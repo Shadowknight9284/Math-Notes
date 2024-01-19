@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{esvect}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\author{Pranav Tikkawar}
+\title{Workshop 1 Answers}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+    \item Level Curves and Differential Equations: a warm up
+    \begin{enumerate}
+        \item The level curves are elipsises centered at the origin
+        \begin{enumerate}
+            \item **Refer to LevelCurves.png**
+        \end{enumerate}
+        \item $ 2x + 8y \frac{\mathrm{d} y}{\mathrm{d} x} = 0 $
+        \begin{enumerate}
+            \item Given $x^2 +4y^2 = c$ we can differentiate both sides with respect to x
+            \item We then get $ 2x + 8y \frac{\mathrm{d} y}{\mathrm{d} x} = 0 $
+        \end{enumerate}
+        \item $\frac{\partial f}{\partial x} + \frac{\partial f}{\partial y} \frac{\mathrm{d}y}{\mathrm{d}x} = 0$
+        \begin{enumerate}
+            \item Given $f(x,y(x)) = c $ we reparamaterize the function in terms of t where $x(t) = t$
+            \item $\frac{\mathrm{d} f}{\mathrm{d} t}  = \frac{\partial f}{\partial x} \frac{\mathrm{d} x}{\mathrm{d} t} 
+            + \frac{\partial f}{\partial y} \frac{\mathrm{d} y}{\mathrm{d} t}$
+            \item Now if we replace $t$ with $x$ given by the fact that $x(t) = t$
+            \item $\frac{\mathrm{d} f}{\mathrm{d} x}  = \frac{\partial f}{\partial x} \frac{\mathrm{d} x}{\mathrm{d} x} 
+            + \frac{\partial f}{\partial y} \frac{\mathrm{d} y}{\mathrm{d} x}$
+            \item since $\frac{\mathrm{d} x}{\mathrm{d}x} = 1$ and $ \frac  {\mathrm{d} f}{\mathrm{d} x} = 0$ we can simplify the equation
+            \item $\frac{\partial f}{\partial x} + \frac{\partial f}{\partial y} \frac{\mathrm{d}y}{\mathrm{d}x} = 0$
+        \end{enumerate}
+        \item No, there will not be a function $f(x,y)$ that satisfies this DE
+        \begin{enumerate}
+            \item Based off the prior questions we know that the DE will have the form of $\frac{\partial f}{\partial x} = 2x + 3$ and $\frac{\partial f}{\partial y} = x^2 y$
+            \item We can then find 2 possibilities for the function $f(x,y)$: $f(x,y) = x^2 + 3x + g(y) $ when we integrate $\frac{\partial f}{\partial x} $ with respect to $x$ and $f(x,y) = \frac{x^2 y^2}{2} + h(x) $ when we integrate $\frac{\partial f}{\partial y} $ with repsect to $y$
+            \item Since they represent the same thing we can set the equal to each other: $x^2 + 3x + g(y) = \frac{x^2 y^2}{2} + h(x) $
+            \item Now we can seperate the variables with the $x$ terms on the left and $y$ terms on the right: $x^2 + 3x - h(x) = \frac{x^2 y^2}{2} - g(y)$ 
+            \item Differentiating both sides with respect to $y$ yeilds: $ 0 = x^2y - g'(y) $ 
+            \item This result creates a "contradiction" as it says that $g'(y)$ which is a function soley of $y$, is written in terms of $x$ and $y$ so there cannot be a function that exists that satisfies this.
+        \end{enumerate}
+    \end{enumerate}
+    \item Line Integrals
+    \begin{enumerate}
+        \item $\int_{C_1}^{} \vv{v} \cdot \mathrm{d} \vv{r}  = -2$
+        \begin{enumerate}
+            \item $v(x,y,z) = <1,z,y>$
+            \item $r(t) = <cos(t),sin(t),0>$ and $r'(t) = <-sin(t),cos(t),0> $ along the interval $0 \leq t \leq \pi$
+            \item $v(x(t),y(t),z(t)) = <1,0,sin(t)> $
+            \item $\int_{C_1}^{} \vv{v} \cdot \mathrm{d} \vv{r} = \int_{0}^{\pi} \vv{v}(x(t),y(t),z(t)) \cdot r'(t) \mathrm{d} t$
+            \item $\vv{v}(x(t),y(t),z(t)) \cdot r'(t) = sin(t)$
+            \item $ \int_{0}^{\pi} sin(t) \mathrm{d}t  = -2$
+        \end{enumerate}
+        \item $\int_{C_2}^{} \vv{v} \cdot \mathrm{d} \vv{r}  = -2$
+        \begin{enumerate}
+            \item $v(x,y,z) = <1,z,y>$
+            \item $r(t) = <-t,0,0>$ and $r'(t) = <-1,0,0>$ along the interval $ -1 \leq t \leq 1 $
+            \item $v(x(t),y(t),z(t)) = <1, 0, 0>$
+            \item $\int_{C_1}^{} \vv{v} \cdot \mathrm{d} \vv{r} = \int_{-1}^{1} \vv{v}(x(t),y(t),z(t)) \cdot r'(t) \mathrm{d} t$
+            \item $\vv{v}(x(t),y(t),z(t)) \cdot r'(t) = -1$
+            \item $\int_{-1}^{1} -1 \mathrm{d}t = -2 $
+        \end{enumerate}
+        \item $\nabla \times \vv{v} = 0 \therefore v$ is irroational and has a function $f(x,y)$ which is path independent with integration 
+    \end{enumerate}
+    \item Flux Integrals
+    \begin{itemize}
+        \item ** I tried here but I dont remember it that well, but an attempt was made**
+        \item ** Refer to FluxIntegralSolutions.png for my solutions** (I was too lazy to type it up and im not sure what im doing)
+    \end{itemize}
+\end{enumerate}
+\end{document}
