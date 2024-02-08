@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{HW 2: 292H}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item $-4x'(t)+tx(t) = 2t(x(t))^3 $ \begin{itemize}
+        \item Divide out the terms by $(x(t))^3$: $\frac{-4x'}{x^3} + \frac{t}{x^2} = 2t $
+        \item Set $y = \frac{1}{x^2} $ and $-2y' = \frac{x'}{x^3} $ and get $8y' +ty = 2t$ and then $y' + \frac{ty}{8} = \frac{t}{4}$
+        \item Then we can multiply through by $h(t) = e^{\frac{t^2}{16}}$ to get $hy' + \frac{t}{8}hy = \frac{t}{4}h$
+        \item Then we get $[hy]' = \frac{t}{4}h $
+        \item Then we get $y = 2 + Ce^{\frac{-t^2}{16}}  $
+        \item Since $x = \frac{1}{\sqrt{y}}$ then $x = \frac{1}{\sqrt{2+Ce^{\frac{-t^2}{16}}}} $
+    \end{itemize}
+    \item $x' =  \frac{-1}{t^2} - \frac{x}{t} + x^2$ \begin{itemize}
+        \item Suppose x is a solution of the DE above that we guess and Y is also a solution to the DE given by $y = u + x $ where u is also a function
+        \item We get $u' + x' = \frac{-1}{t^2} - \frac{x}{t} + x^2 - \frac{u}{t} + 2ux + u^2 $ 
+        \item Notice that we can cancel $ x' $ from both sides to get $u' = \frac{u}{t} + u^2$
+        \item Now this is a Bernoulli and we can set $h = \frac{1}{u}$ and $-h' = \frac{u'}{u^2}$ 
+        \item By dividing and subbing in we get $-h' = \frac{1}{t}h +1$ and then $h' + \frac{1}{t}h = -1$
+        \item Then we introduce $j = \frac{t^2}{2}$ and mulitply through to get $jh'+ \frac{1}{t}jh = -j$
+        \item Then we notice that $[jh]' = -j $
+        \item Replacing J and integrating we get $ h = \frac{-t^3}{3} + \frac{c}{t} $
+        \item Since $u = \frac{1}{h}$ then $u = \frac{3t}{-t^3+C} $
+        \item Since $y = u + x $ and y is the original solution we desite then we get $y = \frac{3t}{-t^3+C} +\frac{1}{t} $
+    \end{itemize}
+    \item $x'(t) = sin(x(t)), x(0) = x_0$\begin{itemize}
+        \item From the DE we get $\int_{x_0}^{x}\frac{dx}{sinx} = \int_{0}^{t}dt $
+        \item Evaluating the integral using some algebra magic we get $ln(csc(x_0)-cot(x_0)) - ln(csc(x)-cot(x)) = t - 0 $
+        \item Since we know that $\frac{1-cos(x)}{sin(x)} = tan(\frac{x}{2}) = csc(x) - cot(x)$ then we get $ln(tan(\frac{x}{2}))/(tan(\frac{x_0}{2})) = t $
+        \item Then we get that $tan(x/2) = e^t tan(x_0/2)$
+        \item Then we get $x = 2arctan(e^t tan(x_0/2))$
+        \item For where x is a valid solution we get that $x = 0, x_0 = 0, t \in (-\infty, \infty)$ and $x = 2arctan(e^t tan(x_0/2)) , x_0 \in (0, \pi), t \in (-\infty, \infty) $ and $x = \pi, x_0 = \pi, t \in (-\infty, \infty)$
+    \end{itemize}
+\end{enumerate}
+
+\end{document}
