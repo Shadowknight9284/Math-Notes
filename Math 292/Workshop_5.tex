@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Workshop 5: Math 292}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item Model: \begin{enumerate}
+        \item Equilibrium points: \begin{itemize}
+            \item Equilibrium points: (0,0) and (K,0)
+            \item For $\gamma = \delta k$ then (K, c) for all positive reals c.  
+        \end{itemize}
+        \item Particular Solution: \begin{itemize}
+            \item $x'(t) = rx(1-\frac{x}{K})$. We notice this is similar to the logistic curve from class: $x' = x(r-ax)$
+            \item If we have $r = r$ and $a = \frac{r}{k}$ we have the same equation and then the same Solution
+            \item $x = \frac{x_0 k}{x_0 + e^{-rt}(k-x_0)}$
+            \item Plugging into $y'$ we get $y'=(\delta [\frac{x_0 k}{x_0 + e^{-rt}(k-x_0)}] - \gamma)y$
+            \item We know the sol for $y$ is in the form of $y = y_0 e^{\int_{t_0}^{t}p ds}$ with $\int_{t_0}^{t}p ds = \int_{0}^{t}(\delta [\frac{x_0 k}{x_0 + e^{-rt}(k-x_0)}] - \gamma) $
+            \item The integral evaluates to $\frac{\delta K }{r} ln[\frac{x_0 e^{rt} + k - x_0 }{k}] - \gamma t $ 
+            \item the sol is $y = y_0 e^{\frac{\delta K }{r} ln[\frac{x_0 e^{rt} + k - x_0 }{k}] - \gamma t }$
+        \end{itemize}
+        \item Limit \begin{itemize}
+            \item $\gamma < \delta k$ then $\lim_{t \rightarrow \infty} y(t) = \infty$
+            \item $\gamma > \delta k$ then $\lim_{t \rightarrow \infty} y(t) = 0$
+            \item $\gamma = \delta k$ then $\lim_{t \rightarrow \infty} y(t) = y_0 \frac{x_0}{K}^{\frac{\delta k}{r}} $
+        \end{itemize}
+    \end{enumerate}
+    \item Linear Algebra \begin{enumerate}
+        \item - \begin{itemize}
+            \item $X(t) = e^{\lambda k} \vec{V}$ is a sol as $X'(t) = \lambda e^{\lambda k} \vec{V} $ and $X'(t) = \lambda X(t)$ and $X'(t) = A X(t)$ since $AV = \lambda V$ 
+            \item $\lambda = 0$ then $X = \vec{V}$ for all time
+            \item $\lambda > 0$ then $\lim_{x \rightarrow \infty} X(t) = \infty$ and $\lim_{x \rightarrow -\infty} X(t) = 0$ 
+            \item $\lambda < 0$ then $\lim_{x \rightarrow \infty} X(t) = 0$ and $\lim_{x \rightarrow -\infty} X(t) = \infty$ 
+        \end{itemize}
+       \item - \begin{itemize}
+            \item Proof by induction: 
+            \item Base Case $p(1)$: It is clear that a set of 1 vector is linearly indepdendant as the only $c$ that satisfies $c\vec{V} =0 $ where $\vec{V} \neq 0$ is $0$
+            \item Inductive Steps: Assume $p(k)$ holds. Prove $p(k+1)$:
+            \item $p(k+1)$ is $c_1 \vec{V^{(1)}} + c_2 \vec{V^{(2)}} + ... +c_k \vec{V^{(k)}} + c_{k+1} \vec{V^{(k+1)}} = 0 $ since we know that $p(k)$ holds: $ c_1 \vec{V^{(1)}} + c_2 \vec{V^{(2)}} + ... +c_k \vec{V^{(k)}} = 0 $  we can sub it into $p(k+1)$ to get $ 0 + c_{k+1} \vec{V^{(k+1)}} = 0$ 
+            \item since $\vec{V^{(k+1)}} \neq 0$ then $c_{k+1} = 0$ thus proving by induction that any set of eigenvectors with distinct eigenvalues is linearly indepdendant
+        \end{itemize}
+        \item - \begin{itemize}
+            \item Since we know from the previous part that the columns of $M(t)$ are linearly indepdendant, we can see that it is inveratble. 
+            \item By plugging in 0 for t in the solution we can see $\vec{X}(0) =  M(0)\vec{C}$ 
+            \item Solving for $C$ we get $C = M^{-1}(0)\vec{X}(0)$
+            \item Plugging back gets $X(t) = M(t)M^{-1}(0)\vec{X}(0)$ 
+        \end{itemize}
+        \item - 
+    \end{enumerate}
+\end{enumerate}
+
+
+\end{document}

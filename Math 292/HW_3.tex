@@ -1,0 +1,137 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{HW 3: Math 292}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+    \item [1] - \begin{enumerate}
+        \item [a]: Let $v(x) = (1-x^4)^{1/2}$ , consider the sol of $x'(t) = v(x(t))$ with $x(0) = 0$ \begin{itemize}
+            \item The fucntion is not Lipschitz on the interval
+            \item $\lim_{x_0 \rightarrow -1} |v'(x)| =  \lim_{x_0 \rightarrow -1} |-2(1-x^4)^{\frac{-1}{2}}x^3| = \infty$ 
+            \item $\lim_{x_0 \rightarrow 1} |v'(x)| =  \lim_{x_0 \rightarrow 1} |-2(1-x^4)^{\frac{-1}{2}}x^3| = \infty$ 
+            \item We see that $\frac{1}{\sqrt{1-x^4}} \leq \frac{1}{\sqrt{1-x^2}}$ and so are the integral over the same bounds
+            \item We see that $\int_{x_0}^{1}\frac{1}{(1-x^2)^{1/2}} = sin^{-1}(1)- sin^{-1}(x_0)$ 
+            \item Since $x_0 \in (-1,1)$ the integral evaluates to a finite values as $sin^-1(x_0)$ is defined and finite
+            \item Since the integral from barrows formula is finite, then the solution doesnt exist for all time.
+        \end{itemize}
+        \item [b]: Let $v(x) = (1-x^4)^{2}$ , consider the sol of $x'(t) = v(x(t))$ with $x(0) = 0$ \begin{itemize}
+            \item The sol does exist within the interval as the function is Lipschitz all through the interval
+            \item $\lim_{x_0 \rightarrow -1} |v'(x)| =  \lim_{x_0 \rightarrow -1} |-8(1-x^4)x^3| = 0$
+            \item $\lim_{x_0 \rightarrow 1} |v'(x)| =  \lim_{x_0 \rightarrow 1} |-8(1-x^4)x^3| = 0$
+            \item Also for every since $v'()$ is well defined $\forall x \in (-1,1)$ we can say the function $v$ is bounded by an L therefore making it Lipschitz over the interval. 
+            \item This ensures and unique and existant solution to the DE
+        \end{itemize}
+    \end{enumerate}
+    \item [2] - \begin{enumerate}
+        \item [a]: Prove $\lim_{t \rightarrow \infty} |\frac{d}{dx} \Psi_t(x) | = \infty$ \begin{itemize}
+            \item $\lim_{t \rightarrow \infty} |\frac{V(\Psi_t(x))}{V(x)}| = \frac{1}{V(x)}\lim_{t \rightarrow \infty} V(\Psi_t(x))$ 
+            \item Since $V(x)$ is Lipschitz then $\lim_{x \rightarrow \infty} \Psi_t(x)  = \infty$ 
+            \item Then $\lim_{t \rightarrow \infty} |V(\Psi_t(x))|=  \infty$ as desired
+        \end{itemize}
+        \item [b]: $|x_2(t) - x_1(t)| = |\int_{x_1}^{x_2}\frac{d}{dx} \Psi(x)dx|$ \begin{itemize}
+            \item $\lim_{t \rightarrow \infty}\frac{d}{dx} \Psi(x) = \infty$ from the previous part 
+            \item $ \int_{x_1}^{x_2}\lim_{t \rightarrow \infty}\frac{d}{dx} \Psi(x)$ (Source: Trust me bro)\begin{itemize}
+                \item Through some formuala that was talked about in the Recitation we know that $(\lim \int )\geq (\int \lim) $ and since the line above diverges that means that $ \lim_{t \rightarrow \infty}|\int_{x_1}^{x_2}\frac{d}{dx} \Psi(x)dx|$ also diverges 
+            \end{itemize}
+            \item This limit evaluates to $\infty$ 
+        \end{itemize}
+    \end{enumerate}
+    \item [3] - \begin{enumerate}
+        \item [a] - $x'=Ax$ where $A = \begin{bmatrix}-4 & 2 \\ 5 & -1 \end{bmatrix}$ \begin{itemize}
+            \item Eigenvalues are $ \lambda = -6, 1$
+            \item Corresponding Eigenvectors are $v_1 = \begin{bmatrix}
+                -1 \\ 1
+            \end{bmatrix}, v_2 = \begin{bmatrix}
+                2 \\ 5
+            \end{bmatrix} $
+            \item $M(t) = \begin{bmatrix}
+                2e^t & -e^{-6t} \\ 
+                5e^t & e^{-6t}
+            \end{bmatrix}$
+            \item $M(0)^{-1} = \frac{1}{7}\begin{bmatrix}
+                1 & 1 \\
+                -5 & 2
+            \end{bmatrix}$
+            \item $M(t)M(0)^{-1} = e^{tA} = \frac{1}{7}\begin{bmatrix}
+                2e^t +5e^{-6t} & 2e^t -2e^{-6t} \\
+                5e^t - 5e^{-6t} & 5e^t +2e^{-6t}
+            \end{bmatrix} $
+        \end{itemize}
+        \item [b] - Find all $x_0$ such that $\lim_{x \rightarrow \infty}x(t) = 0$ \begin{itemize}
+            \item $\lim_{x \rightarrow \infty} (\frac{1}{7}\begin{bmatrix}
+                2e^t +5e^{-6t} & 2e^t -2e^{-6t} \\
+                5e^t - 5e^{-6t} & 5e^t +2e^{-6t}
+            \end{bmatrix} \begin{bmatrix}
+                x_1 \\
+                x_2
+            \end{bmatrix} ) = \begin{bmatrix}
+                0 \\
+                0
+            \end{bmatrix}$
+            \item While it would possible to Gaussian Elimination, I simply solved it as a system of equations
+            \item $x_1 [2e^t +5e^{-6t}] = x_2 [2e^t -2e^{-6t}]$ \& $ x_1[5e^t - 5e^{-6t}] = x_2 [5e^t +2e^{-6t}] $
+            \item The aim is to find $x_1$ and $x_2$ so that all the terms with $e^t$ cancel so we are only left with $e^{-6t}$ terms, which go to 0 as t apporaches $\infty$
+            \item we get $ c\begin{bmatrix}
+                -1 \\ 
+                1
+            \end{bmatrix}$ as the solution for all real numbers $c$, as well as the trivial solution $\begin{bmatrix}
+                0 \\
+                0
+            \end{bmatrix}$
+        \end{itemize}
+    \end{enumerate}
+    \item [4] $x'(t) = Ax, x(0) = x_0, A = \begin{bmatrix}
+        2 & 9 & -3 \\
+        6& -1 & 3 \\
+        6& -9 & 11 
+    \end{bmatrix}$ solve for $e^{tA}$ \begin{itemize}
+        \item Eigenvalues: $\lambda = 8, 8, 4$
+        \item Corresponding Eigenvectors: $v_{1} = \begin{bmatrix}
+            -1 \\
+            0 \\
+            2
+        \end{bmatrix} v_{2} = \begin{bmatrix}
+            3 \\
+            2 \\
+            0
+        \end{bmatrix} v_3 = \begin{bmatrix}
+            -1 \\
+            1 \\ 
+            1
+        \end{bmatrix}$
+        \item $M(t) = \begin{bmatrix}
+            -e^{8t} & 3e^{8t} & -e^{-4t} \\ 
+            0 & 2e^{8t} & e^{-4t} \\
+            2e^{8t} & 0 & e^{-4t} 
+        \end{bmatrix}$
+        \item $M(0) = \begin{bmatrix}
+            -1 & 3 & -1 \\
+            0 & 2 & 1 \\
+            2 & 0 & 1
+        \end{bmatrix}$
+        \item $M(0)^{-1} = \frac{1}{8}\begin{bmatrix}
+            2 & -3 & 5 \\
+            2 & 1 & 1 \\
+            -4 & 6 & -2 
+        \end{bmatrix}$ 
+        \item $e^{tA} = M(t)M(0)^{-1} = \frac{1}{8}\begin{bmatrix}
+            4e^{8t} + 4e^{-4t} & 6e^{8t} - 6e^{-4t} &-2e^{8t} + 2e^{-4t} \\
+            4e^{8t} - 4e^{-4t} & 2e^{8t} + 6e^{-4t} & 2e^{8t} - 2e^{-4t} \\
+            4e^{8t} - 4e^{-4t} & -6e^{8t} + 6e^{-4t} & 10e^{8t} - 2e^{-4t} 
+        \end{bmatrix} $
+    \end{itemize}
+\end{enumerate}
+
+\end{document}

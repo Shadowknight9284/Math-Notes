@@ -1,8 +1,8 @@
-PWD c:/Users/prana/OneDrive/Desktop/Math Notes/Template
+PWD c:/Users/prana/OneDrive/Desktop/MathNotes/Template
 INPUT c:/texlive/2023/texmf.cnf
 INPUT c:/texlive/2023/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/prana/OneDrive/Desktop/Math Notes/Template/Template.tex
+INPUT c:/Users/prana/OneDrive/Desktop/MathNotes/Template/Template.tex
 OUTPUT Template.log
 INPUT c:/texlive/2023/texmf-dist/tex/latex/base/article.cls
 INPUT c:/texlive/2023/texmf-dist/tex/latex/base/article.cls

@@ -1,0 +1,275 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Function Problems}
+
+\begin{document}
+\maketitle
+\section*{Problem 1}
+\subsection*{a}
+If $f$ and $g$ are decreasing functions on $\mathbb{R}$ then thier composition $g \circ f$ is not necessarily decreasing. For example, let $f(x) = -x$ and $g(x) = -x$. Then $f$ and $g$ are decreasing functions, but $g \circ f = -(-x) = x$ is not decreasing.
+\subsection*{b}
+If $f$ and $g$ are decreasing functions on $\mathbb{R}$ then their composition is always increasing as if we consider $x_1, x_2 \in \mathbb{R}$ such that $x_1 < x_2$, then $f(x_1) > f(x_2)$ and $g(f(x_1)) < g(f(x_2))$ due to the fact that $g$ is decreasing. Hence, $g \circ f$ is increasing.
+\subsection*{c} 
+If $f$ and $g$ are increasing functions on $\mathbb{R}$ then thier pointwise sum $f+g$ is always increasing as if we consider $x_1, x_2 \in \mathbb{R}$ such that $x_1 < x_2$, then $f(x_1) < f(x_2)$ and $g(x_1) < g(x_2)$ due to the fact that $f$ and $g$ are increasing. Hence, $f(x_1) + g(x_1) < f(x_2) + g(x_2)$ and $f+g$ is increasing. 
+\subsection*{d}
+If $f$ and $g$ are increasing functions on $\mathbb{R}$ then thier pointwise product $f \cdot g$ is not necessarily increasing. For example, let $f(x) = x$ and $g(x) = x$. Then $f$ and $g$ are increasing functions, but $f \cdot g = x^2$ is not increasing for all $x \in \mathbb{R}$.
+\section*{Problem 2}
+\subsection*{a}
+Let $r: \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$ be given by the rule $r(a,b) = 2^{a-1}(2b-1)$. Prove that r is one-to-one and onto N (a bijection).
+\subsubsection*{One-to-one}
+Need: $(\forall a_1,a_2,b_1,b_2 \in \mathbb{N})$ $[r(a_1, b_1) = r(a_2, b_2) \Rightarrow (a_1, b_1) = (a_2, b_2)]$ \\
+Let $a_1, a_2, b_1, b_2 \in \mathbb{N}$ such that $r(a_1, b_1) = r(a_2, b_2)$. Then $2^{a_1-1}(2b_1-1) = 2^{a_2-1}(2b_2-1)$. Since $2^{a_1-1}$ and $2^{a_2-1}$ are both powers of 2, they are both positive and non-zero. Hence, we can divide both sides of the equation by $2^{a_1-1}$ to get $(2b_1-1) = 2^{a_2-a_1}(2b_2-1)$. Since $2b_1-1$ and $2b_2-1$ are both odd and non-zero, we can divide both sides of the equation by $2b_2-1$ to get $\frac{2b_1-1}{2b_2-1} = 2^{a_2-a_1}$. Since the left side is a fraction with odd numerator and denominator, it must also be odd. But the right side is a power of 2, so the only way for the equation to hold is if $a_2-a_1 = 0$ and $2b_1-1 = 2b_2-1$. Hence, $a_1 = a_2$ and $b_1 = b_2$ and $r$ is one-to-one. 
+\subsubsection*{Onto}
+Need: $(\forall n \in \mathbb{N})$ $(\exists a, b \in \mathbb{N})$ $r(a, b) = n$ \\
+Let $n \in \mathbb{N}$. Then $n$ be written in prime facortization form. That is, $n$ is the product of some powers of primes. The even primes, which is only 2, can be contributed by the term $2^{a-1}$ and all the other odd primes can be contributed by the term $2b-1$ as the product of odd numbers is always odd. Hence, $r$ is onto.
+\subsection*{b}
+Let $g: \mathbb{N} \times \mathbb{N} \rightarrow 8\mathbb{N}$ be given by the rule $g(m,n) = 2^{m+2}(2n-1)$. Prove that r is one-to-one and onto N (a bijection).
+\subsubsection*{One-to-One}
+Need: $(\forall m_1,m_2,n_1,n_2 \in \mathbb{N})$ $[g(m_1, n_1) = g(m_2, n_2) \Rightarrow (m_1, n_1) = (m_2, n_2)]$ \\
+Let $m_1, m_2, n_1, n_2 \in \mathbb{N}$ such that $g(m_1, n_1) = g(m_2, n_2)$. Then $2^{m_1+2}(2n_1-1) = 2^{m_2+2}(2n_2-1)$. We can then divide both sides by $8$ to get $2^{m_1-1}(2n_1-1) = 2^{m_2-1}(2n_2-1)$. This leads to a proof that is identical to the one in part a, so $g$ is one-to-one. 
+\subsection*{Onto}
+Need: $(\forall k \in 8\mathbb{N})$ $(\exists m, n \in \mathbb{N})$ $g(m, n) = k$ \\
+Let $n \in 8\mathbb{N}$. Then $k$ be written in prime facortization form times 8. That is, $k$ is a product of 8 times a series of primes. After factoring out 8 from $2^{m+2}$ we get $2^{m-1}$ thus resulting in a identical proof to the one in part a, so $g$ is onto.
+\section*{Problem 3}
+Let $A = \{1,2,3,4\} $ For each subproblem, describe a codomain $B$ and a function $f:A \rightarrow B$
+\subsection*{a}
+one-to-one but not onto\\
+Let $B = \{1,2,3,4,5\}$ and $f: A \rightarrow B$ be given by the rule $f(x) = x$. Then $f$ is one-to-one but not onto.
+\subsection*{b}
+onto B but not one-to-one
+Let $B = \{ 0 \}$ and $f: A \rightarrow B$ be given by the rule $f(x) = 0$. Then $f$ is onto but not one-to-one.
+\subsection*{c}
+both one-to-one and onto
+Let $B = \{1,2,3,4\}$ and $f: A \rightarrow B$ be given by the rule $f(x) = x$. Then $f$ is both one-to-one and onto.
+\subsection*{d}
+neither one-to-one nor onto
+Let $B = \{ 0, 1\}$ and $f: A \rightarrow B$ be given by the rule $f(x) = 0$ Then $f$ is neither one-to-one nor onto.
+\section*{Problem 4}
+Find nonempty sets $A,B,C$ and functions $f: A \rightarrow B$ and $g: B \rightarrow C$ for the following questions
+\subsection*{a}
+$f$ is onto but $g \circ f$ is not onto.\\
+$A = \{1, 2\}, B = \{1,2\}, C = \{1,2\} $ where $f: A \rightarrow B$ is given by the rule $f(x) = x$ and $g: B \rightarrow C$ is given by the rule $g(x) = 1$. Then $f$ is onto but $g \circ f$ is not onto.
+\subsection*{b}
+$g$ is onto but $g \circ f$ is not onto.\\
+$A = \{1, 2\}, B = \{1,2\}, C = \{1,2\} $ where $f: A \rightarrow B$ is given by the rule $f(x) = 1$ and $g: B \rightarrow C$ is given by the rule $g(x) = x$. Then $g$ is onto but $g \circ f$ is not onto.
+\subsection*{c}
+$g \circ f$ is onto but $f$ is not onto.\\
+$A = \{1, 2\}, B = \{1,2,3\}, C = \{1\} $ where $f: A \rightarrow B$ is given by the rule $f(x) = x$ and $g: B \rightarrow C$ is given by the rule $g(x) = 1$ Then $g \circ f$ is onto but $f$ is not onto.
+\subsection*{d}
+$f$ is 1-1 but $g \circ f$ is not 1-1.\\
+$A = \{1, 2\}, B = \{1,2\}, C = \{1\} $ where $f: A \rightarrow B$ is given by the rule $f(x) = x$ and $g: B \rightarrow C$ is given by the rule $g(x) = 1$ Then $f$ is 1-1 but $g \circ f$ is not 1-1.
+\subsection*{e}
+$g$ is 1-1 but $g \circ f$ is not 1-1.\\
+$A = \{1, 2\}, B = \{1,2\}, C = \{1, 2\} $ where $f: A \rightarrow B$ is given by the rule $f(x) = 1$ and $g: B \rightarrow C$ is given by the rule $g(x) = x$ Then $g$ is 1-1 but $g \circ f$ is not 1-1.
+\subsection*{f}
+$g \circ f$ is 1-1 but $g$ is not 1-1.\\
+$A = \{1, 2\}, B = \{1,2,3\}, C = \{1,2 \}$ where $f: A \rightarrow B$ is given by the rule $f(x) = x$ and $g: B \rightarrow C$ is given by the rule $g(x) = x$ for $x \in \{1,2\}$ and $g(x) = 1$ for $x = 3$ Then $g \circ f$ is 1-1 but $g$ is not 1-1.
+
+\section*{Problem 5}
+Let $f : A \rightarrow B$ and $g : B \rightarrow C$ be 1-1 functions. Prove that $g \circ f$ is also 1-1.
+\subsection*{Proof}
+Suppose: $f: A \rightarrow B$ and $g: B \rightarrow A$ are 1-1 functions. \\
+Need: $g \circ f$ is 1-1. \\
+In other words: $(\forall a_1, a_2 \in A)[g(f(a_1)) = g(f(a_2)) \rightarrow a_1 = a_2]$\\
+Proof: Let $a_1, a_2 \in A$ such that $g(f(a_1)) = g(f(a_2))$. Since $g$ is 1-1 then $f(a_1) = f(a_2)$. Since $f$ is 1-1 then $a_1 = a_2$ as desired. Hence, $g \circ f$ is 1-1.
+\section*{Problem 6}
+Let $f : A \rightarrow B$ and $g : B \rightarrow C$ be onto functions. Prove that $g \circ f$ is also onto.
+\subsection*{Proof}
+Suppose: $f: A \rightarrow B$ and $g: B \rightarrow A$ are onto functions. \\
+Need: $g \circ f$ is onto. \\
+In other words: $(\forall z \in C)(\exists x \in A)[g(f(x)) = z]$\\
+Proof: Let $z \in C$, since $g$ is onto $C$ then $(\exists y \in B)[g(y) = z]$. Since $f$ is onto $B$ then $(\exists x \in A)[f(x) = y]$ as desired. Hence, $g(f(x)) = z$ and $g \circ f$ is onto. 
+\section*{Problem 7}
+Let $f : A \rightarrow B$ and $g : B \rightarrow C$ be functions. Assume $g \circ f$ is one to one. Prove that $f$ is one to one.
+\subsection*{Proof}
+Suppose $f : A \rightarrow B$ and $g : B \rightarrow C$ are functions. \\
+Assume $g \circ f$ is one to one. \\
+Need: $f$ is one to one. \\
+In other words: $(\forall a_1, a_2 \in A)[f(a_1) = f(a_2) \rightarrow a_1 = a_2]$\\
+Proof: Let $a_1, a_2 \in A$ such that $f(a_1) = f(a_2)$. 
+Composing $g$ to both sides gives $g(f(a_1)) =g(f(a_2))$
+Since $g \circ f$ is one to one, then $a_1 = a_2$ as desired. 
+\section*{Problem 8}
+Let $f : A \rightarrow B$ and $g : B \rightarrow C$ be functions. Assume $g \circ f$ is onto. Prove that $g$ is onto.
+\subsection*{Proof}
+Suppose $f : A \rightarrow B$ and $g : B \rightarrow C$
+Assume: $g \circ f$ is onto. \\
+Need: $g$ is onto. \\
+In other words: $(\forall z \in C)(\exists y \in B)[g(y) = z]$\\
+Proof: Let $z \in C$ then since $g \circ f$ is onto then $\exists x \in A$ such that $g(f(x)) = z$. Let $y := f(x)$, clearly $y \in B$ and $g(y) = g(f(x)) = z$ as desired. Hence, $g$ is onto.
+\section*{Problem 9}
+Let $f : A \rightarrow B$  and $g : B \rightarrow A$ be functions satsifying $g \circ f = I_A$.
+\subsection*{a}
+Prove that if $f$ is onto then $f \circ g = I_B$.
+\subsubsection*{Proof}
+Suppose: $f : A \rightarrow B$  and $g : B \rightarrow A$ 
+Assume $g \circ f = I_A$. and $f$ is onto \\
+Need $f \circ g = I_B$ \\
+In other words: $(\forall b \in B)[f(g(b)) = b]$\\
+Proof: since $g \circ f = I_A$ we can say that $f$ is one to one. 
+Since $f$ is onto and one to one then $f$ is invertible (Main Theorem).
+Since $f$ is invertible then it is both right and left invertable. 
+By defintion of right invertibility, $f \circ g = I_B$ as desired.
+
+\subsection*{b}
+Prove that if $g$ is 1-1 then $f \circ g = I_B$.
+\subsubsection*{Proof}
+Suppose: $f : A \rightarrow B$  and $g : B \rightarrow A$
+Assume $g \circ f = I_A$. and $g$ is 1-1 \\
+Need $f \circ g = I_B$ \\
+Proof: Since $g \circ f = I_A$ then $g$ is onto.
+Since $g$ is 1-1 and onto then $g$ is invertible (Main Theorem).
+Since $g$ is invertible then it is both right and left invertable.
+By defintion of left invertibility, $f \circ g = I_B$ as desired.
+\subsection*{c}
+Prove by example that $g \circ f = I_A$ alone doesnt imply $f \circ g = I_B$
+\subsubsection*{Proof}
+Let $A = \mathbb{R}_{\geq 0}$ and $B = \mathbb{R}_{\leq 0}$ and $f: A \rightarrow B$ be given by the rule $f(x) = -\sqrt{x}$ and $g: B \rightarrow A$ be given by the rule $g(x) = x^2$. Then $g \circ f = I_A$ but $f \circ g = I_B$ is not true.
+\subsection*{d}
+(Optional) Can you fine such an example with $A = B$
+\subsubsection*{Proof}
+It is not possible as if $A = B$ that means $A$ and $B$ have the same elements. And since $f \circ g \neq I_B$ that imply that $f$ is not onto but for two sets to be equal, the functions must be 1-1 and onto (defintion of Cardinality). Hence, it is not possible to find such an example with $A = B$.
+\section*{Problem 10}
+Suppose $A,B,C,D$ are nonempty sets and $g: B \rightarrow C$ is 1-1 function.
+For each of the following two claims, prove it or give a specific counterexample (In a counterexample you may choose your $A,B,C,D,g$.)
+\subsection*{a}
+For any two function $f_1: A \rightarrow B $ and $f_2: A \rightarrow B$, if $g \circ f_1 = g \circ f_2$ then $f_1 = f_2$.
+\subsubsection*{Proof}
+Suppose: $A,B$ are notempty sets and $f_1: A \rightarrow B $ and $f_2: A \rightarrow B$ are functions. \\
+Assume $g \circ f_1 = g \circ f_2$\\
+Need $f_1 = f_2$\\
+This is not true for any two functions as we can take $A = \mathbb{R}$, $B = \mathbb{R}$, and $C = \mathbb{R}$ and $g(x) = x^2$ and $f_1(x) = x$ and $f_2(x) = -x$. Then $g \circ f_1 = g \circ f_2$ but $f_1 \neq f_2$. 
+\subsection*{b}
+For any two function $h_1: C \rightarrow D $ and $h_2: C \rightarrow D$, if $h_1 \circ g = h_2 \circ g$ then $h_1 = h_2$.
+\subsubsection*{Proof}
+Suppose $C,D$ are nonempty sets and $h_1: C \rightarrow D $ and $h_2: C \rightarrow D$ are functions. \\
+Assume $h_1 \circ g = h_2 \circ g$\\
+Need $h_1 = h_2$\\
+Proof: This is not true as we can take $B = \{1\}, C = \{1,2,3\}$ and $D = \{1, 2, 3\}$ and $g: B \rightarrow C$ be given by the rule $g(x) = 1$ and $h_1: C \rightarrow D$ be given by the rule $h_1(x) = x$ and $h_2: C \rightarrow D$ be given by the rule $h_2(x) = x $ for $x \in \{1,2\}$, $h_2(3) = 4 $ and $h_2(4) = 3 $. Then $h_1 \circ g = h_2 \circ g$ but $h_1 \neq h_2$. 
+
+\section*{Problem 11}
+\subsection*{a}
+Let $f: A \rightarrow B$ be 1-1 and onto, and let $g: B \rightarrow A$ be a function. Prove that $g$ is the inverse of $f$ iff $f \circ g = I_B$
+\subsubsection*{Proof}
+Suppose $A,B$ are nonempty sets and $f: A \rightarrow B$ is 1-1 and onto and $g: B \rightarrow A$ is a function. \\
+Need: $g$ is the inverse of $f$ iff $f \circ g = I_B$\\
+\subsubsection*{Part I}
+Need: $g$ is the inverse of $f$ implies $f \circ g = I_B$\\
+Suppose $g$ is the inverse of $f$. 
+Need $f \circ g = I_B$\\
+Proof: Since $g$ is the inverse of $f$ then $f \circ g = I_B$ by defintion of inverse.
+\subsubsection*{Part II}
+Need: $f \circ g = I_A$ implies $g$ is the inverse of $f$\\
+Suppose $f \circ g = I_B$\\
+Need: $g$ is the inverse of $f$\\
+Proof: Since $f$ is 1-1 and onto then $f$ is invertible (Main Theorem). Since $f \circ g = I_B$ then $g$ is an inverse of $f$ . Since $f$ is invertible then there is only one inverse of $f$ and since $g$ is an inverse of $f$ then $g$ is the inverse of $f$ as desired.
+\subsection*{b}
+\section*{Problem 12}
+Let $A$ and $B$ be nonempty sets and $f: A \rightarrow B$ a function. Assume there exists a function $g:B \rightarrow A$ such that $g \circ f = I_A$. Prove that $f$ is 1-1.
+\subsection*{Proof}
+Suppose: $A$ and $B$ are nonempty sets and $f: A \rightarrow B$ a function. \\
+Assume there exists a function $g:B \rightarrow A$  such that $g \circ f = I_A$\\
+Need f is 1-1\\
+In other words: $(\forall a_1, a_2 \in A)[f(a_1) = f(a_2) \rightarrow a_1 = a_2]$ \\
+Proof: Let $a_1, a_2 \in A$ such that $f(a_1) = f(a_2)$. Then id we compose g with both sides of the equation we get $g(f(a_1)) = g(f(a_2))$. Since $g \circ f = I_A$ then $a_1 = a_2$ as desired. Hence, $f$ is 1-1.
+\section*{Problem 13}
+Let $A$ and $B$ be nonempty sets and $f: A \rightarrow B$ a function. Assume there exists a function $g:B \rightarrow A$ such that $f \circ g = I_B$. Prove that $f$ is onto.
+\subsubsection*{Proof}
+Suppose: $A$ and $B$ are nonempty sets and $f: A \rightarrow B$ a function. \\
+Assume there exists a function $g:B \rightarrow A$  such that $f \circ g = I_B$\\
+Need f is onto\\
+That is: $(\forall y \in B)(\exists x \in A)[f(x) = y]$ \\
+Proof:Let $y \in B$ and define $x := g(y)$ then $f(x) = f(g(y)) = (f \circ g)(y) = I_B(y) = y$ as desired. Hence, $f$ is onto.
+\section*{Problem 14}
+Find an example of a function which has more than one left inverse. Do the same for right inverses.
+\subsection*{a}
+Find two nonempty sets $A$ and $B$ and a function $f: A \rightarrow B$ which has more than one left inverse.
+\subsubsection*{Proof}
+Need: $f: A \rightarrow B$ which has more than one left inverse.\\
+In other words: Need two functions $g: B \rightarrow A$ and $h: B \rightarrow A$ such that $g \circ f = I_A$ and $h \circ f = I_A$ and $g \neq h$\\
+Proof: Let $A = \{1,2\}$ and $B = \{1,2,3\}$ and $f: A \rightarrow B$ be given by the rule $f(x) = x$ and $g: B \rightarrow A$ be given by the rule $g(x) = x$ for $x \in \{1,2\}$ and $g(3)=1$ and $h: B \rightarrow A$ be given by the rule $h(x) = x$ for $x \in \{1,2\}$ and $h(3)=2$. Then $g \circ f = I_A$ and $h \circ f = I_A$ and $g \neq h$ as desired.
+
+\subsection*{b}
+Find two nonempty sets $A$ and $B$ and a function $f: A \rightarrow B$ which has more than one right inverse.
+\subsubsection*{Proof}
+Let $A = \mathbb{R}$ and $B = \mathbb{R}_{\geq 0}$ and $f: A \rightarrow B$ be given by the rule $f(x) = x^2$. and $g: B \rightarrow A$ be given by the rule $g(x) = \sqrt{x}$ and $h: B \rightarrow A$ be given by the rule $h(x) = -\sqrt{x}$. Then $f \circ g = I_B$ and $f \circ h = I_B$ and $g \neq h$ as desired.
+
+\section*{Problem 15}
+Let $A$ and $B$ be nonempty sets and $f: A \rightarrow B$ and $g: B \rightarrow A$ be functions. Prove that if $g \circ f = I_A$ is equivalant to $(\forall x \in A)(\forall y \in B)[f(x) = y \rightarrow g(y) = x]$
+\subsection*{Proof}
+\subsubsection*{Part I}
+Need: $g \circ f = I_A$ implies $(\forall x \in A)(\forall y \in B)[f(x) = y \rightarrow g(y) = x]$\\
+Suppose: $A$ and $B$ are nonempty sets and $f: A \rightarrow B$ and $g: B \rightarrow A$ be functions. \\
+Assume: $g \circ f = I_A$\\
+Need: $(\forall x \in A)(\forall y \in B)[f(x) = y \rightarrow g(y) = x]$\\
+Assume: $f(x) = y$ \\ 
+Proof: Let $x \in A$ then $f(x) = y$, then $g(y) = g(f(x)) = I_A(x) = x$ as desired.
+\subsubsection*{Part II}
+Need $(\forall x \in A)(\forall y \in B)[f(x) = y \rightarrow g(y) = x]$ implies $g \circ f = I_A$\\
+Suppose: $A$ and $B$ are nonempty sets and $f: A \rightarrow B$ and $g: B \rightarrow A$ be functions. \\
+Assume: $(\forall x \in A)(\forall y \in B)[f(x) = y \rightarrow g(y) = x]$\\ 
+Need: $g \circ f = I_A$\\
+In other words $(\forall x \in A)[g(f(x)) = x]$\\
+Proof: Let $x \in A$ then $g(y) = x$ then substituting $f(x) = y$ then $g(f(x)) = x$ as desired.
+
+\section*{Problem 16}
+Let $A$ and $B$ be nonempty sets and $f: A \rightarrow B$ and $g: B \rightarrow A$ be functions. Prove that $f \circ g = I_B$ is equivalent to $(\forall x \in A)(\forall y \in B)[f(x) = y \leftarrow g(y) = x]$
+\subsection*{Proof}
+\subsubsection*{Part I}
+Need: $f \circ g = I_B$ implies $(\forall x \in A)(\forall y \in B)[f(x) = y \leftarrow g(y) = x]$\\
+Suppose: $A$ and $B$ are nonempty sets and $f: A \rightarrow B$ and $g: B \rightarrow A$ be functions. \\
+Assume $f \circ g = I_B$\\
+Need $(\forall x \in A)(\forall y \in B)[f(x) = y \leftarrow g(y) = x]$\\
+Proof: Let $y \in B$ then $g(y) = x$ then $f(x) = f(g(y)) = I_B(y) = y$ as desired.
+\subsubsection*{Part II}
+Need $(\forall x \in A)(\forall y \in B)[f(x) = y \leftarrow g(y) = x]$ implies $f \circ g = I_B$\\
+Suppose: $A$ and $B$ are nonempty sets and $f: A \rightarrow B$ and $g: B \rightarrow A$ be functions. \\
+Assume: $(\forall x \in A)(\forall y \in B)[f(x) = y \leftarrow g(y) = x]$\\
+Need: $f \circ g = I_B$\\
+In other words: $(\forall y \in B)[f(g(y)) = y]$\\
+Proof: Let $y \in B$ then $f(x) = y$ then substituting $g(y) = x$ then $f(g(y)) = y$ as desired.
+
+\section*{Problem 17}
+Let $A, B, C$ be nonempty sets, and let $f : A \rightarrow B$ and $g : B \rightarrow C$ be invertible functions.
+Show that $g \circ f : A \rightarrow C$ is also invertible and that $(g \circ f)^{-1} = f^{-1} \circ g^{-1}$.
+\subsection*{Proof}
+Suppose: $A,B,C$ are nonempty sets and $f : A \rightarrow B$ and $g : B \rightarrow C$ are invertible functions. \\
+Need to show that: $(g \circ f)^{-1} = f^{-1} \circ g^{-1}$\\
+That is we need to show that $(g \circ f) \circ (g \circ f)^{-1} = I_C$ and $(g \circ f)^{-1} \circ (g \circ f) = I_A$\\
+\subsubsection*{Part I}
+Need: $(g \circ f) \circ (g \circ f)^{-1} = I_C$\\
+Proof: $(g \circ f) \circ (g \circ f)^{-1} = (g \circ f) \circ (f^{-1} \circ g^{-1}) = g \circ (f \circ f^{-1}) \circ g^{-1} = g \circ I_B \circ g^{-1} = g \circ g^{-1} = I_C$ as desired.
+\subsubsection*{Part II}
+Need: $(g \circ f)^{-1} \circ (g \circ f) = I_A$\\
+Proof: $(g \circ f)^{-1} \circ (g \circ f) = (f^{-1} \circ g^{-1}) \circ (g \circ f) = f^{-1} \circ (g^{-1} \circ g) \circ f = f^{-1} \circ I_B \circ f = f^{-1} \circ f = I_A$ as desired.
+
+\section*{Problem 18}
+Let $A, B, C, D$ be nonempty sets, and let $f : A \rightarrow B$ and $g : B \rightarrow C$ and $h : C \rightarrow D$ be functions. Show that $h \circ g \circ f : A \rightarrow D$ is also invertable and that $(h \circ g \circ f)^{-1} = f^{-1} \circ g^{-1} \circ h^{-1}$.
+\subsection*{Proof}
+Suppose: $A, B, C, D$ are nonempty sets, and $f : A \rightarrow B$ and $g : B \rightarrow C$ and $h : C \rightarrow D$ are functions that are all invertable. \\
+Need to show that: $h \circ g \circ f$ is invertable and $(h \circ g \circ f)^{-1} = f^{-1} \circ g^{-1} \circ h^{-1}$\\
+\subsection*{Part I}
+Need: $h \circ g \circ f$ is invertable\\
+Proof: Since $f, g, h$ are all invertable then we can compose to create the functions to get $h \circ g \circ f$. Then we can compose the inverses of the functions "in reverse order" ($f^{-1} \circ g^{-1} \circ h^{-1}$) to get the inverse of $h \circ g \circ f$ as desired as $f^{-1} \circ g^{-1} \circ h^{-1} \circ h \circ g \circ f = I_A$ and $h \circ g \circ f \circ f^{-1} \circ g^{-1} \circ h^{-1} = I_D$.
+\subsection*{Part II}
+Given: $(h \circ g \circ f)^{-1} = f^{-1} \circ g^{-1} \circ h^{-1}$\\
+We need to show that $(h \circ g \circ f) \circ (h \circ g \circ f)^{-1} = I_D$ and $(h \circ g \circ f)^{-1} \circ (h \circ g \circ f) = I_A$ in order to prove that $(h \circ g \circ f)^{-1} = f^{-1} \circ g^{-1} \circ h^{-1}$ and it is invertable.
+
+\subsubsection*{Subpart I}
+Need $(h \circ g \circ f) \circ (h \circ g \circ f)^{-1} = I_D$\\
+
+\subsubsection*{Subpart II}
+Need $(h \circ g \circ f)^{-1} \circ (h \circ g \circ f) = I_A$\\
+
+
+\end{document}

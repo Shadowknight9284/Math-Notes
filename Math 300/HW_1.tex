@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{HW 1}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item -
+    \begin{itemize}
+        \item Suppose A, B, and C are sets.
+        \item Assume $(A \subseteq B) (B \subseteq C) (C \subseteq A) $
+        \item Need  $(B \subseteq A) (C \subseteq B) (A \subseteq C) $
+        \item Since $(B \subseteq C) \& (C \subseteq A) $ Then $(B \subseteq A) $
+        \item Since $(B \subseteq A) \& (A \subseteq B)$ Then $A = B$ 
+        \item Since $(C \subseteq A) \& (A \subseteq B) $ Then $(C \subseteq B) $
+        \item Since $(C \subseteq B) \& (B \subseteq C)$ Then $B = C$ 
+    \end{itemize}
+    \item - 
+    \begin{itemize}
+        \item Suppose $ x \in (A \cup B) \cap C $
+        \item Need $ x \in A \cup (B \cap C) $
+        \item Since $ x \in (A \cup B) \cap C $ Then $ \{ x \in (A \cup B): x \in C \}  $ 
+        \item Since $x \in (A \cup B) $ Then $\{ x \in A $ or $ x \in B \} $
+        \item Case 1: $ (x \in A) \& (x \in C) $ 
+        \begin{itemize}
+            \item Since $x \in A$ then $ x \in A \cup (B \cap C) $ 
+        \end{itemize}
+        \item Case 2 $ (x \in B) \& (x \in C) $ 
+        \begin{itemize}
+            \item Since $ x \in B \& x \in C $ Then $x \in B \cup C $
+            \item Since $x \in B \cup C$ Then $x \in A \cup (B \cap C) $ 
+        \end{itemize}
+        \item An Example of this is A = [1,2,3] , B = [2,3] , C = [3]
+    \end{itemize}
+    \item -
+    \begin{itemize}
+        \item Suppose $x \in A^c - B^c $
+        \item Need $x \in (A-B)^c $ 
+        \item Need $x \notin (A-B) $
+        \item Need $x \notin A: x \in B$ 
+        \item Since $x \in A^c - B^c $ Then $x \in A^c : x \notin B^c$
+        \item Since $x \in A^c : x \notin B^c$ Then $x \notin A : x \in B$ as desired 
+    \end{itemize}
+    \item - 
+    \begin{itemize}
+        \item Prove $Q_{\leq a} \subseteq Q_{\leq b}$ iff $a \leq b $ 
+        \item Part 1: Proving if $Q_{\leq a} \subseteq Q_{\leq b}$ then $a \leq b $ 
+        \item Assume $Q_{\leq a} \subseteq Q_{\leq b}$
+        \item Need $a \leq b $ 
+        \item Suppose $ x \in Q_{\leq a}$ 
+        \item Since $a$ is a rational number and $\exists x : x = a $ Then $ a \in Q_{\leq a} $ 
+        \item Since $ a \in Q_{\leq a} $ and  $ Q_{\leq a} \subseteq Q_{\leq b}$ Then $a \in Q_{\leq b}$
+        \item Since $a \in Q_{\leq b} $ and the definiton of $Q_{\leq b} $ is $\{ r \in Q: r \leq b \} $ Then $a \leq b $
+        \item Part 2: Proving if $a \leq b $ then $Q_{\leq a} \subseteq Q_{\leq b}$
+        \item Assume $a \leq b $
+        \item Need $Q_{\leq a} \subseteq Q_{\leq b}$
+        \item Since $a$ and $b$ are rational then $a \in Q_{\leq a} $ and $b \in Q_{\leq b} $
+        \item Since $a$ is a rational number and $a \leq b $ then $a \in \mathbb{Q}: a \leq b $ and $a \in Q_{\leq b} $ 
+        \item Suppose $x \in Q_{\leq a}$ Then $x \leq a $
+        \item since $x \leq a $ and $a \in Q_{\leq b} $ Then $x \in Q_{\leq b} $
+        \item Since $x \in Q_{\leq b}$ Then $Q_{\leq a } \subset Q+{\leq b} $ 
+    \end{itemize}
+\end{enumerate}
+
+
+\end{document}

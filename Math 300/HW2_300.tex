@@ -1,0 +1,58 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Math 300H: HW 2}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item -
+    \begin{itemize}
+        \item [a]: 
+            \begin{itemize}
+                \item $R$ is a function with domain and codomain $A$ (it is on $A$) as:\begin{itemize}
+                    \item if $x=1$ then $y=2$ as $3(1)+2 = 5 $ (prime)
+                    \item if $x=2$ then $y=1$ as $3(2)+1 = 7 $ (prime)
+                    \item if $x=3$ then $y=2$ as $3(3)+2 = 11 $ (prime)
+                    \item All the elements in the domain are defined and they are defined as elements in the codomain, which in this case is both A.
+                    \end{itemize}
+            \end{itemize}
+        \item [b]:
+        \begin{itemize}
+            \item $R$ is a function with domain $\mathbb{Z}$. 
+            \item We can define a function $f(x) = 2 - x^2$ to satisfy $x^2 + y = 2$ as $ f(x) = y$ 
+            \item Since for all x in $\mathbb{Z}$ there exists a y in $\mathbb{Z}$ we can say R is a function with domain $\mathbb{Z}$
+            \item $(\forall x \in \mathbb{Z}) (\exists ! y \in \mathbb{Z}) (f(x) = y)$
+        \end{itemize}
+        \item [c] :
+        \begin{itemize}
+            \item $R$ is a not function with domain $\mathbb{Z}$. 
+            \item We can define a function $f(x) = (2 - x^2)/2$ to satisfy $x^2 + 2y = 2$ as $ f(x) = y$ 
+            \item For odd values of $x$ we cannot have a $y \in \mathbb{Z}$. Therefore it is not a function.
+        \end{itemize}
+        \item [d] : 
+        \begin{itemize}
+            \item $R$ is not a function with domain $\mathbb{Z}$
+            \item This is true as there exists at least 1 $x$ in the domain such that there are more than one $y$ that staisfies the relation $R$
+            \item Example: $x = 1 $ means $y = 1 $ or $y = -1 $
+        \end{itemize}
+    \end{itemize}
+    \item - 
+    \begin{itemize}
+        \item [a]: $f * g$ is odd as $f(-x)g(-x) = -f(x)g(x)$ this is an odd property
+        \item [b]: $f+g$ depends on f and g as $f(-x)+ g(-x) = -f(x)+g(x)$ the only way $ f+g$ is even or odd depends if f or g are 0 
+        \item [c]: $f \circ g $ is even as $f(g(-x)) = f(-g(x)) = f(g(x))$
+        \item [d]: $g \circ f $ is even as $g(f(-x)) = g(f(x)) $
+    \end{itemize}
+\end{enumerate}
+
+\end{document}

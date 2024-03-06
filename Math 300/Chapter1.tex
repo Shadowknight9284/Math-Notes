@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Math 300}
+\begin{document}
+\maketitle
+
+\section{Chapter 1}
+\subsection{Introduction/ 1/17/2024}
+
+\begin{itemize}
+    \item Proposition 
+    \begin{itemize}
+        \item A sentence with a truth value
+        \item Ask: "Is it true that..."
+    \end{itemize}
+    \item Equivalace
+    \begin{itemize}
+        \item 2 propositions that have the same truth value
+        \item is $P \equiv Q$
+    \end{itemize}
+    \item Logical Connectives
+    \begin{itemize}
+        \item Negation : $\sim P$ 
+        \begin{itemize}
+            \item It is NOT P, it is true only when P is false
+        \end{itemize}
+        \item Conjuction
+        \begin{itemize}
+            \item true when P and Q are true
+            \item $P \land Q$
+        \end{itemize}
+        \item Disjunction
+        \begin{itemize}
+            \item true when either P and Q are true
+            \item $P \lor Q$
+        \end{itemize}
+    \end{itemize}
+    \item DeMorgan's Laws
+    \begin{itemize}
+        \item $\sim (P \land Q) \equiv (\sim P) \lor (\sim Q) $
+        \item $\sim (P \lor Q) \equiv (\sim P) \land (\sim Q) $
+        \item $\sim (P \Rightarrow Q) \equiv P \land (\sim Q)$
+    \end{itemize}
+    \item Tautology
+    \begin{itemize}
+        \item $P \land \sim P$
+        \item Identically true
+    \end{itemize}
+    \item Contradictions
+    \begin{itemize}
+        \item  $P  \lor \sim P$
+        \item Identically false
+    \end{itemize}
+    \item Laws of Excluded Middles
+    \item Conditional Sentences
+    \begin{itemize}
+        \item $P \Rightarrow Q$
+        \item P is Hypothesis and Q is conclusion
+    \end{itemize}
+    \item Contrapositive
+    \item \begin{itemize}
+        \item given $P \Rightarrow Q$ Contrapositive is $\sim Q \Rightarrow \sim P$
+    \end{itemize}
+    \item Converse
+    \begin{itemize}
+        \item given $P \Rightarrow Q$ Converse is $ Q \Rightarrow P$ 
+    \end{itemize}
+    \item Biconditional
+    \begin{itemize}
+        \item $P \Leftrightarrow Q$ 
+        \item P iff Q
+        \item Logically equivalent to $P \Rightarrow Q \land Q \Rightarrow P $
+    \end{itemize}
+    \item Predicates
+    \begin{itemize}
+        \item Open Sentences
+        \item $x < \pi$ and $2x^2 - 1 = 0 $ where x is a free variable
+        \item We have not given x a value so the statement cannot be true or false; only gets a truth value when x is assigned
+        \item $(\forall x \in \mathbb{R})$ is for all x in $\mathbb{R}$
+        \item $(\exists x \in \mathbb{R})$ is for all x in $\mathbb{R}$
+    \end{itemize}
+    \item DeMorgans for Predicates
+    \begin{itemize}
+        \item $\sim (\forall x) p(x) \equiv (\exists x) \sim p(x)$
+        \item $\sim (\exists x) p(x) \equiv (\forall x) \sim p(x)$
+    \end{itemize}
+\end{itemize}
+\end{document}

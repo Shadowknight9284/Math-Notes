@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{HW 4: Math 300}
+
+\begin{document}
+\maketitle
+For the entierty of this assigment: Suppose $x \in A$ and $y \in B$ in the context for each function's A and B
+\begin{enumerate}
+    \item [a] Find two nonempty sets A, B and a function $f_0 : A \rightarrow B$ such that $f_0$ has no left
+    inverse \begin{itemize}
+        \item Let $f_0(x) = x^2$, $A = \mathbb{R}$, $ B =\mathbb{R} $
+        \item We know that if a function is left invertible then the function is one to one. Taking the contrapositive we get if a function is not one to one then it is not left invertible.
+        \item Since the function $f_0 = x^2$ is not one to one as there is at least an element $y \in B$ that has more than one preimage in $A$. Ex: $f_0(1) = 1 , f_1(-1) = 1 $
+        \item Therefore the function $f_0$ is not left invertible
+    \end{itemize}
+    \item [b] Find two nonempty sets A, B and a function $f_1 : A \rightarrow B$ such that $f_1$ has exactly one
+    left inverse \begin{itemize}
+        \item Let $f_1(x) = x$, $A = \mathbb{R}$, $ B =\mathbb{R} $
+        \item We know that due to the goldilocks criterion that if a function is bijective then it will have a unique inverse. This is due to the fact that for every element $y \in B $, there will exist one and only preimage in $A$ meaning there is one and only one way to take the inverse of it. 
+        \item This function is bijective as it is 1-1 and it is onto its codomain, in this case it is onto its range. 
+        \item Due to the function $f_1$ having one and only one inverse, that means it will have one and only one left inverse
+    \end{itemize}
+    \item [c] Find two nonempty sets A, B and a function $f_2 : A \rightarrow B$ such that $f_2$ has more than
+    one left inverse \begin{itemize}
+        \item Let $A = \{1,2\}$, $B = \{1,2,3\}$, and $f_2(x) = x$
+        \item The function is 1 to 1 as for every element in B there is at most 1 element in A that is it's preimage. But the function is not onto. 
+        \item We can let $g_0(1) = 1, g_0(2) =2, g_0(3) = 1$ as a left inverse function of $f_0$ as it satisfies $g \circ f = I_A $
+        \item We can also let $g_1(1) = 1, g_1(2) =2, g_1(3) = 2$ as another left inverse function of $f_2$ as it satisfies $g \circ f = I_A $
+        \item Since there are are multiple functions $g$ that satisfy $g \circ f_2= I_A$ that means that $f_2$ has more than 1 inverse
+    \end{itemize}
+    \item [d] Find two nonempty sets A, B and a function $h_0 : A \rightarrow B$ such that $h_0$ has no right
+    inverse \begin{itemize}
+        \item Let $h_0(x) = x$, $A = \mathbb{R}$, $B = \mathbb{C}$
+        \item We know that if a function is right invertible then it is onto its codomain. Taking the contrapositive, we get that if a function is not onto its codomain then it is not right invertible. 
+        \item Every element in A can be mapped to B in this function, but there is at least on element in B that doesnt have a preimage in A. For example 1+i  is in B but doesnt have a preimage in A.
+        \item Since the function $h_0$ is not onto it's codomain then $h_0$ is not right invertible. 
+    \end{itemize}
+    \item [e] Find two nonempty sets A, B and a function $h_1 : A \rightarrow B$ such that $h_1$ has exactly
+    one right inverse \begin{itemize}
+        \item Let $h_1(x) = x$, $A = \mathbb{R}$, $ B =\mathbb{R} $
+        \item We know that due to the goldilocks criterion that if a function is bijective then it will have a unique inverse. This is due to the fact that for every element $y \in B $, there will exist one and only preimage in $A$ meaning there is one and only one way to take inverse of it. 
+        \item This function is bijective as it is clearly 1-1 and onto its codomain. 
+        \item Due to the function having one and only one inverse, that means it will have one and only one right inverse. 
+    \end{itemize}
+    \item [f] Find two nonempty sets A, B and a function $h_2 : A \rightarrow B$ such that $h_2$ has more than
+    one right inverse \begin{itemize}
+        \item Let $h_2(x) = x^2$ $A = \mathbb{R}$, $ B =\mathbb{R}_{\geq 0} $
+        \item This function has more than one right inverse as we can find 2 functions that satisfy $(h_0 \circ g )(y) = y $ where $y \in B$: 
+        \item $g_0: B \rightarrow A$ $g_0 = \sqrt{y}$ 
+        \item $g_1: B \rightarrow A. g_1 = -\sqrt{y}$ 
+        \item Suppose $y \in B$. Both functions satisfy $(f \circ g )(y) = I_B = y $. where $f$ is $h_2$ and $g$ is a right inverse of $h_2$
+        \item $(h_2 \circ g_0)(y) = (\sqrt{y})^2 = y$ 
+        \item $(h_2 \circ g_1)(y) = (-\sqrt{y})^2 = y$
+        \item This shows that the function $h_2$ has more than one right inverse.
+    \end{itemize}
+\end{enumerate}
+
+\end{document}
