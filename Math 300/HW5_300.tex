@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{HW 5: 300H}
+
+\begin{document}
+\maketitle
+\section*{Question 1}
+Let $A = \{1,2,3\}$. Give a relation on $A$ that is
+For all these relations, consider that $R \subset A \times A$.
+\subsection*{a}
+Reflexive, symmetric, and transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,1), (2,2), (3,3), (1,2), (2,1), (2,3), (3,2), (1,3), (3,1)\}$.
+\subsection*{b}
+Reflexive, symmetric, but not transitive. \\
+\textbf{Solution:}\\
+Let $R = \{(1,1), (2,2), (3,3)\}$.
+\subsection*{c}
+Reflexive, not symmetric, and transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,1), (2,2), (3,3), (1,2)\}$.
+\subsection*{d}
+Reflexive, not symmetric, and not transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,1), (2,2), (3,3), (1,2), (2,3)\}$.
+\subsection*{e}
+Not reflexive, symmetric, and transitive.\\
+\textbf{Solution:}\\
+Let $R = \emptyset $.
+\subsection*{f}
+Not reflexive, symmetric, and not transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,2), (2,1)\}$.
+\subsection*{g}
+Not reflexive, not symmetric, and transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,2), (2,3), (1,3)\}$.
+\subsection*{h}
+Not reflexive, not symmetric, and not transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,2), (2,3)\}$.
+
+\section*{Question 2}
+\subsection*{a}
+Let $A= \{ 1,2\}$. All the relations on A which are symmetric and transitive, but not reflexive
+\textbf{Solution:}\\
+$R = \emptyset$ 
+\subsection*{b}
+Let $A= \{ 1,2,3,4,5\}$. How many relations which are both symmetric and antisymmetric \\
+\textbf{Solution:}\\ 
+There are 32 such relations. If we consider the powerset of $A$ then see that every single subset of $A$ can be a relation that is symetric and antisymmetric if the relation is the identy relation. So there are $2^5 = 32$ such relations.
+\section*{Question 3}
+Let $A = \{1,2,3\}$ For each of the following relations on A, determine whether it is reflexive, symmetric, antisymmetric, and/or transitive.
+\subsection*{a}
+$R = \{(1,2)\}$\\
+\textbf{Solution:}\\
+Reflexive: No. $(1,1)$ is not in $R$.\\
+Symmetric: No. $(2,1)$ is not in $R$.\\
+Antisymmetric: Yes. \\
+Transitive: Yes. 
+\subsection*{b}
+$S = \{(1,2),(1,3)\}$
+\textbf{Solution:}\\
+Reflexive: No. $(1,1)$ is not in $S$.\\
+Symmetric: No. $(2,1)$ is not in $S$.\\
+Antisymmetric: Yes. \\
+Transitive: Yes.
+\subsection*{c}
+$T = \{(1,2),(2,1),(1,1)\}$
+\textbf{Solution:}\\
+Reflexive: No. $(2,2)$ is not in $T$.\\
+Symmetric: Yes
+Antisymmetric: No. $(1,2)$ and $(2,1)$ are in $T$ but $1 \neq 2$.\\
+Transitive: No. $(1,2)$ and $(2,1)$ are in $T$ but $(2,2)$ is not in $T$.\\
+\section*{Question 4}
+Let $A = \{1,2,3\}$. Size of relations:
+\begin{itemize}
+    \item Min Reflexive: 3
+    \item Min symmetric: 0
+    \item Min antisymmetric: 0
+    \item Min transitive: 0
+    \item Min equivalence: 3
+    \item Min partial order: 3
+    \item Max symmetric: 9
+    \item Max antisymmetric: 6
+    \item Max equivalence: 9 
+    \item Max partial: 3 
+\end{itemize}
+\section*{Question 5}
+Let S be the relation on $\mathbb{R}$ defined by $xSy$ : $ x<y+1$. Determine whether S is reflexive, symmetric, antisymmetric, transitive. \\
+\textbf{Reflexive:}\\
+$xSx : x < x+1$ which is true for all $x \in \mathbb{R}$. So S is reflexive.\\
+\textbf{Symmetric:}\\
+if $xSy : x < y+1$ then $ySx : y < x+1$. This would be impossible if $x \neq y$. So S is not symmetric.\\
+\textbf{Antisymmetric:}\\
+if $xSy : x < y+1$ and $ySx : y < x+1$ then $x=y$. This would be impossible if $x \neq y$. So S is antisymmetric.\\
+\textbf{Transitive:}\\
+if $xSy : x < y+1$ and $ySz : y < z+1$. Then $xSz$ would be $x < z+1$. If we consider $xRy$ and $yRz$ then we can rewite the comination as the statement $x < y+1$ and $y < z+1$ to $x < z+2$. which is also true. So S is transitive.\\
+\section*{Question 6}
+Let $E \subset \mathbb{N} \times \mathbb{N}$ be the relation defined as $xEy$ : $xy \leq x+y$. Determine whether E is reflexive, symmetric, antisymmetric, transitive.\\
+\textbf{Reflexive:}\\
+$xEx : x \cdot x \leq x + x$. This is not true for values of 3 or greater. So E is not reflexive.\\
+\textbf{Symmetric:}\\
+if $xEy : xy \leq x+y$ then $yEx : yx \leq y+x$. This is true as multiplication and addition is commutative. So E is symmetric.\\
+\textbf{Antisymmetric:}\\
+if $xEy : xy \leq x+y$ and $yEx : yx \leq y+x$ then $x=y$. This is not true as $x=2$ and $y=3$ is a counterexample. So E is not antisymmetric.\\
+\textbf{Transitive:}\\
+if $xEy : xy \leq x+y$ and $yEz : yz \leq y+z$ then $xEz$ would be $xz \leq x+z$. This is not true for $x=2$, $y=1$, and $z=3$. So E is not transitive.\\
+
+\end{document}

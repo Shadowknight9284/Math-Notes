@@ -148,7 +148,11 @@ For any two function $f_1: A \rightarrow B $ and $f_2: A \rightarrow B$, if $g \
 Suppose: $A,B$ are notempty sets and $f_1: A \rightarrow B $ and $f_2: A \rightarrow B$ are functions. \\
 Assume $g \circ f_1 = g \circ f_2$\\
 Need $f_1 = f_2$\\
-This is not true for any two functions as we can take $A = \mathbb{R}$, $B = \mathbb{R}$, and $C = \mathbb{R}$ and $g(x) = x^2$ and $f_1(x) = x$ and $f_2(x) = -x$. Then $g \circ f_1 = g \circ f_2$ but $f_1 \neq f_2$. 
+Supose $a \in A$ need $f_1(a) = f_2(a)$\\
+Since $g$ is 1-1 then $g(f_1(a)) = g(f_2(a))$ then $f_1(a) = f_2(a)$ as desired
+
+
+
 \subsection*{b}
 For any two function $h_1: C \rightarrow D $ and $h_2: C \rightarrow D$, if $h_1 \circ g = h_2 \circ g$ then $h_1 = h_2$.
 \subsubsection*{Proof}
@@ -270,6 +274,98 @@ Need $(h \circ g \circ f) \circ (h \circ g \circ f)^{-1} = I_D$\\
 
 \subsubsection*{Subpart II}
 Need $(h \circ g \circ f)^{-1} \circ (h \circ g \circ f) = I_A$\\
+
+
+
+
+\section*{Extra Problems}
+\section*{Problem 1}
+Let $A,B$ be nonempy sets, $f:A \rightarrow B$. If $f$ is one to one, then $f$ has a left inverse.
+\subsection*{Proof}
+Suppose: $A, B$ are nonempty sets, $f: A \rightarrow B$.\\
+Assume $f$ is one to one.\\
+Need: $f$ has a left inverse.\\
+In other words, need: $(\exists g: B \rightarrow A)(g(f(x) = x))$\\
+Proof: 
+Let $y \in B$, since $f$ is one to one then $(\exists ! x \in A)[f(x) = y]$. Let define $g: B \rightarrow A$ such that $g(y) := x$. We can prove that $g(f(x))=x$ due to the fact $g(y) = g(f(x)) = x$ as desired. Hence, $f$ has a left inverse.
+
+\section*{Problem 2}
+Let $A,B$ be nonempy sets, $f:A \rightarrow B$. If $f$ is onto, then $f$ has a right inverse.
+\subsection*{Proof}
+Suppose $A, B$ are nonempty sets, $f: A \rightarrow B$.\\
+Assume $f$ is onto.\\
+Need: $f$ has a right inverse.\\
+In other words, need: $(\exists g: B \rightarrow A)(f(g(y)) = y)$ \\
+Proof: Let $y \in B$, since $f$ is onto then $y$ is always in the range of $f$ then we can define $g(y)$ to be an element of the preimage set of $y$. We can call this element $t$ and $g(y) = t$ such that $f(t) = y$\\
+We need to prove that $f \circ g (y) = y$, by definiton of $g(y) = t$ we have that $f(g(y)) = y$ 
+
+\section*{Problem 3}
+If $g \circ f = I_B$ then $(\forall x \in A)(\forall y \in B)[f(x) = y \rightarrow g(y) = x]$
+\subsection*{Proof}
+Suppose: $A, B$ are nonempty sets, $f: A \rightarrow B$ and $g: B \rightarrow A$\\
+Assume: $g \circ f = I_B$\\
+Need: $(\forall x \in A)(\forall y \in B)[f(x) = y \rightarrow g(y) = x]$\\
+Proof: Let $y \in B$ and $x \in A$ such that $f(x) = y$. Then $g(y) = g(f(x)) = I_B(x) = x$ as desired.
+
+\section*{Problem 4}
+
+
+
+
+\section*{Definitons}
+\subsection*{Domain}
+$A$ is the domain of $f$ if $A$ is a nonempty set such that $\{x: \exists y \in B (f(x) = y)\}$ \\
+The set of all x's which relate to at least one y in $B$.
+
+\subsection*{Range}
+$C$ is the Range of $f$ if $C$ is a nonempty set such that $\{y: \exists x \in A (f(x) = y)\}$ \\
+The set of all y's to which at least one x relates to in $A$.
+
+\subsection*{Codomain}
+Codomain is a superset of the range of f
+
+\subsection*{One-to-One}
+$(\forall x_1, x_2 \in A)(f(x_1) = f(x_2) \rightarrow x_1 = x_2)$
+
+\subsection*{Onto}
+$(\forall y \in B)(\exists x \in A)[f(x) = y]$
+
+\subsection*{Bijection}
+Both 1-1 and Onto
+
+\subsection*{Left Inverse}
+g is a left inverse of f if $g \circ f = I_A$
+
+
+\subsection*{Right Inverse}
+g is a right inverse of f if $f \circ g = I_B$
+
+\subsection*{Inverse}
+g is an (unique) inverse of f if $g \circ f = I_A$ and $f \circ g = I_B$
+
+\subsection*{Left Invertible}
+f is left invertable if there exists a left inverse of f
+
+\subsection*{Right Invertible}
+f is right invertable if there exists a right inverse of f
+
+\subsection*{Invertible}
+f is invertable if there exists a unique inverse of f that is both left and right inverses of f
+
+\subsection*{Main Theorem}
+A function is invertible if and only if it is both one-to-one and onto.
+
+\subsection*{Images}
+The image of X under f is defined as all of the $f(x)$ such that $x \in X$ \\
+In otherwords: $\{y \in B: \exists x \in A (f(x) = y) \}$
+\subsection*{Preimages}
+The preimage of Y under f is defined a all of the $x \in A$ such that $f(x) \in Y$ \\ 
+In otherwords: $\{x \in A: f(x) \in Y\}$
+
+\subsection*{Composition}
+The composition of two functions $f: A \rightarrow B$ and $g: B \rightarrow C$ is defined as $g \circ f: A \rightarrow C$ such that $(g \circ f)(x) = g(f(x))$
+
+
 
 
 \end{document}

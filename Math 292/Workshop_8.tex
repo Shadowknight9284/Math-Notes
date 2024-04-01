@@ -1,0 +1,313 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Workshop 8: 292H}
+
+\begin{document}
+\maketitle
+\section*{Question 6}
+Harmonic Oscillator W/ Friction: $mx'' = - kx - ax'(t)$
+\subsection*{a}
+$y = x'$, $y' = x''$, $X = \begin{bmatrix}
+    x\\
+    y
+\end{bmatrix}$, and $g(t) = \begin{bmatrix}
+    0\\
+    \frac{f(t)}{m}
+\end{bmatrix}$
+$$X'(t) = BX(t)$$
+$$B = \begin{bmatrix}
+    0 & 1\\
+    -\frac{k}{m} & -\frac{a}{m}
+\end{bmatrix}$$
+\subsection*{b}
+Compute $e^{tB}$ for the matrix $B = \begin{bmatrix}
+    0 & 1\\
+    -\frac{k}{m} & -\frac{a}{m}
+\end{bmatrix}$
+For sake of ease I will take $m = 1/2$. \\
+This the equation will be $x'' = -2kx - 2ay'$\\
+The matrix $B = \begin{bmatrix}
+    0 & 1\\
+    -2k & -2a
+\end{bmatrix}$\\
+\subsubsection*{Case 1: $a^2 > 2k$}
+The characteristic equation is $\mu^2 + 2a\mu + 2k = 0$\\
+The roots are $\mu_1 = -a + \sqrt{a^2 - 2k}$ and $\mu_2 = -a - \sqrt{a^2 - 2k}$\\
+The eigenvectors are $v_1 = \begin{bmatrix}
+    1 \\
+    \mu_1
+\end{bmatrix}$ and $v_2 = \begin{bmatrix}
+    1 \\
+    \mu_2
+\end{bmatrix}$\\
+$$e^{tB} = \begin{bmatrix}
+    1 & 1\\
+    \mu_1 & \mu_2
+\end{bmatrix} \begin{bmatrix}
+    e^{\mu_1 t} & 0\\
+    0 & e^{\mu_2 t}
+\end{bmatrix}  \begin{bmatrix}
+    \mu_2 & -1\\
+    -\mu_1 & 1
+\end{bmatrix} * \frac{1}{\mu_2 - \mu_1}$$
+$$\frac{1}{\mu_2-\mu_1}\begin{bmatrix}
+    \mu_1e^{\mu_2 t}  + \mu_2e^{\mu_1 t} & e^{\mu_2 t} - e^{\mu_1 t}\\
+    \mu_1\mu_2e^{\mu_1 t} + \mu_1\mu_2e^{\mu_2 t} & \mu_2e^{\mu_2 t}-\mu_1e^{\mu_1 t}
+\end{bmatrix}
+$$
+\subsubsection*{Case 2: $a^2 = 2k$}
+Here there will be only one root of the CP and thus only one eigenvector.\\
+The eigenvalue is $\mu = -a$ and the eigenvector is $v = \begin{bmatrix}
+    1\\
+    -a
+\end{bmatrix}$\\
+We can get a generalized eigenvector by solving $(B - \mu I)w = v$\\
+$$ \begin{bmatrix}
+    a & 1 & 1\\
+    -2k & -a & -a
+\end{bmatrix}, \begin{bmatrix}
+    a & 1 & 1\\
+    0 & 0 & 0
+\end{bmatrix}$$
+Thus our generalized eigenvector is $w = \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix}$\\
+$$e^{tB} = \begin{bmatrix}
+    1 & 0\\
+    -a & 1
+\end{bmatrix} \begin{bmatrix}
+    e^{-at} & 1\\
+    0 & e^{-at}
+\end{bmatrix} \begin{bmatrix}
+    1 & 0\\
+    a & 1
+\end{bmatrix}$$
+\subsubsection*{Case 3: $a^2 < 2k$}
+In this case the roots are complex.\\
+The roots are $\mu_1 = -a + i\sqrt{2k - a^2}$ and $\mu_2 = -a - i\sqrt{2k - a^2}$\\
+The eigenvectors are $v_1 = \begin{bmatrix}
+    1\\
+    -\mu_1
+\end{bmatrix}$ 
+We can split this exponetial into real and imaginary parts then multiply by the eigenvalue to get 2 distinct LI solutions\\
+$$e^{-at}(cos(\sqrt{2k - a^2}t) + i sin(\sqrt{2k - a^2}t)) \begin{bmatrix}
+    1\\
+    a - i\sqrt{2k - a^2}
+\end{bmatrix}$$
+$$e^{-at}\begin{bmatrix}
+    cos(\sqrt{2k - a^2}t)\\
+    acos(\sqrt{2k - a^2}t) + sin(\sqrt{2k - a^2}t)\sqrt{2k - a^2}
+\end{bmatrix} + e^{-at}\begin{bmatrix}
+    sin(\sqrt{2k - a^2}t)\\
+    asin(\sqrt{2k - a^2}t) - cos(\sqrt{2k - a^2}t)\sqrt{2k - a^2}
+\end{bmatrix}$$
+Thus we have our Matrix Exponential.
+$$ M(t) = \begin{bmatrix}
+    cos(\sqrt{2k - a^2}t) & sin(\sqrt{2k - a^2}t)\\
+    acos(\sqrt{2k - a^2}t) + sin(\sqrt{2k - a^2}t)\sqrt{2k - a^2} & asin(\sqrt{2k - a^2}t) - cos(\sqrt{2k - a^2}t)\sqrt{2k - a^2}
+\end{bmatrix}$$
+$$ M(0) = \begin{bmatrix}
+    1 & 0\\
+    a & \sqrt{2k - a^2} 
+\end{bmatrix}$$
+$$ M(0)^{-1} = \frac{1}{\sqrt{2k - a^2}} \begin{bmatrix}
+    \sqrt{2k - a^2} & 0\\
+    -a & 1
+\end{bmatrix}$$
+$$ e^{tB} = M(t)M(0)^{-1}$$
+$$ e^{tB} = \frac{1}{\sqrt{2k - a^2}}\begin{bmatrix}
+    cos(\sqrt{2k - a^2}t) & sin(\sqrt{2k - a^2}t)\\
+    acos(\sqrt{2k - a^2}t) + sin(\sqrt{2k - a^2}t)\sqrt{2k - a^2} & asin(\sqrt{2k - a^2}t) - cos(\sqrt{2k - a^2}t)\sqrt{2k - a^2}
+\end{bmatrix}$$ $$*\begin{bmatrix}
+    \sqrt{2k - a^2} & 0\\
+    -a & 1
+\end{bmatrix}$$ (multiply the two matrices)
+\section*{Question 7}
+Harmonic Oscillator w/ other stuff: $mx'' = - kx - ax' + f(t)$
+\subsection*{a}
+Find integral forumlas for the three prior cases.\\
+Duhamel's formula is $x(t) = e^{tA}x_0 + \int_0^t e^{(t-s)A}f(s)ds$\\
+\subsubsection*{Case 1: $(a/m)^2 > 4k/m $}
+Using the same idea as before we can find the CP: 
+$$ \mu^2 + \frac{a}{m}\mu + \frac{k}{m}$$
+The eigenvalues: $\mu_1 = (-\frac{a}{m} + \sqrt{\frac{a}{m}^2 - 4\frac{k}{m}} )/2 , \mu_2 = (-\frac{a}{m} - \sqrt{\frac{a}{m}^2 - 4\frac{k}{m}} )/2 $
+The eigenvectors: $ v_1 = \begin{bmatrix}
+    1 \\
+    -\mu_1
+\end{bmatrix} v_2 =\begin{bmatrix}
+    1 \\
+    -\mu_2
+\end{bmatrix}$ \\
+Following the same logic as prior we can find the matrix exponential.   
+$$ e^{tA} = \begin{bmatrix}
+    1 & 1\\
+    \mu_1 & \mu_2
+\end{bmatrix} \begin{bmatrix}
+    e^{\mu_1 t} & 0\\
+    0 & e^{\mu_2 t} 
+\end{bmatrix} \begin{bmatrix}
+        \mu_2 & -1\\
+        -\mu_1 & 1
+\end{bmatrix} * \frac{1}{\mu_2 - \mu_1}$$
+Now the integral formula is:
+$$ x(t) = e^{tA}x_0 + \int_0^t e^{(t-s)A}f(s)ds$$
+The integral part is:
+$$  \int_0^t e^{(t-s)A}f(s) ds = \int_0^t \frac{1}{\mu_1 - \mu_2}  \begin{bmatrix}
+    1 & 1\\
+    \mu_1 & \mu_2
+\end{bmatrix} \begin{bmatrix}
+    e^{\mu_1 (t-s)} & 0\\
+    0 & e^{\mu_2 (t-s)} 
+\end{bmatrix} \begin{bmatrix}
+        \mu_2 & -1\\
+        \mu_1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+            0\\
+            \frac{f(s)}{m}
+\end{bmatrix} ds $$
+$$\int_{0}^{t} \frac{1}{\mu_2-\mu_1}
+\begin{bmatrix}
+    \mu_1e^{\mu_2 t}  + \mu_2e^{\mu_1 t} & e^{\mu_2 t} - e^{\mu_1 t}\\
+    \mu_1\mu_2e^{\mu_1 t} + \mu_1\mu_2e^{\mu_2 t} & \mu_2e^{\mu_2 t}-\mu_1e^{\mu_1 t}
+\end{bmatrix}
+ \begin{bmatrix}
+    0\\
+    \frac{f(s)}{m}
+\end{bmatrix}ds$$
+$$ \int_{0}^{t} \begin{bmatrix}
+    \frac{f(t)}{m}e^{\mu_2 t} - e^{\mu_1 t} \\
+    \frac{f(t)}{m}\mu_2e^{\mu_2 t}-\mu_1e^{\mu_1 t}
+\end{bmatrix}ds$$ 
+\subsubsection*{Case 2: $(a/m)^2 = 4k/m $}
+The eigenvalue is $\mu = -\frac{a}{2m}$ and the eigenvector is $v = \begin{bmatrix}
+    1\\
+    -\frac{a}{2m}
+\end{bmatrix}$\\
+The generalized eigenvector is $\begin{bmatrix}
+    \frac{a}{2m} & 1 & 1\\
+    -\frac{k}{m} & -\frac{a}{2m} & -\frac{a}{2m}
+\end{bmatrix}, \begin{bmatrix}
+    \frac{a}{2m} & 1 & 1\\
+    0 & 0 & 0
+\end{bmatrix}$\\
+Thus the generalized eigenvector is $w = \begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}$
+Thus the matrix exponential is:
+$$ e^{tA} = \begin{bmatrix}
+    1 & 0\\
+    -\frac{a}{2m} & 1
+\end{bmatrix} \begin{bmatrix}
+    e^{-\frac{a}{2m}t} & 1\\
+    0 & e^{-\frac{a}{2m}t}
+\end{bmatrix} \begin{bmatrix}
+    1 & 0\\
+    \frac{a}{2m} & 1
+\end{bmatrix}$$
+The integral part is:
+$$ \int_0^t e^{(t-s)A}f(s)ds$$
+$$ \int_0^t \begin{bmatrix}
+    e^{-\frac{a}{2m}(t-s)} + \frac{a}{2m} & 1\\
+    \frac{a}{2m}(e^{-\frac{a}{2m}(t-s)} - b) - \frac{a}{2m}e^{-\frac{a}{2m}(t-s)}& e^{-\frac{a}{2m}(t-s)} - \frac{a}{2m}
+\end{bmatrix} \begin{bmatrix}
+    0\\
+    \frac{f(s)}{m}
+\end{bmatrix} ds$$
+$$ \int_{0}^{t} \begin{bmatrix}
+    \frac{f(s)}{m} \\
+    \frac{f(s)}{m}(e^{-\frac{a}{2m}(t-s)} - \frac{a}{2m})
+\end{bmatrix} ds$$
+\subsubsection*{Case 3: $(a/m)^2 < 4k/m $}
+This is the same as the previous case.\\
+The roots are $\mu_1 = -\frac{a}{2m} + i\sqrt{\frac{4k}{m} - \frac{a}{m}^2}$ and $\mu_2 = -\frac{a}{2m} - i\sqrt{\frac{4k}{m} - \frac{a}{m}^2}$\\
+The eigenvectors are $v_1 = \begin{bmatrix}
+    1\\
+    -\mu_1
+\end{bmatrix}$\\
+The matrix exponential is:
+$$ e^{tA} = e^{-\frac{a}{2m}t}* $$ 
+$$\begin{bmatrix}
+    cos(\sqrt{\frac{4k}{m} - \frac{a}{m}^2}t) & sin(\sqrt{\frac{4k}{m} - \frac{a}{m}^2}t)\\
+    \frac{a}{2m}cos(\sqrt{\frac{4k}{m} - \frac{a}{m}^2}t) + sin(\sqrt{\frac{4k}{m} - \frac{a}{m}^2}t)\sqrt{\frac{4k}{m} - \frac{a}{m}^2} & \frac{a}{2m}sin(\sqrt{\frac{4k}{m} - \frac{a}{m}^2}t) - cos(\sqrt{\frac{4k}{m} - \frac{a}{m}^2}t)\sqrt{\frac{4k}{m} - \frac{a}{m}^2}
+\end{bmatrix}$$ 
+The integral part is:
+$$ \int_0^t e^{(t-s)A}f(s)ds$$
+$$ \int_0^t \begin{bmatrix}
+    e^{(t-s)A}
+\end{bmatrix} \begin{bmatrix}
+    0\\
+    \frac{f(s)}{m}
+\end{bmatrix} ds$$
+$$ \int_{0}^{t} \begin{bmatrix}
+    \frac{f(s)}{m}(sin(\sqrt{\frac{4k}{m} - \frac{a}{m}^2}(t-s)))   \\ 
+    \frac{f(s)}{m} \frac{a}{2m}sin(\sqrt{\frac{4k}{m} - \frac{a}{m}^2}(t-s)) - cos(\sqrt{\frac{4k}{m} - \frac{a}{m}^2}(t-s))\sqrt{\frac{4k}{m} - \frac{a}{m}^2}
+\end{bmatrix}ds$$
+\subsubsection*{b}
+Find the solution to the IVP $mx'' = -kx - ax' + f(t)$, $x(0) = 0$, $x'(0) = 0$, $f(t) = cos(t)$, $m=1$, $a=1$, and $k = 5/4$\\
+Checking the case: $(1/1)^2 < 5/1$\\
+Thus this is case 3 and the eigenvalues are $\mu_1 = -1/2 + 2i$ and $\mu_2 = -1/2 - 2i$\\
+The eigenvectors are $v_1 = \begin{bmatrix}
+    1\\
+    1/2 - 2i
+\end{bmatrix}$ 
+The matrix exponential is:
+$$ e^{tA} = e^{-t/2} 
+    (cos(2t) + isin(2t)) \begin{bmatrix}
+    1 \\
+    1/2 - 2i
+\end{bmatrix}$$
+$$ e^{tA} = e^{-t/2} (\begin{bmatrix}
+    cos(2t) \\
+    cos(2t)/2 + 2sin(2t)
+\end{bmatrix} + \begin{bmatrix}
+    sin(2t) \\
+    sin(2t)/2 - 2cos(2t)
+\end{bmatrix})$$
+$$e^{tA} =  \begin{bmatrix}
+    cos(2t)e^{-t/2} & sin(2t)e^{-t/2}\\
+    (cos(2t)e^{-t/2} + 2sin(2t))e^{-t/2} & (sin(2t)e^{-t/2} - 2cos(2t))e^{-t/2}
+\end{bmatrix} \begin{bmatrix}
+    1 & 0\\
+    -1/4 & 1/2
+\end{bmatrix}$$
+$$= \frac{e^{-t/2}}{4}\begin{bmatrix}
+    4cos(2t) - sin(2t) & 2sin(2t) \\
+    7sin(2t) + 6cos(2t) &  2sin(2t) - 4cos(2t)
+\end{bmatrix} $$
+The integral part is:
+$$ \int_0^t e^{(t-s)A}f(s)ds$$
+$$ \int_0^t \begin{bmatrix}
+    e^{(t-s)A}
+\end{bmatrix} \begin{bmatrix}
+    0\\
+    cos(s)
+\end{bmatrix} ds$$
+$$ \int_{0}^{t} \begin{bmatrix}
+    2sin(2(t-s))cos(s)e^{-(t-s)/2} \\
+    (2sin(2t) - 4cos(2t))cos(s)e^{-(t-s)/2}
+\end{bmatrix}ds$$
+Since we only care what $x(t)$ is we can focus on the first term of the matrix and integrate that
+$$ \int_{0}^{t} 2sin(2(t-s))cos(s)e^{-(t-s)/2}ds$$
+We can rewrite this as a sum of trig functions as $2sin(2t-2s)cos(s) = sin(\frac{2t-s}{2}) + sin(\frac{2t-3s}{2})$
+$$ \int_{0}^{t} sin(\frac{2t-s}{2})e^{-t+s/2}ds + \int_{0}^{t} sin(\frac{2t-3s}{2})e^{-t+s/2}ds$$
+Using integration by parts we can solve this integral
+$$ (-e^{-t/2}(sin(t) +cos(t)) + sin(t/2) + cos(t/2) )+ 
+(-e^{-t/2}(sin(t) +3cos(t))/5 - (sin(t/2) - cos(t/2))/5 )
+$$
+This plus the matrix exponential is the solution to the IVP, but since $x(0) = 0$ and $x'(0) = 0$ the solution is just the integral. \\
+Therefore the solution is $$x(t) = (-e^{-t/2}(sin(t) +cos(t)) + sin(t/2) + cos(t/2) )+ 
+(-e^{-t/2}(sin(t) +3cos(t))/5 - (sin(t/2) - cos(t/2))/5 )$$
+\end{document}
