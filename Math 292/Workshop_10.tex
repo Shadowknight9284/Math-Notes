@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{TODO}
+
+\begin{document}
+\maketitle
+\section*{Question 1}
+Consider $\begin{bmatrix}
+    x \\
+    y
+\end{bmatrix}'(t) = v(x,y,t), x(0)=x_0, y(0) = y_0$ \\
+Apply Picard iteration scheme starting with inital function the constant function $X(t) = \begin{bmatrix}
+    x_0 \\
+    y_0
+\end{bmatrix}$ Then compare the examples
+\subsection*{a}
+$v(x,y,t) = \begin{bmatrix}
+    t\\
+    x^2
+\end{bmatrix}$\\
+The Picard iteration scheme is given 
+$$x_0(t) = x_0$$
+$$x_1(t) = x_0 + \int_0^t \begin{bmatrix}
+    s\\
+    x_0^2
+\end{bmatrix} ds = \begin{bmatrix}
+    x_0 + \frac{t^2}{2} \\
+    y_0 + x_0^2t
+\end{bmatrix}$$
+$$x_2(t) = x_0 + \int_0^t \begin{bmatrix}
+    s \\
+    (x_0 + \frac{s^2}{2})^2
+\end{bmatrix} ds = \begin{bmatrix}
+    x_0 + \frac{t^2}{2} \\
+    y_0 + x_0^2t + x_0\frac{t^3}{3} + \frac{x^5}{20}
+\end{bmatrix}$$
+$$x_3(t) = x_0 + \int_0^t \begin{bmatrix}
+    s \\
+    (x_0 + \frac{s^2}{2})^2
+\end{bmatrix} ds = \begin{bmatrix}
+    x_0 + \frac{t^2}{2} \\
+    y_0 + x_0^2t + x_0\frac{t^3}{3} + \frac{x^5}{20}
+\end{bmatrix}$$
+We can see from here that for all $X_n$ for $n \geq 2$ they will be eqaul meaning that $$X(t) = \begin{bmatrix}
+    x_0 + \frac{t^2}{2} \\
+    y_0 + x_0^2t + x_0\frac{t^3}{3} + \frac{x^5}{20}
+\end{bmatrix}$$
+\subsection*{b}
+$v(x,y,t) = \begin{bmatrix}
+    -y\\
+    x
+\end{bmatrix}$ with specific intial condition $x(0) = 1, y(0) = 0$
+The Picard iteration scheme is given
+$$x_0(t) = \begin{bmatrix}
+    x_0 \\
+    y_0
+\end{bmatrix}$$
+$$x_1(t) = \begin{bmatrix}
+    x_0 \\
+    y_0
+\end{bmatrix} + \int_0^t \begin{bmatrix}
+    -y_0 \\
+    x_0
+\end{bmatrix} ds = \begin{bmatrix}
+    x_0 - y_0t \\
+    y_0 + x_0t
+\end{bmatrix}$$
+$$x_2(t) = \begin{bmatrix}
+    x_0 \\
+    y_0
+\end{bmatrix} + \int_0^t \begin{bmatrix}
+    -y_0 - x_0t \\
+    x_0 - y_0t
+\end{bmatrix} ds = \begin{bmatrix}
+    x_0 - y_0t - x_0\frac{t^2}{2} \\
+    y_0 + x_0t - y_0\frac{t^2}{2}
+\end{bmatrix}$$
+$$x_3(t) = \begin{bmatrix}
+    x_0 \\
+    y_0
+\end{bmatrix} + \int_0^t \begin{bmatrix}
+    -y_0 - x_0t + y_0\frac{t^2}{2} \\
+    x_0 - y_0t - x_0\frac{t^2}{2}
+\end{bmatrix} ds = \begin{bmatrix}
+    x_0 - y_0t - x_0\frac{t^2}{2} + y_0\frac{t^3}{6} \\
+    y_0 + x_0t - y_0\frac{t^2}{2} - x_0\frac{t^3}{6}
+\end{bmatrix}$$
+After plugging in for $x_0 = 1, y_0 = 0$ we get
+$$x_3(t) = \begin{bmatrix}
+    1 - \frac{t^2}{2} \\
+    t - \frac{t^3}{6}
+\end{bmatrix}$$
+As we continue to iterate we will notice a common taylor series expansion of $sin(t)$ and $cos(t)$ \\
+Thus:
+$$X(t) = \begin{bmatrix}
+    cos(t) \\
+    sin(t)
+\end{bmatrix}$$
+\section*{Question 2}
+A function that obeys the properties of a contraction maps must obey 2 properties.\\
+The function decreases by a constant factor $0 < k < 1$ for all $x,y \in \mathbb{R}^n$ and $f(x) - f(y) \leq k(x-y)$\\
+This means that a function in the form of $f(x) = kx$ will satisfy this property.\\
+For example $f(x) = .5x$ will satisfy this property as at each natural number $n$ the function will decrease by a factor of .5.\\
+We can continue this to that it will go to 0 as $n \to \infty$\\
+Thus the function $f(x) = .5x$ is a contraction map.
+\end{document}

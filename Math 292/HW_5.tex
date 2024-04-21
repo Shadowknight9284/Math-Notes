@@ -1,0 +1,221 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Math 292 Homework 5}
+\begin{document}
+\maketitle
+\section*{Problem 1}
+Solve $x''(t) + 4x(t) = 3cos(2t)$ with $x(0) = x_0$ and $x'(0) = y_0$\\
+\textbf{Creating a driven first order System:}\\
+We can rewrite the equation as a first order system by letting $y(t) = x'(t)$\\
+Then we have $y'(t) + 4x(t) = 3cos(2t)$\\
+Thus we get the matrix $A$ in the equation $\frac{d}{dt}\begin{bmatrix}
+    x(t)\\
+    y(t)
+\end{bmatrix} = A\begin{bmatrix}
+    x(t)\\
+    y(t)
+\end{bmatrix} + \begin{bmatrix}
+    0\\
+    3cos(2t)
+\end{bmatrix}$\\
+Where $A = \begin{bmatrix}
+    0 & 1\\
+    -4 & 0
+\end{bmatrix}$\\
+\textbf{Solving the Homogeneous System:}\\
+The characteristic equation of $A$ is $det(A - \mu I) = 0$\\
+This gives us $\mu^2 + 4 = 0$\\
+Thus we have $\mu = 2i$ and $\mu = -2i$ \\
+The eigenvectors of $A$ are $v_1 = \begin{bmatrix}
+    1\\
+    2i
+\end{bmatrix}$ and $v_2 = \begin{bmatrix}
+    1\\
+    -2i
+\end{bmatrix}$\\
+We can then split one of the eigenvectors and imaginary exponential into real and imaginary parts to get $e^{2it} = cos(2t) + isin(2t)$\\
+$$cos(2t) + isin(2t) \begin{bmatrix}
+    1 \\
+    2i
+\end{bmatrix} $$
+
+
+
+Solve $x''(t) + 4x'(t) = 3cos(2t)$ with $x(0) = x_0$ and $x'(0) = y_0$\\
+\textbf{Creating a driven first order System:}\\
+We can rewrite the equation as a first order system by letting $y(t) = x'(t)$\\
+Then we have $y'(t) + 4y(t) = 3cos(2t)$\\
+Thus we get the matrix $A$ in the equation $\frac{d}{dt}\begin{bmatrix}
+    x(t)\\
+    y(t)
+\end{bmatrix} = A\begin{bmatrix}
+    x(t)\\
+    y(t)
+\end{bmatrix} + \begin{bmatrix}
+    0\\
+    3cos(2t)
+\end{bmatrix}$\\
+Where $A = \begin{bmatrix}
+    0 & 1\\
+    0 & -4
+\end{bmatrix}$\\
+\textbf{Solving the Homogeneous System:}\\
+The characteristic equation of $A$ is $det(A - \mu I) = 0$\\
+This gives us $\mu^2 + 4\mu = 0$\\
+Thus we have $\mu = 0$ and $\mu = -4$ \\
+The eigenvectors of $A$ are $v_1 = \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix}$ and $v_2 = \begin{bmatrix}
+    -1\\
+    4
+\end{bmatrix}$\\
+Thus the matrix exponential of $A$ is $e^{At} = \begin{bmatrix}
+    1 & -1\\
+    0 & 4
+\end{bmatrix}\begin{bmatrix}
+    e^{0t} & 0\\
+    0 & e^{-4t}
+\end{bmatrix} \begin{bmatrix}
+    1 & -1\\
+    0 & 4
+\end{bmatrix}^{-1}$\\
+$$ e^{At} = \begin{bmatrix}
+    e & \frac{e}{4} - \frac{e^{-4t}}{4}\\
+    0 & e^{-4t}
+\end{bmatrix}$$
+\textbf{Solving the Inhomogeneous System:}\\
+Given the matrix exponential of $A$, we can solve the inhomogeneous system by using the formula $x(t) = e^{At}x(0) + \int_0^t e^{A(t - s)}g(s)ds$\\
+Where $g(s) = \begin{bmatrix}
+    0\\
+    3cos(2s)
+\end{bmatrix}$\\
+Thus we have $x(t) = \begin{bmatrix}
+    e & \frac{e}{4} - \frac{e^{-4t}}{4}\\
+    0 & e^{-4t}
+\end{bmatrix}\begin{bmatrix}
+    x_0\\
+    y_0
+\end{bmatrix} + \int_0^t \begin{bmatrix}
+    e & \frac{e}{4} - \frac{e^{-4(t - s)}}{4}\\
+    0 & e^{-4(t - s)}
+\end{bmatrix}\begin{bmatrix}
+    0\\
+    3cos(2s)
+\end{bmatrix}ds$\\
+The integral can be simplified to $\int_0^t \begin{bmatrix}
+    3cos(2s) (\frac{e}{4} - \frac{e^{-4(t - s)}}{4})\\
+    3cos(2s) (e^{-4(t - s)})
+\end{bmatrix}ds$\\
+Thus the integral evalutes to 
+$$\begin{bmatrix}
+    \frac{3}{40}((5e-1)sin(2t) - 2cos(2t)) + \frac{3}{20}e^{-4t}\\
+    \frac{3}{10}(sin(2t) +2cos(2t))- \frac{3}{5}e^{-4t}
+\end{bmatrix}$$
+Thus the solution to the system's $x$ component is 
+$$x(t) = ex_0 + y_0(\frac{e}{4}-\frac{e^{-4t}}{4}) + \frac{3}{40}((5e-1)sin(2t) - 2cos(2t)) + \frac{3}{20}e^{-4t}$$
+
+\section*{Problem 2}
+Consider the vector field $v(x,t) = \begin{bmatrix}
+    -(2+y)(x+y)\\
+    -y(1-x)
+\end{bmatrix}$\\
+\subsection*{a}
+\textbf{Finding the Equilibrium Points:}\\
+$-(2+y)(x+y) = 0, -y(1-x)=0$\\
+Thus we have $(x,y) = (0,0), (1,-1), (1,-2)$
+\textbf{Linearizing the System:}\\
+The Jacobian of the system is
+$$J = \begin{bmatrix}
+    -2-y & -x-2y-2\\
+    y & x-1
+\end{bmatrix}$$
+Evaluating the Jacobian at the equilibrium points gives us
+$$J(0,0) = \begin{bmatrix}
+    -2 & -2\\
+    0 & -1
+\end{bmatrix}$$
+$$J(1,-1) = \begin{bmatrix}
+    -1 & -1\\
+    -1 & 0
+\end{bmatrix}$$
+$$J(1,-2) = \begin{bmatrix}
+    0 & 1\\
+    -2 & 0
+\end{bmatrix}$$
+\textbf{Stability of the Equilibrium Points:}\\
+The Trace and Determinant of the Jacobian at $(0,0)$ are $-3$ and $2$ respectively.\\
+Thus near the equilibrium point $(0,0)$ the system is a sink, and therefore is a stable equilibrium point.\\
+The Trace and Determinant of the Jacobian at $(1,-1)$ are $-1$ and $-1$ respectively.\\
+Thus near the equilibrium point $(1,-1)$ the system is a saddle, and therefore is an unstable equilibrium point.\\
+The Trace and Determinant of the Jacobian at $(1,-2)$ are $0$ and $2$ respectively.\\
+Thus near the equilibrium point $(1,-2)$ the system is a periodic orbit, and therefore is a not a stable equilibrium point, but is Lyanupov Stable.\\
+
+\subsection*{b}
+Consider $v(x,t) = \begin{bmatrix}
+    (2+y)(x+y)\\
+    -y(1-x)
+\end{bmatrix}$
+\textbf{Finding the Equilibrium Points:}\\
+$(2+y)(x+y) = 0, -y(1-x)=0$\\
+Thus we have $(x,y) = (0,0), (1,-1), (1,-2)$
+\textbf{Linearizing the System:}\\
+The Jacobian of the system is
+$$J = \begin{bmatrix}
+    2+y & x+2y+2\\
+    y & x-1
+\end{bmatrix}$$
+Evaluating the Jacobian at the equilibrium points gives us
+$$J(0,0) = \begin{bmatrix}
+    2 & 2\\
+    0 & -1
+\end{bmatrix}$$
+$$J(1,-1) = \begin{bmatrix}
+    1 & 1\\
+    -1 & 0
+\end{bmatrix}$$
+$$J(1,-2) = \begin{bmatrix}
+    0 & -1\\
+    -2 & 0
+\end{bmatrix}$$
+\textbf{Stability of the Equilibrium Points:}\\
+The Trace and Determinant of the Jacobian at $(0,0)$ are $1$ and $-2$ respectively.\\
+Thus near the equilibrium point $(0,0)$ the system is a saddle, and therefore is an unstable equilibrium point.\\
+The Trace and Determinant of the Jacobian at $(1,-1)$ are $1$ and $1$ respectively.\\
+Thus near the equilibrium point $(1,-1)$ the system is a source, and therefore is an unstable equilibrium point.\\
+The Trace and Determinant of the Jacobian at $(1,-2)$ are $0$ and $2$ respectively.\\
+Thus near the equilibrium point $(1,-2)$ the system is a periodic orbit, and therefore is a not a stable equilibrium point, but is Lyanupov Stable.\\
+
+
+
+
+
+
+
+\section*{Problem 3}
+Find exact solution of $x'(t) = v(x(t),t)$ and $x(0) = 0$ for $v(x,t) = 2t(1+x)$\\ 
+Starting from $X_0 = 0$, then compute $X_1, X_2, X_3, X_4$\\
+\textbf{Picard Iteration:}\\
+We can solve the equation by using Picard Iteration.\\
+$$X_0 = 0$$
+$$X_1 = \int_0^t 2sds = \int_0^t 2sds = t^2$$\\
+$$X_2 = \int_0^t 2s(1 + X_1)ds = \int_0^t
+2s(1+s^2)ds = t^2 + \frac{t^4}{2}$$\\
+$$X_3 = \int_0^t 2s(1 + X_2)ds = \int_0^t 2s(1 + s^2 + \frac{s^4}{2})ds = t^2 + \frac{t^4}{2} + \frac{t^6}{6}$$\\
+$$X_4 = \int_0^t 2s(1 + X_3)ds = \int_0^t 2s(1 + s^2 + \frac{s^4}{2} + \frac{s^6}{6})ds = t^2 + \frac{t^4}{2} + \frac{t^6}{6} + \frac{t^8}{24}$$\\
+Thus the exact solution is $X(t) = \sum_{n=1}^{\infty} \frac{t^{2n}}{n!}$\\
+$$X(t) = e^{t^2} - 1$$
+
+
+\end{document}

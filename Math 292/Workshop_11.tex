@@ -1,0 +1,141 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Workshop 11}
+
+\begin{document}
+\maketitle
+\section{Question 1}
+Suppose $p(t), q(t)$ are continuous functions on $(a,b)$ Consider $x'' + px' + qx = 0$\\
+Given any two differentiable functions $x_1(t), x_2(t)$, define the function $W(t) = x_1(t)x_2'(t) - x_1'(t)x_2(t)$ Called the Wronskian \\
+Assumimg these are two solutions of the DE for $t$ in $(a,b)$ show that $W'(t) = -p(t)W(t)$. Use this to show $W(t) = 0 or W(t) \neq 0$ for all $t$ in $(a,b)$\\
+\textbf{Solution:}\\
+$$W(t) = x_1(t)x_2'(t) - x_1'(t)x_2(t)$$
+$$W'(t) = x_1' x_2' + x_1 x_2'' - x_1'x_2' - x_1''x_2$$
+$$W'(t) = x_1 x_2'' - x_1''x_2$$
+$$W'(t) = x_1(- px_2' - qx_2) - x_2(-px_1' - qx_1)$$
+$$W'(t) = -px_1x_2' - qx_1x_2 + px_1x_2' + qx_1x_2$$
+$$W'(t) = -p(x_1x_2' - x_1'x_2)$$
+$$W'(t) = -pW(t)$$
+Now, we know that $W'(t) = -pW(t)$ we can "solve" for $W(t)$ by integrating both sides. \\
+$$\int \frac{dW(t)}{W(t)} = \int -p(t)dt$$
+$$\ln|W(t)| = -\int p(t)dt + C$$
+$$W(t) = e^{-\int p(t)dt}C$$
+We see from prior experience that this solution is existant and unique for all time $t$ in $(a,b)$\\ Thus, $W(t) = 0$(an equilibrium solution) or $W(t) \neq 0$ for all $t$ in $(a,b)$
+
+\section{Question 2}
+Consider the DE $x'' + px' + qx = r$ where $p(t), q(t), r(t)$ are continuous functions on $(a,b)$\\
+Let $x_1(t), x_2(t)$ be two solutions of the DE for $t$ in $(a,b)$ such that $W(t) = \neq 0$ for all $t$ in $(a,b)$\\
+Let $Y(t) = c_1(t)x_1(t) + c_2(t)x_2(t)$\\
+Assume $c_1'x_1 + c_2'x_2 = 0$. Show $c_1'x_1' + c_2'x_2' = r(t)$\\
+Conclude that we get a formula for $c_1'(t), c_2'(t)$\\
+\textbf{Solution:}\\
+$$Y(t) = c_1(t)x_1(t) + c_2(t)x_2(t)$$
+$$Y'(t) = c_1x_1' + c_2x_2'$$
+$$Y''(t) = c_1'x_1' + c_1x_1'' + c_2'x_2' + c_2x_2'' $$
+$$Y''(t) + pY'(t) + qY(t) = r$$
+$$c_1'x_1' + c_1x_1'' + c_2'x_2' + c_2x_2'' + pc_1x_1' + pc_2x_2' + qc_1x_1 + qc_2x_2 = r$$
+$$c_1'x_1' + c_2'x_2' + c_1(x_1'' + px_1' + qx_1) + c_2(x_2'' + px_2' + qx_2) = r$$
+$$c_1'x_1' + c_2'x_2' = r$$ 
+As desired.\\
+Now, we can solve for $c_1'(t), c_2'(t)$ by considering the matrix representaion of the above equations. \\
+$$\begin{bmatrix}
+x_1 & x_2\\
+x_1' & x_2'
+\end{bmatrix} \begin{bmatrix}
+c_1'\\
+c_2'
+\end{bmatrix} = \begin{bmatrix}
+0\\
+r
+\end{bmatrix}$$
+$$\begin{bmatrix}
+c_1'\\
+c_2'
+\end{bmatrix} = \begin{bmatrix}
+    x_2' & -x_2\\
+    -x_1' & x_1
+\end{bmatrix} \begin{bmatrix}
+0\\
+r
+\end{bmatrix} \frac{1}{W(t)}$$
+$$\begin{bmatrix}
+c_1'\\
+c_2'
+\end{bmatrix} = \begin{bmatrix}
+    -x_2r\\
+    x_1r
+\end{bmatrix} \frac{1}{W(t)}$$
+As desired.\\
+
+\section{Question 3}
+Set up the ODE as $\begin{bmatrix}
+    x \\
+    y
+\end{bmatrix}' = \begin{bmatrix}
+    0 & 1\\
+    -q & -p
+\end{bmatrix} \begin{bmatrix}
+    x\\
+    y
+\end{bmatrix} + \begin{bmatrix}
+    0\\
+    r
+\end{bmatrix}$\\
+Notice $\begin{bmatrix}
+    x_1\\
+    x_1'
+\end{bmatrix}$ and $\begin{bmatrix}
+    x_2\\
+    x_2'
+\end{bmatrix}$ are two LI solution of the homogenous part. Do the integral in the Duhamels fomular and extract first component. Compare to the Previous Question.\\
+\textbf{Solution:}\\
+From Duhamels formula in terms of flow we get:\\
+$$X(t) = \Phi_{t,0}X_0 + \int_0^t \Phi_{t,s}r(s)ds$$
+$$X(t) = \Phi_{t,0}X_0 + M(t)\int_0^t M(s)^{-1}\begin{bmatrix}
+    0\\
+    r(s)
+\end{bmatrix}ds $$
+$$X(t) = \Phi_{t,0}X_0 + \begin{bmatrix}
+    x_1(t) & x_2(t)\\
+    x_1'(t) & x_2'(t)
+\end{bmatrix} \int_0^t \begin{bmatrix}
+    x_2(s) & -x_2(s)\\
+    -x_1(s) & x_1(s)
+\end{bmatrix} \begin{bmatrix}
+    0\\
+    r(s)
+\end{bmatrix}ds$$
+$$X(t) = \Phi_{t,0}X_0 + \begin{bmatrix}
+    x_1(t) & x_2(t)\\
+    x_1'(t) & x_2'(t)
+\end{bmatrix} \int_0^t \begin{bmatrix}
+    c_1'(s)\\
+    c_2'(s)
+\end{bmatrix}ds$$
+$$X(t) = \Phi_{t,0}X_0 + \begin{bmatrix}
+    x_1(t) & x_2(t)\\
+    x_1'(t) & x_2'(t)
+\end{bmatrix} \begin{bmatrix}
+    c_1(t)\\
+    c_2(t)
+\end{bmatrix}$$
+$$X(t) = \Phi_{t,0}X_0 + \begin{bmatrix}
+    c_1(t)x_1(t) + c_2(t)x_2(t)\\
+    c_1(t)x_1'(t) + c_2(t)x_2'(t)
+\end{bmatrix}$$
+$$X(t) = \Phi_{t,0}X_0 + Y(t)$$
+
+
+
+\end{document}

@@ -1,0 +1,504 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ mathrsfs }
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Math 300: Midterm 3 Review}
+
+\begin{document}
+\maketitle
+\section*{Question 1}
+Let $A = \{1,2,3\}$. Give a relation on $A$ that is
+For all these relations, consider that $R \subset A \times A$.
+\subsection*{a}
+Reflexive, symmetric, and transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,1), (2,2), (3,3), (1,2), (2,1), (2,3), (3,2), (1,3), (3,1)\}$.
+\subsection*{b}
+Reflexive, symmetric, but not transitive. \\
+\textbf{Solution:}\\
+Let $R = \{(1,1), (2,2), (3,3), (1,2),(2,1),(2,3),(3,2)\}$.
+\subsection*{c}
+Reflexive, not symmetric, and transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,1), (2,2), (3,3), (1,2)\}$.
+\subsection*{d}
+Reflexive, not symmetric, and not transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,1), (2,2), (3,3), (1,2), (2,3)\}$.
+\subsection*{e}
+Not reflexive, symmetric, and transitive.\\
+\textbf{Solution:}\\
+Let $R = \emptyset $.
+\subsection*{f}
+Not reflexive, symmetric, and not transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,2), (2,1)\}$.
+\subsection*{g}
+Not reflexive, not symmetric, and transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,2), (2,3), (1,3)\}$.
+\subsection*{h}
+Not reflexive, not symmetric, and not transitive.\\
+\textbf{Solution:}\\
+Let $R = \{(1,2), (2,3)\}$.
+
+\section*{Question 2}
+\subsection*{a}
+Let $A= \{ 1,2\}$. All the relations on A which are symmetric and transitive, but not reflexive
+\textbf{Solution:}\\
+$R = \emptyset, \{(1,1) \} \{(2,2) \}$
+\subsection*{b}
+Let $A= \{ 1,2,3,4,5\}$. How many relations which are both symmetric and antisymmetric \\
+\textbf{Solution:}\\ 
+There are 32 such relations. If we consider the powerset of $A$ then see that every single subset of $A$ can be a relation that is symetric and antisymmetric if the relation is the identy relation. So there are $2^5 = 32$ such relations.
+\section*{Question 3}
+Let $A = \{1,2,3\}$ For each of the following relations on A, determine whether it is reflexive, symmetric, antisymmetric, and/or transitive.
+\subsection*{a}
+$R = \{(1,2)\}$\\
+\textbf{Solution:}\\
+Reflexive: No. $(1,1)$ is not in $R$.\\
+Symmetric: No. $(2,1)$ is not in $R$.\\
+Antisymmetric: Yes. \\
+Transitive: Yes. 
+\subsection*{b}
+$S = \{(1,2),(1,3)\}$
+\textbf{Solution:}\\
+Reflexive: No. $(1,1)$ is not in $S$.\\
+Symmetric: No. $(2,1)$ is not in $S$.\\
+Antisymmetric: Yes. \\
+Transitive: Yes.
+\subsection*{c}
+$T = \{(1,2),(2,1),(1,1)\}$
+\textbf{Solution:}\\
+Reflexive: No. $(2,2)$ is not in $T$.\\
+Symmetric: Yes
+Antisymmetric: No. $(1,2)$ and $(2,1)$ are in $T$ but $1 \neq 2$.\\
+Transitive: No. $(1,2)$ and $(2,1)$ are in $T$ but $(2,2)$ is not in $T$.\\
+\section*{Question 4}
+Let $A = \{1,2,3\}$. Size of relations:
+\begin{itemize}
+    \item Min Reflexive: $\{(1,1),(2,2),(3,3) \}$
+    \item Min symmetric: $\emptyset$
+    \item Min antisymmetric: $\emptyset$
+    \item Min transitive: $\emptyset$
+    \item Min equivalence: $\{(1,1),(2,2),(3,3) \}$
+    \item Min partial order: $\{(1,1),(2,2),(3,3) \}$
+    \item Max symmetric: $\{(1,1),(2,2),(3,3),(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)\} $
+    \item Max antisymmetric: $\{(1,1),(2,2),(3,3),(1,2),(1,3),(2,3)\}$
+    \item Max equivalence: $A \times A$
+    \item Max partial: $\{(1,1),(1,2),(1,3),(2,2),(2,3),(3,3)\} $
+\end{itemize}
+\section*{Question 5}
+Let S be the relation on $\mathbb{R}$ defined by $xSy$ : $ x<y+1$. Determine whether S is reflexive, symmetric, antisymmetric, transitive. \\
+\textbf{Reflexive:}\\
+Need $xSx$ : $x < x+1$. This is true for all $x \in \mathbb{R}$. So S is reflexive.\\
+\textbf{Symmetric:}\\
+Need $xSy \Rightarrow ySx$ Counterexample: $x=1$, $y=100$. $1 < 100+1$ but $100 \cancel{<} 1+1$. So S is not symmetric.\\
+\textbf{Antisymmetric:}\\
+Need $xSy \land ySx \Rightarrow x = y$ Counterexample: $x=1$, $y=1.5$ $1 < 1.5+1$ and $1.5 < 1+1$ but $1 \neq 1.5$. So S is not antisymmetric.\\
+\textbf{Transitive:}\\
+Need $xSy \land ySz \Rightarrow xSz$ Counterexample: $x=5$, $y=4.3$, and $z=3.5$. $5 < 4.3+1$ and $4.3 < 3.5+1$ but $5 \cancel{<} 3.5+1$. So S is not transitive.\\
+\section*{Question 6}
+Let $E \subset \mathbb{N} \times \mathbb{N}$ be the relation defined as $xEy$ : $xy \leq x+y$. Determine whether E is reflexive, symmetric, antisymmetric, transitive.\\
+\textbf{Reflexive:}\\
+$xEx : x \cdot x \leq x + x$. This is not true for values of 3 or greater. So E is not reflexive.\\
+\textbf{Symmetric:}\\
+if $xEy : xy \leq x+y$ then $yEx : yx \leq y+x$. This is true as multiplication and addition is commutative. So E is symmetric.\\
+\textbf{Antisymmetric:}\\
+if $xEy : xy \leq x+y$ and $yEx : yx \leq y+x$ then $x=y$. This is not true as $x=2$ and $y=3$ is a counterexample. So E is not antisymmetric.\\
+\textbf{Transitive:}\\
+if $xEy : xy \leq x+y$ and $yEz : yz \leq y+z$ then $xEz$ would be $xz \leq x+z$. This is not true for $x=2$, $y=1$, and $z=3$. So E is not transitive.\\
+\section*{Problem 7}
+Let $D$ be the relation on $\mathbb{N}$ defined as: $x D y$ iff $x^2 | y$. Determine whether $D$ is reflexive, symmetric, antisymmetric, and transitive.
+\subsection*{Reflexive}
+Need: $x D x$ \\
+$x^2 | x$ \\
+Counter: 2. $2^2$ does not divide $2$. So $D$ is not reflexive.
+\subsection*{Symmetric}
+Need: $x D y \Rightarrow y D x$ \\
+$x^2 | y \Rightarrow y^2 | x$ \\
+This is not true in general. For example, $2^2 | 4$ but $4^2 \cancel{|} 2$. So $D$ is not symmetric.
+\subsection*{Antisymmetric}
+Need: $x D y \land y D x \Rightarrow x = y$ \\
+$x^2 | y \land y^2 | x \Rightarrow x = y$ \\
+$y = kx^2$ and $x = qy^2$ for some $k, q \in \mathbb{N}$. \\
+Substitute $y = kx^2$ into $x = qy^2$ to get $x = q(kx^2)^2 = qk^2x^4$. \\
+Divide by $x$ (as it is $\neq 0$) to get $1 = qk^2x^3$. \\
+This is only true if $x = 1$ and $q = k = 1$. So $x = y$ and $D$ is antisymmetric
+\subsection*{Transitive}
+Need: $x D y \land y D z \Rightarrow x D z$ \\
+$x^2 | y \land y^2 | z \Rightarrow x^2 | z$ \\
+Suppose  $k, q \in \mathbb{N}$ such that $y = kx^2 \land z = qy^2$ \\
+Then $z = q(kx^2)^2 = qk^2x^4$. \\
+Since $k, q, x \in \mathbb{N}$, $qk^2x^2 \in \mathbb{N}$. We can call this $r$. \\
+Thus $z = rx^2$ and $x^2 | z$. So $D$ is transitive.
+\section*{Problem 8}
+Let $S$ be the relation on $\mathbb{N}$ defined as: $x S y$ iff $x|y^2$ Determine whether $S$ is reflexive, symmetric, antisymmetric, and transitive.
+\subsection*{Reflexive}
+Need: $x S x$ \\
+$x | x^2$ \\
+$(\exists q \in \mathbb{N} )x^2 = qx$ \\
+This is true for all $x \in \mathbb{N}$. as the "q" will be x to satisfy the equation So $S$ is reflexive.
+\subsection*{Symmetric}
+Need: $x S y \Rightarrow y S x$ \\
+$x | y^2 \Rightarrow y | x^2$ \\
+$(\exists k,q \in \mathbb{N} )y^2 = kx \Rightarrow x^2 = qy$ \\
+This is not true in general. For example, $x=3$ and $y=6$. $3|36$ but $6 \cancel{|} 9$. So $S$ is not symmetric.
+\subsection*{Antisymmetric}
+Need: $x S y \land y S x \Rightarrow x = y$ \\
+$x | y^2 \land y | x^2 \Rightarrow x = y$ \\
+$(\exists k,q \in \mathbb{N} )y^2 = kx \land x^2 = qy \rightarrow x = y$\\
+Counter: $x = 2$ and $y = 4$. $2|16$ and $4|4$ but $2 \neq 4$. So $S$ is not antisymmetric
+\subsection*{Transitive}
+Need: $x S y \land y S z \Rightarrow x S z$ \\
+$x | y^2 \land y | z^2 \Rightarrow x | z^2$ \\
+$(\exists k,q,r \in \mathbb{N} )y^2 = kx \land z^2 = qy \rightarrow z^2 = rx$\\
+Counter example is $x = 8$, $y = 4$, and $z = 2$. $8|16$ and $4|4$ but $8 \cancel{|} 4$. So $S$ is not transitive.
+\section*{Problem 9}
+Let $S = \mathbb{R} \times \mathbb{R}$ be define as follows: for $(x_1, y_1) \in S$ and $(x_2, y_2) \in S$. We have $(x_1, y_1) P (x_2, y_2)$ iff $x_1 \leq x_2$ and $y_1 > y_2$. Determine whether $P$ is reflexive, symmetric, antisymmetric, and transitive.
+\subsection*{Reflexive}
+Need: $(x, y) P (x, y)$ \\
+$x \leq x$ and $y > y$ \\
+This is not true for all $(x, y) \in S$. So $P$ is not reflexive. Counter: $(1, 2)$
+\subsection*{Symmetric}
+Need: $(x_1, y_1) P (x_2, y_2) \Rightarrow (x_2, y_2) P (x_1, y_1)$ \\
+$x_1 \leq x_2$ and $y_1 > y_2 \Rightarrow x_2 \leq x_1$ and $y_2 > y_1$ \\
+This is not true in general. For example, $(1, 2) P (2, 1)$ but $(2, 1) \cancel{P} (1, 2)$. So $P$ is not symmetric.
+\subsection*{Antisymmetric}
+Need: $(x_1, y_1) P (x_2, y_2) \land (x_2, y_2) P (x_1, y_1) \Rightarrow (x_1, y_1) = (x_2, y_2)$ \\
+$x_1 \leq x_2$ and $y_1 > y_2 \land x_2 \leq x_1$ and $y_2 > y_1 \Rightarrow (x_1, y_1) = (x_2, y_2)$ \\
+This is vacuously true as there is no $(x_1, y_1) and (x_2, y_2)$ that satisfy the conditions. So $P$ is antisymmetric
+\subsection*{Transitive}
+Need: $(x_1, y_1) P (x_2, y_2) \land (x_2, y_2) P (x_3, y_3) \Rightarrow (x_1, y_1) P (x_3, y_3)$ \\
+$x_1 \leq x_2$ and $y_1 > y_2 \land x_2 \leq x_3$ and $y_2 > y_3 \Rightarrow x_1 \leq x_3$ and $y_1 > y_3$ \\
+This is true due to the transitive property of the inequalities. So $P$ is transitive.
+
+\section*{Problem 10}
+The properties of reflexivity, symmetry, antisymmetry, and transitivity are related to the
+identity relation and the operations of inversion and composition. Let $R \subset A \times A$ Prove:
+\subsection*{a}
+$R$ is reflexive iff $I_A \subset R$
+\subsubsection*{Proof}
+\subsubsection*{Forward}
+Suppose $x \in A$. 
+Assume $R$ is reflexive. 
+Need $I_A \subseteq R$.\\
+Since $R$ is reflexive, $\forall x \in A, xRx$. This means $(x, x) \in R$. Since $I_A = \{(x, x) | x \in A\}$, $I_A \subseteq R$.
+\subsubsection*{Backward}
+Suppose $x \in A$
+Assume $I_A \subseteq R$.
+Need $R$ is reflexive.\\
+Since $I_A \subseteq R$, $\forall x \in A, (x, x) \in R$. This means that $\forall x \in A, xRx$. So $R$ is reflexive.
+\subsection*{b}
+$R$ is symmetric iff $R = \overleftarrow{R}$
+\subsubsection*{Proof}
+\subsubsection*{Forward}
+Suppose $a, b \in A$.
+Assume $R$ is symmetric.
+Need $R = \overleftarrow{R}$.\\
+In other words, $\{(a, b) | a, b \in A \land aRb\} = \{(b, a) | a, b \in A \land aRb\}$.\\
+Since $R$ is symmetric, $\forall a, b \in A, aRb \Rightarrow bRa$. This means that $(a, b) \in R \Rightarrow (b, a) \in R$. So $R \subseteq \overleftarrow{R}$. Also since $R$ is symmetric $\forall a, b \in A, bRa \Rightarrow aRb$. This means that $(b, a) \in R \Rightarrow (a, b) \in R$. So $\overleftarrow{R} \subseteq R$. So $R = \overleftarrow{R}$.
+
+\subsubsection*{Backward}
+Suppose $R = \overleftarrow{R}$. Then $\forall x, y \in A, (x, y) \in R \Rightarrow (y, x) \in R$. This means that $\forall x, y \in A, xRy \Rightarrow yRx$. So $R$ is symmetric.,
+\subsection*{c}
+$R$ is antisymmetric iff $R \cap \overleftarrow{R} \subset I_A$
+\subsubsection*{Proof}
+\subsubsection*{Forward}
+Suppose $R$ is antisymmetric. Then $\forall x, y \in A, xRy \land yRx \Rightarrow x = y$. This means that $(x, y) \in R \land (y, x) \in R \Rightarrow x = y$. Since $(x,y) \in R$ means $xRy$, $(y,x) \in R$ means $x\overleftarrow{R}y$ and $x=y$ means $(x, y) \in I_A$. Thus $R \cap \overleftarrow{R} \subset I_A$.
+\subsubsection*{Backward}
+Suppose $R \cap \overleftarrow{R} \subset I_A$. Then $\forall x, y \in A, (x, y) \in R \land (y, x) \in R \Rightarrow (x, y) \in I_A$. This means that $\forall x, y \in A, xRy \land yRx \Rightarrow x = y$. Which is the definiton of antisymmetry, so $R$ is antisymmetric.
+\subsection*{d}
+$R$ is transitive iff $R \circ R \subset R$
+\subsubsection*{Proof}
+\subsubsection*{Forward}
+Suppose $x,z \in A$.
+Assume $R$ is transitive.
+Need $R \circ R \subset R$.\\
+Let $(x,z) \in R \circ R$ then $\exists y \in A$ such that $xRy \land yRz$. Since $R$ is transitive and $xRz$. So $(x,z) \in R$. So $R \circ R \subseteq R$.
+
+\subsubsection*{Backward}
+Suppose $R \circ R \subset R$. Then $\forall x, y, z \in A, (x, y) \in R \land (y, z) \in R \Rightarrow (x, z) \in R$. This means that $\forall x, y, z \in A, xRy \land yRz \Rightarrow xRz$. Which is the definition of transitivity, so $R$ is transitive.
+\section*{Problem 11}
+A relation $V$ on $\mathbb{R}$ is given by $xVy$ iff $x=y$ or $xy = 1$. 
+\subsection*{a}
+Prove that $V$ is an equivalence relation.\\
+\subsubsection*{Reflexive}
+Need: $xVx$ \\
+$x = x$ or $x \cdot x = 1$ \\
+This is true for all $x \in \mathbb{R}$. So $V$ is reflexive.
+\subsubsection*{Symmetric}
+Need: $xVy \Rightarrow yVx$ \\
+$x = y$ or $xy = 1 \Rightarrow y = x$ or $yx = 1$ \\
+This is true for all $x, y \in \mathbb{R}$. So $V$ is symmetric
+\subsubsection*{Transitive}
+Need: $xVy \land yVz \Rightarrow xVz$ \\
+$x = y$ or $xy = 1 \land y = z$ or $yz = 1 \Rightarrow x = z$ or $xz = 1$ \\
+{Case 1: $x = y$ and $y = z$}\\
+Then $x = z$ and $xVz$. So $V$ is transitive.\\
+{Case 2: $x = y$ and $yz = 1$}\\
+Then $xz = 1$ and $xVz$. So $V$ is transitive.\\
+{Case 3: $xy = 1$ and $y = z$}\\
+Then $xz = 1$ and $xVz$. So $V$ is transitive.\\
+{Case 4: $xy = 1$ and $yz = 1$}\\
+Then $1/x = 1/z$ and $x=z$ and $xVz$. So $V$ is transitive.\\
+Thus $V$ is an equivalence relation.
+\subsection*{b}
+Describe the equivalence classes of $3, -2/3, and 0$.\\
+The equivalence class of $3$ is $\{3, 1/3\}$\\
+The equivalence class of $-2/3$ is $\{-2/3, -3/2\}$\\
+The equivalence class of $0$ is $\{0\}$\\ 
+\section*{Problem 12}
+Let $T$ be the relation on $\mathbb{Z}$ defined as: $aTb$ iff there exists nonzero integers r and s such that $ar^2 = bs^2$. Prove that $T$ is an equivalence relation.
+\subsection*{Reflexive}
+Need: $aTa$ \\
+There exists $r = s = 1$ such that $a = a$. So $T$ is reflexive.
+\subsection*{Symmetric}
+Need: $aTb \Rightarrow bTa$ \\
+Suppose $aTb$. Then there exists $r, s \neq 0$ such that $ar^2 = bs^2$. This means that $bs^2 = ar^2$. So $bTa$. So $T$ is symmetric
+\subsection*{Transitive}
+Need: $aTb \land bTc \Rightarrow aTc$ \\
+Suppose $aTb$ and $bTc$. Then there exists $r, s, t, u \neq 0$ such that $ar^2 = bs^2$ and $bt^2 = cu^2$. This means that $ar^2 / s^2 = cu^2 / t^2$. $ar^2t^2 = bs^2u^2$. So $aTc$. So $T$ is transitive.\\
+\section*{Problem 13}
+Let $R$ be the relation on $\mathbb{N}$ defined as: $aRb$ iff there exists odd integers $k$ and $l$ such that $ak =bl$.
+\subsection*{a}
+$20R12$ is in this relation as $k = 3, l = 5$. to make $20*3 = 60 = 12*5$.\\
+\subsection*{b}
+$7R10$ is not in this relation as there are no odd integers $k$ to multiply to 7 to make an even number.\\
+\subsection*{c}
+$20R10$ is not in the relation as there are no odd integers $k$ to multiply to 20 to make an "odd" multiple of 10.\\
+\subsection*{d}
+\subsubsection*{Reflexive}
+Need $aRa$\\
+There exists $k = l = 1$ such that $ak = al$. So $R$ is reflexive.
+\subsubsection*{Symmetric}
+Need $aRb \Rightarrow bRa$\\
+Suppose $aRb$. Then there exists $k, l$ such that $ak = bl$. This means that $bl = ak$. So $bRa$. So $R$ is symmetric
+\subsubsection*{Transitive}
+Need $aRb \land bRc \Rightarrow aRc$\\
+Suppose $aRb$ and $bRc$. Then there exists $k, l, m, n$ such that $ak = bl$ and $bm = cn$. This means that $akm = bln$. Since 2 odd integers multiplied is also odd then $aRc$. So $R$ is transitive.
+\subsection*{e}
+Describe the equivalence claseses:\\
+The equivalence class of $2^0$ is $\{2n+1: n \in \mathbb{N}\}$\\
+The equivalence class of $2^1$ is $\{2(2n+1): n \in \mathbb{N}\}$\\
+The equivalence class of $2^2$ is $\{2^2(2n+1): n \in \mathbb{N}\}$\\
+The equivalence class of $2^k$ $\forall k \geq 0$ is $\{2^k(2n+1): n \in \mathbb{N}\}$\\
+In other words, The equiliances classes are represented as $2^k$ where $k \in \mathbb{Z}$ and $k \geq 0$. And all the elements of the equivalence class is all the numbers $x \in \mathbb{N}$ which have the same power of 2 in thier prime factorization.\\
+
+
+\section*{Problem 14}
+On $\mathbb{N}$ a relation $P$ is given by $aPb$ iff the prime factorization of $a$  and $b$ have the same power of 2. 
+\subsection*{a}
+\subsubsection*{Reflexive}
+Need $aPa$\\
+The prime factorization of $a$ is the same as the prime factorization of $a$. So $P$ is reflexive.
+\subsubsection*{Symmetric}
+Need $aPb \Rightarrow bPa$\\
+Suppose $aPb$. Then the prime factorization of $a$ and $b$ have the same power of 2. This means that the prime factorization of $b$ and $a$ have the same power of 2. So $P$ is symmetric
+\subsubsection*{Transitive}
+Need $aPb \land bPc \Rightarrow aPc$\\
+Suppose $aPb$ and $bPc$. Then the prime factorization of $a$ and $b$ have the same power of 2 and the prime factorization of $b$ and $c$ have the same power of 2. This means that the prime factorization of $a$ and $c$ have the same power
+\subsection*{b}
+$1/P$: $\{1, 3,5 \}$\\
+$4/P$: $\{4, 12,20 \}$\\
+$72/P$: $\{8,24,60\}$
+\section*{Problem 15}
+\subsection*{a}
+Let $P$ and $Q$ be equivalence relations on a set $A$. Prove that $R := P \cap Q$ is an equivalence relation on $A$.\\
+\subsubsection*{Reflexive}
+Suppose $a \in A$.
+Need $aRa$\\
+Since $P$ and $Q$ are equivalence relations, $aPa$ and $aQa$. This means that $(a,a) \in P$ and $(a,a) \in Q$. So $a \in P \cap Q$. So $aRa$.
+\subsubsection*{Symmetric}
+Suppose $a,b \in A$ 
+Assume $aRb$.
+Need $bRa$\\
+Since $aRb$, $(a,a) \in P \cap q$ so $(a,b) \in P$ and $(a,b) \in Q$ Since $P$ and $Q$ are both equivalence relations they are symmetric. So $(b,a) \in P$ and $(b,a) \in Q$. So $bRa$. So $R$ is symmetric.
+
+\subsubsection*{Transitive}
+Suppose $a,b,c \in A$
+Assume $aRb$ and $bRc$.
+Need $aRc$\\
+Since $aRb$ and $bRc$, $(a,b) \in P \cap Q$ and $(b,c) \in P \cap Q$. This means that $(a,b) \in P$ and $(a,b) \in Q$ and $(b,c) \in P$ and $(b,c) \in Q$. Since $P$ and $Q$ are equivalence relations, they are transitive. So $(a,c) \in P$ and $(a,c) \in Q$. So $aRc$. So $R$ is transitive.\\
+
+\subsection*{b}
+Give an exaple of two equivalence relations $P$ and $Q$ on $A = \{ 1,2,3 \} $ such that $T := P \cup Q$ is not an equivalence relation on $A$.\\
+\textbf{Solution:}\\
+Let $A = \{ 1,2,3\}$, \\
+$P = \{ (1,1), (2,2), (3,3), (1,3), (3,1) \}$, \\
+$Q = \{ (1,1), (2,2), (3,3), (1,2), (2,1) \}$.\\
+Then $T = P \cup Q = \{ (1,1), (2,2), (3,3), (1,3), (3,1), (1,2), (2,1) \}$.\\
+$T$ is not an equivalence relation as it is not transitive. For example, $(3,1) \in T$ and $(1,2) \in T$ but $(3,2) \cancel{\in} T$.\\
+
+
+\section*{Problem 16}
+Let $P$ be the relation on $\mathbb{N}$ defined as: $aPb$ iff $b=2^ka$ for some integers $k \geq 0$. Prove that $P$ is a partial order.\\
+\subsection*{Reflexive}
+Need: $aPa$\\
+$a = 2^0a$. So $aPa$.
+\subsection*{Antisymmetric}
+Need: $aPb \land bPa \Rightarrow a = b$\\
+Suppose $aPb$ and $bPa$. Then $b = 2^ka$ and $a = 2^lb$ for some $k, l \geq 0$. This means that $b = 2^k2^lb$. So $b = 2^{k+l}b$. This means $k+l = 0$ and $k = l = 0$. So $a = b$
+\subsection*{Transitive}
+Need: $aPb \land bPc \Rightarrow aPc$\\
+Suppose $aPb$ and $bPc$. Then $b = 2^ka$ and $c = 2^lb$ for some $k, l \geq 0$. This means that $c = 2^k2^la$. So $c = 2^{k+l}a$. So $aPc$.\\
+\section*{Problem 17}
+Let $A$ an arbitrary nonempty set, and let $P$ be a partial order on $A$. Define a new relation $<$ on $A$ as follows $x<y$ iff $xPy$ and $x \neq y$. 
+\subsubsection*{a}
+Prove that there are no $x,y \in A$ such that $x<y$ and $y<x$.\\
+Suppose there exists $x, y \in A$ such that $x<y$ and $y<x$. Then $xPy$ and $yPx$. Due to $P$ being Partial Order and thus antisymmetric, $x = y$. This is a contradiction. So there are no $x, y \in A$ such that $x<y$ and $y<x$.\\
+\subsubsection*{b}
+Prove that $<$ is transitive.\\
+Assume that $<$ is not transitive. Then there exists $x,y,z\in A$ such that $x<y$ and $y<z$ but $x \cancel{<} z$. If $x<y$ then $xPy$ and if $y<z$ then $yPz$. Since $P$ is a partial order, it is transitive. So $xPz$. But $x \cancel{<} z$ is a contradiction. So $<$ is transitive.\\
+
+\section*{Problem 18}
+Let $A$ be a nonempty set with partial order P. for each $t \in A$ define $S_t := \{ x \in A: xPt\}$\\
+Let $\mathscr{F} = \{S_t : t \in A \}$ then $\mathscr{F}$ is a subset of $\mathscr{P}(A)$ [since for every $t \in A$, $S_t \subset A$]. and thus can be partially orded by $\subseteq $. Let $a,v \in A$ be arbitrary.
+\subsection*{i}
+Prove that if $aPb$ then $S_a \subseteq S_b$\\
+Suppose $aPb$. Let $x \in S_a$. Then $xPa$. Since $aPb$, $xPb$. So $x \in S_b$. So $S_a \subseteq S_b$.\\ 
+
+Suppose $a,b \in A$. Assume $aPb$. Need $S_a \subseteq S_b$. Let $x \in S_a$. Then $xPa$. Since $aPb$, $xPb$ by the transitivity of $P$. So $x \in S_b$. So $S_a \subseteq S_b$.\\
+
+\subsection*{ii}
+Prove that if $S_a \subseteq S_b$ then $aPb$\\
+Suppose $a,b \in A$. Assume $S_a \subseteq S_b$. Need $aPb$. Let $x \in S_a$. Then $xPa$. Since $S_a \subseteq S_b$, $x \in S_b$. Since we know that $P$ is a partial order, it is also Reflexive, so $a$ is in the set $S_a$. So there is an element $x \in S_b$ where $x=a$ so $aPb$.\\
+
+\section*{Problem 19}
+
+\subsection*{a}
+Let $P$ and $Q$ be partial orders on the same nonempty set $A$. Prove that $P \cap Q$ is a partial order on $A$.\\
+For sake of ease: Let $R := P \cap Q$\\
+
+
+\subsubsection*{Reflexive}
+Suppose $a \in A$. 
+Need $aRa$\\
+Since $P$ and $Q$ are partial orders and thus reflexive, $aPa$ and $aQa$. This means that $(a,a) \in P$ and $(a,a) \in Q$. So $(a,a) \in P \cap Q$. So $aRa$.
+
+\subsubsection*{Antisymmetric}
+Suppose $a,b \in A$
+Assume $aRb$ and $bRa$.
+Need: $a = b$\\
+Since $aRb$ and $bRa$, $(a,b) \in P \cap Q$ and $(b,a) \in P \cap Q$. This means that $(a,b) \in P$ and $(a,b) \in Q$ and $(b,a) \in P$ and $(b,a) \in Q$. Since $P$ and $Q$ are partial orders and antisymmetric, $aPb$ and $aQb$ and $bPa$ and $bQa$ implies $a = b$. So $R$ is antisymmetric.
+
+
+\subsubsection*{Transitive}
+Suppose $a,b,c \in A$.
+Assume $aRb$ and $bRc$.
+Need $aRc$\\
+Since $aRb$ and $bRc$, $(a,b) \in P \cap Q$ and $(b,c) \in P \cap Q$. This means that $(a,b) \in P$ and $(a,b) \in Q$ and $(b,c) \in P$ and $(b,c) \in Q$. Thus $aPb$ and $aQb$ and $bPc$ and $bQc$. Since $P$ and $Q$ are partial order and transitive, $aPc$ and $aQc$. Since $aPc$ and $aQc$, $a \in P \cap Q$. So $aRc$. So $R$ is transitive.\\
+
+\subsection*{b}
+Give an example of two partial orders $P$ and $Q$ on $A \{1,2,3 \}$ such that $P \cup Q$ is not a partial order on $A$.\\
+\subsubsection*{Solution}
+Let $A = \{1,2,3\}$\\
+Let $P = \{ (1,1), (2,2), (3,3), (1,3) \}$\\
+Let $Q = \{ (1,1), (2,2), (3,3), (3,1) \}$\\
+Then $P \cup Q = \{ (1,1), (2,2), (3,3), (1,3), (3,1) \}$\\
+Which is not antisymmetric, thus not a partial order.\\
+
+
+\section*{Problem 20}
+\subsection*{a}
+Let $\leq_1 and\leq_2$ be total orders on the same nonempty set $A$. Let $P$ be the relation on A defined by $aPb$ iff $a\leq_1 b$ and $a\leq_2 b$. Prove that $P$ is a partial order on A.
+\subsubsection*{Reflexive}
+Suppose $a \in A$.
+Need: $aPa$\\
+Since $\leq_1$ and $\leq_2$ are total orders, $a\leq_1 a$ and $a\leq_2 a$. So $aPa$.
+\subsubsection*{Antisymmetric}
+Suppose $a,b \in A$.
+Assume $aPb$ and $bPa$.
+Need: $a = b$\\
+Since $aPb$ and $bPa$, $a\leq_1 b$ and $a\leq_2 b$ and $b\leq_1 a$ and $b\leq_2 a$. Since $\leq_1$ and $\leq_2$ are total orders and antisymmetric, $a = b$ as desired
+\subsubsection*{Transitive}
+Suppose $a,b,c \in A$.
+Assume $aPb$ and $bPc$.
+Need $aPc$\\
+Since $aPb$ and $bPc$, $a\leq_1 b$ and $a\leq_2 b$ and $b\leq_1 c$ and $b\leq_2 c$. Since $\leq_1$ and $\leq_2$ are total orders and transitive, $a\leq_1 c$ and $a\leq_2 c$. So $aPc$. So $P$ is transitive.\\
+
+\subsection*{b}
+Give an example of 2 total orders on the same set $A$ such that the relation $P$ is not a total order on $A$.\\
+$aPb$ iff $a\leq_3 b$ and $a\leq_4 b$\\
+\subsubsection*{Solution}
+Let $A = \{1,2,3\}$\\
+Let $\leq_3 := \leq$
+Let $\leq_4 := \geq$\\
+$\leq_3 = \{ (1,1), (1,2), (1,3), (2,2), (2,3), (3,3) \}$\\
+$\leq_4 = \{ (1,1), (2,1), (3,1), (2,2), (3,2), (3,3) \}$\\
+$P = \{ (1,1), (2,2), (3,3)\}$\\
+Counter to Total order: $1 \cancel{P} 2$ and $2 \cancel{P} 1$\\
+$I_A \subseteq P$
+
+\section*{Problem 21}
+Let $P$ be a partial order on a set $A$, and let $B \subseteq A$. Prove that if B contains one of its upper bounds $s$ then $s$ is the least upper bound of $B$.
+\subsubsection*{Proof}
+Suppose $A$, $B$ are sets and $P$ is a partial order on $A$ where $B \subseteq A$\\
+Assume $s \in B$ and $s$ is an upper bound of $B$.\\
+Need: $s$ is the least upper bound of $B$. In other words $\forall t$ that are upper bounds $sPt$\\
+Let $t$ be an upper bound of $B$. Since $s$ is an upper bound of $B$ that is also in $B$, there does not exist another upperbound in $B$ that is less than $s$. So every upperbound of $B$ other than $s$ must related to $s$ by $P$. In other words $sPt$ thus $s$ is the least upper bound of $B$.\\ 
+
+\section*{Problem 22}
+Let $S \subseteq \mathbb{R}$ be a bounded set and let $T$ be an non-empty subset of $S$. Prove that $$inf(s) \leq inf(T) \leq sup(T) \leq sup(S)$$
+\subsubsection*{Proof}
+\textbf{Proof of existence}
+
+
+
+\section*{Problem 23}
+
+\section*{Problem 24}
+
+\section*{Problem 25}
+
+\section*{Problem 26}
+
+\section*{Problem 27}
+
+\section*{Definitions}
+\subsection*{Power Set}
+Let $A$ be a set. The power set of $A$ is the set of all subsets of $A$.\\
+$\mathscr{P}(A) := \{X: X \subseteq A\}$\\
+
+\subsection*{Cartesian Product}
+Let $A$ and $B$ be sets. The Cartesian product of $A$ and $B$ is the set of all ordered pairs $(a,b)$ where $a \in A$ and $b \in B$.\\
+$A \times B := \{(a,b): a\in A, b \in B \}$
+
+\subsection*{Set Partition}
+Let $A$ be a set. A set partition of $A$ is a collection of nonempty subsets of $A$ such that every element of $A$ is in exactly one of the subsets.\\
+$P = \{A_1, A_2, \ldots, A_n\}$ is a partition of $A$ if:\\
+$\forall x \in A: \exists i \in \{1,2,\ldots,n\} : x \in A_i$\\
+$\forall i,j \in \{1,2,\ldots,n\} : i \neq j \Rightarrow A_i \cap A_j = \emptyset$\\
+
+\subsection*{Identity Relation}
+Let $A$ be a set. The identity relation on $A$ is the relation that relates every element of $A$ to itself.\\
+$I_A := \{(a,a): a \in A\}$
+\subsection*{Composition}
+Let $P$ and $Q$ be relations. $P:A \rightarrow B$ and $Q:B \rightarrow C$. The composition of $P$ and $Q$ is the relation that relates $a$ to $c$ if there exists $b$ such that $aPb$ and $bQc$.\\
+$P \circ Q := \{(a,c): \exists b \in B: aPb \land bQc\}$
+
+\subsection*{Inverse}
+Let $P$ be a relation from $A$ to $B$. The inverse of $P$ is the relation that relates $b$ to $a$ if $aPb$.\\
+$\overleftarrow{P} := \{(b,a): a\in A, b\in B, aPb\}$
+
+\subsection*{Dom}
+Let $P$ be a relation from $A$ to $B$. The domain of $P$ is the set of all elements of $A$ that are related to some element of $B$.\\
+$dom(P) := \{a \in A: \exists b \in B: aPb\}$
+
+\subsection*{Range}
+Let $P$ be a relation from $A$ to $B$. The range of $P$ is the set of all elements of $B$ that are related to some element of $A$.\\
+$ran(P) := \{b \in B: \exists a \in A: aPb\}$
+
+\subsection*{title}
+
+
+\end{document}
