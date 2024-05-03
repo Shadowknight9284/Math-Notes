@@ -445,20 +445,53 @@ Let $P$ be a partial order on a set $A$, and let $B \subseteq A$. Prove that if 
 Suppose $A$, $B$ are sets and $P$ is a partial order on $A$ where $B \subseteq A$\\
 Assume $s \in B$ and $s$ is an upper bound of $B$.\\
 Need: $s$ is the least upper bound of $B$. In other words $\forall t$ that are upper bounds $sPt$\\
-Let $t$ be an upper bound of $B$. Since $s$ is an upper bound of $B$ that is also in $B$, there does not exist another upperbound in $B$ that is less than $s$. So every upperbound of $B$ other than $s$ must related to $s$ by $P$. In other words $sPt$ thus $s$ is the least upper bound of $B$.\\ 
+Let $t$ be an upper bound of $B$. Since $s$ is an upper bound of $B$ that is also in $B$, there does not exist another upperbound in $B$ that is less than $s$ since the definition of an upper bound is $\{s: \forall a \in B, aPs\}$. So every upperbound of $B$ other than $s$ must related to $s$ by $P$. In other words $sPt$ thus $s$ is the least upper bound of $B$.\\ 
 
 \section*{Problem 22}
 Let $S \subseteq \mathbb{R}$ be a bounded set and let $T$ be an non-empty subset of $S$. Prove that $$inf(s) \leq inf(T) \leq sup(T) \leq sup(S)$$
 \subsubsection*{Proof}
 \textbf{Proof of existence}
-
-
+Suppose $S$ is a bounded set and $T$ is a non-empty subset of $S$.\\
+Since $S$ is bounded, $inf(S)$ and $sup(S)$ exist. Since $T$ is a non-empty subset of $S$, $T$ is also bounded. So $inf(T)$ and $sup(T)$ exist.\\
+\textbf{Proof of $inf(s) \leq inf(T)$}\\
+Let $i_s = inf(S)$ and $i_t = inf(T)$.\\
+Since $T$ is a subset of $S$, $inf(S)$ is a lower bound of $T$. So by the definition of infimum $inf(S) \leq inf(T)$.\\
+\textbf{Proof of $inf(T) \leq sup(T)$}\\
+Let $i_t = inf(T)$ and $s_t = sup(T)$.\\
+Since $T$ is a bounded set and is non empty $inf(T) \leq sup(T)$.\\
+\textbf{Proof of $sup(T) \leq sup(S)$}\\
+Let $s_t = sup(T)$ and $s_s = sup(S)$.\\
+Since $T$ is a subset of $S$, $sup(S)$ is an upperbound of $T$. So by the definition of supremum $sup(T) \leq sup(S)$.\\ 
 
 \section*{Problem 23}
+Let $B$ and $C$ be non-empty sets of real numbers such that $b \leq c$  for all $b \in B$ and $c \in C$. Prove that $sup(B) \leq inf(C)$.
+\textbf{Proof}
+Suppose $B$ and $C$ are non-empty sets of real numbers such that $b \leq c$ for all $b \in B$ and $c \in C$.\\
+Need: $sup(B) \leq inf(C)$.\\
+Since $B$ is a non-empty set of real numbers, $sup(B)$ exists. Since $C$ is a non-empty set of real numbers, $inf(C)$ exists due to the axiom of completeness.\\
+Let $c \in C$. Since $(\forall b \in B) b \leq c$, $c$ is an upper bound of $B$. So by definition of supremum $sup(B) \leq c$. Since $c$ is an arbitrary element of $C$ and $sup(B) \leq c$, $sup(B)$ is a lower bound of $C$. So by definition of infimum $sup(B) \leq inf(C)$.\\
 
 \section*{Problem 24}
+Let $A$ be an arbitrary nonempty set and let 
 
 \section*{Problem 25}
+Let $A$  be the set of all closed subintervals of $[0,1]$ with positive length. $A$ is a partially ordered by set inclusion. A set $B \subseteq A$ is a collection of intervals, also note $[0,1] \in A$. \subsubsection*{i}
+Does every nonempty subset $B$ of $A$ have an upper bound?\\
+Yes as for every set $B$ in $A$, $[0,1]$ will be an element such that $1 \in A$ and $\forall x \in B , x \subseteq [0,1]$. So $[0,1]$ is an upper bound for $B$.\\
+\subsubsection*{ii}
+Does every nonempty subset $B$ of $A$ have a least upper bound?\\
+Yes, as since there exists an upper bound for every nonempty subset $B$ of $A$, the least upper bound will be the interval $s$ such that all of the upperbounds of $B$ contain $s$. In other words $sup(B) := s \in A$ such that $\forall x$ that are upper bounds of $B, s \subseteq x$.\\
+Since $B$ is bounded then it has a maximum which is in $B$. This maximum is an upper bound of $B$ and is a subset of all other upper bounds of $B$. So the maximum is the least upper bound of $B$.\\
+\textbf{Review for Later}
+
+\subsubsection*{iii}
+Does every nonempty subset $B$ of $A$ have a maximum?\\
+
+\subsubsection*{iv}
+
+\subsubsection*{v}
+
+\subsubsection*{vi}
 
 \section*{Problem 26}
 

@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Vocab 300}
+
+\begin{document}
+\maketitle
+
+\section{Sets}
+
+\section{Functions}
+\subsubsection*{Function}
+A function is a special relation such that each input has exactly one output.\\
+$f : A \rightarrow B$ means that $f$ is a function from $A$ to $B$ where $A$ and $B$ are sets.\\
+$f(x) = y$ means that $f$ maps $x$ to $y$ where $x\in A$ and $y \in B$ .\\
+$f := \{(x,y) \in f : (\forall x \in A)(\exists! y \in B)[f(x) = y]\}$
+\subsubsection*{Composition}
+The composition of two functions $f$ and $g$ is a function $f \circ g$ such that $(f \circ g)(x) = f(g(x))$\\
+$f \circ g : A \rightarrow C$ where $f : A \rightarrow B$ and $g : B \rightarrow C$\\
+$(f \circ g)(x) = f(g(x))$ for all $x \in A$
+\subsubsection*{Domain}
+The domain of a function is the set of all possible inputs.\\
+$dom(f) := \{x \in A : (\exists y \in B)[f(x) = y]\}$ \\ 
+$dom(f) = A$ basically for every function $f$.
+\subsubsection*{Codomain}
+The codomain of a function is the set of all possible outputs.\\
+$codom(f) := B$
+\subsubsection*{Range}
+The range of a function is the set of all outputs such that there is an input that maps to it.\\
+$range(f) := \{y \in B : (\exists x \in A)[f(x) = y]\}$\\
+$range(f) \subseteq codom(f)$
+\subsubsection*{Injective/ One-to-One}
+A function is injective if each output has at most one input.\\
+$f$ is injective if $(\forall x_1,x_2 \in A)[f(x_1) = f(x_2) \Rightarrow x_1 = x_2]$\\
+$f$ is injective if $(\forall x_1,x_2 \in A)[x_1 \neq x_2 \Rightarrow f(x_1) \neq f(x_2)]$
+\subsubsection*{Surjective/ Onto}
+A function is surjective if each output has at least one input.\\
+$f$ is surjective if $(\forall y \in B)(\exists x \in A)[f(x) = y]$
+\subsubsection*{Bijective}
+A function is bijective if it is both injective and surjective.
+\subsection*{Goldilocks}
+A function is bijective if $(\forall y \in B)(\exists! x \in A)[f(x) = y]$\\
+A function is one to one if $(\forall y \in B)(\exists$ at most $x \in A)[f(x) = y]$\\
+A function is onto if $(\forall y \in B)(\exists$ at least $x \in A)[f(x) = y]$
+\subsubsection*{Left Invertable}
+A function is left invertable if there exists a function $g$ such that $g \circ f = id_A$\\
+$g : B \rightarrow A$ and $g \circ f = id_A$\\
+$g(f(x)) = x$ for all $x \in A$
+\subsubsection*{Right Invertable}
+A function is right invertable if there exists a function $g$ such that $f \circ g = id_B$\\
+$g : B \rightarrow A$ and $f \circ g = id_B$\\
+$f(g(y)) = y$ for all $y \in B$
+\subsubsection*{Invertable}
+A function is invertable if it is both left and right invertable.\\
+$f$ is invertable if there exists a function $g$ such that $g \circ f = id_A$ and $f \circ g = id_B$\\
+$g : B \rightarrow A$ and $g \circ f = id_A$ and $f \circ g = id_B$\\
+$g(f(x)) = x$ and $f(g(y)) = y$ for all $x \in A$ and $y \in B$
+$g$ is unique if a function is invertable, but it is not nessisarily unique for left and right inverse
+\subsubsection*{Left Inverse}
+A function $g$ is a left inverse of another function $f$ if $g \circ f = id_A$\\
+$g : B \rightarrow A$ and $g \circ f = id_A$\\
+\subsection*{Right Inverse}
+A function $g$ is a right inverse of another function $f$ if $f \circ g = id_B$\\
+$g : B \rightarrow A$ and $f \circ g = id_B$\\
+\subsubsection*{Image}
+The Image of a function is the set of all outputs given a set of inputs.\\
+$X \subseteq A, Im_f(X) = \{f(x) : x \in X \}$
+\subsubsection*{Preimage}
+The preimage of a function is the set of all inputs that map to a given output or set of outputs.\\
+$Y \subseteq B, PreIm(Y) = \{x \in A : f(x) \in Y\}$
+\subsubsection*{Caterpillar Lemma}
+For any function $f : A \rightarrow B$, the preimage sets of distinct elements are pairwaise disjoint.
+
+\section{Relations}
+\subsubsection*{Relation}
+A relation is a set of ordered pairs.\\
+$R \subseteq A \times B$\\
+$R := \{(x,y): x\in A, y \in B, xRy\}$\\
+Usually the domain and codomain of a relation are the same, and thus we can look at other properties 
+\subsubsection*{Reflexive}
+A relation is reflexive if every element is related to itself.\\
+$R$ is reflexive if $(\forall x \in A)[xRx]$
+\subsubsection*{Symmetric}
+A relation is symmetric if for every pair of elements, if one is related to the other, then the other is related to the first.\\
+$R$ is symmetric if $(\forall x,y \in A)[xRy \Rightarrow yRx]$
+\subsubsection*{Antisymmetric}
+A relation is antisymmetric if for every pair of elements, if one is related to the other, then the other is not related to the first.\\
+$R$ is antisymmetric if $(\forall x,y \in A)[xRy \wedge yRx \Rightarrow x = y]$
+\subsubsection*{Transitive}
+A relation is transitive if for every pair of elements, if one is related to the other, and the other is related to a third, then the first is related to the third.\\
+$R$ is transitve if $(\forall x,y,z \in A)[xRy \wedge yRz \Rightarrow xRz]$
+\subsubsection*{Equivalence Relation}
+A relation is an equivalence relation if it is reflexive, symmetric, and transitive.\\
+\subsubsection*{Equivalence Class}
+The equivalence class of an element $x$ is the set of all elements related to $x$.\\
+$[x]_R := \{y \in A : xRy\}$\\
+They are usually represented as $[x]$ where $x$ is a member of the class.\\
+\subsubsection*{Partition}
+A partition of a set $A$ is a set of nonempty subsets of $A$ such that every element of $A$ is in exactly one subset.\\
+$\mathscr{P} = \{A_i : i \in I\}$ is a partition of $A$ if $\begin{cases}
+    A_i \neq \emptyset\\
+    A_i \cap A_j = \emptyset \text{ for } i \neq j\\
+    \bigcup_{i \in I} A_i = A
+\end{cases}$\\
+In other words: \begin{enumerate}
+    \item Each set is nonempty
+    \item Each pair of sets is disjoint
+    \item The union of all sets is the original set 
+    \item Each element is in exactly one set
+\end{enumerate}
+\subsubsection*{Partial Order}
+A relation is a partial order if it is reflexive, antisymmetric, and transitive.
+\subsubsection*{Total Order}
+A relation is a total order if it is a partial order and for every pair of elements, one is related to the other.\\
+Thus there is a trichotomy between any two elements.
+$\begin{cases}
+    xRy\\
+    x = y\\
+    yRx
+\end{cases}$
+\subsection*{Relation Table}
+\subsubsection*{Equality Relation}
+The equality relation is an equivalence relation.\\
+It is also a partial order 
+\subsubsection*{Inequality Relation}
+Symmetric. 
+\subsubsection*{< on $\mathbb{R}$}
+Antisymmetric and Transitive.
+\subsubsection*{$\leq$ on $\mathbb{R}$}
+Reflexive, Antisymmetric, and Transitive.\\
+Thus it is a partial order.\\
+In fact it is a total order
+\subsubsection*{Divdes}
+$a|b$ iff $(\exists k \in \mathbb{Z})[b = ak]$\\
+This is a partial order on $\mathbb{N}$ but not on $\mathbb{Z}$.
+
+
+
+\end{document}

@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Math 300 Midterm 4}
+\begin{document}
+\maketitle
+\textbf{Definitions}\\
+\textbf{Section 1: Functions}
+\subsubsection*{One to One}
+A one to one function is a function $f:A \rightarrow B$ such that for all $a_1, a_2 \in A$, if $f(a_1) = f(a_2)$, then $a_1 = a_2$.\\
+This is also called a injective function.\\
+This also means that there exists a left inverse $g$ such that $g \circ f = I_A$.
+\subsubsection*{Onto}
+An onto function is a function $f:A \rightarrow B$ such that for all $b \in B$, there exists an $a \in A$ such that $f(a) = b$.\\
+This is also called a surjective function.\\
+This also means that there exists a right inverse $g$ such that $f \circ g = I_B$.
+\subsection*{Bijection}
+
+\subsubsection*{Inverse Function}
+
+\subsection*{Proofs:}
+\textbf{Proof: One to One $\rightarrow$ $g(f(x))=x$}\\
+Suppose $A,B$ are non empty sets and $f:A \rightarrow B$ 
+Assume $f$ is one to one.\\
+In other words $(\forall a_1, a_2 \in A)(f(a_1) = f(a_2) \rightarrow a_1 = a_2)$\\
+Need $g:B \rightarrow A$ such that $g \circ f = I_A$\\
+Let $y \in B$\\
+If $y \in range(f)$ and $f(x) $ is one to one, then define $g(y) = x$ such that $f(x) = y$\\
+If $y \notin range(f)$, then define $g(y) = a_0$ for an arbitrary $a_0 \in A$\\
+Need to show $g \circ f = I_A$\\
+Let $x \in A$\\
+Need to show $g(f(x)) = x$\\
+Let $y = f(x)$\\
+Clearly $y \in range(f)$\\ due to the fact that $f(x) \in range(f)$\\ 
+Then $g(f(x)) = x$\\
+
+
+
+
+
+\end{document}
