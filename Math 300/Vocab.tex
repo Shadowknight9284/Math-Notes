@@ -26,8 +26,9 @@ $f(x) = y$ means that $f$ maps $x$ to $y$ where $x\in A$ and $y \in B$ .\\
 $f := \{(x,y) \in f : (\forall x \in A)(\exists! y \in B)[f(x) = y]\}$
 \subsubsection*{Composition}
 The composition of two functions $f$ and $g$ is a function $f \circ g$ such that $(f \circ g)(x) = f(g(x))$\\
-$f \circ g : A \rightarrow C$ where $f : A \rightarrow B$ and $g : B \rightarrow C$\\
-$(f \circ g)(x) = f(g(x))$ for all $x \in A$
+$g \circ f: A \rightarrow C$ where $f : A \rightarrow B$ and $g : B \rightarrow C$\\
+$(g \circ f)(x) = f(g(x))$ for all $x \in A$\\
+$g \circ f := (\forall x \in A)(\exists! z \in C)(g(f(x) = z) )$
 \subsubsection*{Domain}
 The domain of a function is the set of all possible inputs.\\
 $dom(f) := \{x \in A : (\exists y \in B)[f(x) = y]\}$ \\ 
@@ -87,6 +88,9 @@ A relation is a set of ordered pairs.\\
 $R \subseteq A \times B$\\
 $R := \{(x,y): x\in A, y \in B, xRy\}$\\
 Usually the domain and codomain of a relation are the same, and thus we can look at other properties 
+\subsubsection*{Composition}
+The composition of two relations $R$ and $S$ is a relation $R \circ S$ such that $(x,z) \in R \circ S$ if $(\exists y)[(x,y) \in S \wedge (y,z) \in R]$\\
+
 \subsubsection*{Reflexive}
 A relation is reflexive if every element is related to itself.\\
 $R$ is reflexive if $(\forall x \in A)[xRx]$
