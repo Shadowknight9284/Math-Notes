@@ -33,16 +33,63 @@ different permutation of $n$ objects which any arbitrary $n_i$ are alike.\\
 \textbf{Combinations.}\\
 $$ \binom{n}{r} = \frac{n!}{(n-r)!r!}$$
 How many ways are there of choosing $r$ things from $n$ distinct things?
-\subsection*{5/29}
 
+\subsection*{5/29}
+\textbf{Example 4c:} $n$ items $m$ are dysfunctional and $n-m$ are functional. What is the probability that no two dysfunctional items are adjacent?\\
+\textbf{Sol:} There are $\binom{n-m+1}{m}$ ways. If we think of the functional (plus one for the before spot) we can put the dysfunctional items in. Thus resulting in $\binom{n-m+1}{m}$ ways.\\
+
+\textbf{Question} Prove that $\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}$\\
+It is shown is pascal's triangle.\\
+Since the left is the number of Combinations of $n$ things taken $r$ at a time, and the right is the number of Combinations of $n-1$ things taken $r-1$ at a time and $r$ at a time.\\ 
+Thus the right side is the number of Combinations in which A is included and the number of Combinations in which A is not included.\\
+
+\textbf{Binomial Theorum}\\
+$$ (x+y)^n = \sum_{r=0}^{n} \binom{n}{r} x^{n-r}y^r$$
+This gives the coefficients of the expansion of $(x+y)^n$\\
+
+\textbf{Multinomial Theorum}\\
+$$ (x_1 + x_2 + \ldots + x_k)^n = \sum_{r_1 + r_2 + \ldots + r_k = n} \frac{n!}{r_1!r_2! \ldots r_k!} x_1^{r_1}x_2^{r_2} \ldots x_k^{r_k}$$
+This gives the coefficients of the expansion of $(x_1 + x_2 + \ldots + x_k)^n$\\
+
+\textbf{Something cool} $\binom{n}{r} \binom{r}{k} = \frac{n!}{r!k!(n-r-k)!}$\\
+
+\textbf{Example 5:} 8 players, 4 matches (identitcal) played of 2 players. How many ways can the matches be played?\\
+\textbf{Sol:} There are $\frac{8!}{2!2!2!2!4!} = 105$ ways.\\
+How many ways can people win?\\
+16 ways.\\
+
+\textbf{Class Activity:} Consider the equation $x_1 + x_2 + \ldots + x_r = n$ where each $x_i$ is non-negative. How many possible solutions are there to this equation. 
 
 \section{Chapter 2: Axioms of Probability}
+\subsection*{5/30}
+\textbf{Axioms of probability}\\
+The probability of Something happening is the number of ways the thing happens dived by the possible outcomes.\\
+\textbf{Axiom 1:} $0 \leq P(A) \leq 1$\\
+\textbf{Axiom 2:} $P(S) = 1$ where $S$ is whole same space\\
+\textbf{Axiom 3:} If $A_1, A_2, \ldots$ are mutually exclusive events, then $P(A_1 \cup A_2 \cup \ldots) = P(A_1) + P(A_2) + \ldots$\\
 
-\section{Chapter 3}
+\subsection*{6/3}
+$P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)$\\
 
-\section{Chapter 4}
+\subsection*{6/4}
+\textbf{n ppl who throw the hats in what is the probablity that no one gets their own hat?}\\
+$\frac{1}{e}$ as $n \to \infty$\\
+We want probability of $A_1 \cap A_2 \cap \ldots \cap A_n$\\
+$P(A_1 \cap A_2 \cap \ldots \cap A_n) = 1 - P(A_1^c \cup A_2^c \cup \ldots \cup A_n^c)$\\
+$P(A_1^c \cup A_2^c \cup \ldots \cup A_n^c) = 1 - P(A_1^c) - P(A_2^c) - \ldots - P(A_n^c) + P(A_1^c \cap A_2^c) + \ldots$\\
+With a buch of work we get:
+$$ 1 - \sum_{i=1}^{n} (-1)^{i+1} \frac{(x-i)!}{x!}\binom{x}{i}$$
+This results in $1 - \frac{1}{2!} + \frac{1}{3!} - \frac{1}{4!} + \ldots$\\
 
-\section{Chapter 5}
+\textbf{Example 50} on page 42 of 8th edition.\\
+
+\section{Chapter 3: Conditional Probability and Independence}
+\subsection*{6/6}
+$$P(A \cap B) = P(A)P(B|A) = P(A)P(B)$$
+iff E and F are independent.\\
+\section{Chapter 4: Random Variables}
+
+\section{Chapter 5: Continuous Random Variables}
 
 
 
