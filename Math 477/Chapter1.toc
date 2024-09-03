@@ -2,4 +2,4 @@
 \contentsline {section}{\numberline {2}Chapter 2: Axioms of Probability}{3}{}%
 \contentsline {section}{\numberline {3}Chapter 3: Conditional Probability and Independence}{3}{}%
 \contentsline {section}{\numberline {4}Chapter 4: Random Variables}{4}{}%
-\contentsline {section}{\numberline {5}Chapter 5: Continuous Random Variables}{4}{}%
+\contentsline {section}{\numberline {5}Chapter 5: Continuous Random Variables}{5}{}%

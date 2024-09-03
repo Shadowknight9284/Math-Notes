@@ -1,9 +1,9 @@
 # Fdb version 4
-["pdflatex"] 1717696038.61751 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 477/Chapter1.tex" "Chapter1.pdf" "Chapter1" 1717696039.95922 0
-  "Chapter1.aux" 1717696039 653 d960e51bfa520621fc3272b19e30eac9 "pdflatex"
-  "Chapter1.tex" 1717696037 4578 d65ac094adec9097a185986fad4f6a7e ""
-  "Chapter1.toc" 1717696039 416 930d7f5859d1481065d5e83465752294 "pdflatex"
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 477/Chapter1.tex" 1717696037 4578 d65ac094adec9097a185986fad4f6a7e ""
+["pdflatex"] 1719856924.08785 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 477/Chapter1.tex" "Chapter1.pdf" "Chapter1" 1719856925.5706 0
+  "Chapter1.aux" 1719856925 653 c82e51ede30803fb3b5dafbf73dc55f5 "pdflatex"
+  "Chapter1.tex" 1719856923 6959 35bf1b7d8b15bfdda7a01aab543be173 ""
+  "Chapter1.toc" 1719856925 416 248e16a33963ddc1ae7590f3acde8d06 "pdflatex"
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 477/Chapter1.tex" 1719856923 6959 35bf1b7d8b15bfdda7a01aab543be173 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1705505139 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1705503004 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1705503004 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -41,7 +41,9 @@
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1705503004 31809 8670ca339bf94e56da1fc21c80635e2a ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1705503004 32762 7fee39e011c23b3589931effd97b9702 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1705503004 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb" 1705503004 32915 7bf7720c61a5b3a7ff25b0964421c9b6 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1705503004 32716 08e384dc442464e7285e891af9f45947 ""
+  "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1705503004 34694 870c211f62cb72718a00e353f14f254d ""
   "c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1705507028 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "c:/texlive/2023/texmf-dist/tex/latex/amsfonts/amsfonts.sty" 1705503004 5949 3f3fd50a8cc94c3d4cbf4fc66cd3df1c ""
   "c:/texlive/2023/texmf-dist/tex/latex/amsfonts/amssymb.sty" 1705503004 13829 94730e64147574077f8ecfea9bb69af4 ""

@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Assignment 3}
+
+\begin{document}
+\maketitle
+\section*{Question 28}
+\subsection*{a}
+The probability of the 21th card in the deck being the ace of spades given the 20th card is an ace is $\frac{3}{128}$.
+This is due to the fact that we can split the probability into two cases. The first case is that the 20th card (which is the ace) is the ace of spades. Then the probability of the 21st card being the ace of spades is zero. The second case is that the 20th card is not the ace of spades but is instead one of the other three aces. In this case, the probability of the 21st card being the ace of spades is $\frac{1}{32}$ for the remaining 32 cards in the deck. Thus the probability is $\frac{1}{4} \cdot 0 + \frac{3}{4} \cdot \frac{1}{32} = \frac{3}{128}$.
+\subsection*{b}
+The probability of the 21th card in the deck being the two of clubs given the 20th card is an ace is . This is because we can view the probability as $P(2c_{21} | A_{20})$ which is equal to $P(2c_{21} \cap A_{20})/P(A_{20})$ which is also equal to $P(A_{20}| 2c_{21})P(2c_{21})/P(A_{20})$. 
+The probability of $P(A_{20})$ is $\binom{48}{19}*4/\binom{52}{19}$.
+The probability of $P(2c_{21})$ is $1/52$.
+The probability of $P(A_{20}| 2c_{21})$ $\binom{47}{19} *4 *1/\binom{52}{19} $.
+Thus the probability is $\frac{\binom{47}{19} *4 *1/\binom{52}{19} *1/52}{\binom{48}{19}*4/\binom{52}{19}}$ 
+
+
+\section*{Question 33}
+\section*{a}
+The probability that Joe is early is $.7 \cdot .7 + .3 \cdot .1 = .52$. This is simply multiplying the conditional probabilities 
+\section*{b}
+It is $\frac{.49}{.52}$ this is because the probability is the probability that Joes is early and it rains divided by the probability that Joe is early.
+\section*{Question 59}
+\subsection*{a}
+It is simply $p^4$.
+\subsection*{b}
+It is $p^3(1-p)$.
+\subsection*{c}
+The probability is $1-p^4$. This is due to the fact that the only way that 4 heads in a row can occur before one tail and 3 heads is if the first four flips are heads. The probability of this is $p^4$. Thus the probability of 4 heads in a row not occurring before one tail and 3 heads is $1-p^4$.
+\section*{Question 74}
+The probability is $\sum_{n=0}^{\infty} \frac{31}{36}^{n/2} \cdot \frac{32}{36}^{n/2} \cdot \frac{5}{36}$. This due to the fact that the probability is all of the possible ways that A does not roll a 6, B does not roll a 9, then A rolls a 6. 
+
+\end{document}

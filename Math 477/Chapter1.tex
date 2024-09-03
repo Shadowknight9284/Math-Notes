@@ -87,10 +87,66 @@ This results in $1 - \frac{1}{2!} + \frac{1}{3!} - \frac{1}{4!} + \ldots$\\
 \subsection*{6/6}
 $$P(A \cap B) = P(A)P(B|A) = P(A)P(B)$$
 iff E and F are independent.\\
+\subsection*{6/10}
+\textbf{Bayes formula}\\
+$$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$$
+\textbf{Odds}\\
+$$\frac{P(A)}{P(A^c)}$$
+\textbf{New Odds}\\
+$$\frac{P(A|B)}{P(A^c|B)} = \frac{P(B|A) \cdot P(A)}{P(B|A^c) \cdot P(A^c) }$$
 \section{Chapter 4: Random Variables}
+\subsection*{6/20}
+\textbf{Random Variable Info}\\
+\textbf{Binomial Random Variable}\\
+$P[x=n] = \binom{N}{n}p^n(1-p)^{N-n}$\\
+$\mathbb{E}[x] = Np$\\
+$Var[x] = Np(1-p)$\\
+\textbf{Poisson Random Variable}\\
+$P[x=n] = \frac{e^{-\lambda}\lambda^n}{n!}$\\
+$\mathbb{E}[x] = \lambda$\\
+$Var[x] = \lambda$\\
+\textbf{Geometric Random Variable}\\
+$P[x=n] = (1-p)^{n-1}p$\\
+$\mathbb{E}[x] = \frac{1}{p}$\\
+$Var[x] = \frac{1-p}{p^2}$\\
+\textbf{Negative Binomial Random Variable}\\
+$P[x=n] = \binom{n-1}{r-1}p^r(1-p)^{n-r}$\\
+$\mathbb{E}[x] = \frac{r}{p}$\\
+$Var[x] = \frac{r(1-p)}{p^2}$\\
+\textbf{Hypergeometric Random Variable}\\
+$P[x=n] = \frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}$\\
+$\mathbb{E}[x] = \frac{Mk}{N}$\\
+$Var[x] = \frac{N-M}{N-1}k\frac{M}{N}\frac{N-k}{N-1}$\\
+$Var[x] = np(1-p)(1-\frac{n-1}{N-1})$\\
+\textbf{Zeta Random Variable}\\
+$P[x=k] = \frac{c}{k^{\alpha + 1}}$\\
+$\mathbb{E}[x] = \frac{c}{\alpha - 1}$\\
+$Var[x] = \frac{c^2}{(\alpha - 1)^2(\alpha - 2)}$\\
+
 
 \section{Chapter 5: Continuous Random Variables}
-
+$pdf[a \leq x \leq b] = \int_{a}^{b} f(x)dx$\\
+Where $f(x)$ is the probability density function.\\
+A Cumulative Distribution Function is $cdf(x) = P[X \leq x]$\\
+Also $cdf(x) = \int_{-\infty}^{x} f(x)dx$\\
+\textbf{Gaussian Random Variable}\\
+$P[x=n] = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$\\
+$\mathbb{E}[x] = \mu$\\
+$Var[x] = \sigma^2$\\
+\textbf{Exponential Random Variable}\\
+$P[x=n] = \lambda e^{-\lambda x}$\\
+$\mathbb{E}[x] = \frac{1}{\lambda}$\\
+$Var[x] = \frac{1}{\lambda^2}$\\
+A non negative Random variable c is memmoryless if $P[x>s+t | x > s] = P[x>t]$
+\textbf{Gamma Random Variable}\\
+$P[x=n] = \frac{\lambda^{\alpha}x^{\alpha - 1}e^{-\lambda x}}{(\alpha - 1)!}$\\
+$P[x=n] = \frac{\lambda^{\alpha}x^{\alpha - 1}e^{-\lambda x}}{\Gamma(\alpha)}$\\
+$\mathbb{E}[x] = \frac{\alpha}{\lambda}$\\
+$Var[x] = \frac{\alpha}{\lambda^2}$\\
+\textbf{Weibull Random Variable}\\
+$P[x=n] = \frac{\alpha}{\beta}(\frac{x}{\beta})^{\alpha - 1}e^{-(\frac{x}{\beta})^{\alpha}}$\\
+$\mathbb{E}[x] = \beta \Gamma(1 + \frac{1}{\alpha})$\\
+$Var[x] = \beta^2[\Gamma(1 + \frac{2}{\alpha}) - \Gamma^2(1 + \frac{1}{\alpha})]$\\
 
 
 \end{document}

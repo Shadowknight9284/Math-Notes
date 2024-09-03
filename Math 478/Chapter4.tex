@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{dsfont}
+
+\usepackage{graphicx}
+
+\newcommand{\prob}{\mathds{P}}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Chapter 4}
+
+\begin{document}
+\maketitle
+
+\textbf{9/3}
+\section*{Chapter 4}
+\subsection*{Markov Property}
+If the probability of the nest state only depends on the current state, it satisfies the "Markov Property".\\
+\textbf{Drunkards walk example}
+$$\mathds{P}(x_{i+1} = x_i \pm 1) = \frac{1}{2} \mathds{P}(x_{i+1} \neq x_i \pm 1) = 0$$
+$$ \mathds{P}(x_{i+1} = x+1 | x_i = x) = 1/2$$
+$$ \mathds{P}(x_{i+1} = x-1 | x_i = x) = 1/2$$
+\subsection*{Formal Definition}
+Let $\{X_n, n \in \mathds{N}\}$ be a stochastic process that takes discrete time values. Suppose $\mathds{P}(X_{n+1} = j | X_n = i_n ... X_0 = i_0) = P_{i,j}$ Such a stochastic process is called a Markov Chain. $P_{ij}$ is the transition probability from state i to state j.
+\subsection*{Transition Probability Matrix}
+Let $i,j \in \mathds{N}$ be possible states of the Markov Chain. The matrix $P = [P_{ij}]$ is called the transition probability matrix of the Markov Chain. Where $P_{ij} = \mathds{P}(x_{n+1} = j | x_n = i)$.
+\textbf{Ex 4.1}
+$$\mathds{P}(\text{rain tomorrow} | \text{rain today}) = \alpha$$
+$$\mathds{P}(\text{rain tomorrow} | \text{no rain today}) = \beta$$
+$$\text{Let} \begin{cases}
+    0 = \text{rain} \\
+    1 = \text{no rain}
+\end{cases}$$
+$$P = \begin{bmatrix}
+    \alpha & 1 - \alpha \\
+    \beta & 1 - \beta
+\end{bmatrix}$$
+\textbf{Ex 4.4}
+Suppose whether it rains tomorrow or not depends on both todays and yesterdays weather. \\
+$$\begin{tabular}{|c|c|c|}
+    \hline
+    Today's Weather & Yesterdays's Weather & Value \\
+    \hline
+    Rain & Rain & 0 \\
+    \hline
+    Rain & No Rain & 1 \\
+    \hline
+    No Rain & Rain & 2 \\
+    \hline
+    No Rain & No Rain & 3 \\
+    \hline
+\end{tabular}$$
+Suppose:\\ $\mathds{P}(\text{rain tomorrow} | \text{rain today, rain yesterday}) = .7$\\
+$\mathds{P}(\text{rain tomorrow} | \text{rain today, no rain yesterday}) = .5$\\
+$\mathds{P}(\text{rain tomorrow} | \text{no rain today, rain yesterday}) = .4$\\
+$\mathds{P}(\text{rain tomorrow} | \text{no rain today, no rain yesterday}) = .2$\\
+$$P = \begin{bmatrix}
+    .7 & 0 & .3 & 0 \\
+    .5 & 0 & .5 & 0 \\
+    0 & .4 & 0 & .6 \\
+    0 & .2 & 0 & .8
+\end{bmatrix}$$
+\section*{4.2 Chapman-Kolmogorov Theorem}
+$P_{ij}$ = probability of going from state i to state j\\
+$P_{ij}^{(n)}$ = probability of going from state i to state j in n steps.\\
+$P_{ij}^{(n+m)} = \sum_{k} P_{ik}^{(n)} P_{kj}^{(m)}$ (pg.197)\\
+\textbf{Look at example 4.10 for next class}
+
+
+\subsection*{Martingale}
+\textbf{Martingale Convergence Theorem}
+A martingale is defined as 
+
+
+
+\end{document}

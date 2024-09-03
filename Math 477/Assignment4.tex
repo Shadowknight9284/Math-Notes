@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Assignment 4}
+
+\begin{document}
+\maketitle
+\section*{Question 33}
+To find what is the number of papers needed to maximize profit we need to take the Expected value of each number of papers and then find the maximum value.\\
+Let $b$ be the number of papers bought, $s$ the number of papers sold, and $r$ the profit per paper sold.\\
+With the price of buying a paper being 10 cents and the price of selling a paper being 15 cents, the profit per paper sold is 5 cents minus the left over papers.\\
+Thus the formula used to find profit is $r = 0.05s - 0.10(b-s)$.\\ 
+Now we need to multiply the probability of each of the number of papers being sold by the profit per paper sold.\\
+With a binomial distribution of $n=10$ and $p=\frac{1}{3}$ the Expected value formula is 
+$$ E(X) = \sum_{s=0}^{n} r \cdot \binom{n}{s}p^s(1-p)^{n-s}$$
+For $b = 0$ the Expected value is 0\\
+For $b = 1$ the Expected value is 4.740\\
+For $b = 2$ the expected value is 8.185\\
+For $b = 3$ the expected value is 8.700\\
+For $b = 4$ the expected value is 5.315\\
+Clearly the maximum expected value is when $b = 3$.\\
+
+\section*{Question 54}
+I would use a poisson distribution to  model the number of cars abandonded on a highway.\\
+\subsection*{a}
+No abandonded cars: $P(X=0) = \frac{e^{-2}2^0}{0!} = e^{-2}$
+
+\subsection*{b}
+At least two abandonded cars: $P(X \geq 2) = 1 - P(X < 2) = 1 - P(X = 0) - P(X = 1) = 1 - e^{-2} - 2e^{-2} = 1 - 3e^{-2}$
+
+\section*{Question 75}
+$P(X = x) = \binom{9+x}{x} (1/2)^10(1/2)^x$
+
+\section*{Question 5}
+$P(X = 0)$ is 1\\
+Since $P(X=0) = 1 - P(X \neq 0) = 1 - P(X = 1)$ Thus $P(X\neq 0) = P(X = 1)$ and $P(X=0) + P(X=1) = 1$\\
+Also $E(X) = 3Var(X) = 3E(X^2) - 3E(X)^2$.\\
+Thus $1P(X=1) = 3(1P(X=1^2) - (1P(X=1))^2)$\\
+Thus $P(X=1) = 0$\\
+Therefore $P(X=0) = 1$ and $P(X \neq 0) = 0$\\
+\end{document}

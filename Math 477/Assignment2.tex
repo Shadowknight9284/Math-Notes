@@ -1,0 +1,33 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{TODO}
+
+\begin{document}
+\maketitle
+\section{Question 18}
+The reason why the function $f_n = f_{n-1} + f_{n-2}$ defines the action of the number of ways that you get successive heads not appear is due to the fact that if the first toss was heads, the next must be tails and the number of ways to get to the next heads is $f_{n-2}$. If the first toss was tails, the number of ways to get to the next heads is $f_{n-1}$. Thus, the number of ways to get to the next heads is $f_{n-1} + f_{n-2}$.
+\section{Question 20}
+If the sample space of an experiment is countably infinite then each even cannot be equally likely as the would result in a uniform distribution. The total probability of all events must sum to 1, but there is no number $n$ such that $n \cdot \frac{1}{\infty} = 1$. Thus, the probability of each event must not be all equal. 
+
+\section{Question 42}
+$1-\frac{35}{36}^n$ as we do the copmliment of the probability that the event does not happen. The probability that the event does not happen is $\frac{35}{36}$ and we do this $n$ times. There needs to be 24 dice rolls
+
+\section{Question 3.14}
+\subsection*{a}
+The probability is $\frac{7 \cdot 9 \cdot 5 \cdot 7}{12 \cdot 14 \cdot 16 \cdot 18}$. Since the events are not independent, we must use the formula $P(A \cap B) = P(A)P(B|A)$. Then the probability becomes $P(A_b \cap B_b \cap C_w \cap D_w) = P(A)P(B|A)P(C|A \cap B)P(D|A \cap B \cap C)$. After doing the calculation of the probabilities using the formula $P(B) = P(A)P(B|A) + P(A^c)P(B|A^c)$, we get the probability to be $\frac{7 \cdot 9 \cdot 5 \cdot 7}{12 \cdot 14 \cdot 16 \cdot 18}$.
+
+\subsection*{b}
+Similarly the probability is $\frac{7 \cdot 9 \cdot 5 \cdot 7}{12 \cdot 14 \cdot 16 \cdot 18} \cdot \binom{4}{2}$. Since multiplication is commutative, and we need to choose the two black balls of the four, we can multiply the probability by $\binom{4}{2}$.
+
+\end{document}

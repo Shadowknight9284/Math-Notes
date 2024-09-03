@@ -1,0 +1,168 @@
+\documentclass{beamer}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Introduction to Stochastic Calculus and Its Applications in Finance}
+
+\begin{document}
+
+\begin{frame}
+    \frametitle{Stochastic Calculus}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Martingale}
+    A martingale is a stochastic process that has the property that, at any particular time in the realized sequence, the conditional expectation of the next value in the sequence is equal to the present observed value even given knowledge of all prior observed values.\\
+    \vspace{0.5cm}
+    If $X_1, X_2, X_3, \ldots$  is a sequence of random variables, then the filtration is the collection of all information available up to time $n$ and is denoted by $\{\mathcal{F}_n\}$.\\ 
+    \vspace{0.5cm}
+    Formally, a martingale is a sequence of random variables $X_1, X_2, X_3, \ldots$ such that for all $n \geq 1$,
+    $$|\mathbb{E}[X_n]| < \infty$$
+    $$E[X_{n+1} | \mathcal{F}_n] = X_n$$
+    $$E[X_{n+1} - X_n | \mathcal{F}_n] = 0$$
+\end{frame}
+
+\begin{frame}
+    \frametitle{Brownian Motion}
+    Brownian motion is a stochastic process that models random continuous motion.\\
+    A standard Brownian motion is one with drift $m=0$ and variation $\sigma^2= 1$\\
+    A stochastic process $B_t$ is called a Brownian motion with drift $m$ and variance $\sigma^2$ starting at the origin if: (assuming if $s<t$)
+    \begin{itemize}
+        \item $B_0 = 0$
+        \item $B_t -B_s$ is normal with mean $m(t-s)$ and variance $\sigma^2(t-s)$
+        \item $B_t - B_s$ is independent of the values of $B_r$ for $r \leq s$
+        \item with probability one, the function $t \rightarrow B_t$ is a continuous function of t.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Stochastic Integral}
+    The stochastic integral is a generalization of the Riemann integral to stochastic processes. It is used to define the integral of a stochastic process with respect to another stochastic process.\\
+    \vspace{0.5cm}
+    Let $B_t$ be a standard one-dimensional Brownian motion. The stochastic integral of a process $A_s$ with respect to $B_t$ is defined as
+    $$\int_{0}^{t} A_s dB_s = \lim_{\|P\| \to 0} \sum_{i=0}^{n-1} A_{t_{i}} (B_{t_{i+1}} - B_{t_{i}})$$
+    where the limit is taken over all partitions $P = \{0 = t_0 < t_1 < \ldots < t_n = t\}$ of the interval $[0,t]$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Quadratic Variation}
+    The quadratic variation of a stochastic process is a measure of the total variation of the process over time. It is defined as the limit of the sum of the squares of the differences between consecutive values of the process.\\
+    \vspace{0.5cm}
+    Formally, let $X_t$ be a stochastic process. The quadratic variation of $X_t$ is defined as
+    $$[X]_t = lim_{n \rightarrow \infty} \sum_{j \leq tn} (X(\frac{j}{n}) + X(\frac{j-1}{n}) )^2 $$
+    Note that $[B]_t = t$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Stochastic Differential Equations}
+    A stochastic differential equation (SDE) is an equation that describes the evolution of a stochastic process over time. It is a differential equation that contains a stochastic term.\\
+    \vspace{0.5cm}
+    A general SDE is given by
+    $$dX_t = \mu(t,X_t) dt + \sigma(t,X_t) dB_t$$
+    where $X_t$ is the stochastic process, $\mu(t,X_t)$ is the drift term, $\sigma(t,X_t)$ is the diffusion term, and $B_t$ is a Brownian motion.
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Itô's Formula}
+    Itô's Formula is a fundamental theorem in stochastic calculus that provides a formula for the differential of a function of a stochastic process.\\
+    \vspace{0.5cm}
+    Let $f(t, x)$ be a function of $t$ and $X_t$. Then, Itô's formula states that
+    $$df(t,B_t) = \partial_x f(t,B_t) dB_t + [\partial_t f(t,Bt) + \frac{1}{2}\partial_{xx}f(t,B_t)]dt $$
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Product Rule}
+    Itô's formula can be used to derive a product rule for stochastic processes.\\
+    Suppose $X_t$ and $Y_t$ satisfy the stochastic differential equations
+    $$dX_t = H_t dt + A_t dB_t, dY_t = K_t dt + C_t dB_t$$ 
+    Then, the product $Z_t = X_t Y_t$ satisfies the following stochastic differential equation:
+    \begin{align*}
+        dZ_t &= X_t dY_t + Y_t dX_t + [X_t Y_t] dt\\
+        &= X_t (K_t dt + C_t dB_t) + Y_t (H_t dt + A_t dB_t) + A_t C_t dt
+    \end{align*}
+    
+    the last term, $A_t C_t$ is derived from the the quadratic covariation of $X_t$ and $Y_t$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Geometric Brownian Motion}
+    A Geometric Brownian motion is an stochastic process that satisfies the following stochastic differential equation:
+    $$dS_t = \mu S_t dt + \sigma S_t dB_t$$
+    This SDE is solvable and the solution is given by:
+    $$S_t = S_0 e^{(\mu - \frac{1}{2}\sigma^2)t + \sigma B_t}$$
+    where $S_0$ is the initial value of the process.
+    The Geometric Brownian motion is widely used in finance to model stock prices as it measure changes in terms of fractions of percentages of the current price.
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Black-Scholes Model: Introduction}
+    The Black-Scholes model is a mathematical model used for pricing options. It is based on the assumption that the price of the underlying asset follows a geometric Brownian motion.\\
+    \vspace{0.5cm}
+    The Black-Scholes model assumes the stock price follows the following stochastic differential equation:
+    $$dS_t = \mu S_t dt + \sigma S_t dW_t$$
+    where $S_t$ is the price of the underlying asset, $\mu$ is the drift rate, $\sigma$ is the volatility, and $W_t$ is a Brownian motion.\\
+    It also assumes a risk free bound rate $r$ satisfying
+    $$dR_t = rR_t dt$$
+    where $V_t$ is the value of the option. Thay is $R_t = e^{rt}R_0$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Black-Scholes Model: Strike Price}
+    The Black-Scholes model is used to price European call options. Let T be a time in the future and K be the strike price of the option. The value of this option at time T is given by 
+    $F(S_T) = max(S_T - K, 0)$ 
+    The goal is to find the price $f(t,x)$ at time $t<T$ given $S_t = x$ 
+
+    The Black-Scholes approach is to hedge the portfolio to guarantee the value at time $T$. The value of the portfolio is given by
+    $$ V_t = a_t S_t + b_t R_t$$
+    where $a_t$ and $b_t$ are the number of shares of the stock and the bond respectively. The value of the portfolio at time $T$ is given by
+    $$V_T = (S_T - K)_+$$
+    where $(x)_+ = max(x,0)$
+\end{frame}
+
+\begin{frame}
+    \frametitle{Black-Scholes Model: Assumptions}
+    We require the assumption that the portfolio is self financing. This means that there is no outside money used to rebalanced the portfolio. This gives us the following stochastic differential equation:
+    $$dV_t = a_t dS_t + b_t dR_t$$
+    Additionally the fair value of the European call option should be at most the value of the portfolio at the time since it has the same payoff as the call option at expiry \\
+    With this assumption and the prior equations, we can derive the following stochastic differential equation for the value of the option. 
+    Then utilizing Itô's formula, we can derive the Black-Scholes equation.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Solving Black-Scholes Equation}
+    Through the use of Itô's formula, we can derive the Black-Scholes equation. The solution to this equation is given by the Black-Scholes formula:
+    $$f(T-t,x) = x \Phi(d_1) - K e^{-r(T-t)} \Phi(d_2)$$
+    where $\Phi$ is the standard normal cumulative distribution function, and $d_1$ and $d_2$ are given by
+    $$d_1 = \frac{log(\frac{x}{K}) + (r+\frac{\sigma^2}{2}t)}{\sigma \sqrt{t}}$$
+    $$d_2 = \frac{log(\frac{x}{K}) + (r-\frac{\sigma^2}{2}t)}{\sigma \sqrt{t}}$$
+\end{frame}
+
+\begin{frame}
+    \frametitle{Conclusion}
+    Stochastic calculus is a powerful tool for modeling and analyzing random processes. Itô's formula provides a way to compute the differential of a function of a stochastic process, and the Black-Scholes model is a widely used application of stochastic calculus in finance. By understanding these concepts, we can gain insights into the behavior of financial markets and develop pricing models for financial instruments.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Thank You}
+    Thank you for your attention. I hope you found this presentation informative and interesting. If you have any questions or comments, please feel free to ask at pt422@scarletmail.rutgers.edu.\\
+    \vspace{0.5cm}
+    I predominantly used the book "Stochastic Calculus: An Introduction with Applications" by Gregory F. Lawler. \\ 
+    \vspace{0.5cm}
+    I would also like to thank Forrest Thurman for his guidance and support throughout this project.
+\end{frame}
+
+\end{document}

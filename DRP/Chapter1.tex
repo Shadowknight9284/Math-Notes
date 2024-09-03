@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{TODO}
+
+\begin{document}
+\maketitle
+\section*{1.1}
+\subsection*{1}
+$W = X* \mathbb{E}[Y]$
+\subsection*{2}
+$U = \frac{Z}{\mathbb{E}[Y]}$
+\subsection*{3}
+$ V = Y$
+
+\section*{1.2}
+\subsection*{1}
+$E[X^2 + 4XY + 4Y^2 | X] = E[X^2|X] + 4E[XY|X] + 4E[Y^2|X] $\\
+$= X^2 + 4X\mathbb{E}[Y] + 4\mathbb{E}[Y^2] $ 
+\subsection*{2}
+$E[X^2 + 4XY + 4Y^2 | X, Z] = E[X^2|X,Z] + 4E[XY|X,Z] + 4E[Y^2|X,Z] $\\
+$= X^2 + 4XY + 4Y $
+\subsection*{3}
+$E[X+2Y | Z] = E[X|Z] + 2E[Y|Z] $\\
+$ = \mathbb{E}[X] + 2\mathbb{E}[Y]$
+\subsection*{4}
+
+\section*{1.3}
+\subsection*{1}
+\begin{align*}
+\mathbb{E}[S_n] &= \mathbb{E}[X_1 + X_2 + ... + X_n] 
+\\&= \mathbb{E}[X_1] + \mathbb{E}[X_2] + ... + \mathbb{E}[X_n] 
+\\&= n* \mathbb{E}[X_j] \\&= 0 \\
+\mathbb{E}[S_n^2] &= \mathbb{E}[(X_1 + X_2 + ... + X_n)^2] \\&= \mathbb{E}[X_1^2 + X_2^2 + ... + X_n^2 + 2X_1X_2 + 2X_1X_3 + ... + 2X_{n-1}X_n] = n\mathbb{E}[X_j^2] + n(n-1)\mathbb{E}[X_jX_k] \\&= n\mathbb{E}[X_j^2] \\&= 2n \\
+\mathbb{E}[S_n^3] &= \mathbb{E}[(X_1 + X_2 + ... + X_n)^3] \\&= \mathbb{E}[X_1^3 + X_2^3 + ... + X_n^3 + 3X_1^2X_2 + 3X_1^2X_3 + ... + 3X_{n-1}^2X_n + 6X_1X_2X_3 + 6X_1X_2X_4 + ... + 6X_{n-2}X_{n-1}X_n] \\&= n\mathbb{E}[X_j^3] + 3n(n-1)\mathbb{E}[X_j^2X_k]/2 + n(n-1)(n-2)\mathbb{E}[X_jX_kX_l] \\&= \frac{7n}{3} \\
+\end{align*}
+
+
+\subsection*{2}
+\begin{align*}
+    E[S_n | F_m] = S_m + \mu(n-m) = S_m\\
+    E[S_n^2 | F_m] = S_m^2 + \sigma^2(n-m) = S_m^2 + 2(n-m)\\
+    E[S_n^3 | F_m] = 
+\end{align*}
+
+\subsection*{3}
+$E[X_m | S_n] = \frac{S_n}{n} $
+
+\section*{1.4}
+***
+
+\section*{1.5}
+***
+
+\section*{1.6}
+\subsection*{1}
+I believe it is a submartingale as the expected value of the next value is greater than the current value. 
+\subsection*{2}
+\subsection*{3}
+\subsection*{4}
+\subsection*{5}
+
+
+\end{document}
