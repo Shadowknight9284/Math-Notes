@@ -9,6 +9,12 @@
 \usepackage{graphicx}
 
 
+\newcommand{\prob}[1]{\mathds{P}(#1)}
+\newcommand{\expec}[1]{\mathds{E}(#1)}
+\newcommand{\var}[1]{\text{Var}(#1)}
+\newcommand{\ex}[1]{\textbf{Example #1}}
+
+
 \setlength\parindent{0pt}
 
 \author{Pranav Tikkawar}
@@ -18,6 +24,42 @@
 \maketitle
 
 \section{Probability Review}
+\subsection*{Moment Generating Functions}
+Suppose $X$ is a random variable. The $r$th moment of $X$ about the origin is defined as
+$$\mu_r' := \expec{X^r} = \int x^r f(x) dx$$
+where $f(x)$ is the PDF. \\
+The first moment is the mean indicated by $\mu$ \\
+The $r$th moment about the mean is defined as
+$$ \mu_r := \expec{(X - \mu)^r} = \int (x - \mu)^r f(x) dx$$
+$\mu_2$ is the variance of $X$ indicated by $\sigma^2$ and is always non-negative \\
+$\var{x} = \expec{X^2} - \expec{X}^2$ \\
+A random variable $X$ taking values in $\mathds{R}$ is said to be norm with parameter $\mu$ and $\sigma^2$ if its PDF is given by
+$$f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}$$
+Case: $\mu = 0$ and $\sigma^2 = 1$ is called the standard normal distribution. \\
+\textbf{Moment Generating Function} \\
+The moment generating function of a random variable $X$ is defined as 
+$$M_X(t) = \expec{e^{tX}} = \int e^{tx} f(x)dx $$
+Note $e^{tx} = 1 + tx + \frac{(tx)^2}{2!} + \frac{(tx)^3}{3!} + ...$ \\
+Can also be considered as 
+$$ M_X(t) = \sum_{n=0}^{\infty} \frac{t^n \mu_n'}{n!}$$
+where $\mu_n$ is the $n$th moment of $X$ about the origin. \\
+$$M_X(t) = \expec{e^{tX}} = \expec{1 + tX + \frac{(tX)^2}{2!} + \frac{(tX)^3}{3!} + ...}$$
+$$M_X(t)' = \expec{Xe^{tX}} = \expec{X} + \expec{X^2}t + \expec{X^3}\frac{t^2}{2!} + ...$$
+$$M_X(0)' = \expec{X} $$
+$$M_X(0)^{(n)} = \mu_n(x) = \expec{X^n}$$
+
+
+
+
+
+% Write this later !!!
+% $$\int x \frac{e^{(-(x-\mu)^2)/2\sigma^2}}{\sqrt{2\pi \sigma^2}} dx$$
+% $$ z = (-(x-\mu)^2)/2\sigma^2 $$
+% $$ dz = -(x-\mu)/\sigma^2 dx$$
+% $$ -\sigma^2 dz = (x-\mu) dx$$
+% $$  \int x \frac{e^{(-(x-\mu)^2)/2\sigma^2}}{\sqrt{2\pi \sigma^2}} - \mu \frac{e^{(-(x-\mu)^2)/2\sigma^2}}{\sqrt{2\pi \sigma^2}}  + \mu \frac{e^{(-(x-\mu)^2)/2\sigma^2}}{\sqrt{2\pi \sigma^2}}  dx $$
+% $$ \int (x-\mu)\frac{e^{(-(x-\mu)^2)/2\sigma^2}}{\sqrt{2\pi \sigma^2}}dx  + \int \mu \frac{e^{(-(x-\mu)^2)/2\sigma^2}}{\sqrt{2\pi \sigma^2}} dx $$
+% $$\int -\sigma^2 e^{-z} dz + \mu \int \frac{e^{(-(x-\mu)^2)/2\sigma^2}}{\sqrt{2\pi \sigma^2}} dx$$
 
 
 

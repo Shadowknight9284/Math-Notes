@@ -9,6 +9,10 @@
 \usepackage{graphicx}
 
 \newcommand{\prob}{\mathds{P}}
+\newcommand{\expec}{\mathds{E}}
+\newcommand{\var}{\text{Var}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\ex}[1]{\textbf{Example #1}}
 
 
 \setlength\parindent{0pt}
@@ -73,10 +77,52 @@ $P_{ij}^{(n)}$ = probability of going from state i to state j in n steps.\\
 $P_{ij}^{(n+m)} = \sum_{k} P_{ik}^{(n)} P_{kj}^{(m)}$ (pg.197)\\
 \textbf{Look at example 4.10 for next class}
 
-
-\subsection*{Martingale}
-\textbf{Martingale Convergence Theorem}
-A martingale is defined as 
+\textbf{9/8}
+\subsection*{Proof of Chapman-Kolmogorov Theorem}
+Equation: $P_{ij}^{(n+m)} = \sum_{k} P_{ik}^{(n)} P_{kj}^{(m)}$\\
+We can visualize this as a graph with n+m steps and we consider all the paths $i \rightarrow j$ and sum them with the law of total probability.\\
+\textbf{Proof:}\\
+$$ P_{ij}^{(n+m)} = \mathds{P}(X_{n+m} = j | X_0 = i)$$
+$$ = \sum_{k} \mathds{P}(X_{n+m} = j, X_n = k | X_0 = i)$$
+$$ = \sum_{k} \mathds{P}(X_{n+m} = j | X_n = k, X_0 = i) \mathds{P}(X_n = k | X_0 = i)$$
+Note that this is the probabilty of going from k to j in m steps(which doesn't depend on $x_0 =i$ due to the Markov Property) and from i to k in n steps.\\
+Homogeneity of a Markov Chain.\\
+\textbf{Example 4.10} 
+An urn always contains 2 balls. Possible ball colors are red and blue. Each stage of the process we pick a ball and randomly replace it with another ball. Replacement of the same color is $.8$ and replacement of a different color is $.2$.\\ 
+If initially both the first balls are red, what is the probability that the 5th ball is red?\\   
+$$P = \begin{bmatrix}
+    .8 & .2 & 0 \\
+    .1 & .8 & .1 \\
+    0 & .2 & .8
+\end{bmatrix}$$
+Note: for a set up where the probability of changing colors is invariant of the color of the ball, the transition matrix will be visually "radially" symmetric***.\\
+$$\mathds{P}(X_5 = \text{red} ) = P_{22}^{(4)}  + \frac{1}{2}P_{21}^{(4)} + 0P_{12}^{(4)}$$
+$$ =0.7048 $$
+Ask what are other Properties of stochastic matrix\\
+$ a_{i,j} = a{n-i, n-j }$\\
+\ex{4.11}\\
+In a sequence of independent flips of a fair coint, let $N$ denote the number of flips until there is a run of 3 heads.\\
+Find (a) $P(N \leq 8)$ (b) $P(N = 8)$\\
+Consider 4 states: 0,1,2,3. given by n = the number of consecutive heads\\
+$$P = \begin{bmatrix}
+    1/2 & 1/2 & 0 & 0 \\
+    1/2 & 0 & 1/2 & 0 \\
+    1/2 & 0 & 0 & 1/2 \\
+    0 & 0 & 0 & 1 \\
+\end{bmatrix}$$
+(a) = $P_{03}^{(8)}$\\
+(b) = $\frac{1}{2} P_{02}^{(7)}$\\
+\subsection*{4.3 Classification of States}
+\textbf{Definition:} State j of is accessible from state i if $P_{ij}^{(n)} > 0$ for some $n \geq 0$. If the states are accessible from each other, they are said to communicate.\\
+Communication is an equivalence relation.\\
+Reflexive and symmetric are obvious.\\
+Transitive is proven by the Chapman-Kolmogorov Theorem.\\
+This relation divides the states into classes.\\
+\subsection*{Reccurent and Transient States}
+\textbf{Definition:} A given state i of a MC let $f_i$ denote the probability that the chain will eventually return to state i.\\
+A state is called Reccurent if $f_i = 1$ and Transient if $f_i < 1$.\\
+The expected number of tevisits to a reccuent state is infinite.\\
+for a transient state the probability of being in state i for exactly n times period is $f_i^n (1-f_i)$: Geometric distribution\\
 
 
 

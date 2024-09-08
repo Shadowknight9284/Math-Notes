@@ -8,14 +8,140 @@
 
 \usepackage{graphicx}
 
+\newcommand{\partialfrac}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ddt}{\frac{d}{dt}}
+\newcommand{\dyx}{\frac{dy}{dx}}
 
 \setlength\parindent{0pt}
 
 \author{Pranav Tikkawar}
-\title{TODO}
+\title{PDEs}
 
 \begin{document}
 \maketitle
+
+\section*{Introduction}
+\textbf{What is a PDE?}\\
+Start with ODE: $u = u(x)$, equation involing indepednant variable $x$ and dependent variable $u$ as well as its derivatives.\\
+\textbf{Example:} $u'' -x u = 0, x \in I$ (Airy Functions). Second order Linear ODE. $Lu = u'' - xu$ Where L is an operator.\\
+Linearity means 2 things: $L(u_1 + u_2) = Lu_1 + Lu_2$ and $L(cu) = cLu$\\ $\forall u_1, u_2 \in \mathcal{F}, \forall c \in \mathds{F}$\\
+PDE: $u = u(x, y, ...)$ equation involving independent variables $x, y, ...$ and Function $u$ as well as its partial derivatives $u_x, u_y, u_{xx}, u_{yy}, u_{xy}$\\
+\textbf{Example:} $x^2u - sin(xy)u_{xxyy}+3u_x = 0$ 4th order linear PDE of 2 vars.\\
+Remark: Importance of linearity: say $u_1, u_2$ are solutions of a Linear PDE: $Lu_1 = 0, Lu_2 = 0$ then $c_1u_1 + c_2u_2, (\forall c_1, c_2 \in \mathds{R})$  is also a solution of $Lu = 0$\\
+More generally, if $u_1, ..., u_n$ are solutions, then $\sum_{j=1}^{n}c_ju_j$ is also a solution.\\ 
+\textbf{Example:} $u=u(x,y)$, solve $u_{xx} = 0$. $u_x = f(y)$, $u = f(y)x + g(y)$ where $f,g$ are arbitrary functions. $(\forall f,g \in \mathcal{F})$\\
+$Lu = 0$  is homogenous, $Lu = f$ is non-homogenous.\\
+\section*{1.2 First Order PDE of x,y}
+$$x, y, u_x, u_y, u $$
+\textbf{Generally:} $a(x,y)u_x + b(x,y)u_y + c(x,y)u = 0$\\
+\textbf{Example 1:} $u_x = 0$: $u = f(y)$ No change in the x direction, hence the function stays constant on all horizontal lines.\\ 
+\textbf{Example 2: Geometric Method} $au_x + bu_y = 0, (a,b \in \mathds{R})$\\
+$\vec{v} = (a,b)$; $\nabla u = <u_x, u_y>$; $\nabla u \cdot \vec{v} = 0 \rightarrow D_{\vec{v}}u = 0$\\
+No change in the "v" direction (say $|\vec{v}| = 1$)\\
+$x = ta, y = tb \rightarrow ay-bx=0$
+On the lines $ay-bx = c$ where $c$ is a constant, the function $u$ is constant. Lets call its value $f(c)$\\
+$u(x,y) = f(ay-bx)$ where $f$ is a function of a single variable\\
+The lines where these are solutions/constant are called \textbf{characteristic lines}\\ 
+Check: $u_x = -bf'(ay-bx)$, $u_y = af'(ay-bx)$\\
+\textbf{Change of variable}
+Change our plane such that $\vec{v}$ is our "x" axis.\\
+View $(x,y) = x + iy, (x',y') = x' + iy'$. Multiplying by $e^{i\alpha}$ rotates the plane ccw by $\alpha$\\
+$x'+iy' = (x+iy)e^{i\alpha}$ where $\vec{v} = (a,b) = (cos(\alpha), sin(\alpha))$\\
+$x' = xcos(\alpha) + y sin(\alpha)$, $y' = -xsin(\alpha) + ycos(\alpha)$\\
+Rewrite PDE in our new system: $u = u(x',y') = u(x'(x,y),y'(x,y))$\\
+$$u_x = u_{x'}\partialfrac{x'}{x} + u_{y'}\partialfrac{y'}{x}$$
+$$u_x = au_{x'} - bu_{y'}$$
+$$u_y = u_{x'}\partialfrac{x'}{y} + u_{y'}\partialfrac{y'}{y}$$
+$$u_y = au_{y'} + bu_{x'}$$
+$$au_x + bu_y = 0$$
+$$a^2u_{x'} + b^2u_{y'} = 0$$
+$$u_{x'} = 0$$
+$$u = f(y') = f(ay-bx)$$
+\textbf{Example 3:} $u_x + yu_y = 0$\\
+$u$ doesnt change in the direction of $\vec{v} = (1,y)$ at the point $(x,y)$\\
+Lets call $C$ the characteristic curve: $\begin{cases} x = x(t), y = y(t) \end{cases}$ tangent to $\vec{v}$ at any $(x,y)$\\
+$$\ddt u(x(t),y(t)) = 0$$\\
+$$\dyx = y \rightarrow y(x) = c e^{x}, (\forall c \in \mathds{R})$$
+$$u(x,ce^x) = f(c)$$
+$$u(x,y) = f(ye^{-x})$$
+\textbf{Remark:} More generally $a(x,y)u_x + b(x,y)u_y = 0$\\
+$$\dyx = \frac{b(x,y)}{a(x,y)} \text{: ODE for characteristic curves}$$
+\section*{1.3.1 Mass flow/Transport Equation/Continuity Equation}
+Substance that flows in space. (eg. fluid)\\
+$\rho = \rho(x,y,z,t)$ density of the substance at point $(x,y,z)$ at time $t$\\
+$\vec{v} = \vec{v}(x,y,z,t)$ velocity of the substance at point $(x,y,z)$ at time $t$\\
+Consider $R$ as an arbitrary region in space.\\
+Conservation of mass: $m(t) = \int_{R} \rho(x,y,z,t)dV$ mass in R at time t\\
+Consider $[t , t + \Delta t]$, $m(t+\Delta t) = \int_{R} \rho(x,y,z,t+\Delta t)dV$\\
+Substance leaves/enters in $R$ through the boundary $\partial R$\\
+Consider a small part of the boundary call it $\partial S$ and see how much mass has left through this boundary patch over time period $[t,t+\Delta t]$\\
+% \includegraphics{massflow.png}
+We want to introdouce the "normal" $\vec{n}$ over the boundary $\partial S$\\
+$$\text{height} = \vec{v} \Delta t \cdot \vec{n} \text{ and area of base} = dS \rightarrow \text{volume} = \Delta t \vec{v} \cdot \vec{n} dS $$
+$$\rho = \text{mass/vol} \rightarrow \Delta t \rho \vec{v} \cdot \vec{n} dS$$
+$$ \Delta m = \Delta t \int_{\partial R} \rho \vec{v} \cdot \vec{n} dS$$
+Mass Conservation: $m(t + \Delta t) = m(t) - \Delta m $\\
+$$\frac{1}{\Delta t} \int_{R} \rho(x,y,z,t+\Delta t) - \rho(x,y,z,t)dV =\int_{\partial R} \rho \vec{v} \cdot \vec{n} dS$$
+$$ = \int_{R} div(\rho \vec{v})dV$$
+Where $div(\vec{F}) = \partialfrac{F_1}{x} + \partialfrac{F_2}{y} + \partialfrac{F_3}{z}$\\
+Let $\Delta t \rightarrow 0$\\
+$$\partialfrac{\rho}{t} + div(\rho \vec{v}) = 0$$
+This is the Transport Equation.\\
+\textbf{Example:} $\vec{v} = c(1,0)$ and $\rho = \rho(x,t)$\\
+$$\partialfrac{\rho}{t} + c\partialfrac{\rho}{x} = 0$$
+$$\rho(t,x) = f(x-ct)$$
+$\rho_t + c\rho_x = 0, t>0, x \in \mathds{R}, \rho(0,x) = \rho_0(x), x \in \mathds{R}$ Initial condition\\
+$$\rho(t,x) = \rho_0(x-ct)$$ 
+\section*{1.3.2 Heat Equation/Diffusion/Energy Flux}
+Flow of energy: $\vec{q}(x,y,z,t)$ energy flux at point $(x,y,z)$ at time $t$\\
+During the time interval $[t, t+ \Delta t]$ the energy $\Delta E = \Delta t \int_{\partial R} \vec{q} \cdot \vec{n} dS$ has left the test volume $R$ through the boundary $\partial R$\\
+Consider the patch $\partial S$ of the boundary $\partial R$ and the normal $\vec{n}$\\
+$$\Delta t \vec{q} \cdot \vec{n} dS \rightarrow e(\vec{n}) \Delta t dS$$
+Cauchy tensor deformation.\\
+To measure the energy inside $R$ we need the specific heat $c(x,y,z)$ and it measure the energy containing in 1 degree of temperature in 1 unit mass.\\
+$$ c = \frac{e}{T \cdot \text{mass}} = \frac{e}{T \cdot \rho \text{vol}}$$ 
+$$ T c \rho = \frac{e}{\text{vol}}$$
+$$ E(t) = \int_{R} T(\vec{x},t) \rho(\vec{x}) c(\vec{x}) dV $$ 
+This is the energy inside R at time t.\\
+$$E(t + \Delta t) = E(t) - \Delta E$$
+$$\int_{R} T_t(\vec{x},t) \rho(\vec{x}) c(\vec{x}) + div \vec{q} dV = 0$$
+$$ T_t c \rho + div \vec{q} = 0$$
+Incomplete: we need to know how $\vec{q}$ depends on $T$\\
+Forier's law of heat conduction: $\vec{q} = -k \nabla T$\\
+$k(\vec{x}) = $ heat conductivity of the material\\
+Heat flows from hot to cold.\\
+$$grad(t) $$ is the direction of the greatest increase of $T$\\
+$$c \rho T_t - div(k \nabla T) = 0$$
+Specific case: Assume $c, \rho, k$ are constants.\\
+$$\nabla T = \begin{pmatrix} T_x \\ T_y \\ T_z \end{pmatrix} \cdot \begin{pmatrix}
+    d_x, d_y, d_z
+\end{pmatrix}$$
+$$ div \nabla T = \nabla \cdot \nabla T = \nabla^2 T = T_{xx} + T_{yy} + T_{zz}$$
+This is the laplacian of $T$\\
+$$T_t = \mathbf{D} \nabla^2 T, \mathbf{D} = \frac{k}{c \rho}$$
+Fick's law of Diffusion.\\
+High density to low density.\\
+\subsection*{Wave Equation}
+Consider a string\\
+We have $x$ and $u(x,t)$\\
+Consider a small part of the string $[x,x+\Delta x]$ called $d\ell$\\
+There is a tangent force $T(x + \Delta x,t)$\\
+The mass of the string is $m(x)$ from origin to x\\
+Newton's law: $F = ma$\\
+$$T(x+\Delta x,t) - T(x,t) = (m(x + \Delta x) - m(x)) \vec{r}_tt(x,t)$$
+Divide by $\Delta x$ and let $\Delta x \rightarrow 0$\\
+$$\vec{T}_x(x,t) = \rho(x) \vec{r}_tt(x,t)$$
+Where $\rho$ is the linear density of the string\\
+$T$ is tangent to the string: $T$ is parallel to $\vec{r}_x$ \\
+introduce $\vec{\tau} = \frac{\vec{r}_x}{| \vec{r}_x |}$\\
+$$T = T(x,t) \vec{\tau}$$
+Where $T$ is constant along the string.\\
+Assume small vibration so that $|u_x|$ is small.\\
+$$\vec{r} = (1,u_x) = (1,0) $$
+
+
+
+
 
 
 \end{document}
