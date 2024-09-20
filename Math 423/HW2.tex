@@ -1,0 +1,126 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{TODO}
+
+\begin{document}
+\maketitle
+
+\section*{1.4 Problem 4 ***}
+A rod occupying the interval $0 \leq x \leq l$ is subject to the heat source
+$f(x) = 0$ for $0 < x < l/2$ , and $f(x) = H$ for $l/2 < x < l$ where $H > 0$. The rod has physical constants $c = \rho = k = 1$, and its ends are kept at zero temperature.
+\subsection*{a} 
+Find the steady-state temperature of the rod.\\
+\textbf{Solution:} \\
+$u(0, t) = u(l, t) = 0, \lim_{t \rightarrow \infty} u_t = 0$ and $u(l/2, t)$ is equal on both sides with $u(l/2,t)_x$ are also equal on both sides\\
+The steady-state temperature $u(x)$ satisfies the equation
+$$ u_{xx} + f(x) = 0 $$
+We can then integrate this to get:
+\begin{align*}
+u_{xx} &= -f(x) \\
+u_{x} &= -\int f(x) dx \\
+u_{x} &= \begin{cases}
+0 + C_1(t) & \text{for } 0 < x < l/2 \\
+-Hx + C_2(t) & \text{for } l/2 < x < l
+\end{cases}\\
+u &= -\begin{cases}
+C_1(t)x + C_3(t) & \text{for } 0 < x < l/2 \\
+-\frac{H}{2}x^2 + C_2(t)x + C_4(t) & \text{for } l/2 < x < l
+\end{cases}
+\end{align*}
+
+Now we can apply the boundary conditions.\\
+
+At $x = 0$:
+$$u(0,t) = C_3(t) = 0$$
+At $x = l$:
+$$u(l,t) = -\frac{H}{2}l^2 + C_2(t)l + C_4(t) = 0$$
+At $x = l/2$:
+$$u(l/2,t) = -\frac{H}{2}\left(\frac{l}{2}\right)^2 + C_2(t)\left(\frac{l}{2}\right) + C_4(t) = C_1(t)\frac{l}{2}$$
+And the partial derivative of x at $x = l/2$:
+$$u_x(l/2,t) = -H\left(\frac{l}{2}\right) + C_2(t) = C_1(t)$$
+
+
+\subsection*{b} 
+Which point is the hottest, and what is the temperature there?
+
+
+
+
+
+\section*{1.4 Problem 6 ***}
+Two homogeneous rods have the same cross section, specific heat c, and
+density $\rho$ but different heat conductivities $\kappa_1$ and $\kappa_2$ and lengths $L_1$ and $L_2$. Let $k_j = \kappa_j/c\rho$ be their diffusion constants. They are welded together
+so that the temperature $u$ and the heat flux $\kappa u_x$ at the weld are continuous.
+The left-hand rod has its left end maintained at temperature zero. The
+right-hand rod has its right end maintained at temperature T degrees.\\
+\subsection*{a} Find the equilibrium temperature distribution in the composite rod.
+
+\subsection*{b} Sketch it as a function of x in case $k_1 = 2, k_2 = 1, L_1 = 3, L_2 = 2, \text{ and } T = 10$. (This exercise requires a lot of elementary algebra, but
+it's worth it.)
+
+
+\section*{1.5 Problem 2 ***}
+Consider the problem 
+$$ u''(x) + u'(x) = f(x)$$
+$$ u'(0) = u(0) = \frac{1}{2}[u'(l) + u(l)]$$
+With $f(x)$ a given function.\\
+\subsection*{a} Is the solution unique? Explain.\\
+We know from our Ordinary Differential Equations class that the solution to a second order linear inhomogeneous differential equation is unique.\\
+We can solve the homogeneous equation to get the general solution and then add the particular solution to get the unique solution.\\
+The boundary conditions are also unique as there are 2 conditions, when 2 are needed, so the solution is unique.\\
+Solving the homogeneous equation we get:
+$$ u_h(x) = C_1e^{-x} + C_2$$
+
+
+
+
+
+\subsection*{b} Does a solution necessarily exist or is there a constion that $f(x)$ must satisfy for a solution to exist?\\
+
+\section*{1.5 Problem 6 ***}
+Solve the equation 
+$$ u_x + 2xy^2 u_y = 0$$
+\textbf{Solution: }\\
+We solve this by noticing the directional derivative in the direction of the vector $(1, 2xy^2)$ is 0. This means that the solution is constant along the lines $y^2 = x^2 + C$ for some constant $C$.\\
+Thus we can also say that 
+$$ \frac{dy}{dx} = \frac{2xy^2}{1} = 2xy^2$$
+This is a separable differential equation and we can solve it by separating the variables and integrating.\\
+\begin{align*}
+    \frac{dy}{dx} &= 2xy^2\\
+    \int y^{-2} dy &= \int 2x dx\\
+    -y^{-1} &= x^2 + C\\
+\end{align*}
+
+
+\section*{1.6 Problem 4 ***}
+What is the type of the equation:
+$$ u_{xx} - 4u_{xy} + 4u_{yy} = 0$$
+Show that by direct substition that $u(x,y) = f(y+2x) + xg(y+2x)$ is a solution for arbitrary functions $f$ and $g$. 
+
+\section*{1.6 Problem 6 ***}
+Consider the equation
+$$ 3u_y + u_{xy} = 0$$
+\subsection*{a}
+What is its type?\\
+Elliptic
+
+\subsection*{b}
+Find the general solution. Hint ($v = u_y$)\\
+
+\subsection*{c}
+With auxiliary conditions $u(x,0) = e^{-3x}$ and $u_y(x,0) = 0$, does a solution exist? Is it unique?\\
+
+
+\end{document}

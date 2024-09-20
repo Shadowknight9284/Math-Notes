@@ -1,0 +1,170 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{HW1: Math 423}
+
+\begin{document}
+\maketitle
+
+\section*{1.1 Problem 11}
+Verify that $u(x,y) = f(x)g(y)$ is a solution of the PDE $u u_{xy} = u_x u_y$ for all pairs of functions $f$ and $g$ of one variable.\\
+\textbf{Solution:}\\
+\begin{align*}
+    u_{x} &= f'(x)g(y)\\
+    u_{y} &= f(x)g'(y)\\
+    u_{xy} &= f'(x)g'(y)\\
+    u_{x}u_{y} &= f'(x)g(y)f(x)g'(y)\\
+    u u_{xy} &= f(x)g(y)f'(x)g'(y)\\
+    u u_{xy} &= u_{x}u_{y}
+\end{align*}
+Thus clearly $u(x,y) = f(x)g(y)$ is a solution of the PDE $u u_{xy} = u_x u_y$ for all pairs of functions $f$ and $g$ of one variable.
+
+\section*{1.1 Problem 12}
+Verify by direct substitution that the function $u(x,y) = sin(nx)sinh(ny)$ is a solution of the PDE $u_{xx} + u_{yy} = 0$ for all positive integers $n$.\\
+\textbf{Solution:}\\
+\begin{align*}
+    u_{x} &= ncos(nx)sinh(ny)\\
+    u_{y} &= nsin(nx)cosh(ny)\\
+    u_{xx} &= -n^2sin(nx)sinh(ny)\\
+    u_{yy} &= n^2sin(nx)sinh(ny)\\
+    u_{xx} + u_{yy} &= -n^2sin(nx)sinh(ny) + n^2sin(nx)sinh(ny)\\
+    u_{xx} + u_{yy} &= 0
+\end{align*}
+Thus clearly $u(x,y) = sin(nx)sinh(ny)$ is a solution of the PDE $u_{xx} + u_{yy} = 0$ for all positive integers $n$.
+
+\section*{1.2 Problem 2}
+Solve the equation $3u_y + u_{xy} = 0$\\
+\textbf{Solution:}\\
+Let $v = u_y$\\
+Then $v_x = u_{xy}$\\
+Thus the equation becomes $3v + v_x = 0$\\
+This is a first order linear ODE.\\
+The integrating factor is $e^{3x}$\\
+Multiplying both sides by the integrating factor we get\\
+\begin{align*}
+    3e^{3x}v + e^{3x}v_x &= 0\\
+    \frac{d}{dx}(e^{3x}v) &= 0\\
+    e^{3x}v &= C\\
+    v &= C_1e^{-3x}
+\end{align*}
+Where $C$ is a constant $\in \mathds{R}$.\\
+Now we have $v = u_y$\\
+Integrating $v$ with respect to $y$ we get\\
+\begin{align*}
+    u &= \int v dy\\
+    u &= \int Ce^{-3x} dy\\
+    u &= C_1e^{-3x}y + C_2(x)
+\end{align*}
+Where $C_1$ is a constant s $\in \mathds{R}$ and $C_2$ is function of $x$.\\
+
+
+\section*{1.2 Problem 6}
+Solve the equation $\sqrt{1 - x^2}u_x + u_y = 0$ with the condition that $u(0,y) = y$\\
+\textbf{Solution:}\\
+Noticing that the directional derivative in the direction of $(\sqrt{1 - x^2}, 1)$ is 0. The function is constant along these curves. We can find the characteristic curves by solving the ODE $\frac{dy}{dx} = \frac{1}{\sqrt{1 - x^2}}$\\
+
+$$\frac{dy}{dx} = \frac{1}{\sqrt{1-x^2}}$$
+$$y = arcsin(x) + C$$
+Now we have $u(x, y(x)) = u(x, arcsin(x) + C)$\\
+Let $x=0$ as an arbitrary value so we have $u(0, y(0)) = u(0, arcsin(0) + C) = u(0, C) = f(C)$\\
+Thus $C = y - arcsin(x)$\\ 
+Thus $u(x, y) = f(y - arcsin(x))$\\
+Now we can apply the initial condition $u(0, y) = y$\\
+$u(0, y) = f(y - arcsin(0)) = f(y) = y$\\
+Thus $f(y) = y$\\
+Thus $u(x, y) = y - arcsin(x)$\\
+
+\section*{1.2 Problem 10}
+Solve $u_x + u_y + u = e^{x+2y}$ with $u(x,0) = 0$ \\
+\textbf{Solution:}\\
+$$x' = x+y, y' = x - y$$
+$$x = \frac{x' + y'}{2}, y = \frac{x' - y'}{2}$$
+$$u_x = u_{x'} + u_{y'}$$
+$$u_y = u_{x'} - u_{y'}$$
+$$2u_{x'} + u(x',y') = e^{\frac{3x' -y'}{2}}$$
+This is now a first order linear ODE.\\
+The integrating factor is $e^{2x'}$\\
+Multiplying both sides by the integrating factor we get
+$$2e^{2x'}u_{x'} + e^{2x'}u = e^{\frac{7x' -y'}{2}}$$
+$$\frac{d}{dx'}(e^{2x'}u) = e^{\frac{7x' -y'}{2}}$$
+$$e^{2x'}u = \frac{2}{7}e^{\frac{7x' -y'}{2}} + C(y)$$
+$$u = \frac{2}{7}e^{-\frac{3x' -y'}{2}} + C(y')e^{-2x'}$$
+Now we have $u(x', y')$ Now we need to convert back into $u(x,y)$\\
+$$u(x, y) = \frac{2}{7}e^{x+2y} + C(x-y)e^{-2x-2y}$$
+\section*{1.3 Problem 6}
+Consider heat flow in a long circular cylinder where the tempurature only depends on t and r. From the 3d heat equation derivae the equation $u_t = k(u_{rr} + \frac{u_r}{r})$\\
+\textbf{Solution:}\\
+The heat equation in 3D is given by\\
+$$c \rho \frac{\partial u}{\partial t} = \nabla \cdot (k \nabla u)$$
+In cylindrical coordinates we can derive the Laplacian by rewretiting the divergence in cylindrical coordinates.\\
+Consider that for cylindrical coordinates we have\\
+\begin{align*}
+    r = \sqrt{x^2 + y^2}\\
+    \theta = tan^{-1}(\frac{y}{x})\\
+\end{align*} 
+Since we know the Laplacian is in the form of:\\
+$$\nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2}  + \frac{\partial^2}{\partial z^2}$$
+We can write each of these terms in cylindrical coordinates.\\
+Thus we have\\
+$$\frac{\partial^2}{\partial x^2} = \frac{\partial^2 r}{\partial x^2}\frac{\partial}{\partial r} + (\frac{\partial r}{\partial x})^2\frac{\partial^2}{\partial r^2} + \frac{\partial^2 \theta}{\partial x^2}\frac{\partial}{\partial \theta} + (\frac{\partial \theta}{\partial x})^2\frac{\partial^2}{\partial \theta^2} $$
+$$ \frac{\partial^2}{\partial y^2} = \frac{\partial^2 r}{\partial y^2}\frac{\partial}{\partial r} + (\frac{\partial r}{\partial y})^2\frac{\partial^2}{\partial r^2} + \frac{\partial^2 \theta}{\partial y^2}\frac{\partial}{\partial \theta} + (\frac{\partial \theta}{\partial y})^2\frac{\partial^2}{\partial \theta^2} $$
+Thus writing out all the partial derivatives we have\\
+\begin{align*}
+    \frac{\partial r}{\partial x} &= \frac{x}{r}\\
+    \frac{\partial r}{\partial y} &= \frac{y}{r}\\
+    \frac{\partial \theta}{\partial x} &= -\frac{y}{r^2}\\
+    \frac{\partial \theta}{\partial y} &= \frac{x}{r^2}\\
+    \frac{\partial^2 r}{\partial x^2} &= \frac{y^2}{r^3}\\
+    \frac{\partial^2 r}{\partial y^2} &= \frac{x^2}{r^3} \\
+    \frac{\partial^2 \theta}{\partial x^2} &= \frac{2xy}{r^4}\\
+    \frac{\partial^2 \theta}{\partial y^2} &= -\frac{2xy}{r^4}
+\end{align*}
+Notice that $\frac{\partial^2}{\partial z^2} = \frac{\partial^2}{\partial z^2}$\\
+Also not that many terms cancel out like the $\frac{\partial^2 \theta}{\partial x^2}$ and $\frac{\partial^2 \theta}{\partial y^2}$ terms.\\ As well as many other terms sum to nice things\
+Thus we can write the Laplacian in cylindrical coordinates as\\
+$$\nabla^2 = \frac{\partial^2}{\partial r^2} + \frac{1}{r}\frac{\partial}{\partial r} + \frac{1}{r^2}\frac{\partial^2}{\partial \theta^2} + \frac{\partial^2}{\partial z^2}$$
+Thus we can note that since we are only interested in the radial and time dependence we can ignore the angular and z dependence.\\
+Thus it follows that we have\\
+$$\nabla^2 = \frac{\partial^2}{\partial r^2} + \frac{1}{r}\frac{\partial}{\partial r}$$
+Thus we can write the heat equation as\\
+$$u_t = k u_{rr} + \frac{u_r}{r}$$
+with $k = \frac{k}{c \rho}$\\
+
+\section*{1.3 Problem 10}
+If $f(x)$ is continus and $|f(x)| \leq \frac{1}{|x|^3 + 1}$ for all $x$ show that $$\int_{D} \nabla \cdot f dx = 0$$
+\textbf{Solution:}\\
+Let $D$ be a larger ball with boundary $\partial D$ We can use the divergence theorem to write\\
+$$|\int_{D} \nabla \cdot f dx| = |\int_{\partial D} f \cdot n d(\partial D)|$$
+By cauchy schwartz we have\\
+that $|f \cdot n| \leq |f| |n|$\\
+Since $|n| = 1$ we have\\
+$$ |\int_{\partial D} f \cdot n d(\partial D)| \leq \int_{\partial D} |f| d(\partial D)$$
+It hs been given that $|f(x)| \leq \frac{1}{|x|^3 + 1}$.\\
+since we have taken $D$ to be a ball of radius $R$ we can do a change of variable to polar, spherical coordinates with $d(\partial D)  = R^2sin(\theta) d\theta d\phi$, with integrating from $\theta \in (0,2\pi), \phi \in (0, \pi)$\\
+We can also note that $|x| = R$ on the boundary of the ball.\\
+Thus we have\\
+$$\int_{\partial D} |f| \cdot n d(\partial D)| \leq \int_{\partial D} \frac{1}{R^3 + 1} d(\partial D) = \int_{0}^{\pi}\int_{0}^{2\pi} \frac{R^2}{R^3+1} sin(\theta)d\theta d\phi$$
+This integral evaluates to\\
+$$\frac{R^2}{R^3 + 1} (4 \pi)$$
+We have now shown that\\
+$$|\int_{D} \nabla \cdot f dx| \leq \frac{4 \pi R^2}{R^3 + 1}$$
+Now we can take the limit as $R \to \infty$\\
+$$\lim_{R \to \infty} \frac{4 \pi R^2}{R^3 + 1} = 0$$
+Note that it goes to 0 similar to $\frac{1}{R}$\\
+Therefore we have shown that\\
+$$\int_{D} \nabla \cdot f dx = 0$$
+Where $D$ is all of space
+
+\end{document}

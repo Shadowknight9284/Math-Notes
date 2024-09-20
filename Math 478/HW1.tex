@@ -1,0 +1,131 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{HW1: Math 478}
+\begin{document}
+\maketitle
+\section*{Question 1}
+A Markov chain $X_0, X_1, X_2, \ldots$ has 3 states, $0, 1, 2$. The transition matrix is given by
+$$ \begin{bmatrix}
+    0.7 & 0.2 & 0.1\\
+    0 & 0.6 & 0.4\\
+    .5 & 0 & 0.5
+\end{bmatrix}$$
+\textbf{Solution:}\\
+\subsection*{i: Determine the conditional probability Pr$\{ X_2 =1, X_3 = 1 | X_1 = 0\}$ and Pr$\{X_1 = 1, X_2 = 1 | X_0 = 0\}$}
+The probability for the first term in other words is the probability of starting at state 0 at the $X_1$ term then to 1 and then to 1 again. This is given by the product of the transition probabilities from 0 to 1 and 1 to 1. This is given by
+$$0.2 \times 0.6 = 0.12$$
+The probability for the second term is the probability of starting at state 0 at the $X_0$ term then to 1 and then to 1 again. This is given by the product of the transition probabilities from 0 to 1 and 1 to 1. This is given by
+$$0.2 \times 0.6 = 0.12$$
+\subsection*{ii: Why should we expect to get the same value for both the probabilities above?}
+This should be expected due to the Markov property. The Markov property states that the future is independent of the past given the present. This means that the probability of transitioning from state 0 to 1 and then to 1 again is the same as the probability of transitioning from state 0 to 1 and then to 1 again at any other time. This is because the transition probabilities are independent of the past states.
+
+\subsection*{iii:  Determine the conditional probability Pr${X_2 = 1 | X_0 = 0}$}
+This is the probability of going from state 0 to 1 in 2 steps. This is given by the sum of the probabilities of all the paths going to 0 to 1 in 2 steps. This is given by 
+$$ \text{Pr:} \{X_2 = 1 | X_0 = 0\} $$
+$$ = \text{Pr:} \{X_2 = 1, X_1 = 0 | X_0 = 0\} + \text{Pr:} \{X_2 = 1, X_1 = 1 | X_0 = 0\} + \text{Pr:} \{X_2 = 1, X_1 = 2 | X_0 = 0\}$$
+$$ = a_{00}a_{01} + a_{01}a_{11} + a_{02}a_{21}$$
+$$ = 0.7 \times 0.2 + 0.2 \times 0.6 + 0.1 \times 0$$
+$$ = 0.14 + 0.12 + 0$$
+$$ = 0.26$$
+
+\section*{Question 2}
+Three white and three black balls are distributed in two urns in such a way
+that each contains three balls. We say that the system is in state $i, i = 0, 1, 2, 3$, if the first urn
+contains $i$ white balls. At each step, we draw one ball from each urn and place the ball drawn from
+the first urn into the second, and conversely with the ball from the second urn. Let $X_n$ denote the
+state of the system after the $n$
+th step. Explain why $\{Xn, n = 0, 1, 2, . . . \}$ is a Markov chain and
+calculate its transition probability matrix.\\
+\textbf{Solution:}\\
+
+The system is a Markov chain because the future state of the system is dependent only on the present state of the system. The future state of the system is independent of the past states of the system. The transition probability matrix is given by
+$$ \begin{bmatrix}
+    0 & 1 & 0 & 0\\
+    1/9 & 4/9 & 4/9 & 0\\
+    0 & 4/9 & 4/9 & 1/9\\
+    0 & 0 & 1 & 0
+\end{bmatrix}$$
+
+\section*{Question 3}
+There are $k$ players, with player $i$ having value $v_i > 0, i = 1, . . . , k$. In
+every period, two of the players play a game, while the other $k-2$ wait in an
+ordered line. The loser of a game joins the end of the line, and the winner then
+plays a new game against the player who is first in line. Whenever $i$ and $j$ play,
+$i$ wins with probability $\frac{v_i}{v_i + v_j}$. 
+\textbf{Solution:}\\
+\subsection*{i: Define a Markov chain that is useful in analyzing this model}
+
+The Markov chain that is useful in analyzing this model is the state of the system after each game. Each state is who is the person at the front of the line and the next state is the next person who will be in the front of the line. This would encode the information of each "face off" between players as historic face offs do not matter.
+
+\subsection*{ii: How many states does this Markov chain have?}
+The number of states that this Markov chain has is $k$ states. This is because there are $k$ players and the state of the system is the player that is first in line. The player that is first in line can be any of the $k$ players.
+
+\subsection*{iii: What is the transition probability matrix of this Markov chain?}
+The transition probability matrix of this Markov chain is given by the $k \times k$ matrix 
+$$ \begin{bmatrix}
+    0 & \frac{v_2}{v_1 + v_2} & \frac{v_3}{v_1 + v_3} & \cdots & \frac{v_k}{v_1 + v_k}\\
+    \frac{v_1}{v_1 + v_2} & 0 & \frac{v_3}{v_2 + v_3} & \cdots & \frac{v_k}{v_2 + v_k}\\
+    \vdots & \vdots & \vdots & \vdots & \vdots\\
+    \frac{v_1}{v_k + v_1} & \frac{v_2}{v_k + v_2} & \frac{v_3}{v_k + v_3} & \cdots & 0
+\end{bmatrix}$$
+Note that the diagonal elements are all $0$ because a player cannot play against themselves.
+Note the horizontal elements are the probabilities of winning against the other players sum to zero as the encompass all the possible outcomes of the game when a player is at the front of the line and faces of against any of the other players.
+
+
+
+
+\section*{Question 4}
+A coin comes up heads with probability $.6$ and tails with probability $0.4$. We
+want to find the probability that there is a run of three consecutive heads
+within the first $10$ flips.
+\subsection*{i: Carefully define a Markov chain to solve this problem.}
+A Markov chain can be defined with the following states:
+\begin{itemize}
+    \item State 0: No heads in a row
+    \item State 1: One head in a row
+    \item State 2: Two heads in a row
+    \item State 3: Three heads in a row
+\end{itemize}
+This would be a good choice as the present state can be how many hea we have in a row without needing multiple past states. 
+
+\subsection*{ii:  Find the one-step transition probability matrix P for this chain.}
+The transition probability matrix is given by
+$$ P = \begin{bmatrix}
+    0.4 & 0.6 & 0 & 0\\
+    0.4 & 0 & 0.6 & 0\\
+    0.4 & 0 & 0 & 0.6\\
+    0 & 0 & 0 & 1
+\end{bmatrix}$$
+
+\subsection*{iii:  Obtain the required probability by using a software program to compute $P^{10}$.}
+Utilizing Wolfram Alpha 
+$$P^{10} = \begin{bmatrix}
+0.137593 & 0.0952295 & 0.065817 & 0.701361 \\
+0.107364 & 0.0741065 & 0.0513516 & 0.767178 \\
+0.0634864 & 0.043878 & 0.0302285 & 0.862407 \\
+0 & 0 & 0 & 1 
+\end{bmatrix}$$
+
+
+\section*{Question 5}
+Prove that if the number of states in a Markov chain is $M$, and if state $j$
+can be reached from state $i$, then it can be reached in M steps or less.\\
+\textbf{Solution:}\\
+We can utilize the pigeon hole principle to determine that if we know $j$ can be reached through $i$ then it can be reached in $M$ steps or less.\\
+Remember that the pigeonhole principle states that for $n$ items placed into $m$ containers, with $n > m$, at least one container must contain more than one item.\\
+In this case we can utlize this information to know that we the most efficent path from $i$ to $j$ will not revisit steps as if the path from $i$ to $j$ revisits a state $k$ then we can omit the steps in between the first and second visit as the markov property states that the future is independent of the past given the present and thus will not change the outcome of the transition. This is very similar to principle of least action, so I will refer to this by that title from now on.\\
+Since we are now armed with the principle of least action analog as well as the pigeonhole principle. We can see that for any Markov Chain with $M$ states, if we have a path from $i$ to $j$ that revisits states that follows the principle of least action, it will be at most $M$ steps since we do not want any steps to be revisited since each state will not have another "item"/step attached to it. Thus we can conclude that if state $j$ can be reached from state $i$, then it can be reached in $M$ steps or less.
+
+\end{document}

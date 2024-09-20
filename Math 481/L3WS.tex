@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Lecture 3 Worksheet}
+
+\begin{document}
+\maketitle
+
+The Gamma distribution is specifie by two parameters positive $\alpha$ and $\beta$. Its MGF is given by $M_X(t) = \frac{1}{(1 - \beta t)^\alpha}$
+
+\section*{Question 1}   
+\subsection*{Suppose $X$ is a random variable with Gamma distribution with parameters $\alpha = 3$ and $\beta = 2$. Use the MGF to computer $E(X)$ and $Var(X)$.}
+\subsubsection*{$\mathds{E}[X]$}
+\begin{align*}
+    \mathds{E}[X] &= M_X'(0)\\
+    &= \frac{d}{dt} \frac{1}{(1 - 2t)^3} \Big|_{t = 0}\\
+    &= \frac{d}{dt} (1 - 2t)^{-3} \Big|_{t = 0}\\
+    &= -3(1 - 2t)^{-4}(-2) \Big|_{t = 0}\\
+    &= 6
+\end{align*}
+
+
+
+\subsubsection*{$\text{Var}[X]$}
+\begin{align*}
+    \text{Var}[X] &= \mathds{E}[X^2] - \mathds{E}[X]^2\\
+    &= M_X''(0) - \mathds{E}[X]^2\\
+    &= \frac{d^2}{dt^2} \frac{1}{(1 - 2t)^3} \Big|_{t = 0} - 6^2\\
+    &= \frac{d^2}{dt^2} (1 - 2t)^{-3} \Big|_{t = 0} - 36\\
+    &= 12(1 - 2t)^{-5}(-2)^2 \Big|_{t = 0} - 36\\
+    &= 48 - 36\\
+    &= 12
+\end{align*}
+
+
+
+\section*{Question 2}
+
+
+
+\section*{Question 3}
+
+
+
+\end{document}

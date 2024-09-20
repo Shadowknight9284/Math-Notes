@@ -1,0 +1,263 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Linear Algebra Homework 2}
+
+\begin{document}
+\maketitle
+
+\section*{Section 1.3: 19}
+Let $V = \{ \{ (a_1,a_2): a_1, a_2 \in \mathds{R}\} \}$ Define addition of elements of $V$ coordinates and for $(a_1,a_2) \in V$ and $c \in \mathds{R}$, define:
+$$c(a_1, a_2)=
+\begin{cases}
+    (0,0) \text{if } c = 0 \\
+    (ca_1, a_2/c) \text{if } c \neq 0
+\end{cases}
+$$
+Is $V$ a vector space over $\mathds{R}$ with these operations?\\
+\textbf{Answer:} \\
+No, this is not a vector space.\\
+To show that $V$ is not a vector space, we need to show that it fails to satisfy one of the vector space axioms. Specifically, we will show that it fails to satisfy axiom VS 8.\\
+Let $x = (1,1) \in V$ and let $a = 1$ and $b = 1$. Then $(a+b)x = (1+1)(1,1) = (2)(1,1) = (2,1/2)$.\\
+And $ax + bx = 1(1,1) + 1(1,1) = (1,1) + (1,1) = (1+1, 1+1) = (2,2)$.\\
+These two are not equal thus $(a+b)x \neq ax + bx$.\\
+Thus $V$ is not a vector space.\\
+\section*{Section 1.4: 4(a)}
+For each list of polynomials in $P_3(R)$ determine whether the first polynomial can be expressed as a linear combination of the other two.\\
+$$ x^3 - 3x + 5, \quad x^3 + 2x^2 - x +1, \quad x^3 +3 x^2 - 1 $$\\
+\textbf{Answer:}\\
+Let $p_1 = x^3 - 3x + 5$, $p_2 = x^3 + 2x^2 - x + 1$, and $p_3 = x^3 + 3x^2 - 1$.\\
+
+We want to see if $p_1 = ap_2 + bp_3$ for some $a,b \in \mathds{R}$.\\
+Thus we want:
+$$ x^3 - 3x + 5 = a(x^3 + 2x^2 - x + 1) + b(x^3 + 3x^2 - 1) $$
+Let $a = 3, b = -2$. Then we have:
+\begin{align*}
+    3(x^3 + 2x^2 - x + 1) - 2(x^3 + 3x^2 - 1) &= 3x^3 + 6x^2 - 3x + 3 - 2x^3 - 6x^2 + 2 \\
+    &= (3-2)x^3 + (6-6)x^2 + (-3)x + (3+2)\\ 
+    &= x^3 - 3x + 5
+\end{align*}
+Thus $p_1$ can be expressed as a linear combination of $p_2$ and $p_3$.\\
+
+\section*{Section 1.4: 5(g)}
+In each part, determine wheter the given vector is in the span of S.
+$$ \begin{bmatrix}
+    1 & 2 \\
+    -3 & 4
+\end{bmatrix}, S = \left\{ \begin{bmatrix}
+    1 & 0 \\
+    -1 & 0
+\end{bmatrix}, \begin{bmatrix}
+    0 & 1 \\
+    0 & 1
+\end{bmatrix}, \begin{bmatrix}
+    1 & 1 \\
+    0 & 0
+\end{bmatrix}
+\right\}\\
+$$
+\textbf{Answer:} \\
+We want to see if we can express the vector as a linear combination of the vectors in $S$.\\
+For this to be possible we need to find $a,b,c \in \mathds{R}$ such that:
+$$ a \begin{bmatrix}
+    1 & 0 \\
+    -1 & 0
+\end{bmatrix} + b \begin{bmatrix}
+    0 & 1 \\
+    0 & 1
+\end{bmatrix} + c \begin{bmatrix}
+    1 & 1 \\
+    0 & 0
+\end{bmatrix} = \begin{bmatrix}
+    1 & 2 \\
+    -3 & 4
+\end{bmatrix}$$
+This gives us the following system of equations:
+\begin{align*}
+    a + c &= 1 \\
+    b + c &= 2 \\
+    -a &= -3 \\
+    b &= 4
+\end{align*}
+From the third equation we have $a = 3$.\\
+From the fourth equation we have $b = 4$.\\
+Substituting these values into the first equation gives us:
+$$ 3 + c = 1 \implies c = -2$$
+Now substituting these values into the second equation gives us:
+$$ 4 + c = 2 \implies c = -2$$
+Thus we have $a = 3, b = 4, c = -2$.\\
+Thus the vector is in the span of $S$ since there exists a combination of $a,b,c \in \mathds{R}$ that can generate a linear combination.\\
+
+\section*{Section 1.4: 6}
+Show that the vectors $(1,1,0), (1,0,1), (0,1,1)$ generate $F^3$.\\
+
+ \textbf{Answer:} \\
+To show that the vectors generate $F^3$, we need to show that any arbitrary vector $(a_1,a_2,a_3) \in F^3$ can be expressed as a linear combination of the given vectors.\\
+We can express an arbitrary vector $(a_1,a_2,a_3) \in F^3$ as a linear combination of the given vectors: 
+$$ (a_1,a_2,a_3) = a(1,1,0) + b(1,0,1) + c(0,1,1)$$
+This gives us the following system of equations:
+\begin{align*}
+    a + b &= a_1 \\
+    a + c &= a_2 \\
+    b + c &= a_3
+\end{align*}
+We can solve this system of equations for $a,b,c$ in terms of $a_1,a_2,a_3$.\\
+Subtracting the first equation from the second gives us:
+$$ c - b = a_2 - a_1 \implies c = a_2 - a_1 + b$$
+Substituting this into the third equation gives us:
+$$ b + (a_2 - a_1 + b) = a_3 \implies 2b + a_2 - a_1 = a_3 \implies 2b = a_3 - a_2 + a_1 \implies b = \frac{a_3 - a_2 + a_1}{2}$$
+Following similar steps we can find $a$ and $c$ in terms of $a_1,a_2,a_3$.\\
+$$ a = a_1 - b = a_1 + \frac{-a_3 + a_2 - a_1}{2} = \frac{2a_1 - a_3 + a_2 - a_1}{2} = \frac{a_1 + a_2 - a_3}{2}$$
+$$ c = a_3 - b = a_3 - \frac{a_3 - a_2 + a_1}{2} = \frac{2a_3 - a_3 + a_2 - a_1}{2} = \frac{a_3 + a_2 - a_1}{2}$$
+Thus we can see that any arbitrary vector $(a_1,a_2,a_3)$ can be expressed as a linear combination of the given vectors. With the scalars $a,b,c$ being defined as above. Thus the vectors generate $F^3$.\\
+
+\textbf{Note:}
+Since there are 3 vector and we want to generate $F^3$, we can also check if the vectors are linearly independent. If they are linearly independent then they will generate $F^3$.\\
+To check for linear independence we can set up the following equation:
+$$ a(1,1,0) + b(1,0,1) + c(0,1,1) = (0,0,0)$$
+and prove that the only solution is $a = b = c = 0$.\\
+This gives us the following system of equations:
+\begin{align*}
+    a + b &= 0 \\
+    a + c &= 0 \\
+    b + c &= 0
+\end{align*}
+From the first equation we have $b = -a$.\\
+Substituting this into the second equation gives us:
+$$ a - a + c = 0 \implies c = 0$$
+Substituting this into the third equation gives us:
+$$ -a + 0 = 0 \implies a = 0$$
+Thus $b = 0$.\\
+Thus the only solution is $a = b = c = 0$. Thus the vectors are linearly independent and generate $F^3$.\\
+
+
+
+
+
+\section*{Section 1.5: 2(d)}
+Determine whether the following sets are linearly dependant or linearly independent.
+$$ \left\{x^3 - x, 2x^2 + 4, -2x^3 + 3x^2 + 2x+ 6   \right\} \text{ in } P_3(R)$$
+\textbf{Answer:} \\
+This set is linearly dependent.\\
+This is due to the fact that there exists a non trivial linear combination of the vectors that can generate the zero vector.\\
+Let $a = -1, b = 3/2, c = 1$ Then we have:
+$$ -1(x^3 - x) + \frac{3}{2}(2x^2 + 4) + c(-2x^3 + 3x^2 + 2x + 6) = 0$$
+Thus the set is linearly dependent.\\
+
+
+\section*{Section 1.5: 6}
+In $M_{m \times n}(F) $ let $E^{ij}$ denote the matrix whose only nonzero entry is 1 in the $i$-th row and $j$-th column. Prove that $\left\{E^{ij}: 1 \leq i \leq m, 1 \leq j \leq n \right\}$ is linearly independent.\\
+\textbf{Answer:} \\
+To show that the set is linearly independent we can show that there are no nontrivial linear combinations of the matrices that can generate the zero matrix.\\
+Let $c_{ij}E^{ij} = 0$ for some scalars $c_{ij} \in F$.\\
+$$ \sum_{i=1}^{m} \sum_{j=1}^{n} c_{ij}E^{ij} = 0$$
+This means that the only nonzero entry in the matrix is at the $i$-th row and $j$-th column.\\
+We can see that for each $E^{ij}$, the only nonzero entry is at the $i$-th row and $j$-th column.\\
+For the matrix to be equal to the zero matrix, we must have $c_{ij} = 0$ for all $i,j$.\\
+Thus the only solution is the trivial solution. Thus the set is linearly independent.\\
+
+
+
+\section*{Section 1.6: 2(b)}
+Determine which of the following sets are bases for $R^3$ 
+$$ \left\{ (2,-4,1), (0,3,-1), (6, 0, -1)\right\}$$
+\textbf{Answer:} \\
+To determine if the set is a basis for $R^3$ for a set of 3, 3-dimensional vectors, we need to check if the vectors are linearly independent.\\
+We can do this by showing there is no nontrivial linear combination of the vectors that can generate the zero vector.\\
+Let $a(2,-4,1) + b(0,3,-1) + c(6,0,-1) = (0,0,0)$ for some scalars $a,b,c \in R$.\\
+This gives us the following system of equations:
+\begin{align*}
+    2a + 6c &= 0 \\
+    -4a + 3b &= 0 \\
+    a - b - c &= 0
+\end{align*}
+We can put this into an augmented matrix and row reduce:
+$$ \begin{bmatrix}
+    2 & 0 & 6 & | & 0 \\
+    -4 & 3 & 0 & | & 0 \\
+    1 & -1 & -1 & | & 0
+\end{bmatrix}$$
+Row reducing gives us:
+$$ \begin{bmatrix}
+    1 & 0 & 3 & | & 0 \\
+    0 & 1 & 4 & | & 0 \\
+    0 & 0 & 0 & | & 0
+\end{bmatrix}$$
+We can see that there are 2 leading 1's and 1 free variable. Thus there exists a nontrivial solution. \\
+We can not that we can let $a = 3, b = 4, c = -1$. To satisfy the equation $a(2,-4,1) + b(0,3,-1) + c(6,0,-1) = (0,0,0)$.\\
+Thus the set is not a basis for $R^3$.\\
+
+\section*{Section 1.6: 3(b)}
+Determine which of the following sets are bases for $P_2(R)$
+$$ \left\{ 1+2x+x^2,3+x^2, x+x^2 \right\}$$
+\textbf{Answer:} \\
+To determine if the set is a basis for $P_2(R)$, we need to check if the vectors are linearly independent.\\
+We can view each of these polynomial as vectors in $R^3$.\\
+Let $p_1 = 1 + 2x + x^2$, $p_2 = 3 + x^2$, $p_3 = x + x^2$.\\
+We can express these as vectors:
+$$ p_1 = \begin{bmatrix}
+    1 \\
+    2 \\
+    1
+\end{bmatrix}, p_2 = \begin{bmatrix}
+    3 \\
+    0 \\
+    1
+\end{bmatrix}, p_3 = \begin{bmatrix}
+    0 \\
+    1 \\
+    1
+\end{bmatrix}$$
+We can set up the following system of equations:
+$$ a(1 + 2x + x^2) + b(3 + x^2) + c(x + x^2) = 0$$
+This gives us the following system of equations:
+\begin{align*}
+    a + 3b &= 0 \\
+    2a + c &= 0 \\
+    a + b + c &= 0
+\end{align*}
+We can put this into an augmented matrix and row reduce:
+$$ \begin{bmatrix}
+    1 & 3 & 0 & | & 0 \\
+    2 & 0 & 1 & | & 0 \\
+    1 & 1 & 1 & | & 0
+\end{bmatrix}$$
+Row reducing gives us:
+$$ \begin{bmatrix}
+    1 & 0 & 0 & | & 0 \\
+    0 & 1 & 0 & | & 0 \\
+    0 & 0 & 1 & | & 0
+\end{bmatrix}$$
+We can see that there are 3 leading 1's and no free variables. Thus the only solution is the trivial solution. Thus the set is linearly independent.\\
+
+\section*{Section 1.6: 9}
+Te vectors $u_1 = (1,1,1,1), u_2 = (0,1,1,1), u_3 = (0,0,1,1), u_4 = (0,0,0,1)$ form a basis for $F^4$. Find the unique representation of an arbitrary vector $v = (a_1,a_2,a_3,a_4)$ in $F^4$ as a linear combination of $u_1 , u_2 , u_3 , u_4$.\\
+\textbf{Answer:}\\
+An arbitrary vector $v = (a_1,a_2,a_3,a_4)$ can be expressed as a linear combination of the basis vectors $u_1, u_2, u_3, u_4$ as follows:
+Let $v = c_1 u_1 + c_2 u_2 + c_3 u_3 + c_4 u_4$ for some scalars $c_1, c_2, c_3, c_4 \in F$.\\
+This gives us the following system of equations:
+$$ v = \begin{bmatrix}
+    c_1 \\
+    c_1 + c_2 \\
+    c_1 + c_2 + c_3 \\
+    c_1 + c_2 + c_3 + c_4
+\end{bmatrix} = \begin{bmatrix}
+    a_1 \\
+    a_2 \\
+    a_3 \\
+    a_4
+\end{bmatrix}
+$$
+
+\end{document}

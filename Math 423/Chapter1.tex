@@ -12,6 +12,7 @@
 \newcommand{\ddt}{\frac{d}{dt}}
 \newcommand{\dyx}{\frac{dy}{dx}}
 
+
 \setlength\parindent{0pt}
 
 \author{Pranav Tikkawar}
@@ -138,7 +139,197 @@ $$T = T(x,t) \vec{\tau}$$
 Where $T$ is constant along the string.\\
 Assume small vibration so that $|u_x|$ is small.\\
 $$\vec{r} = (1,u_x) = (1,0) $$
+$$u_t + \nabla \cdot (u \vec{v}) = 0$$
+1D wave equation: $u_{tt} = c^2 u_{xx}$\\
+In general $u_{tt} - c^2\Delta u_{xx} = $\\
+\textbf{Laplaces Equation:} $\Delta u = 0$\\
+\textbf{Remark} describes equilibrium \\
+Functions that solves Laplace's equation are called harmonic functions.\\
+\textbf{Example:} 1D: $u_{xx} = 0$: Linear\\
+\textbf{Example:} 2D: $u_{xx} + u_{yy} = 0$:\\
+$f(z) = u(x,y) + iv(x,y)$\\
+holomorphic /complex analytic\\
+then $\Delta u = 0$ and $\Delta v = 0$\\
+Then taking the real and imaginary parts of these equations we get the harmonic functions in 2D.\\
+\textbf{Imp Example:} $u = ln(x^2+y^2)$\\
+\textbf{Remark: } Characterization of steady(no time); irrotational(zero curl); incompressible (zero divergence) flow fiels $\vec{F}$\\
+$$\nabla \times \vec{F} = 0 \rightarrow \vec{F} = \nabla u$$
+where u is the potential of the flow field.\\
+$$\nabla \cdot \vec{F} = 0 \rightarrow \text{div} \nabla u = \Delta u = 0 $$
+\section*{1.4 Initial and Boundary Conditions}
+PDE + BCs = Boundary Value Problem (BVP)\\
+\textbf{PDEs describing equilibrium phenomena are paired wiht boundary conditions (BCs)}.\\
+\textbf{Dirichlet BC}
+Suppose a space $D$ and a boundary $\partial D$ \\$\begin{cases}
+    \Delta u = 0 \text{ in } D\\
+    u = \phi \text{ on } \partial D
+\end{cases}$\\
+Body D in thermal equilibrium knowing the boundary temperature find the temperature inside the body.\\
+Prescribing the function on the boundary is called Dirichlet BC.\\
+\textbf{Neumann BC}\\
+$\begin{cases}
+    \Delta u = 0 \text{ in } D\\
+    \partial{n}\vec{u} = \psi \text{ on } \partial D
+\end{cases}$ Neumann BC.\\
+$\partial_n u = \Delta u \cdot n$ This is heat flux \\
+EG: Insulated object: $\partial_n u = 0 \text{ on } \partial D$\\
+if u is a solution then so is $u + c$\\
+\textbf{Mixed Boundary Conditions}
+$\begin{cases}
+    \Delta u = 0 \text{ in } D\\
+    u = \phi \text{ on } \partial D_1\\
+    \partial_n u = \psi \text{ on } \partial D_2
+\end{cases}$\\
+\textbf{Robin BC}
+$\begin{cases}
+    \Delta u = 0 \text{ in } D\\
+    \alpha u + \beta \partial_n u = \gamma \text{ on } \partial D
+\end{cases}$\\
+\textbf{Example:}
+$$k \partial_n u + c(u - u_\infty) = 0 \text{ on } $$
+where k is thermal conductivity, c is convective heat transfer coefficient, $u_\infty$ is the ambient temperature.\\
+\textbf{Example} 
+$$\begin{cases}
+    u'' = 0 \text{ on } (0,1)\\
+    u(0) = 0\\
+    u(1) = 1
+\end{cases} \rightarrow u(x) = x$$
+\textbf{PDEs describing dynamic processes}
+We have time variable! Usually are paired with initial conditions (IC) and BC.\\
+\begin{itemize}
+    \item Thermodynamics: $u_t$
+\end{itemize}
+IC: $u(t_0, x) = \phi(x) , \forall x \in D$\\
+\begin{itemize}
+    \item Newtonian Mechanics: $u_{tt}$
+\end{itemize}
+IC: $\begin{cases}
+    u(t_0, x) = \phi(x)\\
+    u_t(t_0, x) = \psi(x)
+\end{cases}, \forall x \in D$\\
+\textbf{Example}\\
+$$ u_t - u_{xx} = f(t,x), t > 0, x \in (0,1)$$
+$$u(0,x) = u_0(x) \text{ IC}$$
+$$u(t,0) = \phi(t) \text{ BC}$$
+$$u(t,1) = \psi(t) \text{ BC}$$
+\textbf{Remark: } If D is unbounded, we'll need conditions at infinity.\\
+\section*{1.5 Well Posed problems}
+Well pose problems has 3 criteria:
+\begin{itemize}
+    \item Existence: There exists a solution
+    \item Uniqueness: The solution is unique
+    \item Stability: The solution depends continuously on the data. (IC,BC,source terms)
+\end{itemize}
+$$A x = b$$
+Where A is $m \times n$ matrix, x is $n \times 1$ vector, b is $m \times 1$ vector.\\
+\begin{itemize}
+    \item $m > n$: Existence may fail too many variables
+    \item $m < n$: Uniqueness may fail too many equations
+    \item $m = n$ and A is invertible: Existence, uniqueness and stability! 
+\end{itemize}
+$x = A^{-1}b$\\
+$$ \begin{cases}
+    Ax = b \\
+    A(x_\epsilon) = b + \epsilon
+\end{cases}$$
+$$||x - x_\epsilon|| \leq |A^{-1} \epsilon| \leq ||A^{-1}|| \cdot ||\epsilon||$$
+\textbf{Remark} If A has a very small eigenvalue, then $||A^{-1}||$ is very large. Ill conditioned problems\\
+\section*{1.6 Types of 2nd Order PDEs}
+In the case of 2 variables $x,y$\\
+$$au_{xx} + bu_{xy} + cu_{yy} + du_x + eu_y + fu = 0$$
+$$Q(x,y) = ax^2 + bxy + cy^2 + dx + ey + f$$
+$$H = b^2 - 4ac \text{the Discriminant}$$
+\textbf{Definition}
+$$\begin{cases}
+    H < 0 \text{ Elliptic: By linear change of varibale it can be reduced to the normal form: } u_{xx} + u_{yy} + ... = 0\\\\
+    H = 0 \text{ Parabolic: By linear change of variable it can be reduced to the normal form: } u_{xx} + .. = 0\\\\
+    H > 0 \text{ Hyperbolic By linear change of variable it can be reduced to the normal form: } u_{xx} - u_{yy} = 0
+\end{cases}$$
 
+***
+$$au_{xx} + bu_{xy} + cu_{yy} + ... = 0$$
+Can be converted to quaratic form
+Proof of cases: 
+$u_{xx} + bu_{xy} + cu_{yy} ... = 0$ This is \textbf{(1)}\\
+\begin{align*}
+    x^2 +bxy +cy^2 &= x^2 + 2xby/2 + (by)^2/4 + cy^2 - (by)^2/4 \\
+    &= (x+by/2)^2 + -Hy^2/4\\
+\end{align*}
+Let $x = \xi, y = b\xi/2 + \sqrt{H}\eta/2 $\\
+***
+
+Extended to a,b,c functions of x,y.\\
+$H = H(x,y)$\\
+Same definition categorizes the type of equation at (x,y)\\
+\textbf{Example} Euler-Tricomi Equation
+$$u_{xx} - x u_{yy} = 0$$
+$$H = 4x$$
+This corresponds to transonic flow.\\
+Hyperbolic become subsonic\\
+Elliptic become supersonic\\
+Parabolic is sonic boom\\
+\textbf{Matrix Perspective}
+Rewrite (1) as $div(A \nabla u) + ... = 0$\\
+$$A = \begin{pmatrix}
+    a & \frac{b}{2}\\
+    \frac{b}{2} & c
+\end{pmatrix} \begin{bmatrix}
+    u_{x}\\
+    u_{y}
+\end{bmatrix}$$
+$$ \partial_x (au_x + b/2 u_y) + \partial_y (b/2 u_x + cu_y)$$
+$$H < 0  \Leftrightarrow det(A) > 0$$
+Evals have the same sign (Elliptic)
+$$H = 0 \Leftrightarrow det(A) = 0$$
+One eval is zero (Parabolic)
+$$H > 0 \Leftrightarrow det(A) < 0$$
+Evals have different signs (Hyperbolic)\\
+For more variables: $u(x_1,x_2,...,x_n)$\\
+$$ A = \begin{bmatrix}
+    a_{11} & a_{12} & ... & a_{1n}\\
+    a_{21} & a_{22} & ... & a_{2n}\\
+    ... & ... & ... & ...\\
+    a_{n1} & a_{n2} & ... & a_{nn}
+\end{bmatrix}$$
+A is symmetric\\
+$$div(A \nabla u) + ... = 0. \text{ This is (2)}$$\\
+$$\sum a_ij u_{x_ix_j} + ... = 0$$\\
+Def. (2) is 
+\begin{itemize}
+    \item Elliptic if all eigenvalues of A have same sign $\Delta$
+    \item Parabolic if one eval is 0 but all others have same sign $\partial_t - \Delta$ 
+    \item Hyperbolic if evals one eval is of one sign and all the others are of the opposite sign. $\partial_t^2 - \Delta$
+\end{itemize}
+Consider the equation $Ax \cdot x$ \\
+Where A is symmetric\\
+This is a quaratic form\\
+Goal reduce to normal form.\\
+$$A = P \wedge P^T$$
+Where $\wedge$ is the eigenvalue decomposition\\
+And $P^{T} = P^{-1}$ (orthogonal)\\
+$$ Ax \cdot x = P \wedge P^T x \cdot x$$
+$$ = \wedge P^{T} x \cdot P^{T} x$$
+Let $y = P^{T} x$\\
+$$ = \wedge y \cdot y$$
+$$ = \sum \lambda_i y_i^2$$
+Where $\lambda_i$ are the eigenvalues of A\\
+If all $\lambda_i > 0$ let $z_i = \sqrt{\lambda_i} y_i$\\
+$$ = \sum z_i^2$$
+If all $\lambda_i < 0$ let $z_i = \sqrt{-\lambda_i} y_i$\\
+$$ = -\sum z_i^2$$
+In $z$-variables \\
+$$ A x \cdot x = z_1^2 - z_2^2 + ... $$
+This is called Sylvester's law of inertia.\\
+$$div(A \nabla u) + ... = 0$$
+$$A = P \wedge P^T$$
+$$ y = P^T x$$
+$$ \nabla_x u = P \nabla_y u $$
+Try and figure this out\\
+Note that $\nabla_x = (u_x1, u_x2, u_x3, ...)$\\
+$$ div_x (F) = div_y (P^T F)$$
+$$ div_x (P \wedge P^{T} \nabla_x u ) = div_x (P \wedge \nabla_y u)$$
+$$ = div_y (P P^{T} \wedge \nabla_y u) = div_y(\wedge \nabla_y u)$$
+$$ = \sum \lambda_i u_{y_i y_i}$$
 
 
 

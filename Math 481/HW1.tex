@@ -1,0 +1,215 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Homework 1: Math 481}
+
+\begin{document}
+\maketitle
+\section*{Problem 4.8}
+Find the expected value of the random variable $X$ whose probability density is given by 
+$$ f(x) = \begin{cases}
+    x \text{ for } 0 < x < 1 \\
+    2 - x \text{ for } 1 < x < 2 \\
+    0 \text{ otherwise}
+\end{cases} $$
+\subsection*{Solution}
+To find the expected value of the random variable $X$, we can use the formula for the expected value of a continuous random variable:
+$$
+E[X] = \int_{-\infty}^{\infty} x f(x) dx
+$$
+Since $f(x)$ is non-zero only in the interval $(0, 2)$, we can split the integral into two parts:
+$$
+E[X] = \int_{0}^{1} x f(x) dx + \int_{1}^{2} x f(x) dx
+$$
+Substituting the expression for $f(x)$, we have:
+$$
+E[X] = \int_{0}^{1} x^2 dx + \int_{1}^{2} x(2 - x) dx
+$$
+Now we can evaluate each integral separately.
+$$ E[X] = \frac{1}{3} + \frac{2}{3}  = 1$$
+
+\section*{Problem 4.19}
+Find $\mu, \mu_2'$ and $\sigma^2$ for the random variable $X$ with the following probability density function:
+$$ f(x) = \begin{cases}
+    x/2 \text{ for } 0 < x < 2 \\
+    0 \text{ otherwise}
+\end{cases} $$
+\subsection*{Solution}
+To find the $\mu$ which is the 1st momenet about the mean, we can say that it is by definition: 0. This is because it is $E[X - \mu] = E[X]-E[\mu] = \mu - \mu= 0$.\\
+If in this case $\mu$ denotes the 1st moment about the origin, we can find it as follows:
+$$
+\mu = E[X] = \int_{-\infty}^{\infty} x f(x) dx = \int_{0}^{2} x \cdot \frac{x}{2} dx = \int_{0}^{2} \frac{x^2}{2} dx = \left[ \frac{x^3}{6} \right]_{0}^{2} = \frac{8}{6} = \frac{4}{3}
+$$
+Next, we can find $\mu_2'$ which is the 2nd moment about the origin:
+$$
+\mu_2' = E[X^2] = \int_{-\infty}^{\infty} x^2 f(x) dx = \int_{0}^{2} x^2 \cdot \frac{x}{2} dx = \int_{0}^{2} \frac{x^3}{2} dx = \left[ \frac{x^4}{8} \right]_{0}^{2} = \frac{16}{8} = 2
+$$
+Finally, we can find the variance $\sigma^2$:
+$$
+\sigma^2 = \mu_2' - \mu^2 = 2 - \left( \frac{4}{3} \right)^2 = 2 - \frac{16}{9} = \frac{18}{9} - \frac{16}{9} = \frac{2}{9}
+$$
+
+\section*{Problem 4.23}
+If the random varibale $X$ has the mean $\mu$ and standard deviation $\sigma$, show that the random varibale $Z$ who's values are related to those of $X$ by the equation $Z = \frac{X - \mu}{\sigma}$ has $E[Z] = 0 $ and $var[Z] = 1$.\\  
+A distribution that has the mean $0$ and the variance $1$ is said to be in standard form, and when we perform the above change of variable, we are said to be standardizing the distribution of $X$
+\subsection*{Solution}
+To find the expected value of $Z$, we can use the linearity of expectation:
+$$
+E[Z] = E\left[\frac{X - \mu}{\sigma}\right] = \frac{1}{\sigma} E[X - \mu] = \frac{1}{\sigma} (E[X] - \mu) = \frac{1}{\sigma} (\mu - \mu) = 0
+$$
+Next, we can find the variance of $Z$:
+$$
+var[Z] = var\left[\frac{X - \mu}{\sigma}\right] = \frac{1}{\sigma^2} var[X] = \frac{1}{\sigma^2} \sigma^2 = 1
+$$
+Thus, we have shown that $E[Z] = 0$ and $var[Z] = 1$.
+\section*{Problem 4.33}
+Fin the moment generating function of the continuous random variable $X$ with the following probability density function:
+$$ f(x) = \begin{cases}
+    1 \text{ for } 0 < x < 1 \\
+    0 \text{ otherwise}
+\end{cases} $$
+and use it to find $\mu_1', \mu_2',$ and $\sigma^2$.
+\subsection*{Solution}
+The moment generating function $M_X(t)$ is defined as:
+$$
+M_X(t) = E[e^{tX}] = \int_{-\infty}^{\infty} e^{tx} f(x) dx = \int_{0}^{1} e^{tx} dx
+$$
+Now we can evaluate the integral:
+$$
+M_X(t) = \left[ \frac{e^{tx}}{t} \right]_{0}^{1} = \frac{e^{t} - 1}{t}
+$$
+Next, we can find the first moment about the origin $\mu_1'$:
+$$
+\mu_1' = M_X'(0) = \frac{d}{dt} \left( \frac{e^{t} - 1}{t} \right) \bigg|_{t=0} = \frac{(t-1)e^t - 1}{t^2} = \frac{1}{2}
+$$
+Next, we can find the second moment about the origin $\mu_2'$:
+$$
+\mu_2' = M_X''(0) = \frac{d^2}{dt^2} \left( \frac{e^{t} - 1}{t} \right) \bigg|_{t=0} = \frac{(t^2-2t+2)e^t - 2}{t^3} \bigg|_{t=0} = \frac{1}{3}
+$$
+Finally, we can find the variance $\sigma^2$:
+$$
+\sigma^2 = \mu_2' - \mu_1'^2 = \frac{1}{2} - \frac{1}{4} = \frac{1}{12}
+$$
+
+\section*{Problem 4.40}
+Given the moment generating function $M_X(t) = e^{3t+8t^2}$, find the moment generating function of the random variable $Z = \frac{1}{4}(X-3)$ an use it to determine the mean and variance of $Z$.
+\subsection*{Solution}
+To find the moment generating function of $Z$, we can use the following relationship:
+$$
+M_Z(t) = M_{\frac{1}{4}(X-3)}(t)
+$$
+Using the property of moment generating functions, we have:
+$$
+M_Z(t) = e^{-3t/4}M_X(t/4) = e^{-3t/4} e^{3(t/4) + 8(t/4)^2} = e^{t^2/2}
+$$
+Next, we can find the mean and variance of $Z$ using the moment generating function:
+$$
+E[Z] = M_Z'(0) = \frac{d}{dt} e^{t^2/2} \bigg|_{t=0} = te^{t^2/2} \bigg|_{t=0} = 0
+$$
+$$
+M''_Z(0) = \frac{d^2}{dt^2} e^{t^2/2} \bigg|_{t=0} = (t^2+1)e^{t^2/2} \bigg|_{t=0} = 1
+$$
+Finally, we can find the variance $\sigma^2$:
+$$
+\sigma^2 = M_Z''(0) - (M_Z'(0))^2 = 1 - 0^2 = 1
+$$
+
+\section*{Problem 4.54}
+If $var(X_1) = 5, var(X_2) = 4, var(X_3) = 7, cov(X_1, X_2) = 3, cov(X_1, X_3) = -2 $ and $X_2, X_3$ are independent, find the covariance of $Y_1 = X_1 - 2X_2 + 3X_3$ and $Y_2 = -2X_1 + 3X_2 + 4X_3$.
+\subsection*{Solution}
+\begin{align*}
+    cov(Y_1, Y_2) &= cov(X_1 - 2X_2 + 3X_3, -2X_1 + 3X_2 + 4X_3) \\
+    &= -2var(X_1) - 6var(X_2) + 12var(X_3) + 7cov(X_1, X_2) - 2cov(X_1, X_3) + cov(X_2, X_3)\\
+    &= -2(5) - 6(4) + 12(7) + 7(3) - 2(-2) + 0\\
+    &= -10 - 24 + 84 + 21 + 4 + 0\\
+    &= 75
+\end{align*}
+
+\section*{Problem 8.1}
+Cov of sample mean with sample mean minus a random var is 0. Hint: Use covariance properties and connection to variance. Statement use corollary of theorem 4.15 on page 136 to show that if $X_1, X_2, \ldots, X_n$ constitute a random sample from an infinite population, then $cov(X_r-\bar{X}, \bar{X}) = 0$ for all $i$.
+\subsection*{Solution}
+The covariance of $X_r - \bar{X}$ and $\bar{X}$ can be expressed as:
+$$
+cov(X_r - \bar{X}, \bar{X}) = -var(\bar{X}) + cov(X_r, \bar{X})
+$$
+Since $\bar{X}$ is the sample mean, we have:
+$$ \bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i$$
+Thus, we can express the covariance as:
+$$
+cov(X_r, \bar{X}) = cov(X_r, \frac{1}{n} \sum_{i=1}^{n} X_i) = \frac{1}{n} \sum_{i=1}^{n} cov(X_r, X_i)
+$$
+Using corollary 4 we can see that:
+\begin{align*}
+    Cov(X_r, 1/n \sum X_i) - Var(\bar{X}) &= \frac{1}{n} cov(X_r, X_r) - Var(\bar{X}) \\
+    &= \frac{1}{n} Var(X_r) - Var(\bar{X}) 
+\end{align*}
+Assuming IID, we can see that:
+\begin{align*}
+    Var(\bar{X}) &= cov(1/n \sum X_i, 1/n \sum X_i) \\
+    &= \frac{1}{n^2} \sum cov(X_r, X_r)
+    &= \frac{1}{n^2} n Var(X) = \frac{Var(X)}{n}
+\end{align*}
+Thus we can see that:
+$$
+var(X_r)/n - var(\bar{X}) = 0
+$$
+Thus we have shown that $cov(X_r - \bar{X}, \bar{X}) = 0$.
+
+
+\section*{Problem 8.2}
+Independent samples from two different populations. 
+a) is straightforward. Why? b) Use covariance connection and then properties of covariance and independence. \\
+Use Theorem 4.14 on page 135 and its corollary to show that if $X_{11}, X_{12}, \ldots, X_{1n_1}$ and $X_{21}, X_{22}, \ldots, X_{2n_2}$ are independent random variables, with the first $n_1$ constituting a random sample from and infinite population with the mean $\mu_1$ and variance $\sigma_1^2$, and the second $n_2$ constituting a random sample from an infinite population with mean $\mu_2$ and variance $\sigma_2^2$, Then show that \\
+a) $E[\bar{X_1} - \bar{X_2}] = \mu_1 - \mu_2$\\
+b) $var(\bar{X_1} - \bar{X_2}) = \frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}$
+\subsection*{Solution}
+\subsection*{a}
+By the linearity of expectation, and the fact that we have:
+\begin{align*}
+E[\bar{X_1} - \bar{X_2}] &= E[\bar{X_1}] - E[\bar{X_2}] \\
+&= E[\sum x_{1i}/n_1] - E[\sum x_{2i}/n_2] \\
+&= \frac{1}{n_1} \sum E[x_{1i}] - \frac{1}{n_2} \sum E[x_{2i}] \\
+&= \frac{1}{n_1} n_1 \mu_1 - \frac{1}{n_2} n_2 \mu_2 \\
+&= \mu_1 - \mu_2
+\end{align*}
+\subsection*{b}
+To find the variance of the difference of the two sample means, we can use the properties of variance and covariance. Since the two samples are independent, we have:
+\begin{align*}
+var(\bar{X_1} - \bar{X_2}) &= var(\bar{X_1}) + var(\bar{X_2}) \\
+&= var\frac{(\sum X_1)}{n_1} + var\frac{(\sum X_2)}{n_2} \\
+&= \frac{\sum var(X_1)}{n_1^2} + \frac{\sum var(X_2)}{n_2^2} \\
+&= n_1\frac{\sigma_1^2}{n_1^2} + n_2\frac{\sigma_2^2}{n_2^2} \\
+&= \frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}
+\end{align*}
+
+
+\section*{Problem 8.3}
+With reference to Exercise 2, show that if the two samples come from normal populations, then $\bar{X_1} - \bar{X_2}$ is a random variable having a normal distribution with mean $\mu_1 - \mu_2$ and variance $\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}$.
+\subsection*{Solution}
+We can consider the MGF of these two independent random variables. The MGF of the difference of two independent normal random variables is given by:
+\begin{align*}
+M_{\bar{X_1} - \bar{X_2}}(t) &= E[e^{t(\bar{X_1} - \bar{X_2})}] \\
+&= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{t(\bar{X_1} - \bar{X_2})} f_{\bar{X_1}}(x_1) f_{\bar{X_2}}(x_2) dx_1 dx_2 \\
+&= \int_{-\infty}^{\infty} e^{t\bar{X_1}} f_{\bar{X_1}}(x_1) dx_1 \cdot \int_{-\infty}^{\infty} e^{-t\bar{X_2}} f_{\bar{X_2}}(x_2) dx_2 \\
+&= M_{\bar{X_1}}(t) \cdot M_{\bar{X_2}}(-t)
+\end{align*}
+Since we know that both $\bar{X_1}$ and $\bar{X_2}$ are normally distributed, we can substitute in their MGFs: 
+\begin{align*}
+    M_{\bar{X_1} - \bar{X_2}}(t) &= e^{\mu_1 t + \frac{\sigma_1^2 t^2}{2}} \cdot e^{-\mu_2 t + \frac{\sigma_2^2 t^2}{2}} \\
+    &= e^{(\mu_1 - \mu_2)t + \frac{(\sigma_1^2 + \sigma_2^2)t^2}{2}}
+\end{align*}
+This clearly is also the MGF of a normal distribution with mean $\mu_1 - \mu_2$ and variance $\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}$.
+
+
+\end{document} 

@@ -47,6 +47,38 @@ $$M_X(t) = \expec{e^{tX}} = \expec{1 + tX + \frac{(tX)^2}{2!} + \frac{(tX)^3}{3!
 $$M_X(t)' = \expec{Xe^{tX}} = \expec{X} + \expec{X^2}t + \expec{X^3}\frac{t^2}{2!} + ...$$
 $$M_X(0)' = \expec{X} $$
 $$M_X(0)^{(n)} = \mu_n(x) = \expec{X^n}$$
+$$Var(X) = \expec{X^2} - \expec{X}^2$$
+$$Var(X) = M_X''(0) - M_X'(0)^2$$
+Properties of MGF:
+\begin{itemize}
+\item MGF is unique to the distribution, ie, eg: If MGF is a distribution of $\frac{1}{1-3t}$ then the distribution is exponential with parameter $\lambda = 3$
+\item $M_{x+a}(t) = e^{at}M_X(t)$
+\item $M_{bX}(t) = M_X(bt)$
+\item $M_{x + y}(t) = \mathds{E}(e^{tx}e^{ty})$
+\item $M_{x + y}(t) = M_x(t)M_y(t)$ if $X$ and $Y$ are independent
+\end{itemize}
+Why? If $X$ and $Y$ are independent: 
+$$ f(x,y) = f_x(x)f_y(y)$$
+where $f(x,y)$ is the joint PDF of $X$ and $Y$ \\
+
+\textbf{Example}\\
+$$x -- \text{Exp}(\lambda)$$ 
+$$Y = 3X \rightarrow M_Y(t) = M_X(3t) = \frac{1}{1-\lambda3t}$$
+$$ y -- Exp(3\lambda)$$
+
+\textbf{MGF of the normal}\\
+\begin{align*}
+M_X(t) &= \expec{e^{tX}} = \int e^{tx} \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}} dx\\
+&= \frac{1}{\sqrt{2\pi \sigma^2}} \int e^{tx-\frac{x^2 - 2x\mu + \mu^2}{2\sigma^2}} dx\\
+&= \frac{1}{\sqrt{2\pi \sigma^2}} \int e^{-\frac{(x-(\mu +t \sigma^2))^2 + (\mu + t \sigma^2)^2 - \mu^2}{2 \sigma^2}} dx\\
+&= e^{\frac{t^2\sigma^4 + 2 \mu t \sigma^2}{2\sigma^2}} \int \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(x-(\mu +t \sigma^2))^2}{2\sigma^2}} dx\\
+&= e^{\frac{t^2\sigma^2}{2} + \mu t}\\
+\end{align*}
+
+\textbf{Q:}\\
+Suppose $X = N(\mu_1, \sigma_1^2)$ and $Y = N(\mu_2, \sigma_2^2)$ are independent. Show that $Z = X + Y$ is $N(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2)$\\   
+Using independance of $X$ and $Y$ we show that $M_Z(t) = M_X(t)M_Y(t)$
+
 
 
 

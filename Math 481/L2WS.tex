@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Lecture 2 Worksheet}
+
+\begin{document}
+\maketitle
+The Exponential distrubtion is specifice by one parameter, $\lambda > 0$. It has pdf: $$f(x) = \frac{1}{\lambda} e^{-x/\lambda}$$
+\section*{1: Compute the MGF of the exponential distribution.}
+\begin{align*}
+M_x(t) &= E[e^{tx}]\\
+&= \int_{0}^{\infty} e^{tx} \frac{1}{\lambda} e^{-x/\lambda} dx\\
+&= \frac{1}{\lambda} \int_{0}^{\infty} e^{x(t-1/\lambda)} dx\\
+\end{align*}
+This integral converges if $t < 1/\lambda$. If $t < 1/\lambda$, then:
+\begin{align*}
+M_x(t) &= \frac{1}{\lambda} \cdot \frac{1}{t-1/\lambda} e^{x(t-1/\lambda)} \Big|_{0}^{\infty}\\
+&= \frac{1}{\lambda t -1} [0 - 1]\\
+&= \frac{1}{1-\lambda t}
+\end{align*}
+\section*{2 Use the MGF to determine the mean and variance of the exponential distribution with parameter $\lambda = 3$.}
+\subsection*{Mean}
+\begin{align*}
+\mathds{E} &= M_x'(0)\\
+M_x(t) &= \frac{1}{1-3t}\\
+M_x'(t) &= \frac{3}{(1-3t)^2}\\
+M_x'(0) &= 3
+\end{align*}
+\subsection*{Variance}
+\begin{align*}
+\text{Var} &= M_x''(0) - M_x(0)^2\\
+M_x''(t) &= \frac{18}{(1-3t)^3}\\
+M_x''(0) - M_x(0)^2 &= 9
+\end{align*}
+
+\section*{3: If $X$ is an exponential random variable is $Y = 3X$ also exponential?}
+
+
+
+
+
+\end{document}

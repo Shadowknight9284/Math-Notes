@@ -119,11 +119,264 @@ Reflexive and symmetric are obvious.\\
 Transitive is proven by the Chapman-Kolmogorov Theorem.\\
 This relation divides the states into classes.\\
 \subsection*{Reccurent and Transient States}
-\textbf{Definition:} A given state i of a MC let $f_i$ denote the probability that the chain will eventually return to state i.\\
-A state is called Reccurent if $f_i = 1$ and Transient if $f_i < 1$.\\
-The expected number of tevisits to a reccuent state is infinite.\\
-for a transient state the probability of being in state i for exactly n times period is $f_i^n (1-f_i)$: Geometric distribution\\
+\textbf{Definition:} A given state i of a Markov Chain let $f_i$ denote the probability that the chain will eventually return to state i.\\
+A state is called \textbf{Recurrent} if $f_i = 1$ and \textbf{Transient} if $f_i < 1$.\\
+The expected number of revisits to a recurrent state is infinite.\\
+For a transient state the probability of being in state i for exactly n times period is $f_i^n (1-f_i)$: Note that this is Geometric distribution\\
+\textbf{Lets notice state properties:}\\
+\begin{align*}
+    f_i &= \prob(x_{n+N} =i | X_n = i)\\
+    & = \prob(x_N = i | X_0 = i)
+\end{align*}
+
+A Recurrent state is revisited infinitely often after it is visited once it will be revisited by the markov properties, and it repeats.\\
+A Transient state is revisited only a finite number of times.\\
+\textbf{Proof of Transitive state finite recurrence:}\\
+The probability a transient state is revisited exactly n times is $f_i^{n-1} (1-f_i)$\\
+\begin{align*}
+    E(n) &= \sum_{n=1}^{\infty} n f_i^{n-1} (1-f_i)\\
+    &= (1-f_i)\sum_{n=1}^{\infty} \frac{d}{df_i} f_i^n\\
+    &= (1-f_i)\frac{d}{df_i} \sum_{n=1}^{\infty} f_i^n\\
+    &= (1-f_i)\frac{d}{df_i} \frac{f_i}{1-f_i}\\
+    &= \frac{1}{(1-f_i)}
+\end{align*}
+\textbf{Proposition 4.1}\\
+A state is is 
+\begin{enumerate}
+    \item Recurrent if $\sum_{n=1}^{\infty} P_{ii}^{(n)} = \infty$\
+    \item Transient if $\sum_{n=1}^{\infty} P_{ii}^{(n)} < \infty$
+\end{enumerate}
+\textbf{Proof:}\\
+Define $I_n = \begin{cases}
+    1 & \text{if } X_n = i\\
+    0 & \text{otherwise}
+\end{cases}
+$\\
+The number of times period the process is in state i is $\sum_{n=0}^{\infty} I_n$\\
+The expected value of the number of times the process is in state i is
+\begin{align*}
+    \expec(\sum_{n=0}^{\infty} I_n) &= \sum_{n=0}^{\infty} \expec(I_n)\\
+    &= \sum_{n=0}^{\infty} \prob(x_n = i |x_0 = i)\\
+    &= \sum_{n=0}^{\infty} P_{ii}^{(n)}
+\end{align*}
+\textbf{Corallary 4.2 (pg 207)}\\
+If i is recurrent and i communicates with j, then j is recurrent.\\
+\textbf{Proof:}\\
+$$i \leftrightarrow j \rightarrow \exists k \text{ s.t. } P_{ij}^k > 0 \text{ and } P_{ji}^k$$ For any n, $$P_{ij}^{(m+n+k)} \geq P_{ji}^m P_{ii}^n P_{ij}^k$$
+$$ \sum_{n=1}^{\infty}P_{ij}^{(m+n+k)} \geq \sum_{n=1}^{\infty} P_{ji}^m P_{ii}^n P_{ij}^k$$
+$$\sum_{t=0}^{\infty} P_{jj}^t \geq \sum_{n=1}^{\infty}P_{ij}^{(m+n+k)} \geq P_{ji}^m P_{ij}^k sum_{n=1}^{\infty}  P_{ii}^n \geq \infty $$
+Thus if i is recurrent and i communicates with j, then j is recurrent.\\
+\textbf{Remark:} If the state i is transient and if the state j communicates with i, then j is transient.\\
+\textbf{Proof:} 
+Assume the if, Suppose j is not transient. Then j is recurrent. Then i is recurrent. This is a contradiction. Thus j is transient.\\
+\textbf{Remark:} Transience and Recurrence are class properties.\\ 
+\textbf{Remark:} Suppose we have a Markov Chain with a finite number of states. Then at least one state is recurrent.\\
+A Markov Chain with exactly one communication class is called irreducible.\\
+A finite state irreducible Markov Chain must have all states recurrent.\\
+\textbf{Example 4.18}
+Consider a Markov Chain with 5 states.\\
+$$P = \begin{bmatrix}
+    .5 & .5 & 0 & 0 & 0 \\
+    .5 & .5 & 0 & 0 & 0 \\
+    0 & 0 & .5 & .5 & 0 \\
+    0 & 0 & .5 & .5 & 0 \\
+    .25 & .25 & 0 & 0 & .5
+\end{bmatrix}$$
+Find the equivalence classes, classify them as reccurent or transient.\\
+\textbf{Solution:}\\
+The equivalence classes are $\{0,1\}$ and $\{2,3\}$ and $\{4\}$\\
+4 is its own class due to the fact the communication between 0 and 1 is not symmetric.\\
+Does number of nonzero eigenvectors equal the number of equivalence classes?\\
+\textbf{Example 4.19}\\
+Markov Chain wih states $(0,\pm 1 \dots)$\\
+$P_{i,i+1} = p$ and $P_{i,i-1} = 1-p$\\
+pg 209-211 \\
+A random walk is symmetric if $p = 1/2$\\
+Can prove that the random walk recurrent in that case
+\textbf{Remark:} \\
+Definition of Reccurence:
+$$ f_i = P(\text{Ever coming back to state i | starting at state i})$$
+$$ f_i = P(\sum_n (x_n = i) | x_0 = i)$$
+\textbf{Random Walk}\\
+State space is $\mathscr{Z}$\\
+TRansition probabilities are: $P_{i,i+1} = p$ and $P_{i,i-1} = 1-p $\\
+Note: when there is only one equivalence class, the Markov Chain is irreducible.\\
+Find $f_0 = \beta = P(\text{ever returning to 0 | starting at 0})$\\
+Condition the probability $\beta$ on the next transtion.
+$$\beta =  (p)P(\text{ever returns to 0} | x_1 = 1) + (1-p)P(\text{returns to 0} | x_1 = -1)$$
+Let $\alpha = P(\text{ever returns to 0} | x_1 = 1)$\\
+$ \alpha = (p)P(\text{ever returns to 0} | x_1 = 1, x_2 = 2) + (1-p)P(\text{ever returns to 0} | x_1 = 1, x_2 = 0)$\\
+$$\alpha = 1 - p + p\alpha^2$$
+Solving gives $$\alpha = \frac{1-p}{p}$$
+If the random walk is symetric then $\alpha = 1$ is the only Solution. 
+Substitution in equation with beta gives $f_0 = 1$\\
+\section*{4.4 Long Run Proportions and Limiting Probability}
+Let $i \neq j$ be states of a Markov Chain.\\
+Define $f_{ij}$ as the probability that the Markov chain, starting in state i, will ever reach state j.\\
+$$f_{ij} = \sum_{n=1}^{\infty} P_{ij}^{(n)}$$
+\textbf{Proposition 4.3}\\
+If the state i is reccurent and i communicates with j, then probability of eventually reaching j is 1, $f_{ij} = 1$.\\
+\textbf{Proof:}\\
+$$i \leftrightarrow j \rightarrow \exists n > 0 \text{ s.t. } P_{ij}^{(n)} > 0$$ Assume n is the minimum such integer.\\
+Since i is recurrent, the infinite sequence $0 = k_0 < k_1 < k_2 < ...$ exists such that $X_{k_r} = i$ for $r = 0,1,2,3,...$\\
+Define $z = min( r> 0 , X_{k_r + n  } = j)$\\
+Then $P(Z = z) =  P^n_{ij} (1 - P_{ij}^{(n)})^{z-1}$\\ 
+Thus $f_{ij} = 1$ by sandwich Theorem\\
+Assume j is a recurrent state.\\
+Define $N_j = min(n > 0 | X_n = j)$\\
+Let $m_j = E[N_j | x_0 = j]$\\
+It is the expextected number of steps to return to j.\\
+Since we know that $P(N_j < \infty| x_0 = j) = 1$\\
+Still it may happen that $m_j = E[N_j | x_0 = j] = \infty$\\
+Definition: if $m_j < \infty$ then j is positive recurrent.\\
+If $m_j = \infty$ then j is null recurrent.\\
+We define $\pi_j$ to be the long run proportion of time the Markoc chain is in state j.\\
+$$\pi_j = \lim_{n \to \infty} \frac{1}{n} \sum_{k=0}^{n-1} I_k$$
+Where $I_k = 1$ if $X_k = j$ and $0$ otherwise.\\
+Proposition 4.4 :\\
+IF the markov chain is irreducible and reccurent then any intial state $x_0$ will have $\pi_j = \frac{1}{m_j}$\\
+At time $T_0 + \sum T_k$ the chain enters state j for the (n+1)th time, the proporttion of th time the chain is in state j during this is $\frac{n+1}{T_0 + \sum T_k}$\\
+$$\pi_j = \lim_{n \rightarrow \infty} \frac{n+1 }{T_0 + \sum T_k }$$
+Prop 4.4 if a MC is irreducible and recurrent, then $\pi_j = \frac{1}{m_j}$\\
+Propr 4.5 if the state i is positive reccurent and if the state j communicates with i then the state j is also positive recurrent.\\
+Proof: $i \Leftrightarrow j \rightarrow \exists n>0 \text{ such that } P^n_{ij} > 0, \pi_i P^{n}_{ij} =$ Proportion of times that the pricess wil be in state j, n steps after it was in step i. $ < \pi_j$    \\
+$$\pi_i P^n_{ij} \leq \pi_j$$
+$pi_i > 0 $ since it is positive reccurent. since P is also finite thus $\pi_j$ is positive reccurent.\\
+Remark: null recurrence is also a class property.\\
+\textbf{Claim:} an irreducible finite state markov chain is positive recurrent.\\
+\textbf{Proof:} Let $m_j$ be the expected return time to state j.\\
+If you have a finite MC then the there is one EC, and if one is null recurrent then all are null recurrent.\\
+Suppose that satte i in such  MC is null recurrent.\\
+Then $\pi_j = 0$ Since null reccurnece is a class property and there is only one class, thus all states are null recurrent.\\
+$\pi_i = 0$ for all states.\\
+$\sum pi_i = 0$ with probability one. This is a contradiction.\\
+\textbf{Theorum 4.1} Consider a irreducible Markov Chain. If the chain is positive reccurent then the long run proportions are unique colutions of the system of equations 
+$$\sum_{i} \pi_i P_{ij} = \pi_j$$
+and $\sum_{j} \pi_j = 1$\\
+Think of it like all way the ways the $\pi$ go to state j. \\
+Similar to conservation of flow.\\
+\textbf{Matrix Intutition}:\\
+Write $\vec{\pi} = \begin{bmatrix}
+    \pi_0 & \pi_1 & \pi_2 & \dots
+\end{bmatrix}$\\
+be the row vector with entris $\pi_j$\\
+Then $\vec{\pi} P = \vec{\pi}$\\
+And $\sum_j \pi_j = 1$\\
+\textbf{Example 1}\\
+Consider a two state Markov Chain with transition matrix 
+$$ P = \begin{bmatrix}
+    \alpha & 1 - \alpha \\
+    \beta & 1-\beta
+\end{bmatrix}$$
+Compute the long run proptions $\pi_0$ and $\pi_1$\\
+Assume $\alpha , \beta \neq 0,1$\\
+$$\pi_0 P_{01} + \pi_1 P_{11} = \pi_1$$
+$$\pi_0 P_{00} + \pi_1 P_{10} = \pi_0$$
+$$\pi_0 + \pi_1 = 1$$
+In matrix formulation we have $\begin{bmatrix}
+    \pi_0 & \pi_1
+\end{bmatrix} \begin{bmatrix}
+    \alpha & 1 - \alpha \\
+    \beta & 1-\beta
+\end{bmatrix} = \begin{bmatrix}
+    \pi_0 & \pi_1
+\end{bmatrix}$\\
+Short cut to remember 
+$$ \begin{bmatrix}
+    & 0 & 1 \\
+    0 & P_{00} & P_{01}\\
+    1 & P_{10} & P_{11}\\
+    & \pi_0 & \pi_1 \\
+\end{bmatrix}
+$$
+Note that $\pi_0 = \frac{\beta}{1- \alpha + \beta}$ and $\pi_1 = \frac{1-\alpha}{1 - \alpha + \beta}$\\
+\textbf{Example 2}\\
+Doubly stochastic matrix. If the sum of the columns and rows are equal to 1.\\
+If the transition matri of a Markov Chain with n-states is a doubly stochastic matrix , then the long run proportions are $\pi_j = 1/n$ for all j.\\
+\textbf{Proof:}
+$$[1/n, 1/n, 1/n, \dots] P = [1/n, 1/n, 1/n, \dots]$$
+$$ 1/n \sum_{j} P_{ij} = 1/n$$
+$$\sum_{j} P_{ij} = 1$$
+Since solutions are unique as in Theroum 4.1, thus $\pi_j = 1/n$ for all j.\\
+\textbf{Example 3}\\
+Simple random symmetric walk. This is also reflectant at the edges.\\
+States are $(0, 1, 2, \dots, L)$\\
+$P_{01} = 1, P_{L,L-1} = 1$\\
+$P_{i,i-1} = 1/2$ and $P_{i,i+1} = 1/2$\\
+Simple case: L = 2\\
+$$ P = \begin{bmatrix}
+    0 & 1 & 0 \\
+    1/2 & 0 & 1/2 \\
+    0 & 1 & 0
+\end{bmatrix}
+$$
+$$\pi_0 = 0, \pi_1 = 1/2, \pi_2 = 1/2$$
+Case L = 3\\
+$$ P = \begin{bmatrix}
+    0 & 1 & 0 & 0 \\
+    1/2 & 0 & 1/2 & 0 \\
+    0 & 1/2 & 0 & 1/2 \\
+    0 & 0 & 1 & 0
+\end{bmatrix}$$
+$$\pi_0 = 1/6 , \pi_1 = 1/3 , \pi_2 = 1/3 , \pi_3 = 1/6$$
+Prove that for L = n, $\pi_i = \frac{1}{n}$ for all i other than $\pi_0, \pi_L = 1/2L$.\\
+\textbf{Example}\\
+For L = 1000, what is the probability of revisiting state 0?\\
+it is 2000 as it is $\pi = 1/m$\\
+If the system is inconsistent the MC is transient or null reccurent.\\
+$\pi_j = 0 $ for all j.\\
+\textbf{Example 4.26:}\\
+MC with acceptable staus in the set $A$ and unacceptable status $A^C$\\
+If $x_n \in A$ process is "up", if $x_n \in A^C$ process is "down".\\
+Find: \\
+\textbf{i:} Rate at which the process goes from up to down.\\
+\textbf{ii:} Average length of time process remain down when it goes down.\\
+\textbf{iii:} Average length of time process remains up when it goes up.\\
+\textbf{Solution:}\\
+Let $i \in A$ and $j \in A^C$\\
+The rate at which the process enters j from i is $$= \pi_i P_{ij}$$\\
+Rare ar which process enters j from any acceptable state is $$\sum_{i \in A} \pi_i P_{ij}$$
+Rate at which the process goes from $A \rightarrow A^C$ is $$\sum_{j \in A^C} \sum_{i \in A} \pi_i P_{ij}$$
+Let $u$ be the average time process stays up.\\
+Let $d$ be the average time process stays down.\\
+rate at which a breakdown occurs is $\frac{1}{u+d}$\\
+Therefore $$\frac{1}{u+d} = \sum_{j \in A^C} \sum_{i \in A} \pi_i P_{ij}$$
+Proportion the process is up is 
+$$\frac{u}{u+d} = \sum_{i \in A} \pi_i$$
+Get $u$ and $d$ in terms of $\pi$\\
+$$u = \frac{\sum_{i \in A} \pi_i}{\sum_{j \in A^C} \sum_{i \in A} \pi_i P_{ij}}$$
+$$d = \frac{\sum_{j \in A^C} \sum_{i \in A} \pi_i P_{ij}}{\sum_{i \in A^C} \pi_i}$$
+
+\textbf{Stationary Probability}\\
+If the intial distribution of states is chosen accoring to long run propotions $\pi_j$, then the future distrubituion of the state of the system will be the same if $P(x_0 = j) = \pi_j$ then $P(x_n = j) = \pi_j$\\
+Using induction we can see this true for all n. (4.4)\\
+
+\textbf{4.4.1}:
+Limiting probabilities: 
+\textbf{Example: } Consider a two state MC with $$P = \begin{bmatrix}
+    .7 & .3 \\
+    .4 & .6
+\end{bmatrix}$$
+Numericcal calculation show that $P^{(n)}$ converges to a limiting distribution $$P^n = \begin{bmatrix}
+    4/7 & 3/7 \\
+    4/7 & 3/7
+\end{bmatrix}
+$$
+\textbf{Claim: } The limiting probabilties $\lim_{n \rightarrow \infty} P(x_n = j) $ if they exist are equal to the long run proportions $\pi_j$\\
+\textbf{Proof:} Assume $\alpha_j = \lim_{n \to \infty} P(x_n = j)$ exists.\\
+Then $P(x_{n+1} = j) = \sum_{i} P(x_{n+1} = j | x_n = i) P(x_n = i)$\\
+Gives $\lim_{n \to \infty} P(x_{n+1} = j) = \lim_{n \to \infty} \sum_{i} P_{ij} P(x_n = i)$\\
+Thus $\alpha_j = \sum_{i} P_{ij} \alpha_i$ for all $j$\\
+Also $\sum_{j} \alpha_j = 1$\\
+Recall that $pi_j$ are the unique solutions of the system of equations $$\sum_{i} \pi_i P_{ij}, \sum_{i}\pi_j = 1$$
+Therefore $\lim_{n \rightarrow \infty }\alpha_j = \pi_j$ if $\alpha_j$ exists \\
+When do limits not exist? When $n \rightarrow \infty$ diverges or collates \\
+A chain that can only return to a state a multiple of $d>1$ times is called a periodic chain. And does not have limiting probabilties.\\
+\textbf{Definition: }\\
+An irrecucible, positive reccurent, aperiodic Markov Chain is said to be ergodic.\\
 
 
 
-\end{document}
+
+
+\end{document} 

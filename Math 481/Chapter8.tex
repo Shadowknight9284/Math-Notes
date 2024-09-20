@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Chapter 8: Sample Statistics}
+
+\begin{document}
+\maketitle
+
+\textbf{Definition:} A random sample of size n from a population with pdf $f(x)$ is a sequence of n independent random variables with pdf $f(x)$.\\
+Thus $X_1, X_2, \ldots, X_n$ are independent random variables with pdf $f(x)$.\\
+\textbf{Example:} $X_i =$ amount of ice cream  in the ith scop with the same scoop\\
+\textbf{Question:} What can we infer about the distribution
+Sample must be diret to the joint pdf\\
+\textbf{eg:} $P ( X_1 > X_2 + X_3)$\\
+The jpdf of $X_1, X_2, X_3$ is $f(x_1, x_2, x_3) = f(x_1)f(x_2)f(x_3)$\\
+$$P(X_1 > X_2 + X_3) = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \int_{x_1=x_2+x_3}^{\infty} f(x_1)f(x_2)f(x_3) dx_1 dx_2 dx_3$$
+Integral over the region $\mathds{R}^3$
+\textbf{Definition} A statistic is a random var which is a funtion of the random sample\\
+\textbf{Example:} Sample mean $\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i$\\
+\textbf{Theorem:} Suppose $X_1, X_2, \ldots, X_n$ are iid random variables with mean $\mu$ and variance $\sigma^2$. Then $E[\bar{X}] = \mu$ and $Var(\bar{X}) = \frac{\sigma^2}{n}$\\
+\textbf{Theorum} Suppose $X_1, X_2, \ldots, X_n$ is a random sample from a normal population  with distribution $N(\mu, \sigma^2)$, then $\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$\\ 
+\textbf{Proof}:
+Idea get MGF of $\bar{X}$\\
+\begin{align*}
+M_{\bar{X}}(t) &= M_{1/n \sum X_i}(t) \\
+&= M_{\sum x_i}(t/n) \\
+&= M_{X_1}(t/n)^n
+\end{align*}
+We know $M_{N}(t) = e^{\mu t + \frac{\sigma^2 t^2}{2}}$\\
+$$M_{X_1}(t/n)^n = e^{{\mu t} + \frac{\sigma^2 t^2}{2n}}$$\\
+Suppose $X$ is a rv.
+Consider $P(|X - \mu_X| < k \sigma_X) \geq 1 - 1/k^2$
+\textbf{Theorem:} Chebyshev's Inequality\\
+\textbf{Proof: } \\
+$$P(|X - \mu_X|^2 < k^2 \sigma_X^2) = \int_{\mu - k\sigma}^{\mu + k\sigma} f(x) dx$$
+\textbf{Application: }\\
+$$P(|\bar{X} - \mu| < k \sigma) \geq 1 - \frac{1}{k^2}$$
+$$ = P(|\bar{X} - \mu| < k \sigma/\sqrt{n}) \geq 1 - \frac{1}{k^2}$$
+$$ \rightarrow P(|\bar{X} - \mu| < \tilde{k}) \geq 1 - \frac{\sigma_{pop}^2}{n \tilde{k}^2} $$
+
+
+\end{document}

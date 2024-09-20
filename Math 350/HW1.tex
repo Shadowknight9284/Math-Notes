@@ -1,0 +1,247 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{HW Math 350H}
+
+\begin{document}
+\maketitle
+\section*{Section 1.2}
+\section*{Question 7}
+\subsection*{Let $S = \{ 0,1 \}$ and $F = R$. In $\mathcal{F}(S,F)$, show that $f = g$ and $f +g =h$ where $f(t) = 2t + 1$, $g(t) = 1 + 4t - 2t^2$, and $h(t) = 5^t + 1$}
+We can prove this by proving each case separately.\\
+\textbf{Proof of f = g}
+\begin{align*}
+    \text{Let } t = 0 \implies f(0) &= g(0) \implies 2(0)+1 = 1 + 4(0) - 2(0)^2 \implies 1 = 1\\
+    \text{Let } t = 1 \implies f(1) &= g(1) \implies  = 2(1)+1 = 1 + 4(1) - 2(1)^2 \implies 3 = 3
+\end{align*}
+\textbf{Proof of f + g = h}
+\begin{align*}
+    \text{Let } t= 0 \implies f(0) + g(0) &= h(0) \implies 2(0)+1 + 1 + 4(0) - 2(0)^2 = 5^0 + 1 \implies 2 = 2\\
+    \text{Let } t= 1 \implies f(1) + g(1) &= h(1) \implies 2(1)+1 + 1 + 4(1) - 2(1)^2 = 5^1 + 1 \implies 6 = 6
+\end{align*}
+\section*{Question 8}
+\subsection*{In any vector space $V$, show that $(a+b)(x+y) = ax + ay + bx + by$  for any $x,y \in V$ and $a,b \in F$}
+We can initially treat $x+y$ as a single vector and thus use (VS 7) to distribute the scalars then use (VS 8) on each of the resulting vectors to lead to 4 vectors.\\
+\begin{align*}
+    & (a+b)(x+y) \\
+    &= a(x+y) + b(x+y) , (\text{VS } 7 )\\
+    &= (ax + ay) + (bx + by), (\text{VS } 8)
+\end{align*}
+Note that the there are multiple parentesis representaions for this sum as follows:
+\begin{align*}
+    &= ((ax + ay) + bx) + by\\
+    &= (ax + ay) + (bx + by)\\
+    &= (ax + (ay + bx)) + by\\
+    &= ax + (ay + (bx + by))\\
+    &= ax + ((ay + bx) + by)\\
+\end{align*}
+These solutions are equivalent as by (VS 2) we can rearrange the order of parentesis along vector addition:
+\begin{align*}
+    ((ax + ay) + bx) + by = (ax + (ay + bx)) + by (VS 2)\\
+    (ax + (ay + bx)) + by = ax + ((ay + bx) + by) (VS 2)\\
+    ax + ((ay + bx) + by) = ax + (ay + (bx + by)) (VS 2)\\
+    ax + (ay + (bx + by)) = (ax + ay) + (bx + by) (VS 2)
+\end{align*}
+Finally we can see that $((ax + ay) + (bx + by))$  is equivalent to $ax + ay + bx + by$\\
+By the transitive property of equality, we can conclude that $(a+b)(x+y) = ax + ay + bx + by$ regardless of the parenthesis representations we choose to distribute the term out by.\\
+
+
+
+\section*{Question 9}
+\subsection*{Prove Corollaries 1 and 2 of Theorem 1.1 and Theorem 1.2 (c)}
+\textbf{Corollary 1:} The vector \underline{0} in (VS 3)is unique.\\ 
+\textbf{Proof:} Assume there are two zero vectors $\underline{0}$ and $\underline{0}'$ in $V$.\\
+Thus $\forall x \in V$ we have $x + \underline{0} = x$ and $x + \underline{0}' = x$\\
+Thus by transitiviy we have $x + \underline{0} = x + \underline{0}'$\\
+By theorem 1.1 we have $\underline{0}  = \underline{0}'$\\
+This is a contradiction as we assumed there were two distinct zero vectors.\\
+Thus the zero vector is unique.\\
+\textbf{Corollary 2:} The vector y in (VS 4) is unique.\\
+\textbf{Proof:} Assume there are two vectors $y$ and $y'$ in $V$ such that $x + y = 0$ and $x + y' = 0$\\
+Thus by transitiviy we have $x + y = x + y'$\\
+Thus by theorem 1.1 we have $y = y'$\\
+This is a contradiction as we assumed there were two distinct vectors.\\
+Thus the vector y is unique.\\
+\textbf{Theorem 1.2 (c):} $a\underline{0} = \underline{0}, \forall a \in F$\\
+\textbf{Proof:} Let $a \in F$, Need $a \underline{0} = \underline{0}$\\
+Consider $a\underline{0} + a \underline{0}$\\
+Thus by (VS 7) we have $a\underline{0} + a\underline{0}= a(\underline{0} + \underline{0})$\\
+Thus by (VS 3) we have $a(\underline{0} + a\underline{0}) = a\underline{0}$\\
+By (VS 4) We let $y = -a \underline{0}$ and add y to both sided\\
+Thus we have $a\underline{0} = \underline{0}$ as desired\\
+
+
+
+\section*{Question 11}
+\subsection*{Let $V = \{0\}$ consit of a single vector 0 an define $0+0 = 0$ and $c0 = 0$ for each $c \in F$. Prove that $V$ is a vector space over $F$}
+Note that $\forall x \in V \implies x = 0$ Since V has only one element.\\
+Thus for the following proofs I will simply state what needs to be proven and then implicitly let $x, y, z $ be arbitrary elements of $V$ which implies $x,y,z = 0$\\
+\textbf{Proof of VS 1:}\\
+Let $x,y \in V$ Nee $x+y = y+x \in V$\\
+$0 + 0 = 0 + 0$\\ 
+$0 = 0$\\
+\textbf{Proof of VS 2:}\\
+Let $x,y,z \in V$ Need $(x+y)+z = x+(y+z)$\\
+$(0 + 0) + 0 = 0 + (0 + 0)$\\
+$0 + 0 = 0 + 0$\\
+$0 = 0$\\
+\textbf{Proof of VS 3:}\\
+Let $x \in V$ Need $\exists \underline{0} \in V, x + \underline{0} = x$\\
+$ 0 + \underline{0} = 0$\\
+Since $0$ is the only element in $V$, $\underline{0} = 0$\\
+Thus $0+0=0$\\
+$0=0$\\
+\textbf{Proof of VS 4:}\\
+Let $x \in V$ Need $\exists y \in V, x + y = 0$\\
+Let $y = 0$\\
+$x +y = 0 + 0 = 0$ as desired\\
+\textbf{Proof of VS 5:}\\
+Let $x \in V$ Need $1x = x$\\
+$1*0 = 0$\\
+$0 = 0$\\
+\textbf{Proof of VS 6:}\\
+Let $a,b \in F, x \in V$ Need $(ab)x = a(bx)$\\
+$ab0 = a(b0)$\\
+$0 = a0$\\
+$0 = 0$\\
+\textbf{Proof of VS 7:}\\
+Let $a \in F, x,y \in V$ Need $a(x+y) = ax + ay$\\
+$a(0+0) = a0 + a0$\\
+$0 = 0$\\
+\textbf{Proof of VS 8:}\\
+Let $a,b \in F, x \in V$ Need $(a+b)x = ax + bx$\\
+$(a+b)0 = a0 + b0$\\
+$0 = 0$\\
+
+\section*{Question 12}
+\subsection*{A real-valued function $f$ is defined on the set of all real numbers is called and even function if $f(-t) = f(t)$ for all $t \in \mathds{R}$. Prove that the set of even functions defined on the real line with the operations of addition and scalar multiplication defined by $(f+g)(t) = f(t) + g(t)$ and $(cf)(t) = c[f(t)]$ is a vector space over $\mathds{R}$}
+Note that any for 2 even functions $f,g$ their sum $f+g$ is also even as:
+\begin{align*}
+    (f+g)(-t) &= f(-t) + g(-t)\\
+    &= f(t) + g(t)\\
+    &= (f+g)(t)
+\end{align*}
+As well as for any scalar $c$:
+\begin{align*}
+    (cf)(-t) &= c[f(-t)]\\
+    &= c[f(t)]\\
+    &= (cf)(t)
+\end{align*}
+\textbf{Proof of VS 1:}\\
+Let $f,g \in V$, Need $f+g = g+f$\\
+$(f+g)(t) = f(t) + g(t) = g(t) + f(t)$\\
+$f(t) + g(t) = f(t) + g(t)$\\
+$f+g = g+f$ as desired\\
+\textbf{Proof of VS 2:}\\
+Let $f,g,h \in V$ Need $(f+g)+h = f+(g+h)$\\
+$((f+g)+h)(t) = (f+g)(t) + h(t) = f(t) + g(t) + h(t)$\\
+$(f+(g+h))(t) = f(t) + (g+h)(t) = f(t) + g(t) + h(t)$\\
+Thus $(f+g)+h = f+(g+h)$ as desired\\
+\textbf{Proof of VS 3:}\\
+$\exists \underline{0} \in V, \forall f \in V$ Need $f + \underline{0} = f$\\
+$(f+\underline{0})(t) = f(t) + \underline{0}(t) = f(t)$\\
+Let $\underline{0}(t) = 0$\\
+$f(t) + \underline{0} = f(t)$ as desired \\
+Note that $\underline{0} \in V$ as $0$ is even since $0(t) = 0(-t) = 0$\\
+\textbf{Proof of VS 4:}\\
+Let $f \in V$ Need $\exists g \in V$ s.t. $f+g = \underline{0}$\\
+Let $g = -1f$\\
+$(f+ -1f)(t) = f(t) + -1f(t) = \underline{0}$ as desired\\
+Note that $g$ is even as $g(t) = -1f(t) = -1f(-t) = g(-t)$\\
+\textbf{Proof of VS 5:}\\
+Let $f \in V$ Need $1f = f$\\
+$(1f)(t) = 1f(t)$\\
+$1f(t) = f(t)$ \\
+Thus $1f = f$ as desired\\
+\textbf{Proof of VS 6:}\\
+Let $a,b \in \mathds{R}, f \in V$ Need $(ab)f = a(bf)$\\
+$(ab)f(t) = a(bf(t))$\\
+$abf(t) = abf(t)$\\
+$(ab)f = a(bf)$ as desired\\
+\textbf{Proof of VS 7:}\\
+Let $a \in \mathds{R}, f,g \in V$ Need $a(f+g) = af + ag$\\
+$a(f+g)(t) = a(f(t) + g(t)) = af(t) + ag(t) = af +ag$ as desired\\
+\textbf{Proof of VS 8:}\\
+$\forall a,b \in \mathds{R}, \forall f \in V, (a+b)f = af + bf$\\
+$(a+b)f(t) = af(t) + bf(t) = af +bf$ as desired\\
+
+\section*{Question 17}
+\subsection*{Let $V = \{(a_1,a_2): a_1, a_2 \in F\}$.  where F is a field. Define addition of elements of V coordinatewise, and for $c \in F$ and $(a_1,a_2) \in V$ define $c(a_1,a_2) = (a_1,0)$ Is V a vector space over F with operations?}
+V is not a vector space as (VS 5) does not hold.\\
+Let $x = (0,1), c = 1$.\\
+Thus $1x = 1(0,1) = (0,0)$\\
+Clearly $(0,0) \neq (0,1)$
+
+\section*{Section 1.3}
+\section*{Question 5}
+\subsection*{Prove that $A + A^{t}$ is symmetric for any square matrix A }
+Let $A$ be an $n$ by $n$ matrix with each entry $a_{i,j}$ corresponding to entry in the ith row and jth column.\\
+Clearly $A^t$ has the values of $a_{ij}$ in the entries in the ith column and jth row. In other words, its values of $a_{ji}$ in the ith row and jth column\\
+Thus $A + A^{t}$ has entries of $a_{ij}+a_{ji}$ in the ith row and jth column.\\
+This would be symmetric as for every symmetric matrix the for each entry $a_{ij} = a_{ji}$\\
+Clearly $a_{ij}+a_{ji} = a_{ji}+a_{ij}$\\
+Thus $A + A^{t}$ is symmetric
+
+\section*{Question 8a}
+\subsection*{Determine if the following sets are subspaces of $\mathds{R}^3$ under the operation of adition and scalar multiplication defined on $\mathds{R}^3$ Justify your answers: $W_1 = \{(a_1, a_2,a_3) \in \mathds{R}^3: a_1 = 3a_2 \text{ and } a_3 = -a_2\}$}
+This is a subspace as the since $W$ is a subset of a vector space ($\mathds{R}^3$) it must satisfy the 8 properties of a vector space.\\
+It also satisfies $0 \in W$ as for $a_2 = 0, (0,0,0) \in W$\\
+It satisfies the closure property of addition as:\\
+Let $x = (a_1,a_2,a_3)$ and $y = (b_1,b_2,b_3)$\\
+Thus $x = (3a_2,a_2,-a_2)$ and $y = (3b_2,b_2,-b_2)$\\
+$x+y = (3a_2+3b_2,a_2+b_2,-a_2-b_2)$\\
+$x+y = (3(a_2+b_2),a_2+b_2,-(a_2+b_2))$\\
+Let $c = a_2+b_2$\\
+$x+y = (3c,c,-c)$\\
+This clearly is also in $W$ thus it satisfies closure.\\
+It satisfies the closure property of scalar multiplication as:\\
+Let $x = (a_1,a_2,a_3)$\\
+$x = (3a_2,a_2,-a_2)$\\
+$cx = (3ca_2,ca_2,-ca_2)$\\
+$cx = (3c(a_2),c(a_2),-c(a_2))$\\
+Let $d = ca_2$\\
+$cx = (3d,d,-d)$\\
+This clearly is also in $W$ thus it satisfies closure.\\
+
+\section*{Question 8b}
+\subsection*{Determine if the following sets are subspaces of $\mathds{R}^3$ under the operation of adition and scalar multiplication defined on $\mathds{R}^3$ Justify your answers: $W_1 = \{(a_1, a_2,a_3) \in \mathds{R}^3: a_1 = a_3 + 2\}$}
+This is not a subspace as there is no element in the set that satisfies the condition $0 \in W$\\
+Let $x = (a_1,a_2,a_3)$\\
+Thus $x = (a_3 + 2,a_2,a_3)$\\
+Clearly $0 \notin W $ since $a_3 + 2 \neq a_3, \forall a_3 \in \mathds{R}$\\
+
+\section*{Question 11}
+\subsection*{Is the set $W = \{f \in P(F): f(x) = 0 \text{ or } f(x) \text{ has degree } n \}$ a subspace of $P(F)$ if $n \geq 1$? Justify your answer.}
+Yes, this is a subspece of $P(F)$ as it satisfies the closure properties of addition and scalar multiplication as well has the 0 polynomial.
+Firstly: $0 \in W$ as $f(x) = 0$\\
+Thus the zero polynomial is in $W$\\
+Secondly: Let $f,g \in W$\\
+Then $f(x) = 0$ or $f(x)$ has degree $n$ and can be represented as $\sum_{i=0}^{n} a_i x^i$\\
+Then $g(x) = 0$ or $g(x)$ has degree $n$ and can be represented as $\sum_{i=0}^{n} b_i x^i$\\
+Thus $f + g = \sum_{i=0}^{n} (a_i + b_i)x^i$\\
+If $f(x) = 0$ and $g(x) = 0$ then $f + g = 0$\\
+If $f(x)$ or $g(x)$ has degree $n$ and the other is 0, then $f + g$ is either $f$ or $g$ (whichever one is of degree $n$) has degree $n$\\
+If both $f(x)$ and $g(x)$ have degree $n$, then $f + g = \sum_{i=0}^{n} (a_i + b_i)x^i$ which also has degree $n$ \\
+Thus it is closed under addition\\
+
+Thirdly: Let $f \in W, c \in \mathds{R}$\\
+Then $f(x) = 0$ or $f(x)$ has degree $n$ and be represented as $\sum_{i=0}^{n} a_i x^i$\\
+Then $cf = c\sum_{i=0}^{n} a_i x^i$\\
+Thus $cf \in W$ as $cf = 0$ or $cf = c\sum_{i=0}^{n} a_i x^i$ which has degree $n$\\
+Thus it is closed under scalar multiplication\\
+
+
+
+\end{document}
