@@ -8,6 +8,15 @@
 
 \usepackage{graphicx}
 
+% Augmented Matrix
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+
 
 \setlength\parindent{0pt}
 

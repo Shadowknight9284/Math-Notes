@@ -1,8 +1,8 @@
 # Fdb version 4
-["pdflatex"] 1726840046.0313 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 478/Chapter4.tex" "Chapter4.pdf" "Chapter4" 1726840048.44726 0
-  "Chapter4.aux" 1726840047 33 cd8a9e253be16178be412705367a589a "pdflatex"
-  "Chapter4.tex" 1726840045 18832 0e036f70250514cb072b43ddd348add4 ""
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 478/Chapter4.tex" 1726840045 18832 0e036f70250514cb072b43ddd348add4 ""
+["pdflatex"] 1727446584.89773 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 478/Chapter4.tex" "Chapter4.pdf" "Chapter4" 1727446586.02182 0
+  "Chapter4.aux" 1727446585 33 f5162ef287409618820a40adc8e2d2a1 "pdflatex"
+  "Chapter4.tex" 1727446583 25567 b59310dc9661f73430f8f8d74b309548 ""
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 478/Chapter4.tex" 1727446583 25567 b59310dc9661f73430f8f8d74b309548 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1705505139 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1705503004 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1705503004 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -14,6 +14,8 @@
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm" 1705503004 940 228d6584342e91276bf566bcf9716b83 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1705504024 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1705504024 1324 c910af8c371558dc20f2d7822f66fe64 ""
+  "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm" 1705504024 1332 f817c21a1ba54560425663374f1b651a ""
+  "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm" 1705504024 1336 3125ccb448c1a09074e3aa4a9832f130 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmex10.tfm" 1705504024 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1705504024 1524 4414a8315f39513458b80dfc63bff03a ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmmi6.tfm" 1705504024 1512 f21f83efb36853c0b70002322c1ab3ad ""
@@ -42,6 +44,7 @@
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1705503004 31809 8670ca339bf94e56da1fc21c80635e2a ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1705503004 32762 7fee39e011c23b3589931effd97b9702 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1705503004 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb" 1705503004 32915 7bf7720c61a5b3a7ff25b0964421c9b6 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1705503004 32716 08e384dc442464e7285e891af9f45947 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb" 1705503004 30457 bc0868ebece724ed7c3d37e3d9bff7bd ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb" 1705504676 17014 61891910dfe21ad76f9789fdafdd860e ""

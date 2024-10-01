@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{HW2 - Math 481}
+
+\begin{document}
+\maketitle
+
+\section*{Problem 8.6}
+Look at the binomial random variables as on page 226, that is, as sums of iid Bernoulli random variables, and using central limit Theorem, prove Theorem 6.8 on page 191.\\
+If $X$ is a random random variable having a binomial distribution with parameters $n$ and $\theta$ then the moment generating dunction of 
+$$ Z = \frac{X - n\theta}{\sqrt{n\theta(1-\theta)}} $$
+approaches the standard normal distribution as $n \rightarrow \infty$.\\
+
+\textbf{Solution:}\\
+Since we can consider a binomial random variable as a sum of iid Bernoulli random variables, we can write $X$ as: 
+$$\sum_{i=1}^{n} Y_i$$
+where $Y_i$ are iid Bernoulli random variables with parameter $\theta$.\\
+Then we can consider $Z$ as:
+$$Z = \frac{\sum_{i=1}^{n} Y_i - n\theta}{\sqrt{n\theta(1-\theta)}}$$
+$$Z = \frac{\sum_{i=1}^{n} Y_i /n - \theta}{\sqrt{\theta(1-\theta)/n}}$$
+$$Z = \frac{\bar{Y} - \theta}{\sqrt{\theta(1-\theta)/n}}$$
+where $\bar{Y} = \sum_{i=1}^{n} Y_i /n$ is the sample mean of the Bernoulli random variables.\\
+By the Central Limit Theorem, the sample mean $\bar{Y}$ approaches a normal distribution as $n \rightarrow \infty$. with $\mu = \theta$ and $\sigma = \sqrt{\theta(1-\theta)}$ Therefore, $Z$ also approaches a normal distribution as $n \rightarrow \infty$.\\
+
+
+\section*{Problem 8.20}
+Prove Theorem 9\\
+If $X_1, X_2, \ldots, X_n$ are independent random variables having Chi-Squared distributions with $v_1, v_2, \ldots, v_n$ degrees of freedom, then 
+$$ Y = \sum_{i=1}^{n} X_i $$
+has the Chi-Squared distribution with $v = \sum_{i=1}^{n} v_i$ degrees of freedom.\\
+\textbf{Solution:}\\
+To prove this using the moment generating function (MGF), we start by recalling the MGF of a Chi-Squared distribution with \( v_i \) degrees of freedom. The MGF of a Chi-Squared random variable \( X_i \) with \( v_i \) degrees of freedom is given by:
+\[ M_{X_i}(t) = (1 - 2t)^{-v_i/2} \]
+
+Since \( X_1, X_2, \ldots, X_n \) are independent Chi-Squared random variables, the MGF of their sum \( Y = \sum_{i=1}^{n} X_i \) is the product of their individual MGFs:
+\[ M_Y(t) = \prod_{i=1}^{n} M_{X_i}(t) = \prod_{i=1}^{n} (1 - 2t)^{-v_i/2} \]
+
+This can be simplified as:
+\[ M_Y(t) = (1 - 2t)^{-\sum_{i=1}^{n} v_i / 2} \]
+
+Let \( v = \sum_{i=1}^{n} v_i \). Then we have:
+\[ M_Y(t) = (1 - 2t)^{-v/2} \]
+
+This is the MGF of a Chi-Squared distribution with \( v \) degrees of freedom. Therefore, \( Y \) has a Chi-Squared distribution with \( v = \sum_{i=1}^{n} v_i \) degrees of freedom.
+
+\section*{Problem 8.24}
+Show that if $X_1, X_2, \ldots, X_n$ are independent random variables, g=hazing the chi-squared distribution with $v=1$ and $Y_n = \sum_{i=1}^{n} X_i$, then the limiting distribution of 
+$$ Z_n = \frac{Y_n/n - 1}{\sqrt{2/n}} $$
+as $n \rightarrow \infty$ is the standard normal distribution.\\
+\textbf{Solution:}\\
+We can clealry see that $Y_n/n$ is the sample mean of the $X_i$'s. Therefore, $Y_n/n$ approaches a normal distribution by the central limit theorem as $n \rightarrow \infty$. with $\mu = 1$ and $\sigma = \sqrt{2}$.\\
+
+
+\section*{Problem 8.26}
+Use the method of Excercise 25 to find the approximate values of the probably that a random variable having the chi-squared distribution with $\nu = 50$ will take on a value greater than 68.0\\
+\textbf{Solution:}\\
+We know from the previous exercise that 
+$$ \frac{X - \nu}{\sqrt{2\nu}} $$
+is an approximation of the chi-squared distribution as a standard normal distribution. Therefore, we can write:
+$$ \frac{X - 50}{100}$$
+We can then calculate:
+$$ P((68-50)/100 < Z ) = P(Z > 1.8) = 1 - P(Z < 1.8) = 1 - .9641 = .0359 $$
+Thus our approximation is that the probability that a random variable having the chi-squared distribution with $\nu = 50$ will take on a value greater than 68.0 is .0359.\\
+
+\section*{Problem 4.31}
+What is the smallest value of $k$ in Chebyshevs theorem for which the probability that a random variable will take on a value between $\mu - k\sigma$ and $\mu + k\sigma$ is:
+\subsection*{a) at least .95}
+We can appply Chebyshev's theorem to get:
+$$ P(|X - \mu| < k\sigma) \geq 1 - \frac{1}{k^2} $$
+We can then solve for $k$:
+$$ 1 - \frac{1}{k^2} \geq .95 $$
+$$ \frac{1}{k^2} \leq .05 $$
+$$ k^2 \geq 20 $$
+$$ k \geq \sqrt{20} $$
+
+\subsection*{b) at least .99}
+We can appply Chebyshev's theorem to get:
+$$ P(|X - \mu| < k\sigma) \geq 1 - \frac{1}{k^2} $$
+We can then solve for $k$:
+$$ 1 - \frac{1}{k^2} \geq .99 $$
+$$ \frac{1}{k^2} \leq .01 $$
+$$ k^2 \geq 100 $$
+$$ k \geq \sqrt{100} $$
+$$ k \geq 10 $$
+
+
+
+\end{document}

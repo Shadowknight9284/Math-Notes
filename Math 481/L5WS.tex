@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+% Augmented Matrix
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Lecture 5 Worksheet}
+
+\begin{document}
+\maketitle
+\section{For each case below, write down the PDF of gamma distribution with those parameters. Your expressions should be explicit}
+
+\subsection{$\alpha = 3, \beta = 2$}
+$$f(X) = \frac{x^2 e^{-x/2}}{16}, x>0, 0 \text{ otherwise}$$
+\subsection{$\alpha = 2, \beta = 3$}
+$$f(X) = \frac{xe^{-x/3}}{9}, x>0, 0 \text{ otherwise}$$
+\subsection{$\alpha = 1, \beta = 2$}
+$$f(X) = \frac{e^{-x/2}}{2}, x>0, 0 \text{ otherwise}$$
+\subsection{$\alpha = 2, \beta = 1$}
+$$f(X) = xe^{-x}, x>0, 0 \text{ otherwise}$$
+
+\section{Identify which of a,b,c,d are exponential random variables and Identify the parameter $\lambda$}
+C is a exponential random variable with $\lambda = 2$\\
+$$ f(x) = \frac{1}{2} e^{-x/2}, x>0, 0 \text{ otherwise}$$
+
+\section{For each case below, write down the PDF of Chi-Squared distribution with those parameters. Identify the parameter $\nu$}
+A is a Chi-Squared random variable with $\nu = 6$\\
+
+C is a Chi-Squared random variable with $\nu = 2$\\
+
+
+
+\end{document}

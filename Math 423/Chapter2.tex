@@ -222,8 +222,265 @@ If $\psi = 0$ region of influence of $[a,b]$ is just the effect is felt only at 
 In 3d the solution to the wave equation is given by Kirkchoff's formula.\\
 it only uses $\phi$ and $\psi$ on the boundary of the region of influence.\\
 this is true for $n \geq 3$ and odd dimensions.\\
-So in 2D this is not true! 
+So in 2D this is not true! \\
+
+\textbf{Energy Conservation:}\\
+$$ u_{tt} = c^2 u_{xx}$$
+$$ E(t) = \frac{1}{2} \int_{\mathds{R}}u_t^2(t,x) + c^2 u_x^2(t,x) dx$$
+Then $E(t)$ is constant in time. In particular $E(t) = E(0)$\\
+\textbf{Remark:} \\
+$\phi, \psi$ are localized, in other words, vanish outside of some interval. $[a,b]$\\
+Thus the function $u(x,t)$ is also localized in $[a-ct,b+ct]$\\
+\textbf{Proof:}\\
+$$ E'(t) = \int_{\mathds{R}} u_t u_{tt} + c^2 u_x u_{xt} dx$$
+$$ E'(t) = \int_{\mathds{R}} u_t c^2 u_{xx} + c^2 u_x u_{xt} dx$$
+This motivates integrating by parts.\\
+$$ \int_{\mathds{R}} u_x u_{tx} dx = \left[ u_x u_t \right]_{-\infty}^{\infty} - \int_{\mathds{R}} u_{xx} u_t dx$$
+$$ E'(t) = \int_{\mathds{R}} u_t c^2 u_{xx} - c^2 u_{xx} u_t dx = 0$$
+\textbf{Remark:} \\
+In higher dimensions $u_x^2$ is replaced by $|\nabla u|^2$\\
+
+\subsection{2.3: Heat Equation}
+$$ u_t = k u_{xx}$$
+Now we consider this on a finite interval \\
+$$t \in (0,T), x \in (0,L)$$
+$$ R = (0,T) \times (0,L)$$
+$$ \bar{R} = [0,T] \times [0,L]$$
+This is inculding the boundary.\\
+We also was all boundary without the top "t" side call it $\Gamma$\\
+This is called the parabolic boundary.\\
+\textbf{Max Principle:}\\
+If $u(x,t)$ is a solution to the heat equation in $R$ and it is continuous on $\bar{R}$ 
+Then $max(u)_{\bar{R}} = max(u)_{\Gamma}$\\
+This is an extension of the extreme value theorem\\
+\textbf{Proof:}\\
+$$v(t,x) = u(t,x) + \epsilon x^2$$
+Where $\epsilon > 0$\\
+$$v_t = u_t = k u_{xx} = k( v_{xx} - 2\epsilon)$$
+$$v_{xx} = u_{xx} + 2\epsilon$$
+Thus we gain:
+$$ v_t = k v_{xx} - 2k\epsilon$$
+$$ v_t < k v_{xx}$$
+$v$ attains its maximum on the boundary.\\
+Let $v(t_0,x_0) = max(V)_{\bar{R}}$
+if $(t_0,x_0) \in \bar{R}$ then $v_t \leq k v_{xx}$\\
+$$ v(t_0,x_0) = 0 $$
+$$ f(x) = v(t_0,x) \text{ has max at } x_0 \text{, then}$$
+$$ f''(x) = 0 $$
+$$ v_t(t_0,x_0) < k v_{xx}(t_0,x_0) \leq 0$$
+This is contradiction.\\
+if $(t_0,x_0) \in $ top boundary ie $t_0 = T, x \in (0,L)$\\
+$$ g(t) = v(t,x_0) $$
+has max at $T$ then $g'(T) \geq 0$\\
+$$ g'(T) = v_t(T,x_0) = u_t(T,x_0) \leq 0$$
+$$ 0 \geq v_t < k v_{xx} \geq 0$$
+This is a contradiction.\\
+\textbf{Consider} \\
+Why does it work on gamma?\\
+Thus $max(v)_\Gamma = max(v)_{\bar{R}}$\\
+
+Now we need to prove this for $u$\\
+Let $M = max(u)_{\Gamma}$\\
+goal: $u(t,x) \leq M$ for all $(t,x) \in \bar{R}$\\
+\begin{align*}
+    u + \epsilon x^2 &= V\\
+    & \leq max(V)_{\Gamma} \\
+    & = max(u + \epsilon x^2)_{\Gamma}\\
+    & \leq max(u)_{\Gamma} + \epsilon L^2
+\end{align*}
+Let $\epsilon \to 0$\\
+$$ u \leq max(u)_{\Gamma}$$
+\textbf{Remark:} \\
+Strong max principle says that $max(u)_{\bar{R}}$ can \textbf{only} be attained on $\Gamma$\\
+Immediate consequence of this the solution to the heat equation is unique.\\
+\textbf{Corollary:} \\
+We can do this for minimum as well.\\
+\textbf{Proof:} \\
+Let $v = -u$\\
+Then $v_t = -u_t = -k u_{xx} = k v_{xx}$\\
+Then we can apply the max principle to $v$\\
+\textbf{Theorem: Uniqueness} \\
+The solution to the heat equation is unique.\\
+\textbf{Proof:} \\
+$$\begin{cases}
+    u_t = k u_{xx} + f(t,x)\\
+    u = u_0 
+\end{cases}
+$$
+The following are the intital/boundary conditions.\\
+$$\begin{cases}
+    u(t,0) = a(t)\\
+    u(t,L) = b(t)\\
+    u(0,x) = \phi(x)
+\end{cases}
+$$
+This has at most one solution.\\
+\textbf{Proof:} \\
+Suppose $u_1, u_2$ are two solutions.\\
+Let $w = u_1 - u_2$\\
+Then $w_t = k w_{xx}$\\
+$$\begin{cases}
+    w(t,0) = 0\\
+    w(t,L) = 0\\
+    w(0,x) = 0
+\end{cases}
+$$
+$$ max(w)_{\bar{R}} = 0$$
+$$ min(w)_{\bar{R}} = 0$$
+Thus $w = 0$ ie $u_1 = u_2 $ in $R$ \\
+\textbf{Remark:} \\
+We cant prescribe data for $u$ on top boundary. It is determned by the PDE and the initial data.\\
+\textbf{Proof 2:} \\
+$$E(t) = \int_0^L w^2(t,x) dx$$
+$$E'(t) = 2 \int_0^L w w_t dx = 2 \int_0^L w k w_{xx} dx $$
+$$ = 2k \left[ w w_x \right]_0^L - 2k \int_0^L w_x^2 dx$$
+$w = 0$ on the boundary.\\
+$$ = -2k \int_0^L w_x^2 dx \leq 0$$
+$$ E'(t) \leq 0$$
+ie heat dissipates over time.\\
+$$E(t) \leq E(0)$$
+$$\int_0^L w^2(0,x) dx = 0$$
+Since we know that by our definition of the integral it is non negative.\\
+Thus $0 \geq w^2(0,x) \geq 0$\\
+Thus $w = 0$\\
+Thus $u_1 = u_2$\\
+\textbf{Remark:} \\
+The heat equation is a smoothing effect.\\
+$$u_{xx}(A) < 0 \implies u_{t}(A) < 0$$
+Peaks go down and valleys go up.\\
+Want to reach equilibrium.\\
+\textbf{Remark:} \\
+Uniqueness for heat IBVP holds in: \\
+\textbf{Stability estimates:} \\
+\textbf{Lemma 1:} \\
+Consider $R$ and $\Gamma$
+$$\begin{cases}
+    u_t = ku_{xx}, \in R\\
+    u = u_0 \in \Gamma
+\end{cases}
+$$
+$$max(u)_{\bar{R}} = max(u)_{\Gamma}$$
+\textbf{Proof:} \\
+$$-|u_0| \leq u_0 \leq |u_0|$$
+$$ u \leq max(u)_{\bar{R}} = max(u)_{\Gamma} \leq max(|u|)_\Gamma$$
+$$ -u \geq min(u)_{\bar{R}} = min(u)_{\Gamma} \geq -max(|u|)_\Gamma$$
+$$ |u| \leq max(|u|)_\Gamma \text{ everywhere}$$
+Initial/boundary data $u_0$ controls $u$ everywhere.\\
+\textbf{Corollary:} \\
+$$\begin{cases}
+    \partial_t u_1 = k \partial_{xx} u_1
+    u_1(x,0) = \phi_1(x)\\
+    u_1(0,t) = u_1(l,t) =  0
+\end{cases}$$
+$$\begin{cases}
+    \partial_t u_2 = k \partial_{xx} u_2
+    u_2(x,0) = \phi_2(x)\\
+    u_2(0,t) = u_2(l,t) =  0
+\end{cases}$$
+We think $u_1$ as the true one and the $u_2$ is the experimentally derived one with perturbations.\\
+$$ max |u_2 - u_1|_{\bar{R}} \leq max|\phi_2 - \phi_1|_{[0,l]}$$
+\textbf{Proof:} \\
+Let $u = u_2 - u_1$\\
+Let $\phi = \phi_2 - \phi_1$\\
+$u$ will solve the heat equation with initial condition $\phi$\\
+$$\begin{cases}
+    u_t = k u_{xx}\\
+    u(x,0) = \phi(x)\\
+    u(0,t) = u(l,t) = 0
+\end{cases}
+$$
+
+By lemma 1 we have that $max(u)_{\bar{R}} \leq max(u)_{[0,l]}$\\
+
+\textbf{Lemma 2:} \\
+$$ \int_{0}^{l} u^2 dx \leq \int_{0}^{l} \phi^2 dx$$
+$$
+\begin{cases}
+    u_t = k u_{xx}\\
+    u(x,0) = \phi(x)\\
+    u(0,t) = u(l,t) = 0
+\end{cases}
+$$
+\textbf{Proof:} \\
+$$ E(t) = \int_{0}^{l} u^2 dx$$
+$$ E'(t) \geq 0 \implies E(t) \leq E(0)$$
+\textbf{Corollary 2:} \\
+In the setting of Corollary 1:\\
+$$ \int_0^l |u_2 - u_1|^2 dx \leq \int_0^l |\phi_2 - \phi_1|^2 dx$$
+$f = f(x)$ on I\\
+$$||f||_\infty = max|f|_I$$
+$$||f||_\infty = 0 \implies f = 0$$\\
+$$||f||_{L^2} = \left( \int_I |f|^2 dx \right)^{1/2}$$
+This is known as the $L^2$ norm; mean-squared\\
+$$|f(x)| \leq ||f(x)||_\infty$$\\
+$|f(x)|^2 \leq ||f(x)||_\infty^2$\\
+$$\int_I |f(x)|^2 dx \leq ||f(x)||_\infty^2 \int_I dx$$
+$$||f||_{L^2} \leq ||f||_\infty \sqrt{|I|}$$
+
+$$||u_2(\star, t) - u_1(\star, t)||_{L^2} \leq ||\phi_2 - \phi_1||_{L^2}$$
+The size at any time is controlled by the intial data.\\
+
+\section*{2.4: Heat Equation on the Real Line}
+\textbf{Theorem:} \\
+$$S(x,t) = \frac{1}{\sqrt{4\pi kt}} e^{-\frac{x^2}{4kt}}$$
+This is the fundamental solution to the heat equation.\\
+\begin{enumerate}
+    \item $S_t =  S_{xx}$
+    \item $\int_{-\infty}^{\infty} S(x,t) dx = 1, \forall t > 0$
+    \item $\lim_{t \to 0^+} \int_{R} S(x,t) f(x) dx = f(0)$ for all continuous and bounded $f$ on $\mathds{R}$
+\end{enumerate}
+$\lim_{t \to 0^+} S(x,t) = \begin{cases}
+        \infty, & x = 0\\
+        0, & x \neq 0
+\end{cases}$
+\textbf{Proof:} \\
+Need to prove:\\
+$$ \lim_{t \rightarrow 0^+}\int_R S(x,t) [f(x) - f(0)] dx = 0$$
+Fix $\epsilon > 0$ then there exists $\delta > 0$ such that $|f(x) - f(0)| < \epsilon$ for $|x-0| < \delta$\\
+$$ I = \int_{|x| < \delta} + \int_{|x| \geq \delta}$$
+$$ |I_1| \leq \int S(x,t) |f(x) - f(0)| dx$$
+$$ |f(x) - f(0)| < \epsilon$$
+$$ |I_1| \leq \epsilon \int_{x \leq \delta} S(x,t) dx \leq \epsilon $$
+This works for any $t$\\
+$$ |f(x)| \leq M $$
+$$ |f(x) - f(0)| \leq 2M$$
+$$ |I_2| \leq 2M \int_{|x| \geq \delta} S(x,t) dx$$
+Let $y = \frac{x}{\sqrt{4t}}$\\
+Then $y^2 = \frac{x^2}{4t}$\\
+$$ |I_2| \leq 2M \int_{|y| \geq \frac{\delta}{\sqrt{4t}}} \frac{1}{\sqrt{4\pi t}} e^{-y^2} \sqrt{4t} dy$$
+$$ |I_2| \leq \frac{2M}{\sqrt{\pi}}\int_{|y| \geq \frac{\delta}{\sqrt{4t}}} e^{-y^2} dy$$
+Notice that the integral goes to 0 as $t \to 0$\\
+$$ \int_{R} g(y) dy = \lim_{a \rightarrow \infty}\int_{-c}^{c} g(y) dy$$
+$$ \int_{R} g(y) dy = \lim_{t \rightarrow 0^+} \int_{-1/t}^{1/t} g(y) dy$$
+$$ \int_{R} g(y) dy = \lim_{t \rightarrow 0^+} \int_{|y| \geq 1/t} g(y) dy$$
+We can see this goes to 0 as $t \to 0$\\
+\textbf{Definition} \\
+$$\lim_{t \to 0^+} S(x,t) = \delta_0(x)$$
+which means (3).\\
+Formally we can write this as:
+$$ \delta_0(x) = \begin{cases}
+    0 & x \neq 0\\
+    \infty & x = 0
+\end{cases}$$
+$$ \int_{-\infty}^{\infty} \delta_0(x) dx = 1$$
+\textbf{Corollary:} \\
+Take any y and consider $F(x,t) = S(x-y,t)$\\
+then (1), (2) hold for $F$ and \\
+$\lim_{t \to 0^+}*F(x,t) = \delta_y(x) \iff \lim_{t \to 0^+} \int_R F(x,t) f(x) dx = f(y)$\\ 
+
+$u = u(t,y)$\\
+$$\begin{cases}
+    u_t = k u_{yy}\\
+    u(0,y) = \phi(y)
+\end{cases}
+$$
+$$ \phi(x) = \int_{-\infty}^{\infty} \phi(y) \delta_x(y) dy$$
+\textbf{Theorem:} \\
+$$u(t,y) = \int_{-\infty}^{\infty} \phi(y) S(y,t) dy$$
+This solves heat equation !!!\\
+IC is considered as a limit 
 
 
 
+% exam is theory
 \end{document}

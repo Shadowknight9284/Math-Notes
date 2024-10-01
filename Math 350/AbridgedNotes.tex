@@ -1,0 +1,110 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+% Augmented Matrix
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Abridged Important Notes for Math 350}
+
+\begin{document}
+\maketitle
+
+\section{Speer's Notes}
+
+
+\section{Lecture 1}
+\subsection{Vector Space Axioms}
+\begin{enumerate}
+    \item Commutative property of addition
+    \item Associative property of addition
+    \item Additive identity 
+    \item additive inverse
+    \item multiplicative identity 
+    \item Associativity of scalar multiplication
+    \item distributivity of 1 vector to 2 scalars
+    \item distributivity of 2 vectors to 1 scalar
+\end{enumerate}
+
+\section{Lecture 2}
+\subsection{Theorem 1.1}
+Let $V$ be a vector space over $\mathbb{F}$, let $x,y,z \in V$, and assume $x + z = y + z$. Then $y = z$.\\
+This is cancellation from the right
+\subsection{Theorem 1.1 '}
+Let $x,y,z \in V$ If $z +x = z + y$, then $x = y$.\\
+This is cancellation from the left
+\subsection{Theorem 1.1 Corollary 1}
+The vector $\underline{0}$ (VS 3) is unique.\\
+\subsection{Theorem 1.1 Corollary 2}
+The vector $y$ or $-x$ in (VS 4) is unique.\\
+
+
+\section{Lecture 3}
+\subsection{Theorem 1.2(a)}
+$\forall x \in V, 0 \cdot x = \underline{0}$
+\subsection{Theorem 1.2(b)}
+$\forall a \in \mathds{F}$ and $x \in V$, $(-a)c = (-ax)$
+\subsection{Definition of a subspace}
+Let $V$ be a vector space over $\mathds{F}$. A subset $W$ of $V$ is called a subspace of $V$ if $W$ is a vector space over $\mathds{F}$ when equiped with the same operations of addition and scalar multiplication as in $V$. 
+\subsection{Theorem 1.3}
+Let $W \subset V$ Then $W$ is a subspace of $V$ iff\\
+\begin{itemize}
+    \item $\underline{0} \in W$
+    \item W is closed under addition, i.e. $\forall x,y \in W, x + y \in W$
+    \item W is closed under scalar multiplication, i.e. $\forall a \in \mathds{F}, x \in W, ax \in W$
+\end{itemize}
+
+\subsection{Linear combination}
+Let $V$ be a vector space over $\mathds{F}$ and let $S$ be a nonempty subset of $V$. A vector $v \in V$ is called linear combination of vectors of $D$ is $\exists$ finitely many vectors $u_1, \dots, u_n \in S$ and scalars $a_1, \dots, a_n \in \mathds{F}$ such that $v = a_1u_1 + \dots + a_nu_n$
+
+\subsection{Elementary Row Operations}
+\begin{enumerate}
+    \item Interchange two rows
+    \item Multiply a row by a nonzero scalar
+    \item Add a multiple of one row to another row
+\end{enumerate}
+Make sure to denote an operation as $\xrightarrow{r_1 + 2r_2 \rightarrow r_1}$
+
+\subsection{RREF}
+A matrix is in RREF if:
+\begin{enumerate}
+    \item The leading entry of each nonzero row is 1
+    \item The leading 1 in each row is to the right of the leading 1 in the row above it
+    \item All entries in the column above and below a leading 1 are 0
+\end{enumerate}
+The process of converting a matrix to RREF is called Gaussian Elimination
+
+\section{Lecture 4}
+\subsection{Span and Theorem 1.5}
+The span of any subset $S$ of a vector space $V$ is a subspace of $V$ that contains $S$. Moreover, any subspace of $V$ that conains $S$ also contains the span of $S$. It is also the smallest subspace of $V$ that contains $S$.
+
+\subsection{Linear Dependence/Independence}
+A subset $S$ of a vector space $V$ is linearly dependent if $\exists$ finitely many distinct vectors $u_1, \dots, u_n \in S$ and scalars $a_1, \dots, a_n \in \mathds{F}$, not all zero, such that $a_1u_1 + \dots + a_nu_n = \underline{0}$. Otherwise, $S$ is linearly independent.\\
+To calculate this we can solve the homogeneous system of equations $a_1u_1 + \dots + a_nu_n = \underline{0}$ or $Ax = \underline{0}$ where $A$ is the matrix with columns $u_1, \dots, u_n$ and $x$ is the column vector with entries $a_1, \dots, a_n$
+
+\subsection{Bases}
+A basis $\beta$ for a vector space $V$ is a linearly independent subset of $V$ that spans $V$. If $\beta$ is a basis for $V$, , we also say that the vectors of $\beta$ form a basis for $V$.\\
+
+\section{Lecture 5}
+\subsection{Theorem 1.8}
+Let $V$ be a vector space and let $u_1, \dots, u_n$ b distinct vectors in $V$. Then $\beta = \{u_1, \dots, u_n\}$ is basis for $V$ iff every $v \in V$ can bexpressed uniquely as a linear combinations of the vectors of $\beta$.\\
+
+
+
+\end{document}

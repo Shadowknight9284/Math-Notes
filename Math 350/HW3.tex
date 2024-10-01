@@ -1,0 +1,279 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Homework 3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\setlength\parindent{0pt}
+
+
+\begin{document}
+\maketitle
+
+\section*{2.1: Problem 2}
+\textbf{Prove that $T$ is a linear transformation.}\\
+$$ T: R^3 \to R^2 \text{ defined by } T(a_1, a_2, a_3) = (a_1 - a_2, 2a_3) $$
+We will verify that:
+$$ T = L_A \text{ where } A = \begin{bmatrix} 1 & -1 & 0 \\ 0 & 0 & 2 \end{bmatrix} $$
+Now let's check that $T = L_A$: For $a_1, a_2 \in \mathds{R}$
+$$ L_A \begin{pmatrix}
+a_1 \\ a_2 \\ a_3
+\end{pmatrix} = A \begin{pmatrix}
+a_1 \\ a_2 \\ a_3
+\end{pmatrix} = \begin{pmatrix}
+a_1 - a_2 \\ 2a_3
+\end{pmatrix}$$
+Clearly $T = L_A$. Thus $T$ is a linear transformation due to the fact that matrix multiplication is a linear operation.\\
+\textbf{Find bases for both $N(T)$ and $R(T)$.}\\
+Since we have that $T = L_A$, we can find the bases for $N(T)$ and $R(T)$ by finding the null space and column space of $A$.\\
+First, we can bring $A$ to RREF form and then call it $R$:
+$$ \begin{bmatrix}
+1 & -1 & 0 \\ 0 & 0 & 2
+\end{bmatrix} \xrightarrow{\frac{1}{2}r_2 \to r_2} \begin{bmatrix}
+1 & -1 & 0 \\ 0 & 0 & 1
+\end{bmatrix} $$
+We can see that for a null space, any element $x \in N(t)$ must solve $Ax = 0$. Additionally any element $x \in N(t)$ that solves $Ax = 0$ must also solve $Rx = 0$. We can see that the null space is
+$$ N(T) = \text{span} \left\{ \begin{pmatrix}
+1 \\ 1 \\ 0
+\end{pmatrix} \right\} $$
+due to the fact that $a_2$ is a free variable.
+Thus we have that a basis for the null space is $\left\{ \begin{pmatrix}
+1 \\ 1 \\ 0
+\end{pmatrix} \right\}$.\\
+For the column space, we can see that the column space is the span of the columns of $A$ that are pivot columns of $R$. Thus we have
+$$ R(T) = \text{span} \left\{ \begin{pmatrix}
+1 \\ 0
+\end{pmatrix}, \begin{pmatrix}
+0 \\ 2
+\end{pmatrix} \right\} $$
+Thus we have that a basis for the column space is $\left\{ \begin{pmatrix}
+1 \\ 0
+\end{pmatrix}, \begin{pmatrix}
+0 \\ 2
+\end{pmatrix} \right\}$.\\
+
+
+
+\textbf{Compute nullity and rank of $T$ and verify the dimension theorem}\\
+The nullity of $T$ is the dimension of the null space of $T$. We have that the null space of $T$ is spanned by $\left\{ \begin{pmatrix}
+1 \\ 1 \\ 0
+\end{pmatrix} \right\}$. Thus the nullity of $T$ is 1.\\
+The rank of $T$ is the dimension of the column space of $T$. We have that the column space of $T$ is spanned by $\left\{ \begin{pmatrix}
+1 \\ 0
+\end{pmatrix}, \begin{pmatrix}
+0 \\ 2
+\end{pmatrix} \right\}$. Thus the rank of $T$ is 2.\\
+The dimension theorem states that the rank of $T$ plus the nullity of $T$ is equal to the dimension of the domain of $T$. We have that the dimension of the domain of $T$ is 3. Thus we have that $2 + 1 = 3$ which verifies the dimension theorem.\\
+
+
+\textbf{Use the approriate theorms in this sections to determine where T is one-to-one or onto.}\\
+Clearly since $N(T) \neq \{0\}$, $T$ is not one-to-one. \\
+We can also see that if $dim(R(T)) = dim(W)$, then $T$ is onto. We have that $dim(R(T)) = 2$ and $dim(W) = 2$. Thus $T$ is onto.\\
+
+\section*{2.1: Problem 3}
+\textbf{Prove that $T$ is a linear transformation.}\\
+$$ T: R^2 \to R^3 \text{ defined by } T(a_1,a_2) = (a_1 +a_2, 0, 2a_1-a_2)$$
+We will verify that:
+$$ T = L_A \text{ where } A = \begin{bmatrix} 1 & 1 \\ 0 & 0 \\ 2 & -1 \end{bmatrix} $$
+Now let's check that $T = L_A$: For $a_1, a_2 \in \mathds{R}$
+$$ L_A \begin{pmatrix}
+a_1 \\ a_2
+\end{pmatrix} = A \begin{pmatrix}
+a_1 \\ a_2
+\end{pmatrix} = \begin{pmatrix}
+a_1 + a_2 \\ 0 \\ 2a_1 - a_2
+\end{pmatrix}$$
+Clearly $T = L_A$. Thus $T$ is a linear transformation due to the fact that matrix multiplication is a linear operation.\\
+
+\textbf{Find bases for both $N(T)$ and $R(T)$.}\\
+Since we have that $T = L_A$, we can find the bases for $N(T)$ and $R(T)$ by finding the null space and column space of $A$.\\
+First, we can bring $A$ to RREF form:
+$$ \begin{bmatrix}
+1 & 1 \\ 0 & 0 \\ 2 & -1
+\end{bmatrix} \xrightarrow{r_3 \leftrightarrow r_2} \begin{bmatrix}
+1 & 1 \\ 2 & -1 \\ 0 & 0
+\end{bmatrix} \xrightarrow{r_2 - 2r_1 \to r_2} \begin{bmatrix}
+1 & 1 \\ 0 & -3 \\ 0 & 0
+\end{bmatrix} \xrightarrow{-\frac{1}{3}r_2 \to r_2} \begin{bmatrix}
+1 & 1 \\ 0 & 1 \\ 0 & 0
+\end{bmatrix} \xrightarrow{r_1 - r_2 \to r_1} \begin{bmatrix}
+1 & 0 \\ 0 & 1 \\ 0 & 0
+\end{bmatrix} $$
+We can see that for the null space, it must solve $Ax = 0$. Clealry since there are no free variables, we have that the null space is $\{0\}$.\\
+Thus we have that the basis for the null space is $\{0\}$.\\
+For the column space, we can see that the column space is the span of the columns of $A$ that are pivot columns. Thus we have
+$$ R(T) = \text{span} \left\{ \begin{pmatrix}
+1 \\ 0 \\ 2
+\end{pmatrix}, \begin{pmatrix}
+1 \\ 0 \\ -1
+\end{pmatrix} \right\} $$
+
+\textbf{Compute nullity and rank of $T$ and verify the dimension theorem}\\
+The nullity of $T$ is the dimension of the null space of $T$. We have that the null space of $T$ is $\{0\}$. Thus the nullity of $T$ is 0.\\
+The rank of $T$ is the dimension of the column space of $T$. We have that the column space of $T$ is spanned by $\left\{ \begin{pmatrix}
+1 \\ 0 \\ 2
+\end{pmatrix}, \begin{pmatrix}
+1 \\ 0 \\ -1
+\end{pmatrix} \right\}$. Thus the rank of $T$ is 2.\\
+The dimension theorem states that the rank of $T$ plus the nullity of $T$ is equal to the dimension of the domain of $T$. We have that the dimension of the domain of $T$ is 2. Thus we have that $2 + 0 = 2$ which verifies the dimension theorem.\\
+
+\textbf{Use the approriate theorms in this sections to determine where T is one-to-one or onto.}\\
+Clearly since $N(T) = \{0\}$, $T$ is one-to-one. \\
+We can also see that if $dim(R(T)) = dim(W)$, then $T$ is onto. We have that $dim(R(T)) = 2$ and $dim(W) = 3$. Thus $T$ is not onto.\\
+
+\section*{2.1: Problem 9(a)}
+State why the transformation is not linear.\\
+$$ T: R^2 \to R^2 \text{ defined by } T(a_1, a_2) = (1,a_2) $$
+We can see that for $a_1, a_2 \in \mathds{R}$, and some scalar $c \in \mathds{R}$, we have that
+$$ cT(a_1, a_2) = c(1, a_2) = (c, ca_2) $$
+$$ T(c(a_1, a_2)) = T(ca_1, ca_2) = (1, ca_2) $$
+We can see that $c(1, a_2) \neq (1, ca_2)$.
+Thus $T$ is not a linear transformation.\\
+\section*{2.1: Problem 9(b)}
+State why the transformation is not linear.\\
+$$ T: R^2 \to R^2 \text{ defined by } T(a_1, a_2) = (a_1, a_1^2) $$
+We can see that for $a_1, a_2, b_1, b_2 \in \mathds{R}$, define $x = (a_1, a_2)$ and $y = (b_1, b_2)$. We have that
+$$ T(x + y) = T(a_1 + b_1, a_2 + b_2) = (a_1 + b_1, (a_1 + b_1)^2) $$
+$$ T(x) + T(y) = T(a_1, a_2) + T(b_1, b_2) = (a_1, a_1^2) + (b_1, b_1^2) = (a_1 + b_1, a_1^2 + b_1^2) $$
+We can see that $(a_1 + b_1, (a_1 + b_1)^2) \neq (a_1 + b_1, a_1^2 + b_1^2)$.
+
+\section*{2.1: Problem 15}
+Recall the definition of $P(R)$ on page 11. Define 
+$T: P(R) \to P(R)$ by $T(f(x)) = \int_0^x f(t)dt$.\\
+Prove that $T$ is linear and one to one but not onto.\\
+We can consider $f(x), g(x) \in P(R)$ and some scalar $c \in R$. We have that
+$f(x) = \sum_{i=0}^n a_ix^i$ and $g(x) = \sum_{i=0}^m b_ix^i$. \\
+We need to show that $T(f(x) + g(x)) = T(f(x)) + T(g(x))$ and $T(cf(x)) = cT(f(x))$.\\
+Without loss of generality, we can say that $n \geq m$. We have that
+$g(x) = \sum_{i=0}^n b_ix^i$ and for $i \geq m+1$ $b_i = 0$\\
+Thus we have that
+$$T(f(x)) = \int_0^x \sum_{i=0}^n a_it^i dt = \sum_{i=0}^n \int_0^x a_it^i dt = \sum_{i=0}^n \frac{a_i}{i+1}x^{i+1}$$
+$$T(g(x)) = \int_0^x \sum_{i=0}^n b_it^i dt = \sum_{i=0}^n \int_0^x b_it^i dt = \sum_{i=0}^n \frac{b_i}{i+1}x^{i+1}$$
+$$T(f(x)) + T(g(x)) = \sum_{i=0}^n \frac{a_i}{i+1}x^{i+1} + \sum_{i=0}^n \frac{b_i}{i+1}x^{i+1} = \sum_{i=0}^n \frac{a_i + b_i}{i+1}x^{i+1} $$
+As well as:
+$$(f+g)(x) = \sum_{i=0}^n (a_i + b_i)x^i$$
+$$T(f+g)(x) = \int_0^x \left( \sum_{i=0}^n (a_i + b_i)t^i  \right) dt = \sum_{i=0}^n \int_0^x (a_i + b_i)t^i dt$$
+$$ = \sum_{i=0}^n \frac{a_i + b_i}{i+1}x^{i+1}$$
+We can see that $T(f(x) + g(x)) = T(f(x)) + T(g(x))$.\\
+Now we can show that $T(cf(x)) = cT(f(x))$. We have that
+$$T(cf(x)) = \int_0^x cf(t)dt = c\int_0^x f(t)dt = cT(f(x))$$
+Thus we have that $T$ is a linear transformation.\\
+Now we can show that $T$ is one-to-one. We can show this by showing that for any two arbitrary polynomials $h(x)$ and $k(x)$, if $T(h(x)) = T(k(x))$, then $h(x) = k(x)$. \\
+Consider $h(x) = \sum_{i=0}^n a_ix^i$ and $k(x) = \sum_{i=0}^m b_ix^i$. We have that
+$$T(h(x)) = T(k(x)) \implies \int_0^x h(t)dt = \int_0^x k(t)dt$$
+$$\implies \sum_{i=0}^n \frac{a_i}{i+1}x^{i+1} = \sum_{i=0}^m \frac{b_i}{i+1}x^{i+1}$$
+We can see that the only way this can be true is if $n = m$ and $a_i = b_i$ for all $i$. Thus we have that $h(x) = k(x)$.\\
+Thus we have that $T$ is one-to-one.\\
+Now we can show that $T$ is not onto. \\
+We can do this by noting the polynomial of degree -1, which is the zero polynomial. We have that
+$$T(0) = \int_0^x 0dt = 0$$
+Every other polynomial that has a degree greater than -1 after its application of T will increase in degree, but not the zero polynomial. Thus we will not have an output of a polynomial of degree 0.\\
+Thus we have that $T$ is not onto.\\
+
+\section*{2.2: Problem 2(a)}
+Let $\beta, \gamma$ be the standard ordered bases for $R^n$ and $R^m$ respectively. For each linear transformation $T: R^n \to R^m$, compute $[T]_{\beta}^{\gamma}$\\
+$$ T: R^2 \to R^3 \text{ defined by } T(a_1, a_2) = (2a_1 - a_2, 3a_1 + 4a_2, a_1) $$
+We can see that
+$$ T(1,0) = (2,3,1) $$
+$$ T(0,1) = (-1,4,0) $$
+Thus we have that
+$$ [T]_{\beta}^{\gamma} = \begin{bmatrix}
+2 & -1 \\ 3 & 4 \\ 1 & 0
+\end{bmatrix} $$
+
+\section*{2.2: Problem 2(b)}
+Let $\beta, \gamma$ be the standard ordered bases for $R^n$ and $R^m$ respectively. For each linear transformation $T: R^n \to R^m$, compute $[T]_{\beta}^{\gamma}$\\
+$$ T: R^3 \to R^2 \text{ defined by } T(a_1, a_2, a_3) = (2a_1 + 3a_2 -a_3, a_1 + a_3) $$
+We can see that
+$$ T(1,0,0) = (2,1) $$
+$$ T(0,1,0) = (3,0) $$
+$$ T(0,0,1) = (-1,1) $$
+Thus we have that
+$$ [T]_{\beta}^{\gamma} = \begin{bmatrix}
+2 & 3 & -1 \\ 1 & 0 & 1
+\end{bmatrix} $$
+
+\section*{2.2: Problem 2(c)}
+Let $\beta, \gamma$ be the standard ordered bases for $R^n$ and $R^m$ respectively. For each linear transformation $T: R^n \to R^m$, compute $[T]_{\beta}^{\gamma}$\\
+$$ T: R^3 \to R \text{ defined by } T(a_1,a_2,a_3) = 2a_1 +a_2 -3a_3 $$
+We can see that
+$$ T(1,0,0) = 2 $$
+$$ T(0,1,0) = 1 $$
+$$ T(0,0,1) = -3 $$
+Thus we have that
+$$ [T]_{\beta}^{\gamma} = \begin{bmatrix}
+2 & 1 & -3
+\end{bmatrix} $$
+\section*{2.2: Problem 2 Extra Question}
+The way that our $[T]_{\beta}^{\gamma}$ is defined is the same way that we define the matrix $A$ to show that $T = L_A$. This makes sense as we are defining the transformation in terms of the standard basis.\\
+We can see that rather than guessing the matrix (A) that corresponds to the transformation $L_A$ we can multiply each element of the standard ordered basis by the transformation to get the columns of the matrix.\\
+The Jth column is the same as $T(e_j)$ where $e_j$ is the jth column of the standard ordered basis.\\
+\section*{2.2: Problem 4}
+Define:
+$$ T: M_{2 \times 2} \to P_2(R) \text{ by } T \left( \begin{bmatrix}
+a & b \\ c & d
+\end{bmatrix} \right) = (a + b) + (2d)x + bx^2$$
+Let 
+$$ \beta = \left\{ \begin{bmatrix}
+1 & 0 \\ 0 & 0
+\end{bmatrix}, \begin{bmatrix}
+0 & 1 \\ 0 & 0
+\end{bmatrix}, \begin{bmatrix}
+0 & 0 \\ 1 & 0
+\end{bmatrix}, \begin{bmatrix}
+0 & 0 \\ 0 & 1
+\end{bmatrix} \right\} \text{ and } \gamma = \{1, x, x^2\} $$
+Find $[T]_{\beta}^{\gamma}$.\\
+We can see that
+$$ T \left( \begin{bmatrix}
+1 & 0 \\ 0 & 0
+\end{bmatrix} \right) = 1 + (2 \cdot 0)x + 0 \cdot x^2 = 1 $$
+$$ T \left( \begin{bmatrix}
+0 & 1 \\ 0 & 0
+\end{bmatrix} \right) = 1 + (2 \cdot 0) x + 1 \cdot x^2 = 1 + x^2 $$
+$$ T \left( \begin{bmatrix}
+0 & 0 \\ 1 & 0
+\end{bmatrix} \right) = 0 + (2 \cdot 0)x + 0 \cdot x^2 = 0 $$
+$$ T \left( \begin{bmatrix}
+0 & 0 \\ 0 & 1
+\end{bmatrix} \right) = 0 + 2x + 0 \cdot x^2 = 2x $$
+Thus we have that
+$$ [T]_{\beta}^{\gamma} = \begin{bmatrix}
+1 & 1 & 0 & 0 \\ 0 & 0 & 0 & 2 \\ 0 & 1 & 0 & 0
+\end{bmatrix} $$
+
+\section*{2.2: Problem 5(d)}
+Let: 
+$$ \alpha = \left\{ \begin{bmatrix}
+1 & 0 \\ 0 & 0
+\end{bmatrix}, \begin{bmatrix}
+0 & 1 \\ 0 & 0
+\end{bmatrix}, \begin{bmatrix}
+0 & 0 \\ 1 & 0
+\end{bmatrix}, \begin{bmatrix}
+0 & 0 \\ 0 & 1
+\end{bmatrix} \right\} \text{ and } \beta = \{1, x, x^2\} \text{ and } \gamma = \left\{1\right\} $$
+Define $T: P_2(R) \to R \text{ by } T(f(x)) = f(2)$ and find $[T]_{\beta}^{\gamma}$.\\
+We can see that
+$$ T(1) = 1 $$
+$$ T(x) = 2 $$
+$$ T(x^2) = 4 $$
+Thus we have that
+$$ [T]_{\beta}^{\gamma} = \begin{bmatrix}
+1 & 2 & 4
+\end{bmatrix} $$ 
+
+
+\end{document}

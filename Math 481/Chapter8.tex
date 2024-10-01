@@ -50,5 +50,294 @@ $$P(|\bar{X} - \mu| < k \sigma) \geq 1 - \frac{1}{k^2}$$
 $$ = P(|\bar{X} - \mu| < k \sigma/\sqrt{n}) \geq 1 - \frac{1}{k^2}$$
 $$ \rightarrow P(|\bar{X} - \mu| < \tilde{k}) \geq 1 - \frac{\sigma_{pop}^2}{n \tilde{k}^2} $$
 
+If $X$ is a rv with finite nonzero variance $\sigma^2$, then fixing an interval around $\mu$,
+\begin{align*}
+\sigma^2 = E[(X-\mu)^2] = -\int_{-\infty}^{\infty}|X-\mu^2|f(x)\ dx &= \int\limits_{near}\dots + \int\limits_{far} \dots \\
+&= \int_{\mu-k}^{\mu+k}\dots + \int\limits_{X:|X-\mu|\geq k}\dots
+\end{align*}
+Since integrand is non-negative because $|x-\mu^2|\geq 0$ and $f(x)\geq0$, then the first term drops out to create inequality,
+\begin{align*}
+\sigma^2 &\geq \int\limits_{|X-\mu|\geq k}|x-\mu^2|f(x)\ dx
+\end{align*}
+since $|x-\mu^2|\geq k^2$,
+\begin{align*}
+\sigma^2 &\geq k^2 \int\limits_{|X-\mu|\geq k} f(x)\ dx\\
+\frac{\sigma^2}{k^2}&\geq P(|X-\mu|\geq k)
+\end{align*}
+\subsection*{Chebyshev's Inequalities}
+\begin{align*}
+P(|X-\mu|\geq k) \leq \frac{\sigma^2}{k^2} &\iff P(\text{outside})\text{ is bounded above} \\
+P(|X-\mu|<k) \geq 1 - \frac{\sigma^2}{k^2} &\iff P(\text{inside})\text{ is bounded below}
+\end{align*}
+Applying to $\overline{X}$ gives "Weak Law of Large Numbers"(W-LLN),
+\begin{align*}
+P\left(|\overline{X}-\mu<k|\right) \geq 1 - \frac{\sigma^2}{n_k^2}
+\end{align*}
+Since $\mu_{\overline{X}} = \mu$ and $\sigma_{\overline{X}}^2/k^2 = \sigma^2/nk^2$.
+\newline
+\subsubsection*{Q:} How large should $n$ be so that $\overline{X}$ approx's $\mu_{pop}$ with error less than $10^{-2}$ with prob. $>0.99$? $\sigma_{pop}=0.2$
+\newline
+\subsubsection*{A:} Using W-LLN,
+\begin{align*}
+P(|\overline{X}-\mu|<10^{-2})\geq 1 - \frac{0.2^2}{n(10^-2)^2} &\geq 0.99 \\
+0.01 &\geq \frac{0.04}{10^{-4}n}\\
+n&\geq 40,000
+\end{align*}
+Note: error is a statistic because its a rv that depends on random sample.
+\subsection*{Central Limit Theorem:}
+Suppose $X_1,\dots,X_n$ is a random sample iid from a pop. with well-def mgf. Then the dist of standardized $\overline{X}$ approaches \textit{standard normal}.\newline
+\begin{align*}
+P\left(a \leq \frac{\overline{X}-\mu}{\frac{\sigma}{\sqrt{n}}} \leq b\right)
+\end{align*}
+since $\mu_{\overline{X}}=\mu$. As $n\rightarrow\infty$,
+\begin{align*}
+P(a \leq Z \leq b) = \int_{a}^{b}\frac{1}{\sqrt{2\pi}}e^{-\frac{z^2}{2}}\ dz.
+\end{align*}
+Rmk: to standardize a rv $A$ means to subtract mean and divide by std. dev,
+\begin{align*}
+B = \frac{A-\mu_{A}}{\sigma_{A}} &\rightarrow E[B] = \frac{1}{\sigma}(E[A]-\mu_{A}E[1]) = 0 \\
+&\rightarrow V[B] = \frac{1}{\sigma_{A}^2}V[A-\mu_{A}] = \frac{V[A]}{\sigma_{A}^2} = 1
+\end{align*}
+\subsubsection*{Q: } It's known that amt of ice cream in $1$ scoop is a rv which follows an unknown distribution with mean $\mu=2$g, $\sigma=0.1$g. Find an approx. for the prob that after $n=100$ scoops, a total of more than $200.02$g.
+\subsubsection*{A: } Let $X_i = $ amt in $i$th scoop. The event is $X_1+\dots+X_{100}\geq200.02$. Using that $\overline{X}=\sum_{i=1}^{100}X_i/100$, standardizing, and CLT,
+\begin{align*}
+P\left(\frac{\overline{X}-2}{0.1/10}\geq \frac{2.0002-2}{0.1/10}\right) \approx P(Z \geq 0.02)
+\end{align*}
+\subsubsection*{Application to Bernoulli}
+\begin{align*}
+X\sim \text{Ber}(p) &= \begin{cases} 1 & \text{with prob p}\\
+0 &\text{with prob 1-p}
+\end{cases}
+\end{align*}
+Apply CLT to $X_1,\dots,X_n$ iid Ber(p),
+\begin{align*}
+\frac{\frac{\sum_{i=1}^nX_i}{n}-p}{\sqrt{\frac{p(1-p)}{n}}} = \frac{\sum_{i=1}^{n}X_i - np}{\sqrt{np(1-p)}}
+\end{align*}
+above has distribution approaching $Z$ as $n\rightarrow\infty$. Take $\sum_{i=1}^{n}X_i$ is sum of $n$ indp Ber rv's as rv $Y$ with Bin(n,p). So 1 binomial rv $Y$,
+\begin{align*}
+\frac{Y - np}{\sqrt{np(1-p)}} \sim Z
+\end{align*}
+where $Z$ is standard normal.\\
+Sample Statistic \\
+We looked at $\overline{X}$ so far.\\
+We want to define and explore Sample Variance statistic.\\ 
+$$\Gamma(\alpha) = \int_{0}^{\infty} t^{\alpha - 1} e^{-t} dt$$
+Thus $\Gamma(1/2) = \int_{0}^{\infty} t^{-1/2} e^{-t} dt$\\
+\begin{align*}
+    \Gamma(\alpha + 1) &= \int_{0}^{\infty} t^{\alpha} e^{-t} dt\\
+    &= \left[-t^{\alpha}e^{-t}\right]_{0}^{\infty} + \alpha \int_{0}^{\infty} t^{\alpha - 1} e^{-t} dt\\
+    &= \alpha \Gamma(\alpha)
+\end{align*}
+We say $X$ is a Gamma r.v w/ parameters $\alpha, \beta > 0 $ if its pdf is
+$$ f(X) = \begin{cases} 
+    \frac{1}{\beta^{\alpha} \Gamma(\alpha)} x^{\alpha -1 } e^{-x/\beta}, x>0\\
+    0, \text{otherwise}
+\end{cases}$$
+
+\textbf{Question: } PDF of $Y = Z^2$ where $Z \sim N(0,1)$\\
+\textbf{Note: } $Y \geq 0$\\
+\textbf{Answer: } $P(0 \leq Y \leq y) = P(Z^2 \leq y) = P(-\sqrt{y} \leq Z \leq \sqrt{y})$\\
+\begin{align*}
+    &= P(Z^2 \leq y)\\
+    &= P(-\sqrt{y} \leq Z \leq \sqrt{y})\\
+    &= 2 P(0 \leq Z \leq \sqrt{y})\\
+    &= 2 \int_{0}^{\sqrt{y}} \frac{1}{\sqrt{2\pi}} e^{-z^2/2} dz
+\end{align*}
+This is the CDF (cumulative distribution function) of $Y$.
+\begin{align*}    
+f_Y(y) &= \frac{d}{dy} F(x)\\
+&= \frac{d}{dy} 2 \int_{0}^{\sqrt{y}} \frac{1}{\sqrt{2\pi}} e^{-z^2/2} dz\\
+&= \frac{2}{\sqrt{2\pi}} e^{-y/2} \frac{1}{2\sqrt{y}}\\
+&= \frac{1}{\sqrt{2\pi y}} e^{-y/2}
+\end{align*}
+\textbf{Maria notes:}
+\begin{itemize}
+    \item $\overline{x}$: sample mean statistic
+    \item want to define and explore sample variance statistic
+    \end{itemize}
+    \subsubsection*{Gamma fn:}
+    for $\alpha>0$, the following is a Gamma fn,
+    \begin{align*}
+    \Gamma(\alpha) &= \int_{0}^{\infty} t^{\alpha-1}e^{-t}\ dt
+    \end{align*}
+    If $\alpha < 1 \rightarrow$ vertical asymptote
+    \begin{itemize}
+    \item near $t=0$ is still ok because $\int_{0}^{\infty} \frac{1}{sqrt{t}}\ dt$ is defined (p-integral, take lower bound as $r$ and evaluate as $r\rightarrow0$)
+    \end{itemize}
+    When $\alpha=1$,
+    \begin{align*}
+    \Gamma(1) = \int_{0}^{\infty} e^{-t}\ dt = \left(-e^-t\right\vert_{0}^{\infty}=1
+    \end{align*}
+    When $\alpha=\alpha+1$,
+    \begin{align*}
+    \Gamma(\alpha+1)&=\int_{0}^{\infty}t^{\alpha}e^{-t}\ dt,\\
+    &= \left(t^{\alpha}e^{-t}\right\vert_{0}^{\infty} - \int_{0}^{\infty} \alpha t^{\alpha - 1} \cdot -e^{-t}\ dt, \\
+    &= 0 + \alpha \Gamma(\alpha), \\
+    \end{align*}
+    by IBP where $u=t^{\alpha}$, $du = \alpha t^{\alpha-1}$, $v=-e^{-t}$, and $dv=e^{-t}dt$. So, if $\boxed{\alpha > 0, \Gamma(\alpha+1)=\alpha\Gamma(\alpha)}$.
+    Further, if $n\in\mathbb{Z}_{>0}$, then $\Gamma(n)=(n-1)!$.
+    \begin{itemize}
+    \item \textbf{Gamma dist:} $X$ is a gamma RV with parameters $\alpha>0$, $\beta>0$ if its pdf is,
+    \begin{align*}
+    f(x) = \frac{x^{\alpha - 1}e^{-\frac{x}{\beta}}}{\beta^\alpha \Gamma(\alpha)},\ x>0
+    \end{align*}
+    \item $\beta^\alpha\Gamma(\alpha)$ is the normalization factor.
+    \end{itemize}
+    Calculation of normalization factor:
+    \begin{align*}
+    \int_{0}^{\infty} x^{\alpha-1}e^{\frac{-x}{\beta}}\ dx &= \int_{u=0}^{u=\infty}\beta^{\alpha-1}u^{\alpha-1}e^{-u}\beta\ du,\\
+    &= \beta^\alpha \cdot \Gamma(\alpha)
+    \end{align*}
+    by $u$-sub with $u=x/\beta$, $dx=\beta du$.
+    \begin{itemize}
+    \item gamma with $\alpha=1$: has dist. $exp(\lambda=\beta) = \frac{1}{\beta}e^{-x/\lambda}$
+    \end{itemize}
+    \subsubsection*{Q}
+    pdf of $Y=Z^2$? where $Z\sim N(\mu=0,\sigma^2=1)$
+    \subsubsection*{A}
+    Can first find cdf of $Y$. Since $y\geq0$,
+    \begin{align*}
+        P(0\leq Y \leq y) = P(Z^2 \leq y) = P(-\sqrt(y)\leq Z \leq \sqrt(y)) &= 2\cdot P(0\leq Z \leq \sqrt{y}), \\
+        &= 2\int_{0}^{\sqrt{y}} \frac{e^{-z^2/2}}{\sqrt{2\pi}}\ dz
+    \end{align*}
+    $P(-\sqrt(y)\leq Z \leq \sqrt(y)) = 2\cdot P(0\leq Z \leq \sqrt{y})$ because $Z$ has symmetry. Calculating pdf from cdf of $Y$,
+    \begin{align*}
+    \frac{d}{dy} \frac{2}{\sqrt{2\pi}} \int_{0}^{\sqrt{y}} e^{-z^2/2}\ dz = \frac{1}{2\sqrt{y}} \frac{2e^{-\left(\sqrt{y}^2\right)/2}}{\sqrt{2\pi}}
+    \end{align*}
+    So,
+    \begin{align*}
+    f_{Y}(y) &= \frac{e^{-y/2}}{y^{1/2}\sqrt{2\pi}},\ y>0
+    \end{align*}
+    \textbf{Note:} this is the pdf of Gamma with $\alpha=1/2$, $\beta=2$ because $\Gamma(1/2)=\sqrt{\pi}$.
+    \begin{itemize}
+    \item $\textbf{def (Chi-Square): }$ $X$ has a Chi-Square ($\chi^2_{\nu}$) with $\nu>0$ degrees of freedom if it is a Gamma rv with parameters $\alpha=\nu/2$ and $\beta=2$.
+    \item so, dist of $Z^2$ is $\chi^2_{\nu=1}$
+    \end{itemize}
+    \subsubsection*{Moments of Gamma}
+    \begin{align*}
+    \mu'_{r} = E[X^r] &= \int_{0}^{\infty}\frac{x^{r}x^{\alpha-1}e^{-x/\beta}}{\beta^{\alpha}\Gamma(\alpha)}\ dx, \\
+    &= \frac{1}{\beta^\alpha \Gamma(\alpha)}\int_{0}^{\infty}x^{r+\alpha-1}e^{-x/\beta}\ dx, \\
+    &= \frac{\beta^{r+\alpha}}{\beta^\alpha \Gamma(\alpha)}\int_{0}^{\infty} u^{r+\alpha-1}e^{-u}\ du,
+    \end{align*}
+    where $x=u\beta$, $dx=\beta du$. The integral above is the same as $\Gamma(1+\alpha)$,
+    \begin{align*}
+    E[X^{r}] &= \frac{\beta^{r}}{\Gamma(\alpha)}\Gamma(r+\alpha)
+\end{align*}
+
+Expectaion of $X^r$ is:
+\begin{align*}
+    E[X^r] &= \int_{0}^{\infty} \frac{x^r x^{\alpha-1} e^{-x/\beta}}{\beta^\alpha \Gamma(\alpha)}\ dx\\
+    &= \frac{1}{\beta^\alpha \Gamma(\alpha)} \int_{0}^{\infty} x^{r+\alpha-1} e^{-x/\beta}\ dx\\
+    &= \frac{\beta^{r+\alpha}}{\beta^\alpha \Gamma(\alpha)} \int_{0}^{\infty} u^{r+\alpha-1} e^{-u}\ du\\
+    &= \frac{\beta^r}{\Gamma(\alpha)} \Gamma(r+\alpha)
+\end{align*}
+Thus $\mu$ is $\beta\alpha$ and second moment is $\beta^2\alpha(\alpha + 1)$.\\
+Thus the variance of $X$ is $\beta^2\alpha$.\\
+\textbf{Exponential}
+$$E[exp(\lambda)] = \lambda $$
+$$ Var[exp(\lambda)] = \lambda^2$$
+\textbf{chi-square}
+$$E[\chi^2_{\nu}] = \nu$$
+$$Var[\chi^2_{\nu}] = 2\nu$$
+
+MGF will be 
+$$\sum_{n=0}^{\infty} \frac{\mu_r' t^r}{r!}$$
+$$= \sum_{n=0}^{\infty} \frac{\alpha(\alpha+1)\ldots(\alpha+r-1)\beta^r t^r}{r!}$$
+This is $(1-\beta t)^{-\alpha}$\\
+
+\textbf{Sample Variance Statistic}
+$$S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2$$
+
+Important identity:
+$$ \sum (X_i - \bar{X})^2 = \sum (X_i - \mu)^2 - n(\bar{X} - \mu)^2$$
+Lets say want $E[S^2]$.\\
+using the definition will not fully work because we dont know $E[(X_i - \bar{x})^2]$\\
+We can use the identity above to get $E[S^2]$\\
+$$E[S^2] = \frac{1}{n-1} (\sum E[(X_i - \mu)^2] - nE[(\bar{X} - \mu)^2])$$
+The first term is the expectation of the sample pop squared.\\
+The second term is the variance of the sample mean.\\
+$$E[S^2] = \frac{1}{n-1} (n\sigma^2 - n\frac{\sigma^2}{n}) = \sigma^2$$
+Thus the expectation of the sample variance is the population variance.\\
+\textbf{Theorum:}
+$X_1 ... X_n$ is a random sample from a normal pop with mean $\mu$ and variance $\sigma^2$. Then \\
+a) $\bar{X}$ and $S^2$ are independent\\
+b) $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$\\
+\textbf{Aside:}
+Proof of :
+$$ \sum (X_i - \bar{X})^2 = \sum (X_i - \mu)^2 - n(\bar{X} - \mu)^2$$
+$$ = n \sigma^2 - n \frac{\sigma^2}{n} = n \sigma^2 - \sigma^2 = (n-1) \sigma^2$$
+
+Since $S^2$ is a statistic (a random variable)
+its good to have its pdf (in terms of pop pdf) we dont answer in general but we do for a normal population.\\
+It has a gamma distribution with $\alpha = \frac{\nu}{2}$ and $\beta = 2$\\ 
+This is also known as a chi-square distribution with $\nu$ degrees of freedom.\\
+So its a chi-square distribution with $\nu$ degrees of freedom.\\
+We can also see see that 
+$$ \frac{(n-1) S^2}{\sigma^2} \sim \chi^2_{n-1}$$
+Prove this using the fact that the population is normal.\\
+\textbf{Proof:}
+Each of the $X_i$ is normal with mean $\mu$ and variance $\sigma^2$\\
+The left hand side become 
+$$ \frac{(n-1) S^2}{\sigma^2} = \frac{1}{\sigma^2} \sum_{i=1}^{n} (X_i - \bar{X})^2$$
+$$ = \sum (X_i - \bar{X})^2/\sigma^2$$
+$$ = \sum (X_i - \mu)^2/\sigma^2 - n(\bar{X} - \mu)^2/\sigma^2$$
+We can define $Z_i = \frac{X_i - \mu}{\sigma}$\\
+Then $Z_i$ is standard normal with $\mu = 0, \sigma^2 =1$. because $X_i$ is normal\\
+Let $\tilde{Z} = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}}$\\
+Then $\tilde{Z}$ is standard normal\\
+Since we proved earlier that if each $X_i$ is normal then $\bar{X}$ is normal\\
+Thus $\tilde{Z}$ is standard normal\\
+$$ \frac{(n-1)S^2}{\sigma^2} + \tilde{Z}^2 = \sum_{i=1}^{n} Z_i^2$$
+$$ \tilde{Z}^2 \sim \chi^2_{1}$$
+$$ \sum Z_i^2 \sim \chi^2_{n}$$
+$$ \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$$
+$ \frac{(n-1)S^2}{\sigma^2}$ and $\tilde{Z}^2$ are independent prove this\\
+We learned that 
+$$ (n-1)S^2/\sigma^2 \sim \chi^2_{n-1}$$
+
+\subsection{8.7 Order Statistics}
+Given random sample $X_1, X_2, \ldots, X_n$\\
+the rth order statistic $Y_r$ has rhe value that is the rthvalue when the sample is ordered from smallest to largest.\\
+So $r = 1, 2, \ldots, n$\\
+\textbf{Example:} \\
+Suppose $X_1 = 3, X_2 = \pi, X_3 = e$\\
+Then $Y_1 = e, Y_2 = \pi, Y_3 = 3$\\
+Note $Y_1$ is also called the sample minimum and $Y_n$ is called the sample maximum.\\
+Sample Median is the middle one. If n is odd, it is the middle value. If n is even, it is the average of the two middle values.\\
+We actually know the pdf of the order statistics.\\
+Fix an interval $[a,b]$\\
+$$P(Y_r \in [a,b]) = P(a \leq Y_r \leq b)$$
+$$P(\text{once of the X's is in } [a,b] \text{and r-1 before and n-r after})$$
+$$ = \frac{n!}{(r-1)!(n-r)!}\int_{a}^{b} f(x) dx (\int_{-\infty}^{a} f(x) dx)^{r-1} (\int_{b}^{\infty} f(x) dx)^{n-r}$$
+The first term is the combination of the elements of the sample: aka the multinomial coefficient: $\begin{pmatrix}
+    n\\
+    r-1, 1, n-r
+\end{pmatrix}$\\
+The first integral is the probability that one of the X's is in the interval\\
+The second integral is the probability that r-1 of the X's are before the interval\\
+The third integral is the probability that n-r of the X's are after the interval\\
+This proability is $\int_a^b f_{Y_r}(y_r) dy_r$\\
+So let $a = y_r$ and $b = y_r + h$\\
+$$\lim_{h \rightarrow 0} \frac{n!}{(r-1)!(n-r)!} \int_{y_r}^{y_r + h} \frac{f(x)}{h} dx (\int_{-\infty}^{y_r} f(x) dx)^{r-1} (\int_{y_r + h}^{\infty} f(x) dx)^{n-r}$$
+$$ f_{Y_r}(y_r) = \frac{n!}{(r-1)!(n-r)!} f(y_r) (\int_{-\infty}^{y_r} f(x) dx)^{r-1} (\int_{y_r}^{\infty} f(x) dx)^{n-r}$$
+Now in general for a uniform distribution, the pdf of the rth order statistic is
+$$ f(x) = \frac{1}{b-a} \text{ for } a \leq x \leq b$$
+$$ f_{Y_r}(y_r) = \frac{n!}{(r-1)!(n-r)!} \frac{1}{b-a} \frac{y_r -a}{b-a}^{r-1} \frac{b-y_r}{b-a}^{n-r}$$
+This is applicable for $Y_r$ in $[a,b]$\\
+$$ f_{Y_r}(y_r) = \frac{n!}{(r-1)!(n-r)!} \frac{(y_r -a)^{r-1} (b-y_r)^{n-r}}{(b-a)^n}$$
+Example
+$n = 3, r = 1, $
+$$ f_{Y_1}(y_1) = 3 \frac{(y_1 - a)^0 (b-y_1)^2}{(b-a)^3} = \frac{3(b-y_1)^2}{(b-a)^3}$$
+\textbf{Question: } $Y_1$ in an exponetional population with pdf 
+$$ f(x) = \frac{e^{-x/\lambda}}{\lambda}$$
+What is the pdf of $Y_1$?\\
+\textbf{Answer: } $n = n, r = 1$
+$$ f_{Y_1}(y_1) = \frac{n!}{(r-1)!(n-r)!} \frac{e^{-y_1/\lambda}}{\lambda} (\int_{y_1}^{\infty} \frac{e^{-x/\lambda}}{\lambda} dx)^{n-1}$$
+$$ = n \frac{e^{-y_1/\lambda}}{\lambda} (e^{-y_1/\lambda})^{n-1}$$
+$$ = n \frac{e^{-n y_1/\lambda}}{\lambda} $$
+We can recognize this as an exponential distribution with parameter $\lambda/n$\\
+
+
+
 
 \end{document}

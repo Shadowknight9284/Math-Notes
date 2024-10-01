@@ -1,0 +1,43 @@
+%%% 
+%%% This is a preamble to typeset your homework in math classes
+%%% 
+
+% Common packages used in LaTeX. 
+% You may add more as you need.
+\usepackage{amsmath,amssymb,amsthm} % American Mathematical Society
+\usepackage{extramarks,titling}     % Formatting
+\usepackage{graphicx,tikz,pgfplots} % Figures and plots
+\usepackage[shortlabels]{enumitem}  % Lists
+\usepackage{float}                  % Floating objects
+\usepackage{fancybox,framed}        % Frame
+\usepackage{tabularx}
+\pgfplotsset{compat=1.18}
+
+%% Document Settings. Feel free to adjust it.
+% Page layout
+\pagestyle{head}
+\firstpageheader{\name}{\course}{\assignment}
+\firstpageheadrule
+\runningheader{\name}{\course}{\assignment}
+\runningheadrule
+
+% Custom environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition} 
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+
+% Custom command
+\newcommand{\setof}[1]{\left\{ {#1}\right\}}
+\newcommand{\setdef}[2]{\left\{{#1}\,\left|\,{#2}\right.\right\}}
+\newcommand{\seq}[1]{\left\{{#1}\right\}_{n=1}^\infty}
+
+% Augmented Matrix
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother

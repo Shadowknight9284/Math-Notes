@@ -374,8 +374,154 @@ When do limits not exist? When $n \rightarrow \infty$ diverges or collates \\
 A chain that can only return to a state a multiple of $d>1$ times is called a periodic chain. And does not have limiting probabilties.\\
 \textbf{Definition: }\\
 An irrecucible, positive reccurent, aperiodic Markov Chain is said to be ergodic.\\
+\textbf{Branching Proess:}\\
+A branching process is a Markov Chain with time give vy generations in $0,1,2,3, \dots$ and states fiven by populations in $0,1,2,3, \dots$\\
+Induviduals in each gen eration produce offspring
+$$X_i = \# of offspring of individual of the (i-1)^th generations$$
+\textbf{Remark}\\
+If 0 is a reccurent state because $P_{00} = 1$\\
+Then it is an abosrbing state.\\
+Proof is somewhat trivial using matrix multiplication.\\
+\textbf{Remark 2}\\
+Define $P_0 = P[\text{An individual produces 0 offspring}]$ \\
+If $P_0 >0$ then all the states other than 0 are transient.\\
+\textbf{Proof:}\\
+Consider $P_{i0}$\\
+it is th probability for going from state i to 0.\\
+$$= P[Each one of the i Individuals produces 0 offspring]$$
+$$= P_0^i$$
+$$= P_0^i > 0$$
+Thus the state i is transient for $i \neq 0$\\
+\textbf{Remark 3}
+If $P_0 > 0 $ then the population eventually either becomes extinct or grows indefinitely.\\
+\textbf{Note:}\\
+We do not use transient probabilities to study branching processes. We mostly use the probability distribution of the number of offspring produced by an individuals. \\
+Let $P_j = P[\text{An individual produces j offspring}]$\\
+Compute the mean and variance of $X_n$\\
+\textbf{Mean}\\
+$X_0 = 1$
+$$\expec(X_n) = \mu = \sum_{j} j P_j$$
+$$\expec(X_n) = \expec[\expec[X_n|X_{n-1}]]$$
+write $z_i, i = 1,2,3, \dots$ for the number of offspring of the $x_{n-1}$ individuals in the $(n-1)^th$ generation.\\
+Then $X_n = \sum_{i=1}^{X_{n-1}} Z_i$\\
+$$\expec(X_n) = \expec[\expec[\sum_{i=1}^{X_{n-1}} Z_i| X_{n-1}]]$$
+$$ \mu = z_i | X_{n-1} $$
+$$ E[X_n]= \expec( \mu X_{n-1})$$
+$$ E[X_n] = \mu \expec(X_{n-1})$$
+Since $X_0 = 1$\\
+Thus $\expec[X_n] = \mu^n$\\
+\textbf{Variance}
+$$\var(X_n) = \sigma^2 = \sum_{j} j^2 P_j - \expec(X_n)^2$$
+We can also note that 
+$$ var(X_n) = \sigma^2(\mu^{n-1} + \mu^{n} + .. + \mu^{2n-2})$$
+$$ var(X_n) = \begin{cases}
+    \sigma^2 \mu^{n-1} \frac{1 - \mu^{n-1}}{1 - \mu} & \text{if } \mu \neq 1\\
+    n \sigma^2  & \text{if } \mu = 1 
+\end{cases}
+$$
+Probabilityt of extinction (of a population) \\
+$$\pi_0 = P[\text{Population becomes extinct}]$$
+$$\pi_0 = \lim_{n \to \infty} P(X_n = 0|X_0 = 1)$$
 
+Case 1: if $\mu < 1$ then $\pi_0 = 1$\\
+\textbf{Proof:}\\
+We can see this that for each generation the population decreases.\\
+Thus the long run proportion of the population being 0 is 1.\\
+Case 2: if $\mu > 1$ then $\pi_0 < 1$\\
+\textbf{Proof:}\\
+This follows since the population grows indefinitely.\\
+The equation for $\pi_0$ is
+$$\pi_0 = \textbf{Population dies out}$$
+$$= \sum_{j=0}^{\infty} P(\text{Population dies out} | x_1 = j)P_j$$
+$$ = \sum_{j=0}^{\infty} \pi_0^j P_j$$
+For $\mu > 1$ it can be shown that $\pi_0$ is the smallest solution to the equation $\pi_0 = \sum_{j=0}^{\infty} \pi_0^j P_j$\\
 
+\textbf{Example 4.34}\\
+Suppose $P_0 = 1/2, P_1 = 1/4, P_2 = 1/4$\\
+Compute $\pi_0$.\\
+Find $\mu = 0(1/2) + 1(1/4) + 2(1/4) = .75$\\
+Since $\mu < 1$ then $\pi_0 = 1$\\
+
+\textbf{Example 4.35}\\
+Suppose $P_0 = 1/4 , P_1 = 1/4 , P_2 = 1/2$\\
+
+\section*{4.8 Time Reversible Markov Chains}
+\textbf{Detour:}\\
+Better understand the concept of a stationary M.C.\\
+It has a stationary distribution $\vec{\pi} = [\pi_1, \dots, \pi_n]$ that satisfies $\vec{\pi} P = \vec{\pi}$\\ 
+Comnsider a time series that is states at a time, as it propogrates, it reaches a stationary distribution. This implies that the distribution of the states at time $n$ is the same as the distribution at time $n+1$\\
+\textbf{Example:}
+MC with TPM:
+$$P = \begin{bmatrix}
+    1/3 & 2/3\\
+    1/2 & 1/2
+\end{bmatrix}$$
+We can calc the stationary distribution by solving the system of equations:
+$$\pi_1 = \frac{1}{3}\pi_1 + \frac{1}{2}\pi_2$$
+$$\pi_2 = \frac{2}{3}\pi_1 + \frac{1}{2}\pi_2$$
+$$\pi_1 + \pi_2 = 1$$
+This gives $\pi_1 = 3/7$ and $\pi_2 = 4/7$\\
+Suppose at time $t=0$ the probability distribution is:
+$$ P(x_0 = 0) = 3/7 \text{ and } P(x_0 = 1) = 4/7$$
+Then at time $t=1$ the distribution is the same as at time $t=0$\\
+
+\textbf{Time Reversible Markov Chains}\\
+Consider an ergodic MC that has been running for a long time.\\
+Consider the revise process $X_n, X_{n-1}, \dots, X_0$ starting for some large n.\\ 
+It satisfies the markov property, future given the present is independent of the past.\\
+The Transition probabilties of the rversed chain are given by $Q_{ij} = P(X_{n-1} = j | X_n = i) = P(X_m = j | X_{m+1} = i)$\\
+We can find it out using bayes formula\\
+$$Q_{ij} = \frac{P(X_m =j) P(X_{m+1} = i | X_m = j)}{P(X_{m+1} = i)}$$
+$$Q_{ij} = \frac{\pi_j P_{ji}}{\pi_i}$$
+\textbf{Definition:} A Markov Chain is time reversible if $Q_{ij} = P_{ij}$\\
+If the MC is time reversible 
+$$ P_{ij} = \frac{\pi_j P_{ji}}{\pi_i}$$
+$$ \pi_i P_{ij} = \pi_j P_{ji}$$
+This is saying the rate you go from i to j is the same as j to i\\
+Verify reversible by computing $\vec{\pi} = $ and checking if $Q_{ij} = P_{ij}$\\
+But more efficielty we can fin $x_i > 0$ such that $\sum x_i = 1$ and $x_iP_{ij} = x_j P_{ji}$\\
+\textbf{Proof:}\\
+$$\sum_i x_i P_{ij} = \sum_i x_j P_{ji}$$
+$$\sum_i x_i P_{ij} = x_j \sum_i P_{ji}$$
+$$\sum_i x_i P_{ij} = x_j$$
+and $\sum x_i = 1$\\
+By theorem $4.1$ the solutions fo this sysmen are unique and are $\vec{\pi}$\\
+\textbf{Example 4.38}\\
+Consider an aribitrary connected graph accociate with a (+ve) number $w_{ij}$ for each edge. Conside a particle moving from node to node such that the particle will move from node i to node j with probability $P_{ij} = \frac{w_{ij}}{d_i}$ where $d_i = \sum_j w_{ij}$\\
+The TPM is:
+$$P = \begin{bmatrix}
+    w_{11}/d_1 & w_{12}/d_1 & \dots \\
+    w_{21}/d_2 & w_{22}/d_2 & \dots \\
+    \vdots & \vdots & \vdots
+\end{bmatrix}$$
+For this example the TPM is:\\
+$$P = \begin{bmatrix}
+    0 & 1/2 & 0 & 1/6 & 1/3 \\
+    1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 \\ 
+    1/5 & 0 & 0 & 0 & 4/5 \\
+    1/6 & 0 & 1/6 & 2/3 & 0
+\end{bmatrix}$$
+Time reversibility for such an MC is given by:
+$$\pi_i P_{ij} = \pi_j P_{ji}$$
+$$\pi_i \frac{w_{ij}}{d_i} = \pi_j \frac{w_{ji}}{d_j}$$
+$$\frac{\pi_i}{d_i} = \frac{\pi_j}{d_j} = c$$
+$$ \pi_i = c d_i$$
+$$ c = \frac{1}{\sum_i \sum_j w_{ij}}$$
+Thus 
+$$\pi_i = \frac{\sum_{j}w_{ij}}{\sum_i \sum_j w_{ij}}$$
+Note you need to calc twice for ij and ji\\
+Note if we pick all the $w_{ij} $ to be the same we get a random walk on a graph\\
+Consider the MC with TPM:
+2/3 going clockwise and 1/3 going counter clockwise with 3 states.\\
+$$P = \begin{bmatrix}
+    1/3 & 2/3 & 0 \\
+    0 & 1/3 & 2/3 \\
+    2/3 & 0 & 1/3
+\end{bmatrix}$$
+This is doubly stochastic.\\
+Argue that $Q$ is the same as $P^T$\\
+Then show $Q \neq P$ because $P$ is not symmetric.\\
 
 
 

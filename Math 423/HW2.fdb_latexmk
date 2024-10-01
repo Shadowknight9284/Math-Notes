@@ -1,8 +1,9 @@
 # Fdb version 4
-["pdflatex"] 1726843366.91248 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 423/HW2.tex" "HW2.pdf" "HW2" 1726843368.17164 0
-  "HW2.aux" 1726843368 32 c81c40425fbb5e93b90fba65da0b5e61 "pdflatex"
-  "HW2.tex" 1726843365 4553 614ddceee22e9370bdca328ed14fad7a ""
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 423/HW2.tex" 1726843365 4553 614ddceee22e9370bdca328ed14fad7a ""
+["pdflatex"] 1727113306.43689 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 423/HW2.tex" "HW2.pdf" "HW2" 1727113308.40973 0
+  "HW2.aux" 1727113308 32 f852561997c05a7d986acd1deeb530ec "pdflatex"
+  "HW2.tex" 1727113305 11273 9526b5252e3fa2c85491e2af37f13b64 ""
+  "IMGs/HW2plot.png" 1727065449 121460 b9f7b22a002dec0c289913ee4a43a377 ""
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 423/HW2.tex" 1727113305 11273 9526b5252e3fa2c85491e2af37f13b64 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1705505139 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1705503004 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1705503004 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -36,6 +37,7 @@
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1705503004 35752 024fb6c41858982481f6968b5fc26508 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1705503004 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1705503004 32362 bc3f3eec7ab7d65fe700963d4017d32c ""
+  "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1705503004 31809 8670ca339bf94e56da1fc21c80635e2a ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1705503004 32762 7fee39e011c23b3589931effd97b9702 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1705503004 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1705503004 32716 08e384dc442464e7285e891af9f45947 ""
