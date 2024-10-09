@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  2 OCT 2024 20:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  5 OCT 2024 11:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/prana/OneDrive/Desktop/MathNotes/Template/test.tex
-(c:/Users/prana/OneDrive/Desktop/MathNotes/Template/test.tex
+**"c:/Users/prana/OneDrive/Desktop/MathNotes/Math 423/HW3.tex"
+(c:/Users/prana/OneDrive/Desktop/MathNotes/Math 423/HW3.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
 (c:/texlive/2023/texmf-dist/tex/latex/exam/exam.cls
@@ -524,8 +524,8 @@ Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count352
 \l__pdf_internal_box=\box73
-) (./test.aux)
-\openout1 = `test.aux'.
+) (./HW3.aux)
+\openout1 = `HW3.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
@@ -573,31 +573,176 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 LaTeX Font Info:    Trying to load font information for U+rsfs on input line 21.
  (c:/texlive/2023/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
-) [1
+)
+Underfull \hbox (badness 10000) in paragraph at lines 26--29
 
-{c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-This exam contains 2 questions with 0 parts, 0 subparts, and 0 subsubparts.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
+
+ []
+
+[1
+
+{c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 54--55
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 58--59
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--63
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 64--66
+
+ []
+
+<HW3IMG/11.png, id=18, 676.77844pt x 416.30531pt>
+File: HW3IMG/11.png Graphic file (type png)
+<use HW3IMG/11.png>
+Package pdftex.def Info: HW3IMG/11.png  used on input line 67.
+(pdftex.def)             Requested size: 338.3884pt x 208.15215pt.
+[2{c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./HW3IMG/11.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 79--80
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
+
+ []
+
+<HW3IMG/12.png, id=25, 673.76718pt x 434.37282pt>
+File: HW3IMG/12.png Graphic file (type png)
+<use HW3IMG/12.png>
+Package pdftex.def Info: HW3IMG/12.png  used on input line 89.
+(pdftex.def)             Requested size: 336.88277pt x 217.18587pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 100--101
+
+ []
+
+[3 <./HW3IMG/12.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 104--105
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 108--109
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 112--113
+
+ []
+
+<HW3IMG/13.png, id=30, 1278.27562pt x 517.18219pt>
+File: HW3IMG/13.png Graphic file (type png)
+<use HW3IMG/13.png>
+Package pdftex.def Info: HW3IMG/13.png  used on input line 115.
+(pdftex.def)             Requested size: 639.13625pt x 258.59045pt.
+
+Overfull \hbox (190.26991pt too wide) in paragraph at lines 115--116
+ [] 
+ []
+
+[4 <./HW3IMG/13.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 127--128
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--132
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 139--140
+
+ []
+
+<HW3IMG/14.png, id=35, 1373.13pt x 459.21562pt>
+File: HW3IMG/14.png Graphic file (type png)
+<use HW3IMG/14.png>
+Package pdftex.def Info: HW3IMG/14.png  used on input line 142.
+(pdftex.def)             Requested size: 686.56332pt x 229.60724pt.
+
+Overfull \hbox (237.69699pt too wide) in paragraph at lines 142--143
+ [] 
+ []
+
+[5 <./HW3IMG/14.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 154--155
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 158--159
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--167
+
+ []
+
+<HW3IMG/15.png, id=40, 1363.34344pt x 505.89pt>
+File: HW3IMG/15.png Graphic file (type png)
+<use HW3IMG/15.png>
+Package pdftex.def Info: HW3IMG/15.png  used on input line 169.
+(pdftex.def)             Requested size: 681.67006pt x 252.94437pt.
+
+Overfull \hbox (232.80373pt too wide) in paragraph at lines 169--170
+ [] 
+ []
+
+[6] [7 <./HW3IMG/15.png>] [8] [9] [10] [11] [12]
+This exam contains 7 questions with 0 parts, 0 subparts, and 0 subsubparts.
 This exam has a total of 0 points.
 This exam has a total of 0 bonus points.
-(./test.aux)
+(./HW3.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 25190 strings out of 474166
- 633797 string characters out of 5749518
- 1927542 words of memory out of 5000000
- 47092 multiletter control sequences out of 15000+600000
- 562068 words of font info for 53 fonts, out of 8000000 for 9000
+ 25290 strings out of 474166
+ 635311 string characters out of 5749518
+ 1938542 words of memory out of 5000000
+ 47182 multiletter control sequences out of 15000+600000
+ 567246 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 90i,10n,103p,856b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on test.pdf (2 pages, 36177 bytes).
+ 90i,16n,103p,857b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on HW3.pdf (12 pages, 411239 bytes).
 PDF statistics:
- 29 PDF objects out of 1000 (max. 8388607)
- 18 compressed objects within 1 object stream
+ 108 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 38 words of extra memory for PDF output out of 10000 (max. 10000000)
 

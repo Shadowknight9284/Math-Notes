@@ -1,0 +1,338 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Homework 4}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+\question Question 1.4 15 pg(35)\\
+Let $S_1$ and $S_2$ be subsets of a vector space $V$. Prove that span($S_1 \cap S_2) \subseteq \text{span}(S_1) \cap \text{span}(S_2)$ Give an example in which span($S_1 \cap S_2)$ and $\text{span}(S_1) \cap \text{span}(S_2)$ are equal and one in which they are not equal.\\
+\textbf{Proof:}\\
+Assume that $S_1$ and $S_2$ are subsets of a vector space $V$.\\
+Let $v \in \text{span}(S_1 \cap S_2)$.\\
+Then, v can be written as a linear combination of elements in $S_1 \cap S_2$.\\
+$v = \sum_{i=0}^{n}a_i v_i$ where $v_i \in S_1 \cap S_2$ and $a_i \in \mathbb{R}$.\\
+Since $v_i \in S_1 \cap S_2$, $v_i \in S_1$ and $v_i \in S_2$.\\
+Due to the closure of addtion and scalar multiplication properties of a vector subspace, any linear combination of elements in $S_1$ will be in $\text{span}(S_1)$ and any linear combination of elements in $S_2$ will be in $\text{span}(S_2)$.\\
+Since we can clealry see that $v$ is a linear combination of elements in $S_1$ and $S_2$, $v \in \text{span}(S_1)$ and $v \in \text{span}(S_2)$.\\
+Therefore, $v \in \text{span}(S_1) \cap \text{span}(S_2)$.\qed\\
+
+\textbf{Example of span($S_1 \cap S_2) = \text{span}(S_1) \cap \text{span}(S_2)$:}\\
+We can consider $V$ to be $R^2$.\\
+$$S_1 = \left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix} ,\begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}\right\}$$
+$$S_2 = \left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix} ,\begin{bmatrix}
+    0 \\
+    1
+\end{bmatrix} \begin{bmatrix}
+    1\\
+    1
+\end{bmatrix}\right\}$$
+$$S_1 \cap S_2 = \left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix} ,\begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}\right\}$$
+$$\text{span}(S_1) = \text{span}\left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix} ,\begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}\right\} = R^2$$
+$$\text{span}(S_2) = \text{span}\left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix} ,\begin{bmatrix}
+    0\\
+    1
+\end{bmatrix} \right\} $$
+$$\text{span}(S_1) \cap \text{span}(S_2) = R^2 \cap R^2 = R^2$$
+$$\text{span}(S_1 \cap S_2) = \text{span}\left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix} ,\begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}\right\} = R^2$$
+Clealry this is an example where span($S_1 \cap S_2) = \text{span}(S_1) \cap \text{span}(S_2)$\\
+
+
+
+
+\textbf{Example of span($S_1 \cap S_2) \neq \text{span}(S_1) \cap \text{span}(S_2)$:}\\
+We can consider $V$ to be $R^2$.\\
+$$S_1 = \left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix} ,\begin{bmatrix}
+    1\\
+    1
+\end{bmatrix}\right\}$$
+$$S_2 = \left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix} ,\begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}\right\}$$
+$$S_1 \cap S_2 = \left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix}\right\}$$
+$$\text{span}(S_1) = \text{span}\left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix} ,\begin{bmatrix}
+    1\\
+    1
+\end{bmatrix}\right\} = R^2$$
+$$\text{span}(S_2) = \text{span}\left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix} ,\begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}\right\} = R^2$$
+$$\text{span}(S_1) \cap \text{span}(S_2) = R^2 \cap R^2 = R^2$$
+$$\text{span}(S_1 \cap S_2) = \text{span}\left\{ \begin{bmatrix}
+    1\\
+    0
+\end{bmatrix}\right\} \neq R^2$$
+Clealry this is an example where span($S_1 \cap S_2) \neq \text{span}(S_1) \cap \text{span}(S_2)$\\
+
+
+\question Question 1.5 15 pg(43)\\
+Let $S = \{u_1,u_2,\dots, u_n\}$ be a finite set of vectors. Prove that $S$ is linearly dependent iff $u_1 = 0$ or $u_{k+1} \in \text{span}(u_1,u_2,\dots,u_k)$ for some $k (1 \leq k < n)$.\\
+Also: Can k be allowed to be 0 here (rather than equal to or greater than 1, as the problem says)?
+For sake of ease I will refer to $S$ is linearly dependent as Q and $u_1 = 0$ or $u_k+1 \in \text{span}(u_1,u_2,\dots,u_k)$ for some $k (1 \leq k < n)$ as P \\
+\textbf{Proof:}\\
+
+\textbf{Proof of Q $\to$ P}\\
+We can do this by contradiction
+Assume that $S = \{u_1,u_2,\dots, u_n\}$ is a finite set of vectors.\\
+Assume that $S$ is linearly dependent.\\
+Assume that $u_1 \neq 0$ and $u_k+1 \notin \text{span}(u_1,u_2,\dots,u_k)$ for all $k (1 \leq k < n)$.\\
+Since $S$ is Linearly dependant, then there exists $a_i \in \mathbb{R}$ such that $\sum_{i=1}^{n}a_i u_i = 0$ where not all $a_i$ are 0.\\
+Also $\frac{1}{-a_n}\sum_{i=1}^{n-1}a_i u_i = u_n$.\\
+This is a contraction of $u \notin \text{span}(u_1,u_2,\dots,u_{n-1})$.\\
+Also note that if $u_1 = 0$ then we can take $a_1$ to be any non-zero element of the field to generate the zero vector which is contradictory to the fact that the zero vector is a trivial linear combination.\\
+
+\textbf{Proof of P $\to$ Q }\\
+Assume that $S = \{u_1,u_2,\dots, u_n\}$ is a finite set of vectors.\\
+Assume that $u_1 = 0$ or $u_k+1 \in \text{span}(u_1,u_2,\dots,u_k)$ for some $k (1 \leq k < n)$.\\
+Need to show that $S$ is linearly dependent.\\
+If $u_1 = 0$, then $\sum_{i=2}^{n}0 u_i = u_1$ is a non-trivial linear combination of elements in $S$ that equals 0.\\
+If $u_k+1 \in \text{span}(u_1,u_2,\dots,u_k)$ for some $k (1 \leq k < n)$, then $u_{k+1} = \sum_{i=1}^{k}a_i u_i$ for some $a_i \in \mathbb{R}$.\\
+Thus we can consider $\sum_{i=1}^{k}a_i u_i - u_{k+1} = 0$ as a non-trivial linear combination of elements in $S$ that equals 0.\\
+Thus $S$ is linearly dependent.\\
+
+\textbf{Extra Question}: Can k be allowed to be 0 here (rather than equal to or greater than 1, as the problem says)?\\
+Yes, as if $k = 0$, it would imply that $u_1 \in \text{span}(\emptyset)$.\\
+Since the span of the empty set is $\{0\}$, $u_1 = 0$.\\
+Thus, $u_1 = 0$ is a valid condition for $S$ to be linearly dependent.\\
+
+
+
+
+
+\question Question 2.1 16\\
+Let $T: P(R) \to P(R)$ be defined by $T(f) = f'$. Recall that $T$ is linear. Prove that $T$ is onto but not one-to-one.\\
+\textbf{Proof:}\\
+
+\textbf{Onto:}\\
+Let $g \in P(R)$.\\
+Need to show that there exists an $f \in P(R)$ such that $T(f) = f' = g$.\\
+Take $g = \sum_{i=0}^n a_i x^i$.\\
+Then $f = \sum_{i=0}^n \frac{a_i}{i+1} x^{i+1}$\\
+Then $T(f) = f' = \sum_{i=0}^n a_i x^i = g$.\\
+Therefore, $T$ is onto.\\
+
+\textbf{Not One-to-One:}\\
+Need to show that there exists $T(f_1) = T(f_2)$ but $f_1 \neq f_2$.\\
+Let $f_1 = 1$ and $f_2 = 0$.\\
+Then $T(f_1) = T(1) = 0$ and $T(f_2) = T(0) = 0$.\\
+Therefore, $T$ is not one-to-one.\\
+
+\question Question 2.3 3a\\
+Let $g(x) = 3 + x$ Let $T: P_2(R) \to P_2(R)$ and $U: P_2(R) \to R^3$ be the linear transformations defined by
+$$ T(f(x)) = f'(x)g(x)+ 2f(x) \text{ and } U(a +bx + cx^2) = (a+b, c, a-b)$$
+Compute $[U]_\beta^\gamma, [T]_\beta$ and $[UT]_\beta^\gamma$ directly, then use theorem 2.11 to verify your result.\\  
+To compute $[U]_\beta^\gamma$, we need to find $U(e_1), U(e_2), U(e_3)$ where $e_1 = 1, e_2 = x, e_3 = x^2$.\\
+$U(e_1) = (1, 0, 1)$\\ 
+$U(e_2) = (1, 0, -1)$\\ 
+$U(e_3) = (0, 1, 0)$.\\
+Therefore, $[U]_\beta^\gamma = \begin{bmatrix} 1 & 1 & 0 \\ 0 & 0 & 1 \\ 1 & -1 & 0 \end{bmatrix}$.\\
+To compute $[T]_\beta$, we need to find $T(e_1), T(e_2), T(e_3)$ where $e_1 = 1, e_2 = x, e_3 = x^2$
+$T(e_1) = 2$\\
+$T(e_2) = (3+x) + 2x = 3 + 3x$\\
+$T(e_3) = 2x(3+x) + 2x^2 = 6x + 4x^2$\\
+Thus $[T]_\beta =\begin{bmatrix}
+    2 & 3 & 0\\
+    0 & 3 & 6\\
+    0 & 0 & 4
+\end{bmatrix}$\\
+To compute $[UT]_\beta^\gamma$, we need to find $UT(e_1), UT(e_2), UT(e_3)$ where $e_1 = 1, e_2 = x, e_3 = x^2$\\
+$UT(e_1) = U(2) = (2, 0, 2)$\\
+$UT(e_2) = U(3 + 3x) = (6, 0,0 )$\\
+$UT(e_3) = U(6x + 4x^2) = (6, 4, -6)$\\
+Thus $[UT]_\beta^\gamma = \begin{bmatrix}
+    2 & 6 & 6\\
+    0 & 0 & 4\\
+    2 & 0 & -6
+\end{bmatrix}$\\
+To verify our result, we can use theorem 2.11.\\
+$[UT]_\beta^\gamma = [U]_\beta^\gamma[T]_\beta$\\
+$\begin{bmatrix}
+    2 & 6 & 6\\
+    0 & 0 & 4\\
+    2 & 0 & -6
+\end{bmatrix} = \begin{bmatrix} 
+    1 & 1 & 0 \\ 
+    0 & 0 & 1 \\ 
+    1 & -1 & 0 
+\end{bmatrix} \begin{bmatrix}
+    2 & 3 & 0\\
+    0 & 3 & 6\\
+    0 & 0 & 4
+\end{bmatrix}$\\
+After multiplying the matrices, we can clearly see that the result is the same as $[UT]_\beta^\gamma$\\
+
+\question Question 2.3 3b\\
+Let $g(x) = 3 + x$ Let $T: P_2(R) \to P_2(R)$ and $U: P_2(R) \to R^3$ be the linear transformations defined by
+$$ T(f(x)) = f'(x)g(x)+ 2f(x) \text{ and } U(a +bx + cx^2) = (a+b, c, a-b)$$
+Let $h(x) = 3 -2x + x^2$. Compute $[h(x)]_\beta$ and $[Uh(x)]_\gamma$. Then use $[U]_\beta^\gamma$ from (a) and Theorem 2.14 to verify your result.\\
+To compute $[h(x)]_\beta$ we can simply define it as:
+$$[h(x)]_\beta = \begin{bmatrix} 3 \\ -2 \\ 1 \end{bmatrix}$$
+To compute $[Uh(x)]_\gamma$, we need to find $U(h(x))$.\\
+$U(h(x)) = U(3 -2x + x^2) = (3-2, 1, 3+2) = (1, 1, 5)$\\
+Therefore, $[Uh(x)]_\gamma = \begin{bmatrix} 1 \\ 1 \\ 5 \end{bmatrix}$\\
+To verify our result, we can use theorem 2.14.\\
+$[Uh(x)]_\gamma = [U]_\beta^\gamma[h(x)]_\beta$\\
+$\begin{bmatrix} 1 \\ 1 \\ 5 \end{bmatrix} = \begin{bmatrix} 1 & 1 & 0 \\ 0 & 0 & 1 \\ 1 & -1 & 0 \end{bmatrix} \begin{bmatrix} 3 \\ -2 \\ 1 \end{bmatrix}$\\
+After multiplying the matrices, we can clearly see that the result is the same as $[Uh(x)]_\gamma$\\
+
+\question Question 2.3 4d based on Sec. 2.2 5(d)\\
+For each of the following parts let $T$ be the linear transformation define in the corresponding part of Excerise 5 of section 2.2. Use Theorem 2.14 to compute the following vectors:
+$$[T(f(x))]_\gamma, \text{ where } f(x) = 6 - x + 2x^2$$
+$$ \text{Define } T: P_2(R) \to R \text{ by } T(f(x)) = f(2)$$
+$$[T(f(x))]_\gamma = [T]_\beta^\gamma[f(x)]_\beta$$
+$[f(x)]_\beta = \begin{bmatrix} 6 \\ -1 \\ 2 \end{bmatrix}$\\
+We can use $\gamma = \{1\}$ and $\beta = \{1, x, x^2\}$\\
+$$T(1) = 1$$
+$$T(x) = 2$$
+$$T(x^2) = 4$$
+Therefore, $[T]_\beta^\gamma = \begin{bmatrix} 1 & 2 & 4 \end{bmatrix}$
+Using theorem 2.14, we can compute $[T(f(x))]_\gamma$\\
+$$[T(f(x))]_\gamma = [T]_\beta^\gamma[f(x)]_\beta$$
+$$[T(f(x))]_\gamma = \begin{bmatrix} 1 & 2 & 4 \end{bmatrix} \begin{bmatrix} 6 \\ -1 \\ 2 \end{bmatrix}$$
+After multiplying the matrices, we can clearly see that the result is $[T(f(x))]_\gamma = 12$\\
+
+\question Question 2.4 2c\\
+For each of the following linear transformation $T$, determine whether $T$ is invertible and justify your answer.
+$$T: R^3 \to R^3 \text{ defined by } T(a_1, a_2, a_3) = (3a_1 - 2a_3, a_2, 3a_1 + 4a_2)$$
+We can first assert that $T = L_A$ where $A = \begin{bmatrix} 3 & 0 & -2 \\ 0 & 1 & 0 \\ 3 & 4 & 0 \end{bmatrix}$\\
+We can then utilize theorem 2.18 to determine if $T$ is invertible.\\
+The contents of theorem 2.18 imply that $T$ is invertible if and only $[T]_\beta^\gamma$ is invertible.\\
+Since $[T]_\beta^\gamma = A$(as we have determined from the prior HW), we can see that it would be sufficient to determine if $A$ is invertible.\\
+Utilizing RREF theroy if we can put in $A$ in RREF form and get the identity matrix, then $A$ is invertible.\\
+$$ \begin{bmatrix}
+    3 & 0 & -2\\
+    0 & 1 & 0\\
+    3 & 4 & 0
+\end{bmatrix} \xrightarrow{R_3 - R_1 \to R_3} \begin{bmatrix}
+    3 & 0 & -2\\
+    0 & 1 & 0\\
+    0 & 4 & 2
+\end{bmatrix} \xrightarrow{R_3 - 4R_2 \to R_3} \begin{bmatrix}
+    3 & 0 & -2\\
+    0 & 1 & 0\\
+    0 & 0 & 2
+\end{bmatrix} $$
+$$ \xrightarrow{{1/2}R_3 \to R_3} \begin{bmatrix}
+    3 & 0 & -2\\
+    0 & 1 & 0\\
+    0 & 0 & 1
+\end{bmatrix} \xrightarrow{{1/3}R_1 \to R_1} \begin{bmatrix}
+    1 & 0 & -2/3\\
+    0 & 1 & 0\\
+    0 & 0 & 1
+\end{bmatrix} \xrightarrow{R_1 + 2/3R_3 \to R_1} \begin{bmatrix}
+    1 & 0 & 0\\
+    0 & 1 & 0\\
+    0 & 0 & 1
+\end{bmatrix}$$
+Since we have obtained the identity matrix, $A$ is invertible.\\
+Therefore, $T$ is invertible.\\
+
+\question Question 2.4 2d\\
+For each of the following linear transformation $T$, determine whether $T$ is invertible and justify your answer.
+$$T: R^3 \to R^2 \text{ defined by } T(p(x)) = p'(x)$$
+We can first assert that $T = L_A$ where $A = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 2 \end{bmatrix}$\\
+We can then utilize theorem 2.18 to determine if $T$ is invertible.\\
+The contents of theorem 2.18 imply that $T$ is invertible if and only $[T]_\beta^\gamma$ is invertible.\\
+Since $[T]_\beta^\gamma = A$(as we have determined from the prior HW), we can see that it would be sufficient to determine if $A$ is invertible.\\
+Since $A$ is a 2x3 matrix, we can already see that $A$ is not invertible.\\
+Therefore, $T$ is not invertible.\\
+Additionally, we have seen from a prior HW question that $T$ is not one-to-one.\\
+Thus it is not bijection, and thus not invertible.\\
+Finally, we can see that the domain and codomain of $T$ are not the same dimension, and thus $T$ is not invertible by Theorem 2.17 Corollary \\
+
+\question Question 2.4 7a\\
+Let $A$ be an $n \times n$ matrix. \\
+Suppose $A^2 = \underline{O}$. Prove that $A$ is not invertible.\\
+\textbf{Proof:}\\
+Assume that $A$ is an $n \times n$ matrix.\\
+Assume that $A^2 = \underline{O}$.\\
+Need to show that $A$ is not invertible.\\
+Assume that $A$ is invertible.\\
+Then there exists a matrix $B$ such that $AB = I$.\\
+Then $A^2B^2 = A(AB)B = AIB = AB = I$.\\
+Since $A^2 = \underline{O}$, $A^2B^2 = \underline{O}B^2 = \underline{O}$.\\
+Clearly $I \neq \underline{O}$.\\
+This is a contradiction. Thus, $A$ is not invertible.\\
+
+\question Question 2.4 7b
+Let $A$ be an $n \times n$ matrix. \\
+Suppose $AB = \underline{O}$ for some non-zero $n \times n$ matrix $B$. Could $A$ be invertible?\\
+\textbf{Proof:}\\
+Assume that $A$ is an $n \times n$ matrix.\\
+Assume that $AB = \underline{O}$ for some non-zero $n \times n$ matrix $B$.\\
+Need to show that $A$ is not invertible.\\
+Assume that $A$ is invertible.\\
+Then there exists a matrix $C$ such that $CA = I$.\\
+Then $CAB = IB = B$.\\
+Since $AB = \underline{O}$, $CAB = C\underline{O}$\\
+Thus $B = \underline{O}$.\\
+This goes against the assumption that $B$ is non-zero.\\
+Therefore, $A$ is not invertible.\\
+
+
+\end{questions}
+\end{document}

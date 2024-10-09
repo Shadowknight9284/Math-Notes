@@ -26,7 +26,7 @@ $$ (d_t - c d_x)(d_t + c d_x)u = 0 $$
 Let $ v = (d_t + c d_x)u $\\
 Then $ (d_t - c d_x)v = 0 $
 This is a transport equation. The general solution is $$ v(x,t) = h(x + ct) $$ for some function $h$.\\
-$$ u_t + c u_x  = f(x + ct) $$
+$$ u_t + c u_x  = h(x + ct) $$
 Inhomogeneous transport equation.\\
 We can use linearity to find the general solution. Since it will be the sum of homogenous plus another function\\
 $$ u = u_p + g(x-ct) $$
@@ -478,9 +478,162 @@ $$ \phi(x) = \int_{-\infty}^{\infty} \phi(y) \delta_x(y) dy$$
 \textbf{Theorem:} \\
 $$u(t,y) = \int_{-\infty}^{\infty} \phi(y) S(y,t) dy$$
 This solves heat equation !!!\\
-IC is considered as a limit 
+IC is considered as a limit \\
 
+$$S(x,t) = \frac{1}{\sqrt{4\pi kt}} e^{-\frac{x^2}{4kt}}$$
+$$S_t = S_{xx}$$
+$$\int_{-\infty}^{\infty} S(x,t) dx = 1$$
+For any $y \in R$ \\
+$$ S_t(x-y,t) = S_{xx}(x-y,t)$$
+$$ \int_{-\infty}^{\infty} S(x-y,t) dy = 1$$
+$$ \int_{-\infty}^{\infty} S(x-y,t) f(y) dy = f(x)$$
 
+\textbf{Theroem:} \\
+Let f be bounded and continuous on $\mathds{R}$\\
+$$u(t,x) = \int_{-\infty}^{\infty} f(y) S(x-y,t) dy$$
+Then $u(t,x)$ solves the heat equation.\\
+In other words,
+$$\begin{cases}
+    u_t = k u_{xx}\\
+    u(0,x) = f(x)
+\end{cases}$$
+\textbf{Proof:} \\
+$$u_t = \int_{-\infty}^{\infty} f(y) S_t(x-y,t) dy$$
+$$u_{xx} = \int_{-\infty}^{\infty} f(y) S_{xx}(x-y,t) dy$$
+Since we know that $S$ solves the heat equation we can say thus $u$ solves the heat equation.\\
+Also we know the limit of $S$ is the delta function and thus must solve the initial condition.\\
+\textbf{Remark:} \\
+$$ \begin{cases}
+    u_t = \Delta u\\
+    u(0,x) = f(x)
+\end{cases}
+$$
+$$ u(t,x) = \int_{\mathds{R}^n} f(y) S(x-y,t) dy$$
+$$ S(x,t) = \frac{1}{(4\pi t)^{n/2}} e^{-\frac{|\vec{x}|^2}{4t}}$$
+\textbf{Remark 2:} \\
+If $f$ is bounded and piecewise continuous then \\
+$$\lim_{t \to 0^+} u(t,x) = \frac{f(x^-) + f(x^+)}{2}$$
+\textbf{Theorem: Smoothing Property} \\
+If $f$ is bounded and piecewise continuous then \\
+$$ u(x,t) \text{ is infinitely differentiable in } x \text{ for } t > 0$$
+This is unlike the wave equation.\\
+\textbf{Proof:} \\
+put all derivatives insde the integral and hit S\\
+Clealry S is infinitely differentiable \\
+\textbf{Remark:} \\
+Convolution is smoothing.\\
+$$u(x, t) = (S \star f)(x,t)$$
+This is essentially a (normal) weighted average of $f$\\
+\textbf{Note:} \\
+1) The wave equation is time reversible.\\
+$$ \begin{cases}
+    u_{tt} = u_{xx}\\
+    u(x,0) = \phi(x)\\
+    u_t(x,0) = \psi(x)
+\end{cases}$$
+$$ v(x,t) = u(x,-t)$$
+$$ v_t = -u_t$$
+$$ v_{tt} = u_{tt}$$
+Thus backwards and forwards are the same.\\
+2) The heat equation is not time reversible.\\
+$$ \begin{cases}
+    u_t = u_{xx}\\
+    u(x,0) = \phi(x)
+\end{cases}$$
+$$ v(x,t) = u(x,-t)$$
+$$ v_t = -u_t$$
+$$ -v_t = v_{xx}$$
+This is different and is called the backwards heat equation.\\
+This is an ill posed problem. Thus it has problems with Uniqueness, Existence, and Stability\\
+\subsection*{Infinite speed of propagation}
+If initial $f(x)$ is localized and positive then the solution to the heat equation is $u(x,t) > 0, \forall x \in R, t > 0$\\
+$$ u(x,t) = \frac{1}{\sqrt{4\pi t}} \int_{-\infty}^{\infty} e^{-\frac{(x-y)^2}{4t}} f(y) dy$$
+This is the solution of the heat equation with initial condition $f(x)$\\
+$$ \begin{cases}
+    u_t = u_{xx}\\
+    u(x,0) = f(x)
+\end{cases}$$
+Let $v(x,t) = u(x,t/k)$\\
+For ease let us call $s = t/k$\\
+$$ v_t = u_s \frac{1}{k}$$
+$$ v_{xx} = u_{xx}$$
+$$ v_t = v_{xx}$$
+This implies 
+$$ \begin{cases}
+    v_t = v_{xx}\\
+    v(x,0) = f(x)
+\end{cases} $$
+This can be rewritten as 
+$$ v(x,t) = \frac{1}{\sqrt{4\pi t}} \int_{-\infty}^{\infty} e^{-\frac{(x-y)^2}{4t}} f(y) dy$$
+$$ v(x,kt) = u(x,t)$$
+Thus 
+$$ u(x,t) = \frac{1}{\sqrt{4\pi kt}} \int_{-\infty}^{\infty} e^{-\frac{(x-y)^2}{4kt}} f(y) dy$$
+Thus k only speeds up or slows down the solution.\\
+\textbf{Derivation of the Fundamental Solution:} \\
+$$ u_t = u_{xx}$$
+We can consider the symmetries of the equation! \\
+Study the symmetries: Scale the variables\\
+$$ t \to Bt \text{ and } x \to Ax$$
+$$ v(x,t) = u(Ax, Bt)$$
+$$ v_t = u_t(Ax, Bt) = B u_t(Ax, Bt)$$
+$$ v_{xx} = u_{xx}(Ax, Bt) = A^2 u_{xx}(Ax, Bt)$$
+$$ v_t = \frac{B}{A^2} v_{xx}$$
+We get the same equation if $B = A^2$\\
+Let $\lambda = A$ 
+If $u(x,t)$ solves the heat equation then $u(\lambda x, \lambda^2 t)$ also solves the heat equation for any $\lambda$.\\
+Look for a solution that is unaffected by scaling. (scale invariant, self-similar)\\
+$$ u(x,t) = u(\lambda x, \lambda^2 t), \forall x \in R, t >0, \forall \lambda \in R$$
+We can choose a useful choice of $\lambda$\\
+Choose lambda such that $x \text{ or } t = 1$\\
+Ex: $\lambda = \frac{1}{\sqrt{t}}$\\
+$$ u(x,t) = u(x/\sqrt{t}, 1)$$
+Thus $u(x,t) = f(x/\sqrt{t})$\\
+$$ y = \frac{x}{\sqrt{t}}$$
+Substitute $y$ into the heat equation\\
+$$ u_t = f' \cdot x \cdot \frac{-1}{2t^{3/2}}$$
+$$ u_{xx} = f'' \cdot \frac{1}{t}$$
+$$ u_t = u_{xx}$$
+$$ f' \cdot x \cdot \frac{-1}{2t^{3/2}} = f'' \cdot \frac{1}{t}$$
+$$ \frac{-x}{2\sqrt{t}} f' = f''$$
+$$ f''(y) + \frac{1}{2}y f'(y) = 0$$
+This is a second order ODE.\\
+\begin{align*}
+    f''(y) = -\frac{1}{2}y f'(y)\\
+    \frac{f''}{f'} = -\frac{1}{2}y\\
+    ln | f' | = -\frac{1}{4}y^2 + C\\
+    f' = C_1e^{-\frac{1}{4}y^2}\\
+    \text{let } g(y) = \int e^{-\frac{1}{4}y^2} dy\\
+    f = C_1 g(y) + C_2\\
+\end{align*}
+Need to solve 
+$$\begin{cases}
+    S_t = S_{xx}\\
+    S(x,0^+) = \delta_0(x)
+\end{cases}
+$$
+Can we match this IC?\\
+No, because of the $\delta_0$\\
+Which is not a function! to work with a function conside the integral of the delta function.\\
+$$ \int_{-\infty}^{x} \delta_0(x) dx = \begin{cases}
+    0, & x < 0\\
+    1, & x > 0
+\end{cases}$$
+$$ \int_{-\infty}^{\infty} f(y) \delta_0(y) dy = f(0)$$
+This is called the Heaviside function.\\
+$$ H(x) = \int_{-\infty}^{x} \delta_0(y) dy$$
+Solve 
+$$\begin{cases}
+    F_t = F_{xx}\\
+    F(x,0) = H(x)
+\end{cases}$$
+We also know that the derivative of a solution of the heat equation also solves the heat equation.
+$$ u(x,t) = C_1 g(x/\sqrt{t}) + C_2$$
+$$ u(x,0) = C_1 g(\infty) + C_2 = 1, \forall x >0$$
+$$ u(x,0) = C_1 g(\infty) + C_2 = 0, \forall x < 0$$
+$$ g(\pm \infty) = \sqrt{\pm \pi}$$
+$$ C_1 = \frac{1}{2\sqrt{\pi}}$$
+$$ C_2 = 1/2$$
+$$ S = F = \frac{1}{2\sqrt{\pi}} g'(x/\sqrt{t})= \frac{1}{\sqrt{4\pi t}} e^{-\frac{x^2}{4t}}$$
 
 % exam is theory
 \end{document}
