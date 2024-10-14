@@ -1,0 +1,122 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\textbf{Missed notes:}
+Counting proesses\\
+$\{ N(t), t>=0 \}$
+They follow 3 properties:
+\begin{enumerate}
+    \item $N(t) \geq 0$
+    \item $N(t)$ is integer valued
+    \item $N(t)$ is monotone increasing
+\end{enumerate}
+$$N(t): R \to N$$
+Monotone increasing function of t\\
+$$N(t) -N(s) = \text{ Number of events in } (t,s]$$
+\textbf{Little o notation}\\
+A function f is said to be little o $o(h)$ if\\
+$$ \lim_{h \to 0} \frac{f(h)}{h} = 0$$
+eg: $f(h) = h^2$ is little $o(h)$\\
+If u add two function in little $o(h)$ then it is still little $o(h)$\\
+\textbf{Definition:}
+A counting process $\{N(t), t \geq 0\}$ is a Poisson process if:
+\begin{enumerate}
+    \item $N(0) = 0$
+    \item The number of events in disjoint intervals are independent. 
+    \item $P(N(t+h) - N(t) = 1) = \lambda h + o(h)$ where $\lambda$ is the rate of the Poisson process. (this mean it is dependant on the length of the interval)
+    \item $P(N(t+h) - N(t) \geq 2) = o(h)$
+\end{enumerate}
+\textbf{Lemma 5.1:}\\
+Let $\{N(t), t \geq 0\}$ be a Poisson process. Define $\{N_s(t), t \geq 0 \}$ by $N_s(t) = N(s+t) - N(s)$\\
+Then $\{N_s(t), t \geq 0\}$ is a Poisson process with rate $\lambda$\\
+\textbf{Proof:}\\
+\begin{align*}
+    N_s(0) = N(s+0) - N(s) = 0\\
+    (a,b) \cap (c,d) &= \emptyset \\
+    P(N_s(b) - N_s(a) = x,  N_s(d) - N_s(c) = y)\\
+    P(N(b-s) - N(a-s) = x, N(d-s) - N(c-s) = y)\\
+    P(N(b-s) - N(a-s) = x)P(N(d-s) - N(c-s) = y)\\
+    P(N_s(b) - N_s(a) = x)P(N_s(d) - N_s(c) = y)\\
+\end{align*}
+Thus disjoint intervals are independent.\\
+$$P(N_s(t+h) - N_s(t) = 1) = P(N(s+t+h) - N(s+t) = 1) $$
+We assume $N$ has stationary increments.\\
+$$P(N(s+t+h) - N(s+t) = 1) = P(N(t+h) - N(t) = 1) = \lambda h + o(h)$$
+\textbf{Lmma 5.2:}\\
+Let $T_1 = min(t > 0 : N(t) = 1)$\\
+it is time of arrival\\
+$T_1$ is exponentially distributed with rate $\lambda$\\
+\textbf{Proof:}\\
+$$P_0(t) = P(N(t) = 0)$$
+$$P_0(t+h) = P(N(t) = 0 , N(t+h) - N(t) = 0) $$
+$$P_0(t+h) = P(N(t) = 0)P(N(t+h) - N(t) = 0)$$
+$$P_0(t+h) = P_0(t)(1 - \lambda h - 2o(h))$$
+note that $-2o(h) = o(h)$ cuz it basically 0 
+$$P_0(t+h) = P_0(t) - \lambda h P_0(t) + o(h)P_0(t)$$
+$$\frac{d P_0(t)}{t} = -\lambda P_0(t) + 0$$
+This solves to with IC $P_0(0) = 1$ 
+$$P_0(t) = e^{-\lambda t}$$
+\textbf{Define:}\\
+$T_n for n \geq 1$ is the time between the $(n-1)^th$ and $n^th$ arrival.\\
+\textbf{Proposition 5.4:}\\
+$T_1, T_2, \dots$ are independent and exponentially distributed with rate $\lambda$\\
+\textbf{Proof:}\\
+Rea book.\\ 
+\textbf{Remark:}\\
+Define $S_n = \sum_{i=1}^{n} T_i$\\
+From last time, $S_n$ has a gamma distribution with parameters $n$ and $\lambda$\\
+$$ f_{S_n}(t) = \frac{\lambda^n t^{n-1} e^{-\lambda t}}{(n-1)!}$$
+\textbf{Theoremm 5.1}\\
+If $\{N(t), t \geq 0\}$ is a Poisson process with parameter $\lambda$ then $N(t)$ is a poisson random variable with parameter $\lambda t$\\
+\textbf{Proof:}\\
+$$P(N(t) = n) =  \int_0^{\infty} P(N(t) = n | S_n = t) \frac{\lambda^n t^{n-1} e^{-\lambda t}}{(n-1)!} dt$$
+$$ = P(T_{n+1} = t-s | T_1 + T_2 + \dots + T_n = s) $$
+$$ = P(T_{n+1} = t-s) $$
+$$ = \frac{(\lambda t)^n e^{-\lambda t}}{n!}$$
+\textbf{Example}\\
+Let $\{ N(t), t \geq 0\}$ be a Poisson process with rate $\lambda = \frac{1}{3}$\\
+Find:\\
+a) $P(N(5) > N(3))$\\
+This means there are $> 0$ events in $(3,5]$\\
+$$P(N(5) > N(3)) = 1 - P(N(5) - N(3) = 0)$$
+$$ = 1 - P(N(2) = 0)$$
+$$ = 1 - e^{-\frac{2}{3}}$$
+b) $P(\{N(4) = 1\}, \{N(5) = 3\})$\\
+
+c) $E(N(5) | N(3) = 2)$\\
+d) $E(T_b | N(3) = 4)$\\
+Last time we finished 5.3.2 + examples\\
+5.3.3 Further thinning of a poisson process. \\
+Suppose $\{N(t), t \geq 0\}$ is a Poisson process with rate $\lambda$\\
+There are events of 2 types: 1 w/ probability $p$ and 2 w/ probability $1-p$\\
+Write $N_1(t)$ for the number of type 1 events in $(0,t]$\\
+$N_2(t)$ for the number of type 2 events in $(0,t]$\\
+textbf{Proposition 5.5}\\
+$\setof{N_1(t), t \geq 0}$ is a Poisson process with rate $p\lambda$ and $\setof{N_2(t), t \geq 0} $ Poisson process with rate $(1-p)\lambda$\\
+\textbf{Compound Poisson process}\\
+Suppose random variables are iid with disstribution F with mean $\mu$ and variance $\sigma^2$\\
+The non-negative integer valued random varianle $S = \sum_{i=1}^{N} X_i$ is called a compound Poisson random variable.\\
+\textbf{Conditional Variance formula}\\
+$$Var(Y) = E(Var(Y|X)) + Var(E(Y|X))$$
+If $N$ is a poison random variable with parameter $\lambda$ then:\\
+$$Var(S) = \lambda \sigma^2 + \mu^2 \lambda$$
+Read example 5.27
+
+
+
+
+\end{document}

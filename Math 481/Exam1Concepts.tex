@@ -1,0 +1,198 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{definition}
+    \textbf{Sample Variance}\\
+    The sample variance is defined as $S^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i - \bar{X})^2$.
+    If $X_1, X_2, \ldots, X_n$ are independent and identically distributed random variables with mean $\mu$ and variance $\sigma^2$, then the sample variance $S^2$ is an unbiased estimator of the population variance $\sigma^2$. That is $E(S^2) = \sigma^2$.
+    It also has a chi-squared distribution with $n-1$ degrees of freedom. That is $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{\nu = n-1}$.
+    Important identity: $\sum_{i=1}^{n}(X_i - \bar{X})^2 = \sum_{i=1}^{n}(X_i - \mu)^2 - n(\bar{X} - \mu)^2$.\\
+    Sample variance is an unbiased estimator of the population variance. That is $E(S^2) = \sigma^2$.
+\end{definition}
+\begin{definition}
+    Chebyshev's Theorem\\
+    If $X$ is a random variable with mean $\mu$ and variance $\sigma^2$, then for any $k > 0$, $P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}$.
+    Applying Chebyshev to a sample mean we get the weak law of large numbers. That is for a sample mean $\bar{X}$, $P(|\bar{X} - \mu| \geq k) \leq \frac{\sigma^2}{nk^2}$. 
+    Example question: \\
+    How large should $n$ so that the $\bar{X}$ approximates $\mu$ within $\epsilon$ with probability at least $1 - \delta$ with population $\sigma_{pop}^2 = \sigma^2$?
+    \textbf{Sol:}
+    \begin{align*}
+        P(|\bar{X} - \mu| < \epsilon) &\geq 1 - \frac{\sigma^2}{n\epsilon^2} \geq 1- \delta\\
+        n &\geq \frac{\sigma^2}{\epsilon^2\delta}
+    \end{align*}
+\end{definition}
+\begin{definition}
+    Chi-Squared Distribution\\
+    Parameters: $\nu$ degrees of freedom\\
+    MGF: $\frac{1}{(1-2t)^{\nu/2}}$\\
+    Mean: $\nu$\\
+    Variance: $2\nu$\\
+    If $X_1, X_2, \ldots, X_n$ are independent and identically distributed random variables with mean $\mu$ and variance $\sigma^2$, then the sum of squares of these random variables is a chi-squared random variable with $n$ degrees of freedom. That is $Y = X_1^2 + X_2^2 + \ldots + X_n^2 \sim \chi^2_{\nu = n}$.
+\end{definition}
+\begin{definition}
+    \textbf{Moment Generating Function}\\
+    The moment generating function of a random variable $X$ is defined as $M_X(t) = E(e^{tX})$.
+    Some properties of the moment generating function are:
+    \begin{align*}
+        M_X(0) &= 1\\
+        M_X'(0) &= E(X)\\
+        M_X''(0) &= E(X^2)\\
+        M_{aX + b}(t) &= e^{bt}M_X(at)\\
+        M_{X+Y}(t) &= M_X(t)M_Y(t) \text{ if $X$ and $Y$ are independent}
+    \end{align*}
+
+\end{definition}
+\begin{definition}
+    \textbf{Central Limit Theorem}\\
+    Suppose $X_1, X_2, \ldots, X_n$ are independent and identically distributed random variables with well definied mgf. Then the sample mean $\bar{X} = \frac{1}{n}\sum_{i=1}^{n}X_i$ approaches standard normal 
+    $$ P( a \leq \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \leq b)$$
+    as $n \to \infty$:
+    $$ \lim_{n \to \infty} P( a \leq \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \leq b) = \int_{a}^{b} \frac{1}{\sqrt{2\pi}}e^{-x^2/2}dx$$
+\end{definition}
+\begin{definition}
+    \textbf{Gamma Distribution}\\
+    Parameters: $\alpha, \beta$\\
+    PDF: $f(x) = \frac{x^{\alpha - 1}e^{-x/ \beta}}{\beta^{\alpha} \Gamma(\alpha)}$\\
+    MGF: $(1 - \beta t)^{-\alpha}$\\
+    Mean: $\alpha\beta$\\
+    Variance: $\alpha\beta^2$\\
+    We know that chi-squared distribution is a special case of gamma distribution with $\alpha = \nu/2$ and $\beta = 2$.\\
+    We know that the exponential distribution is a special case of gamma distribution with $\alpha = 1$ and $\beta = \lambda$.
+\end{definition}
+\begin{definition}
+    \textbf{Rth order statistic}\\
+    The rth order statistic of a random sample $X_1, X_2, \ldots, X_n$ is the rth smallest value in the sample. That is $X_{(r)}$ is the rth order statistic.\\
+    The pdf of the rth order statistic is given by $f_{X_{(r)}}(x) = \frac{n!}{(r-1)!(n-r)!}F(x)^{r-1}(1-F(x))^{n-r}f(x)$.\\
+    We can clearly see that this is the probability of $r-1$ values being less than $x$ and $n-r$ values being greater than $x$ and 1 being exactly $x$.
+    
+\end{definition}
+
+
+\section{Textbook:}
+Exam topics: \\
+MGFs\\
+Chapter 6.3 Gamma distribution pg(178) \\
+\begin{definition}
+    \textbf{Gamma Distribution}\\
+    Parameters: $\alpha, \beta$\\
+    PDF: $f(x) = \frac{1}{\Gamma(\alpha)\beta^\alpha}x^{\alpha-1}e^{-x/\beta}$ for $x > 0$\\
+    MGF: $(1-\beta t)^{-\alpha}$\\
+    Mean: $\alpha\beta$\\
+    Variance: $\alpha\beta^2$
+\end{definition}
+\begin{definition}
+    \textbf{exponential distribution}\\
+    Parameters: $\lambda$\\
+    PDF: $f(x) = \frac{e^{-x/\lambda}}{\lambda}$ for $x > 0$\\
+    MGF: $(1-\lambda t)^{-1}$\\
+    Mean: $\lambda$\\
+    Variance: $\lambda^2$\\
+    Note that this is a special case of the gamma distribution with $\alpha = 1$ and $\beta = \lambda$.
+\end{definition}
+\begin{definition}
+    \textbf{Chi-Squared Distribution}\\
+    Parameters: $\nu$ degrees of freedom\\
+    PDF: $f(x) = \frac{1}{2^{\nu/2}\Gamma(\nu/2)}x^{\nu/2-1}e^{-x/2}$ for $x > 0$\\
+    MGF: $\frac{1}{(1-2t)^{\nu/2}}$\\
+    Mean: $\nu$\\
+    Variance: $2\nu$\\
+    Note that this is a special case of the gamma distribution with $\alpha = \nu/2$ and $\beta = 2$.\\
+    If $X$ is the standard normal distribution, then $X^2$ is a chi-squared distribution with 1 degree of freedom.\\
+    More generally, if $X_1, X_2, \ldots, X_n$ are independent and identically distributed standard normal random variables, then $X_1^2 + X_2^2 + \ldots + X_n^2$ is a chi-squared distribution with $n$ degrees of freedom.\\
+    If $X_1, X_2 \ldots, X_n$ are independent and identically distributed chi-squared random variables with $\nu_1, \nu_2, \ldots, \nu_n$ degrees of freedom, then $X_1 + X_2 + \ldots + X_n$ is a chi-squared distribution with $\nu_1 + \nu_2 + \ldots + \nu_n$ degrees of freedom.
+\end{definition}
+Chapter 8.1 pg(233)\\
+\begin{definition}
+    \textbf{Random Sample:}\\
+    A random sample is a set of independent and identically distributed random variables.\\
+    $X_1, X_2, \ldots, X_n$ are independent and identically distributed random variables they consitute a random sample of size $n$ from the population.\\
+\end{definition}
+\begin{definition}
+    \textbf{Sample Mean:}\\
+    The sample mean is defined as $\bar{X} = \frac{1}{n}\sum_{i=1}^{n}X_i$.
+    $E[\bar{X}] = \mu$ and $Var[\bar{X}] = \frac{\sigma^2}{n}$.
+    If $\bar{X}$ is from a normal population of $\mu, \sigma^2$, then $\bar{X}$ is normally distributed with mean $\mu$ and variance $\frac{\sigma^2}{n}$.
+\end{definition}
+\begin{definition}
+    \textbf{Sample Variance:}\\
+    The sample variance is defined as $S^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i - \bar{X})^2$.
+\end{definition}
+Chapter 8.2 sample mean pg(235)\\
+\begin{definition}
+    \textbf{Law of Large Numbers:}\\
+    For any positive constant c, the proability that $\bar{X}$ will take a value between $\mu \pm c$ is at least $1 - \frac{\sigma^2}{nc^2}$.
+    When $n \to \infty$ the probability approaches 1.\\
+    In other words, the sample mean $\bar{X}$ approaches the population mean $\mu$ as the sample size $n$ increases.
+\end{definition}
+\begin{definition}
+    \textbf{Central Limit Theorem:}\\
+    Suppose $X_1, X_2, \ldots, X_n$ are independent and identically distributed random variables from an infinite population with a mean $\mu$ and variance $\sigma^2$ and an MGF $M_X(t)$. Then the limiting distribution of $$Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}}$$ is the standard normal distribution as $n \to \infty$.\\
+
+\end{definition}
+Chapter 8.4 Chi-Squared pg(242)\\
+\begin{theorem}
+    If $\bar{X}$ and $S^2$ are the sample mean and sample variance of a random sample of size $n$ from a normal population with mean $\mu$ and variance $\sigma^2$, then
+    \begin{enumerate}
+        \item $\bar{X}$ and $S^2$ are independent random variables.
+        \item The random variable $\frac{(n-1)S^2}{\sigma^2}$ has a chi-squared distribution with $n-1$ degrees of freedom.
+    \end{enumerate}
+\end{theorem}
+
+Chapter 8.7 Order Statistic pg(252)\\
+\begin{definition}
+    \textbf{Order Statistic:}\\
+    Let $X_1, X_2, \ldots, X_n$ be a random sample of size $n$ from a population with CDF $F(x)$. The order statistics are the random variables $X_{(1)}, X_{(2)}, \ldots, X_{(n)}$ defined as follows:
+    \begin{align*}
+        X_{(1)} &= \min(X_1, X_2, \ldots, X_n)\\
+        X_{(2)} &= \text{second smallest value in the sample}\\
+        &\vdots\\
+        X_{(n)} &= \max(X_1, X_2, \ldots, X_n)
+    \end{align*}
+    The pdf of the rth order statistic is given by $f_{X_{(r)}}(x) = \frac{n!}{(r-1)!(n-r)!}F(x)^{r-1}(1-F(x))^{n-r}f(x)$. Clearly this is the probability that there are $r-1$ values less than $x$, $n-r$ values greater than $x$, and exactly 1 value equal to $x$.\\
+    Another form of the pdf is 
+    $$ g_r(y_r) = \frac{n!}{(r-1)!(n-r)!}f(y_r)[\int_{-\infty}^{y_r}f(y)dy]^{r-1}[\int_{y_r}^{\infty}f(y)dy]^{n-r}$$
+    Common order statistics are the minimum $Y_{(1)}$, the maximum $Y_{(n)}$, and the median $Y_{(m+1)}$ for $n = 2m+1$.
+\end{definition}
+
+Chapter 10.1 pg(283)\\
+\begin{definition}
+    \textbf{Point Estimator:}\\
+    Using the vaule of a sample statistic to estimate the value of a population parameter is called point estimation. We refer to the value of the statsitc as a point estimate.\\
+    A point estimator is unbiased if $E[\hat{\theta}] = \theta$.
+\end{definition}
+Chapter 10.2 Point estimator, unbiased estimators pg(284)\\
+\begin{definition}
+    \textbf{Unbiased Estimator:}\\
+    A point estimator $\hat{\theta}$ of a parameter $\theta$ is said to be unbiased if $E[\hat{\theta}] = \theta$.
+\end{definition}
+\begin{definition}
+    \textbf{Bias:}\\
+    The bias of an estimator $\hat{\theta}$ of a parameter $\theta$ is defined as $Bias(\hat{\theta}) = E[\hat{\theta}] - \theta$. An estimator is unbiased if $Bias(\hat{\theta}) = 0$.
+\end{definition}
+\begin{definition}
+    \textbf{Asymtotically Unbiased:}\\
+    An estimator $\hat{\theta}$ of a parameter $\theta$ is said to be asymptotically unbiased if $lim_{n \to \infty} Bias(\hat{\theta}) = 0$.
+\end{definition}
+Chapter 10.8 Method of Max liklyhood pg(301)\\
+\begin{definition}
+    \textbf{Method of Maximum Likelihood:}\\
+    The method of maximum likelihood is a method of estimating the value of a parameter by maximizing the likelihood function. The likelihood function is defined as $L(\theta) = \prod_{i=1}^{n}f(x_i|\theta)$.\\
+    We also consider the log-likelihood function $l(\theta) = \ln(L(\theta)) = \sum_{i=1}^{n}\ln(f(x_i|\theta))$.\\
+    The maximum likelihood estimator $\hat{\theta}$ is the value of $\theta$ that maximizes the likelihood function.\\
+\end{definition}
+
+
+
+\end{document}

@@ -1,0 +1,225 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:423}
+\newcommand{\assignment}{Homework 4}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question Question 2.4 11
+    \begin{parts}
+        \part Consider the diffusion equation on the whole line with the usual
+        initial condition $u(x, 0) = \phi(x)$. If $\phi(x)$ is an odd function, show
+        that the solution $u(x, t)$ is also an odd function of $x$. (Hint: Consider
+        $u(-x, t) + u(x, t)$ and use the uniqueness.)
+        \part Show that the same is true if “odd” is replaced by “even.”
+        \part Show that the analogous statements are true for the wave equation.
+    \end{parts}
+    \textbf{Solution:}\\
+    a) \\
+    Let $u(x, t)$ be the solution to the diffusion equation on the whole line with the initial condition $u(x, 0) = \phi(x)$. Let $\phi(x)$ be an odd function. We want to show that $u(x, t)$ is also an odd function of $x$.\\
+    More formally: $\phi(-x) = -\phi(x) \implies u(-x,t) = -u(x,t)$ 
+    We can consider $u(-x,t)$ as it has the associated initial values $\phi(-x) = -\phi(x)$.\\
+    We can then consider $v(x,t) = u(-x,t) + u(x,t)$.\\ 
+    We know that $v$ must solve the diffusion equation through linearity.\\
+    We also know that $v(x,0) = u(-x,0) + u(x,0) = -\phi(x) + \phi(x) = 0$.\\
+    By uniqueness, we know that $v(x,t) = 0$.\\
+    Thus, $u(-x,t) + u(x,t) = 0 \implies u(-x,t) = -u(x,t)$.\\
+    Thus, $u(x,t)$ is an odd function of $x$.\\
+    b) \\
+    We can use the same logic as in part a) to show that if $\phi(x)$ is an even function, then $u(x,t)$ is also an even function of $x$.\\
+    More formally: $\phi(-x) = \phi(x) \implies u(-x,t) = u(x,t)$\\
+    We can consider $u(-x,t)$ as it has the associated initial values $\phi(-x) = \phi(x)$.\\
+    We can then consider $v(x,t) = u(-x,t) - u(x,t)$.\\
+    We know that $v$ must solve the diffusion equation through linearity.\\
+    We also know that $v(x,0) = u(-x,0) - u(x,0) = \phi(x) - \phi(x) = 0$.\\
+    By uniqueness, we know that $v(x,t) = 0$.\\
+    Thus, $u(-x,t) - u(x,t) = 0 \implies u(-x,t) = u(x,t)$.\\
+    Thus, $u(x,t)$ is an even function of $x$.\\
+    c) \\
+    We can use similar logic to show that the analogous statements are true for the wave equation.\\
+    For the wave equation with odd initial conditions, we can show that the solution is odd.\\
+    We have initial conditions $u(x,0) = \phi(x)$ and $u_t(x,0) = \psi(x)$.\\
+    We have $\phi(-x) = -\phi(x)$ and $\psi(-x) = -\psi(x)$.\\
+    We can consider $u(-x,t)$ as it has the associated initial values $\phi(-x) = -\phi(x)$ and $\psi(-x) = -\psi(x)$.\\
+    We can then consider $v(x,t) = u(-x,t) + u(x,t)$.\\
+    We know that $v$ must solve the wave equation through linearity.\\
+    We also know that $v(x,0) = u(-x,0) + u(x,0) = -\phi(x) + \phi(x) = 0$ and $v_t(x,0) = u_t(-x,0) + u_t(x,0) = -\psi(x) + \psi(x) = 0$.\\
+    By uniqueness, we know that $v(x,t) = 0$.\\
+    Thus, $u(-x,t) + u(x,t) = 0 \implies u(-x,t) = -u(x,t)$.\\
+    Thus, $u(x,t)$ is an odd function of $x$.\\
+    For the wave equation with even initial conditions, we can show that the solution is even.\\
+    We have initial conditions $u(x,0) = \phi(x)$ and $u_t(x,0) = \psi(x)$.\\
+    We have $\phi(-x) = \phi(x)$ and $\psi(-x) = \psi(x)$.\\
+    We can consider $u(-x,t)$ as it has the associated initial values $\phi(-x) = \phi(x)$ and $\psi(-x) = \psi(x)$.\\
+    We can then consider $v(x,t) = u(-x,t) - u(x,t)$.\\
+    We know that $v$ must solve the wave equation through linearity.\\
+    We also know that $v(x,0) = u(-x,0) - u(x,0) = \phi(x) - \phi(x) = 0$ and $v_t(x,0) = u_t(-x,0) - u_t(x,0) = \psi(x) - \psi(x) = 0$.\\
+    By uniqueness, we know that $v(x,t) = 0$.\\
+    Thus, $u(-x,t) - u(x,t) = 0 \implies u(-x,t) = u(x,t)$.\\
+    Thus, $u(x,t)$ is an even function of $x$.\\
+    \question Question 2.4 16
+    Solve the diffusion equation with constant dissipation $$u_t - ku_{xx} + bu = 0 \text{ for } -\infty < x< \infty \text{ with } u(x,0) = \phi(x) $$ 
+    Where $b$ is constant.\\
+    \textbf{Solution:}\\
+    Following the hin we can make the change of variables that
+    $$ u(x,t) = e^{-bt}v(x,t) $$
+    Substituting this into the diffusion equation we get
+    \begin{align*}
+        u_t = -be^{-bt}v + e^{-bt}v_t\\
+        u_{xx} = e^{-bt}v_{xx}
+    \end{align*}
+    Now substituting these into the diffusion equation we get:
+    $$ -be^{-bt}v + e^{-bt}v_t - e^{-bt}v_{xx} + be^{-bt}v$$
+    $$ e^{-bt}v_t - ke^{-bt}v_{xx} = 0$$
+    $$ v_t = kv_{xx}$$
+    We can see that $v(x,t)$ is the solution to the diffusion equation with initial condition $v(x,0) = \phi(x)$.\\
+    We know the solution for this is 
+    $$ v(x,t) = \frac{1}{\sqrt{4\pi kt}}\int_{-\infty}^{\infty}e^{-\frac{(x-s)^2}{4kt}}\phi(s)ds$$
+    $$ u(x,t) = \frac{e^{-bt} }{\sqrt{4\pi kt}}\int_{-\infty}^{\infty}e^{-\frac{(x-s)^2}{4kt}}\phi(s)ds$$
+
+    \question Question 2.5 2\\
+    Consider a traveling wave $u(x,t) = f(x-at)$ where f is a given function of one variable
+    \begin{parts}
+        \part If it is a solution of the wave equation, show that the speed must be $a \pm c$ (unless f is a linear function).
+        \part If it is a solution of the diffusion equation, find f and show that the speed a is arbitrary.
+    \end{parts}
+    \textbf{Solution:}\\
+    a)\\
+    If $u(x,t) = f(x-at)$ is a solution of the wave equation, then we have
+    $$ u_{tt} = a^2f''(x-at)$$
+    $$ u_{xx} = f''(x-at)$$
+    Substituting these into the wave equation we get
+    $$ a^2f''(x-at) = c^2f''(x-at)$$
+    $$ a^2 = c^2$$
+    $$ a = \pm c$$
+    Unless f is a linear function.\\ 
+    Then $f'' = 0$ and $a \neq c$.\\
+    b)\\
+    If $u(x,t) = f(x-at)$ is a solution of the diffusion equation, then we have
+    $$ u_t = -af'(x-at)$$
+    $$ u_{xx} = f''(x-at)$$
+    Substituting these into the diffusion equation we get
+    $$ -af'(x-at) = kf''(x-at)$$
+    We can then thus we can rewrite this as
+    $$ \frac{-a}{k} = \frac{f''(x-at)}{f'(x-at)}$$
+    If we consider $\lambda = x-at$ then we can rewrite this as
+    $$ \frac{f''(\lambda)}{f'(\lambda)} = \frac{d}{d \lambda} ln(f')$$
+    Thus we can solve this ODE as 
+    \begin{align*}
+    ln(f') &= \frac{-a}{k}\lambda + C\\
+    f' &= C_1 e^{\frac{-a}{k}\lambda}
+    \end{align*}
+    Integrating a second time we get 
+    \begin{align*}
+    f &= C_2 + C_1 \int e^{\frac{-a}{k}\lambda} d\lambda\\
+    f &= C_2 + C_3 e^{\frac{-a}{k}\lambda}
+    \end{align*}
+    Now puting it back in terms of $x-at$ we get
+    $$ f(x-at) = C_2 + C_3 e^{\frac{-a}{k}(x-at)}$$
+    This clearly solves the diffusion equation and the speed $a$ is arbitrary.\\
+
+    \question Question 2.5 3
+    Let $u$ satisfy the diffusion question $u_t = \frac{1}{2}u_{xx}$ Let
+    $$v(x,t) = \frac{1}{\sqrt{t}}e^{\frac{x^2}{2t}}u(\frac{x}{t}, \frac{1}{t}) $$
+    Show that $v$ the "backwards" diffusion equation $v_t = -\frac{1}{2}v_{xx}$
+    \textbf{Solution:}\\
+    We can do this by computing the partial derivatives of $v$ and substituting them into the backwards diffusion equation.\\
+    We have
+    \begin{align*}
+        v_t &= \left[\frac{-1}{2}t^{-3/2} e^{x^2 /2t} - t^{-1/2}\left( \frac{x^2}{2t^2}\right)e^{x^2 / 2t} \right]u + t^{-1/2}e^{x^2 / 2t}\left[ \frac{-x}{t^2}u_x - \frac{1}{t^2}u_t \right]\\
+        v_x &= \frac{1}{\sqrt{t}} \left[ \frac{x}{t}e^{x^2 / 2t}u + \frac{1}{t} e^{x^2 / 2t}u_x \right] = t^{-3/2}e^{x^2 / 2t}(xu + u_x)\\
+        v_{xx} &= t^{-3/2} \left\{ \frac{x}{t} e^{x^2 / 2t} (xu + u_x) + e^{x^2 / 2t}\left[u + \frac{x}{t}u_x + \frac{1}{t}u_xx \right]  \right\}
+    \end{align*}
+    We can then simplify the expression for $v_t$ and $v_{xx}$ 
+    \begin{align*}
+        v_t &= \frac{-1}{2}t^{-5/2}e^{x^2 / 2t}\left[ (x^2 + t)u + 2xu_x + 2u_t \right] 
+        v_xx &= t^{-5/2} e^{x^2 / 2t} \left[ (x^2 + t)u + 2xu_x + 2u_t \right]
+    \end{align*}
+    We can then substitute these into the backwards diffusion and clearly see that it satisfies the equation.\\
+
+    \question Question 4.1 2
+    Consider a metal rod \(0 < x < l\), insulated along its sides but not at
+    its ends, which is initially at temperature \(1\). Suddenly both ends are
+    plunged into a bath of temperature \(0\). Write the differential equation,
+    boundary conditions, and initial condition. Write the formula for the
+    temperature \(u(x,t)\) at later times. In this problem, assume the infinite
+    series expansion
+    $$1 = \frac{4}{\pi}\left( \sin(\frac{\pi x}{l})+ \frac{1}{3}\sin(\frac{3\pi x}{l}) + \frac{1}{5}\sin(\frac{5\pi x}{l}) + \dots \right) $$
+    \textbf{Solution:}\\
+    We can utilize the PDE $u_t = ku_{xx}$ with boundary conditions $u(0,t) = 0$ and $u(l,t) = 0$ and initial condition $u(x,0) = 1$.\\
+    Since the heat equation and the boundary conditions are linear and homogenous, we can use the method of seperation of variables and assume the solution is of the form $u(x,t) = X(x)T(t)$.\\
+    We can then substitute this into the heat equation to get
+    $$ u_t = ku_xx \implies XT' = kX''T$$
+    Seperate the variables to get 
+    $$ \frac{T'}{kT} = \frac{X''}{X} = \alpha$$
+    We can then solve the ODEs for the cases of $\alpha = 0, -\lambda^2$ and $\lambda^2$ to get the general solution.
+    \textbf{If $\alpha = 0$}\\
+    We get $X(x) = c_1 + c_2x$\\
+    We can then apply the boundary conditions to get $c_1 = c_2 = 0$\\
+    Thus we get the trivial solution $X(x) = 0$\\
+    \textbf{If $\alpha = \lambda^2$}\\
+    We get $X(x) = c_1\cosh(\lambda x) + c_2\sinh(\lambda x)$\\
+    We can then apply the boundary conditions to get $c_1 = 0$ and $c_2 = 0$\\
+    Thus we get the trivial solution $X(x) = 0$ \\
+    \textbf{If $\alpha = -\lambda^2$}\\
+    We get $X(x) = c_1\cos(\lambda x) + c_2\sin(\lambda x)$\\
+    We can then apply the boundary conditions to get $c_1 = 0$ and $c_1\cos(\lambda l) + c_2 \sin(\lambda l) = 0$\\
+    We then get $ \sin(\lambda l) = 0$\\
+    Solving this we get $\lambda = \frac{n\pi}{l}$ for $n \in \mathbb{N}$\\
+    The eigenfunctions corresponding to these eigenvalues are $X_n(x) = \sin(\lambda_n x)$\\
+    Now we can consider the differential equation for $T(t)$\\
+    We get $T'(t) = -k\lambda^2 T(t)$\\
+    Thus we can solve to get 
+    $$T(t) = C e^{-k \lambda^2 t} $$
+    Thus our eigenfunctions for $T(t)$ are 
+    $$ T_n(t) = e^{-k \lambda_n^2 t}$$
+    Thus our general solution is
+    \begin{align*}
+        u(x,t) &= \sum_{n=1}^{\infty} C_n e^{-k \lambda_n^2 t} \sin(\lambda_n x)\\
+        &= \sum_{n=1}^{\infty} C_n e^{-k \left(\frac{n\pi}{l}\right)^2 t} \sin\left(\frac{n\pi x}{l}\right)
+    \end{align*}
+    Now we must satisfy the initial condition $u(x,0) = 1$\\
+    We can do this by setting $t = 0$ in the general solution to get
+    $$ u(x,0) = \sum_{n=1}^{\infty} C_n \sin\left(\frac{n\pi x}{l}\right) = 1$$
+    By the hint we can see that $1 = \frac{4}{\pi}\left( \sin(\frac{\pi x}{l})+ \frac{1}{3}\sin(\frac{3\pi x}{l}) + \frac{1}{5}\sin(\frac{5\pi x}{l}) + \dots \right) $\\
+    Thus we can see that $C_n = \frac{4}{(2n-1)\pi}$\\
+    Thus our final solution is
+    $$ u(x,t) = \sum_{n=0}^\infty \frac{4}{(2n-1)\pi} e^{-k \left(\frac{(2n-1)\pi}{l}\right)^2 t} \sin\left(\frac{(2n-1)\pi x}{l}\right)$$
+
+
+    \question Question 4.1 3
+    A quantum-mechanical particle on the line with an infinite potential outside the interval $(0,l)$ (“particle in a box”) is given by Schrödinger's equation $u_t = i u_{xx}$ on $(0,l)$ with Dirichlet conditions at the ends. Separate the variables and use (8) to find its representation as a series.
+    \textbf{Solution:}\\
+    We can utilize the PDE $u_t = iu_{xx}$ with boundary conditions $u(0,t) = 0$ and $u(l,t) = 0$.\\
+    We can assume an arbitrary initial condition $u(x,0) = \phi(x)$.\\
+    Since the heat equation and the boundary conditions are linear and homogenous, we can use the method of seperation of variables and assume the solution is of the form $u(x,t) = X(x)T(t)$.\\
+    We can seperate the variables to get
+    $$ \frac{T'}{iT} = \frac{X''}{X} = \alpha$$
+    For the $X(x)$ ODE we can solve the cases of $\alpha = 0, -\lambda^2$ and $\lambda^2$ to get the general solution.\\
+    As we saw from the prior question we must take $\alpha = -\lambda^2$\\
+    And the eigenvaules are $\lambda = \frac{n\pi}{l}$ for $n \in \mathbb{N}$\\
+    The eigenfunctions corresponding to these eigenvalues are $X_n(x) = \sin(\lambda_n x)$\\
+    Now we can consider the differential equation for $T(t)$\\
+    We get $T'(t) = -i\lambda^2 T(t)$\\
+    Thus we can solve to get
+    $$T(t) = C e^{-i\lambda^2 t} $$
+    Thus our eigenfunctions for $T(t)$ are
+    $$ T_n(t) = e^{-i\lambda_n^2 t}$$
+    Thus our general solution is
+    \begin{align*}
+        u(x,t) &= \sum_{n=1}^{\infty} C_n e^{-i \lambda_n^2 t} \sin(\lambda_n x)\\
+        &= \sum_{n=1}^{\infty} C_n e^{-i \left(\frac{n\pi}{l}\right)^2 t} \sin\left(\frac{n\pi x}{l}\right)
+    \end{align*}
+
+\end{questions}
+
+\end{document}

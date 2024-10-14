@@ -337,6 +337,32 @@ $$ = n \frac{e^{-y_1/\lambda}}{\lambda} (e^{-y_1/\lambda})^{n-1}$$
 $$ = n \frac{e^{-n y_1/\lambda}}{\lambda} $$
 We can recognize this as an exponential distribution with parameter $\lambda/n$\\
 
+\section{CHPT 10}
+\textbf{Sample moment}
+Denote rth sample moment to be 
+$$ M_r = \frac{1}{n} \sum_{i=1}^{n} X_i^r$$
+Notice that thwse are RVS.\\
+The idea of method od moment is to equate the ith sample moment to the ith population moment.\\
+Thus we can vie this as a system of equations.\\
+Why is this a reasonable idea: Note that $M_r'$ is the average of $X_i^r$\\
+By the strong law of large numbers, $M_r$ converges to $E[X^r]$\\
+Example for uniform distribution on $[a, b]$\\
+$$\bar{x} = \frac{a+b}{2}$$
+$$m_2' = \frac{b^3 -a^3}{3(b-a)}$$
+$$m_2' = \frac{a^2 + a(2\bar{x}  a) + (2\bar{x}-a)^2}{3}$$
+$$ a = \bar{x} \pm \sqrt{\bar{x}^2 -4\bar{x}^2 + 3m_2'} $$
+Note: let $(s^2)' $be the second sample moment about the mean.\\
+$$ (s^2) ' = \frac{1}{n} \sum_{i=1}^{n} (X_i - \bar{X})^2$$
+Remark: the prime indicates it s not the same as sample variance.\\
+It has the same property as 
+$$ Var[X] = E[X^2] - E[X]^2 \& (s^2)' = m_2 ' + \bar{x}^2$$
+So, 
+$$ a = \bar{x} - \sqrt{3} s'$$
+$$ b = \bar{x} + \sqrt{3} s'$$
+
+
+
+
 
 
 

@@ -1,21 +1,149 @@
-\documentclass{article}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{mathrsfs}
-\usepackage{dsfont}
-\usepackage{cancel}
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
 
-\usepackage{graphicx}
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
 
-\setlength\parindent{0pt}
-
-\author{Pranav Tikkawar}
-\title{TODO}
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Homework 3}
+\author{\name}
+\title{\course \ - \assignment}
 
 \begin{document}
 \maketitle
 
 
+\newpage
+\begin{questions}
+    \question Question 1. 8.23\\
+    Variance of sample variance of a normal family. (Hint: See the text for a theorem that tells you about the distribution of sample variance of a normal family. We discussed the variance of that kind of distributions.) [3O1]\\
+Use Theorem 11 to show that, for random samples of size n from a normal
+population with the variance $\sigma^2$, the sampling distribution of $S^2$ has the mean $\sigma^2$
+and the variance $\frac{2\sigma^4}{n-1}$ . (A general formula for the variance of S2 for
+random samples from any population with finite second and fourth moments may be
+found in the book by H\@. Cramer listed among the references at the end of ´
+this chapter.)\\
+\textbf{Solution:}\\
+We know that the sampling distribution of $(n-1)S^2/\sigma^2$ is $\chi^2_{n-1}$.\\
+We can clearly see that the mean of $S_2 = \sigma^2$ due to properties of expectaion and the chi-square distribution as
+\begin{align*}
+    E((n-1)S^2 / \sigma^2) &= (n-1) \\
+    E(S^2) &= \sigma^2
+\end{align*}
+Now, we can find the variance of $S^2$ as follows:
+\begin{align*}
+    Var((n-1)S^2/ \sigma^2) &= 2(n-1)
+    Var(S^2) &= \frac{2\sigma^4}{n-1}
+\end{align*}
+\begin{solution}
+    Clearly the mean of $S^2$ is $\sigma^2$ and the variance is $\frac{2\sigma^4}{n-1}$.
+\end{solution}
+    \question Question 2. 6.7\\
+    Prove the important recursive property of the gamma function integral.\\
+Use integration by parts to show that \(\Gamma(\alpha) = (\alpha - 1) \cdot \Gamma(\alpha - 1)\) for \(\alpha > 1\).\\
+\textbf{Solution:}\\
+We know that the gamma function is defined as:
+\begin{align*}
+    \Gamma(\alpha) = \int_0^\infty x^{\alpha - 1}e^{-x}dx
+\end{align*}
+Now, we can use integration by parts to prove the recursive property of the gamma function integral.
+\begin{align*}
+    \Gamma(\alpha) &= \int_0^\infty x^{\alpha - 1}e^{-x}dx\\
+    &= \left[-x^{\alpha - 1}e^{-x}\right]_0^\infty + (\alpha - 1)\int_0^\infty x^{\alpha - 2}e^{-x}dx\\
+    &= 0 + (\alpha - 1)\int_0^\infty x^{\alpha - 2}e^{-x}dx\\
+    &= (\alpha - 1)\Gamma(\alpha - 1)
+\end{align*}
+\begin{solution}
+    We have proved that \(\Gamma(\alpha) = (\alpha - 1) \cdot \Gamma(\alpha - 1)\) for \(\alpha > 1\).
+\end{solution}
+    \question Question 3. 6.11\\
+        Understanding the gamma distribution's pdf.\\
+        Show that a gamma distribution with $\alpha > 1$ has a relative maximum at $x = \beta(\alpha - 1)$. What happens when
+    $0 < \alpha < 1$ and when $\alpha = 1$?\\
+    \textbf{Solution:}\\
+    The probability density function (pdf) of a gamma distribution is given by:
+    \begin{align*}
+        f(x; \alpha, \beta) = \frac{ x^{\alpha-1} e^{-x/\beta}}{\beta^\alpha \Gamma(\alpha)}
+    \end{align*}
+    To find the relative maximum, we take the derivative of the pdf with respect to $x$ and set it to zero:
+    \begin{align*}
+        \frac{d}{dx} f(x; \alpha, \beta) &= \frac{d}{dx} \left( \frac{x^{\alpha-1} e^{-x/\beta}}{\beta^\alpha \Gamma(\alpha)} \right) \\
+        &= \frac{d}{dx} \left( x^{\alpha-1} e^{- x/\beta} \right) \cdot \frac{1}{\beta^\alpha \Gamma(\alpha)} \\
+        &= \left( (\alpha - 1)x^{\alpha-2} e^{- x/\beta} - \frac{1}{\beta} x^{\alpha-1} e^{- x/\beta} \right) \cdot \frac{1}{\beta^\alpha \Gamma(\alpha)} \\
+        &= x^{\alpha-2} e^{- x/\beta} \left( (\alpha - 1) -  \frac{x}{\beta} \right) \cdot \frac{1}{\beta^\alpha \Gamma(\alpha)} 
+    \end{align*}
+    Clearly this is only zero when $\alpha -1 - x/\beta = 0$ \\
+    \begin{solution}
+            $$x = \beta(\alpha - 1)$$
+    \end{solution}
+    We know that for $0 < \alpha < 1$ the gamma distribution is increasing, and for $\alpha < 1$ the gamma distribution is decreasing.
+    And for $\alpha = 1$, the gamma distribution is an exponential distribution.
+    \question Question 4. 8.45\\
+    Verify the results of Example 4, that is, the sampling distributions of $Y_1$, $Y_n$, and \(\tilde{X}\) shown there for random samples from an exponential population.\\
+    \textbf{Solution:}\\
+    The exponential distribution is given by:
+    \begin{align*}
+        f(x; \lambda) = \frac{1}{\lambda} e^{-x/ \lambda }
+    \end{align*}
+    The mean and variance of the exponential distribution are given by:
+    \begin{align*}
+        E(X) &= 1/\lambda \\
+        Var(X) &= 1/\lambda^2
+    \end{align*}
+    We want to verify the sample distribution of $Y_1$, $Y_n$, and $\tilde{X}$ and we can utilize theorem 16 to do so. \\
+    Theorem 16 for an exponential distribution states that: 
+    $$ g_r(y_r) = \frac{n!}{(r-1)! (n-r)!} [\int_0^{y_r}\frac{1}{\lambda} e^{-x/ \lambda} dx]^{r-1} \frac{1}{\lambda} e^{-x/ \lambda} [\int_{y_r}^\infty \frac{1}{\lambda} e^{-x/ \lambda} dx]^{n-r}$$
+    We can use this theorem to verify the results of Example 4.\\
+    The pdf of $Y_1$ is given by:
+    \begin{align*}
+        f(y_1) &= \frac{n}{\lambda} [e^{-y_1 /\lambda} * (e^{-y_1 /\lambda})^{n-1}]\\
+        &= \frac{n}{\lambda} [e^{-ny_r /\lambda} ] 
+    \end{align*}
+    The pdf of $Y_n$ is given by:
+    \begin{align*}
+        f(y_n) &= \frac{n}{\lambda} [(1-(e^{-y_n /\lambda})^{n-1}] * (e^{-y_n /\lambda})]
+    \end{align*}
+    The pdf of $\tilde{X}$ (where $n = 2m+1$) is given by:
+    \begin{align*}
+        f(\tilde{x}) &= \frac{(2m+1)!}{m!m!} \frac{1}{\lambda} e^{-\tilde{x}/ \lambda} \left[ \int_0^{\tilde{x}} \frac{1}{\lambda} e^{-x/ \lambda} dx \right]^m \left[ \int_{\tilde{x}}^\infty \frac{1}{\lambda} e^{-x/ \lambda} dx \right]^m\\
+        &= \frac{(2m+1)!}{m!m!} \frac{1}{\lambda} e^{-\tilde{x}/ \lambda} \left[ 1 - e^{-\tilde{x}/ \lambda} \right]^m \left[ e^{-\tilde{x}/ \lambda} \right]^m\\
+        &= \frac{(2m+1)!}{m!m!} \frac{1}{\lambda} \left[ 1 - e^{-\tilde{x}/ \lambda} \right]^m \left[ e^{-\tilde{x}/ \lambda} \right]^{m+1}
+    \end{align*}
+    
+    \question Question 5. 8.48\\
+    Find the mean and the variance of the sampling distribution of Y1 for random samples of size n from the population of Exercise 46\\
+    We are considering the distribution \\
+    \textbf{Solution:}\\
+    The sample distribution of $Y_1$:
+    \begin{align*}
+        f(y_1) &= n (1-y_1)^{n-1}
+    \end{align*} 
+    The mean of $Y_1$ is given by:
+    \begin{align*}
+        E(Y_1) &= \int_0^1 y_1 n (1-y_1)^{n-1} dy_1\\
+        &= \int_0^1 n (1-y_1)^{n-1} dy_1\\
+        &= (-y(1-y)^n) \Big|_0^1 + \int_0^1 (1-y)^n dy\\
+        &= \frac{1}{n+1}(1-y)^{n+1} \Big|_0^1\\
+        &= \frac{1}{n+1}
+    \end{align*}
+    The variance of $Y_1$ is given by:
+    \begin{align*}
+        Var(Y_1) &= E(Y_1^2) - E(Y_1)^2\\
+        &= \int_0^1 y_1^2 n (1-y_1)^{n-1} dy_1 - \left( \frac{1}{n+1} \right)^2\\
+    \end{align*}
+    We know that 
+    $$ \int_0^1 y_1^2 n (1-y_1)^{n-1} dy_1 = \frac{2}{(n+1)(n+2)}$$
+    Therefore, the variance of $Y_1$ is given by:
+    \begin{align*}
+        Var(Y_1) &= \frac{2}{(n+1)(n+2)} - \left( \frac{1}{n+1} \right)^2\\
+        &= \frac{n}{(n+1)^2(n+2)}
+    \end{align*}
+    \begin{solution}
+        The mean of $Y_1$ is $\frac{1}{n+1}$ and the variance of $Y_1$ is $\frac{n}{(n+1)^2(n+2)}$.
+    \end{solution}
+
+
+\end{questions}
 
 \end{document}

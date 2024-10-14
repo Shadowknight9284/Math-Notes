@@ -1,0 +1,148 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Homework 5}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question Question 1.3 23\\
+    Let $W_1$ and $W_2$ be subspaces of a vector space $V$\\
+    \begin{parts}
+        \part Prove that $W_1 + W_2$ is a subspace of $V$ that contains both $W_1$ and $W_2$.
+        \part Prove that any subspace of $V$ that contains both $W_1$ and $W_2$ must contain $W_1 + W_2$.
+    \end{parts}
+    Note that $\forall x \in W_1$ and $\forall y \in W_2$, $x + y \in V$ since $W_1, W_2$ are subspaces of $V$.\\
+    \begin{solution}
+        Part (a):\\
+        To show that $W_1 + W_2$ is a subspace of $V$ that contains both $W_1$ and $W_2$, we need the following properties to hold:\\
+        \begin{parts}
+            \part $W_1 + W_2 \subseteq V$
+            \part $\underline{0} \in W_1 + W_2$
+            \part $\forall x,y \in W_1 + W_2$, $x + y \in W_1 + W_2$
+            \part $\forall x \in W_1 + W_2$ and $\forall c \in \mathbb{R}$, $cx \in W_1 + W_2$
+        \end{parts}
+        First to show that $W_1 + W_2 \subseteq V$.\\
+        Suppose $z \in W_1 + W_2$. Then $z = x + y$ for some $x \in W_1$ and $y \in W_2$.\\
+        Since $W_1, W_2$ are subspaces of $V$, $x + y \in V$. Therefore $W_1 + W_2 \subseteq V$.\\
+        Next to show that $\underline{0} \in W_1 + W_2$.\\
+        Since $W_1, W_2$ are subspaces of $V$, $\underline{0} \in W_1$ and $\underline{0} \in W_2$.\\
+        Therefore $\underline{0} + \underline{0} \in W_1 + W_2 \implies \underline{0} \in W_1 + W_2$.\\
+        Next to show that $\forall x,y \in W_1 + W_2$, $x + y \in W_1 + W_2$.\\
+        Suppose $z_1, z_2 \in W_1 + W_2$. Then $z_1 = x_1 + y_1$ and $z_2 = x_2 + y_2$ for some $x_1, x_2 \in W_1$ and $y_1, y_2 \in W_2$.\\
+        Then $z_1 + z_2 = (x_1 + y_1) + (x_2 + y_2) = (x_1 + x_2) + (y_1 + y_2)$.\\
+        Since $W_1, W_2$ are subspaces of $V$, $x_1 + x_2 \in W_1$ and $y_1 + y_2 \in W_2$. Therefore $z_1 + z_2 \in W_1 + W_2$.\\
+        Finally to show that $\forall x \in W_1 + W_2$ and $\forall c \in \mathbb{R}$, $cx \in W_1 + W_2$.\\
+        Suppose $z \in W_1 + W_2$. Then $z = x + y$ for some $x \in W_1$ and $y \in W_2$.\\
+        Then $cz = c(x + y) = cx + cy$. Since $W_1, W_2$ are subspaces of $V$, $cx \in W_1$ and $cy \in W_2$. Therefore $cz \in W_1 + W_2$.\\
+        Therefore $W_1 + W_2$ is a subspace of $V$ that contains both $W_1$ and $W_2$.\\
+    \end{solution}
+    \begin{solution}
+        Part (b):\\
+        Let $W$ be a subspace of $V$ that contains both $W_1$ and $W_2$.\\
+        We can see that $W_1 \subseteq W$ and $W_2 \subseteq W$.\\
+        Thus if we consider $x \in W_1$ and $y \in W_2$, then $x + y \in W$ since $W$ is a subspace of $V$.\\
+        Therefore $W_1 + W_2 \subseteq W$.
+    \end{solution}
+    
+    \question Question 1.3 24
+    Show that $F^n$ is the direct sum of the subspaces \\
+    $W_1 = \left\{\left(a_1, a_2, \dots, a_n \right) \in F^n : a_n = 0\right\}$ and  $W_2 = \left\{(a_1, a_2, \dots, a_n) \in F^n : a_1 = a_2 = \dots = a_{n-1} = 0\right\}$.
+    \begin{solution}
+        We can already see that $W_1 \subseteq F^n$ and $W_2 \subseteq F^n$.\\
+        To show that $F^n$ is the direct sum of $W_1$ and $W_2$, we need to show that $F^n = W_1 + W_2$ and $W_1 \cap W_2 = \setof{\underline{0}}$.\\
+        First to show that $W_1 \cap W_2 = \setof{\underline{0}}$.\\
+        Suppose $x \in W_1 \cap W_2$. Then $x = (a_1, a_2, \dots, a_n)$ for some $a_1, a_2, \dots, a_n \in F$.\\
+        Since $x \in W_1$, $a_n = 0$. Since $x \in W_2$, $a_1 = a_2 = \dots = a_{n-1} = 0$.\\
+        Therefore $x = (0, 0, \dots, 0) = \underline{0}$.\\
+        Next to show that $F^n = W_1 + W_2$.\\
+        First to show that $F_n \subseteq W_1 + W_2$.\\
+        Suppose $x \in F^n$. Then $x = (a_1, a_2, \dots, a_n)$ for some $a_1, a_2, \dots, a_n \in F$.\\
+        Let $y = (0, 0, \dots, a_n) \in W_1$ and $z = (a_1, a_2, \dots, a_{n-1}, 0) \in W_2$.\\
+        Then $y + z = (0, 0, \dots, a_n) + (a_1, a_2, \dots, a_{n-1}, 0) = (a_1, a_2, \dots, a_n) = x$.\\
+        Next show that $W_1 + W_2 \subseteq F^n$.\\
+        Suppose $x \in W_1 + W_2$. Then $x = y + z$ for some $y \in W_1$ and $z \in W_2$.\\
+        Then $y = (0, 0, \dots, a_n)$ and $z = (a_1, a_2, \dots, a_{n-1}, 0)$.\\
+        Then $y + z = (0, 0, \dots, a_n) + (a_1, a_2, \dots, a_{n-1}, 0) = (a_1, a_2, \dots, a_n) = x$.\\
+        Therefore $F^n = W_1 + W_2$ and $W_1 \cap W_2 = \setof{\underline{0}}$.
+    \end{solution}
+
+    \question Question 1.3 25\\
+    Let $W_1$ denote the set of polynomials $f(x)$ in $P(F)$ suchthat in the representation 
+    $$ f(x) = \sum_{i=0}^n a_i x^i$$
+    we have $a_i = 0$ when $i$ is even. Likewise let $W_2$ denote the set of all polynomials $g(x)$ in $P(F)$ such that in the representation
+    $$ g(x) = \sum_{i=0}^n b_i x^i$$
+    we have $b_i = 0$ when $i$ is odd. Show that $P(F)$ is the direct sum of $W_1$ and $W_2$.
+    \begin{solution}
+        We can already see that $W_1 \subseteq P(F)$ and $W_2 \subseteq P(F)$.\\
+        To show that $P(F)$ is the direct sum of $W_1$ and $W_2$, we need to show that $P(F) = W_1 + W_2$ and $W_1 \cap W_2 = \setof{0}$.\\\\
+        First to show that $W_1 \cap W_2 = \setof{0}$.\\
+        Suppose $z(x) \in W_1 \cap W_2$. Then $z(x) = \sum_{i=0}^n c_i x^i$ for some $c_i \in F$.\\
+        Since $z(x) \in W_1$, $c_i = 0$ when $i$ is even. Since $z(x) \in W_2$, $c_i = 0$ when $i$ is odd.\\
+        Therefore there are no non-zero terms in $z(x)$ and $z(x) = 0$.\\\\
+        Next to show that $P(F) = W_1 + W_2$.\\
+        First to show that $P(F) \subseteq W_1 + W_2$.\\
+        Suppose $f(x) \in P(F)$. Then $f(x) = \sum_{i=0}^n a_i x^i$ for some $a_n \in F$.\\
+        Let $g(x) = \sum_{i=0}^n a_{2i} x^{2i} \in W_1$ and $h(x) = \sum_{i=0}^n a_{2i+1} x^{2i+1} \in W_2$.\\
+        Then $g(x) + h(x) = \sum_{i=0}^n a_{2i} x^{2i} + \sum_{i=0}^n a_{2i+1} x^{2i+1} = \sum_{i=0}^n a_i x^i = f(x)$.\\
+        Therefore $P(F) \subseteq W_1 + W_2$.\\\\
+        Next to show that $W_1 + W_2 \subseteq P(F)$.\\
+        Suppose $f(x) \in W_1 + W_2$. Then $f(x) = g(x) + h(x)$ for some $g(x) \in W_1$ and $h(x) \in W_2$.\\
+        Then $g(x) = \sum_{i=0}^n a_{2i} x^{2i}$ and $h(x) = \sum_{i=0}^n a_{2i+1} x^{2i+1}$.\\
+        Then $g(x) + h(x) = \sum_{i=0}^n a_{2i} x^{2i} + \sum_{i=0}^n a_{2i+1} x^{2i+1} = \sum_{i=0}^n a_i x^i = f(x)$.\\
+        Therefore $W_1 + W_2 \subseteq P(F)$.\\\\
+        Therefore $P(F)$ is the direct sum of $W_1$ and $W_2$.
+    \end{solution}
+
+    \question Question 1.3 30\\
+    Let $W_1$ and $W_2$ be subspaces of a vector space $V$. Prove that $V$ is the direct sum of $W_1$ and $W_2$ iff each vector in v can be uniquely expressed as the sum of a vector in $W_1$ and a vector in $W_2$.
+
+    \begin{solution}
+        Proof of $\implies$:\\
+        We can do this by contradiction.\\
+        Suppose $V$ is the direct sum of $W_1$ and $W_2$.\\
+        Then $V = W_1 + W_2$ and $W_1 \cap W_2 = \setof{\underline{0}}$.\\
+        Then we can consider $v \in V$.\\
+        We can assume there is \textbf{not} a unique way to represent this as a sum of vectors in $W_1$ and $W_2$ i.e. $v = w_1 + w_2 = w_1' + w_2'$ for some $w_1, w_1' \in W_1$ and $w_2, w_2' \in W_2$ where $w_1 \neq w_1'$ or $w_2 \neq w_2'$.\\
+        Then $w_1 - w_1' = w_2' - w_2$.\\
+        Since $w_1, w_1' \in W_1$ and $w_2, w_2' \in W_2$, $w_1 - w_1' \in W_1$ and $w_2' - w_2 \in W_2$.\\
+        The only vector they can have in common is $\underline{0}$.\\
+        Then $w_1 - w_1' \in W_1 \cap W_2 = \setof{\underline{0}}$.\\
+        Therefore $w_1 - w_1' = \underline{0} \implies w_1 = w_1'$.\\
+        Similarly $w_2 = w_2'$.\\
+        Therefore $v$ can be uniquely expressed as the sum of a vector in $W_1$ and a vector in $W_2$.\\\\
+        Proof of $\impliedby$:\\
+        Suppose each vector in $v$ can be uniquely expressed as the sum of a vector in $W_1$ and a vector in $W_2$.\\
+        Need to show that $V = W_1 + W_2$ and $W_1 \cap W_2 = \setof{\underline{0}}$.\\
+        First we can show that $W_1 \cap W_2 = \setof{\underline{0}}$.\\
+        We can do this by contradiction.\\
+        Suppose $v \in W_1 \cap W_2$ and $v \neq \underline{0}$.\\
+        Then $v = w_1 = w_2$ for some $w_1 \in W_1$ and $w_2 \in W_2$.\\
+        Then $v = w_1 + w_2$ where $w_1, w_2 \in W_1$ and $W_2$.\\
+        Since $v$ can be uniquely expressed as the sum of a vector in $W_1$ and a vector in $W_2$, $w_1 = w_2 = \underline{0}$.\\
+        Therefore $v = \underline{0}$.\\
+        Therefore $W_1 \cap W_2 = \setof{\underline{0}}$.\\\\
+        Next to show that $V = W_1 + W_2$.\\
+        First to show that $V \subseteq W_1 + W_2$.\\
+        Suppose $v \in V$.\\
+        Then $v = w_1 + w_2$ for some $w_1 \in W_1$ and $w_2 \in W_2$.\\
+        Then $v \in W_1 + W_2$.\\
+        Next to show that $W_1 + W_2 \subseteq V$.\\
+        Suppose $v \in W_1 + W_2$.\\
+        Then $v = w_1 + w_2$ for some $w_1 \in W_1$ and $w_2 \in W_2$.\\
+        Then $v \in V$.\\
+        Therefore $V = W_1 + W_2$.
+    \end{solution}
+
+
+\end{questions}
+
+\end{document}

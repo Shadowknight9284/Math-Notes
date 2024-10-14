@@ -635,5 +635,104 @@ $$ C_1 = \frac{1}{2\sqrt{\pi}}$$
 $$ C_2 = 1/2$$
 $$ S = F = \frac{1}{2\sqrt{\pi}} g'(x/\sqrt{t})= \frac{1}{\sqrt{4\pi t}} e^{-\frac{x^2}{4t}}$$
 
-% exam is theory
+1. Heat + Dirichelt BC 
+$$\begin{cases}
+    u_t = u_{xx}\\
+    u(x,0) = f(x)\\
+    u(0,t) = 0\\
+    u(\pi,t) = 0
+\end{cases}
+$$
+$$ u(x,t) = \sum_{n=1}^{\infty} c_n e^{-n^2t} \sin(nx)$$
+Can we choose $c_n$ such that $u(x,0) = f(x)$\\
+3. Heat + Neumann BC
+$$\begin{cases}
+    u_t = u_{xx}\\
+    u(x,0) = f(x)\\
+    u_x(0,t) = 0\\
+    u_x(\pi,t) = 0
+\end{cases}$$
+This is an insulated endpoint.
+$$u(x,t) = X(x)T(t)$$
+$$\frac{T'}{T} = \frac{X''}{X} = \alpha$$
+$$T'(t) = \alpha T(t)$$
+$$ T(t) = e^{\alpha t}$$
+$$ X'' = \alpha X$$
+We have BC: $u_x(0,t) = X'(0)T(t) = 0$ and $u_x(\pi,t) = X'(\pi)T(t) = 0$\\
+Eigenval problem:
+$$\begin{cases}
+    X'' = \alpha X\\
+    X'(0) = 0\\
+    X'(\pi) = 0
+\end{cases}
+$$
+if $\alpha > 0 \implies c_1,c_2=0, X = 0$\\
+if $\alpha <= 0 \implies X(x) = c_1 \cos(\lambda x) + c_2 \sin(\lambda x)$\\
+$X'(x) = -c_1 \lambda \sin(\lambda x) + c_2 \lambda \cos(\lambda x)$\\
+$X'(0) = 0 \implies c_2 \lambda = 0$\\
+Thus $c_2 = 0$\\
+$X'(\pi) = -\lambda c_1 \sin(\lambda \pi) = 0$\\
+$\lambda = n$\\
+Thus (1) has e-vals $\alpha_n = -n^2$\\
+With corresponding e-funcs $X_n(x) = \cos(nx)$\\
+Thus $u_n(x,t) = e^{-n^2t} \cos(nx)$\\
+Consider the linear combination of these solutions.\\
+These solved the PDE and BC, but what about the IC?
+$f(x) = \sum_{n=1}^{\infty} c_n \cos(nx)$\\
+
+3. Laplace's Equation in a Rectangle \\
+$$\begin{cases}
+    \Delta u = 0\\
+    u = f \text{ on } \partial R
+\end{cases}$$
+$$ u_{xx} + u_{yy} = 0$$
+$$\begin{cases}
+    u(x,0) = f_0(x)\\
+    u(x,1) = f_1(x)\\
+    u(0,y) = g_0(y)\\
+    u(\pi, y) = g_1(y)
+\end{cases}$$
+Linearity principle: \\
+$$u = u_1 + u_2 + u_3 + u_4$$
+It is enough to consider 1 piece.\\
+Consider the "top" boundary
+$$\begin{cases}
+    u_{xx} + u_{yy} = 0\\
+    u(0,y) = u(\pi,y) = 0\\
+    u(x,0) = 0\\
+    u(x,1) = f_1(x)
+\end{cases}$$
+Seperate variables: $u(x,y) = X(x)Y(y)$\\
+$$\frac{X''}{X} = -\frac{Y''}{Y} = \alpha$$
+$$ u(0,y) = X(0)Y(y) = 0$$
+$$ \begin{cases}
+    X'' = \alpha X\\
+    X(0) = X(\pi) = 0
+\end{cases}$$
+$\alpha_n = -n^2$\\
+$X_n(x) = \sin(nx)$\\
+$$\begin{cases}
+    Y'' = -\alpha Y\\
+    Y(0) = 0
+\end{cases}$$ 
+$$Y = 2c_1 sinh(ny)$$ 
+Thus $u_n(x,y) = \sinh(ny) \sin(nx)$ plus the 3 BC on the top.\\
+$$u(x,y) = \sum_{n=1}^{\infty} c_n \sinh(ny) \sin(nx)$$
+Reamins the 4th BC.\\
+$$f(x) = \sum_{n=1}^{\infty} c_n \sin(nx)$$
+
+4. Laplace's Equation in a Disk \\
+$$\begin{cases}
+    \Delta u = 0\\
+    u = f \text{ on } \partial D
+\end{cases}$$
+Now we want to write in polar coordinates.\\
+$$\Delta u = \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial u}{\partial r} \right) + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2}$$
+$$ \Delta u = u_{rr} + \frac{1}{r^2} u_{\theta \theta} + \frac{1}{r} u_r$$
+
+
+
+
+
+
 \end{document}

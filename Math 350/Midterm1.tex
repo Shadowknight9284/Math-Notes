@@ -1,0 +1,167 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Midterm 1 Review}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Lecture 1}
+Basic 250 review and intro to vector spaces\\
+Intro to fields: $\mathbb{Q}, \mathbb{R}, \mathbb{C}, \mathbb{Z}_2$\\
+
+\begin{definition}
+    A vector space $V$ over a field $F$ consists of a set equipped with vector addtion and scalar multiplication so that $\forall x,y \in V, \exists! x+y \in V$ and $\forall a \in F, \forall x \in V, \exists! ax \in V$\\
+    The following are the vector space axioms:
+    \begin{enumerate}
+        \item $\forall x,y \in V, x+y = y+x$
+        \item $\forall x,y,z \in V, (x+y)+z = x+(y+z)$
+        \item $\exists \underline{0} \in V$ such that $\forall x \in V, x + \underline{0} = x$
+        \item $\forall x \in V, \exists -x \in V$ such that $x + (-x) = \underline{0}$
+        \item $\forall x \in V, 1 \cdot x = x$
+        \item $\forall a,b \in F, \forall x \in V, (ab)x = a(bx)$
+        \item $\forall a \in F, \forall x,y \in V, a(x+y) = ax + ay$
+        \item $\forall a,b \in F, \forall x \in V, (a+b)x = ax + bx$
+    \end{enumerate}
+    In words they are:
+    \begin{enumerate}
+        \item Commutative property of addition
+        \item Associative property of addition
+        \item Additive identity 
+        \item additive inverse
+        \item multiplicative identity 
+        \item Associativity of scalar multiplication
+        \item distributivity of 1 vector to 2 scalars
+        \item distributivity of 2 vectors to 1 scalar
+    \end{enumerate}    
+\end{definition}
+\section{Lecture 2}
+\begin{theorem}[Theorem 1.1]
+    Let $V$ be a vector space over $F$ Let $x,y,z \in V$ and assume $x + z = y + z$. Then $x = y$.\\
+    This is cancellation from the right
+    \begin{proof}
+        Given $x + z = y + z$. Need $x=y$\\
+        $x + z = y + z$\\
+        $x + z + (-z) = y + z + (-z)$\\
+        $x + \underline{0} = y + \underline{0}$\\
+        $x = y$
+    \end{proof}
+\end{theorem}
+\begin{theorem}[Theorem 1.1 ']
+    Let $x,y,z \in V$ If $z +x = z + y$, then $x = y$.\\
+    This is cancellation from the left
+    \begin{proof}
+        Given $z + x = z + y$. Need $x=y$\\
+        $z + x = z + y$\\
+        $z + x + (-z) = z + y + (-z)$\\
+        $\underline{0} + x = \underline{0} + y$\\
+        $x = y$
+    \end{proof}
+    We can also prove this by using Theorem 1.1 and (VS 1)
+\end{theorem}
+\begin{corollary}[Corollary 1]
+    The vector $\underline{0}$ (VS 3) is unique.
+    \begin{proof}
+        Suppose $\underline{0}$ and $\underline{0}'$ are both additive identities.\\
+        $\underline{0} + \underline{0}' = \underline{0}$\\
+        $\underline{0} + \underline{0}' = \underline{0}'$\\
+        By Theorem 1.1, $\underline{0} = \underline{0}'$
+    \end{proof}
+\end{corollary}
+\begin{corollary}[Corollary 2]
+    The vector $y$ or $-x$ in (VS 4) is unique.
+    \begin{proof}
+        Suppose $y$ and $y'$ are both additive inverses of $x$.\\
+        $y + x = \underline{0}$\\
+        $y' + x = \underline{0}$\\
+        By Theorem 1.1, $y = y'$
+    \end{proof}
+\end{corollary}
+
+\section{Lecture 3}
+\begin{theorem}[Theorem 1.2(a)]
+    $\forall x \in V, 0 \cdot x = \underline{0}$
+    \begin{proof}
+        Given $x \in V$. Need $0 \cdot x = \underline{0}$\\
+        $0 \cdot x = (0 + 0) \cdot x$\\
+        $0 \cdot x = 0 \cdot x + 0 \cdot x$\\
+        $0 \cdot x + (-0 \cdot x) = 0 \cdot x + 0 \cdot x + (-0 \cdot x)$\\
+        $0 = 0 \cdot x$
+    \end{proof}
+\end{theorem}
+\begin{theorem}[Theorem 1.2(b)]
+    $\forall a \in F, \forall x \in V, (-a) \cdot x = -(a \cdot x) = a(-x)$
+    \begin{proof}
+        We can show that $(-a) \cdot x + (a \cdot x) = \underline{0}$\\
+        $(-a) \cdot x + (a \cdot x) = (-a)x + a(x)$\\
+        $(-a) \cdot x + (a \cdot x) = (-a + a)x$\\
+        $(-a) \cdot x + (a \cdot x) = {0}x$\\
+        $(-a) \cdot x + (a \cdot x) = \underline{0}$
+    \end{proof}
+\end{theorem}
+\begin{definition}
+    Let $V$ be a vector space over $F$. A subset $W$ of $V$ is a subspace of $V$ if $W$ is a vector space over $F$ with the same operations of addition and scalar multiplication as $V$.
+\end{definition}
+\begin{theorem}[Theorem 1.3]
+    Let $W \subset V$. Then $W$ is a subspace of $V$ iff
+    \begin{itemize}
+        \item $\underline{0} \in W$
+        \item $W$ is closed under addition, i.e. $\forall x,y \in W, x + y \in W$
+        \item $W$ is closed under scalar multiplication, i.e. $\forall a \in F, x \in W, ax \in W$
+    \end{itemize}
+    Note that VS 1,2,5,6,7,8 are inherited from $V$.
+    So we need to prove VS 3,4.
+\end{theorem}
+\begin{definition}
+    Let $V$ be a vector space over $F$ and $S$ a nonempty subset of $V$. A vector $v \in V$ is called a linear combination of vectors of $S$ if $\exists$ finitely many vectors $u_1, \dots, u_n \in S$ and scalars $a_1, \dots, a_n \in F$ such that $v = a_1u_1 + \dots + a_nu_n = \sum_{i=1}^n a_i u_i$
+\end{definition}
+
+\section{Lecture 4}
+\begin{definition}
+    Let $V$ be a vector space over $F$ and $S$ a nonempty subset of $V$. Then the span of $S$ is the set of all linear combinations of vectors of $S$.\\
+    The span of $\emptyset$ is defined to be $\setof{\underline{0}}$
+\end{definition}
+\begin{theorem}[Theorem 1.5]
+    The span of any subset $S$ of a vector space $V$ is a subspace of $V$ that contains $S$ more over any subspace of $V$ that contains $S$ also contains the span of $S$.
+\end{theorem}
+Note that Theorem 1.5 asserts that the spans of $S$ is the smallest subspace of $V$ that contains $S$.
+\begin{definition}
+    Let $S \subset V$ then $S$ generates (or spans) $V$ if $V = \text{span}(S)$
+\end{definition}
+\begin{definition}
+    A subset $S$ of a vector space $V$ is Linearly dependant if $\exists$ finitely many distinct vectors $u_1, \dots, u_n \in S$ and scalars $a_1, \dots, a_n \in F$ not all zero such that $a_1u_1 + \dots + a_nu_n = \underline{0}$
+\end{definition}
+\begin{definition}
+    A subset $S$ of a vector space $V$ is linearly independent if it is not linearly dependent. In other words it only has the trivial solution of $a_1u_1 + \dots + a_nu_n = \underline{0}$ for all $a_i = 0$
+\end{definition}
+\begin{definition}
+    A basis $\beta$ for a vector space $V$ is a Linearly Independent subset of $V$ that spans $V$. If $\beta$ is a basis for $V$, we also say that the vectors of $\beta$ form a basis for $V$.
+\end{definition}
+
+\section{Lecture 5}
+\begin{theorem}[Theorem 1.8]
+    Let $V$ be a vector space and let $u_1, \dots, u_n$ be distinct vectors in $V$. Then $\beta = \setof{u_1, \dots, u_n}$ is a basis for $V$ iff every $v \in V$ can be expressed uniquely as a linear combination of the vectors of $\beta$.\\
+    This of this as a making $V$ into $F^n$
+\end{theorem}
+\begin{theorem}[Theorem 1.9]
+    If a vector space $V$ is generate by a finite set $S$ then some subset of $S$ is a basis for $V$ hence it has a finite basis.
+\end{theorem}
+
+
+
+\end{document}

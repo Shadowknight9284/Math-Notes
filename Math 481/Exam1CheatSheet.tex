@@ -1,0 +1,37 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Cheat Sheet}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\begin{center}
+    \textit{\underline{Distributions}}\\
+\end{center}
+\textbf{\underline{Normal}}: \textbf{Pars:} $\mu$ (mean), $\sigma^2$ (variance) \textbf{PDF:} $f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$ \textbf{MGF:} $M_X(t) = \exp\left(\mu t + \frac{\sigma^2 t^2}{2}\right)$ \textbf{Mean:} $\mathbb{E}[X] = \mu$ \textbf{Var:} $\text{Var}(X) = \sigma^2$\\
+\textbf{\underline{Chi-Squared:}} \textbf{Pars:} $k$ (degrees of freedom) \textbf{PDF:} 
+$f(x) = \frac{1}{2^{k/2}\Gamma(k/2)}x^{k/2-1}\exp\left(-\frac{x}{2}\right)$ \textbf{MGF:} $M_X(t) = (1-2t)^{-k/2}$ \textbf{Mean:} $\mathbb{E}[X] = k$ \textbf{Var:} $\text{Var}(X) = 2k$ \textbf{IMP} Is Gamma with $\alpha = \nu/2, \beta = 2$. If $X\sim N$, $X^2 \sim \chi^2$  \\
+\textbf{\underline{Gamma:}} \textbf{Pars:} $\alpha$, $\beta$ \textbf{PDF}: $ $
+\textbf{MGF:} $M_X(t) = (1-\beta t)^{-\alpha}$ \textbf{Mean:} $\mathbb{E}[X] = \frac{\alpha}{\beta}$ \textbf{Var:} $\text{Var}(X) = \frac{\alpha}{\beta^2}$\\
+\textbf{\underline{Exponential:}} \textbf{Pars:} $\lambda$ (rate) \textbf{PDF:} $f(x) = \lambda\exp(-\lambda x)$ \textbf{MGF:} $M_X(t) = \frac{\lambda}{\lambda - t}$ \textbf{Mean:} $\mathbb{E}[X] = \frac{1}{\lambda}$ \textbf{Var:} $\text{Var}(X) = \frac{1}{\lambda^2}$
+\begin{center}
+    \textit{\underline{Samples}}\\
+\end{center}
+\textbf{\underline{Sample Mean:}} $\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$ \textbf{Mean:} $\mathbb{E}[\bar{X}] = \mu$ \textbf{Var:} $\text{Var}(\bar{X}) = \frac{\sigma^2}{n}$ \textbf{Dist:} $\bar{X}\sim N(\mu, \sigma^2/n)$\\
+\textbf{\underline{Sample Variance:}} $S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})^2$ \textbf{Mean:} $\mathbb{E}[S^2] = \sigma^2$ \textbf{Var:} $\text{Var}(S^2) = \frac{2\sigma^4}{n-1}$ \textbf{Dist:} $(n-1)S^2/\sigma^2 \sim \chi^2_{n-1}$\\
+\textbf{\underline{Chebyshev's} } $\mathbb{P}(|X-\mu|< k) \geq 1 - \frac{\sigma^2}{k^2}$ and $\mathbb{P}(|X-\mu|< k\sigma) \geq 1 - \frac{1}{k^2}$ \\
+\textbf{\underline{Law of Large Numbers:}} $\bar{X} \in (\mu \pm c) \geq 1-\frac{\sigma^2}{nc^2}$   \\
+\textbf{\underline{Central Limit Theorem:}} $Z= \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0,1)$ as $n \to \infty$\\
+\textbf{\underline{Order Statistics:}} The $r$th smallest value of an $n$ sample. $f_{X_{(r)}}(x) = \frac{n!}{(r-1)!(n-r)!}F(x)^{r-1}(1-F(x))^{n-r}f(x)$ or $= \frac{n!}{(r-1)!(n-r)!}f(x)\int_{-\infty}^x f(y)dy^{r-1}\int_x^\infty f(y)dy^{n-r}$\\
+\textbf{\underline{Max Likelihood}} $\hat{\theta}$ is max of $L(\theta) = \prod_{i=1}^n f(x_i|\theta)$ or $l(\theta) = \sum_{i=1}^n \log f(x_i|\theta)$\\
+
+
+
+
+\end{document}
