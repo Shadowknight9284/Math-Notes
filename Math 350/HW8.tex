@@ -1,0 +1,637 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Homework 8}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question[10] Sec. 5.1 Question 4(c)
+    For each of the following matrices:\\
+    \begin{parts}
+        \part Determine the eigenvalues of the matrix.
+        \part For each eigenvalue, determine the eigenvectors.
+        \part If possible find a basis for $F^n$ consisting of eigenvectors of the matrix.
+        \part If successful in finding such a basis determine and invertible matrix $Q$ and a diagonal matrix $D$ such that $Q^{-1}AQ = D$.
+    \end{parts}
+    $$A = \begin{bmatrix}
+        i & 1 \\
+        2 & -i
+    \end{bmatrix}, \quad \text{ for } F = C $$
+    \begin{solution}
+        \textbf{Part (a)}\\
+        The characteristic polynomial of $A$ is given by
+        \begin{align*}
+            \det(A - \lambda I) &= \begin{vmatrix}
+                i - \lambda & 1 \\
+                2 & -i - \lambda
+            \end{vmatrix}\\
+            &= (i - \lambda)(-i - \lambda) - 2\\
+            &= \lambda^2 + 1 - 2\\
+            &= \lambda^2 - 1\\
+            &= (\lambda - 1)(\lambda + 1)
+        \end{align*}
+        So the eigenvalues of $A$ are $\lambda = 1, -1$.\\
+        \textbf{Part (b)}\\
+        For $\lambda = 1$, we have
+        \begin{align*}
+            A - I &= \begin{bmatrix}
+                i - 1 & 1 \\
+                2 & -i - 1
+            \end{bmatrix}\\
+            \begin{bmatrix}
+                i - 1 & 1 \\
+                2 & -i - 1
+            \end{bmatrix} \xrightarrow{(-i-1)r_1 + r_2 \to r_2} &\begin{bmatrix}
+                i - 1 & 1 \\
+                0 & 0
+            \end{bmatrix} \xrightarrow{\frac{1}{i-1}r_1 \to r_1} \begin{bmatrix}
+                1 & \frac{-i+1}{2} \\
+                0 & 0
+            \end{bmatrix}
+        \end{align*}
+        We can see that vectors of the form of $\begin{bmatrix}
+            i-1\\
+            2
+        \end{bmatrix}$ are eigenvectors of $A$ corresponding to $\lambda = 1$.\\
+        We can call the eigenspace of $\lambda = 1$ as $E_{1}$.\\
+        For $\lambda = -1$, we have
+        \begin{align*}
+            A + I &= \begin{bmatrix}
+                i + 1 & 1 \\
+                2 & -i + 1
+            \end{bmatrix}\\
+            \begin{bmatrix}
+                i + 1 & 1 \\
+                2 & -i + 1
+            \end{bmatrix} \xrightarrow{(-i+1)r_1 + r_2 \to r_2} &\begin{bmatrix}
+                i + 1 & 1 \\
+                0 & 0
+            \end{bmatrix} \xrightarrow{\frac{1}{i+1}r_1 \to r_1} \begin{bmatrix}
+                1 & \frac{-i-1}{2} \\
+                0 & 0
+            \end{bmatrix}
+        \end{align*}
+        $\begin{bmatrix}
+            i+1\\
+            2
+        \end{bmatrix}$ are eigenvectors of $A$ corresponding to $\lambda = -1$.\\
+        We can call the eigenspace of $\lambda = -1$ as $E_{-1}$ as.\\
+        \textbf{Part (c)}\\
+        By the theorems in chapter 5 we can see that the sets $E_{1}$ and $E_{-1}$ are lineanrly independent sets, thus $E_{1} \cup E_{-1}$ is also linearly independent. \\
+        Since the largest linearly independent combination of vectors in the set $E_{1} \cup E_{-1}$ is of size 2, and $C^2$ has dimension 2, we can see that the eigenvectors of $A$ are a basis for $C^2$.\\
+        Thus the basis is $\setof{\begin{bmatrix}
+            i-1\\
+            2
+        \end{bmatrix}, \begin{bmatrix}
+            i+1\\
+            2
+        \end{bmatrix}}$\\
+        \textbf{Part (d)}\\
+        Let $Q = \begin{bmatrix}
+            i-1 & i+1\\
+            2 & 2
+        \end{bmatrix}$ and $D = \begin{bmatrix}
+            1 & 0\\
+            0 & -1
+        \end{bmatrix}$.\\
+        We can see that $Q^{-1}AQ = D$.
+        Obviosuly $Q$ is invertible since $\det(Q) = 2i - 2 - 2i - 2 = -4 \neq 0$.
+        Thus we have found the required $Q$ and $D$.
+    \end{solution}
+
+    \question[10] Sec. 5.1 Question 4(d)
+    $$ A = \begin{bmatrix}
+        2 & 0 & -1\\
+        4 & 1 & -4 \\
+        2 & 0 & -1
+    \end{bmatrix}, \quad \text{ for } F = R $$
+    \begin{solution}
+        The characteristic polynomial of $A$ is given by
+        \begin{align*}
+            det(A - \lambda I) &= \begin{vmatrix}
+                2 - \lambda & 0 & -1\\
+                4 & 1 - \lambda & -4\\
+                2 & 0 & -1 - \lambda
+            \end{vmatrix}\\
+            &= (1-\lambda)\begin{vmatrix}
+                2 - \lambda & -1\\
+                2 & -1 - \lambda
+            \end{vmatrix}\\
+            &= (1-\lambda)((2-\lambda)(-1-\lambda) + 2)\\
+            &= -\lambda(1-\lambda)^2
+        \end{align*}
+        Thus the eigenvalues of $A$ are $\lambda = 0, 1$. Where 1 has a multiplicity of 2\\
+        \textbf{Part (b)}\\
+        For $\lambda = 0$, we have
+        \begin{align*}
+            A - 0 I &= \begin{bmatrix}
+                2 & 0 & -1\\
+                4 & 1 & -4\\
+                2 & 0 & -1
+            \end{bmatrix}\\
+            \xrightarrow{r_2 - 2r_1 \to r_2, r_3 - r_1 \to r_3} &\begin{bmatrix}
+                2 & 0 & -1\\
+                0 & 1 & -2\\
+                0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        We can see that the eigenvectors of $A$ corresponding to $\lambda = 0$ are of the form $\begin{bmatrix}
+            1\\
+            4 \\
+            2
+        \end{bmatrix}$.\\
+        We can call the eigenspace of $\lambda = 0$ as $E_{0}$.\\
+        For $\lambda = 1$, we have
+        \begin{align*}
+            A - I &= \begin{bmatrix}
+                1 & 0 & -1\\
+                4 & 0 & -4\\
+                2 & 0 & -2
+            \end{bmatrix}\\
+            \xrightarrow{r_2 - 4r_1 \to r_2, r_3 - 2r_1 \to r_3} &\begin{bmatrix}
+                1 & 0 & -1\\
+                0 & 0 & 0\\
+                0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        We can see that the eigenvectors of $A$ corresponding to $\lambda = 1$ are of the form $\begin{bmatrix}
+            1\\
+            0 \\
+            1
+        \end{bmatrix}$, and $\begin{bmatrix}
+            0\\
+            1 \\
+            0
+        \end{bmatrix}$.\\
+        We can call the eigenspace of $\lambda = 1$ as $E_{1}$.\\
+        \textbf{Part (c)}\\
+        By the theorems in chapter 5 we can see that the sets $E_{0}$ and $E_{1}$ are lineanrly independent sets, thus $E_{0} \cup E_{1}$ is also linearly independent. \\
+        Since the largest linearly independent combination of vectors in the set $E_{0} \cup E_{1}$ is of size 3, and $R^3$ has dimension 3, we can see that the eigenvectors of $A$ are a basis for $R^3$.\\
+        Thus the basis is $\setof{\begin{bmatrix}
+            1\\
+            4 \\
+            2
+        \end{bmatrix}, \begin{bmatrix}
+            1\\
+            0 \\
+            1
+        \end{bmatrix}, \begin{bmatrix}
+            0\\
+            1 \\
+            0
+        \end{bmatrix}}$\\
+        \textbf{Part (d)}\\
+        Let $Q = \begin{bmatrix}
+            1 & 1 & 0\\
+            4 & 0 & 1\\
+            2 & 1 & 0
+        \end{bmatrix}$ and $D = \begin{bmatrix}
+            0 & 0 & 0\\
+            0 & 1 & 0\\
+            0 & 0 & 1
+        \end{bmatrix}$.\\
+        We can see that $Q^{-1}AQ = D$.
+        Obviosuly $Q$ is invertible since $\det(Q) = 1(0 - 1) - 1(4 - 0) + 0 = -4 \neq 0$.
+        Thus we have found the required $Q$ and $D$.
+    \end{solution}
+
+    \question[10] Sec. 5.1 Question 5(f)
+    For each linear operator $T$ on $V$ fin the eigenvalues of $T$ and an ordered basis $\beta$ for $V$ such that $[T]_{\beta}$ is a diagonal matrix.
+    $$ V = P_3(R), \quad T(f(x)) = f(x) + f(2)x$$
+    \begin{solution}
+        For $T$ we can say that $T = L_A$ where $A$ is $$\begin{bmatrix}
+            1 & 0 & 0 & 0\\
+            1 & 3 & 4 & 8\\
+            0 & 0 & 1 & 0\\
+            0 & 0 & 0 & 1
+        \end{bmatrix}$$
+        The characteristic polynomial of $A$ is given by
+        \begin{align*}
+            det(A - \lambda I) &= \begin{vmatrix}
+                1 - \lambda & 0 & 0 & 0\\
+                1 & 3 - \lambda & 4 & 8\\
+                0 & 0 & 1 - \lambda & 0\\
+                0 & 0 & 0 & 1 - \lambda
+            \end{vmatrix}\\
+            &= (3 - \lambda)\begin{vmatrix}
+                1 - \lambda & 0 & 0 \\
+                0 & 1 - \lambda & 0\\
+                0 & 0 & 1 - \lambda
+            \end{vmatrix}
+            &= (3 - \lambda)(1 - \lambda)^3
+        \end{align*}
+        Thus the eigenvalues of $T$ are $\lambda = 3, 1$, with 1 having a multiplicity of 3.\\
+        For $\lambda = 1$ we have
+        $$ A - I = \begin{bmatrix}
+            0 & 0 & 0 & 0\\
+            1 & 2 & 4 & 8\\
+            0 & 0 & 0 & 0\\
+            0 & 0 & 0 & 0
+        \end{bmatrix}$$
+        We can see that the eigenvectors of $A$ corresponding to $\lambda = 1$ are of the form $\begin{bmatrix}
+            -2\\
+            1\\
+            0\\
+            0
+        \end{bmatrix}$, $\begin{bmatrix}
+            -4\\
+            0\\
+            1\\
+            0
+        \end{bmatrix}$, $\begin{bmatrix}
+            -8\\
+            0\\
+            0\\
+            1
+        \end{bmatrix}$.\\
+        We can call this eigenspace as $E_{1}$.\\
+        For $\lambda = 3$ we have
+        $$ A - 3I = \begin{bmatrix}
+            -2 & 0 & 0 & 0\\
+            1 & 0 & 4 & 8\\
+            0 & 0 & -2 & 0\\
+            0 & 0 & 0 & -2
+        \end{bmatrix}$$
+        $$ \xrightarrow{r_2 + \frac{1}{2}r_1 + 2r_3 + 4r_4 \to r_2} \begin{bmatrix}
+            -2 & 0 & 0 & 0\\
+            0 & 0 & 0 & 0\\
+            0 & 0 & -2 & 0\\
+            0 & 0 & 0 & -2
+        \end{bmatrix}$$
+        We can see that the eigenvectors of $A$ corresponding to $\lambda = 3$ are of the form $\begin{bmatrix}
+            0\\
+            1\\
+            0\\
+            0
+        \end{bmatrix}$\\
+        We can call this eigenspace as $E_{3}$.\\
+        By the theorems in chapter 5 we can see that the sets $E_{1}$ and $E_{3}$ are lineanrly independent sets, thus $E_{1} \cup E_{3}$ is also linearly independent.
+    \end{solution}
+
+    \begin{solution}
+        Continued:\\
+        Since the largest linearly independent combination of vectors in the set $E_{1} \cup E_{3}$ is of size 4, and $P_3(R)$ has dimension 4, we can see that eigenvectors of $T$ is a basis for $P_3(R)$.\\
+        Thus we can let $\beta = \setof{\begin{bmatrix}
+            -2\\
+            1\\
+            0\\
+            0
+        \end{bmatrix}, 
+        \begin{bmatrix}
+            -4\\
+            0\\
+            1\\
+            0
+        \end{bmatrix},
+        \begin{bmatrix}
+            -8\\
+            0\\
+            0\\
+            1
+        \end{bmatrix},
+        \begin{bmatrix}
+            0\\
+            1\\
+            0\\
+            0
+        \end{bmatrix}}$\\
+        We can see that $[T]_{\beta}$ is a diagonal matrix.
+        $$ [T]_{\beta} = \begin{bmatrix}
+            1 & 0 & 0 & 0\\
+            0 & 1 & 0 & 0\\
+            0 & 0 & 1 & 0\\
+            0 & 0 & 0 & 3
+        \end{bmatrix}$$
+    \end{solution}
+
+    \question[10] Sec. 5.1 Question 9(a)
+    Prove that a linear operator $T$ on a finite dimensional vector space is invertable iff $0$ is not an eigenvalue of $T$.
+    \begin{solution}
+        Assume $T$ is a linear operator on a finite dimensional vector space. Let us call $T$ a function from $V$ to $V$.\\
+        \textbf{Proof of $\implies$:}\\
+        Suppose $T$ is invertible. \\
+        Need to show that $0$ is not an eigenvalue of $T$.\\
+        Note that since $T$ is a linear operator on a finite dimensional vector space, we can take $T = L_A$ for some matrix $A$.\\
+        Suppose $w$ is an eigenvector of $T$ corresponding to the eigenvalue $\lambda$.\\
+        Then we have $T(w) = \lambda w$.\\
+        Notice that we have $v$ be non zero and we have that for all $w \in V$ we have $T(w) = 0$ iff $w = 0$.\\
+        Thus must have that $\lambda \neq 0$. as desired.\\
+        \textbf{Proof of $\impliedby$:}\\
+        Suppose $0$ is not an eigenvalue of $T$.\\
+        Need to show that $T$ is invertible.\\
+        Since we know that $0$ is not an eigenvalue of $T$, we know that there is no non zero vector $v$ such that $T(v) = 0$.\\
+        This means that $T$ is injective.\\
+        This also implies that $T$ is surjective since $T$ is a linear operator on a finite dimensional vector space.\\
+        Thus $T$ is bijective and thus invertible.
+    \end{solution}
+
+    \question[10] Sec. 5.1 Question 9(b)
+    Let $T$ be an invertible linear operator. Prove that a scalar $\lambda$ is an eigenvalue of $T$ iff $\lambda^{-1}$ is an eigenvalue of $T^{-1}$.
+    \begin{solution}
+        Since $T$ is the inverse of $T^{-1}$, we only need to consider the forward direction.\\
+        Suppose $\lambda$ is an eigenvalue of $T$.\\
+        Then we have $T(v) = \lambda v$ for some non zero vector $v$.\\
+        We can apply $T^{-1}$ to both sides to get $T^{-1}(T(v)) = T^{-1}(\lambda v)$.\\
+        This implies that $v = \lambda T^{-1}(v)$.\\
+        Thus we have that $\lambda^{-1} v = T^{-1}(v)$
+        Thus $\lambda^{-1}$ is an eigenvalue of $T^{-1}$. 
+    \end{solution} 
+
+    \question[10] Sec. 5.1 Question 10
+    Prove that the eigenvalue of an upper triangular matrix M are the diagonal entries of M.
+    \begin{solution}
+        We can prove this by induction for any $n \times n$ .\\
+        For a base case of $1 \times 1$ matrix, we have that the only eigenvalue is the diagonal entry.\\
+        Suppose that the statement is true for all $n \times n$ matrices.\\
+        Let $M$ be an $(n+1) \times (n+1)$ upper triangular matrix.\\
+        Let $\lambda$ be an eigenvalue of $M$.\\
+        Then we have that $det(M - \lambda I) = 0$.\\
+        We can expand this determinant along the last row to get
+        $$(m_{n+1, n+1} - \lambda)det(M_{n \times n} - \lambda I) = 0$$
+        Since $M_{n \times n} - \lambda I$ is an upper triangular matrix, we can see that the eigenvalues of $M_{n \times n}$ are the diagonal entries of $M_{n \times n}$.\\
+        Thus the eigenvalues of $M$ are the diagonal entries of $M$.
+    \end{solution}
+
+    \question[10] Sec. 5.2 Question 2(d)
+    For each of the following matrices $A \in M_{n \times n}(R)$ test $A$ for diagonalizability and if $A$ is diagonalizable find an invertible matrix $Q$ and a diagonal matrix $D$ such that $Q^{-1}AQ = D$.
+    $$ A = \begin{bmatrix}
+        7 & -4 & 0\\
+        8 & -5 & 0\\
+        6 & -6 & 3
+    \end{bmatrix}$$
+    \begin{solution}
+        First we can find the characteristic polynomial of $A$.
+        \begin{align*}
+            det(A - \lambda I) &= \begin{vmatrix}
+                7 - \lambda & -4 & 0\\
+                8 & -5 - \lambda & 0\\
+                6 & -6 & 3 - \lambda
+            \end{vmatrix}\\
+            &= (3 - \lambda)\begin{vmatrix}
+                7 - \lambda & -4\\
+                8 & -5 - \lambda
+            \end{vmatrix}\\
+            &= (3 - \lambda)((7 - \lambda)(-5 - \lambda) + 32)\\
+            &= (3 - \lambda)(\lambda^2 - 2\lambda - 3)\\
+            &= (3 - \lambda)^2(-\lambda - 1)
+        \end{align*}
+        Thus the eigenvalues of $A$ are $\lambda = 3, -1$ with 3 having a multiplicity of 2.\\
+        For $\lambda = 3$ we have
+        \begin{align*}
+            A - 3I &= \begin{bmatrix}
+                4 & -4 & 0\\
+                8 & -8 & 0\\
+                6 & -6 & 0
+            \end{bmatrix}\\
+            \xrightarrow{r_2 - 2r_1 \to r_2, r_3 - \frac{3}{2}r_1 \to r_3} &\begin{bmatrix}
+                4 & -4 & 0\\
+                0 & 0 & 0\\
+                0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        We can see that the eigenvectors of $A$ corresponding to $\lambda = 3$ are of the form $\begin{bmatrix}
+            1\\
+            1\\
+            0
+        \end{bmatrix}$, $\begin{bmatrix}
+            0\\
+            0\\
+            1
+        \end{bmatrix}$.\\
+        We can call this eigenspace as $E_{3}$.\\
+        For $\lambda = -1$ we have
+        \begin{align*}
+            A + I &= \begin{bmatrix}
+                8 & -4 & 0\\
+                8 & -4 & 0\\
+                6 & -6 & 4
+            \end{bmatrix}\\
+            \xrightarrow{r_2 - r_1 \to r_2, r_3 - \frac{3}{2}r_1 \to r_3} &\begin{bmatrix}
+                8 & -4 & 0\\
+                0 & 0 & 0\\
+                0 & -3 & 4
+            \end{bmatrix}
+        \end{align*}
+        We can clearly see that the eigenvectors of $A$ corresponding to $\lambda = -1$ are of the form $\begin{bmatrix}
+            2\\
+            4\\
+            3
+        \end{bmatrix}$.
+    \end{solution}
+
+    \begin{solution}
+        Continued:\\
+        We can call this eigenspace as $E_{-1}$.\\
+        We can see that the sets $E_{3}$ and $E_{-1}$ are lineanrly independent sets, thus $E_{3} \cup E_{-1}$ is also linearly independent. \\
+        Since the largest linearly independent combination of vectors in the set $E_{3} \cup E_{-1}$ is of size 3, and $R^3$ has dimension 3, we can see that the eigenvectors of $A$ are a basis for $R^3$.\\
+        This must mean that $A$ is diagonalizable.\\
+        Let $Q = \begin{bmatrix}
+            1 & 0 & 2\\
+            1 & 0 & 4\\
+            0 & 1 & 3
+        \end{bmatrix}$ and $D = \begin{bmatrix}
+            3 & 0 & 0\\
+            0 & 3 & 0\\
+            0 & 0 & -1
+        \end{bmatrix}$.\\
+        Thus we have found the required $Q$ and $D$.
+    \end{solution}
+
+    \question[10] Sec. 5.2 Question 2(f)
+    $$ A = \begin{bmatrix}
+        1 & 1 & 0\\
+        0 & 1 & 2\\
+        0 & 0 & 3
+    \end{bmatrix}$$
+    \begin{solution}
+        Since the matrix is already upper triangular, we can see that the eigenvalues of $A$ are the diagonal entries of $A$.\\
+        Thus the eigenvalues of $A$ are $\lambda = 1, 3$ with 1 having a multiplicity of 2.\\
+        For $\lambda = 1$ we have
+        \begin{align*}
+            A - I &= \begin{bmatrix}
+                0 & 1 & 0\\
+                0 & 0 & 2\\
+                0 & 0 & 2
+            \end{bmatrix}
+        \end{align*}
+        We can see that the eigenvectors of $A$ corresponding to $\lambda = 1$ are of the form $\begin{bmatrix}
+            1\\
+            0\\
+            0
+        \end{bmatrix}$\\
+        We can see that this eigenspace is of dimension 1. but the algebraic multiplicity of the eigenvalue is 2.\\
+        Thus $A$ is not diagonalizable.
+    \end{solution}
+
+    \question[10] Sec. 5.2 Question 3(d)
+    For each of the following linear operators $T$ on a vector space $V$, test $T$ and if $T$ is diagonalizable find a basis $\beta$ for $V$ such that $[T]_{\beta}$ is a diagonal matrix.
+    $$ V = P_2(R), \quad T(f(x)) = f(0) + f(1)(x+x^2)$$
+    \begin{solution}
+        Let us assert that $T = L_A$ for some matrix $A$.\\
+        $$A = \begin{bmatrix}
+            1 & 0 & 0\\
+            1 & 1 & 1\\
+            1 & 1 & 1
+        \end{bmatrix}$$
+        The characteristic polynomial of $A$ is given by
+        \begin{align*}
+            det(A - \lambda I) &= \begin{vmatrix}
+                1 - \lambda & 0 & 0\\
+                1 & 1 - \lambda & 1\\
+                1 & 1 & 1 - \lambda
+            \end{vmatrix}\\
+            &= (1 - \lambda)\begin{vmatrix}
+                1 - \lambda & 1\\
+                1 & 1 - \lambda
+            \end{vmatrix}
+            &= (1 - \lambda)(\lambda^2 - 2\lambda)\\
+            &= -\lambda(1 - \lambda)(2 - \lambda)
+        \end{align*}
+        Thus the eigenvalues of $A$ are $\lambda = 0, 1, 2$.\\
+        Since each eigenvalue has a multiplicity of 1, we can see that $A$ is diagonalizable.\\
+        For $\lambda = 0$ we have
+        \begin{align*}
+            A - 0I &= \begin{bmatrix}
+                1 & 0 & 0\\
+                1 & 1 & 1\\
+                1 & 1 & 1
+            \end{bmatrix} \\
+            \xrightarrow{r_3 - r_2 \to r_3, r_2 - r_1 \to r_2} &\begin{bmatrix}
+                1 & 0 & 0\\
+                0 & 1 & 1\\
+                0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        We can see that the eigenvectors of $A$ corresponding to $\lambda = 0$ are of the form $\begin{bmatrix}
+            0\\
+            -1\\
+            1
+        \end{bmatrix}$.\\
+        We can call this eigenspace as $E_{0}$.\\
+        For $\lambda = 1$ we have
+        \begin{align*}
+            A - I &= \begin{bmatrix}
+                0 & 0 & 0\\
+                1 & 0 & 1\\
+                1 & 1 & 0
+            \end{bmatrix} \\
+        \end{align*}
+        We can see that the eigenvectors of $A$ corresponding to $\lambda = 1$ are of the form $\begin{bmatrix}
+            -1\\
+            1\\
+            1
+        \end{bmatrix}$.\\
+        We can call this eigenspace as $E_{1}$.\\
+        For $\lambda = 2$ we have
+        \begin{align*}
+            A - 2I &= \begin{bmatrix}
+                -1 & 0 & 0\\
+                1 & -1 & 1\\
+                1 & 1 & -1
+            \end{bmatrix} \\
+            \xrightarrow{r_2 + r_1 \to r_2, r_3 + r_1 \to r_3} &\begin{bmatrix}
+                -1 & 0 & 0\\
+                0 & -1 & 1\\
+                0 & 1 & -1
+            \end{bmatrix} \\
+            \xrightarrow{r_3 + r_2 \to r_3} &\begin{bmatrix}
+                -1 & 0 & 0\\
+                0 & -1 & 1\\
+                0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        We can see that the eigenvectors of $A$ corresponding to $\lambda = 2$ are of the form $\begin{bmatrix}
+            0\\
+            1\\
+            1
+        \end{bmatrix}$.\\
+        We can call this eigenspace as $E_{2}$.\\
+        Thus we can see that the sets $E_{0}$, $E_{1}$, and $E_{2}$ are lineanrly independent sets, thus $E_{0} \cup E_{1} \cup E_{2}$ is also linearly independent. \\
+        Since the largest linearly independent combination of vectors in the set $E_{0} \cup E_{1} \cup E_{2}$ is of size 3, and $P_2(R)$ has dimension 3, we can see that the eigenvectors of $A$ are a basis for $P_2(R)$.\\
+        Thus our basis $\beta$ is $\setof{\begin{bmatrix}
+            0\\
+            -1\\
+            1
+        \end{bmatrix}, \begin{bmatrix}
+            -1\\
+            1\\
+            1
+        \end{bmatrix}, \begin{bmatrix}
+            0\\
+            1\\
+            1
+        \end{bmatrix}}$
+    \end{solution}
+    
+    
+    \question[10] Sec. 5.2 Question 13
+    Let $T$ be an invertible linear operator on a finite dimensional vector space $V$
+    \begin{parts}
+        \part Recall that for any eigenvalue $\lambda$ of $T$, $\lambda^-1$ is an eigenvalue of $T^-1$. Prove that the eigenspace of $T$ corresponding to $\lambda$ is the same as the eigenspace of $T^-1$ corresponding to $\lambda^-1$.
+        \part Prove that if $T$ is diagonalizable, then $T^-1$ is also diagonalizable.
+    \end{parts}
+    \begin{solution}
+        \textbf{Part (a)}\\
+        Suppose $\lambda$ is an eigenvalue of $T$ and $v$ is an eigenvector of $T$ corresponding to $\lambda$.\\
+        Then we have $T(v) = \lambda v$.\\
+        We can apply $T^{-1}$ to both sides to get $T^{-1}(T(v)) = T^{-1}(\lambda v)$.\\
+        This implies that $v = \lambda T^{-1}(v)$.\\
+        Thus we have that $\lambda^{-1} v = T^{-1}(v)$.\\
+        Thus $v$ is an eigenvector of $T^{-1}$ corresponding to $\lambda^{-1}$.\\
+        Thus the eigenspace of $T$ corresponding to $\lambda$ is the same as the eigenspace of $T^{-1}$ corresponding to $\lambda^{-1}$.\\
+        \textbf{Part (b)}\\
+        Suppose $T$ is diagonalizable.\\
+        Then we have that $T = L_A$ for some matrix $A$.\\
+        Let $Q$ be the matrix such that $Q^{-1}AQ = D$ where $D$ is a diagonal matrix.\\
+        We can see that $T^{-1} = L_{A^{-1}}$.\\
+        We can see that $Q^{-1}A^{-1}Q = D^{-1}$.\\
+        Thus $T^{-1}$ is diagonalizable.
+    \end{solution}
+
+    \question[10] Sec. 5.2 Question 21
+    Let $W_1, W_2, W_3, \ldots, W_k$ be subspaces of finite-dimensional vector space $V$ such that 
+    $$ \sum_{i=1}^{k} W_i = V$$
+    Prove that $V$ is that direct sum of $W_1, W_2, W_3, \ldots, W_k$ if and only 
+    $$ dim(V) = \sum_{i=1}^{k} dim(W_i)$$
+    \begin{solution}
+        \textbf{Proof of $\implies$:}\\
+        Suppose $V$ is the direct sum of $W_1, W_2, W_3, \ldots, W_k$.\\
+        Need to show that $dim(V) = \sum_{i=1}^{k} dim(W_i)$.\\
+        Let $\gamma_i$ be a basis for $W_i$.\\
+        Since all $\gamma_i$ are linearly independent and $\gamma_i \cap \gamma_j = \emptyset$ for $i \neq j$, we can see that $\gamma = \gamma_1 \cup \gamma_2 \cup \ldots \cup \gamma_k$ is a basis for $V$.\\
+        Thus $dim(V) = |(\gamma)| = \sum_{i=1}^{k} dim(W_i)$.\\
+        Note that I use $|(\gamma)|$ to denote the number of elements in the basis $\gamma$. I frankly don't know if this is allowed but know I am denoting it as such.\\\\
+        \textbf{Proof of $\impliedby$:}\\
+        Suppose $dim(V) = \sum_{i=1}^{k} dim(W_i)$.\\
+        Need to show that $V$ is the direct sum of $W_1, W_2, W_3, \ldots, W_k$.\\
+        Let $\gamma_i$ be a basis for $W_i$.\\
+        Since $V = \sum_{i = 1}^{k} W_i$, we can see that $\forall v \in V$, $v = \sum_{i = 1}^{k} w_i$ for some $w_i \in W_i$.\\
+        Thus $\gamma = \gamma_1 \cup \gamma_2 \cup \ldots \cup \gamma_k$ is a generating set for $V$.\\
+        Since $dim(V) = \sum_{i=1}^{k} dim(W_i)$
+        Then $\sum_{i=1}^{k} dim(W_i) = \sum_{i=1}^{k}dim(span(\gamma_i)) = dim(span(\gamma)) = |(\gamma)|$.\\
+        Since $|(\gamma)| = dim(V)$, so we can see that the size of $\gamma$ is the same as the dimension of $V$. and thus by theorem 5.9 we can see that $V$ is the direct sum of $W_1, W_2, W_3, \ldots, W_k$.
+    \end{solution}
+
+    \question[10] Sec. 5.2 Question 22
+    Let $V$ be a finite dimensional vector space with a basis $\beta$ and let $\beta_1 , \dots, \beta_k$ be a partition of $\beta$ (ie $\beta_1, \dots, \beta_k$ are subsets of $\beta$ such that $\beta = \beta_1 \cup \dots \cup \beta_k$ and $\beta_i \cap \beta_j = \emptyset$ for $i \neq j$). Prove that $V = span{\beta_1} \oplus \dots \oplus span{\beta_k}$ 
+    \begin{solution}
+        We need to prove that $V = span{\beta_1} + \dots + span{\beta_k}$ and $span(\beta_i) span(\beta_j) = 0$ for $i \neq j$\\
+        Clearly the $span{\beta_i} \cap span(\beta_j) = 0$ for $i \neq j$ since $\beta_i \cap \beta_j = \emptyset$.\\
+        We can see that $V = span{\beta_1} + \dots + span{\beta_k}$ since $\beta = \beta_1 \cup \dots \cup \beta_k$.\\
+        Thus $V = span{\beta_1} \oplus \dots \oplus span{\beta_k}$.
+    \end{solution}
+    \end{questions}
+
+    
+\end{document}

@@ -1,0 +1,92 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:478}
+\newcommand{\assignment}{Homework 3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question Question 1.\\
+    In the class we showed that, if \( S \) and \( T \) are independent exponential random variables, having rates \( \lambda \) and \( \mu \), then \(\min\{S, T\} \approx \text{exponential}(\lambda + \mu)\), and \( P(S < T) = \frac{\lambda}{\lambda + \mu} \). Extend these results to show that, if \( T_1, \ldots, T_n \) are independent exponential \((\lambda_i)\) distributed random variables, then \(\min\{T_1, \ldots, T_n\} \sim \text{exponential} (\lambda_1 + \cdots + \lambda_n)\), and \( P(T_i = \min (T_1, \ldots, T_n)) = \frac{\lambda_i}{\lambda_1 + \cdots + \lambda_n} \).
+    \begin{solution}
+        To show that \(\min\{T_1, \ldots, T_n\} \sim \text{exponential} (\lambda_1 + \cdots + \lambda_n)\), we can use the memoryless property of the exponential distribution. We can see for the 2 element case that 
+        \begin{align*}
+            P(\min\{T_1, T_2\} > t) &= P(T_1 > t, T_2 > t)\\
+            &= P(T_1 > t)P(T_2 > t) \text{ (independence)}\\
+            &= e^{-\lambda_1 t}e^{-\lambda_2 t}\\
+            &= e^{-(\lambda_1 + \lambda_2)t}
+        \end{align*}
+        And clealry the only way that this is possible is if the minimum of the two is exponential with rate \(\lambda_1 + \lambda_2\). We can extend this to the \(n\) element case. \\
+        \begin{align*}
+            P(\min\{T_1, \ldots, T_n\} > t) &= P(T_1 > t, \ldots, T_n > t)\\
+            &= P(T_1 > t) \cdots P(T_n > t) \text{ (independence)}\\
+            &= e^{-\lambda_1 t} \cdots e^{-\lambda_n t}\\
+            &= e^{-(\lambda_1 + \cdots + \lambda_n)t}
+        \end{align*}
+        Clearly this is the CDF of an exponential distribution with rate \(\lambda_1 + \cdots + \lambda_n\).\\
+        Thus we have shown that \(\min\{T_1, \ldots, T_n\} \sim \text{exponential} (\lambda_1 + \cdots + \lambda_n)\).\\\\
+        Now to show that \( P(T_i = \min (T_1, \ldots, T_n)) = \frac{\lambda_i}{\lambda_1 + \cdots + \lambda_n} \), we can use the same logic as above. We can see that for the two element case that the probability that \(S < T\) is the proportion of the rate of \(S\) to the sum of the rates of \(S\) and \(T\). We can extend this to the \(n\) element case.\\
+        \begin{align*}
+            P(T_i = \min (T_1, \ldots, T_n)) &= P(T_i < T_1, \ldots, T_i < T_{i-1}, T_i < T_{i+1}, \ldots, T_i < T_n)\\
+            &= P(T_i < T_1) \cdots P(T_i < T_{i-1})P(T_i < T_{i+1}) \cdots P(T_i < T_n)\\
+            &= \frac{\lambda_i}{\lambda_1 + \cdots + \lambda_n}
+        \end{align*}
+    \end{solution}
+    \newpage
+
+    \question Question 2.\\
+    A spacecraft can keep traveling if at least two of its three engines are working. Suppose that the failure times of the engines are exponential with means 1 year, 1.5 years, and 3 years. What is the average length of time the spacecraft can travel? Hint: Use the results stated in problem 1.
+    \begin{solution}
+        We can let \(T_1, T_2, T_3\) be the failure times of the engines. Each $T_i$ is exponentially distributed with \(\lambda = 1, 2/3, 1/3\) respectively.
+        By the memoryless property of the exponential distribution, the time until the first engine fails is exponentially distributed with rate \(\lambda_1 + \lambda_2 + \lambda_3 = 2\). Thus the mean time of the first engine failing is 0.5 years.\\ 
+        Now for the average time for the second failure of the engine would be each of the remaining engines failing in the following cases: \\\\
+        If the first engine fails at time \(t\) it will happen with probability \(\frac{1}{2}\). Then the remaining two engines have a failure rate of \(\lambda_2 + \lambda_3 = 1\). Thus the mean time for the second engine to fail is \(1\) years.\\
+        If the second engine fails at time \(t\), it will happen with probability \(\frac{1}{3}\). Then the remaining two engines have a failure rate of \(\lambda_1 + \lambda_3 = 4/3\). Thus the mean time for the second engine to fail is \(3/4\) years.\\
+        If the third engine fails at time \(t\), it will happen with probability \(\frac{1}{6}\) Then the remaining two engines have a failure rate of \(\lambda_1 + \lambda_2  = 5/3 \) Thus the mean time for the second engine to fail is \(3/5\) years.\\
+        Now we can calculate the average time the spacecraft can travel by adding the mean times of each of the engines failing.
+        \begin{align*}
+            \text{Average time spacecraft can travel} &= 0.5 + \frac{1}{2} \cdot 1 + \frac{1}{3} \cdot \frac{3}{4} + \frac{1}{6} \cdot \frac{3}{5}\\
+            &= 0.5 + 0.5 + 0.25 + 0.10\\
+            &= 1.35 \text{ years}
+        \end{align*}
+        Thus the average time the spacecraft can travel is 1.35 years.
+    \end{solution}
+
+    \question Question 3.\\
+    In good years, storms occur according to a Poisson process with rate 3 per unit time, while in other years they occur according to a Poisson process with rate 5 per unit time. Suppose next year will be a good year with probability 0.3. Let \( N(t) \) denote the number of storms during the first \( t \) time units of next year.
+    \begin{parts}
+        \part Find \(P\{N(t) = n\}\)
+        \part Is \(N(t)\) a Poisson process? 
+        \part Does \(N(t)\) have stationary increments? Why or why not?
+        \part Does \(N(t)\) have independent increments? Why or why not?
+        \part If next year starts off with 3 storms by time t=1 what is the conditional probabilty next year will be a good year?
+    \end{parts}
+\begin{solution}
+    \begin{parts}
+        \part We can use law of total probability to find \(P\{N(t) = n\}\). We can see that
+        \begin{align*}
+            P\{N(t) = n\} &= P\{N(t) = n | \text{good year}\}P\{\text{good year}\} + P\{N(t) = n | \text{bad year}\}P\{\text{bad year}\}\\
+            &= \frac{(3t)^n}{n!}0.3 + e^{-5t}\frac{(5t)^n}{n!}0.7
+        \end{align*}
+        \part \(N(t)\) is not a Poisson process because the rate of the process changes with time since there are good days and bad days 
+        \part \(N(t)\) 
+    \end{parts}
+\end{solution}
+
+
+
+
+
+\end{questions}
+
+\end{document}

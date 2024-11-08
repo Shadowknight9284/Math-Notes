@@ -1,0 +1,94 @@
+\documentclass[a4paper,answers,12pt,addpoints]{exam}
+\usepackage{import}
+% \usepackage[margin = .5in, footskip-.25in]{geometry}
+
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Cheat Sheet}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+
+\renewcommand{\arraystretch}{1.75}
+\renewcommand{\arraystretch}{1.75}
+\begin{table}[h!]
+  \centering
+  Important Distributions:
+  \begin{tabular}{c|c|c|c|c}
+  \textbf{Dist} & \textbf{PDF} & \textbf{Mean} & \textbf{Var} & \textbf{MGF} \\
+  \hline
+  \textbf{Normal} & $\frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right), -\infty<x<\infty$ & $\mu$ & $\sigma^2$ & $\exp\left(\mu t + \frac{1}{2}\sigma^2 t^2\right)$ \\
+  \hline
+  \textbf{Gamma} & $\frac{1}{\beta^\alpha\Gamma(\alpha)}x^{\alpha-1}e^{-x/\beta}, x>0$ & $\alpha\beta$ & $\alpha\beta^2$ & $(1-\beta t)^{-\alpha}$ \\
+  \hline
+  \textbf{Chi-square} & $\frac{1}{2^{\nu/2}\Gamma(\nu/2)}x^{(\nu-2)/2}e^{-x/2}, x>0$ & $\nu$&$2\nu$ & $(1-2t)^{-\nu/2}$\\
+  \hline
+  \textbf{Exponential} & $\frac{1}{\lambda}e^{-x/\lambda}, x>0$ & $\lambda$ & $\lambda^2$ & $(1-\lambda t)^{-1}$\\
+  \hline
+  \textbf{Uniform} & $\frac{1}{\beta-\alpha}, \alpha<x<\beta$ & $\frac{\alpha+\beta}{2}$ & $\frac{(\beta-\alpha)^2}{12}$ & $\frac{e^{\beta t}-e^{\alpha t}}{t(\beta-\alpha)}$ \\
+  \hline
+  \textbf{Bernoulli} & $p^x(1-p)^{1-x}, x=0,1$ & $p$ & $p(1-p)$ & $(1-p) + pe^{t}$\\
+  \hline
+  \textbf{Binomial} & $\binom{n}{x}p^{x}(1-p)^{n-x}, x=0,1,2,\dots,n$ & $np$ & $np(1-p)$ & $(1+p(e^t-1))^n$ 
+ \end{tabular}
+\end{table}
+\renewcommand{\arraystretch}{1}
+\begin{center}
+    Information
+\end{center}
+\textbf{Gamma:} $\Gamma(\alpha) = \int_0^\infty x^{\alpha-1}e^{-x}dx$, $\Gamma(n) = (n-1)!$ and $\Gamma(n) = (n-1)\Gamma(n-1)$\\
+\textbf{Standard normal:} If $X \sim N(\mu, \sigma^2)$, then $Z = \frac{X-\mu}{\sigma} \sim N(0,1)$\\
+\textbf{CLT of Bionomial:} If $X \sim B(n,p)$, then $\frac{X-np}{\sqrt{np(1-p)}} \sim N(0,1)$\\
+\textbf{{Sample Mean:}} 
+$$\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$$
+\textbf{Mean:} $\mu$ \textbf{Var:} $\frac{\sigma^2}{n}$ \textbf{Dist:} $\bar{X}\sim N(\mu, \sigma^2/n)$\\\\
+\textbf{{Sample Variance:}} 
+$$S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})^2$$
+\textbf{Mean:} $\sigma^2$ \textbf{Var:} $\frac{2\sigma^4}{n-1}$ \textbf{Dist:} $(n-1)S^2/\sigma^2 \sim \chi^2_{n-1}$\\
+\textbf{Note:} $\bar{X}$ and $S^2$ are independent.\\
+\textbf{Imp Identity:} 
+$$\sum_{i=1}^n (X_i - \bar{X})^2 = \sum_{i=1}^n (X_i - \mu)^2 - n(\bar{X} - \mu)^2$$
+\begin{center}
+    Important Theorems
+\end{center}
+\textbf{Chebyshev's} 
+$$\mathbb{P}(|X-\mu|< k) \geq 1 - \frac{\sigma^2}{k^2} \text{ and } \mathbb{P}(|X-\mu|< k\sigma) \geq 1 - \frac{1}{k^2}$$
+\textbf{Weak Law of large numbers:} $P(|\bar{X} - \mu_{pop}| < k ) \geq 1 -\frac{\sigma^2_{pop}}{nk^2} $\\
+\textbf{Central Limit Theorem:} if $X_i ... X_n$ are iid from any pop w/$(\mu, \sigma^2)$ $Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$ as $n \to \infty$\\
+\textbf{S. Normal squared:} If $X \sim N(0,1)$, then $X^2 \sim \chi^2_1$\\
+\textbf{Sum S. Normal Squared:} If $X_1, X_2 ... X_n$ are iid $N(0,1)$, then $\sum_{i=1}^n X_i^2 \sim \chi^2_n$\\
+\textbf{Order Statistics:} $X_{(1)} < X_{(2)} < ... < X_{(n)}$. It is the $r$th item of a sample of $n$. 
+$$f_{X_{(r)}}(x) = \frac{n!}{(r-1)!(n-r)!}F(x)^{r-1}(1-F(x))^{n-r}f(x)$$
+$$=\frac{n!}{(r-1)!(n-r)!}f(x)\int_{-\infty}^x f(y)dy^{r-1}\int_x^\infty f(y)dy^{n-r}$$\\
+\textbf{Unbiased Estimator}: $\mathbb{E}[\hat{\theta}] = \theta$\\
+\textbf{Asymtotically unbiased:} $\lim_{n\to\infty} \mathbb{E}[\hat{\theta}] = \theta$\\
+\textbf{Max Likelihood:} $\hat{\theta}$ is max of $L(\theta) = \prod_{i=1}^n f(x_i|\theta)$ or $l(\theta) = \sum_{i=1}^n \log f(x_i|\theta)$\\
+
+\begin{center}
+    Important identities:
+\end{center}
+\textbf{Expectation:} $\int_{-\infty}^\infty xf(x)dx$\\
+$$\mathbb{E}[aX+bY+c] = a\mathbb{E}[X] + b\mathbb{E}[Y] + c$$
+\textbf{Variance:}  $Var(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2$\\
+$$\text{Var}(aX+bY+c) = a^2\text{Var}(X) + b^2\text{Var}(Y) + 2ab\text{Cov}(X,Y)$$
+ We can remove Cov if X,Y are independent\\
+\textbf{Covariance:} $\text{Cov}(X,Y) = \mathbb{E}[(X-\mu_X)(Y-\mu_Y)]$\\
+$$\text{Cov}(X,Y) = \int_R \int_S (x-\mu_X)(y-\mu_Y)f(x,y)dxdy$$ 
+$$Y = \sum a_i X_i \text{ then } Var[Y] = \sum a^2_i Var[X_i] + 2\sum_{i<j} a_ia_j Cov[X_i, X_j]$$ 
+$$Y = \sum a_i X_i, Z = \sum b_i X_i \text{ then }Cov[Y,Z] = \sum a_ib_i Var[X_i] + \sum \sum_{i<j} (a_ib_j + a_jb_i) Cov[X_i, X_j]$$
+\textbf{MGF:} 
+$$M_X(t) = \mathbb{E}[e^{tX}]$$
+$$M_{aX+bY+c}(t) = e^{ct}M_X(at)M_Y(bt)$$
+if Y and X are independent \\
+$$\frac{d^r}{dt^r} M_X(t = 0) = \mu_r' $$ rth moment of X\\ 
+
+
+
+
+
+\end{document}

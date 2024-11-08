@@ -1,0 +1,153 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:423}
+\newcommand{\assignment}{Chapter 6}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\section*{Chapter 6}
+\begin{align*}
+    u &= u(x,y)\\
+    \Delta u &= u_{xx} + u_{yy}\\
+\end{align*}
+\begin{definition}[Weak Max Principle]
+    $D \subset \mathbb{R}^2$ is open, bounded, connected. $\Delta u = 0$ in $D$. $u$ is continuous on $\bar{D}$.\\
+    Then $\max_{\bar{D}} u = \max_{\partial D} u$.
+\end{definition}
+\begin{remark}
+    Also hold for min \\
+    Analogous to max principle for the heat equation. and the proof is similar.\\
+    Strong max principle says max (or min) cannot be achieved in the interior of $D$ unless $u$ is constant\\
+    $\partial D$ and $\bar{D}$ are closed and bounded sets; $u$ is continuous here. max and min are achieved here. (by extreme value theorem)\\
+\end{remark}
+\textbf{Idea:} If max is attained at $p \in D$ then $u_{xx}(p) \leq 0$, $u_{yy}(p) \leq 0$\\
+Typically inequality is strict. $\implies \Delta u(p) < 0$ which is a contradiction \\
+What to do when $\Delta u = 0$?\\ 
+if wwe had $\Delta u > 0$ in $D$ we will det the desired contradiction.\\
+\begin{proof}
+    \begin{align*}
+        v(x,y) &= u(x,y) + \epsilon(x^2 + y^2)\\
+        \Delta v &= \Delta u + 4\epsilon\\
+        \Delta v &= 0 + 4\epsilon > 0 \text{ in } D \text{ for } \epsilon > 0\\
+    \end{align*}
+    $$\max_{\bar{D}} v \text{ is achieved on } \partial D \text{ at } p_0 = (x_0,y_0) \in \partial D$$
+    $$ u \leq v \leq v(p_0) = u(p_0) + \epsilon(x_0^2 + y_0^2) \leq \max_{\partial D} u + \epsilon$$
+    $\bar{D} $ is bounded. $\exists R > 0$ such that $|(x,y)| \leq R$ for all $(x,y) \in \bar{D}$\\
+    Thus for any $(x,y) \in \bar{D}$, $u(x,y) \leq \max_{\partial D} u + \epsilon R$\\
+    This is true for all $\epsilon > 0$\\
+    Thus as $\epsilon \to \epsilon$\\
+    \begin{align*}
+        \max(\bar{D}) u &\leq \max(\partial D) u\\
+        \max(\bar{D}) u &\geq \max(\partial D) u\\
+    \end{align*}
+\end{proof}
+\begin{corollary}[Uniqueness]
+    $$\begin{cases}
+        \Delta u = f \text{ in } D\\
+        u = g \text{ on } \partial D\\
+    \end{cases}$$
+    Where f, g are continuous. and $u$ is continous in $D$. This Dirichilet problem has at most one solution.\\
+    $D$ is open, bounded, connected.\\
+    \begin{proof}
+        suppose $u_1$ and $u_2$ are two solutions.\\
+        Let $u = u_1 - u_2$\\
+        $$\begin{cases}
+            \Delta u = 0 \text{ in } D\\
+            u = 0 \text{ on } \partial D\\
+        \end{cases}$$
+        by max principle, $\max(\bar{D}) u = \max(\partial D) u = 0$\\
+        by min principle, $\min(\bar{D}) u = \min(\partial D) u = 0$\\
+    \end{proof}
+\end{corollary}
+\begin{definition}[Invariance]
+    $\Delta$ is invariant under rigid motions: translations and rotation:\\
+    IE 
+    Do a change of variables $x' = x + a$, $y' = y + b$\\
+    $$u_{xx} + u_{yy} = 0 \implies u_{x'x'} + u_{y'y'} = 0$$
+    $$ \Delta = \Delta' $$
+    $$\begin{bmatrix}
+        x'\\
+        y'\\
+    \end{bmatrix} = \begin{bmatrix}
+        \cos(\theta) & -\sin(\theta)\\
+        \sin(\theta) & \cos(\theta)\\
+    \end{bmatrix} \begin{bmatrix}
+        x\\
+        y\\
+    \end{bmatrix}$$
+    $$u_{xx} + u_{yy} = 0 \implies u_{x'x'} + u_{y'y'} = 0$$
+    $$ \Delta = \Delta' $$
+    $$\Delta u = u_{rr} + \frac{1}{r} u_r + \frac{1}{r^2} u_{\theta\theta}$$
+    This is clearly invariant under rotation.\\
+\end{definition}
+In physical problems, $\Delta$ is used to model isotropic phenomena.\\
+Isoptropic meaning the same in all directions.\\
+Conductivity equation: \\
+$u$ is electric potential, \\
+$-\nabla u = E$ is the electric field.\\
+$div(\sigma \nabla u ) = 0$ in $D$ where $\sigma$ is a matrix function.\\
+Search for soluntion to $\Delta u = 0$ in $D$ that is rotationally invariant.\\
+\begin{align*}
+    u &= u(r)\\
+    \Delta u &= u_{rr} + \frac{1}{r} u_r\\
+    \Delta u &= 0 \implies u_{rr} + \frac{1}{r} u_r = 0\\
+    u_r + \frac{1}{r} u = C_1\\
+    u = C_1 \ln(r) + C_2\\
+    u = \frac{1}{2} ln(x^2 + y^2) \\
+\end{align*} 
+The last line is called the fundamental solution to $\Delta u = 0$ in $\mathbb{R}^2$\\
+In $\mathbb{R}^3$, we have the ODE $\frac{1}{r} \frac{\partial }{\partial r} (r^2 \frac{\partial u}{\partial r}) = 0$\\
+\begin{align*}
+    u &= u(r)\\
+    \Delta u &= u_{rr} + \frac{2}{r} u_r\\
+    \Delta u &= 0 \implies u_{rr} + \frac{2}{r} u_r = 0\\
+    u_r + \frac{2}{r} u = C_1\\
+    u = C_1 r + C_2\\
+    u = \frac{1}{r} \\
+    u = \frac{1}{\sqrt{x^2 + y^2 + z^2}}
+\end{align*}
+This is the fundamental solution to $\Delta u = 0$ in $\mathbb{R}^3$\\
+In $3D$ u is the electric potential of a unit charge a the origin. 
+\section{Poission's Formula}
+In 2D $D = \setof{r < 1 \text{ and } -\pi \leq \theta < \pi}$\\
+$$\begin{cases}
+    \Delta u = 0 \text{ in } D\\
+    u = f \text{ on } \partial D\\
+\end{cases}$$
+$$ u = \frac{a_0}{2} + \sum_{n=1}^{\infty} r^n (a_n \cos(n\theta) + b_n \sin(n\theta))$$
+$$f(\theta) = u(1,\theta) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos(n\theta) + b_n \sin(n\theta)$$
+$$a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(\theta) \cos(n\theta) d\theta$$
+$$b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(\theta) \sin(n\theta) d\theta$$
+We can now calulate this series explicitly.\\
+\begin{align*}
+    u(r,\theta) &= \frac{1}{\pi} \int_{-\pi}^{\pi} r^n f(\theta) \left(\cos(n\theta)\cos(n\phi) + \sin(n\theta)\sin(n\phi)\right)d\phi + \frac{1}{2} \int_{-\pi}^{\pi} f(\phi)d\phi\\
+    &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(\theta) \cos(n(\theta - \phi))d\phi + \frac{1}{2} \int_{-\pi}^{\pi} f(\phi)d\phi\\
+    &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(\theta) \left[\frac{1}{2} + \sum_{n=1}^\infty r^n \cos(n(\theta - \phi))\right] d\phi
+\end{align*}
+Now consider the complex exponential $e^{in\theta}$\\
+\begin{align*}
+    z &= re^{i(\theta -\phi)}\\
+    z^n &= r^n e^{in(\theta - \phi)}\\
+    Re(z^n) &= r^n \cos(n(\theta - \phi))\\
+    \frac{1}{2} + Re\sum_{n=1}^\infty z^n &= \frac{1}{2} + Re\left(\frac{z}{1-z}\right)\\
+    &= Re\left(\frac{1-z +2z}{2(1-z)}\right)\\
+    &= \frac{1}{2}Re\left(\frac{1+z}{1-z}\right)\\
+    &= \frac{1}{2} \left( \frac{1- |z|^2}{|1-z|^2}\right)\\
+    &= \frac{1}{2} \frac{1 - r^2}{1 - 2Re(z) + |z|^2}\\
+    &= \frac{1}{2} \frac{1 - r^2}{1 - 2r\cos(\theta - \phi) + r^2}\\
+\end{align*}
+$$ u(r,\theta) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(\phi) P(r,\theta - \phi) d\phi$$
+Where $P(r,\theta) = \frac{1 - r^2}{1 - 2r\cos(\theta) + r^2}$ is the Poission Kernel.\\
+
+
+
+
+
+\end{document}

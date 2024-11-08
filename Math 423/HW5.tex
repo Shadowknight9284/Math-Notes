@@ -1,0 +1,344 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:423}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question 4.2 2
+    Consider the equation \( u_{tt} = c^2 u_{xx} \) for \( 0 < x < l \), with the boundary conditions \( u_x(0,t) = 0 \), \( u(l, t) = 0 \) (Neumann at the left, Dirichlet at the right).
+    \begin{parts}
+        \item Show that the eigenfunctions are \( \cos[(n+\frac{1}{2})\pi x/l] \) 
+        \item Write the series expansion of the solution \( u(x,t) \)
+    \end{parts}
+    \begin{solution}
+        \textbf{Part a} \\
+        Since the wave equation and BC are linear homogenous, we can use seperation of variables. Let \( u(x,t) = X(x)T(t) \). Then, we have
+        \[ \frac{T''}{c^2T} = \frac{X''}{X} = \alpha \]
+        Then, we have
+        \begin{align*}
+            T'' - c^2\alpha T &= 0 \\
+            X'' - \alpha X &= 0
+        \end{align*}
+        The boundary conditions are \( X'(0) = 0 \) and \( X(l) = 0 \). \\
+        We can then consider the ODE of \( X \). Clearly we must have $\alpha < 0 $ for non trivial solutions. Thus with $\alpha = -\lambda^2$, we have
+        \begin{align*}
+            X'' - \alpha X &= 0 \\
+            X'(0) &= 0 \\
+            X(l) &= 0
+        \end{align*}
+        \[ X(x) = c_1 \cos(\lambda x) + c_2 \sin(\lambda x) \] 
+        With the boundary conditions, we have
+        \begin{align*}
+            X'(0) &= -c_1\lambda\sin(0) + c_2\lambda\cos(0) = 0 \\
+            X(l) &= c_1\cos(\lambda l) + c_2\sin(\lambda l) = 0
+        \end{align*}
+        Clealry $c_2 = 0$ by the first BC and $cos(\lambda l) = 0$ by the second BC. Thus, we have
+        \[ \lambda = \frac{(2x+1)\pi}{2l} \]
+        Thus, the eigenfunction are \( \cos[(n+\frac{1}{2})\pi x/l] \)\\
+        \textbf{Part b} \\
+        Now we need to consider the ODE for \( T \). We have
+        \[ T'' + c^2\lambda^2T = 0 \]
+        The general solution is
+        \[ T(t) = c_3\cos(c\lambda t) + c_4\sin(c\lambda t) \]
+        Thus, the general solution is
+        \begin{align*}
+            u(x,t) &= \sum_{n=0}^{\infty}X(x)T(t)\\
+            &= \sum_{n=0}^{\infty} \left[ c_3\cos(c\lambda t) + c_4\sin(c\lambda t) \right] \cos\left[ \lambda x \right]\\
+            &= \sum_{n=0}^{\infty} \left[ A_n \cos\left( \frac{(2n+1)\pi c t}{2l} \right) + B_n \sin\left( \frac{(2n+1)\pi c t}{2l} \right) \right] \cos\left[ \frac{(2n+1)\pi x}{2l} \right]
+        \end{align*}
+    \end{solution}
+    \question 4.3 2
+    Consider the eigenvalue problem with Robin BC at both ends:
+    \begin{align*}
+        -X'' &= \lambda X \\
+        X'(0) - a_0X(0) = 0, &\quad X'(l) + a_1X(l) = 0
+    \end{align*}
+    \begin{parts}
+        \item Show that $\lambda = 0$ iff $a_0 + a_1 = -a_0a_1l$
+        \item Find the eigenfunctions corresponding to the zero eigenvalue
+    \end{parts}
+    \begin{solution}
+        \textbf{Part a} \\
+        If $\lambda = 0$, then we have
+        \begin{align*}
+            -X'' &= 0 \\
+            X'(0) - a_0X(0) &= 0 \\
+            X'(l) + a_1X(l) &= 0
+        \end{align*}
+        The general solution is
+        \[ X(x) = c_1X + c_2 \]
+        Then, we have
+        \begin{align*}
+            X'(0) - a_0X(0) &= c_1 - a_0c_2 = 0 \\
+            X'(l) + a_1X(l) &= c_1 + a_1(c_1 l + c_2) = 0
+        \end{align*}
+        Solving for $c_1$ , we have
+        \begin{align*}
+            c_1 &= a_0c_2 \\
+        \end{align*}
+        Substituting back in, we have
+        \begin{align*}
+            a_0c_2 + a_1(a_0c_2 l + c_2) &= 0 \\
+            c_2(a_0 + a_0a_1l + a_1) &= 0\\
+            a_0 + a_1 &= -a_0a_1l 
+        \end{align*}
+        \textbf{Part b} \\
+        If $\lambda = 0$, then we have
+        \begin{align*}
+            X(x) &= c_1x + c_2\\
+            &= a_0x +1
+        \end{align*}
+
+    \end{solution}
+
+    \question 4.3 15
+    Find the equation for the eigenvalues $\lambda$ of the problem
+    \[ (\kappa(x) X' )' + \lambda \rho X = 0 \quad \text{for } 0 < x < l \text{ with } X(0) = X(l) = 0 \]
+    where $\kappa(x) = \kappa_1^2$ for $x<a$ and $\kappa(x) = \kappa_2^2$ for $x>a$. and $\rho(x) = \rho_1^2$ for $x<a$ and $\rho(x) = \rho_2^2$ for $x>a$. where all these constants are positive and $0 < a < l$.
+    \begin{solution}
+        We have 
+        $$\begin{cases}
+            \kappa_1^2 X'' +\lambda \rho_1^2 X = 0 \quad x < a \\
+            \kappa_2^2 X'' +\lambda \rho_2^2 X = 0 \quad x > a
+        \end{cases}$$
+        $$\begin{cases}
+            X'' = -\frac{\lambda \rho_1^2}{\kappa_1^2} X  \quad x < a \\
+            X'' = -\frac{\lambda \rho_2^2}{\kappa_2^2} X \quad x > a
+        \end{cases}$$
+        We can now consider the cases of the sign of $\lambda$.
+        \textbf{Case 1: $\lambda = \mu^2$} \\
+        Then we have
+        $$\begin{cases}
+            X = C_1 cos(\mu\frac{\rho_1}{\kappa_1}x) + C_2 sin(\mu\frac{\rho_1}{\kappa_1}x) \quad x < a \\
+            X = C_3 cos(\mu\frac{\rho_2}{\kappa_2}x) + C_4 sin(\mu\frac{\rho_2}{\kappa_2}x) \quad x > a
+        \end{cases}$$
+        Now applying the BC: (for sake of ease consider $\alpha_1 = \mu\frac{\rho_1}{\kappa_1}$ and $\alpha_2 = \mu\frac{\rho_2}{\kappa_2}$)
+        \begin{align*}
+            X(0) &= 0 = C_1 \\
+            X(l) &= 0 = C_3 \cos(\alpha_2 l) + C_4 \sin(\alpha_2 l) \implies C_3 = -C_4 \frac{\sin(\alpha_2 l)}{\cos(\alpha_2 l)} = -C_4 \tan(\alpha_2 l)
+        \end{align*}
+        Now our solution is
+        $$\begin{cases}
+            X = C_2 \sin(\alpha_1 x) \quad x < a \\
+            X = C_4 (\sin(\alpha_2 x) - \tan(\alpha_2 )\cos(\alpha_2 x)) \quad x > a
+        \end{cases}$$
+        for a new $C_5 = C_4 \cos(\alpha_2 l)$
+        $$ \begin{cases}
+            X = C_2 \sin(\alpha_1 x) \quad x < a \\
+            X = C_5 \sin(\alpha_2 (x-l))  \quad x > a
+        \end{cases}$$
+        To solve for the last 2 constants we need to satify the following equations:
+        \begin{align*}
+            X(a^-) &= X(a^+) \implies C_2 \sin(\alpha_1 a) = C_5 \sin(\alpha_2 (a-l)) \\
+            X'(a^-) &= X'(a^+) \implies C_2 \alpha_1 \cos(\alpha_1 a) = C_5 \alpha_2 \cos(\alpha_2 (a-l))
+        \end{align*}
+        We can see that $$ \frac{\kappa_1}{\rho_1} \tan(\alpha_1 a) + \frac{\kappa_2}{\rho_2} \tan(\alpha_2 (l-a)) = 0$$ 
+        The zeros of this equation are the eigenvalues.
+        \textbf{Case 2: $\lambda = 0$} \\
+        Then we have $$\begin{cases}
+            X'' = 0 \quad x < a \\
+            X'' = 0 \quad x > a
+        \end{cases}$$
+        The general solution is
+        $$\begin{cases}
+            X = C_1 x + C_2 \quad x < a \\
+            X = C_3 x + C_4 \quad x > a
+        \end{cases}$$
+        Applying the BC, we have
+        \begin{align*}
+            X(0) &= 0 = C_2 \\
+            X(l) &= 0 = C_3 l + C_4 \implies C_4 = -C_3 l
+        \end{align*}
+        And applying the continourity condition, we have 
+        \begin{align*}
+            X(a^-) &= X(a^+) \implies C_1 a &= C_4 (a-l)\\
+            X'(a^-) &= X'(a^+) \implies C_1 &= C_4
+        \end{align*}
+        Thus, we have $C_1 = 0$ and $C_4 = 0$. Thus, the eigenfunctions are trivial and $\lambda = 0$ is not an eigenvalue.
+        \textbf{Case 3: $\lambda = -\mu^2$} \\
+        Then we have
+        $$\begin{cases}
+            X'' = \frac{\mu^2 \rho_1^2}{\kappa_1^2} X \quad x < a \\
+            X'' = \frac{\mu^2 \rho_2^2}{\kappa_2^2} X \quad x > a
+        \end{cases}$$
+        The general solution is
+        $$\begin{cases}
+            X = C_1 cosh(\mu\frac{\rho_1}{\kappa_1}x) + C_2 sinh(\mu\frac{\rho_1}{\kappa_1}x) \quad x < a \\
+            X = C_3 cosh(\mu\frac{\rho_2}{\kappa_2}x) + C_4 sinh(\mu\frac{\rho_2}{\kappa_2}x) \quad x > a
+        \end{cases}$$
+        Applying the bc we have
+        \begin{align*}
+            X(0) &= 0 = C_1 \\
+            X(l) &= 0 = C_3 \cosh(\mu\frac{\rho_2}{\kappa_2}l) + C_4 \sinh(\mu\frac{\rho_2}{\kappa_2}l) \implies C_3 = -C_4 \frac{\sinh(\mu\frac{\rho_2}{\kappa_2}l)}{\cosh(\mu\frac{\rho_2}{\kappa_2}l)} = -C_4 \tanh(\mu\frac{\rho_2}{\kappa_2}l)
+        \end{align*}
+        following similar steps as case 1, we have
+        $$\begin{cases}
+            C_2 \sinh(\mu\frac{\rho_1}{\kappa_1}x) \quad x < a \\
+            C_5 \sinh(\mu\frac{\rho_2}{\kappa_2}(x-l)) \quad x > a
+        \end{cases}$$
+        Thus we get the equation
+        $$ \frac{\kappa_1}{\rho_1} \tanh(\mu\frac{\rho_1}{\kappa_1} a) + \frac{\kappa_2}{\rho_2} \tanh(\mu\frac{\rho_2}{\kappa_2} (l-a)) = 0$$
+        Thus the zeros of the above equation are the eigenvalues but clearly there are none for this case.\\\\
+        Thus the eigenvalues are $\lambda = \mu^2$ where $\mu$ is the solution to the equation
+        $$ \frac{\kappa_1}{\rho_1} \tan(\alpha_1 a) + \frac{\kappa_2}{\rho_2} \tan(\alpha_2 (l-a)) = 0$$
+    \end{solution}
+    \question 5.1 2
+    Let $\phi(x) \equiv x^2$ for $0 \leq x \leq 1 = l$. 
+    \begin{parts}
+        \item Calculate the Fourier sine series of $\phi(x)$
+        \item Calculate the Fourier cosine series of $\phi(x)$
+    \end{parts}
+    \begin{solution}
+        \textbf{Part a} \\
+        We have
+        \begin{align*}
+            \phi(x) &= x^2 \\
+            &= \sum_{n=1}^{\infty} B_n \sin(n\pi x)
+        \end{align*}
+        We can calculate the coefficients as
+        \begin{align*}
+            x^2 &= \sum_{n=1}^{\infty} B_n \sin(n\pi x) \\
+            \int_{0}^{1} x^2 \sin(m \pi x) dx &= \int_{0}^{1} \sum_{n=1}^{\infty} B_n \sin(n\pi x) \sin(m\pi x) dx \\
+            \int_{0}^{1} x^2 \sin(m \pi x) dx &= \sum_{n=1}^{\infty} B_n \int_{0}^{1} \sin(n\pi x) \sin(m\pi x) dx \\
+            \int_{0}^{1} x^2 \sin(n \pi x) dx &= \frac{1}{2} B_n \\
+            B_n &= 2 \int_{0}^{1} x^2 \sin(n\pi x) dx\\
+            B_n &= 2 \frac{-2 + (-1)^n(2-n^2\pi^2)}{n^3\pi^3}
+        \end{align*}
+        Therefore the Fourier sine series of $\phi(x)$ is
+        \[ \sum_{n=1}^{\infty} 2 \frac{-2 + (-1)^n(2-n^2\pi^2)}{n^3\pi^3} \sin(n\pi x) \]
+        \textbf{Part b} \\
+        We have
+        \begin{align*}
+            \phi(x) &= x^2 \\
+            &= \frac{a_0}{2} \sum_{n=1}^{\infty} A_n \cos(n\pi x)
+        \end{align*}
+        We can first calculate $a_0$ as
+        \begin{align*}
+            a_0 &= 2 \int_{0}^{1} x^2 dx \\
+            &= \frac{2}{3}
+        \end{align*}
+        Then we can calculate the coefficients as
+        \begin{align*}
+            x^2 &= \frac{1}{3} + \sum_{n=1}^{\infty} A_n \cos(n\pi x) \\
+            \int_{0}^{1} x^2 \cos(m \pi x) dx &= \int_{0}^{1} \frac{1}{3}\cos(m \pi x) + \sum_{n=1}^{\infty} A_n \cos(n\pi x) \cos(m\pi x) dx \\
+            \int_{0}^{1} x^2 \cos(m \pi x) dx &= \sum_{n=1}^{\infty} A_n \int_{0}^{1} \cos(n\pi x) \cos(m\pi x) dx \\
+            \int_{0}^{1} x^2 \cos(n \pi x) dx &= \frac{1}{2} A_n \\
+            A_n &= 2 \int_{0}^{1} x^2 \cos(n\pi x) dx\\
+            A_n &= \frac{4(-1)^n}{n^2 \pi^2}
+        \end{align*}
+        Therefore the Fourier cosine series of $\phi(x)$ is
+        \[ \frac{1}{3} + \sum_{n=1}^{\infty} \frac{4(-1)^n}{n^2 \pi^2} \cos(n\pi x) \]
+    \end{solution}
+    \question 5.1 9
+    Solve $u_{tt} = c^2 u_{xx}$ for $0 < x < \pi$ with the BC $u_x(0,t) = u_x(\pi,t) = 0$ and the IC $u(x,0) = 0$ and $u_t(x,0) = \cos^2(x)$.
+    \begin{solution}
+        Since BC and PDE are linear homogenous, we can use seperation of variables. Let $u(x,t) = X(x)T(t)$. Then we have
+        \[ \frac{T''}{c^2T} = \frac{X''}{X} = \alpha \]
+        Then we have
+        \begin{align*}
+            T'' - c^2\alpha T &= 0 \\
+            X'' - \alpha X &= 0
+        \end{align*}
+        The boundary conditions are $X'(0) = 0$ and $X(\pi) = 0$. \\
+        We can then consider the ODE of $X$. Clearly we must have $\alpha =< 0 $ for non trivial solutions. Thus with $\alpha = -\lambda^2$, we have
+        \begin{align*}
+            X'' + \lambda^2 X &= 0 \\
+            X'(0) &= 0 \\
+            X(\pi) &= 0
+        \end{align*}
+        \[ X(x) = c_1 \cos(\lambda x) + c_2 \sin(\lambda x) \]
+        With the boundary conditions, we have
+        \begin{align*}
+            X'(0) &= -c_1\lambda\sin(0) + c_2\lambda\cos(0) = 0 \implies c_2 = 0 \\
+            X'(\pi) &= -c_1\lambda\sin(\lambda \pi) + c_2\lambda\cos(\lambda \pi) = 0 \implies \lambda = n
+        \end{align*}
+        Thus, the eigenfunction are $ \cos(n x) $. for the eigenvalues $\alpha = -\lambda^2 $\\
+        Now we need to consider the ODE for $T$. We have
+        \[ T'' + c^2\lambda^2T = 0 \]
+        The general solution is
+        \[ T(t) = c_1 \cos(c\lambda t) + c_2 \sin(c\lambda t) \]
+        Additionally for $\alpha = 0$ we have
+        \[ X(x) = c_1 x + c_2 \]
+        Applying the BC, we have
+        \begin{align*}
+            X'(0) &= 0 = c_1 \\
+            X'(\pi) &= 0 = c_1 
+        \end{align*}
+        Thus, the eigenfunctions are $X_0(x) = C_2 $ and for $T$ we have $T_0(t) = C_5 t + C_6$. 
+        Thus the general solution is
+        \[ u(x,t) = \sum_{n=1}^{\infty} \left[ A_n \cos(n x) \cos(c n t) + B_n \cos(n x) \sin(c n t) \right] + C t + D \] 
+        Now we need to consider the IC. We have
+        \begin{align*}
+            u(x,0) &= 0 = \sum_{n=1}^{\infty} A_n \cos(n x) + D \\
+            \implies A_n &= 0 \quad \text{and} \quad D = 0
+        \end{align*}
+        \begin{align*}
+            u_t(x,0) &= \cos^2(x) = \sum_{n=1}^{\infty} c n B_n \cos(n x) + C
+        \end{align*}
+        Clealry $C = \frac{1}{2}$ and $B_n = \frac{1}{4c} $ for $n =2$ and $0$ otherwise. Thus the solution is
+        \[ u(x,t) = \frac{t}{2} + \frac{1}{4c} \cos(2x) \sin(2ct) \]
+    \end{solution}
+    \question 6.1 5
+    Solve $u_{xx} + u_{yy} = 1$ in $r < a$ with $u(x, y)$ vanishing on $r = a$
+    \begin{solution}
+        The PDE we want to solve is $\Delta u = 1$ \\
+        We can convert to polar since we have $r < a$. We have
+        $$ \Delta u = \frac{\partial^2 u}{\partial r^2} + \frac{1}{r} \frac{\partial u}{\partial r} + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2} = 1$$
+        Since $u$ vanishes on $r = a$, we can consdider the solution are radially symetric. Thus we have
+        $$ \frac{d^2 u}{d r^2} + \frac{1}{r} \frac{d u}{d r} = 1$$
+        We can solve this ODE as
+        $$ r\frac{d^2 u}{d r^2} + \frac{d u}{d r} = r$$
+        $$ \frac{d}{d r}(r\frac{d u}{d r}) = r$$
+        $$ u(r) = \frac{r^2}{4} + C_1ln(r) + C_2$$
+        Applying the BC, we have
+        $$ u(0) = 0 = C_1$$
+        $$ u(a) = 0 = \frac{a^2}{4} + C_2$$
+        Thus, the solution is
+        $$ u(r) = \frac{r^2}{4} - \frac{a^2}{4}$$
+        $$ u(x,y) = \frac{x^2 + y^2 - a^2}{4}$$
+    \end{solution}
+    \question 6.1 11
+    Show that there is no solution of 
+    $$ \Delta u = f \quad \text{in } D , \quad \frac{\partial u}{\partial n} = g \quad \text{on } \partial D$$
+    in three dimensions, unless 
+    $$ \int_{D} f dV = \int_{\partial D} g dS$$
+    \begin{solution}
+        We can use the divergence theorem to show this. We have
+        $$ \int_{D} \Delta u dV = \int_{\partial D} \frac{\partial u}{\partial n} dS \implies \int_{D} f dV = \int_{\partial D} g dS$$
+        Clealry the only way the above equation can hold is if the two integrals are equal. \\\\
+        For 2D we can utilize Green's theorem to show this. We have
+        $$ \int_{D} \Delta u dA = \int_{\partial D} \frac{\partial u}{\partial n} ds \implies \int_{D} f dA = \int_{\partial D} g ds$$
+        Clealry the only way the above equation can hold is if the two integrals are equal.\\\\
+        For 1D, we can utilize the fundamental theorem of calculus to show this. We have
+        $$ \int_{D} \Delta u dx = \int_{\partial D} \frac{\partial u}{\partial n} dx \implies \int_{D} f dx = B - A$$
+    \end{solution}
+    \question 6.2 2
+    Prove that the eigenfunctions $\{sin(my) sin(nz) \}$ are orthogonal on the square $0 < y < \pi$, $0 < z < \pi$ 
+    \begin{solution}
+        To show that the eigenfunctions are orthogonal, we need to show that
+        $$ \int_{0}^{\pi} \int_{0}^{\pi} \sin(my) \sin(nz)  \sin(py) \sin(qz) dy dz = 0 \quad \text{for } m \neq p \text{ or } n \neq q$$
+        We can first seperate the integrals as
+        $$ \int_{0}^{\pi} \sin(my) \sin(py) dy \int_{0}^{\pi} \sin(nz) \sin(qz) dz$$
+        Then we can use the trig identity
+        $$ \sin(a) \sin(b) = \frac{1}{2} \left[ \cos(a-b) - \cos(a+b) \right]$$
+        Thus we have
+        $$ \int_{0}^{\pi} \sin(my) \sin(py) dy = \frac{1}{2} \int_{0}^{\pi} \cos((m-p)y) - \cos((m+p)y) dy$$
+        $$ \int_{0}^{\pi} \sin(nz) \sin(qz) dz = \frac{1}{2} \int_{0}^{\pi} \cos((n-q)z) - \cos((n+q)z) dz$$
+        Once we evaluate the integrals we can see that the integrals are zero for $m \neq p$ or $n \neq q$
+        Therefore the eigenfunctions are orthogonal.
+    \end{solution}
+\end{questions}
+
+\end{document}

@@ -1,0 +1,34 @@
+objdumb - object dumb
+wc - word count
+
+Look at MC/Assembly to find out 
+
+nano bomb.s **
+
+gdb bomb: for live debugging
+    set a break point
+        $ break main
+
+    $ disassemble ||| to disassembly the following code
+    $ x (address) |||  Need to know what type of thing I am looking at 
+        $ x/s (address) ||| returns something 
+
+    $ b phase_1 ||| breakpoint
+    $ set disassemble-next-line on 
+    $ c (to continue)
+    $ x/a $esp + 0x2c ||||
+    $ ni ||| next intruction
+    $ si ||| step instruction
+    $ quit ||| when you see the bomb 
+
+
+    $b phase_n
+    $b explode_bomb
+    $ set disassemble-next-line on
+    $ run sol.txt
+
+    $ info reg
+
+If we do smth > file.txt we save to a file 
+     
+    

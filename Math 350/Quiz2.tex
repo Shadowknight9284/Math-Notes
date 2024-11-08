@@ -1,0 +1,49 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Quiz 2}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{definition}
+    \textbf{Ordered Basis}\\
+    An ordered basis for $V$ (finite diminsional vector space) is a basis for V endowed with a specific order.
+    \begin{example}
+        In $F^3$, an ordered basis is $\beta = \{e_1, e_2, e_3\}$ but so is $\beta' = \{e_3, e_2, e_1\}$. but $\beta \neq \beta'$.
+    \end{example}
+\end{definition}
+
+\begin{definition}
+    \textbf{Standard Ordered Basis}\\
+    The (notice the article) standard ordered basis is the basis $\beta = \{e_1, e_2, \dots, e_n\}$ for $F^n$.
+\end{definition}
+
+\begin{definition}
+    \textbf{Coordinate Vector of a Basis}\\
+    Let $\beta = \{u_1, u_2, \dots, u_n\}$ be an ordered basis for $V$. Then for any $x \in V$ let $a_1 ... a_n$ be the unique scalars such that $x = \sum_{i=1}^{n} a_iu_i$. \\
+    We then define the coordinate vector of $x$ with respect to $\beta$ as $[x]_{\beta} = \begin{bmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{bmatrix}$\\
+    \textit{Think of it like the vector in the basis of the basis vectors. In other words, the basis vectors are our axes and our $[x]_\beta$ is the vector in that space.}
+\end{definition}
+
+\begin{definition}
+    \textbf{Matrix Representation of a Linear Transformation}\\
+    Let $T: V \to W$ be a linear transformation between finite dimensional vector spaces $V$ and $W$. Let $\beta = \{u_1, u_2, \dots, u_n\}$ be an ordered basis for $V$ and $\gamma = \{v_1, v_2, \dots, v_m\}$ be an ordered basis for $W$.\\
+    Then the matrix representation of $T$ with respect to $\beta$ and $\gamma$ is the $m \times n$ matrix $[T]_{\beta}^{\gamma}$ such that for any $x \in V$, $[T(x)]_{\gamma} = [T]_{\beta}^{\gamma}[x]_{\beta}$.\\
+    If $V = W$ and $\beta = \gamma$, then we write $[T]_{\beta} = [T]_{\beta}^{\beta}$.\\
+    Notice that the $j$th column of $A$ is simply $[T(u_j)]_{\gamma}$. In other words. each column of $T_{\beta}^{\gamma}$ is the coordinate vector of $T(u_j)$ where $u_j$ is the $j$th basis vector of $\beta$ in the coordinate system of $\gamma$.
+\end{definition}
+
+\begin{definition}
+    L
+\end{definition}
+
+
+\end{document}

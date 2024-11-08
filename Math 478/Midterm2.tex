@@ -1,0 +1,156 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\newpage
+\section*{Content Outline}
+All Chapters except:
+\begin{itemize}
+    \item 5.2.4
+    \item 5.2.5
+    \item 5.3.4
+    \item 5.3.5
+    \item 5.4.1
+    \item 5.4.3
+    \item 5.4.4
+    \item 5.5
+\end{itemize}
+Skip examples:
+\begin{itemize}
+    \item 5.4-5.7
+    \item 5.9
+    \item 5.15
+    \item 5.17
+    \item 6.4
+    \item 6.6-6.9
+    \item 6.18
+    \item 6.20
+\end{itemize}
+
+\section*{Content Overview}
+\begin{itemize}
+    \item Chapter 5
+    \begin{itemize}
+        \item \textbf{Section 1 Intro}
+        \item \textbf{Section 2.1 Exp distribution:} \\
+        PDF: $f(t) = \lambda e^{-\lambda t}$ 
+        \item \textbf{Section 2.2 Properties of Exp distribution}\\
+        Memoryless property: $P(T > s+t | T > t) = P(T > s)$
+        \item \textbf{Section 2.3 Further properties of Exp distribution} \\
+        If $\setof{X_i} \sim \text{Exp}(\lambda_i)$, then $\sum_i X_i \sim \text{Gamma}(n, \sum_i \lambda_i)$\\ If $\setof{X_i} \sim \text{Exp}(\lambda_i)$, then $\min\setof{X_i} \sim \text{Exp}(\sum_i \lambda_i)$
+        \item \textbf{Section 3.1 Poisson process/ Counting Processes} \\
+        $\setof{N(t), t \geq 0}$ is a Counting Process if: $N(t)$ represents the total number of events that have occurred up to time $t$\\ By definition it must satisfy:
+        \begin{parts}
+            \part $N(t) \geq 0$
+            \part $N(t)$ is integer valued
+            \part if $s < t$, then $N(s) \leq N(t)$
+            \part for $s < t$, $N(t) - N(s)$ is the number of events that occur in $(s, t]$
+        \end{parts}
+        \item \textbf{Section 3.2 Poisson Process} \\
+        a function is said to be $o(h)$ if $\lim_{h \to 0} \frac{o(h)}{h} = 0$ ie $o(h)$ is a function that is much smaller than $h$ as $h$ approaches 0.\\
+        A Poisson Process is defined by the following properties:
+        \begin{parts}
+            \part $N(t)$ is a counting process
+            \part $N(0) = 0$
+            \part Independent increments: The number of events in disjoint intervals are independent
+            \part $P(N(t+h) - N(t) = 1) = \lambda h + o(h)$ ie the probability of one event in a small interval is $\lambda h$ and the probability of more than one event is $o(h)$
+            \part $P(N(t+h) - N(t) \geq 2) = o(h)$ ie the probability of more than one event in a small interval is $o(h)$
+        \end{parts}
+        \item \textbf{Section 3.3 Properties of Poisson Process} \\
+        $\setof{N_1(t)}$ and $\setof{N_2(t)}$ are independent Poisson Processes with rates $\lambda p $ and $\lambda (1-p)$ respectively, then the two processes are independent.
+        \item \textbf{Section 4.2 Compound Poisson Process} \\
+        A stochastic process $\setof{X_i}$ is a compound Poisson Process if it can be written as $X(t) = \sum_{i=1}^{N(t)} Y_i$ where $\setof{N(t)}$ is a Poisson Process and $\setof{Y_i}$ are iid random variables.\\
+        An example of a compound Poisson Process is if busses arrive at a sporting event according to a Poisson Process and the number of people on the bus is a random variable.\\
+    \end{itemize}
+    \item Chapter 6
+    \begin{itemize}
+        \item \textbf{Section 1 Intro}
+        We have been looking ar pure birth processes. We can consider a birth-death process where the birth rate is $\lambda_i$ and the death rate is $\mu_i$. 
+        \item \textbf{Section 2 Continuous Time Markov Chains} \\
+        Suppose a CT Stochastic Process $\setof{X_(t), t \geq 0}$ taking on values in the set of non negative integers. The process is a CTMC if it satisfies the Markov Property: $P(X(t+s) = j | X(s) = i, X(u) = x(u), 0 \leq u \leq s) = P(X(t+s) = j | X(s) = i)$ in other words the conditional distribution of the future state depends only on the present state and not on the past states.\\
+        \item \textbf{Section 3 Birth-Death Process} \\
+        Consider a system whos state at anytime is represented by the number of individuals in the system. Suppose n people in the system. The system can transition to n+1 with rate $\lambda_n$ and to n-1 with rate $\mu_n$. ie the time till next arrival $\sim Exp(\lambda_n)$ and the time till next departure $\sim Exp(\mu_n)$.\\
+        This requires $\setof{\lambda_n}_{n=0}^\infty$ and $\setof{\mu_n}_{n=1}^\infty$ parameters\\
+        We have a few important relationships: \\
+        $ v_0 = \lambda_0, v_i = \mu_i + \lambda_i, P_01 = 1, P_{i,i+1} = \frac{\lambda_i}{\mu_i + \lambda_i}, P_{i,i-1} = \frac{\mu_i}{\mu_i + \lambda_i}$\\
+        \item \textbf{Section 4 Tranisition probability functions} \\
+        \textbf{ASK FOR A REVIEW OF THIS}\\
+        \textbf{ASK FOR A F and B Kolmogorov Differential Equations REVIEW}
+        \item \textbf{Section 5 Limiting Probabilities} \\
+        Analgous to the discrete time: $P_j = \lim_{t \to \infty} P_{ij}(t)$
+        \item \textbf{Section 6 Time Reversibility} \\
+        Consider a CTMC that is ergodic and consider the limiting probabilities $P_j$. The process is time reversible if $Q_{ij} = \frac{\pi_j P_{ji}}{\pi_i}$ \textbf{ASK FOR A REVIEW OF THIS}
+    \end{itemize}
+\end{itemize}
+
+
+\section*{Questions}
+Forward and Backward Kolmogorov Differential Equations
+
+
+
+\section*{In Class Review}
+For a Poisson Process: $P(X_i \leq x) = 1 - e^{-\lambda_i x}$ \\
+$P(\min\setof{X_i} = X_i) = e^{-\sum \lambda_i x}$\\
+
+
+
+
+\section*{In Class Problems}
+\begin{questions}
+    \question Question 1.1\\
+    Dusty, Lucky, and Ned are at the front of three separate lines in the cafeteria waiting to be served. The serving times for the three lines follow a Poisson process with respective parameters 1, 2 , and 3. Find the expected waiting time for the first person served?
+\begin{solution}
+    We can use the fact that for a series of exp distributions, the min of the series is also exp with parameter $\sum \lambda_i$. Thus the expected waiting time for the first person served is ${1+2+3} = {6}$. Thus the expected waiting time for the first person served is $\frac{1}{6}$
+\end{solution}
+    \question Question 1.2\\
+    Consider a bank with two tellers. Three people, Alice, Betty, and Carol enter the bank at almost the same
+    time and in that order. Alice and Betty go directly into service while Carol waits for the first available
+    teller. Suppose that the service times for each teller are exponentially distributed with rates $\lambda \leq \mu$.
+    \begin{parts}
+        \part What is the expected total amount of time for Carol to complete her businesses?
+        \part What is the expected total time until the last of the three customers leaves?
+        \part What is the probability Carol is the last one to leave?
+    \end{parts}
+    \begin{solution}
+        \begin{parts}
+            \part The expected total amount of time for Carol to complete her business is the expected time for alice and betty and then carol. We can use min of exp distributions to see who is finished first which is $Exp(\lambda + \mu)$. Then the expected time for carol is $\frac{1}{\lambda} \frac{\lambda}{\lambda + \mu} + \frac{1}{\mu} \frac{\mu}{\lambda + \mu} = \frac{2}{\lambda + \mu}$\\
+            Thus the expected total amount of time for Carol to complete her business is $\frac{3}{\lambda + \mu}$
+            \part The expected total time until the last of the three customers leaves. The time for the person to leave is $Exp(\lambda + \mu)$. The time for the second person to leave is the same, since it is memeoryless. Thus it is $\frac{1}{\mu + \lambda}$ Last but not least the last person to leave has to spend to average time with the server. Which again is tough... If they are equal then it is $\frac{1}{\lambda}$
+        \end{parts}
+    \end{solution}
+    \question 2.1 is also a poisson process with exp
+    \question 2.4 \\
+    You catch fish according to a Poisson process with rate 2 per hour. 40\% of the fish are salmon, while 60\%
+    of the fish are trout. What is the probability of catching exactly 1 salmon and 2 trout in 2.5 hours?\\
+    \begin{solution}
+        
+    \end{solution}
+
+    
+    \question 2.5\\
+    In the land of Oz, sightings of lions, tigers, and bears each follow a Poisson process with respective
+    parameters, $\lambda_L$, $\lambda_T$, $\lambda_B$, where the time unit is hours. Sightings of the three species are independent of
+    each other.
+    \begin{parts}
+        \part Find the probability that Dorothy will not see any animal in the first 24 hours from when she arrives in Oz.
+        \part Dorothy saw three animals one day. Find the probability that each species was seen.
+    \end{parts}
+    \begin{solution}
+        If $\setof{N_i(t)}$ are independent Poisson Processes with rates $\lambda_i$, then the sum of the processes is also a Poisson Process with rate $\sum \lambda_i$.\\
+    \end{solution}
+
+\end{questions}
+\end{document}

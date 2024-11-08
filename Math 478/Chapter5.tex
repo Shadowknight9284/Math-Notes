@@ -114,7 +114,52 @@ The non-negative integer valued random varianle $S = \sum_{i=1}^{N} X_i$ is call
 $$Var(Y) = E(Var(Y|X)) + Var(E(Y|X))$$
 If $N$ is a poison random variable with parameter $\lambda$ then:\\
 $$Var(S) = \lambda \sigma^2 + \mu^2 \lambda$$
-Read example 5.27
+Read example 5.27\\
+\section{add Missed info}
+yes
+\\
+\section{10/25}
+$$P_j = \lim_{t \to \infty} P_{ij}(t)$$
+$$ 0 = \sum_{k \neq j} q_{kj}P_k - v_j P_j$$
+Read remarks of page 395\\
+
+\begin{example}
+    Limiting probability: $P_j$ for the Birth-Death process with birth rate $\lambda_j$ and death rate $\mu_j$\\
+    Write the balance equations for $P_j$\\
+    $$ \lambda_{0} P_{0} = \mu_1 P_1$$
+    $$ (\lambda_{1} + \mu_1) P_1 = \lambda_0 P_0 + \mu_2 P_2$$
+    $$ (\lambda_{n} + \mu_n) P_n = \lambda_{n-1} P_{n-1} + \mu_{n+1} P_{n+1}$$
+    We can now go into canceling. 
+    $$ \lambda_{1} P_1 = \mu_2 P_2$$
+    $$ P_2 = \frac{\lambda_1}{\mu_2} P_1 = \frac{\lambda_1 \cdot \lambda_0}{\mu_2 \cdot \mu_1}$$
+    $$ P_n = \frac{\lambda_{n-1} \cdot \lambda_{n-2} \dots \lambda_0}{\mu_{n+1} \cdot \mu_{n} \dots \mu_1} P_0$$
+    Use $\sum_{j=0}^{\infty} P_j = 1$ to find limiting probability\\
+    $$ 1 = P_0 + P_0 \sum_{n=1}^{\infty} \frac{\lambda_{n-1} \cdot \lambda_{n-2} \dots \lambda_0}{\mu_{n+1} \cdot \mu_{n} \dots \mu_1}$$
+    $$ P_0 = \frac{1}{1 + \sum_{n=1}^{\infty} \frac{\lambda_{n-1} \cdot \lambda_{n-2} \dots \lambda_0}{\mu_{n+1} \cdot \mu_{n} \dots \mu_1}}$$
+    We need the infinite sume to be finite for it to be a valid probability.
+\end{example}
+
+Read Examples 6.13, 6.14, 6.15 and skip 6.16\\
+
+\section*{Chapter 6.6 Time reversibility}
+If limiting probabilities exist, a CTMC is called ergodic.\\
+Consider an ergotic CTMC that has been running a long time.\\
+First look at the embedded discrete time markov chain.(forget the time spent in each state. Just look at the transitions)\\
+Let $\pi_i$ be the limiting probability of being in state $i$ of the embedded chain.\\
+Recall that $\pi_1 = \sum_j \pi_j P_{ji}$ and $\sum_i \pi_1 = 1 $\\
+Note that $\pi_i$ is the proportion of transitions\\
+Recall tha $\frac{1}{v_i}$ mean time spent in state i\\
+Claim $P_i$ is the proportion of time the CTMC is in state i more precisely $P_i = \frac{\pi_i/v_i}{\sum_j \pi_j/v_j}$\\
+\textbf{Verification:}\\ 
+Know $v_i P_i = \sum_{j \neq i} P_j q_{ji} $
+$ = \sum_{j \neq i} P_j v_j P_{ji}$
+$ = \sum_{j} P_j v_j P_{ji} $
+Through some more manpulation we can see that this can only be satisfied by $\pi_i$\\
+\textbf{Time reversibility:}\\
+Reversing a CTMC Assume the process has been running a long time. Observe it backwards.\\
+Pg 402
+
+
 
 
 

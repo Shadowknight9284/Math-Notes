@@ -1,0 +1,132 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Homework 4}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question Question 10.53
+    Given a random sample of size n from a Poisson population, use the method of moments to obtain an estimator
+    for the parameter $\lambda$.
+    \begin{solution}
+        We need to solve the following equation for $\lambda$:
+        \begin{align*}
+            \bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i = \lambda
+        \end{align*}
+        Thus, $\hat{\lambda} = \bar{X}$ is the method of moments estimator for $\lambda$.
+    \end{solution}
+    \question Question 10.56
+    If $X_1, X_2, \ldots, X_n$ is a random sample from a population given by 
+    $$g(x; \theta, \delta) = \begin{cases}
+    1/\theta e^{-(x - \delta)/\theta} & \text{if } x > \delta \\
+    0 & \text{otherwise}
+    \end{cases}$$
+    find estimators for $\delta$ and $\theta$ by the method of moments.
+    This distribution is sometimes referred to as the two-parameter exponential distribution, and for $\theta = 1$ it is
+    the distribution of Example 3.
+    \begin{solution}
+        We can solve the following equations for $\delta$ and $\theta$:
+        \begin{align*}
+            m_1' = \mu_1' &= \bar{X} = \delta + \theta   \\
+            m_2' = \mu_2' &= \frac{1}{n} \sum_{i=1}^{n} X_i^2 = \delta^2 + 2\delta\theta + \theta^2\\
+            \delta &= \bar{X} - \theta \\
+            \theta &= \sqrt{\mu_2' - \mu_1'^2}\\
+            \delta &= \mu_1' - \sqrt{\mu_2' - \mu_1'^2}
+        \end{align*}
+        Thus we have a method of moments estimator for $\delta$ and $\theta$.
+    \end{solution}
+    \question Question 10.59
+    Use the method of maximum likelihood to rework Exercise 53.
+    \begin{solution}
+        We want to max the likelihood function $L(\lambda) = \prod_{i=1}^{n} \frac{\lambda^{x_i} e^{-\lambda}}{x_i!} $ 
+        We can take the log of the likelihood function and solve for $\lambda$:
+        \begin{align*}
+            ln(L(\lambda)) &= \sum_{i=1}^{n} x_i ln(\lambda) - n\lambda - \sum_{i=1}^{n} ln(x_i!) \\
+            \frac{\partial ln(L(\lambda))}{\partial \lambda} &= \frac{1}{\lambda} \sum_{i=1}^{n} x_i - n = 0 \\
+            \lambda &= \frac{1}{n} \sum_{i=1}^{n} x_i = \bar{X}
+        \end{align*}
+        Thus $\hat{\lambda} = \bar{X}$ is the maximum likelihood estimator for $\lambda$.
+    \end{solution}
+    \question Question 10.66
+    Use the method of maximum likelihood to rework Exercise 56
+    \begin{solution}
+        We want to max the likelihood function $L(\delta, \theta) = \prod_{i=1}^{n} \frac{1}{\theta} e^{-(x_i - \delta)/\theta} $ 
+        We can take the log of the likelihood function and solve for $\delta$ and $\theta$:
+        \begin{align*}
+            ln(L(\delta, \theta)) &= -\sum_{i=1}^{n} \frac{x_i - \delta}{\theta} -n ln(\theta) \\
+            \frac{\partial ln(L(\delta, \theta))}{\partial \delta} &= \frac{n}{\theta} = 0\\
+            \frac{\partial ln(L(\delta, \theta))}{\partial \theta} &=  \sum_{i=1}^{n} \frac{x_i - \delta}{\theta^2} - \frac{n}{\theta} = 0
+        \end{align*}
+        We can solve the above equations to get the maximum likelihood estimators for $\delta$ and $\theta$.
+        We can see that $\hat{\delta} = min(X_i)$ and $\hat{\theta} = \bar{x} - min(X_i)$.
+    \end{solution}
+    \question Question 10.3
+    Use the formula for the sampling distribution of $\tilde{X}$ on page 253 to show that for random
+    samples of size $n = 3$ the median is an unbiased estimator of the parameter $\theta$ of a uniform
+    population with $\alpha = \theta - \frac{1}{2}$ and $\beta = \theta + \frac{1}{2}$.
+    \begin{solution}
+        We can notice that the sample median for this population is $h(x) = \frac{(2n -1)!}{m! m!} \cdot \int_{- \infty}^{x} f(x) dx \cdot \int_{x}^{\infty} f(x) dx f(x)$. 
+        $$ h(x) = 6 \left( x - \theta +\frac{1}{2}\right)\left(\theta + \frac{1}{2} - x \right)$$
+        $$ E[x] =6 \int_{\theta - \frac{1}{2}}^{\theta + \frac{1}{2}} x \left( x - \theta +\frac{1}{2}\right)\left(\theta + \frac{1}{2} - x \right)$$
+        After a bunch of algebra, we can see that $E[x] = \theta$. Thus, the median is an unbiased estimator of the parameter $\theta$ of a uniform population with $\alpha = \theta - \frac{1}{2}$ and $\beta = \theta + \frac{1}{2}$.
+
+    \end{solution}
+    \question Question 10.15
+    Show that the mean of a random sample of size $n$ is a
+    minimum variance unbiased estimator of the parameter
+    $\lambda$ of a Poisson population. 
+    \begin{solution}
+        Consider the possion distribution $f(x; \lambda) = \frac{e^{-\lambda} \lambda^x}{x!}$.
+        The mean of a random sample of size $n$ is $\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i$. We know that the mean of a Poisson distribution is $\lambda$. Thus, $\bar{X}$ is an unbiased estimator of $\lambda$. We also know that the variance of a Poisson distribution is $\lambda$. We can caluclate the CRLB of $\lambda$ by solving the following equation:
+        \begin{align*}
+            var(\bar{X}) = \frac{1}{n E\left[\frac{\partial ln(f(X))}{\partial \lambda}^2 \right]}
+        \end{align*}
+        We can see that the CRLB is 
+        \begin{align*}
+            ln(f(X)) &= -\lambda + x ln(\lambda) - ln(x!) \\
+            \frac{\partial ln(f(X))}{\partial \lambda} &= \frac{x}{\lambda} - 1 \\
+            E\left[\frac{\partial ln(f(X))}{\partial \lambda}^2 \right] &= E\left[\left(\frac{x}{\lambda} - 1\right)^2 \right] = \frac{1}{\lambda}\\
+            var(\bar{X}) &= \frac{1}{n \cdot \frac{1}{\lambda}} = \frac{\lambda}{n}
+        \end{align*}
+        Since the variance of $\bar{X}$ is $\frac{\lambda}{n}$, we can see that the mean of a random sample of size $n$ is a minimum variance unbiased estimator of the parameter $\lambda$ of a Poisson population.
+    \end{solution}
+    \question Question 10.18
+    Show that for the unbiased estimator of Example 4, $\frac{n + 1}{n} \cdot Y_n$, the Cramer-Rao inequality is not satisfied.
+
+    \begin{solution}
+        We kno the sample distribution of $Y_n$ is 
+        \begin{align*}
+            \frac{n}{\beta^n} \cdot y^{n-1}_n 
+        \end{align*}
+        We know that the CRLB is given by 
+        \begin{align*}
+            var(\hat{\theta}) = \frac{1}{n E\left[\frac{\partial ln(f(X))}{\partial \theta}^2 \right]}
+        \end{align*}
+        We can calculate the CRLB for the unbiased estimator $\frac{n + 1}{n} \cdot Y_n$ by solving the following equation:
+        \begin{align*}
+            ln(f(X)) &= \ln(n) - n \ln(\beta) + (n-1)\ln(y_n)  \\
+            \frac{\partial ln(f(X))}{\partial \beta} &= -\frac{n}{\beta} \\
+            E\left[\frac{\partial ln(f(X))}{\partial \beta}^2 \right] &= E\left[\left(-\frac{n}{\beta}\right)^2 \right] = \frac{n^2}{\beta^2} \\
+            var(\hat{\theta}) &= \frac{1}{n \cdot \frac{n^2}{\beta^2}} = \frac{\beta^2}{n^3}
+        \end{align*}
+        We can see that the CRLB is $\frac{\beta^2}{n^3}$. We can calculate the variance of the unbiased estimator $\frac{n + 1}{n} \cdot Y_n$ by solving the following equation:
+        \begin{align*}
+            var\left(\frac{n + 1}{n} \cdot Y_n\right) &= \left(\frac{n + 1}{n}\right)^2 \cdot var(Y_n) = \left(\frac{n + 1}{n}\right)^2 \cdot \frac{\beta^2}{n^3} = \frac{\beta^2(n+1)^2}{n^4}
+        \end{align*}
+        We can see that the variance of the unbiased estimator $\frac{n + 1}{n} \cdot Y_n$ is $\frac{\beta^2(n+1)^2}{n^4}$ and that it is greater than the CRLB $\frac{\beta^2}{n^3}$. Thus, the Cramer-Rao inequality is not satisfied.
+    \end{solution}
+
+\end{questions}
+
+\end{document}

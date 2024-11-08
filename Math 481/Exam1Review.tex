@@ -54,7 +54,7 @@
     Suppose $X_1, X_2, \ldots, X_n$ are IID random variables with an unknown distribution with mean $\mu = 5$, variance $\sigma^2 = 2$. Applying Chebyshev's theorem, determine the smallest sample size $n$ that will guarantee that the sample mean is within the interval $(5 - 0.1, 5 + 0.1)$ with probability at least 0.95.
     \begin{solution}
         We can see Chebyshev's Theorem as $P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}$. \\
-        We can manipulate this to get $P(|X - \mu| < k) \leq 1 - \frac{\sigma^2}{k^2}$.\\
+        We can manipulate this to get $P(|X - \mu| < k) \geq 1 - \frac{\sigma^2}{k^2}$.\\
         Applying this to the sample with $\mu = \mu_{\bar{x}} =  5, \sigma_{\bar{x}}^2 = \frac{\sigma^2}{n} = \frac{2}{n}$. We can see that $P(|\bar{X} - 5| < k) \leq 1 - \frac{2}{nk^2}$.\\
         Since we want probability at least 0.95, we have $k=.1$ we can set $1 - \frac{2}{n \cdot .01} \geq 0.95$.\\
         Thus $n \geq \frac{2}{.05 \cdot .01}$\\

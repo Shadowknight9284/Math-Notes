@@ -1,0 +1,297 @@
+`\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+\usepackage{multicol}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+\usepackage[margin=0in, includehead, includefoot, headheight=0pt]{geometry}
+\usepackage{setspace}
+\setstretch{0}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+
+
+% Midterm: Wednesday, October 30, during class
+
+% You may bring one page of notes (single-sided)
+%     preferably handwritten, or typed at least 10 points
+%     no calculators, computers, smart devices
+    
+% Midterm topics:
+
+% Trends in computer architecture
+%     - major components: CPU, memory, System bus, 
+%                         IO bus, storage, IO peripherals
+%     - exponential growth of transistor count -> Moore's Law
+%     - processor-memory speed gap  -> caches
+%     - "power wall"/"multicore crisis"
+
+% C programming
+%     - basic C syntax
+%         - function and variable declarations
+%         - control structures
+%             if/else, switch, while, do/while, for
+%         - structs
+%             bundle together elements, possibly of different types
+            
+%             void foo(struct example e);  // struct passed by value
+%             void foo(struct example *e); // struct passed by reference
+%                                 (actually a pointer passed by value)
+
+%         - arrays and pointers
+%             arrays are objects in memory
+%             array variables are always associated with a specific array
+            
+%             int a[20]; 
+%                 automatically created and destroyed
+%                 cannot be reassigned
+%                 a = b  (not allowed)
+%                 a[i] = n;
+                
+%             int *p; 
+%             p = a;  // now p and a both refer to the same array
+%             p[i] = n;
+            
+%             p = (int *) malloc(20 * sizeof(int));
+%                 // now p refers to an array on the heap
+%             p[i] = n;   // still allowed
+        
+%             memset(p, 0, 20 * sizeof(int));
+        
+%             p = (int *) calloc(20, sizeof(int));
+            
+%             sizeof(p)  == sizeof(int *)
+            
+            
+%             int m[4][5]; // m is array of 4 arrays of 5 ints
+%             m[i][j]
+            
+%             int **p;  // p points to an array of pointers to arrays of ints
+%             p = malloc(4 * sizeof(int *));
+%             p[i] = malloc(5 * sizeof(int));
+%             p[i][j]  
+            
+            
+%             int n;
+%             int *p;
+%             int **q;
+%             p = &n;
+%             q = &p;
+            
+%             n, *p, **q, p[0], q[0][0]   -- all the same
+        
+%         - typedef
+        
+%             typedef struct list node;
+%                 "node" is the same type as "struct list"
+                
+%             typedef double vector[3];
+%                 "vector" is the same type as "double [3]"
+                
+%                 vector x;     double x[3];
+
+%     - memory management
+%         - address vs value
+        
+%             make sure to be clear whether you are talking about
+%             the value of an object or its location
+            
+%             int x;
+%                 x = 1;
+%                 y = x;
+        
+%         - using unary & and *
+        
+%             int x;
+            
+%                 x  - value in x / data stored in x
+%                 &x - location of x / pointer to x
+                
+                
+%             int *p;
+%             p = &x;
+            
+%                 p  - pointer stored in p
+%                 *p - value of the integer p points to
+%                 &p - location of p / pointer to p
+                
+                
+%                 *&p === p
+%                 &*p === p
+%                 *&*p === *p
+        
+%         - malloc and free
+        
+%             use malloc to create objects on the heap
+%             -> not directly associated with any variable
+            
+%             use free to deallocate heap objects
+            
+%             int *p = ...
+%             int *q = malloc(20 * sizeof(int));
+%             q = p;  // whoops, the object we just allocated has been lost
+        
+%     - C strings
+%         - trailing null terminator ('\0'; don't confuse with '0')
+%             allows for string size to be different from array size
+            
+%             "foo"   <- treated as pointer to an array in memory
+%                 <- terminator automatically added by compiler
+                
+%             char s[10] = "foo";   // initializes first 4 elements of s
+%             char s[10] = {'f', 'o', 'o', '\0'};
+            
+            
+%             s = "bar";  not allowed
+%             strcpy(s, "bar");
+            
+            
+%             char *p = malloc(20);
+%             char *q = malloc(20);
+%             strcpy(p, "foo");
+            
+%             q = p;    // same object
+%             strcpy(q, p);  // same string, different objects
+            
+            
+%         - strcpy(), strlen(), strcmp(), strcat()
+%         - memcpy(), memmove()
+        
+%     - printf, fprintf, sprintf
+%             printf("secret number is %d!\n", secret_number)
+            
+%             char str[100];
+%             sprintf(str, "%d", 1024);
+%             // now str contains "1024" (4 chars + terminator)
+            
+%             snprintf(str, 100, "%d", 1024);
+        
+%     - scanf, fscanf, sscanf
+    
+%             scanf("%d", &secret_number);
+            
+%             scanf("%lf", &matrix[i][j]);
+    
+%     - fopen, fclose
+
+% Data representation
+
+%         00101100  = 32+8+4
+
+%     - binary (unsigned) integers                
+%         - fixed-width arithmetic
+%         - differences between sign-magnitude, 1s' complement, 2's complement
+%             sign bit, other bits
+        
+%         - format and range of 2's complement signed integers
+        
+%             11111111
+        
+%             10000000 ... 01111111
+%             -128 ... 127
+%             -2^(b-1)  ... 2^(b-1)-1
+        
+%     - hexadecimal and octal
+%         FF 
+%         7F
+%         80
+        
+        
+%         10(hex) = 16(decimal)
+    
+%     - IEEE floating point (general)
+%         sign bit, exponent bits, significand (fractional) bits
+        
+%             1.ffffffffff * 2^(eeeeee - bias)
+    
+%         - exponent bias
+%             bias(E bits) = 2^(E-1)-1
+%         - special exponent values
+%             all zero: subnormal values and zero
+%                 implicit integer bit is 0, not 1
+%                 exponent is 1 - bias
+%             all ones: infinity and NaNs
+            
+%         - interpretation of normal, zero, denormal, infinite, and NaN values
+
+% Assembly
+%     - high-level ideas
+%         - fetch/execute cycle
+%         - opcode and operands
+%         - operation types: mov, arithmetic and logic, control
+%     - IA32 / X86 assembly (AT&T / GAS style)
+%         - 2-argument form for add, sub, etc.
+%                 addl %eax, %ebx    # ebx = ebx + eax
+%                 subl %eax, %ebx    # ebx = ebx - eax
+%         - operand types: byte/word/double word
+%         - register names
+%         - mov instruction
+%         - operands: immediate, absolute, direct, indirect
+            
+%             movl  $100, %eax  ; EAX = 100
+%             movl  %ebx, %eax  ; EAX = EBX
+%             movl  100, %eax   ; EAX = memory[100 ... 103]
+%             movl  (%ebx), %eax ; EAX = memory[EBX ... EBX+3]
+            
+%             movb  (%ebx), %al  ; EAX[0] = memory[EBX]
+%             movzbl (%ebx), %eax ; EAX = memory[EBX]
+            
+%             movl (%ebx,%ecx), %eax ; EAX = memory[EBX+ECX .. EBX+ECX+3]
+%             movl 100(%ebx,%ecx,4), %eax
+%                 ; EAX = memory[10+EBX+ECX*4 .. 10+EBX+ECX*4+3]
+        
+%         - lea
+%         - push, pop
+        
+%             pushl %eax  ; ESP = ESP - 4; Memory[ESP..ESP+3] = EAX
+
+%     - call, ret
+
+\begin{center}
+    \Large \textbf{Computer Architecture Cheatsheet}
+\end{center}
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item \textbf{Trends in Computer Architecture}
+        \begin{itemize}
+            \item Major components: CPU, memory, System bus, IO bus, storage, IO peripherals
+            \item Exponential growth of transistor count $\rightarrow$ Moore's Law
+            \item Processor-memory speed gap $\rightarrow$ caches
+            \item "Power wall"/"multi-core crisis"
+        \end{itemize}
+        
+        \item \textbf{C Programming}
+        \begin{itemize}
+            \item Basic C syntax: function and variable declarations, control structures (if/else, switch, while, do/while, for), structures
+            \item Arrays and pointers: arrays are objects in memory, array variables are always associated with a specific array
+            \item Memory management: address vs value, using unary \& and *, malloc and free
+            \item C strings: trailing null terminator, \texttt{strcpy()}, \texttt{strlen()}, \texttt{strcmp()}, \texttt{strcat()}, \texttt{memcpy()}, \texttt{memmove()}
+            \item \texttt{printf}, \texttt{fprintf}, \texttt{sprintf}, \texttt{scanf}, \texttt{fscanf}, \texttt{sscanf}, \texttt{fopen}, \texttt{fclose}
+        \end{itemize}
+        
+        \item \textbf{Data Representation}
+        \begin{itemize}
+            \item Binary (unsigned) integers: fixed-width arithmetic, sign-magnitude, 1's complement, 2's complement
+            \item Hexadecimal and octal
+            \item IEEE floating point: sign bit, exponent bits, significant (fractional) bits, exponent bias, special exponent values
+        \end{itemize}
+        
+        \item \textbf{Assembly}
+        \begin{itemize}
+            \item High-level ideas: fetch/execute cycle, opcode and operands, operation types (mov, arithmetic and logic, control)
+            \item IA32 / X86 assembly (AT\&T / GAS style): 2-argument form for add, sub, etc., operand types (byte/word/double word), register names, mov instruction, operands (immediate, absolute, direct, indirect)
+            \item lea, push, pop, call, ret
+        \end{itemize}
+    \end{itemize}
+\setlength{\baselineskip}{12pt}
+\end{multicols}
+
+\end{document}'

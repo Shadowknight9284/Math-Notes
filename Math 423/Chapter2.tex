@@ -635,6 +635,8 @@ $$ C_1 = \frac{1}{2\sqrt{\pi}}$$
 $$ C_2 = 1/2$$
 $$ S = F = \frac{1}{2\sqrt{\pi}} g'(x/\sqrt{t})= \frac{1}{\sqrt{4\pi t}} e^{-\frac{x^2}{4t}}$$
 
+\textbf{\underbar{NEW SECTION}}\\
+
 1. Heat + Dirichelt BC 
 $$\begin{cases}
     u_t = u_{xx}\\
@@ -729,10 +731,88 @@ $$\begin{cases}
 Now we want to write in polar coordinates.\\
 $$\Delta u = \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial u}{\partial r} \right) + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2}$$
 $$ \Delta u = u_{rr} + \frac{1}{r^2} u_{\theta \theta} + \frac{1}{r} u_r$$
+We have BC $u(1, \theta) = f(\theta)$, $u(r,\theta)$ is bounded as $r \to 0$ $ u(r,\pi) = u(r, -\pi)$, $u_\theta(r, \pi) = u_\theta(r, -\pi)$\\
+$$ u(r,\theta) = R(r) \Theta(\theta)$$
+$$ R'' T + \frac{1}{r}R'T + \frac{1}{r^2}R T'' $$
+$$ \frac{r^2 R'' + rR'}{R} = -\frac{\Theta''}{\Theta} = \alpha$$
+Now we have 2 odes.\\
+$$\begin{cases}
+    T'' = -\alpha T\\
+    r^2 R'' + rR' + \alpha R = \alpha R
+\end{cases}$$
+$$ RT(\pi) = RT(-\pi)$$
+$$ R(T(\pi) - T(-\pi)) = 0$$
+Clearly $T(\pi) - T(-\pi) = 0$\\
+We take $\alpha > 0$\\
+$$ T(\theta) = c_1 \cos(\lambda\theta) + c_2 \sin(\lambda\theta)$$
+$$ -\lambda c_1 sin(\lambda \pi) + \lambda c_2 \cos(\lambda \pi) = \lambda c_1 \sin(\lambda \pi) + \lambda c_2 \cos(\lambda \pi)$$
+$$\begin{cases}
+    c_2 \sin(\lambda \pi) = 0\\
+    c_1 \sin(\lambda \pi) = 0
+\end{cases}$$
+Clearly $\sin(\lambda \pi) = 0$\\
+$\lambda = n$\\
+$ \alpha = n^2$ has 2 LI eigenfunctions with dim 2 eigenspace.
+We can then go to our other equation\\
+$$ r^2 R'' + rR' - n^2 R = 0$$
+If $n = 0$ then $R = c_1 + c_2 \ln(r)$\\
+Thus we have 2 LI solutions: $1$ and $ln(r)$\\
+If $n > 0$ then $r^2 R'' + rR' - n^2 R = 0$\\
+This is Euler's ode: we guess $R = r^p$\\
+$$ r^2 p(p-1) r^{p-2} + r p r^{p-1} - n^2 r^p = 0$$
+$$ p(p-1) + p - n^2 = 0$$
+$$ p^2 - n^2 = 0$$
+$$ p = \pm n$$
+Thus our solutions are $r^n$ and $r^{-n}$\\
+In summary:\\
+If $n = 0$ then $T = 1$ and $R = 1, \ln(r) (nope)$\\
+If $n > 0$ then $T = \cos(n\theta), \sin(n\theta)$ and $R = r^n, r^{-n}$\\
+$$ u_n(r,\theta) =  \frac{a_0}{2}\sum_{n=1}^{\infty} r^n c_n \cos(n\theta) + d_n \sin(n\theta)$$
+That satisfies the PDE and the bc: bounded as $r \to 0$ and $u(r,\pi) = u(r,-\pi)$\\ 
+Need: $ f(\theta) = \sum_{n=1}^{\infty} c_n \cos(n\theta) + d_n \sin(n\theta)$\\
+Dirichelt BC: given an f on $[0,\pi]$ find $f(\theta) = \sum b_n \sin(nx)$\\
+Neumann BC: given an f on $[0,\pi]$ find $f(\theta) = a_0/2 + \sum b_n \cos(nx)$\\
+Periodic BC: given an f on $[-\pi, \pi]$ find $f(\theta) = a_0/2 +\sum b_n \cos(nx) + c_n \sin(nx)$\\
 
-
-
-
+\textbf{\underbar{Chapter 5: Fourier Series}}\\
+Say f is given by a Fourier sin series. \\
+$$ f(x) = \sum_{n=1}^{\infty} b_n \sin(nx)$$
+How to find $b_n$
+Notation: $||f||_{L^2(a,b)}^2= \int_a^b |f(x)|^2 dx$\\
+$<f,g>_{L^2(a,b)} = \int_a^b f(x)g(x) dx$\\
+Kronecker Delta: $\delta_{nm} = \begin{cases}
+    1, & n = m\\
+    0, & n \neq m
+\end{cases}$\\
+\textbf{Orthogonality of Sine Functions:} \\
+$$ <\sin(nx), \sin(mx)>_{L^2(0,\pi)} = \int_0^\pi \sin(nx) \sin(mx) dx = \pi/2 \cdot \delta_{nm}$$
+$$b_n = \frac{2}{\pi} \int_0^\pi f(x) \sin(nx) dx = \frac{2}{\pi} <f,\sin(nx)>$$
+This is cool becuase $sin(nx)$ are eigenfunctions of $-\frac{d^2}{dx^2}$\\
+evectors of symetric matrix $A$ are orthogonal.\\
+We can see that $\frac{d^2}{dx^2} \sim A$ and the matrix $A$ are symmetric.\\
+L is a symetric linear operator.\\
+This means that $Lu_1 = \lambda_1 u_1$ and $Lu_2 = \lambda_2 u_2$\\
+In other words the eigenfunctions of a symmetric operator are orthogonal.\\
+Suppose $L^T = L$ and $\lambda_1 \neq \lambda_2$\\
+Then $<u_1, u_2> = 0$\\
+Proof:\\
+$$<Lu_1, u_2> = <u_1, L^Tu_1> $$
+$$<\lambda_1 u_1, u_2> = <u_1, \lambda_2 u_2>$$
+$$\lambda_1 <u_1, u_2> = \lambda_2 <u_1, u_2>$$
+$$ (\lambda_1 - \lambda_2) <u_1, u_2> = 0$$
+$$ \lambda_1 \neq \lambda_2 \implies <u_1, u_2> = 0$$
+\textbf{Claim:} \\  
+L is symmetric with respoec to the inner product: $<f,g> = \int_0^\pi f(x)g(x) dx$\\
+For functions solving the DBC.\\
+\textbf{Taylor vs Fourier Series:} \\
+Taylor: $f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!} x^n$\\
+Fourier: $f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} b_n \sin(nx)$\\
+Taylor: always converges on an interval\\
+Fourier: convergence is not so nice\\
+Taylor: $f(x)$ is infinitely differentiable\\
+Fourier: $f(x)$ is only continuous, somtimes disconintous\\
+Taylor: local information\\
+Fourier: global information\\
 
 
 \end{document}

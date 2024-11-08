@@ -1,0 +1,640 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Homework 6}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question Question 2.4 15\\
+    Let V and W be $n$-dimensional vectors spaces and let $T:V \to W$ be a linear tranformation. Suppose $\beta$ is a basis for V. Prove that T is an isomorphism iff $T(\beta)$ is a basis for W.
+    \begin{solution}
+        \textbf{Proof of $\implies$}\\
+        Assume T is an isomorphism. \\
+        Need to show that $T(\beta)$ is a basis for W.\\
+        Since T is an isomorphism, it is bijective.\\
+        Let $w \in W$.\\
+        Since T is surjective, $\exists v \in V$ such that $T(v) = w$.\\
+        Since $\beta$ is a basis for V, $\exists c_1, c_2, \dots, c_n \in F$ such that $v = c_1v_1 + c_2v_2 + \dots + c_nv_n$.\\
+        $T(v) = T(c_1v_1 + c_2v_2 + \dots + c_nv_n) = c_1T(v_1) + c_2T(v_2) + \dots + c_nT(v_n)$.\\
+        Since $T(v) = w$, $w = c_1T(v_1) + c_2T(v_2) + \dots + c_nT(v_n)$.\\
+        Since $w$ was arbitrary, $T(\beta)$ spans W.\\\\
+        \textbf{Proof of $\impliedby$}\\
+        Assume $T(\beta)$ is a basis for W.\\
+        Need to show that T is an isomorphism.\\
+        Since $T(\beta)$ is a basis for W, it is linearly independent.\\
+        We need to show that T is injective and surjective.\\
+        \textbf{Injective:}\\
+        Need $\forall x,y \in V$, $T(x) = T(y) \implies x = y$.\\
+        Let $x,y \in V$ such that $T(x) = T(y)$.\\
+        $T(x) = T(y) \implies T(x) - T(y) = 0 \implies T(x-y) = 0$.\\
+        Let us call $x-y = z$.\\
+        Since $\beta$ is a basis for V, $\exists c_1, c_2, \dots, c_n \in F$ such that $z = c_1v_1 + c_2v_2 + \dots + c_nv_n$.\\
+        $T(z) = T(c_1v_1 + c_2v_2 + \dots + c_nv_n) = c_1T(v_1) + c_2T(v_2) + \dots + c_nT(v_n) = 0$.\\
+        Since $T(\beta)$ is linearly independent, $c_1 = c_2 = \dots = c_n = 0$.\\
+        Therefore, $z = 0 \implies x = y$.\\
+        Therefore, T is injective.\\
+        \textbf{Surjective:}\\
+        Need to show that $\forall w \in W$, $\exists v \in V$ such that $T(v) = w$.\\
+        Let $w \in W$.\\
+        Since $T(\beta)$ is a basis for W, $\exists c_1, c_2, \dots, c_n \in F$ such that $w = c_1T(v_1) + c_2T(v_2) + \dots + c_nT(v_n)$.\\
+        Let $v = c_1v_1 + c_2v_2 + \dots + c_nv_n$.\\
+        $T(v) = T(c_1v_1 + c_2v_2 + \dots + c_nv_n) = c_1T(v_1) + c_2T(v_2) + \dots + c_nT(v_n) = w$.\\
+        Therefore T is surjective.\\\\
+        Therefore, T is an isomorphism iff $T(\beta)$ is a basis for W.
+    \end{solution}
+    
+    \question Question 2.5 2b\\
+    For each of the following pairs of ordered bases $\beta$ and $\beta'$ for $\mathbb{R}^2$, find the change of coordinate matrix that changes from $\beta'$ coordinates to $\beta$ coordinates. \\
+    $$ \beta = \left\{ (-1,3), (2,-1)\right\} \text{ and } \beta' = \left\{ (0,10), (5,0)\right\}$$
+    \begin{solution}
+        Our change of coordinate matrix $Q$ is as follows:\\
+        $$Q = [I_V]_{\beta'}^\beta = \begin{bmatrix}
+            a & c\\
+            b & d
+        \end{bmatrix}$$
+        \begin{align*}
+            (0,10) = a(-1,3) + b(2,-1)\\
+            (5,0) = c(-1,3) + d(2,-1)
+        \end{align*}
+        Thus we get the system of equations:
+        \begin{align*}
+            -a + 2b = 0\\
+            3a - b = 10\\
+            -c + 2d = 5\\
+            3c - d = 0
+        \end{align*}
+        Solving the system of equations, we get:
+        \begin{align*}
+            a = 4, b = 2, c = 1, d = 3
+        \end{align*}
+        Thus our change of coordinate matrix is:
+        $$Q = \begin{bmatrix}
+            4 & 1\\
+            2 & 3
+        \end{bmatrix}$$
+        We can check our solution by verifying that $[v]_{\beta} = Q[v]_{\beta'}$.
+        \begin{align*}
+            v &= (0,10)\\
+            [v]_{\beta} &= \begin{bmatrix}
+                4\\
+                2
+            \end{bmatrix}   \\
+            Q[v]_{\beta'} &= Q\begin{bmatrix}
+                1\\
+                0
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                4 & 1\\
+                2 & 3
+            \end{bmatrix}\begin{bmatrix}
+                1\\
+                0
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                4\\
+                2
+            \end{bmatrix}
+        \end{align*} 
+        This is clearly our first vector in $\beta$ coordinates.\\
+        \begin{align*}
+            v &= (5,0)\\
+            [v]_{\beta} &= \begin{bmatrix}
+                1\\
+                3
+            \end{bmatrix}   \\
+            Q[v]_{\beta'} &= Q\begin{bmatrix}
+                0\\
+                1
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                4 & 1\\
+                2 & 3
+            \end{bmatrix}\begin{bmatrix}
+                0\\
+                1
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                1\\
+                3
+            \end{bmatrix}
+        \end{align*}
+        This is clearly our second vector in $\beta$ coordinates.\\
+    \end{solution}
+
+    \question Question 2.5 2c
+    $$\beta = \left\{ (2,5), (-1,-3)\right\} \text{ and } \beta' = \left\{ e_1, e_2\right\}$$
+    \begin{solution}
+        Our change of coordinate matrix $Q$ is as follows:\\
+        $$Q = [I_V]_{\beta'}^\beta = \begin{bmatrix}
+            a & c\\
+            b & d
+        \end{bmatrix}$$
+        for:
+        \begin{align*}
+            (1,0) = a(2,5) + b(-1,-3)\\
+            (0,1) = c(2,5) + d(-1,-3)
+        \end{align*}
+        Thus we get the system of equations:
+        \begin{align*}
+            2a - 1b = 1\\
+            5a - 3b = 0\\
+            2c - 1d = 0\\
+            5c - 3d = 1
+        \end{align*}
+        Solving the system of equations, we get:
+        \begin{align*}
+            a = 3, b = 5, c = -1, d = -2
+        \end{align*}
+        Thus our change of coordinate matrix is:
+        $$Q = \begin{bmatrix}
+            3 & -1\\
+            5 & -2
+        \end{bmatrix}$$
+
+    \end{solution}
+
+    \question Question 2.5 3c\\
+    For each of the following pairs of ordered bases $\beta, \beta'$ for $P_2(R)$ find the change of coordinate matrix that changes $\beta'$ coordinates to $\beta$ coordinates.\\
+    $$\beta = \left\{ 2x^2 -x, 3x^2 +1, x^2 \right\} \text{ and } \beta' = \left\{ 1, x, x^2\right\}$$
+    \begin{solution}
+        Our change of coordinate matrix $Q$ is as follows:\\
+        $$Q = [I_V]_{\beta'}^\beta = \begin{bmatrix}
+            a & d & g\\
+            b & e & h\\
+            c & f & i
+        \end{bmatrix}$$
+        for the following equations:
+        \begin{align*}
+            1 = a(2x^2 - x) + b(3x^2 + 1) + c(x^2)\\
+            x = d(2x^2 - x) + e(3x^2 + 1) + f(x^2)\\
+            x^2 = g(2x^2 - x) + h(3x^2 + 1) + i(x^2)
+        \end{align*}
+        Thus we get the system of equations:
+        \begin{align*}
+            1 &= b\\
+            0 &= -a \\
+            0 &= 2a + 3b + c\\
+            0 &= e\\
+            1 &= -d\\
+            0 &= 2d + 3e + f\\
+            0 &= h\\
+            0 &= -g\\
+            1 &= 2g + 3h + i
+        \end{align*}
+        Solving the system of equations, we get:
+        \begin{align*}
+            a &= 0 & b &= 1 & c &= -3\\
+            d &= -1 & e &= 0 & f &= 2\\
+            g &= 0 & h &= 0 & i &= 1  
+        \end{align*}
+        Thus our change of coordinate matrix is:
+        $$Q = \begin{bmatrix}
+            0 & -1 & 0\\
+            1 & 0 & 0\\
+            -3 & 2 & 1
+        \end{bmatrix}$$
+        We can check our solution by verifying that $[v]_{\beta} = Q[v]_{\beta'}$.
+        \begin{align*}
+            v &= 1\\
+            [v]_{\beta} &= \begin{bmatrix}
+                0 \\
+                1\\
+                -3
+            \end{bmatrix}   \\
+            Q[v]_{\beta'} &= Q\begin{bmatrix}
+                1\\
+                0\\
+                0
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                0 & -1 & 0\\
+                1 & 0 & 0\\
+                -3 & 2 & 1
+            \end{bmatrix}\begin{bmatrix}
+                1\\
+                0\\
+                0
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                0 \\
+                1\\
+                -3
+            \end{bmatrix}
+        \end{align*}
+        This is clearly our first vector in $\beta$ coordinates.
+        \begin{align*}
+            v &= x\\
+            [v]_{\beta} &= \begin{bmatrix}
+                -1 \\
+                0\\
+                2
+            \end{bmatrix}   \\
+            Q[v]_{\beta'} &= Q\begin{bmatrix}
+                0\\
+                1\\
+                0
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                0 & -1 & 0\\
+                1 & 0 & 0\\
+                -3 & 2 & 1
+            \end{bmatrix}\begin{bmatrix}
+                0\\
+                1\\
+                0
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                -1 \\
+                0\\
+                2
+            \end{bmatrix}
+        \end{align*}
+        This is clearly our second vector in $\beta$ coordinates.
+        \begin{align*}
+            v &= x^2\\
+            [v]_{\beta} &= \begin{bmatrix}
+                0 \\
+                0\\
+                1
+            \end{bmatrix}   \\
+            Q[v]_{\beta'} &= Q\begin{bmatrix}
+                0\\
+                0\\
+                1
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                0 & -1 & 0\\
+                1 & 0 & 0\\
+                -3 & 2 & 1
+            \end{bmatrix}\begin{bmatrix}
+                0\\
+                0\\
+                1
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                0 \\
+                0\\
+                1
+            \end{bmatrix}
+        \end{align*}
+        This is clearly our third vector in $\beta$ coordinates.\\
+        Clearly the change of coordinate matrix is correct.
+    \end{solution}
+
+    \question Question 2.5 5\\
+    Let $T$ be the linear operator on $P_1(R)$ definined by $T(p(x)) = p'(x)$. Let $\beta = \{1, x\}$ and $\beta' = \{1+x , 1-x\}$. Use Theorem 2.23 and the fact that $\begin{bmatrix}
+        1 & 1\\
+        1 & -1
+    \end{bmatrix}^{-1} = \frac{1}{2}\begin{bmatrix}
+        1 & 1\\
+        1 & -1
+    \end{bmatrix}$ to find the change of coordinate matrix $[T]_{\beta'}$.
+    \begin{solution}
+        First we must find out change of basis matrix $Q$ from $\beta$ to $\beta'$.\\
+        We have the following equations:
+        \begin{align*}
+            1+x &= a(1) + b(x)\\
+            1-x &= c(1) + d(x)
+        \end{align*}
+        Solving the system of equations, we get:
+        \begin{align*}
+            a = 1/2, b = 1/2, c = 1/2, d = -1/2
+        \end{align*}
+        Thus our change of basis matrix is:
+        $$Q = \begin{bmatrix}
+            1/2 & 1/2\\
+            1/2 & -1/2
+        \end{bmatrix}$$
+        We know by theorem 2.23 that $[T]_{\beta'} = Q^{-1} [T]_{\beta} Q$.\\
+        We know that $[T]_{\beta} = \begin{bmatrix}
+           1 & 0\\
+            0 & 1
+        \end{bmatrix}$\\
+        Thus we have:
+        $$ [T]_{\beta'} = \begin{bmatrix}
+            1 & 1\\
+            1 & -1
+        \end{bmatrix} \begin{bmatrix}
+            0 & 1\\
+            0 & 0
+        \end{bmatrix} \begin{bmatrix}
+            1/2 & 1/2\\
+            1/2 & -1/2
+        \end{bmatrix}$$
+        Thus we get:
+        $$ [T]_{\beta'} = \begin{bmatrix}
+            1/2 & -1/2\\
+            1/2 & -1/2
+        \end{bmatrix}$$
+    \end{solution}
+    
+    \question Question 2.5 6b\\
+    For each matrix A and ordered basis $\beta$ find $[L_A]_\beta$. also find invertible matrix $Q$ such that $[L_A]_\beta = Q^{-1} A Q$.
+    $$ A = \begin{bmatrix}
+        1 & 2\\
+        2 & 1
+    \end{bmatrix} \text{ and } \beta = \left\{ \begin{bmatrix}
+        1\\
+        1
+    \end{bmatrix}, \begin{bmatrix}
+        1\\
+        -1
+    \end{bmatrix}\right\}$$
+    \begin{solution}
+        We know that $[L_A]_\beta = Q^{-1} A Q$.\\
+        \begin{align*}
+            A(\beta_1) = (3,3) = 3\beta_1 + 0\beta_2\\
+            A(\beta_2) = (1,-1) = 0\beta_1 - 1\beta_2
+        \end{align*}
+        so $[L_A]_\beta = \begin{bmatrix}
+            3 & 0\\
+            0 & -1
+        \end{bmatrix}$\\
+        Since $\beta$ is a basis for $\mathbb{R}^2$, we know that $Q$ is invertible.\\
+        Thus we have:
+        $$Q = \begin{bmatrix}
+            1 & 1\\
+            1 & -1
+        \end{bmatrix}$$
+        $$Q^{-1} = \frac{1}{2}\begin{bmatrix}
+            1 & 1\\
+            1 & -1
+        \end{bmatrix}$$
+        Thus we have:
+
+        \begin{align*}        
+            [L_A]_\beta &= \begin{bmatrix}
+                1 & 1\\
+                1 & -1 
+            \end{bmatrix}^{-1} \begin{bmatrix}
+                1 & 2\\
+                2 & 1
+            \end{bmatrix} \begin{bmatrix}
+                1 & 1\\
+                1 & -1
+            \end{bmatrix}\\
+            &= \frac{1}{2}\begin{bmatrix}
+                1 & 1\\
+                1 & -1
+            \end{bmatrix} \begin{bmatrix}
+                1 & 2\\
+                2 & 1
+            \end{bmatrix} \begin{bmatrix}
+                1 & 1\\
+                1 & -1
+            \end{bmatrix}\\
+            &= \begin{bmatrix}
+                3 & 0\\
+                0 & -1
+            \end{bmatrix}
+        \end{align*}
+        
+    \end{solution}
+    \question Question 2.5 6c
+    $$A = \begin{bmatrix}
+        1 & 1 & -1 \\
+        2 & 0 & 1\\
+        1 & 1 & 0
+    \end{bmatrix} \text{ and } \beta = \left\{ \begin{bmatrix}
+        1\\
+        1\\
+        1\\
+    \end{bmatrix}, \begin{bmatrix}
+        1\\
+        0\\
+        1\\
+    \end{bmatrix}, \begin{bmatrix}
+        1\\
+        1\\
+        2\\
+    \end{bmatrix}\right\}$$
+    \begin{solution}
+        We know that $[L_A]_{\beta} = Q^{-1} A Q$.\\
+        We let $Q = \begin{bmatrix}
+            1 & 1 & 1\\
+            1 & 0 & 1\\
+            1 & 1 & 2
+        \end{bmatrix}$\\
+        Thus we have the inverse of $Q$ by the RREF method:\\
+        $$Q^{-1} = \begin{bmatrix}
+            1 & 1 & -1\\
+            1 & -1 & 1\\
+            -1 & 0 & 1
+        \end{bmatrix}$$
+        Thus we have:
+        $$[L_A]_{\beta} = \begin{bmatrix}
+            1 & 1 & -1\\
+            1 & -1 & 1\\
+            -1 & 0 & 1
+        \end{bmatrix} \begin{bmatrix}
+            1 & 1 & -1 \\
+            2 & 0 & 1\\
+            1 & 1 & 0
+        \end{bmatrix} \begin{bmatrix}
+            1 & 1 & 1\\
+            1 & 0 & 1\\
+            1 & 1 & 2
+        \end{bmatrix}$$
+        Thus we get:
+        $$[L_A]_{\beta} = \begin{bmatrix}
+            2 & 2 & 2\\
+            0 & -2 & -2\\
+            1 & 1 & 2
+        \end{bmatrix} $$
+
+    \end{solution}
+
+    \question Question 3.2 5e\\
+    For each of the following matrices compute the rank and inverse if it exists.\\
+    $$ A = \begin{bmatrix}
+        1 & 2 & 1\\
+        -1 & 1 & 2\\
+        1 & 0 & 1
+    \end{bmatrix}$$
+    \begin{solution}
+        We can determine the rank of the matrix by row reducing it to RREF form and observing the number pivot columns since we know that by Theorem 3.5 that the number of linearly independent columns is equal to the rank.\\
+        \begin{align*}
+            A = \begin{bmatrix}
+                1 & 2 & 1\\
+                -1 & 1 & 2\\
+                1 & 0 & 1
+            \end{bmatrix} &\xrightarrow{R_2 + R_1 \to R_2} \begin{bmatrix}
+                1 & 2 & 1\\
+                0 & 3 & 3\\
+                1 & 0 & 1
+            \end{bmatrix}\\ 
+            \xrightarrow{R_3 - R_1 \to R_3} \begin{bmatrix}
+                1 & 2 & 1\\
+                0 & 3 & 3\\
+                0 & -2 & 0
+            \end{bmatrix} &\xrightarrow{R_3 + 2/3 R_2 \to R_3} \begin{bmatrix}
+                1 & 2 & 1\\
+                0 & 3 & 3\\
+                0 & 0 & 2
+            \end{bmatrix} \\
+            \xrightarrow{ 1/3 R_2 \to R_2 \text{ and }  1/2 R_3  \to R_3} \begin{bmatrix}
+                1 & 2 & 1\\
+                0 & 1 & 1\\
+                0 & 0 & 1
+            \end{bmatrix} & \xrightarrow{R_2 - R_3 \to R_2} \begin{bmatrix}
+                1 & 2 & 1\\
+                0 & 1 & 0\\
+                0 & 0 & 1
+            \end{bmatrix} \\
+            \xrightarrow{R_1 - 2R_2 \to R_1 \text{ and } R_1 - R_3 \to R_1} \begin{bmatrix}
+                1 & 0 & 0\\
+                0 & 1 & 0\\
+                0 & 0 & 1
+            \end{bmatrix}
+        \end{align*}
+        Thus we have the rank of the matrix to be 3.\\
+    \end{solution}
+
+    \question Question 3.2 6a
+    For each of the following linear transformation $T$ determine whether $T$ is invertible and compute $T^{-1}$ if it exists.\\
+    $$ T: P_2(R) \to P_2(R) \text{ defined by } T(f(x)) = f''(x) + 2f'(x) - f(x)$$
+    \begin{solution}
+        We can determine if $T$ is invertible by checking if the matrix corresponding to $L_A = T$ is invertible.\\
+        We can ta
+        $T(1) = 0 + 0 - 1 = -1$\\
+        $T(x) = 0 + 2 - x = 2 - x$\\
+        $T(x^2) = 2 + 4x - x^2 = 2 + 4x - x^2$\\
+        We can define $ T = L_A$ where $A = \begin{bmatrix}
+            -1 & 2 & 2\\
+            0 & -1 & 4\\
+            0 & 0 & -1
+        \end{bmatrix}$\\
+        We can then put this matrix in RREF form to determine if it is invertible.\\
+        \begin{align*}
+            A = \begin{bmatrix}[ccc|ccc]
+                -1 & 2 & 2 & 1 & 0 & 0\\
+                0 & -1 & 4 & 0 & 1 & 0\\
+                0 & 0 & -1 & 0 & 0 & 1
+            \end{bmatrix} &\xrightarrow{-R_1 \to R_1 \text{ and } -R_2 \to R_2, \text{ and } -R_3 \to R_3} \begin{bmatrix}[ccc|ccc]
+                1 & -2 & -2 & -1 & 0 & 0\\
+                0 & 1 & -4 & 0 & -1 & 0\\
+                0 & 0 & 1 & 0 & 0 & -1
+            \end{bmatrix}\\
+            \xrightarrow{R_2 + 4R_3 \to R_2} \begin{bmatrix}[ccc|ccc]
+                1 & -2 & -2 & -1 & 0 & 0\\
+                0 & 1 & 0 & 0 & -1 & -4\\
+                0 & 0 & 1 & 0 & 0 & -1
+            \end{bmatrix} &\xrightarrow{R_1 + 2R_3 \to R_1 \text{ and } R_1 + 2R_2 \to R_1} \begin{bmatrix}[ccc|ccc]
+                1 & 0 & 0 & -1 & -2 & -10\\
+                0 & 1 & 0 & 0 & -1 & -4\\
+                0 & 0 & 1 & 0 & 0 & -1
+            \end{bmatrix}
+        \end{align*}
+        Clearly this is the Identity matrix.\\
+        Since the Nullity(R) = 0 the matrix is injective and thus left invertible.\\
+        Since the Rank(R) = dim(V) = 3, the matrix is surjective and thus right invertible.\\
+        Therefore, the matrix is invertible.\\
+        By following the RREF form we can determine the inverse of the matrix to be:
+        $$ A^{-1} = \begin{bmatrix}
+            -1 & -2 & -10\\
+            0 & -1 & -4\\
+            0 & 0 & -1
+        \end{bmatrix}$$
+    \end{solution}
+    \question Question 3.4 6
+    Let the RREF form of $A$ be 
+    $$ \begin{bmatrix}
+        1 & -3 & 0 & 4 & 0 & 5\\
+        0 & 0 & 1 & 3 & 0 & 2\\
+        0 & 0 & 0 & 0 & 1 & -1\\
+        0 & 0 & 0 & 0 & 0 & 0
+    \end{bmatrix}$$
+    Determine A if the first, third, and sixth columns of A are
+    $$ \begin{bmatrix}
+        1\\
+        -2\\
+        -1\\
+        3
+    \end{bmatrix}, \begin{bmatrix}
+        -1\\
+        1\\
+        2\\
+        -4
+    \end{bmatrix}, \begin{bmatrix}
+        3\\
+        -9\\
+        2\\
+        5
+    \end{bmatrix}$$
+    Respectively.
+    \begin{solution}
+        We can recognize that in the RREF form the non-pivot columns show the coefficients of prior columns.\\
+        Thus we can see that the second column is $-3$ times the first column. Thus it is 
+        $$ \begin{bmatrix}
+            -3\\
+            6\\
+            3\\
+            -9
+        \end{bmatrix}$$
+        The fourth column is $4$ times the first column plus $3$ times the second column. Thus it is
+        $$ \begin{bmatrix}
+            1\\
+            -5\\
+            2\\
+            0
+        \end{bmatrix}
+        $$
+        Now we can do more work for the fifth column as we know that the sixth column is $5$ times the first column plus $2$ times the second column plus $-1$ times the fifth column. Thus we get:
+        $$ \begin{bmatrix}
+            3\\
+            -9\\
+            2\\
+            5
+        \end{bmatrix} = 5\begin{bmatrix}
+            1\\
+            -2\\
+            -1\\
+            3
+        \end{bmatrix} + 2\begin{bmatrix}
+            -1\\
+            1\\
+            2\\
+            -4
+        \end{bmatrix} + -1 \begin{bmatrix}
+            a\\
+            b\\
+            c\\
+            d
+        \end{bmatrix}$$
+        Where $a,b,c,d$ are the entries of the fifth column.\\
+        Solving the system of equations we get:
+        $$ \begin{bmatrix}
+            a\\
+            b\\
+            c\\
+            d
+        \end{bmatrix} = \begin{bmatrix}
+            0\\
+            1\\
+            -3\\
+            2
+        \end{bmatrix}$$
+        Thus our matrix is:
+    $$ \begin{bmatrix}
+        1 & -3 & -1 & 1 & 0 & 3\\
+        -2 & 6 & 1 & -5 & 1 & -9\\
+        -1 & 3 & 2 & 2 & -3 & 2\\
+        3 & -9 & -4 & 0 & 2 & 5
+    \end{bmatrix}$$
+    \end{solution}
+    
+
+\end{questions}
+
+\end{document}

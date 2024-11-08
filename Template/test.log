@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  13 OCT 2024 16:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  27 OCT 2024 23:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -511,12 +511,9 @@ Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 \c@theorem=\count347
 \c@proposition=\count348
 \c@lemma=\count349
-\c@definition=\count350
-\c@example=\count351
-\c@corollary=\count352
 ) (c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count353
+\l__color_backend_stack_int=\count350
 \l__pdf_internal_box=\box73
 ) (./test.aux)
 \openout1 = `test.aux'.
@@ -537,16 +534,16 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
  (c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count354
+\scratchcounter=\count351
 \scratchdimen=\dimen288
 \scratchbox=\box74
-\nofMPsegments=\count355
-\nofMParguments=\count356
+\nofMPsegments=\count352
+\nofMParguments=\count353
 \everyMPshowfont=\toks63
-\MPscratchCnt=\count357
+\MPscratchCnt=\count354
 \MPscratchDim=\dimen289
-\MPnumerator=\count358
-\makeMPintoPDFobject=\count359
+\MPnumerator=\count355
+\makeMPintoPDFobject=\count356
 \everyMPtoPDFconversion=\toks64
 ) (c:/texlive/2023/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -576,15 +573,15 @@ L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 25093 strings out of 474166
- 631648 string characters out of 5749518
+ 25089 strings out of 474166
+ 631576 string characters out of 5749518
  1927542 words of memory out of 5000000
- 47012 multiletter control sequences out of 15000+600000
+ 47008 multiletter control sequences out of 15000+600000
  561572 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  90i,10n,103p,856b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on test.pdf (2 pages, 36381 bytes).
+Output written on test.pdf (2 pages, 36305 bytes).
 PDF statistics:
  29 PDF objects out of 1000 (max. 8388607)
  18 compressed objects within 1 object stream

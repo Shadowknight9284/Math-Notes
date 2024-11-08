@@ -1,0 +1,50 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\section*{Info on paper}
+
+\section*{Renewal reward processes}
+\begin{example}[7.3 (b)]
+    \begin{align*}
+        \frac{E(R(t))}{t} = \frac{E[R]}{E[X]} \text{ w/ p = 1}
+    \end{align*}
+    Rate at which rewards are earned = $\frac{\text{Expected reward in a cycle}}{\text{Expected time in a cycle}}$
+    Go over examples 7.14, 7.15, 7.16
+\end{example}
+\begin{example}[1]
+    A policement cruses on average 10 mts before stopping a speeder. 90\% of the time the speeder is fined \$80 taking 5 mins. 10\% of the time the speeder is fined \$300 taking 30 mins. What is the average amount of money the police officer makes in 1 hour?
+    \begin{solution}
+        Average time in a cycle = 10 + 5(0.9) + 30(0.1) = 10 + 4.5 + 3 = 17.5 mins\\
+        Average reward in a cycle = 80(0.9) + 300(0.1) = 72 + 30 = 102\\
+        Thus the average rate is $\frac{102}{17.5} = 5.28 $ dollars per minute
+    \end{solution}
+\end{example}
+\begin{example}[2]
+    A truck drivers drives from Atlanta to Boston and back. Each from A to B drive is a fixed speed from a uniform distribution from $(40, 60)$ mph. The return trip is a $40$ or $60$ mph with equal probability. \\
+    What is the long run proportion of driving at 40 mph?
+    \begin{solution}
+        We can utilize a rewards process, where the reward is earned at a rate of 1 per unit time when in the 40 mph state. Let the distance between the two cites be $d = d_{AB} = d_{BA}$ and let $X$ be the speed of the truck.\\
+        $$E[\text{Cycle length}] = E[T_{AB}] + E[T_{BA}] = \frac{1}{20} (\int_{40}^{60} \frac{d}{s} ds)_{T_{AB}}+ (\frac{d}{80} + \frac{d}{120})_{T_{BA}} = \frac{d}{20}ln\left( \frac{3}{2} \right) + \frac{d}{48}$$ 
+        $$E[\text{Reward in a cycle}] = {\frac{1}{2} \frac{d}{40} \cdot (1) + 0 * \frac{d}{40} (1) } $$
+        $$\frac{E[R]}{E[X]} = \frac{\frac{1}{80}}{\frac{1}{48} + \frac{1}{20}ln\left( \frac{3}{2} \right)} $$        
+        4/13 is the proportion of driving at 40 mph
+    \end{solution}
+\end{example}
+
+
+
+\end{document}

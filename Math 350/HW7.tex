@@ -1,0 +1,346 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Homework 7}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \item Question 4.1 9
+    Prove that $det(AB) = det(A)det(B)$ for any $A,B \in M_{2x2}(\mathbb{R})$.
+    \begin{solution}
+        We can consider the matrices $A$ and $B$ in the following cases: (WLOG)
+        \begin{parts}
+            \item A is not invertible
+            \item A is invertible
+        \end{parts}
+        \textbf{Case 1: A is not invertible}
+        If $A$ is not invertible, then $det(A) = 0$. Thus $det(A)det(B) = 0$ and by $A$ being non-invertible, $AB$ is also non-invertible due to the fact that $A$ has a rank less than 2 therefore regardless of the rank of $B$ the matrix $AB$ will have a rank less than 2. Thus $det(AB) = 0$.\\
+        therefore $det(AB) = det(A)det(B)$.\\
+        \textbf{Case 2: A is invertible}
+        If $A$ is invertible, then $det(A) \neq 0$. We know that $A^{-1}$ exists. Thus $ABy =Ay$ for some $x,y \in F$ is equivalent to $By = x$. \\
+        We can consider the augemented matrix $[A|I]$ and row reduce by a series of elementary row operation $E_1 ... E_n$ to $[I|A^{-1}]$.  \\
+        We can consider the augemented matrix $[AB|I]$ and row reduce by the same series of elementary row operation $E_1 ... E_n$ to $[B|A^{-1}]$\\
+        We also know that for for any row additions it will not change the determinant, for row swaps it will change the determinant by a factor of -1, and for row scaling it will change the determinant by a factor of the scalar.\\
+        So for $k$ row swaps and $l$ row scaling we can consider 
+        $ 1 = det(I) = (-1)^k * c_1 * c_2 * ... * c_l * det(A)$\\  
+        Then we can see that $det(B) = \frac{1}{(-1)^k c_1 * c_2 * ... * c_l} det(AB) $\\
+        Which implies that $det(AB) = det(A)det(B)$
+
+        \textbf{Alternatively:}
+        We can consider the matrices $A$ and $B$ as arbitrary matrices $A = \begin{bmatrix}
+            a & b \\ c & d
+        \end{bmatrix}$ and $B = \begin{bmatrix}
+            e & f \\ g & h
+        \end{bmatrix}$. We can see that
+        \begin{align*}
+            det(AB) &= det\left(\begin{bmatrix}
+                a & b \\ c & d
+            \end{bmatrix} \begin{bmatrix}
+                e & f \\ g & h
+            \end{bmatrix}\right)\\
+            &= det\left(\begin{bmatrix}
+                ae + bg & af + bh \\ ce + dg & cf + dh
+            \end{bmatrix}\right)\\
+            &= (ae + bg)(cf + dh) - (af + bh)(ce + dg)\\
+            &= aecf + aedh + bgcf + bhdh - afce - afdg - bghc - bhgd\\
+            &= aecf + aedh + bgcf + bhdh - afce - afdg - bghc - bhgd\\
+            &= a(ecf - fdg) + b(gcf - hgd) + c(aed - bhc) + d(bh - af)\\
+            &= det(A)det(B)
+        \end{align*}
+
+    \end{solution}
+    \item Question 4.1 11
+    Let $\delta: M_{2x2}(F) \to F$ be a function with the following three properties:
+    \begin{enumerate}
+        \item $\delta$ is a linear function of each row of the matrix when the other row is fixed.
+        \item if the two rows of $A$ are identical, then $\delta(A) = 0$.
+        \item $\delta(I) = 1$.
+    \end{enumerate} 
+    \begin{parts}
+        \item Prove that $\delta(E) = det(E)$ for any elementary matrix $E$.
+        \item Prove that $\delta(EA) = \delta(E)\delta(A)$ for any elementary matrix $E$ and any $A \in M_{2x2}(F)$.
+    \end{parts}
+    \begin{solution}
+        \textbf{Part 1:}
+        We can consider the elementary matrices $E$ in the following cases:
+        \begin{enumerate}
+            \item $E$ is a row swap matrix
+            \item $E$ is a row scaling matrix
+            \item $E$ is a row addition matrix
+        \end{enumerate}
+        \textbf{Case 1:} $E$ is a row swap matrix
+        We can consider the matrix $E$ as $E = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}$. We can see that 
+        \begin{align*}
+            \delta(E) &= \delta\left(\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}\right)\\
+            &= \delta\left(\begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}\right) + \delta\left(\begin{bmatrix} 1 & 0 \\ 1 & 0 \end{bmatrix}\right)_{\text{Goes to } 0}\\
+            &= \delta\left(\begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}\right)_{\text{Goes to } 0} + \delta\left(\begin{bmatrix} 1 & 0 \\ 1 & -1 \end{bmatrix}\right)\\
+            &= \delta\left(\begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}\right) + \delta\left(\begin{bmatrix} 0 & 1 \\ 0 & -1 \end{bmatrix}\right)\\
+            &= \delta\left(\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}\right) - \delta\left(\begin{bmatrix} 0 & 1 \\ 0 & 1 \end{bmatrix}\right)_{\text{Goes to } 0}\\
+            &= -1
+        \end{align*}
+        \textbf{Case 2:} $E$ is a row scaling matrix
+        We can consider the matrix $E$ as $E = \begin{bmatrix} k & 0 \\ 0 & 1 \end{bmatrix}$. We can see that by property 1, $\delta(E) = k\delta\left(\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}\right) = k$.\\
+        Additionally if we consider the matrix $E$ as $E = \begin{bmatrix} 1 & 0 \\ 0 & k \end{bmatrix}$, we can see that $\delta(E) = k\delta\left(\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}\right) = k$.\\
+        \textbf{Case 3:} $E$ is a row addition matrix
+        We can consider the matrix $E$ as $E = \begin{bmatrix} 1 & 0 \\ k & 1 \end{bmatrix}$. We can see that 
+        \begin{align*}
+            \delta(E) &= \delta\left(\begin{bmatrix} 1 & 0 \\ k & 1 \end{bmatrix}\right)\\
+            &= \delta\left(\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}\right) + \delta\left(\begin{bmatrix} 0 & 0 \\ k & 1 \end{bmatrix}\right)\\
+            &= 1 + k\delta\left(\begin{bmatrix} 0 & 0 \\ 1 & 1 \end{bmatrix}\right)\\
+            &= 1
+        \end{align*}
+        Additionally if we consider the matrix $E$ as $E = \begin{bmatrix} 1 & k \\ 0 & 1 \end{bmatrix}$, we can see that
+        \begin{align*}
+            \delta(E) &= \delta\left(\begin{bmatrix} 1 & k \\ 0 & 1 \end{bmatrix}\right)\\
+            &= \delta\left(\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}\right) + \delta\left(\begin{bmatrix} 0 & k \\ 0 & 1 \end{bmatrix}\right)\\
+            &= 1 + k\delta\left(\begin{bmatrix} 0 & 1 \\ 0 & 1 \end{bmatrix}\right)\\
+            &= 1
+        \end{align*}
+        Thus we can see that $\delta(E) = det(E)$ for any elementary matrix $E$.\\
+        \textbf{Part 2:}
+        We can take an aribtrary matrix $A = \begin{bmatrix}
+            a & b \\
+            c & d
+        \end{bmatrix}$ and notice that $\delta(A) = ad - bc = det(A)$.\\
+        Since $E$ is an elementary matrix and we know that $det(EA) = det(E)det(A)$, we can see that $\delta(EA) = \delta(E)\delta(A)$. by the fact that $\delta(E) = det(E)$ and $\delta(A) = det(A)$.
+    \end{solution}
+    \item Question 4.1 12
+    Let $\delta: M_{2x2}(F) \to F$ be a function with properties from the prior question. Prove that $\delta(A) = det(A)$ for any $A \in M_{2x2}(F)$.
+    \begin{solution}
+        We can consider an arbitrary matrix $A = \begin{bmatrix}
+            a & b \\
+            c & d
+        \end{bmatrix}$ 
+        \begin{align*}
+            \delta(A) &= \delta\left(\begin{bmatrix}
+                a & b \\
+                c & d
+            \end{bmatrix}\right)\\
+            &= \delta\left(\begin{bmatrix}
+                a & b \\
+                0 & d
+            \end{bmatrix}\right) + \delta\left(\begin{bmatrix}
+                a & b \\
+                c & 0
+            \end{bmatrix}\right)\\
+            &= \delta\left(\begin{bmatrix}
+                a & 0 \\
+                0 & d
+            \end{bmatrix}\right) + \delta\left(\begin{bmatrix}
+                0 & b \\
+                c & 0
+            \end{bmatrix}\right) + \delta\left(\begin{bmatrix}
+                a & 0 \\
+                c & 0
+            \end{bmatrix}\right) + \delta\left(\begin{bmatrix}
+                0 & b \\
+                0 & d
+            \end{bmatrix}\right)\\
+            &= ad - bc
+        \end{align*}
+        Clealy $\delta(A) = det(A)$ for any $A \in M_{2x2}(F)$.
+    \end{solution}
+    \item Question 4.2 7
+    Cofactor Expansion: $$\begin{bmatrix}
+        0 & 1 & 2 \\
+        -1 & 0 & -3 \\
+        2 & 3 & 0
+    \end{bmatrix}$$
+    along the second row.
+    \begin{solution}
+        $$det(A) = (-1)^{(3)} (-1) det\begin{bmatrix}
+            1 & 2 \\
+            3 & 0
+        \end{bmatrix} + (-1)^{(4)} (0) det\begin{bmatrix}
+            0 & 2 \\
+            2 & 0
+        \end{bmatrix} + (-1)^{(5)} (-3) det\begin{bmatrix}
+            0 & 1 \\
+            2 & 3
+        \end{bmatrix}$$
+        $$det(A) = -(-1(-6)) + 0 - (-3(-2)) = -12$$
+    \end{solution}
+    \item Question 4.2 8
+    Cofactor Expansion: $$\begin{bmatrix}
+        1 & 0 & 2 \\
+        0 & 1 & 5 \\
+        -1 & 3 & 0
+    \end{bmatrix}$$
+    along the third row.
+    \begin{solution}
+        $$det(A) = (-1)^{(6)} (-1) det\begin{bmatrix}
+            0 & 2\\
+            1 & 5
+        \end{bmatrix} + (-1)^{(7)} (3) det\begin{bmatrix}
+            1 & 2\\
+            0 & 5
+        \end{bmatrix} + (-1)^{(8)} (0) det\begin{bmatrix}
+            1 & 0\\
+            0 & 1
+        \end{bmatrix}$$
+        $$ det(A) = (-1(-2))  - 3(5) + 0 = -13$$
+    \end{solution}
+    \item Question 4.2 14
+    $$det\left( \begin{bmatrix}
+        2 & 3 & 4 \\
+        5 & 6 & 0 \\
+        7 & 0 & 0
+    \end{bmatrix}\right)$$
+    \begin{solution}
+        We will cofactor expand along the third row.
+        $$det(A) = (-1)^{(6)} (7) det\begin{bmatrix}
+            3 & 4\\
+            6 & 0
+        \end{bmatrix} + (-1)^{(7)} (0) det\begin{bmatrix}
+            2 & 4\\
+            5 & 0
+        \end{bmatrix} + (-1)^{(8)} (0) det\begin{bmatrix}
+            2 & 3\\
+            5 & 6
+        \end{bmatrix}$$
+        $$det(A) = -7(-24) - 0 + 0 = 168$$
+    \end{solution}
+    \item Question 4.2 18
+    $$det\left( \begin{bmatrix}
+        1 & -2 & 3 \\
+        -1 & 2 & -5 \\
+        3 & -1 & 2
+    \end{bmatrix} \right)$$
+    \begin{solution}
+        We will cofactor expand along the first row.
+        $$det(A) = (-1)^{0} (1) det\begin{bmatrix}
+            2 & -5\\
+            -1 & 2
+        \end{bmatrix} + (-1)^{1} (-2) det\begin{bmatrix}
+            -1 & -5\\
+            3 & 2
+        \end{bmatrix} + (-1)^{2} (3) det\begin{bmatrix}
+            -1 & 2\\
+            3 & -1
+        \end{bmatrix}$$
+        $$det(A) = 1(4 - 5) + 2(-2 + 15) + 3(1 - 6) = -1 + 26 - 15 = 10$$
+    \end{solution}
+    \item Question 4.2 23
+    Prove that the determinant of an upper triangular matrix is the product of its diagonal entries.
+    \begin{solution}
+        Let the upper triangular matrix be 
+        $$ \begin{bmatrix}
+            a_{11} & a_{12} & a_{13} & ... & a_{1n} \\
+            0 & a_{22} & a_{23} & ... & a_{2n} \\
+            0 & 0 & a_{33} & ... & a_{3n} \\
+            \vdots & \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & 0 & ... & a_{nn}
+        \end{bmatrix}$$
+        We can see that by cofactor expansion along the last row, we can see that
+        $$det(A) = (-1)^{(n^2-n)} 0 + (-1)^{(n^2-n+1)} 0 + ... + (-1)^{(n^2-1)} a_{nn} det\begin{bmatrix}
+            a_{11} & a_{12} & ... & a_{1n-1} \\
+            0 & a_{22} & ... & a_{2n-1} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & ... & a_{n-1n-1}  
+        \end{bmatrix}$$
+        and by continuously cofactor expanding along the last row, We can continue only requiring one non-trivial term. Thus the solution will be $$ \Pi_{i=1}^{n} (-1)^{n^2-1}a_{ii} = a_{11}a_{22}...a_{nn}$$ 
+    \end{solution}
+    \item Question 4.3 12
+    A matrix $Q \in M_{nxn}(\mathbb{C})$ is called orthogonal if $QQ^t = I$. Prove that if $Q$ is orthogonal, then $det(Q) = \pm 1$.
+    \begin{solution}
+        We can see that $det(QQ^t) = det(I) = 1$. We can also see that $det(QQ^t) = det(Q)det(Q^t) = det(Q)det(Q) = det(Q)^2$. Thus $det(Q)^2 = 1$ and $det(Q) = \pm 1$.
+    \end{solution}
+    \item Question 4.3 15
+    Prove that if $A,B \in M_{nxn}(F)$ are similar, then $det(A) = det(B)$.
+    \begin{solution}
+        We can see that if $A$ and $B$ are similar, then there exists an invertible matrix $Q$ such that $B = Q^{-1}AQ$. We can see that $det(B) = det(Q^{-1}AQ) = det(Q^{-1})det(A)det(Q) = det(A)$. Thus $det(A) = det(B)$.
+    \end{solution}
+    \item Question 4.3 24
+    Let $A \in M_{nxn}(F)$ have the form 
+    $$A = \begin{bmatrix}
+        0 & 0 & ... & 0 & a_1 \\
+        -1 & 0 & ... & 0 & a_2 \\
+        0 & -1 & ... & 0 & a_3 \\
+        \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & ... & -1 & a_n
+    \end{bmatrix}$$
+    Compute $det(A-tI)$.
+    \begin{solution}
+        We can do a cofactor expansion along the first row.
+        $$det(A-tI) = (t) det\left(\begin{bmatrix}
+            t & 0 & ... & a_1 \\
+            -1 & t & ... & a_2 \\
+            0 & -1 & ... & a_3 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & ... & t+ a_n
+        \end{bmatrix} \right) + (-1)^{n-1}a_0 det\left(\begin{bmatrix}
+            -1 & t & ... & 0 \\
+            0 & -1 & ... & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & ... & -1
+        \end{bmatrix} \right)$$
+        Clealry this will continue to be a series of $t$'s and $a_i$'s. Thus we can see that
+        $$det(A-tI) = t (t (t ... (t + a_n) ... + a_2) + a_1  ) + a_0$$
+        $$det(A-tI) = t^n + a_{n-1}t^{n-1} + ... + a_1t + a_0$$
+        Additionally notice that this is the matrix for an $n$th order linear recurrence relation: where the $i$th element of the vector $x$ when multiplied by $A$ will give the $i+1$th element of the vector $x$ and the "base element" be given by $a_0$. Thus we can see that the characteristic polynomial of the matrix $A$ is $det(A-tI)$.
+    \end{solution}
+    \item Question 4.4 2(c)
+    Evaluate the determinant of the matrix
+    $$ A = \begin{bmatrix}
+        2 +i & -1 + 3i\\
+        1 - 2i & 3 - i
+    \end{bmatrix}$$
+    \begin{solution}
+        $$det(A) = (2+i)(3-i) - (-1 + 3i)(1 - 2i) = 6 - 2i + 3i - i^2 + 1 - 2i - 3i + 6i^2 = 2 - 4i$$
+    \end{solution}
+    \item Question 4.4 3(c)
+    Evaluate the determinant of the matrix
+    $$ A = \begin{bmatrix}
+        0 & 1 & 2\\
+        -1 & 0 & -3\\
+        2 & 3 & 0
+    \end{bmatrix}$$
+    Along the second column.
+    \begin{solution}
+        $$det(A) = (-1)^{1} (1) det\begin{bmatrix}
+            -1 & -3\\
+            2 & 0
+        \end{bmatrix} + (-1)^{2} (0) det\begin{bmatrix}
+            0 & 2\\
+            2 & 0
+        \end{bmatrix} + (-1)^{3} (3) det\begin{bmatrix}
+            0 & 2\\
+            -1 & -3
+        \end{bmatrix}$$
+        $$det(A) = -(6) - 0 - (3(2)) = -12$$
+    \end{solution}
+    \item Question 4.4 3(e)
+    Evaluate the determinant of the matrix
+    $$ A = \begin{bmatrix}
+        0 & 1 +i & 2\\
+        -2i & 0 & 1 -i\\
+        3 & 4i & 0
+    \end{bmatrix}$$
+    Along the third row.
+    \begin{solution}
+        $$det(A) = (-1)^{6} (3) det\begin{bmatrix}
+            1 + i & 2\\
+            0 & 1 - i
+        \end{bmatrix} + (-1)^{7} (4i) det\begin{bmatrix}
+            0 & 2\\
+            -2i & 1 - i
+        \end{bmatrix} + (-1)^{8} (0) det\begin{bmatrix}
+            0 & 1 + i\\
+            -2i & 0
+        \end{bmatrix}$$
+        $$det(A) = 3((1 - i)(1+i) - 0) - 4i(0 - 2(-2i)) + 0 = 6 +16 = 22$$
+    \end{solution}
+\end{questions}
+
+\end{document}

@@ -1,9 +1,9 @@
 # Fdb version 4
-["pdflatex"] 1728917495.77458 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 481/Exam1CheatSheet.tex" "Exam1CheatSheet.pdf" "Exam1CheatSheet" 1728917498.57997 0
-  "Exam1CheatSheet.aux" 1728917498 329 cfca87d27653727961d59512c05144d8 "pdflatex"
-  "Exam1CheatSheet.tex" 1728917494 2941 2ca013c6eb74b327d168f04d7e7ee1c7 ""
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 481/Exam1CheatSheet.tex" 1728917494 2941 2ca013c6eb74b327d168f04d7e7ee1c7 ""
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex" 1728852957 1337 dc683e6afd45bd973d73d184720c53c0 ""
+["pdflatex"] 1728937734.23856 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 481/Exam1CheatSheet.tex" "Exam1CheatSheet.pdf" "Exam1CheatSheet" 1728937736.39208 0
+  "Exam1CheatSheet.aux" 1728937736 329 cfca87d27653727961d59512c05144d8 "pdflatex"
+  "Exam1CheatSheet.tex" 1728937733 6789 8437f1f8e03c8237a98a3f489d73a314 ""
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 481/Exam1CheatSheet.tex" 1728937733 6789 8437f1f8e03c8237a98a3f489d73a314 ""
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex" 1728932839 1337 dc683e6afd45bd973d73d184720c53c0 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1705505139 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1705503004 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1705503004 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -22,7 +22,6 @@
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1705504024 1124 6c73e740cf17375f03eec0ee63599741 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1705504024 1116 933a60c408fc0a863a92debe84b2d294 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1705504024 1120 8b7d695260f3cff42e636090a8002094 ""
-  "c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmti12.tfm" 1705504024 1484 ed72f8f5cf654cda15ecc8e32bfcbee5 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1705503004 32080 340ef9bf63678554ee606688e7b5339d ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1705503004 30251 6afa5cb1d0204815a708a080681d4674 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb" 1705503004 36741 0ee9e374ec3e30da87cdfb0ea3575226 ""
@@ -33,7 +32,6 @@
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1705503004 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1705503004 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1705503004 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
-  "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1705503004 36118 fad905eba93cff5bce1e185fe980a177 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1705503004 34694 870c211f62cb72718a00e353f14f254d ""
   "c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1705507028 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "c:/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex" 1705507506 1016 1c2b89187d12a2768764b83b4945667c ""

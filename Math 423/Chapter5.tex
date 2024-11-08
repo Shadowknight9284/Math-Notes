@@ -1,0 +1,496 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:423}
+\newcommand{\assignment}{Chapter 5}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\section*{Introducing Fourier Series}
+$f(x)$ is a $2\pi$ periodic function. ie $f(x) = f(2\pi + x)$\\
+Goal: $f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty}a_n cos(nx) + b_n sin(nx)$\\
+Some underlying assumptions:\\
+$f(x)$ is integrable on a finite interval. eg bounded; continous on $R$ except for finitly many points in each bounded interval.\\
+Also consider complex form: \\
+\begin{align*}
+    cos(nx) &= \frac{e^{inx} + e^{-inx}}{2}\\
+    sin(nx) &= \frac{e^{inx} - e^{-inx}}{2i}\\
+    e^{inx} &= cos(nx) + isin(nx)
+\end{align*}
+\begin{align*}
+     S_N(x) &= \frac{a_0}{2} + \sum_{n=1}^{N}a_n cos(nx) + b_n sin(nx) \\
+     &= \frac{a_0}{2} + \sum_{n=1}^{N} \left( \frac{a_n}{2} + \frac{b_n}{2i}\right) e^{inx} + \left( \frac{a_n}{2} - \frac{b_n}{2i}\right) e^{-inx}
+\end{align*}
+Rename: $c_0 = \frac{a_0}{2}, c_n = \frac{a_n}{2} + \frac{b_n}{2i}, c_{-n} = \frac{a_n}{2} - \frac{b_n}{2i}$\\
+\begin{align*}
+    S_N(x) &= c_0 + \sum_{n=1}^{N}c_n e^{inx} + \sum_{n=1}^{N}c_{-n} e^{-inx}\\
+    &= c_0 + \sum_{n=1}^{N}c_n e^{inx} + \sum_{n=N}^{1}c_{n} e^{inx}\\
+    &= \sum_{n=-N}^{N}c_n e^{inx}
+\end{align*}
+$c_n = \frac{a_n - ib_n}{2}$\\
+$c_{-n} = \frac{a_n + ib_n}{2}$\\
+$c_0 = \frac{a_0}{2}$\\
+\begin{align*}
+    a_n &= c_n + c_{-n}\\
+    b_n &= i(c_n - c_{-n})
+\end{align*}
+Assume $f(x) = \sum_{-\infty}^{\infty} c_n e^{inx}$. How to find $c_n$?\\ 
+Recall $<f,g>_{L^2(-\pi,\pi)} = \int_{-\pi}^{\pi} f(x) \overline{g(x)} dx$\\
+Lemma for orthogonality: $\{e^{inx}\}_{n=-\infty}^{\infty}$ is orthogonal with respect to $<\cdot, \cdot>_{L^2(-\pi, \pi)}$\\
+$$<e^{inx}, e^{imx}>_{L^2(-\pi, \pi)} = \int_{-\pi}^{\pi} e^{inx} \overline{e^{imx}} dx = 2\pi \delta_{nm}$$
+So if we consider $f(x) = \sum_{-\infty}^{\infty} c_n e^{inx}$, then \\
+$$ <f, e^{imx}>_{L^2(-\pi, \pi)} = \sum_{-\infty}^{\infty} c_n <e^{inx}, e^{imx}>_{L^2(-\pi, \pi)} = 2\pi c_m$$
+$$c_m = \frac{1}{2\pi} <f, e^{imx}>_{L^2(-\pi, \pi)}$$
+More explicitly, 
+$$c_m = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-imx} dx$$
+Now we can solve for $a_n$ and $b_n$ using $c_n$\\
+\begin{align*}
+    a_n &= c_n + c_{-n}\\ 
+    &= \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-inx} dx + \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{inx} dx\\
+    &= \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) (e^{-inx} + e^{inx}) dx\\
+    &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) cos(nx) dx
+\end{align*}
+Similarly,
+\begin{align*}
+    b_n &= i(c_n - c_{-n})\\
+    &= i\left(\frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-inx} dx - \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{inx} dx\right)\\
+    &= \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) (e^{-inx} - e^{inx}) dx\\
+    &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) sin(nx) dx
+\end{align*}
+Note that the interval of integration is $(-\pi, \pi)$ because $f(x)$ is $2\pi$ periodic.\\
+\begin{lemma}
+    Let $F(x)$ be a $2\pi$ periodic function. Then $\int_a^{a+2\pi} F(x) dx$ doesnt depend on $a$.
+    \begin{proof}
+        $$ I(a) = \int_0^{a+ 2\pi} F(x) dx - \int_0^{a} F(x) dx$$
+        $$ I'(a) = F(a+2\pi) - F(a) = 0$$
+    \end{proof}
+\end{lemma}
+\begin{remark}
+    $a_0 =$ cos stuff with $n=0$\\
+    That is why we have $\frac{a_0}{2}$
+\end{remark}
+\begin{remark}
+    $c_0$ is the average of the function on the interval
+\end{remark}
+\begin{definition}
+    $f(x)$ $2\pi$ periodic function and integrable on $(-\pi, \pi)$. then the Fourier series of $f(x)$ is
+    $$ f(x) \sim \sum_{n=-\infty}^{\infty} c_n e^{inx}$$
+    where $c_n = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-inx} dx$\\
+    or 
+    $$ f(x) \sim \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n cos(nx) + b_n sin(nx)$$
+    where $a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) cos(nx) dx$ and $b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) sin(nx) dx$
+\end{definition}
+\begin{remark}
+    $\sim$ means correspondence as we dont know if the FS converges to $f(x)$ if at all.
+\end{remark}
+Observations:
+if $f(x)$ is even, then $b_n = 0$\\
+if $f(x)$ is odd, then $a_n = 0$\\
+\begin{remark}
+    $a_n, b_n \to 0$ as $n \to \infty$\\
+    and $c_n \to 0$  as $n \to \pm\infty$ \\
+    this is due to osculations and cancellations\\
+    \begin{proof}
+        Assume $f$ is differentiable. \\
+        \begin{align*}
+            \pi a_n &= \int_{-\pi}^{\pi} f(x) \frac{sin(nx)'}{n} dx\\
+            &= \frac{1}{n} \left[ f(x)sin(nx) \right]_{-\pi}^{\pi} - \frac{1}{n} \int_{-\pi}^{\pi} f'(x) sin(nx) dx\\
+        \end{align*}
+        The first item is 0 because $f(x)$ is $2\pi$ periodic.\\
+        \begin{align*}
+            |a_n| &= \frac{1}{\pi n} \int_{-\pi}^{\pi} |f'(x)| dx \to 0 \\
+        \end{align*}
+    \end{proof}
+\end{remark}
+\begin{example}
+    $f(x) = x$ on $(-\pi, \pi]$\\
+    Extend it to $R$ periodically.\\
+    The function $f(x)$ is odd. So $a_n = 0$\\
+    \begin{align*}
+        b_n &= \frac{1}{\pi} \int_{-\pi}^{\pi} x sin(nx) dx\\
+        &= \frac{1}{\pi} \left[ -\frac{x cos(nx)}{n} \right]_{-\pi}^{\pi} + \frac{1}{\pi n} \int_{-\pi}^{\pi} cos(nx) dx\\
+        &= \frac{1}{\pi} \left[ -\frac{\pi sin(n\pi)}{n} + \frac{\pi sin(n\pi)}{n} \right]\\
+        &= \frac{2}{n} (-1)^{n+1}
+    \end{align*}
+    Thus the Fourier series of $f(x)$ is
+    $$ f(x) \sim \sum_{n=1}^{\infty} \frac{2}{n} (-1)^{n+1} sin(nx)$$
+    $$ f(x) = 2(sin(x) - \frac{sin(2x)}{2} + \frac{sin(3x)}{3} - \frac{sin(4x)}{4} + \ldots)$$
+    \begin{note}
+        No convergence test from calc 2 applies to this
+    \end{note}
+    $$f(x) = \sum_{n=1}^{\infty} \frac{1}{n} (-1)^{n+1} sin(nx)$$\\ 
+    $$ S_N(x) = \sum_{n=1}^{N} \frac{1}{n} (-1)^{n+1} sin(nx)$$
+    $$ f(x) = \lim_{N \to \infty} S_N(x)$$
+\end{example}
+\begin{example}
+    $$f(x) = |x| \text{ on } (-\pi, \pi]$$
+    $$f(x) = \frac{\pi}{2} - \frac{4}{\pi} \sum_{n=1}^{\infty} \frac{1}{n^2 cos(nx)}$$
+\end{example}
+\begin{remark}
+    Limit and convergence are not easy as we see in ex 1. but convergence can be easy, but limit is not easy 
+\end{remark}
+\begin{remark}
+    Decay of fouir coefficients: Ex 1: $\frac{1}{n}$ , Ex 2: $\frac{1}{n^2}$
+    This gives faster decay for ex 2 over ex 1\\
+    Fast decay of coefficients $\implies$ faster convergence $\implies$ better approximation with less terms
+\end{remark}
+\section{5.3 and 5.4}
+\begin{definition}
+    $f$ is piecwise continous on $[a,b]$ if it is continous on $[a,b]$ except for finitely many points where it has finite jumps ie $p_1, p_2, \ldots, p_n$\\ and $f(p_i^\pm)$ exists for all $i$\\ 
+\end{definition}
+\begin{remark}
+    if $a$ or $b$ is one of the excepitonal points we only require existence of $f(a^+)$ or $f(b^-)$
+\end{remark}
+\begin{definition}
+    $f \in p.w C^1 [a,b]$ if $f$ and $f'$ are piecewise continous on $[a,b]$\\
+    Whats allowed? Finitly many jumps (discontinotinouties of f) and finitely many corners or cusps (discontinuities of f')
+\end{definition}
+\begin{definition}
+    $f \in p.w C(R)$ if $f$ is piecewise continous on $(a,b)$ for any $a,b \in R$
+\end{definition}
+\begin{theorem}
+    If $f$ is $2\pi$ periodic and $\in p.w.C^1(R)$ then \\
+    \begin{align*}
+        &= \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n cos(nx) + b_n sin(nx) 
+        &= \sum_{n=-\infty}^{\infty} c_n e^{inx}
+        &= \frac{f(x^-)+f(x^+)}{2}
+    \end{align*}
+    where $c_n = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-inx} dx$
+    $a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) cos(nx) dx$
+    $b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) sin(nx) dx$
+\end{theorem}
+\begin{remark}
+    if $f$ is continous at $x$ then $f(x^-) = f(x^+) = f(x)$ and the sum of the Fourier series at $x$ is $f(x)$
+\end{remark}
+\begin{align*}
+    S_n(x) &= \frac{a_0}{2} + \sum_{n=1}^{N} a_n cos(nx) + b_n sin(nx)\\
+    &= \sum_{n=-N}^{N} c_n e^{inx}
+\end{align*}
+Goal: $S_n(x) \to \frac{f(x^-) + f(x^+)}{2}$ as $N \to \infty$\\
+Take $x$ fixed
+\begin{align*}
+    S_N(x) &= \sum_{n=-N}^{N} \frac{1}{2\pi} \int_{-\pi}^{\pi} f(y) e^{-iny} dy \cdot e^{inx}\\
+    &= \int_{-\pi}^{\pi} f(y) \left( \sum_{n=-N}^{N} \frac{1}{2\pi} e^{in(x-y)} \right) dy\\
+\end{align*}
+The item in the parenthesis is the Dirichlet kernel $D_N(x-y)$\\
+$D_N(z) = \sum_{n=-N}^{N} \frac{1}{2\pi} e^{inz}$\\
+$$ S_N(x) = \int_{-\pi}^{\pi} f(y) D_N(x-y) dy$$
+Note that $D_N(z) = D_N(-z)$\\
+Change of variables: $z = x-y$\\
+$$ S_N(x) = \int_{-\pi-x}^{\pi-x} f(x+z) D_N(z) dz = \int_{-\pi}^{\pi} f(x+z) D_N(z) dz$$
+\begin{lemma}
+    $$D_N(z) = \frac{sin((N+\frac{1}{2})z)}{sin(z/2)}$$
+    \begin{proof}
+        \begin{align*}
+            2\pi D_N(z) &= e^{-inz} \sum_{n=1}^{2N}  e^{inz} \\
+            &= e^{-inz} \frac{e^{i(2N+1)z} - 1}{e^{iz} - 1}\\
+            &= \frac{e^{i(N+1)z} - e^{-i(N)z}}{e^{iz}-1} \cdot \frac{e^{-iz/2}}{e^{-iz/2}}\\
+            &= \frac{e^{i(N+1/2)z} - e^{i(N+1/2)z}}{e^{iz/2} - e^{-iz/2}}\\
+        \end{align*}
+        Note that $sin(z) = \frac{e^{iz} - e^{-iz}}{2i}$\\
+        Note $2\pi D_N(0) = 2N+1$\\
+        $2\pi D_N(\pm \pi) = (-1)^N$\\
+    \end{proof}
+    pick up $f(x+z)$ at $z=0$ like dirac delta function\\
+\end{lemma}
+\begin{theorem}
+    $f$ is $2\pi$ periodic and $\in p.w.C^1(R)$ then $\lim_{N \to \infty} S_N(x) = \frac{f(x^-) + f(x^+)}{2}$ for all $x$ \\
+    $$S_N(x) = \sum_{n=-N}^{N} c_n e^{inx} = \frac{a_0}{2} + \sum_{n=1}^N a_n cos(nx) + b_n sin(nx)$$
+    where $c_n = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(y) e^{-iny} dy$\\
+\end{theorem}
+We can also write $S_N(x)$ as
+\begin{align*}
+    S_N(x) &= \int_{-\pi}^{\pi} f(x+z) D_N(z) dz\\
+\end{align*}
+If $f$ is not continous at $x$ then 
+$$ S_N(x) = \int_{-\pi}^{0} f(x+z) D_N(z) dz + \int_{0}^{\pi} f(x+z) D_N(z) dz$$
+$$ \frac{f(x^-) + f(x^+)}{2} =  \int_{-\pi}^{0} f(x^-) D_N(z) dz + \int_{0}^{\pi} f(x^+) D_N(z) dz = \frac{1}{2} f(x^-) + \frac{1}{2} f(x^+)$$
+\begin{align*}
+    S_N(x) - \frac{f(x^-) + f(x^+)}{2} &= \int_{-\pi}^{0} (f(x+z) - f(x^-)) D_N(z) dz + \int_{0}^{\pi} (f(x+z) - f(x^+)) D_N(z) dz\\
+    &= \to 0 \text{ as } N \to \infty
+\end{align*}
+\begin{corollary}
+    $f,g$ are $2\pi$ periodic and $\in p.w.C^1(R)$.\\
+    If $f, g$ have the same Fourier coefficients then $\frac{f(x^-) + f(x^+)}{2} = \frac{g(x^-) + g(x^+)}{2}$ for all $x$\\
+    In particular $f(x) = g(x)$ for all $x$ in which $f$ and $g$ are continous
+\end{corollary}
+Functions on $[\pi, \pi]$ f is piecewise continous on $[-\pi, \pi]$; extend f to $R$ periodically\\
+Use $f$ on $(-\pi, \pi]$ to contruct $\tilde{f}$ on $R$\\
+now $\tilde{f}$ is $2\pi$ periodic and $\in p.w.C^1(R)$\\
+Now we can see that $c_n = \frac{\tilde{f}(x^{-} + ) \tilde{f}(x^+)}{2}$\\
+Clealry $f(x^-) = \tilde{f}(x^-)$ and with more work (noticing we can go to the next period) we can show $f(-x^+) = \tilde{f}(x^+)$\\\\
+Functions on $[0, \pi]$\\
+$f$ is piecewise continous on $[0, \pi]$; extend $f$ to $R$ periodically\\
+We have a two stage extension process: $f$ on $[0, \pi]$ to $f$ on $[-\pi, \pi]$ to $\tilde{f}$ on $R$\\
+When we do our first extensin we can do even or odd extensions:
+$$f_{even}(x) \begin{cases}
+    f(x) \text{ for } x \in [0, \pi]\\
+    f(-x) \text{ for } x \in [-\pi, 0)
+\end{cases}$$
+$$f_{odd}(x) \begin{cases}
+    f(x) \text{ for } x \in (0, \pi]\\
+    0 \text{ for } x = 0\\
+    -f(-x) \text{ for } x \in [-\pi, 0)
+\end{cases}$$
+For $f_{even}$ we have the Fourier series be 
+$$ \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n cos(nx)$$
+$$ = \frac{f_{even}(x^-) + f_{even}(x^+)}{2}$$
+$$ \begin{cases}
+    f(0^+) at x = 0\\
+    f(\pi^-) at x = \pi
+\end{cases}$$
+For $f_{odd}$ we have the Fourier series be
+$$ \sum_{n=1}^{\infty} b_n sin(nx)$$
+$$ = \frac{f_{odd}(x^-) + f_{odd}(x^+)}{2}$$
+$$ \begin{cases}
+    0 at x = 0\\
+    0 at x = \pi
+\end{cases}$$
+\begin{example}
+    $f(x) = x$ on $[0, \pi]$\\
+    $f_{even}(x) = \begin{cases}
+        x \text{ for } x \in [0, \pi]\\
+        -x \text{ for } x \in [-\pi, 0)
+    \end{cases}$\\
+    $f_{odd}(x) = \begin{cases}
+        x \text{ for } x \in (0, \pi]\\
+        0 \text{ for } x = 0\\
+        x \text{ for } x \in [-\pi, 0)
+    \end{cases}$\\
+    We know $x = \frac{\pi}{2} - \frac{4}{\pi} \sum_{n \in odd} \frac{1}{n^2}cos(nx)$ and $x = 2\sum_{n=1}^{\infty} (-1)^{n+1} \frac{sin(nx)}{n}$\\
+\end{example}
+
+Functions of $[-l, l]$\\
+$f$ is piecewise continous on $[-l, l]$; extend $f$ to $R$ periodically\\
+$$g(x) = f(lx/\pi) x\in[-\pi,\pi]$$ 
+$$c_n = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(lx/\pi) e^{-inx} dx = \frac{1}{2l} \int_{-l}^{l} f(y) e^{-iny\pi/l}dy$$
+
+
+\section{$L^2$ Theory for Fourier series}
+$L^2 := L^2(-\pi, \pi) = \{ f: [-\pi,\pi] \to C: \int_{-\pi}^{\pi} f(x)^2 < \infty\}$\\
+Ex: any continous f is in $L^2$\\
+$$ ||f||^2 = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x)^2 dx$$
+$$ <f,g> = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) \overline{g(x)} dx$$
+$$ <f,f> = ||f||^2$$
+\begin{example}
+    $$e^{inx} \in L^2$$
+    $$<e^{inx}, e^{imx}> = \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{inx} \overline{e^{imx}} dx = \delta_{nm}$$
+    $$f(x) \sim \sum_{n=-\infty}^{\infty} c_n e^{inx}$$
+    $$c_n = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-inx} dx$$
+    $$\phi_n(x) = e^{inx}$$
+    $$c_n = <f, \phi_n>$$
+    $$f(x) = \sum_{n=-\infty}^{\infty} <f, \phi_n> \phi_n(x)$$
+\end{example}
+
+\section{L2 theory for Fourier series}
+$$f: [-\pi, \pi] \to C$$
+$$|| f||^2 = \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(x)|^2 dx$$
+$$L^2 = \{ f: [-\pi, \pi] \to C: ||f|| < \infty\}$$
+$$<f,g> = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) \overline{g(x)} dx$$
+We can prove this be $a*b \leq |a|^2 /2 + |b|^2 /2$ since $0 \leq (a-b)^2$
+\begin{proof}
+    $|f\cdot g| = |f||g| \leq \frac{|f|^2}{2} + \frac{|g|^2}{2}$\\
+    Integreate by $x$\\
+    $$\int_{-\pi}^{\pi} |f(x)g(x)| dx \leq \int_{-\pi}^{\pi} \frac{|f(x)|^2}{2} dx + \int_{-\pi}^{\pi} \frac{|g(x)|^2}{2} dx$$
+    We know the RHS is finite so the LHS is finite\\
+\end{proof}
+We can also do this by Cauchy Schwarz inequality\\
+\begin{theorem}
+    $$||<f,g>|| \leq ||f|| \cdot ||g||$$
+    \begin{proof}
+        Consider $f-tg$ where t is a parameter
+        $$0 \leq ||f-tg||^2 = <f-tg, f-tg> = ||f||^2 - 2t<f,g> + t^2||g||^2$$
+        \textbf{Properties}
+        \begin{itemize}
+            \item $<f,g_1 +g_2> = <f,g_1> + <f,g_2>$
+            \item $<f_1 + f_2, g> = <f_1, g> + <f_2, g>$
+            \item $<af, g> = a<f,g>$
+            \item $<f, ag> = \overline{a}<f,g>$
+        \end{itemize}
+        \begin{align*}
+            ||f-tg||^2 &= ||f||^2 - t <g,f> - \overline{t<g,f>} + |t|^2 ||g||^2\\
+            - t <g,f> - \overline{t<g,f>} &= 2Re[t<g,f>]
+            ||f-tg||^2 &= ||f||^2 - 2Re[t<g,f>] + |t|^2 ||g||^2
+        \end{align*}
+        Let $t \geq 0$\\
+        $$0 \leq ||f||^2 - 2t Re(<g,f>) + t^2 ||g||^2$$
+        minimize in t for a critical point:
+        $$0 = -2Re(<g,f>) + 2t ||g||^2$$
+        $$t = \frac{Re(<g,f>)}{||g||^2}$$
+        Now we have 
+        \begin{align*}
+            0 &\leq ||f||^2 - 2Re[<g,f>] \frac{Re(<g,f>)}{||g||^2} + \frac{|<g,f>|^2}{||g||^2} ||g||^2\\
+            & \leq ||f||^2 - \frac{|<g,f>|^2}{||g||^2}
+            (Re(<g,f>))^2 \leq ||f||^2 ||g||^2
+            |Re(<g,f>)| \leq ||f|| ||g||
+        \end{align*}
+        Thus $t = \frac{\overline{<g,f>}}{||g||^2}$
+    \end{proof}
+    $\phi_n(x) = e^{inx}$\\
+    $$< \phi_n, \phi_m> = \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{inx} \overline{e^{imx}} dx = \delta_{nm}$$
+    Thus $\{\phi_n\}$ is an orthonormal set in $L^2$\\
+    Which means that it is orthogonal and $||\phi_n|| = 1$\\
+    Fourier series $f \sim \sum_{n=-\infty}^{\infty} <f, \phi_n> \phi_n$\\
+    \begin{lemma}
+        Fourier sum as best approximation in $L^2$\\
+        $f \in L^2$, $N$ is a fixed integer. \\
+        \textbf{Goal} approximate f with $S_N(x) = \sum_{n=-N}^{N} a_n e^{inx}$ in the $L^2$ sense\\
+        \textbf{Claim} $||f - \sum_{n=-N}^{N} a_n \phi_n||$ is the minimized for $a_n = <f, \phi_n>$
+    \end{lemma}
+    \begin{proof}
+        \begin{align*}
+            ||f - \sum_{n=-N}^{N} a_n \phi_n||^2 &= ||f||^2 - 2Re[<f, \sum_{n=-N}^{N} a_n \phi_n>] + ||\sum_{n=-N}^{N} a_n \phi_n||^2\\
+            &= ||f||^2 - 2 \sum_{n= -N}^{N} Re[\overline{a_n}, <f, \phi_n>] + \sum_{n=-N}^{N} |a_n|^2 ||\phi_n||^2\\
+        \end{align*}
+        Also consider 
+        $$ < \sum_n a_n \phi_n, \sum_m a_m \phi_m> = \sum_n \sum_m a_n \overline{a_m} <\phi_n, \phi_m> = \sum_n |a_n|^2 ||\phi_n||^2$$ 
+        Aka pythogeran theorem: $ |u+v|^2 = |u|^2 + |v|^2$ if $u,v$ orthogonal\\
+        \begin{align*}
+            ||f - \sum_{n=-N}^{N} a_n \phi_n||^2 &= ||f||^2 - 2 \sum_{n= -N}^{N} Re[\overline{a_n} c_n] + \sum_{n=-N}^{N} |a_n|^2\\
+            &= ||f||^2 + \sum_{n=-N}^{N} |a_n|^2 - 2 \sum_{n=-N}^{N} Re[\overline{a_n} c_n] + c_n^2 - c_n^2\\
+            &= ||f||^2 + \sum_{n=-N}^{N} |a_n - c_n|^2 - \sum_{n=-N}^{N} |c_n|^2
+        \end{align*}
+        We can see that this is minimize if $a_n = c_n$ for all $n$
+    \end{proof}
+    \begin{definition}
+        distance between f, g is \\
+        $$d(f,g) = ||f-g|| $$
+    \end{definition}
+    \begin{definition}
+        $f_n \to f$ in $L^2$ if $d(f_n, f) \to 0$ as $n \to \infty$
+        $$||f_n - f|| \to 0$$
+        This is called Mean Square Convergence
+    \end{definition}
+    \begin{example}
+        $L^2$ convergence is different from pointwise convergence\\
+        $f_n(x) = \begin{cases}
+            n^p \text{ for } x \in [0, 1/n]\\
+            0 \text{ for } x \in (1/n, 1]
+        \end{cases}$, $p>0$\\
+        $$||f_n-0||^2 = \int_{0}^{1} f_n(x)^2 dx = n^{2p-1} \to 0 \text{ if } 2p-1 < 0 \implies p < \frac{1}{2} $$
+        $$f_n(x) \not \to 0 \text{ pointwise}$$        
+    \end{example}
+    Metric space $X$ with a notion of distance $d(x,y) \forall x,y \in X$\\
+    \begin{example}
+        $$\mathbb{R} with d(x,y) = |x-y|$$
+        $$L^2 with d(f,g) = ||f-g||$$
+    \end{example}
+    \begin{definition}
+        Hueristic definition:\\
+        $X$ is complete if it has no holes \\
+    \end{definition}
+    \begin{example}
+        $\mathbb{Q}$ is not complete because $\sqrt{2} \not \in \mathbb{Q}$\\
+    \end{example}
+    $\mathbb{R} = \overline{\mathbb{Q}}$ completenes of $\mathbb{Q}$ fill in the holes
+    \begin{definition}
+        $\setof{x_n}$ is a Cauchy if its terms get arbitrarily close to each other as $n \to \infty$\\
+        $$\forall \epsilon > 0, \exists N >0, \text{ such that } d(x_n, x_m) < \epsilon,  \forall n,m > N$$
+    \end{definition}
+    \begin{definition}
+        $(X,d)$ is called complete if any Cauchy sequence in $X$ converges to a point in $X$\\
+    \end{definition}
+    $$ L^2 \leftrightarrow \text{Lebesguq space}$$
+    $L^2$-integral is lebesgue integral, it generalize the reiman integral and improper integral\\
+    \begin{theorem}
+        $L^2$ is complete
+    \end{theorem}
+    \begin{theorem}
+        Bessel inequality\\
+        $f \in L^2$ and $c_n = <f, \phi_n>$ then \\
+        $$\sum_{n=-\infty}^{\infty} |c_n|^2 \leq ||f||^2$$
+        \begin{proof}
+            $$S_N(x) = \sum_{n=-N}^{N} c_n \phi_n(x)$$
+            \begin{align*}
+                ||f - S_N||^2 &= ||f||^2 - 2 \sum Re(<f, c_n \phi_n>) + \sum |c_n|^2\\
+                &= ||f||^2 - 2 \sum |c_n|^2 + \sum |c_n|^2\\
+                &= ||f||^2 - \sum |c_n|^2
+                \sum |c_n^2| \leq ||f||^2
+            \end{align*}
+        \end{proof}
+    \end{theorem}
+    \begin{corollary}
+        Let $f \in L^2$ then $c_n = <f, \phi_n> = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-inx}$\\
+        $c_n \to 0$ as $n \to \pm \infty$ 
+        \begin{proof}
+            $$\sum_{n=-\infty}^{\infty} |c_n|^2 \leq ||f||^2 < \infty$$
+            $$|c_n|^2 \to 0$$
+        \end{proof}
+    \end{corollary}
+    \begin{theorem}
+        $f\in L^2$ and $c_n = <f, \phi_n>$ and $S_N(x) = \sum_{n=-N}^{N} c_n \phi_n(x)$\\
+        Then $\setof{S_N}$ converg in $L^2$.\\
+        ie there exist $s \in L^2$ such that $S_N \to s$ in $L^2$ as $N \to \infty$
+    \end{theorem}
+    \textbf{Quick Review}
+    \begin{itemize}
+        \item $L^2 = \{ f: [-\pi, \pi] \to C: ||f|| < \infty\}$
+        \item $||f||^2 = \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(x)|^2 dx$
+        \item $<f,g> = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) \overline{g(x)} dx$
+        \item $\phi_n(x) = e^{inx}$
+        \item $<\phi_n, \phi_m> = \delta_{nm}$
+        \item $f(x) = \sum_{n=-\infty}^{\infty} <f, \phi_n> \phi_n(x)$
+        \item $c_n = <f, \phi_n>$
+    \end{itemize}
+    \begin{theorem}
+        $f\in L^2$ and $c_n = <f, \phi_n>$ and $S_N(x) = \sum_{n=-N}^{N} c_n \phi_n(x)$\\
+        Then $\setof{S_N}$ converg in $L^2$.\\
+        ie there exist $s \in L^2$ such that $S_N - s \to 0 $ in $L^2$ as $N \to \infty$
+        \begin{proof}
+            We will show that $\setof{S_N}$ is a Cauchy sequence in $L^2$\\
+            We mean closeness with respect to the $L^2$ norm/distance\\
+            Additionally since $L^2$ is complete, we know that the sequence converges to a point in $L^2$\\
+            Cauchy: $||S_N - S_M|| \to 0$ as $N,M \to \infty$\\
+            $$S_N - S_M = \sum_{n=-N}^{N} c_n \phi_n - \sum_{n=-M}^{M} c_n \phi_n = \sum_{n=-M-1}^{-N} c_n \phi_n + \sum_{n=M+1}^{N} c_n \phi_n$$
+            $$ ||S_N - S_M||^2 = < S_N - S_M, S_N - S_M> = \sum_{-M-1}^{-N} |c_n|^2 + \sum_{M+1}^{N} |c_n|^2$$
+            because these are tails of a convergent series, they go to 0 as $N,M \to \infty$\\
+            We know thus by Bessel's inequality: $\sum_{n=-\infty}^{\infty} |c_n|^2 \leq ||f||^2$\\
+            $$ \sum_0^N - \sum_0^M = \sum_{M+1}^{N} |c_n|^2 \to c - c = 0$$
+        \end{proof}
+    \end{theorem}
+    \begin{remark}
+        Notation:
+        $$S_N(x) = \sum_{n=-N}^{N} c_n \phi_n(x) \xrightarrow{\substack{L^2 \\ N \to \infty}} s(x)$$
+        $$s = \sum_{n=-\infty, L^2}^{\infty} c_n \phi_n$$
+        We can call this $L^2$ convergence or sum
+    \end{remark}
+    \begin{theorem}
+        $f \in L^2$ and $c_n = <f, \phi_n>$ then\\
+        $$f = \sum_{n=-\infty, L^2}^{\infty} c_n \phi_n$$
+        $$\int_{-\pi}^{\pi} |f(x) - \sum_{n=-N}^{N} c_n \phi_n(x)|^2 dx \xrightarrow{N \to \infty} 0$$
+        Fourier series converges to $f$ "on average" in the $L^2$ sense
+    \end{theorem}
+    \begin{remark}
+        \textcircled{1}. Assume $f$ is very nice and prove the theorem for such $f$\\
+        This relies on a notion of uniform convergence\\
+        uniform convergence $\implies$ pointwise convergence $\&$ $L^2$ convergence\\
+        $f_n \to f$ uniformly on I if $max_{x \in I} |f_n(x) - f(x)| \to 0$ as $n \to \infty$\\
+        We can see that $||f_n - f||^2 = \int_{I} |f_n(x) - f(x)|^2 dx \leq \int_{I} max_{x \in I} |f_n(x) - f(x)|^2 dx \xrightarrow{N \to \infty} 0 $\\\\
+        \textcircled{2} For general $f \in L^2$ we can approximate $f$ a sequene of $f_n \in L^2$ that are very nice\\
+        Then we can see that \textcircled{1} applies to $f_n$
+    \end{remark}
+    Thus $\setof{e^{inx}}$ is a basis for $L^2$\\
+    In otherwords it is a complete system\\
+    $L^2 \infty$-dimensional space, all $\setof{e^{inx}}$ are linearly independent\\
+    \begin{remark}
+        $A$ hermitian matrix is a matrix that is equal to its conjugate transpose\\
+        If $A$ is hermitian then $A$ has a complex orthogonal basis of eigenvectors\\
+        $A = \frac{d^2}{dx^2} $ with BC periodicities of $u$ and $u'$. ie $\begin{cases}
+            u'' = \lambda u\\
+            u(-\pi) = u(\pi)\\
+            u'(-\pi) = u'(\pi)
+        \end{cases}$
+        The generalization is the sturm lousiville problem
+    \end{remark}
+    
+    
+
+\end{theorem}
+\end{document}

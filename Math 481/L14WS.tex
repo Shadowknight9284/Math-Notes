@@ -1,0 +1,31 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Lecture 14 Workshop}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question Consider the functions $f(x) = p^x(1-p)^{1-x}$. What are the values of $f(0)$ and $f(1)$?\\
+    Notice that $f$ is the pmf for the Bernoulli distribution with parameter $p$. What is the CRLB? Base in this what can you say about the unbiased estimator $\bar{X}$ \\
+    \begin{solution}
+        We have $f(0) = p^0(1-p)^{1-0} = 1-p$ and $f(1) = p^1(1-p)^{1-1} = p$. \\
+        By the Cramer-Rao inequality we have that the variance of any unbiased estimator is $$ var(\hat{\Theta}) = \frac{1}{n E[(\frac{\partial}{\partial \Theta} \log f(X))^2]}$$
+        For the Bernoulli distribution, we have that the log-likelihood is given by $$\ln f(X) = x \cdot ln(p) + (1-x) \cdot ln(1-p) $$
+        Taking the derivative with respect to $p$ we get $$\frac{\partial}{\partial p} \ln f(X) = \frac{x}{p} - \frac{1-x}{1-p}$$
+        Taking the square of this derivative results in $$\left(\frac{x}{p} - \frac{1-x}{1-p}\right)^2 = \frac{x^2}{p^2} + \frac{(1-x)^2}{(1-p)^2} - 2\frac{x(1-x)}{p(1-p)}$$
+        Simplified we get $$\frac{(x-p)^2}{p^2(1-p)^2}$$
+        We then apply the expectation operator to this expression to get $$E\left[\frac{(x-p)^2}{p^2(1-p)^2}\right] = \frac{1}{p(1-p)}$$
+        Therefore, the CRLB is $\frac{p(1-p)}{n}$. Since the variance of the sample mean is $\frac{p(1-p)}{n}$, we see that the sample mean is the unbiased estimator that achieves the CRLB.
+    \end{solution}
+\end{questions}
+
+\end{document}

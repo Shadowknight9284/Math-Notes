@@ -1,0 +1,501 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:198:211}
+\newcommand{\assignment}{Unified Notes}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Intro}
+\subsection{Main components}
+\begin{itemize}
+    \item CPU
+    \item Memory
+    \item Bus
+    \item I/O  devices: 
+    \subitem Human interface devices
+    \subitem Storage 
+    \subitem Networking
+    \subitem Graphics
+\end{itemize}
+Von Neumann Model: \\
+\subsection{CPU}
+Fetch $\to$ Decode $\to$ Execute $\to$ Fetch
+Running on Hardware: \begin{itemize}
+    \item High level $\quad x = x+y$
+    \item Assembly $\quad$ mov $-0x8(\%esp), \%eax$, add $\%ebx, \%eax$
+    \item Machine Language $\quad$ 0x8B, 0x44, 0x24, 0x08
+\end{itemize}
+\subsection{Moore's Law}
+Observed that the number of transistors on a chip double every 18 months. \\
+Processor speeds double every 18 months. \\
+Memory capacity doubles every 2 years. \\
+Disk capacity doubles every year. \\
+\subsection{Summary}
+Modern systems are more complex\\
+Don't expect speed up for single thread programs\\
+Understanding the systems is curicual: Trade-offs, CPU-memory gap, power wall, etc. \\ 
+
+\section{Unit 1}
+\subsection{Intro to C}
+C is closer to the machine so easier to see mapping
+The anatomy of a C program:
+\begin{itemize}
+    \item include files: \#include \texttt{<stdio.h>}
+    \item declaration of global variables: \texttt{char cMessage[] = "Hello\textbackslash n";}
+    \item comment: \texttt{/*comment here*/}
+    \item One or more function; each program starts with execution a "main": \texttt{int main() \{...\}}
+    \item Declearation of local variables: \texttt{int i;}
+    \item code implementing functions: \texttt{printf("Hello World\textbackslash n");}
+\end{itemize}
+
+\subsection{Comments}
+Begin with /* and end with */ \\
+Can span multiple lines \\
+
+\subsection{Variable Declaration}
+Variables are used as names for data items. \\
+Each variable has a type which tells the compiler how the data is to be interpreted \\
+\textbf{Global:}
+Declare outside the scope of any function accessible from anywhere\\
+\textbf{Local:}
+Declare inside scope of a function accessible only from inode of the function\\
+\subsection{Basic Data Types, Operators, and Expressions}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Type} & \textbf{Description} & \textbf{Size} & \textbf{Example} \\ \hline
+char & individual characters & 1 byte & 'a', 'b', '\textbackslash t' \\ \hline
+int & integers & 4 bytes & -14, 0, 3 \\ \hline
+float & floating point numbers & 4 bytes & 3.14, 0.0, -1.0 \\ \hline
+double & double precision floating point numbers & 8 bytes & 3.14, 0.0, -1.0 \\ \hline
+\end{tabular}
+\caption{Basic Data Types}
+\label{tab:basic-data-types}
+\end{table}
+    
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Symbol & Operation & Usage & Assoc \\ \hline
+* & Multiplication & a*b & L \\ \hline
+/ & Division & a/b & L \\ \hline
+\% & Modulus & a\%b & L \\ \hline
++ & Addition & a+b & L \\ \hline
+- & Subtraction & a-b & L \\ \hline
+\end{tabular}
+\caption{Basic Arithmetic Operators}
+\label{tab:arith-operators}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Symbol & Operation & Usage & Assoc \\ \hline
+++ & Postincrement & a++ & L \\ \hline
+-- & Postdecrement & a-- & L \\ \hline
+++ & Preincrement & ++a & R \\ \hline
+-- & Predecrement & --a & R \\ \hline
+\end{tabular}
+\caption{Special Operators}
+\label{tab:special-operators}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Symbol & Operation & Usage & Assoc \\ \hline
+\textgreater & Greater than & a\textgreater b & L \\ \hline
+\textgreater = & Greater than or equal to & a\textgreater =b & L \\ \hline
+\textless & Less than & a\textless b & L \\ \hline
+\textless = & Less than or equal to & a\textless =b & L \\ \hline
+== & Equal to & a==b & L \\ \hline
+!= & Not equal to & a!=b & L \\ \hline
+\end{tabular}
+\caption{Relational Operators}
+\label{tab:relational-operators}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Symbol & Operation & Usage & Assoc \\ \hline
+! & Logical NOT & !a & R \\ \hline
+\&\& & Logical AND & a \&\& b & L \\ \hline
+|| & Logical OR & a || b & L \\ \hline
+\end{tabular}
+\caption{Logical Operators}
+\label{tab:logical-operators}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Symbol & Operation & Usage & Assoc \\ \hline
+$\sim$ & complement & $\sim$a & R \\ \hline
+\& & bitwise AND & a \& b & L \\ \hline
+| & bitwise OR & a | b & L \\ \hline
+\end{tabular}
+\caption{Bitwise Operators}
+\label{tab:bitwise-operators}
+\end{table}
+
+\textbf{Be careful with type conversions:} \\
+
+\subsection{Control Statements}
+Conditionals: \texttt{if, else, switch} \\
+Loops: \texttt{for, while, do-while} \\
+Specialized "go-to" statements: \texttt{break, continue} \\
+\textbf{if:} \\
+\texttt{if (condition) \{... \} else \{...\}}
+Evaluates expression untill find first with non-zero value. If all states are false, else is executed. \\
+\textbf{switch:} \\
+\texttt{switch (expression) \{ case constant1: ... break; case constant2: ... break; default: ... \}} 
+Finds first case that matches the expression and executes the code. Default always matches always matches. \\
+\textbf{while:} \\
+\texttt{while (condition) \{...\}} zero or more times, while expression is non-zero. Compute expression before iterator. \\
+\textbf{do-while:} \\
+\texttt{do \{...\} while (condition);} one or more times, compute expression after iterator. \\
+\textbf{for:} \\
+\texttt{for (initialization; condition; iterator) \{...\}} 
+zero or more times, while condition is non-zero. computer initialization before iterator. \\
+\textbf{break:} \\
+\texttt{break;} exits the loop or switch statement. \\
+\textbf{continue:} \\
+\texttt{continue;} skips the rest of the loop and goes to the next iteration. 
+\subsection{Functions}
+Similar to java:
+\begin{itemize}
+    \item Name
+    \item Return Type
+    \item Parameters
+    \item Body
+\end{itemize}
+Function call as part of an expression: Arguments evaluated before function call 
+\subsection{Input and Output}
+\textbf{printf:} \\
+\texttt{printf("\% n", counter);} String contains characters to print and formatting directives for variables. \\
+\textbf{scanf:} \\
+\texttt{scanf("\%d", \&counter);} String contains formatting directives for variables and addresses of variables. \\
+
+\subsection{Memory}
+C's memory model matches the underlying virtual memory system: Array of adressable bytes. \\
+Variables are simply names for contiguous sequences of bytes. \\
+Compilers translates names to addresses: typical maps to small address
+\subsection{Pointers}
+A pointer is just an address.\\
+Can have variables of type pointer\\
+When declaring a pointer varibale need to the declare the type of the data item the pointer will point to: \texttt{int *p;} \\
+\textbf{Pointer Operators:} \\
+\texttt{*} - dereference operator: \texttt{int x = 5; int *p = \&x; int y = *p;} \\
+\texttt{\&} - address of operator: \texttt{int x = 5; int *p = \&x;} \\
+\textbf{Null Pointer:} \\
+\texttt{int *p = NULL;} \\
+
+\subsection{Type Casting}
+\texttt{int x = 5; double y = (double) x;} \\
+C is not strongly typed: \\
+Type casting allows programmers to dynamically change the type of a data item. \\
+
+\subsection{Arrays}
+Arrays are contingous sequences of data items. \\
+All elements are of the same type. \\
+Declearation of an array of integers: \texttt{int a[10];} \\
+Accessing elements: \texttt{a[0], a[1], ...} \\
+Array index always start at 0. \\
+The C compiler and runtime system do not check array boundaries. \\
+\textbf{Array Storage:} \\
+Elements are stored in memory in contiguous locations. \\
+First element (grid[0]) is at the lowest address. \\
+\textbf{Array and Pointers:} \\
+An array name is essentially a pointer to the first element in the array. \\
+\texttt{int a[10]; int *p = a;} \\
+First we allocat space for 10 char items. second lines allocats space for a pointer and assigns the address of the first element of the array to the pointer. \\
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+a & p & \&a[0] \\ \hline
+a+n & p+n & \&a[n] \\ \hline
+*a & *p & a[0] \\ \hline
+*(a+n) & *(p+n) & a[n] \\ \hline
+\end{tabular}
+\caption{Equivalences}
+\label{tab:string-functions}
+\end{table}
+
+\subsection{Pointer Arithmetic}
+\texttt{int a[10]; int *p = a;} \\
+\texttt{p++} increments the pointer by the size of the data type. \\
+\texttt{p+n} increments the pointer by n times the size of the data type. \\
+\texttt{double x[10]; double *y = x; *(y+3) = 13}
+This is the same as \texttt{x[3] = 13;} \\
+
+\subsection{Structs}
+Structs are user defined data types. \\
+\texttt{struct \{ int x; int y; \} point;} \\
+\texttt{point.x = 5; point.y = 10;} \\
+\texttt{struct point p; p.x = 5; p.y = 10;} \\
+We can also use arrays of structs. \\
+Pointer to a struct: \texttt{struct point *p = \&point;} \\
+We also have a special syntax for accessing struct member through a point\\
+Passing Structs as Arguments: \\
+Struct item is passed by value
+most of the time we want to pass a pointer to the struct. \\
+
+\subsection{Dynamic Allocation}
+\textbf{Call stack:}  the class stack is an area of memory that is used to store information about the currently active functions. \\
+It is useful for recursion\\
+\textbf{Heap:} The heap is an area of memory that is used for dynamic memory allocation. \\
+\textbf{Malloc:} allocates a contigous reigion of memroy of size numBytes if there is enough freespace and returns a pointer to the first byte of the reigion. \\
+\texttt{int *p = (int *) malloc(10 * sizeof(int));} \\
+\textbf{Free:} deallocates the memory reigion pointed to by ptr. \\
+\texttt{free(p);} \\
+
+\subsection{Type Def}
+\texttt{typedef int Length;} \\
+We can use typedef to define a new type. Mainly for clarity and readability. \\
+
+\subsection{File I/O}
+\textbf{fopen}
+\texttt{FILE *fopen(char* name, char* mode);} \\
+First arugment is the name of the file, the second is the mode of the file: r- read, w- write, a- append. \\
+\textbf{fprintf}
+acts the same as printf but writes to a file. \\
+\textbf{fscanf}
+acts the same as scanf but reads from a file. \\
+
+\newpage
+\section{Unit 2a}
+\subsection{Multidimensional Array}
+\texttt{int m[3][4]} This is an array of 3 arrays of 4 ints\\
+m names the entire the array, m[0] is the pointer to the first row, m[0][0] is the pointer to the first element of the first row\\
+The array index works like: address = address of the array + (row number * row length + column number)*element size \textbf{important}\\
+They must be rectangular: where all the rows are the same length. 
+\subsection{Compilation}
+C is compiled by source and library into the compiler and then it goes out to the executable. 
+\subsection{Number Theory}
+\subsubsection{Base 10}
+$\sum_{i = 0}^{n} a_i 10^i$ where $a_i \in [0,9]$
+This basically is $a_n a_{n-1} a_{n-2} ... a_2 a_1$
+\subsubsection{Base n }
+We can do the same thing but replace 10 to any number n. 
+\subsubsection{Base 2}
+Now we can do the same thing but with just 0s and 1s. ie 101010001
+\subsubsection{Base 16}
+Now we can consider 16 digits: 0-9 and A-F\\
+More compact than binary and the conversion is super easy.
+\subsubsection{Base 8}
+Now our digits are 0-7 more compact to binary but its kinda mid.
+\subsubsection{Base n Rationals}
+The decimal point extends base 10 integers with $1/n , 1/n^2, 1/n^3$
+\subsection{Data Sizes}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Data Type & 16-bit & 32-bit & 64-bit \\ \hline
+char & 1 & 1 & 1 \\ \hline
+short int & 2 & 2 & 2 \\ \hline
+int & 2 & 4 & 4 \\ \hline
+long int & 4 & 4 & 8 \\ \hline
+void * & 2 & 4 & 8 \\ \hline
+float & 4 & 4 & 4 \\ \hline
+double & 8 & 8 & 8 \\ \hline
+\end{tabular}
+\caption{Data Sizes and Ranges}
+\label{tab:data-sizes}
+\end{table}
+
+\subsection{Overflow}
+For efficieny hardware works with fixed-width integers\\
+Use $n$ bits to represent $2^n$ \\
+We can use overflow to understand what happens if we have an overflow of addition and multiplication
+
+\textbf{Wrapping}
+We can say that when we add it is congruent mod 256 for 8 bit addtion.
+
+\subsection{Negative numbers}
+\subsubsection{Sign-Magnitutde}
+The first bit is a negative sign. Required other asthmatic operators. Distinct positive and negative 0s
+\subsubsection{1s complement}
+Flip every bit for the negative. First bit still acts like a negative. addition is similar to unsigned addition. Add 1 if you overflow. distinct 0, and -0.
+\subsubsection{2s complement} 
+Flip all bits and add 1. Addition is the same as unsigned addition. No distinct 0 and -0.
+\subsubsection{un/signed overflow}
+Unsigned overflow or carry out ocours when the correct answer is too large to fit in the given number of bits. \\
+This happened when we carry into the sign bit. \\
+
+\subsection{Bit Shifting}
+\subsubsection{Left Shift}
+Shifts all bits to the left. The leftmost bit is lost and the rightmost bit is filled with 0. \\
+This is like multiplying by 2. \\
+\subsubsection{Right Shift}
+Shifts all bits to the right. The rightmost bit is lost and the leftmost bit is filled with 0. \\
+This is like dividing by 2. \\
+
+\subsection{Floating point}
+\subsubsection{IEEE 754}
+32-bit and 64-bit floating point numbers. \\
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Sign & Exponent & Mantissa & Value & Decimal \\ \hline
+0 & 00000000 & 00000000000000000000000 & 0 & 0.0 \\ \hline
+0 & 01111111 & 00000000000000000000000 & 1 & 1.0 \\ \hline
+0 & 10000000 & 00000000000000000000000 & 2 & 2.0 \\ \hline
+0 & 10000000 & 10000000000000000000000 & 3 & 3.0 \\ \hline
+0 & 10000000 & 01000000000000000000000 & 2.5 & 2.5 \\ \hline
+\end{tabular}
+\caption{Floating Point Numbers}
+\label{tab:floating-point}
+\end{table}
+\subsubsection{Special Values}
+We represent 0 as all 0s. \\
+We represent subnormal as the all 0s in the exponent. where the first elemetn of the mantissa is 0. \\
+for infinity we have all 1s in the exponent and all 0s in the mantissa. \\
+NaN is all 1s in the exponent and any non-zero value in the mantissa. \\
+
+\newpage
+\section{Unit 2b}
+\subsection{Assembly}
+IA32 (X86 ISA)\\
+There are many assembly languages because they are processor specific. 
+\textbf{RISC vs CISC} \\
+Risc is simple instruction set and CISC is complex instruction set. \\
+pg 22 has a table to understand the steps of putting the CPU and memory tg\\
+\subsubsection{Assembly Characteristics}
+Minimal data types: Integer, Floating Point, and no aggregate types \\
+No type checking \\
+3 Types of primitive operations: Arithmetic on regster, transfer data between memory and register, control flow 
+\subsubsection{x86} 
+The Characteristics of x86 are: \\
+Variable length instructions \\
+Can adress memory directly in most instructions\\
+uses little-endian byte ordering \\
+\subsubsection{Instruction formatting}
+\texttt{opcode operand 1, operand 2} \\
+\texttt{movl \%eax, \%ebx} \\
+\textbf{Opcode} is a short mnemonic for instruction purpose
+\textbf{Operands} are the source and destination of the operation. They can be immediate register or memory. \\
+\subsubsection{Machine Representaion}
+Each assembly instruction is translate to a sequence of 1-15 bytes. \\
+First the binary representor of the opcode. \\
+Second, instructions specific the addressing mode\\
+Some instructions can be single byte because operand an addressing mode are implicitly specified by the instruction. \\
+\subsubsection{Registers}
+General purpose registers are 32 bits\\
+Originally categorized as data register and pointer/index registers. \\
+Data : EAX, EBX, ECX, EDX. \\
+Pointer/Index: EBP, ESP, EIP, ESI, ESI \\
+Segment Registers: CS, DS, SS, ES, \\
+ESP is the stack pointer. \\
+EBP is the base register 
+\subsubsection{instructions}
+\textbf{movl} - move data from source to destination \\
+Example: \texttt{movl \%eax, \%ebx} \\
+Moves the contents of \%eax to \%ebx \\
+\texttt{ebx = eax} \\
+In immediate Adressing. operand is immediate. Operand value is found immediatly following the isntruction. \$ in front of immediate operand. \\
+\% denotes register operand. \\
+Example: \texttt{movl \$eax, \%ebx}  copy contnet of \%eax to \%ebx \\
+Example: \texttt{movl \$0x1, \%eax} copy 0x1 to \%eax \\
+Example: \texttt{movl \%eax, 0x1} copy \%eax to memory location 0x1 \\
+Example: \texttt{movl (\%ebp, \%esi), \%eax} copy value at address = ebp + esi to \%eax \\
+Example: \texttt{movl 8(\%ebp, \%esi), \%eax} copy value at address = ebp + esi + 8 to \%eax \\
+Example: \texttt{movl 0x80 (\%ebx, \%esi, 4), \%eax} copy value at address = ebx + esi*4 + 0x80 to \%eax \\
+This is super import for arrays \\
+pg 41 is a good image!!!\\
+\subsubsection{Stack Operations}
+\textbf{pushl} - push data onto the stack \\
+\textbf{popl} - pop data off the stack \\
+\texttt{pushl \%eax} - push \%eax onto the stack. esp = esp -4; Memory[esp] = eax \\
+\texttt{popl \%eax} - pop the top of the stack into \%eax. eax = Memory[esp]; esp = esp + 4 \\
+\textbf{leal} Compute address using addressing mode without accessing memory \\
+\texttt{leal src , dest} \\
+It is used for computing adresses without memory refrence. \\
+EG. it is \texttt{p = \&a[i]} \\
+Example: \texttt{leal 7(\%edx, \%edx, 4), \%eax} eax = 4edx+edx+7
+\subsubsection{Arithmetic Operations}
+\textbf{addl} - add data from source to destination \\
+Example: \texttt{addl \%eax, \%ebx} \\
+Adds the contents of \%eax to \%ebx \\
+\texttt{ebx = ebx + eax} \\
+
+\textbf{subl} - subtract data from source to destination \\
+Example: \texttt{subl \%eax, \%ebx} \\
+Subtracts the contents of \%eax from \%ebx \\
+\texttt{ebx = ebx - eax} \\
+
+\textbf{imull} - signed multiply \\
+Example: \texttt{imull \%eax, \%ebx} \\
+Multiplies the contents of \%eax by \%ebx \\
+\texttt{ebx = ebx * eax} \\
+
+\textbf{sall} - arithmetic shift left \\
+Example: \texttt{sall \$2, \%eax} \\
+Shifts the contents of \%eax left by 2 bits \\
+\texttt{eax = eax << 2} \\
+
+\textbf{sarl} - arithmetic shift right \\
+Example: \texttt{sarl \$2, \%eax} \\
+Shifts the contents of \%eax right by 2 bits \\
+\texttt{eax = eax >> 2} \\
+
+\textbf{xorl} - bitwise exclusive OR \\
+Example: \texttt{xorl \%eax, \%ebx} \\
+Performs a bitwise exclusive OR on \%eax and \%ebx \\
+\texttt{ebx = ebx \textasciicircum eax} \\
+
+\textbf{andl} - bitwise AND \\
+Example: \texttt{andl \%eax, \%ebx} \\
+Performs a bitwise AND on \%eax and \%ebx \\
+\texttt{ebx = ebx \& eax} \\
+
+\textbf{orl} - bitwise OR \\
+Example: \texttt{orl \%eax, \%ebx} \\
+Performs a bitwise OR on \%eax and \%ebx \\
+\texttt{ebx = ebx | eax} \\
+
+\textbf{incl} - increment \\
+Example: \texttt{incl \%eax} \\
+Increments the contents of \%eax by 1 \\
+\texttt{eax = eax + 1} \\
+
+\textbf{decl} - decrement \\
+Example: \texttt{decl \%eax} \\
+Decrements the contents of \%eax by 1 \\
+\texttt{eax = eax - 1} \\
+
+\textbf{negl} - negate \\
+Example: \texttt{negl \%eax} \\
+Negates the contents of \%eax \\
+\texttt{eax = -eax} \\
+
+\textbf{notl} - bitwise NOT \\
+Example: \texttt{notl \%eax} \\
+Performs a bitwise NOT on \%eax \\
+\texttt{eax = \textasciitilde eax} \\
+
+
+
+
+
+
+\end{document}
