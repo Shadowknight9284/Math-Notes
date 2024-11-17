@@ -1,0 +1,259 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:423}
+\newcommand{\assignment}{Homework 6}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question Section 6.4 Problem 1\\
+    Solve \( u_{xx} + u_{yy} = 0 \) in the exterior \( \{ r > a \} \) of a disk, with the boundary condition \( u = 1 + 3\sin\theta \) on \( r = a \), and the condition at infinity that \( u \) be bounded as \( r \to \infty \).
+    \begin{solution}
+        We need to solve $\Delta u = 0$ but we can rewrite this in polar coordinates as
+        \[ \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial u}{\partial r} \right) + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2} = 0 \]
+        From the boundary consition we can see that the solution will be of the form $u = 1 + f(r) \sin \theta$. We can plug this into the Laplace equation to get\\
+        \begin{align*}
+            f''(r) \sin(\theta) + \frac{1}{r} f'(r) \sin(\theta) - \frac{1}{r^2} f(r) \sin(\theta) = 0\\
+            r^2 f''(r) + r f'(r) - f(r) = 0
+        \end{align*}
+        We can solve this ODE by guessing that the solution is of the form $f(r) = r^m$. Plugging this into the ODE we get
+        \begin{align*}
+            r^2 m(m-1) r^{m-2} + r m r^{m-1} - r^m = 0\\
+            m(m-1) + m - 1 = 0\\
+            m^2 - 1 = 0\\
+            m = \pm 1
+        \end{align*}
+        Thus $f(r) = C_1 r + C_2 r^{-1}$. \\
+        We can determine the constants $C_1$ and $C_2$ by plugging in the boundary condition. We get
+        \begin{align*}
+            f(a) = 3 &\implies C_1 a + C_2 a^{-1} = 3\\
+            f(\infty) = \text{bounded} &\implies C_1 = 0 \\
+        \end{align*}
+        Thus $f(r) = \frac{3a}{r}$. Then the solution is $u = 1 + \frac{3a}{r} \sin \theta$.
+        Now convert this back to Cartesian coordinates to get
+        \begin{align*}
+            u(x,y) &= 1 + \frac{3a}{\sqrt{x^2 + y^2}} \frac{y}{\sqrt{x^2 + y^2}}\\
+            &= 1 + \frac{3ay}{x^2 + y^2}
+        \end{align*}
+    \end{solution}
+
+    \question Section 6.4 Problem 2\\
+    Solve \( u_{xx} + u_{yy} = 0 \) in the disk \( r < a \) with the boundary condition \( \frac{\partial u}{\partial r} - hu = f(\theta) \), where \( f(\theta) \) is an arbitrary function. Write the answer in terms of the Fourier coefficients of \( f(\theta) \).
+    \begin{solution}
+        We can convert the Laplace equation to polar coordinates to get
+        $$\frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial u}{\partial r} \right) + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2} = 0$$
+        With BC $\frac{\partial u}{\partial r} - hu = f(\theta)$. and $u(0, \theta) = \text{bounded}$. and $u(a, 0) = u(a, 2\pi), u_\theta(a,0) = u_r(0,2\pi)$.\\
+        We can guess that the solution is of the form $u = R(r) \Theta(\theta)$. \\
+        The BC (with the exception of the first one) can be written as
+        \begin{align*}
+            \Theta(0) = \Theta(2\pi) \\
+            \Theta'(0) = \Theta'(2\pi) \\
+            R(0) = \text{bounded} \\
+        \end{align*}
+        By plugging back into the Laplace equation we get
+        \begin{align*}
+            r^2\frac{R''}{R} = r \frac{R'}{R} = -\frac{\Theta''}{\Theta} = \alpha
+        \end{align*}
+        We can first solve the $\Theta$ equation for $\alpha$:\\
+        We can clearly see that for $\alpha = -\lambda^2$ we cannot solve the BC. \\
+        For $\alpha = 0$ we get $\Theta = C_1$ and $R = C_2 ln(r) + C_3$. \\
+        The only way the BC of $R(0) = \text{bounded}$ can be satisfied is if $C_2 = 0$. Thus the eigenvalue of $\alpha = 0$ has eigenfunctions of constants. \\
+        For $\alpha = \lambda^2$ we get eigenfunctions $\Theta = C_1 \cos(\lambda \theta) + C_2 \sin(\lambda \theta)$ with eigenvalues of $\lambda = n$. For $R$ we get $R = C_3 r^n + C_4 r^{-n}$. \\
+        For the BC to be satisfied we need $C_4 = 0$. Thus the eigenfunctions for $\alpha = \lambda^2$ are $\Theta = C_1 \cos(n\theta) + C_2 \sin(n\theta) $ and $R = C_3 r^n$. with $\lambda = n$ as eigenvalues\\\\
+        Due to superposition we can write the solution as
+        \begin{align*}
+            u(r, \theta) = A_0 + \sum_{n=0}^\infty (r^n) (A_n\cos(n\theta) + B_n \sin(n\theta))
+        \end{align*}
+        We can determine the coefficients by applying our last BC. We get
+        $$\frac{\partial u}{\partial r} - hu = f(\theta)$$
+        $$u_r = \sum_{n=0}^\infty n r^{n-1} (A_n \cos(n\theta) + B_n \sin(n\theta))$$
+        \begin{align*}
+            u_r(a, \theta) - h u(a, \theta) &= f(\theta)\\
+            \sum_{n=0}^\infty n a^{n-1} (A_n \cos(n\theta) + B_n \sin(n\theta)) - h [ A_0 + \sum_{n=0}^\infty a^n (A_n \cos(n\theta) + B_n \sin(n\theta)) ] &= f(\theta) \\
+            -hA_0 + \sum_{n=0}^\infty (na^{-1} - h)a^n (A_n \cos(n\theta) + B_n \sin(n\theta)) &= f(\theta)\\
+            -hA_0 + \sum_{n=0}^\infty \left[ (na^{-1} -h)a^n A_n \cos n \theta +  (na^{-1} -h)a^n B_n \sin n\right] &= f(\theta)\\
+            \int_{0}^{2\pi} -hA_0 + \sum_{n=0}^\infty \left[ (na^{-1} -h)a^n A_n \cos n \theta +  (na^{-1} -h)a^n B_n \sin n\right] d\theta &= \int_{0}^{2\pi}f(\theta)d\theta\\
+            -hA_0 2\pi &= \int_{0}^{2\pi}f(\theta)d\theta\\
+            A_0 &= \frac{-1}{2\pi h} \int_{0}^{2\pi}f(\theta)d\theta
+        \end{align*}
+        Through a similar process where we first multiply through by $\cos(n\theta)$ and $\sin(n\theta)$ and then integrate we get
+        $$A_n = \frac{a^{1-n}}{\pi (n-ah)} \int_{0}^{2\pi} f(\theta) \cos(n\theta) d\theta$$
+        $$B_n = \frac{a^{1-n}}{\pi (n-ah)} \int_{0}^{2\pi} f(\theta) \sin(n\theta) d\theta$$
+    \end{solution}
+
+    \question Section 6.4 Problem 10\\
+    Solve \( u_{xx} + u_{yy} = 0 \) in the quarter-disk \( \{ x^2 + y^2 < a^2, x > 0, y > 0 \} \) with the following boundary conditions: \( u = 0 \) on \( x = 0 \) and on \( y = 0 \) and \( \frac{\partial u}{\partial r} = 1 \) on \( r = a \). Write the answer as an infinite series and write the first two nonzero terms explicitly.
+    \begin{solution}
+        Since the domain is on a quarter disk we can convert the Laplace equation to polar coordinates to get
+        $$\frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial u}{\partial r} \right) + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2} = 0$$
+        With BC $u(0, \theta) = \text{bounded}$, $u(r, 0) = 0$, $u_r(a, \theta) = 1$, and $u(r, \frac{\pi}{2}) = 0$.\\
+        We can use separation of variables to get $u = R(r) \Theta(\theta)$. Plugging this back into the Laplace equation we get
+        $$ r^2 \frac{R''}{R} + r \frac{R'}{R} = -\frac{\Theta''}{\Theta} = \alpha$$
+        The BC can be written as
+        \begin{align*}
+            \Theta(0) = 0\\
+            \Theta(\frac{\pi}{2}) = 0\\
+            R(0) = \text{bounded}\\
+        \end{align*}
+        We can solve the $\Theta$ equation. \\
+        Clearly $\alpha = - \lambda^2$ will not satisfy the BC. \\
+        For $\alpha = 0$ we get a trivial solution. \\
+        For $\alpha = \lambda^2$ we get $\Theta = C_1 \cos(\lambda \theta) + C_2 \sin(\lambda \theta)$. \\
+        By applying the BC we get $\Theta = C_2 \sin(\lambda \theta)$ with eigenvalues $\lambda = 2n$. \\
+        Thus we get $R = C_3 r^n + C_4 r^{-n}$. \\
+        For the BC to be satisfied we need $C_4 = 0$. Thus the eigenfunctions for $\alpha = \lambda^2$ are $\Theta = C_2 \sin(\lambda \theta) $ and $R = C_3 r^{\lambda}$. with $\lambda = 2n$ as eigenvalues.\\
+        Due to superposition we can write the solution as
+        \begin{align*}
+            u(r, \theta) = \sum_{n=0}^\infty r^{2n} (B_n \sin(2n\theta))
+        \end{align*}
+        We can now apply our BC of $u_r(a, \theta) = 1$ to get
+        \begin{align*}
+            u_r = \sum_{n=0}^\infty 2n a^{2n-1} B_n \sin(2n\theta)\\
+            u_r(a, \theta) = \sum_{n=0}^\infty 2n a^{2n-1} B_n \sin(2n\theta) = 1
+        \end{align*}
+        By multiplying through by $\sin(2m\theta)$ and integrating we get
+        \begin{align*}
+            2n a^{2n-1} B_n \int_{0}^{\frac{\pi}{2}} \sin(2n\theta) \sin(2n\theta) d\theta = \int_{0}^{\frac{\pi}{2}} \sin(2n\theta) d\theta\\
+        \end{align*}
+        Thus $B_n = \frac{1}{n \pi a^{2n-1}} \cdot \frac{1-(-1)^n}{n}$. \\
+
+        Since we can see that $B_n = 0$ for even $n$, The first two nonzero terms are
+        \begin{align*}
+            u(r, \theta) = \frac{2}{\pi a} r^2 sin(2\theta) + \frac{2}{9 \pi a^5} r^6 \sin(6\theta) + \ldots
+        \end{align*}
+    \end{solution}
+
+    \question Section 5.2 Problem 9
+    Let \(\phi(x)\) be a function of period \(\pi\). If \(\phi(x) = \sum_{n=1}^{\infty} a_n \sin(nx)\) for all \(x\), find the odd coefficients.
+    \begin{solution}
+        $\phi(x)$ being a function of period $\pi$ means that $\phi(x) = \phi(x + \pi)$. \\
+        We have $\phi(x) = \sum_{n=1}^{\infty} a_n \sin(nx)$. \\
+        So 
+        \begin{align*}
+            \phi(x + \pi) &= \sum_{n=1}^{\infty} a_n \sin(n(x + \pi)) \\
+            &= \sum_{n=1}^{\infty} a_n \sin(nx + n\pi) \\
+            &= \sum_{n=1}^{\infty} a_n \sin(nx) \cos(n\pi) + a_n \cos(nx) \sin(n\pi) \\
+        \end{align*}
+        Since $n \in \mathbb{N}$ we know that $\cos(n\pi) = (-1)^n$ and $\sin(n\pi) = 0$. Thus
+        \begin{align*}
+            \phi(x + \pi) &= \sum_{n=1}^{\infty} a_n (-1)^n \sin(nx)\\
+        \end{align*}
+        Thus 
+        \begin{align*}
+            \phi(x) = \phi(x + \pi) &\implies \sum_{n=1}^{\infty} a_n \sin(nx) = \sum_{n=1}^{\infty} a_n (-1)^n \sin(nx)\\
+        \end{align*}
+        Thus $a_n = (-1)^n a_n$ which implies that $a_n = 0$ for odd $n$. Thus the odd coefficients are $a_n = 0$ for odd $n$.
+    \end{solution}
+
+    \question Section 5.2 Problem 17\\
+    Show that a complex-valued function \( f(x) \) is real-valued if and only if its complex Fourier coefficients satisfy \( c_n = \overline{c_{-n}} \), where \( \overline{c_{-n}} \) denotes the complex conjugate.
+    \begin{solution}
+        If $f(x)$ is real valued and the interval is $-\pi, \pi$ for simplicity (otherwise we can tranform the function to fit this property), The complex Fourier series of a function $f(x)$ is given by 
+        $$f(x) = \sum_{n=-\infty}^{\infty} c_n e^{inx}$$
+        If $f(x)$ is real valued then $f(x) = \overline{f(x)}$. Thus
+        \begin{align*}
+            f(x) &= \sum_{n=-\infty}^{\infty} c_n e^{inx}\\
+            \overline{f(x)} &= \sum_{n=-\infty}^{\infty} \overline{c_n} e^{-inx}
+        \end{align*}
+        Now for the series we can substitute $-k$ for $n$ to get
+        \begin{align*}
+            \overline{f(x)} &= \sum_{k=\infty}^{-\infty} \overline{c_{-k}} e^{ikx}
+        \end{align*}
+        Since $f(x) = \overline{f(x)}$ we can see that $c_n = \overline{c_{-n}}$.\\\\
+        Now if $c_n = \overline{c_{-n}}$ then we can see that 
+        \begin{align*}
+            f(x) = \sum_{n=-\infty}^{\infty} c_n e^{inx} = \sum_{n=-\infty}^{\infty} \overline{c_{-n}} e^{-inx}
+        \end{align*}
+        substituting $-k$ for $n$ we get
+        \begin{align*}
+            f(x) &= \sum_{k=\infty}^{-\infty} \overline{c_{k}} e^{ikx}\\
+            &= \overline{\sum_{k=\infty}^{-\infty} c_k e^{ikx}}
+        \end{align*}
+        Clearly $\overline{\sum_{k=\infty}^{-\infty} c_k e^{ikx}} = \overline{f(x)}$. \\
+        Thus $f(x) = \overline{f(x)}$ and $f(x)$ is real valued.
+    \end{solution}
+
+    \question Section 5.3 Problem 2\\
+    (a) On the interval \([-1,1]\), show that the function \(x\) is orthogonal to the constant functions.\\
+    (b) Find a quadratic polynomial that is orthogonal to both \(1\) and \(x\).\\
+    (c) Find a cubic polynomial that is orthogonal to all quadratics. (These are the first few Legendre polynomials.)
+    \begin{solution}
+        Note for sake of ease we will use the inner product defined as \(\int_{-1}^{1} f(x)g(x)dx\).\\
+        \textbf{(a)}\\
+        We can show that the function \(x\) is orthogonal to the constant functions by taking the inner product of the two functions.\\
+        $$ \int_{-1}^{1} x \cdot C dx = C \int_{-1}^{1} x dx = C \left[ \frac{x^2}{2} \right]_{-1}^{1} = 0$$
+        Thus \(x\) is orthogonal to the constant functions.\\
+        \textbf{(b)}\\
+        We need $a,b,c$ such that $ax^2 + bx + c$ is orthogonal to both $1$ and $x$.\\
+        Thus $<1, ax^2 + bx + c> = 0$ and $<x, ax^2 + bx + c> = 0$.\\
+        We can see that if under the integreal if there is a term with an odd power it will be zero.\\
+        Clealry $<1, ax^2 + bx + c> = \frac{2}{3}a +2a =0 $\\
+        And $<x, ax^2 + bx + c> = \frac{2}{3}b = 0$\\
+        Thus $c= \frac{-1}{3}a$ and $b = 0$.\\
+        Thus the quadratic polynomial that is orthogonal to both \(1\) and \(x\) is $f(x) = ax^2 - \frac{1}{3}a$ or \(f(x) = 3x^2 - 1\).\\
+        \textbf{(c)}\\
+        We need $a,b,c,d$ such that $ax^3 + bx^2 + cx + d$ is orthogonal to $\alpha x^2 + \beta x + \gamma$.\\
+        Thus $<\alpha x^2 + \beta x + \gamma, ax^3 + bx^2 + cx + d> = 0$.\\
+        \begin{align*}
+            \int_{-1}^{1} (\alpha x^2 + \beta x + \gamma)(ax^3 + bx^2 + cx + d)dx &= 0\\
+            \int_{-1}^{1} \alpha x^2(ax^3 + bx^2 + cx + d) + \beta x(ax^3 + bx^2 + cx + d) + \gamma(ax^3 + bx^2 + cx + d)dx &= 0\\
+            \int_{-1}^{1} (\alpha ax^5 + \alpha bx^4 + \alpha cx^3 + \alpha dx^2 + \beta ax^4 + \beta bx^3 + \beta cx^2 + \beta dx + \gamma ax^3 + \gamma bx^2 + \gamma cx + \gamma d ) dx &= 0
+        \end{align*}
+        for the terms with an odd power of $x$ we can see that they will be zero.\\
+        Thus we can simplify to 
+        \begin{align*}
+            \int_{-1}^{1} (\alpha b x^4 + \alpha d x^2 + \beta a x^4 + \beta c x^2 + \gamma b x^2 + \gamma d )dx &= 0\\
+            \alpha b \frac{2}{5} + \alpha d \frac{2}{3} + \beta a \frac{2}{5} + \beta c \frac{2}{3} + \gamma b \frac{2}{3} + 2\gamma d  &= 0\\
+        \end{align*}
+        Now we can group the terms in terms of $\alpha \beta \gamma$ to get 
+        \begin{align*}
+            (2b/5 + 2d/3)\alpha + (2a/5 + 2c/3)\beta + (2b/3 + 2d)\gamma &= 0\\
+        \end{align*}
+        Since $\alpha, \beta, \gamma$ are arbitrary we can see that the coefficients of each term must be zero.\\
+        Thus through some mantipulation we can see that $b = 0, d=0$ ad $c = -\frac{3}{5}a$ 
+        Thus our cubic polynomial is $f(x) = ax^3 - \frac{3}{5}a x$ or $f(x) = 5x^3 - 3x$.
+    \end{solution}
+
+    \question Section 5.3 Problem 6\\
+    Find the complex eigenvalues of the first-derivative operator \(\frac{d}{dx}\) subject to the single boundary condition \(X(0) = X(1)\). Are the eigenfunctions orthogonal on the interval \((0,1)\)?
+    \begin{solution}
+        This is an eigenvalue problem where we need to solve 
+        $$\frac{d}{dx}X(x) = \lambda X(x)$$
+        This cn be solve with seperation of variables and we can see that 
+        $$ X(x) = C e^{x\lambda}$$
+        $$ X(x) = C (\cos(i\lambda) - i\sin(i\lambda))$$
+    \end{solution}
+    Our BC of $X(0) = X(1)$ implies
+    $$ A = A(\cos(i\lambda) - i\sin(i\lambda))$$
+    Thus we need to solve $cos(i\lambda) - i\sin(i\lambda) = 1$\\
+    We can match the real and imaginary parts to get
+    \begin{align*}
+        \cos(i\lambda) &= 1\\
+        \sin(i\lambda) &= 0
+    \end{align*}
+    Thus $\lambda = 2\pi n i$. for $n \in \mathbb{Z}$\\
+    These have corresponing eigenfucntions of $X(x) = e^{2\pi n i x}$\\
+    We can check for orthogonality by taking the inner product of two eigenfunctions.\\
+    \begin{align*}
+        \int_0^1 X_n \overline{X_m} dx &= \int_0^1 e^{2\pi n i x} e^{-2\pi m i x} dx\\
+        &= \int_0^1 e^{2\pi (n-m) i x} dx\\
+        &= \frac{1}{2\pi (n-m) i} [e^{2\pi (n-m) i x}]_0^1\\
+        &= \frac{1}{2\pi (n-m) i} [e^{2\pi (n-m) i} - 1]\\
+        &= \frac{1}{2\pi (n-m) i} [1 - 1]\\
+        &= 0
+    \end{align*}
+    Therefore the eigenfunctions are orthogonal on the interval $(0,1)$.
+\end{questions}
+
+
+\end{document}

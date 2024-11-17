@@ -12,7 +12,6 @@
 
 \begin{document}
 \maketitle
-\tableofcontents
 
 \newpage
 \section*{Content Outline}
@@ -89,7 +88,9 @@ Skip examples:
         \textbf{ASK FOR A REVIEW OF THIS}\\
         \textbf{ASK FOR A F and B Kolmogorov Differential Equations REVIEW}
         \item \textbf{Section 5 Limiting Probabilities} \\
-        Analgous to the discrete time: $P_j = \lim_{t \to \infty} P_{ij}(t)$
+        Analgous to the discrete time: $P_j = \lim_{t \to \infty} P_{ij}(t)$\\
+        We can also make balance equations: $\lambda_i P_i = \mu_{i+1} P_{i+1}$\\\
+        or $\lambda_i P_i = \mu_{i+1} P_{i+1} + \lambda_{i-1} P_{i-1}$\\
         \item \textbf{Section 6 Time Reversibility} \\
         Consider a CTMC that is ergodic and consider the limiting probabilities $P_j$. The process is time reversible if $Q_{ij} = \frac{\pi_j P_{ji}}{\pi_i}$ \textbf{ASK FOR A REVIEW OF THIS}
     \end{itemize}
@@ -152,5 +153,10 @@ $P(\min\setof{X_i} = X_i) = e^{-\sum \lambda_i x}$\\
         If $\setof{N_i(t)}$ are independent Poisson Processes with rates $\lambda_i$, then the sum of the processes is also a Poisson Process with rate $\sum \lambda_i$.\\
     \end{solution}
 
+
+
+
+
+    
 \end{questions}
 \end{document}

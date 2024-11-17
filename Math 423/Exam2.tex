@@ -1,0 +1,144 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Concepts}
+\subsection{Study Guide Concepts}
+\begin{itemize}
+    \item 2.3
+    \item 2.4
+    \item 2.5
+    \item 4 - Boundary Value Problems
+    \item 6
+    \begin{itemize}
+        \item Laplacian in polar
+        \item Seperation of Variables
+        \item Rectagles (6.2)
+        \item Circles Wedges and Annuli (6.4)
+        \item NO max principle, MVT, Poisson's formula
+    \end{itemize}
+    \item 5.1
+    \begin{itemize}
+        \item Fourier Series, full, sin and cos
+        \item No convergence
+    \end{itemize}
+\end{itemize}
+\subsubsection{2.3 - The Diffusion Equation}
+\begin{definition}[Max Principle (weak)]
+    If $u(x,t)$ is a solution to the Diffusion Equation in a rectangle $0 \leq x \leq L$, $0 \leq t \leq T$, then the maximum of $u(x,t)$ occurs on the boundary of the rectangle. In other words on $x = 0, x = L, t = 0$. \\
+    The minimum is similar as we can show that $-u(x,t)$ satisfies the same equation.\\
+    The natrual interpretaion of this is that if you have a rod with no internal heat sourse, the hottest or coldest spot can only occour at $t =0$ or on the edges. 
+\end{definition}
+\begin{definition}[Uniqueness]
+    There is uniqueness for the Dirichlet problem for the Diffusion Equation.
+    That means there is at most one solution of 
+    $$ \begin{cases}
+        u_t - ku_{xx} = f(x,t) \text{ for } 0 < x < L, t > 0\\
+        u(x,0) = \phi(x) \\
+        u(0,t) = g(t) \\
+        u(L,t) = h(t)
+    \end{cases}$$
+    For any given $f(x,t), \phi(x), g(t), h(t)$\\
+    We can do proof by max principle.
+    \begin{proof}
+        We want to show that for all $u_1, u_2$ that satisfy the above conditions, $u_1 = u_2$.\\
+        Let $w = u_1 - u_2$. Then $w$ satisfies the following:
+        $$ \begin{cases}
+            w_t - kw_{xx} = 0 \text{ for } 0 < x < L, t > 0\\
+            w(x,0) = 0 \\
+            w(0,t) = 0 \\
+            w(L,t) = 0
+        \end{cases}$$
+        By max prinicple $w(x,t)$ has a maximum on its boundary. Also it must have a minimum on its boundary. Since $w(x,0) = 0$, the minimum and the maximum must be 0. Thus $w(x,t) = 0$ for all $x,t$.\\
+        Thus $u_1 = u_2$.
+    \end{proof}
+    Now we can do a proof by energy.
+    \begin{proof}
+        We know that $w = u_1 - u_2$\\
+        \begin{align}
+            0 &= 0 \cdot w\\
+            &= (w_t - kw_{xx})w\\
+            &= (1/2w^2)_t + (-kw w_x)_x + kw_x^2
+        \end{align}
+        We can now integrat about $0 < x < L$ \\
+        \begin{align}
+            0 &= \int_0^L (1/2w^2)_t dx {- kw_x w |_0^L}_{goes to 0} + k \int_0^L w_x^2 dx\\
+            \frac{d}{dt} \int_0^L 1/2w^2 dx &= -k  \int_0^L w_x^2 dx\\
+        \end{align}
+        Clealrly the derivative of $\int_0^L w^2 dx$ is decreasing 
+        $$ \int_0^L w^2 dx \leq \int_0^L w(x,0)^2 dx $$
+        The RHS is 0, so the LHS is 0. Thus $w = 0$. 
+    \end{proof}
+\end{definition}
+\begin{definition}[Stablitity]
+    The solution to the Diffusion Equation is stable. That means that if you have a small perturbation in the initial conditions, the solution will not change much.\\
+    In other words they functions are "bounded" by initial conditions.\\
+    This is in a $L_2$ sense.
+    $$ \int_0^l [u_1(x,t) - u_2(x,t)]^2 dx \leq \int_0^l [u_1(x,0) - u_2(x,0)]^2 dx$$
+\end{definition}
+\subsubsection{2.4 - Diffusion on the Whole Line}
+\begin{definition}[Invariance Properties]
+    We have 5 basic invariance properties of the Diffusion Equation.
+    \begin{itemize}
+        \item Translation $u(x - y, t)$ is a solution if $u(x,t)$ is a solution.
+        \item Any derivative of $u(x,t)$ is a solution. 
+        \item A linear combination of solutions is a solution.
+        \item An integral of a solution is a solution. Thus if $S(x,t)$ is a solution then so is $S(x - y, t)$ and so is $v(x,t) = \int_{-\infty}^x S(x - y, t) g(y) dy$. for any $g(y)$.
+        \item Dilation. If $u(x,t)$ is a solution then so is $u(\sqrt{a}x, at)$ for any $a > 0$.
+    \end{itemize}
+\end{definition}
+\begin{definition}[Fundamental Solution to the Diffusion Equation]
+    The fundamental solution to the Diffusion Equation is 
+    $$ S(x,t) = \frac{1}{\sqrt{4\pi kt}} e^{-x^2/4kt}$$
+    This is a solution to the Diffusion Equation with $f(x,t) = 0$ and $u(x,0) = \delta(x)$.
+    We can derive this by utilizing the invariance properties.
+\end{definition}
+\subsubsection{2.5 - Comparison of Waves and Diffusion}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Property} & \textbf{Waves} & \textbf{Diffusion} \\ \hline
+Speed of Propogation & $c$ & Infinite \\ \hline
+Singulatities for $t > 0$ & Transported along characteristics with speed c & Lost immediately \\ \hline
+Well posed for $t > 0$ & Yes & Yes for bounded \\ \hline
+Well posed for $t < 0$ & Yes & No \\ \hline
+Max Principle & No & Yes \\ \hline
+Behavior at infinity & Energy is constant so it doesn't decay & Decays to zero \\ \hline
+Information & Transported & Lost gradually \\ \hline
+\end{tabular}
+\caption{Comparison of Waves and Diffusion}
+\label{tab:comparison}
+\end{table}
+\subsubsection{4.1 - Seperation of Variables}
+
+
+
+\newpage
+
+\section{Problems}
+\begin{questions}
+    \question Question 1.
+\end{questions}
+
+
+
+
+
+
+\end{document}

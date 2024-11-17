@@ -1,0 +1,127 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question Sec 7.1 2(a)
+    For each matrix $A$, find a basis for each generalized eigenspaces of $L_A$ consisting of a union of disjoint cycles of generalized eigenvectors. Then find a Jordan canonical form $J$ for $A$.
+    $$A = \begin{bmatrix}
+        1 & 1 \\
+        -1 & 3
+    \end{bmatrix}$$
+    \begin{solution}
+        We must first find the eigenvalues of $A$. The characteristic polynomial of $A$ is given by
+        \begin{align*}
+            \det(A - \lambda I) &= \begin{vmatrix}
+                1 - \lambda & 1 \\
+                -1 & 3 - \lambda
+            \end{vmatrix} \\
+            &= (1 - \lambda)(3 - \lambda) + 1 \\
+            &= \lambda^2 - 4\lambda + 4 \\
+            &= (\lambda - 2)^2
+        \end{align*}
+        Thus, the eigenvalue of $A$ is $\lambda = 2$ with multiplicity 2. We can now find the eigenvectors of $A$ by solving the system $(A - 2I)\vec{x} = \vec{0}$.
+        \begin{align*}
+            \begin{bmatrix}[cc|c]
+                -1 & 1 & 0 \\
+                -1 & 1 & 0
+            \end{bmatrix}
+            &\implies
+            \begin{bmatrix}[cc|c]
+                1 & -1 & 0 \\
+                0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        Thus our eigenvectors are of the form $\begin{bmatrix} a\\ a \end{bmatrix}$. We can choose $a = 1$ to get the eigenvector $\begin{bmatrix} 1\\ 1 \end{bmatrix}$. \\
+        We can now find the generalized eigenvectors of $A$ by solving the system $(A - 2I)\vec{x} = \vec{v}$ where $\vec{v}$ is the eigenvector we found earlier.
+        \begin{align*}
+            \begin{bmatrix}[cc|c]
+                -1 & 1 & 1 \\
+                -1 & 1 & 1
+            \end{bmatrix}
+            &\implies
+            \begin{bmatrix}[cc|c]
+                1 & -1 & 1 \\
+                0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        Thus our generalized eigenvectors solve the equation $x_1 + x_2 =1$. We can choose $x_1 = 1$ to get the generalized eigenvector $\begin{bmatrix} 1\\ 0 \end{bmatrix}$. \\
+        Thus, the basis for the generalized eigenspace of $A$ is $\left\{ \begin{bmatrix} 1\\ 1 \end{bmatrix}, \begin{bmatrix} 1\\ 0 \end{bmatrix} \right\}$. \\
+        We can now find the Jordan canonical form of $A$ by constructing the matrix $P$ whose columns are the basis vectors of the generalized eigenspaces of $A$.
+        \begin{align*}
+            J &= \begin{bmatrix}
+                2 & 1 \\
+                0 & 2
+            \end{bmatrix}
+        \end{align*}
+
+    \end{solution}
+    \question Sec 7.1 2(b)
+    $$A = \begin{bmatrix}
+        1 & 2\\
+        3 & 2\\
+    \end{bmatrix}$$
+    \begin{solution}
+        We must first find the eigenvalues of $A$. The characteristic polynomial of $A$ is given by
+        \begin{align*}
+            \det(A - \lambda I) &= \begin{vmatrix}
+                1 - \lambda & 2 \\
+                3 & 2 - \lambda
+            \end{vmatrix} \\
+            &= (1 - \lambda)(2 - \lambda) - 6 \\
+            &= \lambda^2 - 3\lambda - 4 \\
+            &= (\lambda - 4)(\lambda + 1)
+        \end{align*}
+        Thus, the eigenvalues of $A$ are $\lambda = 4, -1$. We can now find the eigenvectors of $A$ by solving the system $(A - 4I)\vec{x} = \vec{0}$.
+        \begin{align*}
+            \begin{bmatrix}[cc|c]
+                -3 & 2 & 0 \\
+                3 & -2 & 0
+            \end{bmatrix}
+        \end{align*}
+        Thus our eigenvectors are of the form $\begin{bmatrix} 2a\\ 3a \end{bmatrix}$. We can choose $a = 1$ to get the eigenvector $\begin{bmatrix} 2\\ 3 \end{bmatrix}$. \\
+        We can now find the generalized eigenvectors of $A$ for $\lambda = -4$ by solving the system $(A + 4I)\vec{x} = \vec{v}$ where $\vec{v}$ is the eigenvector we found earlier. 
+
+
+    \end{solution}
+
+    \question Sec 7.1 3(a)
+    For each linear operator $T$ find a basis for each generalized eigenspace of $T$ consiting of a union of disjoint cycles of generalized eigenvectors. Then find a Jordan canonical form $J$ for $T$.
+    $$ \text{Define } T \text{ on } P_2(R) \text{ by } T(f(x)) = 2f(x) - f'(x)$$
+    \begin{solution}
+        
+    \end{solution}
+
+    \question Sec 7.1 3(b)
+    $$ V \text{ is the real vector space of functions spanned by the set of real valued functions } \setof{1, t, t^2, e^t, te^t} \text{, and } T \text{ is the linear operator on } V \text{ defined by } T(f(t)) = f'(t)$$
+    \begin{solution}
+        
+    \end{solution} 
+
+    \question Sec 7.2 4(a)
+    For each of the matrices $A$ that follow, find a Jordan canonical form $J$  and an invertible matrix $Q$ such that $J = Q^{-1}AQ$. 
+    $$ A = \begin{bmatrix}
+        -3 & 3 & -2 \\
+        -7 & 6 & -3 \\
+        1 & -1 & 2
+    \end{bmatrix}$$
+    \begin{solution}
+        
+    \end{solution}
+
+\end{questions}
+
+\end{document}

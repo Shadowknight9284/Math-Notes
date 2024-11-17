@@ -1,0 +1,88 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question Question 1.\\
+    Suppsoe $X_1 \sim Exp(\lambda = 2)$ and $X_2 \sim Exp(\lambda = 3)$ are independant. Use the tranformaiton theorem we learned to find the PDF of $Y = X_1 + X_2$.
+    \begin{solution}
+        We can can see that $y = x_1 +x_2$
+        $f(x_1,x_2) = f(x_1)f(x_2) = \frac{1}{6}e^{-\frac{x_1}{2} - \frac{x_2}{3}}$\\
+        Thus if we let $y = x_1 + x_2$ then $x_1 = y - x_2$ and $x_2 = y - x_1$\\
+        $g(y, x_2) = f(x_1 ,x_2) |J|$\\
+        Where $|J|$ is $\frac{\partial x_1}{\partial y}$ 
+        We can clealry see that $g(y, x_2) = \frac{1}{6}e^{-\frac{x_1}{2} - \frac{x_2}{3}}$\\
+        Since we can see that $x_1 = y - x_2$ thus $y > x_2$ and $x_2 > 0$\\
+        $$f_Y(t) = \int_0^y \frac{1}{6}e^{-\frac{y-x_2}{2} - \frac{x_2}{3}}dx_2$$
+        $$f_Y(t) = e^{-\frac{y}{2}} + e^{-\frac{y}{3}}$$
+        Thus the PDF of $Y = X_1 + X_2$ is $f_Y(t) = e^{-\frac{y}{2}} + e^{-\frac{y}{3}}$
+    \end{solution}
+
+    \question Write a series of algebraic manipulations that converts
+    $$ P(-t_{\alpha/2, n-1} \leq T \leq t_{\alpha/2, n-1}) = 1 - \alpha $$
+    to 
+    $$ P(\bar{X} - t_{\alpha/2, n-1} \frac{S}{\sqrt{n}} \leq \mu \leq \bar{X} + t_{\alpha/2, n-1} \frac{S}{\sqrt{n}}) = 1 - \alpha $$
+    \begin{solution}
+        We know that $T \sim \frac{\bar{X} - \mu }{S / \sqrt{n}}$ where $\bar{X}$ is the sample mean and $S$ is the sample standard deviation.\\
+        \begin{align*}
+            P(-t_{\alpha/2, n-1} \leq T \leq t_{\alpha/2, n-1}) &= 1 - \alpha\\
+            P(-t_{\alpha/2, n-1} \leq \frac{\bar{X} - \mu}{S / \sqrt{n}} \leq t_{\alpha/2, n-1}) &= 1 - \alpha\\
+            P(-t_{\alpha/2, n-1} (S / \sqrt{n}) \leq \bar{X} - \mu \leq t_{\alpha/2, n-1} (S / \sqrt{n})) &= 1 - \alpha\\
+            P(\bar{X} - t_{\alpha/2, n-1} \frac{S}{\sqrt{n}} \leq \mu \leq \bar{X} + t_{\alpha/2, n-1} \frac{S}{\sqrt{n}}) &= 1 - \alpha
+        \end{align*}
+        
+    \end{solution}
+
+    \question Question 3.\\
+    Use the PDF we derived of $t_\nu$ (note: $\nu > 0$) distribution to obtain a formula for the number
+    $$ \int_0^\infty \frac{1}{(1 + m^2)^p} \, dm $$
+    in terms of $p$. State the range of $p$ for which this formula is valid.
+    \begin{parts}
+        \part Directly integrate $\int_0^\infty \frac{1}{1+m^2} \, dm$ and also use your formula. Do you get the same answer? You may use $\Gamma(1/2) = \sqrt{\pi}$.
+        \part Determine $\int_0^\infty \frac{1}{(1+m^2)^{7/2}} \, dm$. Simplify completely. You may use $\Gamma(1/2) = \sqrt{\pi}$.
+        \part Determine $\int_0^\infty \frac{1}{(1+m^2)^7} \, dm$. Simplify completely. You may use $\Gamma(1/2) = \sqrt{\pi}$.
+        \part (Challenge) Determine $\int_0^\infty \frac{1}{(1+m^2)^p} \, dm$ when either $p$ is a positive half-integer or positive integer.
+    \end{parts}
+    \begin{solution}
+        \textbf{Part a:}
+            Let $G \sim \Gamma_{\nu}$ thus 
+            $G(x) = \frac{1}{\sqrt{\nu}} \frac{\Gamma(\frac{\nu + 1}{2})}{\sqrt{\pi} \Gamma(\frac{\nu}{2})} (1 + \frac{x^2}{\nu})^{-\frac{\nu + 1}{2}}$\\
+            And since $G$ is even
+            $$ \int_{0}^{\infty}G(x) = .5 $$
+            $$ \int_0^{\infty} \left( 1 + \frac{t^2}{\nu}\right)^{-(\nu +1) /2 }dt = \frac{1}{2} \frac{\sqrt{\pi \nu} \Gamma(\nu/2)}{\Gamma(\frac{\nu +1}{2})} $$
+            We can sub $m = t \sqrt{\nu}$ and $\sqrt{\nu} dm = dt$\\
+            We can take $p = (\nu + 1) / 2$ and thus $\nu = 2p -1$\\
+            $$ \int_0^{\infty} \frac{1}{(1 + m^2)^p} dm = \frac{1}{2} \frac{\sqrt{\pi} \Gamma((2p - 1)/2)}{\Gamma(p)} $$
+            This is valid for $p > 1/2$\\
+        \textbf{Part b:}
+            We can direclty apply to see that $p = 1$ and thus 
+            $$ \frac{1}{2} \frac{\sqrt{\pi}^2}{1}$$
+            $$ \frac{\pi}{2}$$
+        \textbf{Part c:}
+            We can direclty apply to see that $p = 7/2$ and thus 
+            $$ \frac{\sqrt{\pi}}{2} \frac{\Gamma(3)}{\Gamma(7/2)}$$
+            $$ \frac{\sqrt{\pi}}{2} \frac{8}{15 \sqrt{\pi}}$$
+            $$ 4/15$$
+        \textbf{Part d:}
+            We can direclty apply to see that $p = 7$ and thus 
+            $$ \frac{\sqrt{\pi}}{2} \frac{\Gamma(13/2)}{\Gamma(7)}$$
+            $$ \frac{\sqrt{\pi}}{2} \frac{11 \cdot 9 \cdot 7 \cdot 5 \cdot 3 \cdot \sqrt{\pi}}{2^5 6!}$$
+            $$ \frac{231}{256} \pi$$
+    \end{solution}
+
+\end{questions}
+
+\end{document}

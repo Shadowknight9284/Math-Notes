@@ -1,0 +1,139 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\subsection*{Applying transformation theorems to determine pdfs}
+(in text this is in chapter 7)
+We can notice that if we have $F(y) = P(Y \leq y) = \int_{\infty}^{y} f(y) dy$ \\
+Thus $f(y) = \frac{d}{dy} F(y)$\\
+\begin{theorem}[transformation theorem]
+    Let $f(x)$ be the value of a pdf of a random variable $X$ at $x$. Consider $Y = u(X)$ \\
+    Thus $y = u(x)$ and $x = u^{-1}(y)$\\
+    Let $w = u^{-1}$ thus $x = w(y)$\\
+    Then the pdf of $Y$ is given by $g(y) = f(w(y)) |w'(y)|$
+    \begin{proof}
+        Consider $y = u(x)$ and $x = w(y)$\\
+        Thus 
+        $$ P(a \leq Y \leq b) = P(w(a) \leq X \leq w(b)) = \int_{w(a)}^{w(b)} f(x) dx$$
+        By the fundamental theorem of calculus, we can differentiate the above equation to get the pdf of $Y$.
+        $$ g(y) = \frac{d}{dy} \int_{w(a)}^{w(b)} f(x) dx = \frac{d}{dy} \int_a^b f(w(y)) |w'(y)| dy = f(w(y)) |w'(y)|$$
+        We add the absolute value as $w'(y)$ is positive for increasing functions and negative for decreasing functions.
+    \end{proof}
+\end{theorem}
+\begin{example}
+    If $X \sim Exp(1)$, find the pdf of $Y = \sqrt{X}$
+    \begin{solution}
+        We know that $f(x) = e^{-x}$ for $x \geq 0$\\
+        Let $y = \sqrt{x}$ and $x = y^2$\\
+        Thus $w(y) = y^2$ and $w'(y) = 2y$\\
+        Thus $g(y) = f(w(y)) |w'(y)| = e^{-y^2} 2y$
+    \end{solution}
+\end{example}
+We can also consider a transformation theorem for multiple variables.\\
+\begin{example}
+    If joint pdf of $X_1, X_2$ is given by
+    $$ f(x_1, x_2) = \begin{cases}
+        e^{-x_1 - x_2} & x_1 \geq 0, x_2 \geq 0\\
+        0 & \text{otherwise}
+    \end{cases}$$
+    Find the pdf of $Y = \frac{X_1}{X_1 + X_2}$
+    \begin{solution}
+        Since $y$ decreases when $x_2$ increases and $x_1$ is held constant, We can find the joint pdf of $Y, X_1$ and then integrate over $X_1$ to get the pdf of $Y$.
+        Since $y = \frac{x_1}{x_1 + x_2}$, $x_2 = \frac{x_1}{y} - x_1$. Thus 
+        $\frac{dx_2}{dy} = -\frac{x_1}{y^2}$\\
+        Thus $g(y,x_1) = e^{-x_1/y} x_1/y^2$\\
+        $$ h(y) = \int_0^\infty g(y,x_1) dy $$
+        $$ = \int_0^\infty e^{-x_1/y} x_1/y^2 dy $$
+        $$ = \int_0^\infty e^{-u} u du$$
+        $$ = 1$$
+    \end{solution}
+\end{example}
+\begin{theorem}[Mutliple variable transformation theorem]
+    Let $f(x_1, x_2)$ be the joint pdf of $X_1, X_2$. Consider $Y = u(X_1, X_2)$ \\
+    If the functions are given by $y_1 = u_1(x_1, x_2)$ and $y_2 = u_2(x_1, x_2)$\\
+    Thus we can rewrite $x_1 = w_1(y_1, y_2)$ and $x_2 = w_2(y_1, y_2)$\\
+    Then the joint pdf of $Y_1, Y_2$ where $Y_1 = u_1(X_1, X_2)$ and $Y_2 = u_2(X_1, X_2)$ is given by
+    $$ g(y_1, y_2) = f(w_1(y_1, y_2), w_2(y_1, y_2)) |J|$$
+    where $J$ is the Jacobian of the transformation.
+    $$ J = \begin{vmatrix}
+        \frac{\partial x_1}{\partial y_1} & \frac{\partial x_1}{\partial y_2}\\
+        \frac{\partial x_2}{\partial y_1} & \frac{\partial x_2}{\partial y_2}
+    \end{vmatrix}$$
+\end{theorem}
+
+\subsection*{Definition and application of confidence intervals}
+(Chapter 11.1, 2)
+\begin{definition}[Confidence interval]
+    A confidence interval is a range of values, derived from the sample data, that is likely to contain the value of an unknown population parameter. The interval has an associated confidence level that quantifies the level of confidence that the parameter lies in the interval.
+    $$P(\hat{Theta}_1 \leq \theta \leq \hat{Theta}_2) = 1 - \alpha$$
+    where $\hat{Theta}_1$ and $\hat{Theta}_2$ are the lower and upper bounds of the confidence interval and $\alpha$ is the significance level.\\
+    This is a $(1-\alpha) \times 100\%$ confidence interval.
+\end{definition}
+\begin{theorem}[CI with known variance]
+    For a known variance, the confidence interval for the mean is given by
+    $$\mu = \bar{X} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}$$
+    $$P\left(\bar{X} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \leq \mu \leq \bar{X} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}}\right) = 1 - \alpha$$
+    where $z_{\alpha/2}$ is the z-score for the significance level $\alpha/2$.\\
+    $\bar{X}$ is the sample mean, $\sigma$ is the population standard deviation and $n$ is the sample size.
+\end{theorem}
+\begin{theorem}[CI with unknown variance]
+    For an unknown variance, the confidence interval for the mean is given by
+    $$\mu = \bar{X} \pm t_{\alpha/2} \frac{s}{\sqrt{n}}$$
+    $$P\left(\bar{X} - t_{\alpha/2, n-1} \frac{s}{\sqrt{n}} \leq \mu \leq \bar{X} + t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}\right) = 1 - \alpha$$
+    where $t_{\alpha/2}$ is the t-score for the significance level $\alpha/2$.\\
+    $\bar{X}$ is the sample mean, $s$ is the sample standard deviation and $n$ is the sample size.
+\end{theorem}
+
+
+\subsection*{Definition and application of T distribution}
+\begin{definition}[T distribution]
+    A $T$ distribution also known as a Student's T distribution is a probability distribution that is used to estimate the population mean when the sample size is small and/or the population standard deviation is unknown.\\
+    $$ T = \frac{\bar{X} - \mu}{s/\sqrt{n}}$$
+    where $\bar{X}$ is the sample mean, $\mu$ is the population mean, $s$ is the sample standard deviation and $n$ is the sample size.\\
+    It kinda looks like a normal distribution but has heavier tails based on the sample size.
+\end{definition}
+
+\subsection*{Derivation and usage of the confidence intervals for mean in both situations when variance is given, when variance is not given.}
+\begin{example}[Derivation of CI for the Mean when variance is given]
+    We have $\mu_{\bar{X}} = \mu$ and $\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}}$\\
+    Thus $P\left(|Z| \leq z_{\alpha/2}\right) = 1 - \alpha$ (this is a convention for defining $z_{\alpha/2}$ which is the z score with significance $\alpha$) \\
+    Since $Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}}$, we can rewrite the above equation as
+    \begin{align*}
+        P(|Z| \leq z_{\alpha/2}) &= 1 - \alpha\\
+        P\left(\left|\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}\right| \leq z_{\alpha/2}\right) &= 1 - \alpha\\
+        P\left(\bar{X} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \leq \mu \leq \bar{X} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}}\right) &= 1 - \alpha
+    \end{align*}
+    Thus the confidence interval for the mean when variance is given is
+    $$(\bar{X} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}}, \bar{X} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}})$$
+    where $\bar{X}$ is the sample mean, $\sigma$ is the population standard deviation and $n$ is the sample size.
+\end{example}
+\begin{example}[Derivation of CI for the mean when variance is not given]
+    Similarly we have $\mu_{\bar{X}} = \mu$ and $\sigma_{\bar{X}} = \frac{s}{\sqrt{n}}$\\
+    Thus $P\left(|T| \leq t_{\alpha/2, n-1}\right) = 1 - \alpha$ (this is a convention for defining $t_{\alpha/2, n-1}$ which is the t score with significance $\alpha$ and $n-1$ degrees of freedom) \\
+    Since $T = \frac{\bar{X} - \mu}{s/\sqrt{n}}$, we can rewrite the above equation as
+    \begin{align*}
+        P(|T| \leq t_{\alpha/2, n-1}) &= 1 - \alpha\\
+        P\left(\left|\frac{\bar{X} - \mu}{s/\sqrt{n}}\right| \leq t_{\alpha/2, n-1}\right) &= 1 - \alpha\\
+        P\left(\bar{X} - t_{\alpha/2, n-1} \frac{s}{\sqrt{n}} \leq \mu \leq \bar{X} + t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}\right) &= 1 - \alpha
+    \end{align*}
+    Thus the confidence interval for the mean when variance is not given is
+    $$(\bar{X} - t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}, \bar{X} + t_{\alpha/2, n-1} \frac{s}{\sqrt{n}})$$
+    where $\bar{X}$ is the sample mean, $s$ is the sample standard deviation and $n$ is the sample size.
+\end{example}
+
+
+
+\end{document}

@@ -78,14 +78,245 @@
             P\{N(t) = n\} &= P\{N(t) = n | \text{good year}\}P\{\text{good year}\} + P\{N(t) = n | \text{bad year}\}P\{\text{bad year}\}\\
             &= \frac{(3t)^n}{n!}0.3 + e^{-5t}\frac{(5t)^n}{n!}0.7
         \end{align*}
-        \part \(N(t)\) is not a Poisson process because the rate of the process changes with time since there are good days and bad days 
-        \part \(N(t)\) 
+        \part \(N(t)\) is not a Poisson process because the mixture of two poisson processes with different rate is not a Poisson process. 
+        \part \(N(t)\) does not have because the rate of the process changes with time. In other words $N(t + s) - N(s) \neq N(t)$. becuase of the probability of the year being good or bad.
+        \part \(N(t)\) does have independent increments because the number of storms in the next time interval is independent of the number of storms in the previous time interval.
+        \part We can use Bayes' theorem to find the conditional probability that next year will be a good year given that there are 3 storms by time \(t = 1\). We can see that
+        \[P(G | N(1) = 3) = \frac{P(N(1) = 3| G) P(G)}{P(N(1)=3)}\]
+        \begin{align*}
+            P(N(1) = 3) &= \frac{e^{-3} (3)^3}{3!}0.3 + \frac{e^{-5} (5)^3}{3!}0.7\\
+            P(N(1) = 3 | G) &= \frac{e^{-3} (3)^3}{3!}\\
+            P(G | N(1) = 3) &= \frac{\frac{e^{-3} (3)^3}{3!}0.3}{\frac{e^{-3} (3)^3}{3!}0.3 + \frac{e^{-5} (5)^3}{3!}0.7}\\
+        \end{align*}
+        This is approximately 0.406
     \end{parts}
 \end{solution}
 
+\question Question 4.\\
+Suppose that the number of typographical errors in a new text is Poisson(\(\lambda\)). Two proofreaders
+independently read the text. Suppose that each error is independently found by proofreader \(i\) with
+probability \(p_i\), \(i = 1, 2\). Let \(X_1\) denote the number of errors that are found by proofreader 1 but not
+by proofreader 2. Let \(X_2\) denote the number of errors that are found by proofreader 2 but not by
+proofreader 1. Let \(X_3\) denote the number of errors that are found by both proofreaders. Finally,
+let \(X_4\) denote the number of errors found by neither proofreader.
+\begin{parts}
+    \part Show that \(\frac{E[X_1]}{E[X_3]} = \frac{1-p_2}{p_2} \& \frac{E[X_2]}{E[X_3]} = \frac{1-p_1}{p_1}\)
+    \part By using $X_i$ as an estimator of $E[X_i]$ for $i = 1,2,3$ find estimators of $p_1$ and $p_2$.
+\end{parts}
+\begin{solution}
+    \textbf{Part (a)}\\
+    We can see that \(X_1, X_2, X_3, X_4\) are all Poisson distributed with rates \(\lambda p_1(1-p_2), \lambda p_2(1-p_1), \lambda p_1p_2, \lambda (1-p_1)(1-p_2)\) respectively.\\
+    Clealry \(E[X_1] = \lambda p_1(1-p_2), E[X_2] = \lambda p_2(1-p_1), E[X_3] = \lambda p_1p_2, E[X_4] = \lambda (1-p_1)(1-p_2)\).\\
+    Thus we can see that
+    \begin{align*}
+        \frac{E[X_1]}{E[X_3]} &= \frac{\lambda p_1(1-p_2)}{\lambda p_1p_2}\\
+        &= \frac{1-p_2}{p_2}\\
+        \frac{E[X_2]}{E[X_3]} &= \frac{\lambda p_2(1-p_1)}{\lambda p_1p_2}\\
+        &= \frac{1-p_1}{p_1}
+    \end{align*}
+    \textbf{Part (b)}\\
+    From part (a) we can see that
+    \begin{align*}
+        \frac{E[X_1]}{E[X_3]} &= \frac{1-p_2}{p_2}\\
+        \frac{E[X_2]}{E[X_3]} &= \frac{1-p_1}{p_1}
+    \end{align*}
+    We can use the estimators \(X_1, X_2, X_3\) to estimate \(E[X_1], E[X_2], E[X_3]\) respectively. Thus we can see that
+    \begin{align*}
+        \frac{X_1}{X_3} &= \frac{1-p_2}{p_2}\\
+        \frac{X_2}{X_3} &= \frac{1-p_1}{p_1}
+    \end{align*}
+    Thus we can see that
+    \begin{align*}
+        p_1 &= \frac{X_3}{X_3 + X_2}\\
+        p_2 &= \frac{X_3}{X_3 + X_1}
+    \end{align*}
+    Thus our estimators for \(p_1, p_2\) are \(\frac{X_3}{X_3 + X_2}, \frac{X_3}{X_3 + X_1}\) respectively.
+\end{solution}
+
+\question Question 5.\\
+The lifetime of a light bulb is exponential with a mean of 200 days. When it burns out a custodian
+replaces it immediately. In addition, there is a maintenance person who comes at times of a Poisson
+process at rate 0.01 and replaces the bulb as "preventive maintenance."
+\begin{parts}
+    \part How often is the bulb replaced?
+    \part In the long run, what fraction of the replacements are due to failure?
+\end{parts}
+\begin{solution}
+    \textbf{Part (a)}\\
+    The bulb is replaced when it burns out or when the maintenance person comes. The time until the bulb burns out is exponentially distributed with \( \lambda = 1/200 \). The time until the maintenance person comes is exponentially distributed with \( \lambda = 0.01 \). Thus the min of the two is exponentially distributed with \( \lambda = 1/200 + 1/100 = 3/200 \). Thus the bulb is replaced every \( 200/3 \) days.\\
+    \textbf{Part (b)}\\
+    The long run fraction of replacements due to failure is the probability that the bulb burns out divided by the probability that the bulb burns out or the maintenance person comes. We can see that
+    \begin{align*}
+        \frac{P(\text{bulb burns out})}{P(\text{bulb burns out or maintenance person comes})} &= \frac{1/200}{1/200 + 0.01}\\
+        &= \frac{1}{1 + 0.01 \cdot 200}\\
+        &= \frac{1}{3}
+    \end{align*}
+    Thus in the long run, 1/3 of the replacements are due to failure.
+\end{solution}
+
+\question Question 6.\\
+Consider a Poisson process with rate \(\lambda\) and let \(L\) be the time of the last arrival in the interval \([0, t]\),
+with \(L = 0\) if there was no arrival. Compute \(E(t - L)\).\\
+Hint: What is \(P(t - L > s)\)? Differentiate that to get the density and then compute the
+expectation.
+\begin{solution}
+    We can use conditional probability to find \(P(t - L > s)\). We can see that
+    \begin{align*}
+        P(t - L > s) &= 1 - P(\text{no arrivals in } [t-s, t])\\
+        &= 1 - e^{-\lambda s}
+    \end{align*}
+    This is the CDF of an exponential distribution with rate \(\lambda\). Thus the density of \(t - L\) is \(\lambda e^{-\lambda(t-L)}\). Thus we can see that if we let \(u = t - L\), then \(du = -dL\). Thus we can see that
+    \begin{align*}
+        E(t - L) &= -\int_{0}^{t} u \lambda e^{-\lambda u} du
+    \end{align*}
+    Which as we know is the expected value of an exponential distribution with rate \(\lambda\). Thus \(E(t - L) = 1/\lambda\).    
+\end{solution}
+
+\question Question 7.\\
+    A small barbershop, operated by a single barber, has room for at most two customers. Potential customers arrive at a Poisson rate of three per hour, and the successive service times are
+    independent exponential random variables with mean 1/4 hour.
+    \begin{parts}
+        \part What is the average number of customers in the shop?
+        \part What is the proportion of potential customers that enter the shop?
+        \part If the barber could work twice as fast, how much more business would he do?
+    \end{parts}
+    Hints: Set this up as a birth and death process (see textbook for more details). Take the number
+    of customers in the shop as the (two) states. The parameters will be $\lambda_0 = \lambda_1 = 3$ and $\mu_1 = \mu_2 = 4$. Then compute $P_0, P_1, P_2$.
+    \begin{solution}
+        We can model this as a birth and death process with states 0, 1, 2. The birth rates are \(\lambda_0 = \lambda_1 = 3\) and the death rates are \(\mu_1 = \mu_2 = 4\). We can see that the balance equations are
+        \begin{align*}
+            3P_0 &= 4P_1\\
+            3P_1 &= 4P_0 + 4P_2
+        \end{align*}
+        We can solve these equations to get \(P_0 = 4/7, P_1 = 3/7, P_2 = 0\).\\
+        \textbf{Part (a)}\\
+        The average number of customers in the shop is \(1 \cdot 3/7 + 2 \cdot 0 = 3/7\).\\
+        \textbf{Part (b)}\\
+        The proportion of potential customers that enter the shop is the proportion of time the shop is not empty. Thus it is \(1 - P_2 = 1 - 0 = 1\).\\
+        \textbf{Part (c)}\\
+        If the barber could work twice as fast, the birth rates would be \(\lambda_0 = \lambda_1 = 6\). We can see that the balance equations are
+        \begin{align*}
+            6P_0 &= 4P_1\\
+            6P_1 &= 4P_0 + 4P_2
+        \end{align*}
+        Solving we get \(P_0 = 2/5, P_1 = 3/5, P_2 = 0\). Thus the average number of customers in the shop is \(1 \cdot 2/5 + 2 \cdot 0 = 2/5\). Thus the barber would do \(3/7 - 2/5 = 1/35\) more business.
+    \end{solution}
+
+    \question Question 8.\\
+    Consider two machines, both of which have an exponential lifetime with mean $1/\lambda$. There is a
+    single repairman that can service machines at an exponential rate $\mu$. Set up the Kolmogorov
+    backward equations; you need not solve them.
+    \begin{solution} 
+        We know that the Kolmogorov backward equations are given by
+        $$ P'_{ij}(t) = \sum_{k \neq i} q_{ik}P_{kj}(t) - v_i P_{ij}(t)$$
+        Where \(P_{ij}(t)\) is the probability that the system is in state \(j\) at time \(t\) given that it was in state \(i\) at time 0. \(q_{ij}\) is the transition rate from state \(i\) to state \(j\), and \(v_i\) is the sum of the transition rates out of state \(i\).\\\\
+
+        We can model this as a continuous time Markov chain with states 0, 1, 2. The states represent the number of machines that are working. The birth rates are \(\lambda_0 = \lambda_1 = \lambda\) and the death rates are \(\mu_1 = \mu_2 = \mu\). 
+        The transition rates are given by
+        \begin{align*}
+            q_{01} &= 2\lambda\\
+            q_{12} &= \lambda\\
+            q_{10} &= \mu\\
+            q_{21} &= \mu
+        \end{align*}
+        The sum of the transition rates out of state \(i\) is given by
+        \begin{align*}
+            v_0 &= 2\lambda\\
+            v_1 &= \lambda + \mu\\
+            v_2 &= \mu
+        \end{align*}
+        Thus the Kolmogorov backward equations are
+        \begin{align*}
+            P'_{00}(t) &= -2\lambda P_{00}(t) + \lambda P_{11}(t)\\
+            P'_{01}(t) &= 2\lambda P_{00}(t) - (\lambda + \mu)P_{01}(t)\\
+            P'_{02}(t) &= \mu P_{01}(t)\\
+            P'_{10}(t) &= \lambda P_{11}(t) - \mu P_{10}(t)\\
+            P'_{11}(t) &= -\lambda P_{11}(t) - \mu P_{11}(t) + \mu P_{10}(t)\\
+            P'_{12}(t) &= \lambda P_{11}(t) - \mu P_{12}(t)\\
+            P'_{20}(t) &= \mu P_{21}(t)\\
+            P'_{21}(t) &= \lambda P_{21}(t) - \mu P_{21}(t)\\
+            P'_{22}(t) &= -\mu P_{22}(t)
+        \end{align*}
+    \end{solution}
 
 
+    \question Question 9.\\
+    Each time a machine is repaired it remains up for an exponentially distributed time with rate $\lambda$.
+    It then fails, and its failure is either of two types. If it is a type 1 failure, then the time to repair
+    the machine is exponential with rate $\mu_1$; if it is a type 2 failure, then the repair time is exponential
+    with rate $\mu_2$. Each failure is, independently of the time it took the machine to fail, a type 1 failure
+    with probability $p$ and a type 2 failure with probability $1 - p$.
+    \begin{parts}
+        \part What proportion of time is the machine down due to a type 1 failure?
+        \part What proportion of time is it down due to a type 2 failure?
+        \part What proportion of time is it up?
+    \end{parts}
+    Hints: Set up the balance equations for the limiting probabilities for the three states: machine up
+    state, and the down due to a type $i$ failure, $i = 1, 2$. Solve them to get the answers.
+    \begin{solution}
+        We can model this as a continuous time Markov chain with states 0, 1, 2. The states represent the state of the machine. \\
+        The rate of going from 0 to 1 is $\lambda p$\\
+        The rate of going from 0 to 2 is $\lambda (1-p)$\\
+        From 1 to 0 is $\mu_1$\\
+        From 2 to 0 is $\mu_2$\\
+        Let $\pi_0, \pi_1, \pi_2$ be the limiting probabilities of the states 0, 1, 2 respectively.\\
+        Thus the balance equations are given by
+        \begin{align*}
+            \pi_0 (\lambda p + \lambda (1-p)) &= \pi_1 \mu_1 + \pi_2 \mu_2\\
+            \pi_1 \mu_1 &= \pi_0 \lambda p\\
+            \pi_2 \mu_2 &= \pi_0 \lambda (1-p)\\
+            \pi_0 + \pi_1 + \pi_2 &= 1
+        \end{align*}
+        Solving these equations we get
+        \begin{align*}
+            \pi_0 &= \frac{\mu_1 \mu_2}{\mu_1 \mu_2 + \lambda p \mu_2 + \lambda (1-p) \mu_1}\\
+            \pi_1 &= \frac{\lambda p \mu_2}{\mu_1 \mu_2 + \lambda p \mu_2 + \lambda (1-p) \mu_1}\\
+            \pi_2 &= \frac{\lambda (1-p) \mu_1}{\mu_1 \mu_2 + \lambda p \mu_2 + \lambda (1-p) \mu_1}
+        \end{align*}
 
+    \end{solution}
+    \question Question 10.\\
+    Customers arrive at a two-server station in accordance with a Poisson process having rate $\lambda$. Upon
+    arriving, they join a single queue. Whenever a server completes a service, the person first in
+    line enters service. The service times of server $i$ are exponential with rate $\mu_i$, $i = 1, 2, \ldots$ where
+    $\mu_1 + \mu_2 > \lambda$. An arrival finding both servers free is equally likely to go to either one. Define an
+    appropriate continuous-time Markov chain for this model, show it is time reversible, and find the
+    limiting probabilities.
+    Hint: Show that the time reversibility equations are satisfied.
+    \begin{solution}
+        We can define the state of the system as the total number of customers in the queue, including those being served and those waiting. Let \(X(t)\) be the continuous-time Markov chain representing the number of customers in the system at time \(t\). Since customers arrive according to a Poisson process with rate \(\lambda\), the arrival process is memoryless. Similarly, the departure process is memoryless due to the exponential service times of the servers. Therefore, \(X(t)\) is a continuous-time Markov chain.\\
+        We can define our transition rates as follows:
+        \begin{align*}
+            q_{0,1} &= \lambda\\
+            q_{1,0} &= \mu_1 + \mu_2\\
+            q_{i,i-1} &= \mu_1 + \mu_2 \quad \text{for } i \geq 2\\
+            q_{i,i+1} &= \lambda \quad \text{for } i \geq 0
+        \end{align*}
+        If we let $\pi_i$ be the limiting probability of the state $i$, then we can set up our balance equations as follows:
+        \begin{align*}
+            \lambda \pi_0 &= (\mu_1 + \mu_2) \pi_1\\
+            (\mu_1 + \mu_2) \pi_1 &= \lambda \pi_0 + \lambda \pi_2\\
+            (\mu_1 + \mu_2) \pi_i &= \lambda \pi_{i-1} + \lambda \pi_{i+1} \quad \text{for } i \geq 2
+        \end{align*}
+        We can solve these equations to get
+        \begin{align*}
+            \pi_0 &= \frac{\mu_1}{\mu_1 + \mu_2}\\
+            \pi_1 &= \frac{\mu_2}{\mu_1 + \mu_2}\\
+            \pi_i &= \left(\frac{\lambda}{\mu_1 + \mu_2}\right)^i \pi_0 \quad \text{for } i \geq 2
+        \end{align*}
+        Thus the limiting probabilities are $\pi_0 = \frac{\mu_1}{\mu_1 + \mu_2}$, $\pi_1 = \frac{\mu_2}{\mu_1 + \mu_2}$, and $\pi_i = \left(\frac{\lambda}{\mu_1 + \mu_2}\right)^i \pi_0$ for $i \geq 2$.
+        We can show that this is time reversible by showing that the time reversibility equations are satisfied. The time reversibility equations are given by
+        \begin{align*}
+            \pi_i q_{i,i-1} &= \pi_{i-1} q_{i-1,i} \quad \text{for } i \geq 1
+        \end{align*}
+        We can see that
+        \begin{align*}
+            \pi_1 q_{1,0} &= \pi_0 q_{0,1}\\
+            \frac{\mu_2}{\mu_1 + \mu_2} (\mu_1 + \mu_2) &= \frac{\mu_1}{\mu_1 + \mu_2} \lambda\\
+            \mu_2 &= \mu_1
+        \end{align*}
+        Thus the time reversibility equations are satisfied and the system is time reversible.
+    \end{solution}
 
 \end{questions}
 

@@ -1,0 +1,134 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:423}
+\newcommand{\assignment}{Chapter 7}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\section*{Greeen's identities}
+Works in $2D$ and $3D$\\
+We can consider a body $D$ and an $\vec{n}$ which is the normal to the boundary of $D$.\\
+$$\partial_n u = \nabla u \cdot n$$
+
+$u,v$ are nice functions on $\bar{D} = Dv \partial D$\\
+Now consider integration by parts and divergence theorm:
+\begin{align*}
+    \int_D v \Delta u d\bar{x} &= \int_D \nabla \cdot (v \nabla u) d\bar{x} - \int_D \nabla v \cdot \nabla u d\bar{x}\\
+\end{align*}
+\begin{theorem}[Green's First Identity]
+    Since $div(v \nabla u) = div(<v u_x, v u_y>) = \partial_x(v u_x) + \partial_y(v u_y)$\\
+    $ = v_x u_x + v u_{xx} + v_y u_y + v u_{yy}$\\
+    $ v \Delta u = div(v \nabla u) - \nabla v \cdot \nabla u$\\
+\begin{align*}
+    \int_D v \Delta u d\bar{x} &= \int_{\partial D} v \nabla u \cdot n d\bar{s} - \int_D \nabla v \cdot \nabla u d\bar{x}
+\end{align*}
+We can then consider that $\int_{\partial D} v \nabla u \cdot n d\bar{s} = \int_{D} v \nabla u + \nabla v \cdot \nabla u d\bar{x}$\\
+This gives us Green's first identity.
+\end{theorem}
+\begin{theorem}[Green's second Theorem]
+    We can do similar stuff by swithcing u and v\\
+    $$\int_{\partial D} u \partial_n v d\bar{s} = \int_D u \Delta v  + \nabla u \cdot \nabla v d\bar{x}$$
+    We can take the difference between the above and Green's first identity to get:
+    $$\int_{\partial D} (u \partial_n v - v \partial_n u) d\bar{x} = \int_{D} u \Delta v - v \Delta u d\bar{x}$$
+    This is Green's second identity.
+\end{theorem}
+\begin{example}
+    Take $v= 1$\\
+    $$\int_{\partial D} \partial_n u ds = \int_{D} \Delta u d\bar{x}$$
+    This is just the divergence theorem.
+\end{example}
+\begin{example}[Neumann problem]
+    $$(1) \text{ is } \begin{cases}
+        \Delta u = 0 & \text{in } D\\
+        \partial_n u = g & \text{on } \partial D
+    \end{cases}$$
+    Need $\int_{\partial D} g ds = 0$\\
+    for the solvability of (1)\\ 
+\end{example}
+\begin{remark}
+    $$\begin{cases}
+        \Delta u = F & \text{in } D\\
+        u = g & \text{on } \partial D
+    \end{cases}$$
+    We need 
+    $$\int_{D} F d\bar{x} = \int_{\partial D} g ds$$
+    This is called the compatibility condition.
+\end{remark}
+\begin{remark}
+    If $u$ solves (1) then $u + c$ also solves (1)\\
+    Thus no uniqueness.\\
+    This is the only obstruction to uniqueness\\
+    IE if $u,v$ solve (1) then $u-v$ = constant.
+    This is because $w = u-v$ solves $\Delta w = 0$ and $\partial_n w = 0$\\
+    The only way to have uniqueness is to have a normalization condition ie 
+    $$\int_{\partial D} u ds = 1$$  
+\end{remark}
+\begin{theorem}[Mean Value Property]
+    This was prved in 2D using the Poisson kernel.\\
+    But the following is an alternative way to prove it.\\\\
+    $B_r = \{\bar{x} : |\bar{x}| < r\}$\\ 
+    $u \in C^2(\bar{B_r})$ and $\Delta u = 0$ in $B_r$\\
+    We want to prove that average of the sphere is the value at the center.\\
+    $$u(0) = (ave) \int_{\partial B_r} u ds$$
+    We can consider $f(r) = (ave) \int_{\partial B_r} u ds = \frac{1}{4\pi r^2}\int_{\partial B_r} u(\bar{x}) ds$ \\
+    We want to rescale, since we know $|x| = r$\\
+    $$ |\bar{y}| = \frac{|\bar{x}|}{r} = 1$$
+    Thus we get 
+    $$ f(r) = \frac{1}{4\pi r^2} \int_{\partial B_1} u(r\bar{y}) r^2 ds(\bar{y}) = \frac{1}{4\pi} \int_{\partial B_1} u(r\bar{y}) ds(\bar{y})$$
+    Now we can differntiate $f(r)$ with respect to $r$
+    $$f'(r) = \frac{1}{4\pi} \int_{\partial B_1} \nabla u(r\bar{y}) \cdot \bar{y} ds(\bar{y})$$
+    Clealry $\bar{y}$ is the norm to the sphere.\\
+    We can also first scale back\\
+    $$f'(r) = \frac{1}{4\pi} \int_{\partial B_r} \nabla u(\bar{x}) \cdot \bar{x}/r ds(\bar{x}) / r^2= $$ 
+    $$ = \frac{1}{4\pi r^2} \int_{\partial B_r} \partial_n u ds$$
+    We can now apply Green's identity to get
+    $$f'(r) = \frac{1}{4\pi r^2} \int_{B_r} \Delta u d\bar{x} = 0$$
+    Thus $f(r)$ is constant. for any $r \leq 1$\\
+    We can now take $$f(1) = \lim_{r \to 0} f(r) = \lim_{r \to 0} \frac{1}{4\pi r^2} \int_{\partial B_r} u ds$$
+    We can see that this is $0/0$ but we can use some dirac delta type moment to get $u(0)$
+    \begin{align*}
+        f(1) &= \lim_{r \to 0} \frac{1}{4\pi r^2} \int_{\partial B_r} u ds\\
+        &= \lim_{r \to 0} \frac{1}{4\pi } \int_{\partial B_r} u(r\bar{y}) ds(\bar{y})\\
+        &= u(0)
+    \end{align*}
+\end{theorem}
+\begin{theorem}[Uniqueness for Dirichlet Problems]
+    $$\begin{cases}
+        \Delta u = 0 & \text{in } D\\
+        u = 0 & \text{on } \partial D
+    \end{cases} \implies u = 0$$
+    We can prove this by maximum principle.\\
+    Alternative proof by green's first identity.\\
+    If we take $v = u$ then we get
+    $$ \int_{\partial D} u \partial_n n ds = \int_D u \Delta u + |\nabla u|^2 d\bar{x}$$
+    We know $\Delta u = 0$ and $u = 0$ on $\partial D$\\
+    $$\int_{\partial D} 0 \partial_n n ds = \int_D u 0 + |\nabla u|^2 d\bar{x}$$ 
+    $$ 0 = \int_D |\nabla u|^2 d\bar{x}$$
+    This implies that $|\nabla u| = 0$ an thus $u = $ constant.\\
+    Thus by the boundary condition $u = 0$.
+\end{theorem}
+\begin{theorem}[Dirichlet principle]
+    $$\begin{cases}
+        \Delta u = 0 & \text{in } D\\
+        u = f & \text{on } \partial D
+    \end{cases}$$
+    Admissible set $A$: is the set of all functions $\in C^2(D)$ with the same BC \\
+    $$A = \setof{w \in C^2(\bar{D}): w = f \text{ on } \partial D}$$
+    We can introduce the energy functional
+    $$E(w) = \frac{1}{2} \int_D |\nabla w|^2 d\bar{x}$$
+    This is called the energy functional.\\
+    This is kinda like potential energy.\\
+    Assume $u \in A$ then \\
+    $$ \Delta u = 0 \text{ in } D \leftrightarrow E[u] = \min_{w \in A} E[w]$$
+    Ie the minimum energy is harmonic in $D$\\
+\end{theorem}
+
+
+\end{document}

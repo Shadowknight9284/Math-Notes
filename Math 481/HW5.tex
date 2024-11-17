@@ -5,16 +5,127 @@
 
 % Header
 \newcommand{\name}{Pranav Tikkawar}
-\newcommand{\course}{01:XXX:XXX}
-\newcommand{\assignment}{Homework n}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Homework 5}
 \author{\name}
 \title{\course \ - \assignment}
 
 \begin{document}
 \maketitle
-\newpage
 \begin{questions}
-    \question Question 1.  
-
+    \question Question 1\\
+    If \( x \) is a value of a random variable having an exponential distribution, find \( k \) so that the interval from \( 0 \) to \( kx \) is a \((1 - \alpha) \times 100\%\) confidence interval for the parameter \( \theta \).
+    \begin{solution}
+    We need to solve for k where 
+    $$ P(0 < \theta < kx) = 1 - \alpha$$
+    \begin{align*}
+        P(0 < \theta < kx) &= 1 - \alpha\\
+        &=P(x > \theta / k) \\
+        \int_{\theta / k}^{\infty} \frac{1}{\theta} e^{-x/\theta} dx &= e^{-1/k} = 1 - \alpha\\
+        -\frac{1}{k} &= \ln(1 - \alpha)\\
+        k &= -\frac{1}{\ln(1 - \alpha)}
+    \end{align*}
+    \end{solution}
+    \question Question 2\\
+    Making use of the method of section 8.7. It can be shown that for a random sample of size $n=2$ from the population of excersize 11.2, the distribition of the sample range is given by 
+    $$ f(R) = \begin{cases}
+        \frac{2}{\theta^2}(\theta - R) & 0 \leq R \leq \theta\\
+        0 & \text{otherwise}
+    \end{cases}$$
+    use this to find $c$ such that $R < \theta < cR$ is a $(1 - \alpha) \times 100\%$ confidence interval for $\theta$.
+    \begin{solution}
+        We can see that for the sample range $R$, the PDF is given by $f(R) = \frac{2}{\theta^2}(\theta - R)$ for $0 \leq R \leq \theta$. We need to find $c$ such that $P(R < \theta < cR) = 1 - \alpha$. 
+        \begin{align*}
+            P(R < \theta < cR) &= 1 - \alpha\\
+            P(R < \theta/c \cap \theta < R) &= P(\theta/c < R < \theta)\\ 
+            P(\theta/c < R < \theta) &= \int_{\theta/c}^{\theta} \frac{2}{\theta^2}(\theta - R) dR\\
+            &= \frac{2}{\theta^2} \left[ \theta R - \frac{R^2}{2} \right]_{\theta/c}^{\theta}\\
+            \frac{2}{\theta^2} \left[ \theta^2 - \frac{\theta^2}{2} - \frac{\theta^2}{c} + \frac{\theta^2}{2c} \right] &= 1- \alpha\\
+            1 - \frac{2}{c} + \frac{1}{2c^2} &= 1 - \alpha\\
+            \alpha c^2 - 2c + 1 &= 0\\
+            c &= \frac{1 \pm \sqrt{1 - \alpha}}{\alpha}
+        \end{align*}
+    \end{solution}
+    \question Question 3\\
+    Show that for \( \nu > 2 \) the variance of the \( t \)-distribution
+    with \( \nu \) degrees of freedom is \( \frac{\nu}{\nu - 2} \). (Hint: Make the substitution \( 1 + \frac{t^2}{\nu} = \frac{1}{u} \).)\\
+    Hint: Note that the \( t \)-distribution has mean 0. Thus the variance is the expected value of \( t^2 \). (use other hints in question page)
+    \begin{solution}
+        We can see that the \( t \)-distribution has mean 0. Thus the variance is the expected value of \( t^2 \) ie $\int_{-\infty}^{\infty}t^2 f(t)dt$. We can use the fact that the PDF of the \( t \)-distribution is given by 
+        \[f(t) = \frac{\Gamma \left(  \frac{\nu +1}{2} \right)}{\sqrt{\nu \pi} \Gamma\left( \frac{\nu}{2} \right)} \left(1 + \frac{t^2}{\nu}\right)^{-\frac{\nu +1}{2}}\]
+        By the hint we can see that $dt = -\frac{\sqrt{\nu}}{2\sqrt{1-\nu}}du $ and the limits of integreation become $0$ to $1$ as $t$ goes from $-\infty$ to $\infty$ and $u$ goes from $0$ to $1$. For sake of ease we can let $c$ bt the constant at the begining of the equation $\frac{\Gamma \left(  \frac{\nu +1}{2} \right)}{\sqrt{\nu \pi} \Gamma\left( \frac{\nu}{2} \right)}$. We can now substitute these values into the integral to get
+        \begin{align*}
+            E[t^2] &= 2 \nu^{3/2} c \int_0^1 (\frac{1}{u}-1) u^{\frac{\nu +1}{2}} \frac{1}{\sqrt{1-u}} du\\
+        \end{align*}
+        Because type setting is hard and I am lazy, I will skip the rest of the computation and reach the conclusion that I can convert this to ther form of a beta distribution and use the properties of the beta distribution to get
+        $$ \frac{ \nu \Gamma \left(  \frac{\nu +1}{2} \right)}{\sqrt{\pi} \Gamma\left( \frac{\nu}{2} \right)} \cdot \frac{\sqrt{\pi} \Gamma\left( \frac{\nu}{2} \right)}{\nu \Gamma \left(  \frac{\nu +1}{2} \right) }\cdot \frac{2}{\nu - 2} = \frac{\nu}{\nu - 2}$$
+        Clealry $E[t^2] = \frac{\nu}{\nu - 2}$.
+    \end{solution}
+    \question Question 4\\
+    We are dealing with a normal population with known standard deviation \(\sigma = 0.3\). After a sampling, we sample values \(x_1, x_2, x_3\) which are 1.3, 1.5, and 1.7. Use the formula we derived in class to obtain a 95\% confidence interval for the population mean \(\mu\). Use the formula that gives a CI that is a symmetric interval around the sample mean. (NOTE: \(1 - \alpha\) would be 0.95)
+    Do the same thing as in previous question but now considering sigma as unknown. (o72)
+    \begin{solution}
+        We essentially need to find the confidence interval for the population mean \(\mu\) when the standard deviation is unknown. \\
+        The formula is 
+        $$ \bar{x} - t_{\alpha/2, n-1} \frac{s}{\sqrt{n}} < \mu < \bar{x} + t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}$$
+        where \(t_{\alpha/2, n-1}\) is the value of the t-distribution with \(n-1\) degrees of freedom. and \(s\) is the sample standard deviation.\\
+        Clearly 
+        \begin{align*}
+            \bar{x} &= \frac{1.3 + 1.5 + 1.7}{3} = 1.5\\
+            s &= \sqrt{\frac{(1.3 - 1.5)^2 + (1.5 - 1.7)^2 + (1.7 - 1.5)^2}{2}} = 0.2\\
+            n &=3 \\
+            t_{\alpha/2, n-1} &= t_{0.025, 2} = 4.303&
+        \end{align*}
+        Thus the confidence interval is
+        \begin{align*}
+            1.5 - 4.303 \frac{0.2}{\sqrt{3}} < \mu < 1.5 + 4.303 \frac{0.2}{\sqrt{3}}\\
+            1.003 < \mu < 1.997
+        \end{align*}
+    \end{solution}
+    \question Question 5\\
+    Use the PDF of t distribution with an appropriate value of the parameter \( \nu \) to obtain the the value of the number given by the definite integral $\int_0^\infty \frac{1}{(1+m^2)^{5}}dm$.\\
+    \begin{solution}
+        We can first consider the PDF of the t-distribution. We know that the PDF of the t-distribution is given by
+        \[ f(t) = \frac{\Gamma \left(  \frac{\nu +1}{2} \right)}{\sqrt{\nu \pi} \Gamma\left( \frac{\nu}{2} \right)} \left(1 + \frac{t^2}{\nu}\right)^{-\frac{\nu +1}{2}} \]
+        We can see that for $\frac{\nu +1 }{2} = 5$, $\nu = 9$. Thus the PDF of the t-distribution is given by
+        \[ f(t) = \frac{\Gamma \left( 5 \right)}{\sqrt{9 \pi} \Gamma\left( \frac{9}{2} \right)} \left(1 + \frac{t^2}{9}\right)^{-5} \]
+        We can see that our integral with a subsitution of $m = t/3$ becomes
+        $$ \int_0^\infty \frac{1}{(1+m^2)^{5}}dm = \int_0^\infty \frac{1}{(1+t^2/9)^{5}}\frac{1}{3}dt$$
+        Now since we know that the t-distribution is symmetric about zero, the integral from $0$ to $\infty$ is .5. Thus the integral is
+        $$ \frac{1}{3} \int \frac{1}{(1+t^2/9)^{5}}dt = \frac{1}{3} \cdot \frac{1}{2} \cdot \frac{\sqrt{9\pi} \Gamma(9/2)}{\Gamma(5)} $$
+        The left hand side simplifies to
+        $$ \frac{1}{3} \cdot \frac{1}{2} \cdot \frac{\sqrt{9\pi} \Gamma(9/2)}{\Gamma(5)} = \frac{35 \pi}{256}$$ 
+        (note. I do not want to type set all the algebra so I hope this is acceptable)\\
+        Therefore the value of the integral is $\frac{35 \pi}{256}$.
+    \end{solution}
+    \question Question 6\\
+    Consider two random variables \( X \) and \( Y \) with the joint probability density
+    \[ 
+    f(x, y) = 
+    \begin{cases} 
+    12xy(1 - y) & \text{for } 0 < x < 1, 0 < y < 1 \\ 
+    0 & \text{elsewhere} 
+    \end{cases} 
+    \]
+    Find the probability density of \( Z = XY^2 \) by using Theorem 1 to determine the joint probability density of \( Y \) and \( Z \) and then integrating out \( y \).
+    \begin{solution}
+        We know that $f(x,y) = 12xy(1-y)$ for $0 < x < 1$\\
+        We can convert this to a function of $y$ and $z$ by using the transformation $z = xy^2$ more fittingly $x = z/y^2$.\\
+        By theorem 1 we know that $g(y) = f(w(y)) |w'(y)|$ . Thus applying it to the problem we see that $|w'(y)| = \frac{dx}{dz} = \frac{1}{y^2}$. Thus we can see that
+        $$ g(z,y) = 12 \frac{z}{y}(1-y) \cdot \frac{1}{y^2} $$
+        $$ g(z,y) = 12z (y^{-3} - y^{-2}) $$ 
+        We can see that our function is bounded on $0 < z < y^2$ and $0 < y < 1$. Thus we can integrate out $y$ along the bounds of $\sqrt{z} < y < 1$ to get
+        \begin{align*}
+            h(z) &= 12z \int_{\sqrt{z}}^{1} (y^{-3} - y^{-2})dy \\
+            &= 12z \left[ -\frac{1}{2}y^{-2} + y^{-1} \right]_{\sqrt{z}}^{1}\\
+            &= 12z \left[ -\frac{1}{2} + 1 + \frac{1}{2\sqrt{z}} - \sqrt{z} \right]\\
+            &= 6z + 6 -12\sqrt{z}
+        \end{align*}
+        Thus the probability density of \( Z = XY^2 \) is given by
+        $$ h(z) =  \begin{cases}
+            6z + 6 -12\sqrt{z} & 0 < z < 1\\
+            0 & \text{elsewhere}
+        \end{cases}$$
+    \end{solution}
 \end{questions}
 \end{document}

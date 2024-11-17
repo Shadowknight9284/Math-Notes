@@ -1,5 +1,6 @@
-\documentclass[answers,12pt,addpoints]{exam}
+\documentclass[answers, 12pts,addpoints]{exam}
 \usepackage{import}
+
 
 \import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
 
@@ -12,6 +13,7 @@
 
 \begin{document}
 \maketitle
+
 \section*{Chapter 6}
 \begin{align*}
     u &= u(x,y)\\
@@ -145,9 +147,127 @@ Now consider the complex exponential $e^{in\theta}$\\
 \end{align*}
 $$ u(r,\theta) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(\phi) P(r,\theta - \phi) d\phi$$
 Where $P(r,\theta) = \frac{1 - r^2}{1 - 2r\cos(\theta) + r^2}$ is the Poission Kernel.\\
-
-
-
+$$P(z) = \frac{1 - |z|^2}{|1-z|^2}$$
+Poisson kernal 
+$$ P(r, \theta) = \frac{1 - r^2}{1 - 2r\cos(\theta) + r^2}$$
+$$u(r, \theta) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(\phi) P(r, \theta - \phi) d\phi$$
+\begin{remark}
+    \begin{align*}
+        u(1, \theta) = 0 
+        P(1, \theta - \phi) = \frac{1 - 1}{1 - 2\cos(\theta - \phi) + 1} = \frac{0}{0} \text{ at} \theta = \phi\\
+    \end{align*}
+    We cannot interchange limits and integrals.\\
+    \begin{align*}
+        u(1,\theta) = \lim_{r \to 1} u(r,\theta) \neq \int_{-\pi}^{\pi} \lim_{r \to 1} f(\phi) P(r, \theta - \phi) d\phi\\
+    \end{align*}
+    $P(r, \theta - \phi)$ in the limit $r \to 1$ becomes $2\pi \delta(\theta - \phi)$ so that $\lim_{r \to 1} u(r,\theta) = f(\theta)$\\
+    Look at book to reprouce the proof o $u(r,\theta) - f(\theta)$
+\end{remark}
+Now let us consider as an integration over a circle:
+D is the unit disk in $\mathbb{R}^2$\\
+$\bar{x} = (x,y) \leftrightarrow (r, \theta)$ on the inside\\
+$\bar{y} = (1, \phi)$ which is the boundary\\
+$$r = |\bar{x}| = \sqrt{x^2 + y^2} = r^2 -2\bar{x}\bar{y} + 1$$
+$$P(r, \theta - \phi) = \frac{1 - |\bar{x}|^2}{|\bar{x} - \bar{y}|^2}$$
+$$u(\bar{x}) = \frac{1 - |\bar{x}|^2}{2\pi} \int_{\partial D} \frac{f(\bar{y})}{|\bar{x} - \bar{y}|^2} dS(\bar{y})$$
+This is a arc length integral.\\
+$$ u(0) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(\bar{y}) dS(\bar{y}) = \frac{1}{2\pi} \int_{-\pi}^{\pi} u(1,\phi) dS(\bar{y})$$
+$u(0)$ is the average of $u(1,\phi)$ over the boundary.\\
+\textbf{Excercise:} rewrite Poission's formula in a open disk\\
+\begin{theorem}[Mean Value Property.]
+    $u$ is harmonic in $D_r(\bar{x})$ and continous in the closed disk, then \\
+    (1) hollow: 
+    $$ u(\bar{x}) = \frac{1}{2\pi r} \int_{\partial D_r(\bar{x})} u(\bar{y}) dS(\bar{y})$$
+    $$ = (ave)\int_{\partial D_r(\bar{x})} u(\bar{y}) dS(\bar{y})$$
+    (2) solid:
+    $$ u(\bar{x}) = \frac{1}{\pi r^2} \int_{D_r(\bar{x})} u(\bar{y}) d(\bar{y})$$
+    $$ = (ave)\int_{D_r(\bar{x})} u(\bar{y}) d(\bar{y})$$
+    \begin{proof}
+        (1) Done in the previous section. We can translate to the origin.\\
+        (2) Polar integral\\
+        $$\int_{D_r(\bar{x})} u(\bar{y}) d(\bar{y}) = \int_0^r \int_{\partial D_s(\bar{x})} u(\bar{y}) dS(\bar{y}) ds$$
+        $$ = \int_0^r u(\bar{x} \cdot 2\pi \rho) dS$$
+        $$ \pi r^2 u(\bar{x})$$
+    \end{proof}
+    \begin{remark}
+        In 2D. If we have a harmonic function. IE\\
+        $$\begin{cases}
+            \Delta u = 0 \text{ in } D = D_1(0)\\
+            u = f \text{ on } \partial D\\
+        \end{cases}$$
+        We can find a funciton $f = u + iv$ (complex analytic)\\
+        $v$ is the harmonic conjugate of $u$\\
+        Cauchy's integral formula\\
+        $$ f(z) = \frac{1}{2\pi i} \int_{\partial D} \frac{f(w)}{w - z} dw$$
+        We can see this as using the Poission kernel.\\
+        in reality this is using the boundary to find the interior.\\
+        $f(0) = \frac{1}{2\pi i} \int_{\partial D} \frac{f(w)}{w} dw = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(e^{i\theta}) d\theta $\\
+        $$u(0) = \frac{1}{2\pi} \int_{-\pi}^{\pi} u(e^{i\theta}) d\theta$$
+    \end{remark}
+\end{theorem}
+\begin{theorem}[Strong Max Principle]
+    $D$ is open, bounded, connected. $\Delta u = 0$ in $D$. $u$ is continous on $\bar{D}$.\\
+    Then max or min of $u$ is achieved on $\bar{D}$\\
+    It cannot be attained in the interior of $D$ unless $u$ is constant.\\  
+    \begin{proof}
+        Suppose $M = \max_{\bar{D}}(u)$ is attained in $D$. ie there exists $\bar{x}_0 \in D$ such that $u(\bar{x}_0) = M$\\
+        Then there exists $r > 0$ such that $D_r(\bar{x}_0) \subset D$\\
+        $$M = u(\bar{x}_0) = \frac{1}{2\pi r} \int_{\partial D_r(\bar{x}_0)} u(\bar{y}) dS(\bar{y})$$
+        $$\int_{\partial D_r(\bar{x}_0)} M - u(\bar{y}) dS(\bar{y}) = M \cdot \pi r^2 -\int_{\partial D_r(\bar{x}_0)} u(\bar{y}) dS(\bar{y}) = 0$$
+        $M - u \geq 0 \text{ in } D_r(\bar{x})$ and has $0$ integral hence $M - u = 0$ in $D_r(\bar{x}_0)$\\
+        $u(\bar{y}) = M$ for any $\bar{y} \in D_r(\bar{x}_0)$\\
+        Remains to show that $u$ is $M$ throughout $D$\\
+        Pick any $\bar{x} \in D$\\
+        Take center of disks that remain inside the region.\\
+        The center of each next disk is in the previous disk.\\
+        Have a fixed step/ radius.\\
+        This implies $u$ is constant in $D$\\
+    \end{proof}
+\end{theorem}
+\begin{theorem}[Smoothness]
+    $D$ is open, $u$ has second order partials that are all continous in $D$.\\
+    $u \in C^2(D)$ and $\Delta u = 0$ in $D$\\
+    Then $u \in C^\infty(D)$\\
+    \begin{proof}
+        Pick $\bar{x}_0 \in D$\\
+        Consider a disk $D_r(\bar{x}_0) \subset D$\\
+        Let $\bar{x}_0 = 0$ and $r = 1$\\
+        To prove that $u$ has all partials at $0$, $u(\bar{x}) = \frac{1-|x|^2}{2\pi}\int_C \frac{u(\bar{y})}{|\bar{x} - \bar{y}|^2} dS(\bar{y})$\\
+        As long as we stay away form the boundary we are chilling
+    \end{proof}
+\end{theorem}
+Recall: 
+$$ u \in C^2(D) \& \delta u = 0 \implies u \in C^\infty(D)$$
+\begin{remark}
+    $u$ may even be discontinous on $\partial D$\\
+    No conclusion can be drawn about smoothness on the boundary.\\
+\end{remark}
+\section*{6.4 }
+Consider wedges and annuli.\\
+These become rectangles on the $r, \theta$ plane.\\\\
+$$ \begin{cases}
+    \Delta u = 0 \text{ in }  r>1\\
+    u = f \text{ on } r = 1\\
+    u \text{ is bounded as } r \to \infty\\
+\end{cases}$$
+We take all have the eigenfunctions being $1, ln(r), r^n, r^{-n}$\\
+We only keep $1, r^{-n}$ because of BC. 
+$$ u(r,\theta) = a_0/2 + \sum_{n=1}^\infty r^{-n} (a_n \cos(n\theta) + b_n \sin(n\theta))$$
+Summing we get 
+$$ u(r,\theta) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(\phi) P(1/r, \theta - \phi) d\phi$$
+Where $P(r,\theta) = \frac{1 - r^2}{1 - 2r\cos(\theta) + r^2}$ is the Poission Kernel.\\
+Notice that $P(1/r, \theta ) = -P(r, \theta)$\\
+\begin{example}
+    $$V(\rho, \theta) = u(1/\rho, \theta), \rho < 1$$
+    $$r = 1/\rho > 1$$
+    Now have infinity mapped to the origin, and we can change our BC
+    $$\begin{cases}
+        \Delta V = 0 \text{ in } 0 < \rho < 1\\
+        V = f \text{ on } \rho = 1\\
+        V \text{ is bounded as } \rho \to 0\\
+    \end{cases}$$
+\end{example}
+$$ u(r, \theta) = a_0/2 + \tilde{a_0}ln(r)/2 + \sum_{n=1}^\infty r^{n} (a_n \cos(n\theta) + b_n \sin(n\theta)) + r^{-n}(\tilde{a_n}cos(n\theta) + \tilde{b_n}sin(n\theta))$$
 
 
 \end{document}

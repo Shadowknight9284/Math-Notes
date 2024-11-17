@@ -1,9 +1,8 @@
 # Fdb version 4
-["pdflatex"] 1731077320.47595 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 478/Midterm2.tex" "Midterm2.pdf" "Midterm2" 1731077323.51864 0
-  "Midterm2.aux" 1731077323 2268 88c1722effda5a87ca26f743b2a63a33 "pdflatex"
-  "Midterm2.tex" 1731077318 9241 bbec2efeb97b80e7dc4fdedcd776a631 ""
-  "Midterm2.toc" 1731077322 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 478/Midterm2.tex" 1731077318 9241 bbec2efeb97b80e7dc4fdedcd776a631 ""
+["pdflatex"] 1731257559.97104 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 478/Midterm2.tex" "Midterm2.pdf" "Midterm2" 1731257561.25321 0
+  "Midterm2.aux" 1731257561 2268 c348221e870202136afaf8ca04b9e5e3 "pdflatex"
+  "Midterm2.tex" 1731257558 9397 363b62ba7dbdcf69fd5c431677f95629 ""
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 478/Midterm2.tex" 1731257558 9397 363b62ba7dbdcf69fd5c431677f95629 ""
   "c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex" 1729643921 1468 a4dc3c5958f038d3f5eb0b6b0b3e5655 ""
   "c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1705504038 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1705505139 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -187,5 +186,4 @@
   "Midterm2.aux"
   "Midterm2.log"
   "Midterm2.pdf"
-  "Midterm2.toc"
   (rewritten before read)

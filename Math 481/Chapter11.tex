@@ -49,6 +49,8 @@ $$\bar{X}_1 - \bar{X}_2 \pm z_{\alpha/2} \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\s
 \textbf{Case 2: } $\sigma_1^2$ and $\sigma_2^2$ are unknown. but $\sigma_1^2 = \sigma_2^2$\\
 we can define a pooled sample variance:
 $$S_p^2 = \frac{(n_1 - 1)S_1^2 + (n_2 - 1)S_2^2}{n_1 + n_2 - 2}$$
+Also 
+$$ \frac{(n_1 + n_2 - 2) S_p^2}{\sigma^2} = \frac{(n_1 - 1)S_1^2}{\sigma^2} + \frac{(n_2 - 1)S_2^2}{\sigma^2} \sim \chi^2_{n_1 + n_2 -2}$$
 \begin{remark}
     This is a weighted average of the sample variances. with weights $n_1 - 1$ and $n_2 - 1$
 \end{remark}
@@ -56,10 +58,85 @@ $$S_p^2 = \frac{(n_1 - 1)S_1^2 + (n_2 - 1)S_2^2}{n_1 + n_2 - 2}$$
     $$S_p^2 := \frac{\sum^{n_1} (X_{1i} - \bar{X_1})^2 + \sum^{n_2}( X_{2i} + \bar{X_2} )^2}{n_1 + n_2 - 2}$$
     $$ \sim \chi^2_{n_1 + n_2 - 2}$$
 \end{remark}
+\begin{remark}
+    Then the r.v $T$ is 
+    $$T = \frac{\bar{X}_1 - \bar{X}_2 - (\mu_1 - \mu_2)}{S_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t_{n_1 + n_2 - 2}$$
+\end{remark}
+Consider making a CI for $\sigma^2$\\
+\begin{remark}
+    We know that $S^2$ is a point estimator for $\sigma^2$ \\
+    $$K = \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$$
+    Consider the graph of the $\chi^2$ distribution. It is definied from $0, \infty$ and we can trap an $\alpha$ area in the tails.\\
+    We can call this $\left( \chi^2_{n-1} \right)_{\alpha/2}$ and $\left( \chi^2_{n-1} \right)_{1 - (\alpha/2)}$\\
+    Notice the non symmetry of the $\chi^2$ distribution.\\
+    We can say that $P\left( \left( \chi^2_{n-1} \right)_{\alpha/2} < K < \left( \chi^2_{n-1} \right)_{1 - (\alpha/2)} \right) = 1 - \alpha$\\
+    In a more insightful form we have
+    $$ P\left( \frac{(n-1) S^2}{\chi^2_{n-1, \alpha/2}} < \sigma^2 < \frac{(n-1) S^2}{\chi^2_{n-1, 1 - \alpha/2}}\right) = 1 - \alpha$$
+\end{remark}
+\begin{definition}[F distribution]
+    F distribution with $\nu_1 > 0$ and $\nu_2 > 0$ degrees of freedom is defined by
+    $$F = \frac{\frac{U}{\nu_1}}{\frac{V}{\nu_2}}$$
+    where $U \sim \chi^2_{\nu_1}$ and $V \sim \chi^2_{\nu_2}$\\
+    ie $F = \frac{U\nu_2}{V\nu_1}$
+    \begin{remark}
+        Order is important
+    \end{remark}
+\end{definition}
+\begin{example}
+    $\setof{X_i}_{i \in range(5)}$ independent standard normal r.v.\\
+    Then $\frac{\alpha (Z_1^2 + Z_2^2)}{Z_3^2 + Z_4^2 + Z_5^2} \sim F_{2,3}$ where $\alpha = 3/2$\\
+    This is due to the fact that $Z_i^2 \sim \chi^2_1$ and $\sum_i^n Z_i^2 \sim \chi^2_n$
+\end{example}
+\begin{theorem}
+    PDF of $f_{\nu_1, \nu_2}$ is
+    $$g(x) = \frac{\Gamma\left( \frac{\nu_1 + \nu_2}{2} \right)}{\Gamma\left( \frac{\nu_1}{2} \right) \Gamma\left( \frac{\nu_2}{2} \right)} \left( \frac{\nu_1}{\nu_2} \right)^{\nu_1/2} x^{\frac{\nu_1}{2} - 1} \left( 1 + \frac{\nu_1}{\nu_2} x \right)^{-\frac{\nu_1 + \nu_2}{2}}$$ 
+\end{theorem}
+If we consider two normal pops $N(\mu_1, \sigma_1^2)$ and $N(\mu_2, \sigma_2^2)$ if
+$$ \frac{(n_1-1)S_1^2}{\sigma_1^2} \sim \chi^2_{n_1 - 1} and \frac{(n_2-1)S_2^2}{\sigma_2^2} \sim \chi^2_{n_2 - 1}$$
+then
+$$ \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F_{n_1 - 1, n_2 - 1}$$
+This is useful for a CI for ratio of variances.\\
 
+\section*{Hypothesis Testing}
+\begin{definition}[Hypothesis Testing]
+    It is an assertion about the theoretical distribution. for example about parameters.
+    \begin{example}
+        In a coin toss expiriment C $Ber(p)$ "coin is unfair": $p \neq 0.5$\\
+    \end{example}
+    It is simple if it completely determines the distribution\\
+    It is not simple it is composite
+\end{definition}
+\begin{example}
+    Coin is fair (ie $p = 0.5$)\\
+    is a simple hypothesis
+\end{example}
+\begin{definition}[Statisical Test]
+    it is a criterion used to ecide whether to reject (or acept) one hypothesis called the null hypothesis $H_0$ in favor of an alternative hypothesis $H_1$.
+\end{definition}
 
-
-
+\section*{Chapter 12}
+\begin{example}
+    $N( \mu , \sigma^2 = 4)$ sample to get $\setof{X_i}$ want a test to find $\bar{X} <C$\\
+    $H_0: \mu = 4$\\
+    $H_1: \mu = 1$\\
+    $\alpha = P(\text{reject } H_0 | H_0 \text{ is true})$\\
+    $\beta = P(\text{accept } H_0 | H_1 \text{ is true})$\\
+    We found that if $\alpha$ is small, then $\beta$ is not if n is fixed. \\
+    Increasing $n$ will decrease $\beta$\\
+\end{example}
+\begin{example}
+    Consdier $Exp(\lambda)$ 
+    $H_0: \lambda = 4$\\
+    $H_1: \lambda = 1$\\
+    Suppose we get $\setof{X_i}$\\
+    $\bar{X} < C$\\
+    Find $\alpha$ and $\beta$ for a fixed $C > 0$ Assume sample size is 1\\
+    PDF is $f(x) =e^{-x/ \lambda} / \lambda $\\
+    Thus $\alpha = P(\bar{X} < C | \lambda = 4)$\\
+    $\beta = P(\bar{X} > C | \lambda = 1)$\\
+    We can use the CDF of the exponential distribution to find these values.\\
+    
+\end{example}
 
 
 
