@@ -1,21 +1,21 @@
 \documentclass[answers,12pt,addpoints]{exam}
 \usepackage{import}
+\usepackage{multirow}
+\usepackage{setspace}
 
 \import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
 
+
 \usepackage[margin=.25in, includehead, includefoot, headheight=0pt]{geometry}
-\usepackage{setspace}
-\setstretch{0}
 
 % Header
 \newcommand{\name}{Pranav Tikkawar}
-\newcommand{\course}{01:198:211}
-\newcommand{\assignment}{Exam 1 Cheat Sheet}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
 \author{\name}
+\title{\course \ - \assignment}
 
-
-
-
+\setstretch{0}
 \begin{document}
 \begin{center}
     Trends in Computer Architecture
@@ -57,7 +57,40 @@ Disk capacity doubles every year. \\
 \textbf{2's Complement}: Negate by flipping bits and adding 1. $-5_{10} = 1011_2$ Arithmatic is normal, distinct $0$ \\
 \textbf{IEEE}: sign, exp, mantissa. $\to$ sign $\cdot$ $2^{e-b}$ $\cdot$ mantissa Bias: e = num exp bits, b = $2^{e-1}-1$. subnormal, with all 0 exp leads to 0 as first digit \\
 \textbf{Special values:} 0 = all zeros, $\pm \infty$ = all ones in exp, 0 in mantissa, change sign. NaN = all ones in exp, non-zero mantissa. \\
-
+\newpage
+\begin{center}
+    Digital Logic
+\end{center}
+\textbf{Gates:} AND, OR, NOT, NAND, NOR, XOR, XNOR. \\
+\textbf{Decoder:} n inputs, $2^n$ outputs, for the input in binary the same index is 1, rest are 0. \\
+\textbf{Encoder:} $2^n$ inputs, n outputs, inverse of decoder. \\
+\textbf{Mulitplexer:} $n$ selector, $2^n$ inputs, 1 output, output is equal to one of the inputs based on the selector. \\
+\textbf{Minterms:} Product of all variables in a truth table. Ie $A\bar{B}C$ is a minterm for A=1, B=0, C=1 O=1. \\
+\textbf{SOP and POS}: Sum of Products, Product of Sums. SOP to POS: multiply through, add terms. POS to SOP: Compliment, multiply through, compliment using DM's law. \\
+\textbf{Karnaugh Maps:} 2D representation of truth table. Grouped in terms of 1, 2, 4, 8. The idea is to simiply the expression. The "variant" terms are the one removed and the rest is convered to minterms to lead to the minimal expression. \\
+\textbf{SR Latch:} We have two NOR gates with an S,R and Q, Q'. Essntionally if S=1 then Q is set, and if R=1 then Q is reset. If both are 1 then it is invalid. \\
+\textbf{D Latch:} 2 inputs C, D, C for control, D for data. If C=1 then Q = D, if C=0 then Q = Q. \\
+\textbf{D Flip Flop:} 2 inputs Clk, D, Clk for control, D for data. If Clk=1 then Q = D, if Clk=0 then Q = Q. The difference is that the D flip flop is edge triggered. \\
+\textbf{Finite State Machines:} Has state regsiter which store next state, and load the next state at clock edge. and combinatorial logic.\\
+\textbf{n-type Mos transistors}: when gate has poitive voltage, short circuit between 1 and 2, then zero voltage, open circuit. \\
+\textbf{p-type Mos transistors}: when gate has positive voltage, open circuit between 1 and 2, then zero voltage, short circuit. \\
+\textbf{CMOS:} Complimentary Mos, n-type and p-type in series. 
+\begin{center}
+    Caches
+\end{center}
+\textbf{RAM}: static: retains value with power, faster and more expensive, dynamic: needs to be refreshed, slower and cheaper. \\
+\textbf{Memory Hierarchy:} Registers, L1 Cache on chip, L2 Cache off chip, main memory (DRAM), Disk, Remote server. \\
+\textbf{Cache Memory} Small, fast, Look highest level: $1 \to 2$. We want memory to be local temporally and spatially as it addresses the gap between CPU speed and RAM speed. \\
+\textbf{Cache Hit/Miss} Hit: data is in cache at level k, Miss: data is not in cache at level k so we must go to level k+1, if level k is full, the ome current block must be evicted. \\
+\textbf{Cache Miss} Compulsory: first access, Conflict: when k level i large enough but multiple blocks map to the same location, Capacity: when the set of active data blocks is larger than the cache. \\
+\textbf{Cache Organization} $S = 2^s$ sets, $E$ lines per set, $B = 2^b$ bytes per block, with 1 balid bit per line, $t$ tag bits. Cache size = $S \cdot E \cdot B$. \\
+\textbf{Addressing Caches:} $<tag, set, block>$, The word at address $A$ is in the cache if the tag bit in oneof the $<valid>$ lines in set $<set>$ matches $<tag>$\\
+\textbf{Direct Mapped Cache:} Simplest Cache with only one line per set. Line matching Find a valid line in the selected set with a matching tag. \\
+\textbf{Set Associative Cache:} Multiple lines per set. Set selection is the same, but line matching  must compare the the in each valid line.\\
+\textbf{Replacement} For Direct Mapped, only one choice, for Set Associative we can use FIFO, LRU, or random. \\
+\textbf{Fully Associative Cache:} Set selection is trivial, \\
+\textbf{Write and Cache} Hit: Write through: write to both cache and memory, write back: defer the write to memory for as long as possible. Miss: Write allocate: load the block into cache and update, no-write allocate: write directly to memory. \\
+\textbf{Write-back Cache:} What to do if need to evict a block that has been written into. Write a caches copy to a lower level. Use a dirty bit to keep track of this. \\
 
 
 

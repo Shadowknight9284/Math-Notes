@@ -1,0 +1,102 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Homework 11}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question Section 6.1 Problem 2\\
+    Let $x=(2,1+i,i)$ and $y=(2-i, 2, 1+2i)$. be vectors in $C^3$ Compute $<x,y>$ $||x||$, $||y||$, and $||x+y||$. Then verify the Cauchy-Schwarz inequality and the triangle inequality for these vectors.
+    \begin{solution}
+        \begin{align*}
+            <x,y> &= 2(2+i) + (1+i)(2) + i(1-2i) = 4 + 2i + 2 + 2i + i + 2 = 8 + 5i\\
+            ||x|| &= \sqrt{2^2 +(1+i)(1-i) + i(-i)} = \sqrt{4 + 2 + 1} = \sqrt{7}\\
+            ||y|| &= \sqrt{(2-i)(2+i) + 2^2 + (1+2i)(1-2i)} = \sqrt{5 + 4 + 5} = \sqrt{14}\\
+            ||x+y|| &= \sqrt{(4+i)(4-i) + (3+i)(3-i) + (1+3i)(1-3i)} = \sqrt{17 + 10 + 10} = \sqrt{37}\\
+            |<x,y>| &\leq ||x|| \cdot ||y|| \implies |8 + 5i| \leq \sqrt{7} \cdot \sqrt{14} \implies \sqrt{64 + 25} \leq \sqrt{98} \implies \sqrt{89} \leq \sqrt{98}\\
+            ||x+y|| &\leq ||x|| + ||y|| \implies \sqrt{37} \leq \sqrt{7} + \sqrt{14}
+        \end{align*}        
+        Through minor comuptation we can see that this is true.
+    \end{solution}
+    \question Section 6.1 Problem 3\\
+    In $C([0,1])$ let $f(t) = t$ and $g(t) = e^t$. Then compute $<f,g>$, $||f||$, $||g||$, and $||f+g||$. Then verify the Cauchy-Schwarz inequality and the triangle inequality for these functions.
+    \begin{solution}
+        \begin{align*}
+            <f,g> &= \int_{0}^{1} t \cdot e^t dt = te^t - e^t \Big|_{0}^{1} = 1\\
+            ||f|| &= \sqrt{\int_{0}^{1} t^2 dt} = \sqrt{\frac{1}{3}}\\
+            ||g|| &= \sqrt{\int_{0}^{1} e^{2t} dt} = \sqrt{\frac{e^2 - 1}{2}}\\
+            ||f+g|| &= \sqrt{\int_{0}^{1} (t+e^t)^2 dt} = \sqrt{\int_{0}^{1} t^2 + 2te^t + e^{2t} dt} = \sqrt{\frac{1}{3} + 2 + \frac{e^2 - 1}{2}}\\
+            |<f,g>| &\leq ||f|| \cdot ||g|| \implies |1| \leq \sqrt{\frac{1}{3}} \cdot \sqrt{\frac{e^2 - 1}{2}} \implies 1 \leq \sqrt{\frac{e^2 - 1}{6}}\\
+            ||f+g|| &\leq ||f|| + ||g|| \implies \sqrt{\frac{1}{3} + 2 + \frac{e^2 - 1}{2}} \leq \sqrt{\frac{1}{3}} + \sqrt{\frac{e^2 - 1}{2}}
+        \end{align*}
+        Through minor computation we can see that this is true.
+    \end{solution}
+    \question Section 6.1 Problem 9\\
+    Let $\beta$ be a basis for a finite dimentional inner product space.
+    \begin{parts}
+        \part Prove that if $<x,z> = 0$ for all $z \in V$, then $x = 0$.
+        \part Prove that if $<x,z> = <y,z>$ for all $z \in V$, then $x = y$.
+    \end{parts}
+    \begin{solution}
+        \textbf{Part a:} If we take $z = x$ then we get $<x,x> = 0$ which implies that $x = 0$.\\
+        \textbf{Part b:} If we take $z = x - y$ then we get $<x-y,x-y> = 0$ which implies that $x = y$.
+    \end{solution}
+    \question Section 6.1 Problem 11\\
+    Prove the parallellogram law on an inner product space V; that is show
+    $$||x+y||^2 + ||x-y||^2 = 2||x||^2 + 2||y||^2 \quad \text{for all } x,y \in V$$
+    \begin{solution}
+        We can start off by rewriting the equation in inner product form:
+        $$ <x+y,x+y> + <x-y,x-y> = 2<x,x> + 2<y,y>$$
+        We can rewrite the left hand side by the (almost) linearity of both elemnts of the inner product:
+        \begin{align*}
+            <x+y,x+y> + <x-y,x-y> &= <x,x+y> + <y,x+y> + <x,x-y> - <y,x-y>\\
+            &= <x,x> + <x,y> + <y,x> + <y,y> \\
+            &+ <x,x> - <x,y> - <y,x> + <y,y>\\
+            &= 2<x,x> + 2<y,y>
+        \end{align*}
+        Thus we have shown that the parallelogram law holds.
+    \end{solution}
+    \question Section 6.1 Problem 12
+    Let $\setof{v_1,v_2,...,v_k}$ be an orthononal set in $V$ and let $a_1,a_2,...,a_k$ be scalars. Prove that
+    $$ ||\sum_{i=1}^{k} a_iv_i||^2 = \sum_{i=1}^{k} |a_i|^2||v_i||^2$$
+    \begin{solution}
+        We can start off by rewriting the left hand side in inner product form:
+        \begin{align*}
+            ||\sum_{i=1}^{k} a_iv_i||^2 &= <\sum_{i=1}^{k} a_iv_i, \sum_{j=1}^{k} a_jv_j>\\
+            &= \sum_{i=1}^{k} <a_iv_i, \sum_{j=1}^{k} a_jv_j>\\
+            &= \sum_{i=1}^{k} \sum_{j=1}^k <a_iv_i, a_jv_j>\\
+            &= \sum_{i=1}^{k} <a_iv_i, a_iv_i> \quad \text{since the set is orthogonal}\\
+            &= \sum_{i=1}^{k} |a_i|^2<v_i,v_i>\\
+            &= \sum_{i=1}^{k} |a_i|^2||v_i||^2
+        \end{align*}
+        Thus we have shown that the equation holds.
+    \end{solution}
+    \question Section 6.1 Problem 16(b)
+    Let $V = C([0,1])$ and define 
+    $$<f,g> = \int_{0}^{1/2} f(t)g(t)dt $$
+    Is this a inner product on $V$? Justify your answer.
+    \begin{solution}
+        This is not an inner product as if we take a continous function that is zero on the interval $(0,1/2)$\\
+        $f(t) = \begin{cases}
+            0 & \text{if } t \in [0,1/2)\\
+            t - \frac{1}{2} & \text{if } t = 1/2
+        \end{cases} $. \\
+        We can see that $<f,f> = 0$ but $f \neq 0$.
+    \end{solution}
+
+    
+
+\end{questions}
+
+\end{document}

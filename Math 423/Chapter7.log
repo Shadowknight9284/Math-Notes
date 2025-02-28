@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  14 NOV 2024 20:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  10 DEC 2024 20:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -627,7 +627,177 @@ Underfull \hbox (badness 10000) in paragraph at lines 129--131
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 155--156
+
+ []
+
 [4]
+Underfull \hbox (badness 10000) in paragraph at lines 172--174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--177
+
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 191--193
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 193--195
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 208--212
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 213--214
+
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 223--226
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 256--258
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--263
+
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 269--271
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 271--274
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 275--276
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 277--284
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 285--288
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 289--294
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 295--298
+
+ []
+
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 300--302
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 305--313
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 314--317
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 329--331
+
+ []
+
+
+Overfull \hbox (3.61569pt too wide) in paragraph at lines 331--333
+\OT1/cmr/m/n/12 When re-flect-ing the point $\OML/cmm/m/it/12 x; \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x[]; x[]; x[]\OT1/cmr/m/n/12 )$ over the plane $\OML/cmm/m/it/12 x[] \OT1/cmr/m/n/12 = 0$ aka $\OML/cmm/m/it/12 @D$ \OT1/cmr/m/n/12 we get $\OML/cmm/m/it/12 x\OMS/cmsy/m/n/12 ^^C \OT1/cmr/m/n/12 = (\OML/cmm/m/it/12 x[]; x[]; \OMS/cmsy/m/n/12 ^^@\OML/cmm/m/it/12 x[]\OT1/cmr/m/n/12 )$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 331--333
+
+ []
+
+
+Overfull \hbox (12.42992pt too wide) detected at line 342
+[]
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 361--363
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 369--374
+
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 375--380
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 380--384
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 394--396
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 399--402
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 402--403
+
+ []
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 406--408
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 420--424
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 425--428
+
+ []
+
+[12]
 This exam contains 0 questions with 0 parts, 0 subparts, and 0 subsubparts.
 This exam has a total of 0 points.
 This exam has a total of 0 bonus points.
@@ -638,18 +808,18 @@ L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 25115 strings out of 474166
- 631927 string characters out of 5749518
- 1936542 words of memory out of 5000000
- 47024 multiletter control sequences out of 15000+600000
+ 25125 strings out of 474166
+ 632207 string characters out of 5749518
+ 1943542 words of memory out of 5000000
+ 47034 multiletter control sequences out of 15000+600000
  567573 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  90i,11n,103p,862b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Chapter7.pdf (4 pages, 142826 bytes).
+Output written on Chapter7.pdf (12 pages, 178354 bytes).
 PDF statistics:
- 80 PDF objects out of 1000 (max. 8388607)
- 49 compressed objects within 1 object stream
+ 106 PDF objects out of 1000 (max. 8388607)
+ 67 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

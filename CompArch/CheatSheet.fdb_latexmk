@@ -1,9 +1,9 @@
 # Fdb version 4
-["pdflatex"] 1730312840.14744 "c:/Users/prana/OneDrive/Desktop/MathNotes/CompArch/CheatSheet.tex" "CheatSheet.pdf" "CheatSheet" 1730312841.81202 0
-  "CheatSheet.aux" 1730312841 329 cfca87d27653727961d59512c05144d8 "pdflatex"
-  "CheatSheet.tex" 1730312839 4696 edf4379b998dce19883d25d67c64ac6b ""
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/CompArch/CheatSheet.tex" 1730312839 4696 edf4379b998dce19883d25d67c64ac6b ""
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex" 1729643921 1468 a4dc3c5958f038d3f5eb0b6b0b3e5655 ""
+["pdflatex"] 1734918727.02766 "c:/Users/prana/OneDrive/Desktop/MathNotes/CompArch/CheatSheet.tex" "CheatSheet.pdf" "CheatSheet" 1734918730.16529 0
+  "CheatSheet.aux" 1734918729 329 54a089244f13493d73e19024d03ef2ff "pdflatex"
+  "CheatSheet.tex" 1734918723 8686 42b971e96179b4f7986c8c66ba6bf8aa ""
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/CompArch/CheatSheet.tex" 1734918723 8686 42b971e96179b4f7986c8c66ba6bf8aa ""
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex" 1733272558 1507 f5970c8bf1f39ae25007191611565ec3 ""
   "c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1705504038 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1705505139 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/tctt1200.tfm" 1705504777 1536 efbcae87f87156de95906dc6e6580595 ""
@@ -165,6 +165,7 @@
   "c:/texlive/2023/texmf-dist/tex/latex/import/import.sty" 1705505995 6201 0ad8b5da8e12f60a88d546b2198a56f2 ""
   "c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def" 1705506274 30006 57b07afb710ee2f649c65cfbafda39c1 ""
   "c:/texlive/2023/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg" 1705506391 678 4792914a8f45be57bb98413425e4c7af ""
+  "c:/texlive/2023/texmf-dist/tex/latex/multirow/multirow.sty" 1705507064 6149 2398eec4faa1ee24ff761581e580ecf1 ""
   "c:/texlive/2023/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty" 1705507506 1090 bae35ef70b3168089ef166db3e66f5b2 ""
   "c:/texlive/2023/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty" 1705507506 373 00b204b1d7d095b892ad31a7494b0373 ""
   "c:/texlive/2023/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty" 1705507506 21013 f4ff83d25bb56552493b030f27c075ae ""

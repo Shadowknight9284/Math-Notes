@@ -1,0 +1,86 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:478}
+\newcommand{\assignment}{Intense notes}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+
+Brownian motion:\\
+(1) Deriving conditional distribution given future values\\
+$$X(s) | X(t) ,s \leq t \sim N(\frac{s}{t}B, \frac{s}{t} (t-s))$$
+where $X(t) = B$\\
+Ex 10.1 part II, \\
+(2) Hitting times $T_a$ 
+$$P(T_a < t) = \frac{2}{\sqrt{2\pi}} \int_{|a|/\sqrt{t}}^{\infty} e^{-y^2} dy$$
+(3) Max of a Brownian Motion in an interval \\
+Today we look at variaions of Brownian motion.\\
+(1) BM with a drift \\
+Defined as 
+$$\begin{cases}
+    X(0) = 0\\
+    \setof{X(t), t\geq 0} \text{has stationary independent increments}\\
+    X(t) \text{is normally distributed with mean } \mu t \text{ and variance } \sigma^2 t
+\end{cases}$$
+And equivalent definition is 
+$$ X(t) = \mu t + \sigma B(t)$$
+where $B(t)$ is a Brownian motion.\\
+It is simlar to a regular BM but slanted upwards.\\
+\begin{example}
+    Let $(\setof{X(t)}, t \geq 0)$ be a BM with drift $\mu = .8$ and variance $\sigma^2 = .4$ Find the probability that $2 \leq X(8) \leq 5$\\
+    \begin{solution}
+        Look at time t = 8\\
+        \begin{align*}
+        X(8) &= .8 \cdot 8 + \sqrt{.4}B(8) \\
+        X(8) &= 6.4 + \sqrt{.4}B(8) \\
+        X(8) &= 6.4 + \sqrt{.4}Z \quad \text{where } Z \sim N(0,1) \\
+        P(2 \leq X(8) \leq 5) &= P(2 \leq 6.4 + \sqrt{.4}Z \leq 5) \\
+        P(2-6.4 \leq \sqrt{.4}Z \leq 5-6.4) &= P(-4.4 \leq \sqrt{.4}Z \leq -1.4) \\
+        P\left(\frac{-4.4}{\sqrt{.4}} \leq Z \leq \frac{-1.4}{\sqrt{.4}}\right) & 
+        \end{align*}
+        or
+        $$X(8) \sim N(.8 \cdot 8, .4 \cdot 8)$$
+        $$P(2 \leq X(8) \leq 5) = P(\frac{2-6.4}{\sqrt{3.2}} < Z < \frac{5-6.4}{\sqrt{3.2}})$$
+        it is $\approx .2108$
+    \end{solution}
+\end{example}
+(2) Geometric Brownian Motion\\
+If $\setof{Y(t), t \geq 0}$ is a GM then $\setof{X(t), t \geq 0}$ is a GBM if
+$$X(t) = e^{Y(t)}$$
+where $Y(t)$ is a BM with drift $\mu$ and variance $\sigma^2$\\
+The expected value of a GBM given the history of the process up to a given time is 
+\begin{align*}
+    E[X(t)| X(u), 0 \leq u \leq s] &= E[e^{Y(t)} | Y(u), 0 \leq u \leq s] \\
+    &= E[e^{Y(t) - Y(s) + Y(s)} | Y(u), 0 \leq u \leq s] \\
+    &= e^{Y(s)} E[e^{Y(t) - Y(s)} | Y(u), 0 \leq u \leq s] \\
+    &= X(t) E[e^{Y(t) - Y(s)} ]\\ 
+    &= X(t) e^{\mu(t-s) + \frac{\sigma^2}{2}(t-s)}\\
+\end{align*}
+Therefore, 
+$$ E[X(t) | X(u) 0 < u < s] = X(t) e^{(t-s)(\mu + \sigma^2/2)}$$
+We can use this to model stock prices over time in general non negative random fluctuations.\\
+In general we can consider this as a percentage changes in prices are independent and independently distributed.\\
+Let $X_n = $ price of some stock at time n\\
+Assume $\frac{X_n}{X_{n-1}} < 1$ iid \\
+Define $Y_n = \frac{X_n}{X_{n-1}}$ or $X_n = X_{n-1}Y_n$\\
+We can then iterate to see that $X_n = X_0 \prod_{i=1}^{n} Y_i$\\
+Thus $\log(X_n) = \log(X_0) + \sum_{i=1}^{n} \log(Y_i)$\\
+Since $log(Y_i), i \geq 1$ are iid, $\log(X_n)$ will, when suitably normalized, approximatly be Brownian motion with drift, and thus $X_n$ will be a GBM.\\
+
+
+
+
+
+
+
+\end{document}

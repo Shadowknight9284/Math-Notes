@@ -1,0 +1,58 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Neyman-Pearson Lemma}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question Recall Exp($\lambda$) population has PDF: $f(x) = \frac{1}{\lambda} e^{-\frac{x}{\lambda}}, x > 0$. The null hypothesis $\lambda = 10$ is to be tested against the alternative $\lambda = 5$ using observed sample data $x_1, x_2, \ldots, x_n$. Use the Neyman-Pearson Lemma to obtain a test with the most power when the size of the critical region is to be a fixed $\alpha$.
+
+    \begin{solution}
+        The likelihood function is given by
+        \begin{align*}
+            L(\lambda) &= \frac{1}{\lambda^n} e^{-\frac{\sum x_i}{\lambda}}.
+        \end{align*}
+        The likelihood ratio is given by
+        \begin{align*}
+            \Lambda = \frac{L_0}{L_1} \leq k \quad \in C.
+        \end{align*}
+        Where $C$ is the critical region and $k$ is a constant determined by the size of the critical region. The Neyman-Pearson Lemma states that the most powerful test is given by the likelihood ratio test. 
+        \begin{align*}
+            \Lambda = \frac{L(10)}{L(5)} &= \frac{5}{10}^ne^{-\frac{\sum x_i}{10} + \frac{\sum x_i}{5}} \leq k\\
+            &= \frac{1}{2}^ne^{\frac{\sum x_i}{10}} \leq k\\
+            ln(\Lambda) &= n ln(\frac{1}{2}) + \frac{\sum x_i}{10} \leq ln(k)\\
+            \sum x_i &\leq 10n ln(2) + 10 ln(k).
+        \end{align*}
+
+        Therefore the most powerful test rejects the null hypothesis if $\sum x_i < 10n ln(2) + 10 ln(k)$.
+        and the size of the critical region is $\alpha$.
+
+    \end{solution}
+
+    \question In the previous question suppose $n = 1$ (sample size of one) and the probability of type 1 error $\alpha = 0.05$. What is the critical region in this case?
+    \begin{solution}
+        When $n=1$ and $\alpha = 0.05$, we have
+        \begin{align*}
+            P(X < c | \lambda = 10) &= 0.05\\
+            P(X < c) = 1 - e^{-\frac{c}{10}} &= 0.05\\
+            e^{-\frac{c}{10}} &= 0.95\\
+            c = -10 ln(0.95) &\approx 0.0513.
+        \end{align*}
+
+        Therefore the critical region is $x < 0.0513$.
+
+    \end{solution}
+\end{questions}
+
+\end{document}

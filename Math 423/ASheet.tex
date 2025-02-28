@@ -1,0 +1,82 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+\usepackage{multirow}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+
+\usepackage[margin=.25in, includehead, includefoot, headheight=0pt]{geometry}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+
+\begin{document}
+PDEs Pranav Tikkawar\\
+\textbf{Transport Equation:} $u_t + cu_x = 0 \implies u(x,t) = f(x-ct)$ Solved via method of characteristics: $\frac{dx}{dt} = c \implies x = at + C$ and function is constant along the characteristic lines.\\ 
+\textbf{FOL PDE:} $a(x,y)u_{x} + b(x,y)u_{y} = 0$ or $\langle \nabla u,(a,b)\rangle = 0$. if $a,b$ constant $u(x,y) = f(bx-ay)$ Solved via method of characteristics: $\frac{dy}{dx} = \frac{b}{a} \implies y = \frac{b}{a}x + C$ and function is constant along the characteristic lines. OR by Change of Var for $x' = ax + by, y' = bx - ay$\\
+If non constant $a,b$ then solve for $\frac{dy}{dx} = \frac{b(x,y)}{a(x,y)} \implies y = $ something. Solve for constant and that is that the function is constant along.\\
+\textbf{Well Posed:} 1. Existence 2. Uniqueness 3. Stable/Continuous \\\\
+\textbf{Waves: }$u_{tt} = c^2u_{xx} \implies u(x,t) = f(x-ct) + g(x+ct)$. Product of 2 transports. 
+\textbf{With IC:} $u(x,0) = \phi(x), u_t(x,0) = \psi(x)$. On infinite x: $u(x,t) = \frac{\phi(x+ct) - \phi(x-ct)}{2} - \frac{1}{2c} \int_{x-ct}^{x+ct} \psi(s)ds$ aka D'Alembert's Formula.\\
+\textbf{Energy For Wave}: $E(t) = \frac{1}{2} \int_{-\infty}^{\infty} (u_t^2 + c^2u_x^2)dx$ can make $c^2 = T/\rho$. Energy is conserved. Finite speed or propagation.\\
+\textbf{Diffusion:} $u_t = ku_{xx}$\\
+\textbf{Max Principle} Weak: max on all is on boundary. Strong: max of all can only be on boundary.\\
+\textbf{Uniqueness} Heat is unique proven by either max principle with difference of 2 solutions $=0$ or by energy method.\\
+\textbf{Energy for Heat:} $E(t) = \int_{-\infty}^{\infty} u^2dx$\\
+\textbf{Stablility:} $\int |u(x,t) - v(x,t)|^2dx \leq \int |u(x,0) - v(x,0)|^2dx$\\
+\textbf{Invariance on Whole Line:} 1. Translation, 2. Derivative, 3. Linear Combination, 4. Integral of sol with anything. 5. Scaling by $u(x,t) \to u(\alpha x, \alpha^2 t)$\\
+\textbf{Fundamental Solution}: $u(x,t) = \frac{1}{\sqrt{4\pi kt}} \int_{-\infty}^{\infty} e^{-\frac{(x-y)^2}{4kt}}\phi(y)dy$. for IC $u(x,0)= \phi(x)$ $S = \frac{1}{\sqrt{4\pi kt}} e^{-\frac{x^2}{4kt}}$ is the fundamental solution. $S$ is a green's function.\\\\
+\textbf{Separation of Variables:} $u(x,t) = X(x)T(t)$. Create rato of $X$ and $T$ and set equal to constant. Solve for $X$ and $T$ separately with the BC/IC that are homogeonous.\\
+\textbf{Dirichlet BC:} $u(0,t) = u(L,t) = 0$: $X(x) = sin(\frac{n\pi x}{L})$. Waves: $T(t) = A_n cos(\frac{n\pi c t}{L}) + B_n sin(\frac{n\pi c t}{L})$ Diffusion: $T(t) = A_n e^{-\frac{n^2\pi^2 kt}{L^2}}$ Laplace: $Y(y) = A_n cosh(\frac{n\pi y}{L}) + B_n sinh(\frac{n\pi y}{L})$ Connected to a fourier sine series.\\
+\textbf{Neumann BC:} $u_x(0,t) = u_x(L,t) = 0$: $X(x) = cos(\frac{n\pi x}{L})$. Waves: $T(t) = A_n cos(\frac{n\pi c t}{L}) + B_n sin(\frac{n\pi c t}{L})$ Diffusion: $T(t) = A_n e^{-\frac{n^2\pi^2 kt}{L^2}}$ Laplace: $Y(y) = A_n cosh(\frac{n\pi y}{L}) + B_n sinh(\frac{n\pi y}{L})$ Connected to a fourier cosine series.\\
+\textbf{Robin BC:} $u_x(0,t) - \alpha_0 u(0,t) = u_x(L,t) + \alpha_1 u(L,t) = 0$: Waves: $T(t) = A_n cos(\sqrt{\lambda_n}t) + B_n sin(\sqrt{\lambda_n}t)$ Diffusion: $T(t) = A_n e^{-\lambda_n kt}$. They take the form of a fourier series. \\\\
+\textbf{Fourier Sine Series:} $f(x) = \sum_{n=1}^{\infty} B_n sin(\frac{n\pi x}{L}) \implies B_n = \frac{2}{L} \int_{0}^{L} f(x)sin(\frac{nx\pi}{L})dx$ Relates to Odd functions.\\
+\textbf{Fourier Cosine Series:} $f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} A_n cos(\frac{n\pi x}{L}) \implies A_n = \frac{2}{L} \int_{0}^{L} f(x)cos(\frac{nx\pi}{L})dx$ Relates to Even functions.\\
+\textbf{Fourier Series:} $f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} A_n cos(\frac{n\pi x}{L}) + B_n sin(\frac{n\pi x}{L}) \implies A_n = \frac{1}{L} \int_{-L}^{L} f(x)cos(\frac{n\pi x}{L})dx, B_n = \frac{1}{L} \int_{-L}^{L} f(x)sin(\frac{n\pi x}{L})dx$ Note that our interval is 2L.\\
+Generally $c_n = \frac{1}{2l} \langle f(x), e^{inx} \rangle \quad c_0 = \frac{a_0}{2} \quad c_n = \frac{a_n - ib_n}{2} \quad c_{-n} = \frac{a_n + ib_n}{2} \quad a_n = c_n + c_{-n} \quad b_n = i(c_n - c_{-n})$\\
+\textbf{Converges:} Each point of continuity converges to the average of the left and right limits. All $L^2$ functions converge to the function. \textbf{Bessel's Inequality:} $\sum_{N^+} |c_n|^2 \leq ||f||^2 \quad c_n \to 0$ \textbf{Plancharel's Theorem:} $||f||^2 = \sum_{-\infty}^{\infty} |c_n|^2$\\\\
+\textbf{Laplace's Equation:} $\Delta u = 0 \quad u_{xx} + u_{yy} = 0 \quad u_{rr} + \frac{1}{r}u_r + \frac{1}{r^2}u_{\theta\theta} = 0$\\
+\textbf{Fundamental solution} in 2D is $u = \frac{1}{2\pi} \log(r)$ and 3d is $u = \frac{1}{4\pi r}$.\\
+\textbf{Max Principle}: The max of $u$ is found on the boundary.\\
+\textbf{Uniqueness}: Given suffecient BC (on all sides) the solution is unique.\\
+\textbf{Invariance} Invariant under Rigid Motion. This implies that the solution doesnt care about rotation/direction hence the solution is a function of $r$ only. \\
+\textbf{Rectangle and Cube:} Split each inhomogeneous side into its own solution as $u = u_1 + u_2 + u_3 + u_4$ where $u_i$ is the solution to the ith side with inhomogeneous rest homogenous. Not that most solutions will be in form of $(\cos + \sin)(\cosh + \sinh)$ where terms die out based of IC\\
+\textbf{Poisson's Formula:} $\Delta u = 0 \text{ for } x^2 + y^2 < a^2 \quad u=h(\theta) \text{ for } x^2 + y^2 = a^2$ \\
+For $\boldsymbol{x} = (r, \theta) \quad \boldsymbol{x}' = (a, \phi)$ we have $r = |x| \quad a = |x'| \quad |x- x'|^2 = a^2 - 2ar\cos(\theta - \phi) + r^2$\\
+$u(r, \theta) = \frac{(a^2-r^2)}{2\pi} \int_0^{2\pi} \frac{h(\theta)}{a^2 - 2ar\cos(\theta - \phi) + r^2}d\phi$ and $u(\boldsymbol{x}) = \frac{a^2 - |\boldsymbol{x}|^2}{2\pi} \int_{|x'| = a} \frac{u(x')}{|x-x'|^2}$\\
+\textbf{Mean Value Property:} $u(0) = \frac{a^2}{2\pi a } \int_{|x| = a} \frac{u(x')}{a^2}dS $ in other words the value at the center is the average of the boundary.\\
+\textbf{Wedges:} $\setof{0 < \theta < \theta_0, 0 < r < a}$. 
+\textbf{Annulus:} $\setof{a < r < b, 0 < \theta < 2\pi}$.
+\textbf{Exterior of Circle:} $\setof{r > a, 0 < \theta < 2\pi}$.\\
+Make sure to consider \textbf{ALL} eigenvalues. \\\\
+\textbf{Divergence Theorem}: $\int_{D} \nabla \cdot F dx = \int_{\partial D} F \cdot n dS$\\
+\textbf{Green's First Identity:} $\int_{\partial D} v \frac{\partial u}{\partial n} dS = \int_{D} \nabla v \cdot \nabla u dx + \int_{D} v \Delta u dx$\\
+\textbf{Mean Value Principle:} $u(0) = \frac{1}{\text{Area of D}} \int_{D} u dx$. Derived by recognized the value of the integral in the sphere is not dependent on the radius.\\
+\textbf{Dirichlet Principle} Among all $w$ that solve $w = h \text{ on } \partial D$, the one with lowest energy is the harmonic solution. Where $E[w] = \frac{1}{2} \int_{D} |\nabla w|^2 dx$\\
+\textbf{Green's Second Identity:} $\int_{D} u \Delta v - v \Delta u dx = \int_{\partial D} u \frac{\partial v}{\partial n} - v \frac{\partial u}{\partial n} dS$\\
+\textbf{Representation Formula}: $u(x_0) = \int_{\partial D} [-u(x)] \frac{\partial}{\partial n} (\frac{1}{|x-x_0|}) + \frac{1}{|x-x_0|} \frac{\partial u}{\partial n} \frac{dS}{4\pi}$\\
+\textbf{Green's Functions:} the Green's Function $G(x)$ for the operator $-\Delta$ and the domain $D$ at the point $x_0 \in D$ is a function defined for $x\in D$ st. \\
+(i) $G(x)$ has cont. 2nd Derivatives and $\Delta G = 0 \quad \in D$ except at $x = x_0$ where $\Delta G = -\delta(x-x_0)$ \\
+(ii) $G(x) = 0 \quad \text{on } \partial D$\\
+(iii) The fucntions $G(x) + \frac{1}{4\pi|x-x_0|}$ is finite at $x_0$ and has continuous 2nd Derivatives and is harmonic at $x_0$\\
+We can also denote it as $G(x,x_0)$\\
+\textbf{Green's Function for Laplace's Equation with Dirichlet BC:} $u(x) = \int_{\partial D} u \frac{\partial G}{\partial n} dS$\\
+\textbf{Symmetric:} Green's function is Symmetric $G(x,x_0) = G(x_0,x)$\\
+\textbf{Half Space:} $G(x,x_0) = -\frac{1}{4\pi |x-x_0|} + \frac{1}{4\pi|x-x_0^*|}$ where $x_0^* = (x_0, y_0, -z_0)$ Note that $x_0^*$ is the reflection of $x_0$ across the plane $z = 0$ and procides the "opposite" energy field to make the field 0 on the boundary.\\
+\textbf{Half Space with Dirichlet BC:} $u =h \in \partial D \quad u(x_0) = \frac{z_0}{2\pi} \int_{\partial D} \frac{h(x)}{|x-x_0|^3}dS$\\
+\textbf{Sphere} For a sphere of radius $a$ centered at 0, $x_0^* = \frac{a^2x_0}{|x_0|^2}$ we denote $\rho = |x- x_0| \quad \rho* = |x - x_0^*|$ Then the greens fucntion is $G(x,x_0) = -\frac{1}{4\pi \rho} + \frac{a}{|x_0|} \frac{1}{4\pi \rho*}$ and for $G(x,0) = -\frac{1}{4\pi |x|} + \frac{1}{4\pi a}$ Note that in application this become the solution using Possion's Formula.\\\\
+\textbf{Sum/Difference} $sin(A) + sin(B) = 2sin(\frac{A+B}{2})cos(\frac{A-B}{2}) \quad sin(A) - sin(B) = 2cos(\frac{A+B}{2})sin(\frac{A-B}{2})$\\
+$cos(A) + cos(B) = 2cos(\frac{A+B}{2})cos(\frac{A-B}{2}) \quad cos(A) - cos(B) = -2sin(\frac{A+B}{2})sin(\frac{A-B}{2})$\\
+\textbf{Add/Subtract} $sin(A \pm B) = sin(A)cos(B) \pm cos(A)sin(B) \quad cos(A \pm B) = cos(A)cos(B) \mp sin(A)sin(B)$\\
+\textbf{Product}: $sin(A)sin(B) = \frac{1}{2}[cos(A-B) - cos(A+B)] \quad cos(A)cos(B) = \frac{1}{2}[cos(A-B) + cos(A+B)]$\\ 
+$sin(A)cos(B) = \frac{1}{2}[sin(A+B) + sin(A-B)]$\\
+\textbf{Squared:} $sin^2(A) = \frac{1}{2}[1 - cos(2A)] \quad cos^2(A) = \frac{1}{2}[1 + cos(2A)]$\\
+\textbf{Double Angle:} $sin(2A) = 2sin(A)cos(A) \quad cos(2A) = cos^2(A) - sin^2(A) = 1 - 2 \sin^2(A) = 2cos^2(A) -1$\\
+
+
+\end{document}

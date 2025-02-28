@@ -1,0 +1,30 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\section*{Chapter 1}
+\textbf{Survival Curve}\\
+The Survival curve is defined as $S(t) = P(T > t)$, where $T$ is the random variable representing the time of death.\\
+This is a Decreasing function that quantifies the probability of surviving beyond time $t$.
+\begin{example}
+    Brain cancer Data set:\\
+    88 patients, 53 service till the end of the 20 month study.\\
+    17 of the 40 who did not survive were actually censured.\\
+    $$S(t^-) \times (1-\frac{d_t}{n_{t^-}}) $$
+\end{example}
+
+
+\end{document}

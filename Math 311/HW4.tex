@@ -1,0 +1,277 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Homework 4}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question Suppose \(\{x_n\}_{n=1}^{\infty}\) and \(\{y_n\}_{n=1}^{\infty}\) are two sequences, and define \(s_n = \sum_{k=1}^{n} x_k\) with the convention that \(s_0 = 0\).
+        \begin{parts}
+            \part Prove the summation by parts formula:
+            \[
+            \sum_{k=n}^{m} x_k y_k = s_m y_{m+1} - s_{n-1} y_n - \sum_{k=n}^{m} s_k (y_{k+1} - y_k)
+            \]
+            \begin{solution}
+                We can prove this by induction on \(m\). The base case is \(m = n\), in which case the left-hand side is \(x_n y_n\) and the right-hand side is \(s_n y_{n+1} - s_{n-1} y_n - 0\), which is equal to \(x_n y_n\) since \(s_{n-1} = 0\). 
+                Now, assume the formula holds for some \(m \ge n\). Then we need to prove it for \(m + 1\):
+                \begin{align*}
+                    \sum_{k=n}^{m+1} x_k y_k &= \sum_{k=n}^{m} x_k y_k + x_{m+1} y_{m+1} \\
+                    &= s_m y_{m+1} - s_{n-1} y_n - \sum_{k=n}^{m} s_k (y_{k+1} - y_k) + x_{m+1} y_{m+1} 
+                \end{align*}
+                We can then add $s_m y_{m+2} - s_{m}y_{m+1} + x_{m+1} y_{m+2} - x_{m+1} y_{m+1}$  and then subtract $(s_m + x_{m+1})(y_{m+2}-y_{m+1})$ to get:
+                \begin{align*}
+                    &= (s_m + x_{m+1}) y_{m+2} - s_{n-1} y_n - \sum_{k=n}^{m} s_k (y_{k+1} - y_k) - (s_m + x_{m+1})(y_{m+2}-y_{m+1}) \\
+                    &= s_{m+1}y_{m+2} - s_{n-1} y_n - \sum_{k=n}^{m} s_k (y_{k+1} - y_k) - s_{m+1}(y_{m+2}-y_{m+1}) \\
+                    &= s_{m+1}y_{m+2} - s_{n-1} y_n - \sum_{k=n}^{m+1} s_k (y_{k+1} - y_k)
+                \end{align*}
+                Thus, the formula holds for \(m + 1\) as well. By induction, the formula holds for all \(m \ge n\).
+            \end{solution}
+            \part Prove Dirichlet's test for divergence:
+            \begin{theorem}
+            Suppose \(\{x_n\}_{n=1}^{\infty}\) and \(\{y_n\}_{n=1}^{\infty}\) are sequences, that \(s_n = \sum_{k=1}^{n} x_k\) is bounded, and that \(\{y_n\}_{n=1}^{\infty}\) is monotone decreasing with limit 0. Then, \(\sum_{n=1}^{\infty} x_n y_n\) converges.
+            \end{theorem}
+            (Hint: Use summation by parts, and then apply the comparison test to the series \(\sum_{k=1}^{\infty} s_k (y_{k+1} - y_k)\).)
+            \begin{solution}
+                We know that summation by parts:
+                $$ \sum_{k=n}^{m} x_k y_k = s_m y_{m+1} - s_{n-1} y_n - \sum_{k=n}^{m} s_k (y_{k+1} - y_k) $$
+                We can then take \(n = 1\) and \(m = N\) to get:
+                $$ \sum_{k=1}^{N} x_k y_k = s_N y_{N+1} - s_0 y_1 - \sum_{k=1}^{N} s_k (y_{k+1} - y_k) $$
+                Since we know that $s_n$ is bounded, we can take $M = \sup_{n \ge 1} |s_n|$ and then we can bound the first term:
+                $$ |s_N y_{N+1}| \le M |y_{N+1}| $$
+                We can also see that since $y_n$ is monotone decreasing and converges to 0, the terms are positive, and we can use a telescopic sum to get the following
+                \begin{align*}
+                    \sum_{n=1}^\infty s_n (y_{n+1} - y_n) &\leq \sum_{n=1}^\infty |s_n| |y_{n+1} - y_n| \\
+                    &\leq M \sum_{n=1}^\infty |y_{n+1} - y_n| \\
+                    &= M \sum_{n=1}^\infty (y_n - y_{n+1}) \\
+                    &= M (y_1 - \lim_{n \to \infty} y_n) \\
+                    &= M y_1
+                \end{align*}
+                Thus, we can see that the series converges by the comparison test since the first term converges to 0 and the second term is bounded.
+            \end{solution}
+            \part Show that if \(a_1 \ge a_2 \ge \cdots \ge a_n \ge \cdots\) with \(a_n \to 0\), then the series \(\sum_{n=1}^{\infty} a_n \sin(nx)\) converges for every \(x \in \mathbb{R}\). (Hint: Observe that \(\sin(x) + \sin(2x) + \cdots + \sin(nx) = \Im \sum_{k=1}^{n} e^{ikx}\) and use the formula for the partial sums of a geometric series.)
+            \begin{solution}
+                Since we know that $a_n$ is decreasing and converges to 0, it must be bounded above by $a_1$. Thus 
+                $$ \sum_{n=1}^{\infty} a_n \sin(nx) \leq a_1 \sum_{n=1}^{\infty} \sin(nx) $$
+                We can then use the formula for the partial sums of a geometric series to get:
+                \begin{align*}
+                    \sum_{k=1}^{n} sin(kx) &= \Im \sum_{k=1}^{n} e^{ikx} \\
+                    &= \Im \left( \frac{e^{ix} - e^{i(n+1)x}}{1 - e^{ix}} \right) \\
+                    &\leq \left| \Im \left( \frac{e^{ix} - e^{i(n+1)x}}{1 - e^{ix}} \right) \right| \\
+                    &\leq \Im | \left( \frac{e^{ix} - e^{i(n+1)x}}{1 - e^{ix}} \right)\\
+                    &\leq \frac{1}{|1 - e^{ix}|} \left| e^{ix} - e^{i(n+1)x} \right| 
+                \end{align*}
+                Since $e^{ix}$ is fixed we know the denominator is bounded. The numeator is also bounded by $4$ Thus the partial sums are bounded. And then by Dirichlet's we can see that the series converges.
+            \end{solution}
+        \end{parts}
+
+        \question In this question, you will show that the infinite sum \(\sum_{n=0}^{\infty} \frac{1}{n!}\) and the limit \(\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n\) both exist and are equal.
+        \begin{parts}
+            \part Show that \(\frac{1}{n!} \le \frac{1}{2^{n-1}}\) for all \(n \ge 0\), and use this to prove that \(\sum_{n=0}^{\infty} \frac{1}{n!}\) converges.
+            \begin{solution}
+                We can prove that \(\frac{1}{n!} \le \frac{1}{2^{n-1}}\) by induction. The base case is \(n = 0\), in which case the left-hand side is \(1\) and the right-hand side is \(2\). Also for $n =1$, the left-hand side is $1$ and the right-hand side is $1$.Now, assume the formula holds for some \(n \ge 0\). Then we need to prove it for \(n + 1\):
+                \begin{align*}
+                    \frac{1}{(n+1)!} &= \frac{1}{(n+1) n!} \\
+                    &\leq \frac{1}{(n+1) 2^{n-1}} \\
+                    &\leq \frac{1}{2^{n}} 
+                \end{align*}
+                Thus, the formula holds for \(n + 1\) as well. By induction, the formula holds for all \(n \ge 0\).
+                Now, we can see that  $\sum_{n=0}^{\infty} \frac{1}{2^{n-1}}$ converges, so we can use the comparison test to see that $\sum_{n=0}^{\infty} \frac{1}{n!}$ converges as well.
+            \end{solution}
+            \part Show that \(\left(1 + \frac{1}{n}\right)^n = \sum_{k=0}^{n} \frac{n!}{n^k (n-k)!} \frac{1}{k!}\) is increasing and bounded above by \(\sum_{k=0}^{\infty} \frac{1}{k!}\). (Hint: First, show that for each fixed \(k\), \(\frac{n!}{n^k (n-k)!}\) is increasing in \(n\). Why is this enough?)
+            \begin{solution}
+                We can rewite the term as:
+                \begin{align*}
+                    \frac{n!}{n^k (n-k)!} &= \frac{n(n-1)(n-2)\cdots(n-k+1)}{n^k} \\
+                    &= \frac{n}{n} \cdot \frac{n-1}{n} \cdots \frac{n-k+1}{n} 
+                \end{align*}
+                We also know that For all \(k \in \N\)
+                \begin{align*}
+                    \frac{n-k}{n} \leq \frac{n-k+1}{n+1}
+                \end{align*} 
+                When we "cross multiply" and expand the numerators we see 
+                \begin{align*}
+                    (n-k)(n+1) = n^2 -kn + n - k \\
+                    n(n-k+1) = n^2 - kn +n
+                \end{align*}
+                Thus, we can see that the term is increasing in \(n\). Now we can see that 
+                \begin{align*}
+                    \frac{n!}{n^k (n-k)!} < 1\\
+                    \frac{n!}{n^k (n-k)! k!} \leq \frac{1}{k!}\\
+                    \sum_{k=0}^{n} \frac{n!}{n^k (n-k)! k!} \leq \sum_{k=0}^{\infty} \frac{1}{k!}
+                \end{align*}
+                Thus, we can see that the series is increasing and bounded above by \(\sum_{k=0}^{\infty} \frac{1}{k!}\).
+            \end{solution}
+            \part Show that \(\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = \sum_{n=0}^{\infty} \frac{1}{k!}\).
+            \begin{solution}
+                We need to show that \(\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = \sum_{k=0}^{\infty} \frac{1}{k!}\). 
+                We know that 
+                \begin{align*}
+                    \left(1 + \frac{1}{n}\right)^n &= \sum_{k=0}^{n} \frac{n!}{n^k (n-k)!} \cdot \frac{1}{k!} 
+                \end{align*}
+                We need to prove that for $\epsilon>0$ there exists an $N$ such that for all $n > N$ we have:
+                \begin{align*}
+                    \left| S_n - S \right| < \epsilon
+                \end{align*}
+                We can rewrite the LHS as 
+                \begin{align*}
+                    |S_n - \sum_{k=0}^{\infty} \frac{1}{k!}| = |\sum_{k=0}^{M} \frac{n!}{n^k (n-k)!} \cdot \frac{1}{k!} - \sum_{k=0}^{M} \frac{1}{k!} +  \sum_{k=M+1}^{n} \frac{n!}{n^k (n-k)!} \cdot \frac{1}{k!} - \sum_{k=M+1}^{\infty} \frac{1}{k!}|\\
+                    \leq |\sum_{k=0}^{M} \frac{n!}{n^k (n-k)!} \cdot \frac{1}{k!} - \sum_{k=0}^{M} \frac{1}{k!}| + |\sum_{k=M+1}^{n} \frac{n!}{n^k (n-k)!} \cdot \frac{1}{k!}| + |\sum_{k=M+1}^{\infty} \frac{1}{k!}|\\
+                \end{align*}
+                We can show each of these terms are less than $\epsilon /3$ for all $n > N$. \\
+                Term 1
+                Let $\epsilon > 0$ and we can choose $N$ such that for all $n > N$ for each $k \leq M$ we have 
+                \begin{align*}
+                    \left|\frac{n!}{n^k (n-k)! k!} - \frac{1}{k!}\right| < \frac{\epsilon}{3M}
+                \end{align*}
+                Then we can see that
+                \begin{align*}
+                    |\sum_{k=0}^{M} \frac{n!}{n^k (n-k)!} \cdot \frac{1}{k!} - \sum_{k=0}^{M} \frac{1}{k!}| &= |\sum_{k=0}^{M} \left(\frac{n!}{n^k (n-k)!} - \frac{1}{k!}\right)| \\
+                    &\leq \sum_{k=0}^{M} \left|\frac{n!}{n^k (n-k)!} - \frac{1}{k!}\right| \\
+                    &< M \cdot \frac{\epsilon}{3M} = \frac{\epsilon}{3}
+                \end{align*}
+                Term 2
+                We need to show that 
+                \begin{align*}
+                    |\sum_{k=M+1}^{n} \frac{n!}{n^k (n-k)!} \cdot \frac{1}{k!}| < \frac{\epsilon}{3}
+                \end{align*}
+                This is clear from part b since we know that the series converges. We can choose $N$ such that for all $n > N$ we have
+                \begin{align*}
+                    |\sum_{k=M+1}^{n} \frac{n!}{n^k (n-k)!} \cdot \frac{1}{k!}| < \frac{\epsilon}{3}
+                \end{align*}
+                Term 3
+                We need to show that
+                \begin{align*}
+                    |\sum_{k=M+1}^{\infty} \frac{1}{k!}| < \frac{\epsilon}{3}
+                \end{align*}
+                This is clear since we know that the series converges. We can choose $N$ such that for all $n > N$ we have
+                \begin{align*}
+                    |\sum_{k=M+1}^{\infty} \frac{1}{k!}| < \frac{\epsilon}{3}
+                \end{align*}
+                Thus we can see that 
+                \begin{align*}
+                    |S_n - \sum_{k=0}^{\infty} \frac{1}{k!}| &< |\sum_{k=0}^{M} \frac{n!}{n^k (n-k)!} \cdot \frac{1}{k!} - \sum_{k=0}^{M} \frac{1}{k!}| + |\sum_{k=M+1}^{n} \frac{n!}{n^k (n-k)!} \cdot \frac{1}{k!}| + |\sum_{k=M+1}^{\infty} \frac{1}{k!}|\\
+                    &< \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon
+                \end{align*}
+                Thus the limit converges to $\sum_{k=0}^{\infty} \frac{1}{k!}$.
+            \end{solution}
+        \end{parts}
+
+        \question Given a real number \(x \in \mathbb{R}\), define
+        \[
+        \exp(x) = \sum_{n=0}^{\infty} \frac{x^n}{n!}
+        \]
+        \begin{parts}
+            \part Show that the sum defining \(\exp(x)\) converges absolutely for every real number \(x\).
+            \begin{solution}
+                We can see that the series converges absolutely since we can use the ratio test to get:
+                \begin{align*}
+                    \lim_{n \to \infty} \left| \frac{x^{n+1}}{(n+1)!} \cdot \frac{n!}{x^n} \right| &= \lim_{n \to \infty} \left| \frac{x}{(n+1)}\right| = 0
+                \end{align*}
+                Since this is less than 1, we can see that the series converges absolutely regardless of the value of \(x\).
+            \end{solution}
+            \part Using only the series definition above and other material covered in this class, show that for every \(x, y \in \mathbb{R}\),
+            \[
+            \exp(x) \exp(y) = \exp(x + y)
+            \]
+            (Hint: Remember the binomial theorem.)
+            \begin{solution}
+                We can use the binomial theorem to get:
+                \begin{align*}
+                    \exp(x) \exp(y) &= \sum_{n=0}^{\infty} \frac{x^n}{n!} \cdot \sum_{m=0}^{\infty} \frac{y^m}{m!} \\
+                    &= \sum_{k=0}^{\infty} \sum_{n=0}^{k} \frac{x^n y^{k-n}}{n!(k-n)!} \\
+                    &= \sum_{k=0}^{\infty} \frac{1}{k!} \sum_{n=0}^{k} \binom{k}{n} x^n y^{k-n} \\
+                    &= \sum_{k=0}^{\infty} \frac{(x+y)^k}{k!} \\
+                    &= \exp(x+y)
+                \end{align*}
+                Thus, we can see that \(\exp(x) \exp(y) = \exp(x + y)\).
+            \end{solution}
+        \end{parts}
+
+        \question Give an example of a doubly infinite matrix \(\{a_{n,m}\}_{n,m=1}^{\infty}\) such that \(\sum_{m=1}^{\infty} \left(\sum_{n=1}^{\infty} a_{n,m}\right)\) exists, but \(\sum_{m=1}^{\infty} a_{n,m}\) diverges for every \(n\).
+        \begin{solution}
+            Consider the Matrix \(\{a_{n,m}\}_{n,m=1}^{\infty}\) defined as follows:
+            $$ a_{n,m} = \begin{cases}
+                \frac{(-1)^{m+1}}{n!} \text{ if } m \geq n\\
+                0 \text{ if } m < n 
+            \end{cases} $$
+            This matrix is of the form:
+            \[
+            \begin{bmatrix}
+                1 & -1 & 1 & -1 & \cdots \\
+                0 & \frac{1}{2} & -\frac{1}{2} & \frac{1}{2} & \cdots \\
+                0 & 0 & \frac{1}{6} & -\frac{1}{6} & \cdots \\
+                0 & 0 & 0 & \frac{1}{24} & \cdots \\
+                \vdots & \vdots & \vdots & \vdots & \ddots
+            \end{bmatrix}
+            \]
+            First consider the sum:
+            $$ \sum_{n=1}^{\infty} a_{n,m} $$
+            The sum of the sum of columns are a conditionally convergent series. Since we can see that The partial sums (the sums of the columns) are bounded. And then we can see the rows sums are clealry occilating and thus diverge. 
+        \end{solution}
+
+        \question Suppose \(\sum_{n=1}^{\infty} a_n\) is a conditionally convergent series, and define \(s_n^+\) and \(s_n^-\) to be the sum of the first \(n\) positive terms and the sum of the first \(n\) negative terms, respectively (for example, if \(a_n = \frac{(-1)^n}{n}\), \(s_1^+ = \frac{1}{2}\), \(s_2^+ = \frac{1}{2} + \frac{1}{4}\), and so on, while \(s_1^- = -1\), \(s_2^- = -1 - \frac{1}{3}\), and so on.) Show that \(s_n^+ \to +\infty\) and \(s_n^- \to -\infty\).
+        \begin{solution}
+            Suppose $\sum_{n=1}^{\infty} a_n$ is conditionally convergent. Then consider the sequence $s_n^+$ and $s_n^-$:
+            \begin{align*}
+                s_n^+ &= \sum_{k=1}^{n} a_k^+ \\
+                s_n^- &= \sum_{k=1}^{n} a_k^-
+            \end{align*}
+            Where $a_k^+$ and $a_k^-$ are the positive and negative parts of the series. \\
+            We know that since the series is conditionally convergent, then $$\sum_{k=1}^{\infty} |a_k|$$ diverges. \\
+            Through a careful definiton of $a_n^+$ and $a_n^-$ where the sequenes are defined as:
+            $$ a_n^+ = \begin{cases}
+                a_n & \text{if } a_n > 0 \\
+                0 & \text{otherwise}
+            \end{cases} $$
+            $$ a_n^- = \begin{cases}
+                a_n & \text{if } a_n < 0 \\
+                0 & \text{otherwise}
+            \end{cases} $$
+            Then we can see that 
+            $$ |a_n| = a_n^+ - a_n^- $$
+            $$ \sum_{k=1}^{n} |a_k| = \sum_{k=1}^{n} a_k^+ - \sum_{k=1}^{n} a_k^- \to \infty $$
+            Since we know that original series converges conditionally
+            $$ \sum_{k=1}^{n} a_k = \sum_{k=1}^{n} a_k^+ + \sum_{k=1}^{n} a_k^- = L $$
+            The only way for these 2 conditions to be satisfied is if $s_n^+ \to +\infty$ and $s_n^- \to -\infty$.
+            Thus, we can see that $s_n^+ \to +\infty$ and $s_n^- \to -\infty$.
+        \end{solution}
+
+        \question Suppose \(\sum_{n=1}^{\infty} a_n\) is a conditionally convergent series.
+        \begin{parts}
+            \part Write a rigorous proof showing that for any real number \(L\), there exists a rearrangement \(\sum_{n=1}^{\infty} a_{f(n)}\) converging to \(L\). (Hint: Abbot gives a sketch in Section 2.9: Your job is to make the sketch rigorous. Problem 5 will be of help here.)
+            \begin{solution}
+                Our idea is to creat a rearrangement of the series by taking the positive and negative parts of the series and adding the terms until we reach the limit above the limit $L$ then subtracting terms until we reach the limit below the limit $L$. \\
+                This can be done by considering the two subsequences of $a_n$ where the positive and negative terms are defined as:
+                $$ a_k^+ = \text{the }k\text{th positive term of the series} $$
+                $$ a_k^- = \text{the }k\text{th negative term of the series} $$
+                We can then define the rearrangement $a_n'$ recursively as well as its partial sum $s_n'$ with the following
+                \begin{align*}
+                    a_{n+1}' = \begin{cases}
+                        a_k^+ & \text{if } s_n^+ \leq L \\
+                        a_k^- & \text{if } s_n^- > L 
+                    \end{cases}
+                \end{align*}
+                To show that $s_n' \to L$ we can see that for any $\epsilon > 0$ becuase $a_n \to 0$ there exists an $N \in \N$ such that for all $n > N$ we have $|a_n| < \epsilon$. \\
+                Note that the $N$th term of the positive and negative series are both less than $\epsilon$. \\
+                Let $M \in N$ be the partial sum $s_M'$ includes the $N$th term of the positive series and the $N$th term of the negative series. \\
+                Either $s_M'$ is less than $L$ or greater than $L$. \\
+                Without loss of generality, let $s_M' \le L$. So we will keep adding positive terms until the first $K > M$ such that $s_K' > L$. But note because all of these terms will be less than $\epsilon$, we have $|s_K' - L| < \epsilon$. Now $s_K'$ is within $V_\epsilon(L)$. Note then that for all $k \ge K$, $s_k' \in V_\epsilon(L)$ because our step sizes are always less than $\epsilon$. Thus $(s_n') \to L$
+            \end{solution}
+            \part Explain how you could change your proof from part (a) to construct a rearrangement of \(\sum_{n=1}^{\infty} a_n\) that diverges to \(+\infty\). Do not write the complete proof.
+            \begin{solution}
+                We can do this by adding the positive terms until reaching above $L$ then subtract one negative term. Then add terms to reach above $L +1$ and then subtract one negative term. We can keep doing this and we can see that the series diverges to $+\infty$.
+                This is a valid rearrangement since we are just adding and subtracting terms from the original series
+            \end{solution}
+        \end{parts}
+\end{questions}
+
+\end{document}

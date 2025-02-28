@@ -1,0 +1,135 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311H}
+\newcommand{\assignment}{Recitaion 1}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question 
+    \begin{parts}
+        \item Verify that the triangle inequality holds in the special case when $a$ and $b$ have the same sign.
+        \item Find an effient proof for all cases at once by first proving the inequality $(a+b)^2 \leq (|a|+|b|)^2$.
+        \item Prove that $|a-b| \leq |a-c| + |b-d| + |d-b|$.
+        \item Prove that $||a|-|b|| \leq |a-b|$
+    \end{parts} 
+    \begin{solution}
+        \textbf{(a)}
+    \begin{proof}
+        Suppose we have $a,b \in \mathbb{R}$ such that $a,b \geq 0$. \\
+        We need to verify that $|a+b| \leq |a| + |b|$. \\
+        Since $|a| = a$ and $|b| = b$, we have: $|a|+|b| = a+b$. \\
+        Clearly $a+b > 0$ and $|a+b| = a+b$. \\
+    \end{proof}
+    \textbf{(b)}
+    \begin{proof}
+        Suppose $a,b \in \mathbb{R}$. \\
+        We need to prove $(a+b)^2 \leq (|a|+|b|)^2$. \\
+        We can verify this by taking the square of both sides: \\
+        \begin{align*}
+            (a+b)^2 &\leq (|a|+|b|)^2 \\
+            a^2 + 2ab + b^2 &\leq a^2 + 2|a||b| + b^2 \\
+            2ab &\leq 2|a||b| \\
+            ab &\leq |a||b|
+        \end{align*}
+        Since if $a,b$ have same sign $ab = |a||b|$, the inequality holds. \\
+        if $a,b$ have opposite signs, $ab = -|a||b| \leq |a||b|$ \\
+        Now give that this inequality holds, if take the square root of both sides, we get: \\
+        $$ |a+b| \leq |a| + |b| $$
+    \end{proof}
+    \textbf{(c)}
+    \begin{proof}
+        Suppose $a,b,c,d \in \mathbb{R}$. \\
+        We need to prove $|a-b| \leq |a-c| + |b-d| + |d-b|$. \\
+        Consider $|a-b| = |a-c + c-d + d-b|$. \\
+        Since in the prior part we proved the triangle inequality, we have: \\
+        \begin{align*}
+            |a-b| &\leq |a-c + c-d + d-b| \\
+            &\leq |a-c + c-d| + |d-b| \\
+            &\leq |a-c| + |c-d| + |d-b|
+        \end{align*}
+    \end{proof}
+    \textbf{(d)}
+    \begin{proof}
+        Suppose $a,b \in \mathbb{R}$. \\
+        WLOG assume $|a| \geq |b|$. \\
+        We need that $||a|-|b|| \leq |a-b|$. \\
+        We can recognize that $a = a - b + b$ \\
+        \begin{align*}
+            |(a - b) + (b)| &\leq |a-b| + |b| \\
+            |a| &= |(a-b) + b| \\
+            |a| &\leq |a-b| + |b| \\
+            |a| - |b| &\leq |a-b|\\ 
+            ||a|-|b|| &\leq |a-b| \quad \text{Since $|a| \geq |b|$}
+        \end{align*}
+    \end{proof}
+    \end{solution}
+    \question Given the contrapositive and converse for each of the following statements. Is the converse true, what about the contrapositive?
+    \begin{parts}
+        \item If you are at Rutgers, the you are in New Jersey.
+        \item If n is even, then $n^2$ is divisible by 4.
+    \end{parts}
+    \begin{solution}
+        \textbf{(a)}\\
+        \textbf{Statement:} If you are at Rutgers, the you are in New Jersey. \\
+        \textbf{Converse:} If you are in New Jersey, then you are at Rutgers. (False) \\
+        \textbf{Contrapositive:} If you are not in New Jersey, then you are not at Rutgers. (True) \\
+        \textbf{(b)}\\
+        \textbf{Statement:} If n is even, then $n^2$ is divisible by 4. \\
+        \textbf{Converse:} If $n^2$ is divisible by 4, then n is even. (False) \\
+        \textbf{Contrapositive:} If $n^2$ is not divisible by 4, then n is not even. (True) \\
+    \end{solution}
+    \question Let $S= \emptyset$. 
+    \begin{parts}
+        \item What are the upper bounds of $S$?
+        \item Explain why the completeness axiom only applies to nonempty sets.
+    \end{parts}
+    \begin{solution}
+        \textbf{(a)}\\
+        The upper bounds of $S$ are all real numbers. \\
+        \textbf{(b)}\\
+        We must have a non empty set when considering completeness as the supremum and infimum of the set must exist. If the set is empty, then the supremum and infimum do not exist as all numbers are upper (lower) bounds of the set.
+    \end{solution}
+    \question \begin{parts}
+        \item Let $A$ be nonempty and bounded by below and define $B = \setof{b \in \mathbb{R}: b \text{ is a lower bound of } A}$. Prove that $\sup B = \inf A$.
+        \item Using part (a), explain why there is no need to assert that the greatest lower bounds exist as part of the completeness axiom.
+    \end{parts}
+    \begin{solution}
+        \textbf{(a)}\\
+        \begin{proof}
+            Suppose $A$ is nonempty and bounded below. \\
+            Let $B = \setof{b \in \mathbb{R}: b \text{ is a lower bound of } A}$. \\
+            We need to prove that $\sup B = \inf A$. \\
+            Since $A$ is bounded below, $\inf A$ exists. \\
+            Since $B$ is a set of lower bounds of $A$, $\inf A \in B$. \\
+            Since $\inf A$ is the greatest lower bound of $A$, $\inf A \geq b$ for all $b \in B$. \\
+            Thus $\inf A$ is an upper bound of $B$. \\
+            Since $\inf A$ is the greatest lower bound of $A$, $\inf A = \sup B$.
+        \end{proof}
+        \textbf{(b)}\\
+        \begin{proof}
+            We can see that the completeness axiom is not needed to assert that the greatest lower bounds exist since the supremum of the set of lower bounds is the infimum of the set.
+        \end{proof}
+    \end{solution}
+    \question Prove that if $S$ is a set of real number which is bo
+
+
+
+
+
+
+
+
+\end{questions}
+
+\end{document}

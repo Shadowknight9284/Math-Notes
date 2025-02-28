@@ -1,0 +1,480 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section*{Exam Content}
+\begin{itemize}
+    \item Chapter 1 (Where PDEs come from)
+    \item Chapter 2 (Waves and Diffusion)
+    \item Chapter 4 (Boundary Problems)
+    \item Chapter 5 (Fourier Series)
+    \item Chapter 6 (Harmonic Functions)
+    \item Chapter 7 (Green's Identities and Functions)
+\end{itemize}
+
+\section*{Notes}
+\subsection{Chapter 1}
+\subsubsection{First Order Linear PDE}
+    A really simple PDE that is primarily solved by making a change of variable along the characteristic curves to show that the PDE is actually an ODE in a certain variable and the solution is a function of the other variable.
+    \begin{example}
+        \textbf{First order linear homogeneous PDE with constant coefficients.}
+        \begin{align*}
+            au_x + bu_y = 0
+        \end{align*}
+        \textbf{Solution by Geometry}
+        \begin{solution}
+            We solve this by noticing the directional derivative in the $V = (a, b)$ direction is 0. Ie $V \cdot \nabla u = 0$. \\
+            We can also see that the vector $W = (b, -a)$ is orthogonal to $V$ and the line paralell to $V$ have equation of $bx - ay = c$.\\
+            These lines are called the characteristic lines of the PDE.\\
+            Thus the solution of the PDE is given by
+            $$ u(x, y) = f(bx - ay) $$
+        \end{solution}
+        \textbf{Solution by Change of Basis}
+        \begin{solution}
+            We can also make a change of variables to a nicer form of the PDE. Let $x' = ax + by$ and $y' = bx - ay$. 
+            \begin{align*}
+                u_x = a u_{x'} + b u_{y'}, \quad u_y = bu_{x'} - au_{y'}\\
+                au_x + bu_y = a(au_{x'} + bu_{y'}) + b(bu_{x'} - au_{y'}) = (a^2 + b^2)u_{x'} = 0
+            \end{align*}
+            This is a simple ODE to solve as $a^2 + b^2 \neq 0$.
+            \begin{align*}
+                \int u_{x'} dx' = f(y') + C \implies u(x, y) = f(bx - ay)
+            \end{align*}
+        \end{solution}
+    \end{example}
+    \begin{example}
+        \textbf{First order Linear PDE with variable coefficients}
+        \begin{align*}
+            a(x, y)u_x + b(x, y)u_y = 0
+        \end{align*}
+        \begin{solution}
+            We solve this be finding the direction of the characteristic curves. We can see that in the direction of the vector $V = (a(x, y), b(x, y))$ the directional derivative is 0. Thus if we consider the curves in the xy plane with $dx = a(x, y)dt$ and $dy = b(x, y)dt$ we can see that the solution is constant along these curves. 
+            \begin{align*}
+                \frac{dy}{dx} = \frac{b(x, y)}{a(x, y)}
+            \end{align*}
+            Solving this ODE for $y$ in terms of $x$ gives us the characteristic curves.\\
+            $$y(x) = \int \frac{b(x, y)}{a(x, y)} dx + C$$
+            Thus along these curves the derivative of $u$ is 0
+            $$ \frac{du}{dx} u(x, y(x)) = \frac{\partial u}{\partial x} + \frac{\partial u}{\partial y} \cdot \frac{b(x,y)}{a(x,y)} =0$$
+            Thus $u(x, y(x)) = u(0, y(0))$ is independent of $x$. \\
+            We can notice that $C = y - \int \frac{b(x, y)}{a(x, y)} dx$ and thus the solution is given by
+            $$ u(x, y) = f(y - \int \frac{b(x, y)}{a(x, y)} dx)$$
+            Not that this formula is not 100\% correct, but the idea stands that the solution is constant along the characteristic curves. and solving for the characteristic curves gives us the solution.
+        \end{solution}
+    \end{example}
+    \subsubsection{Transport Equation}
+    The transport equation is a simple first order linear PDE that describes the transport of a quantity in a certain direction. It is given by
+    \begin{align*}
+        u_t + au_x = 0
+    \end{align*}
+    \begin{solution}
+        We can solve this by noticing that the solution is constant along the characteristic curves. The characteristic curves are given by
+        \begin{align*}
+            \frac{dx}{dt} = a \implies x = at + C
+        \end{align*}
+        Thus the solution is constant along the lines $x = at + C$. Thus the solution is given by
+        \begin{align*}
+            u(x, t) = f(x - at)
+        \end{align*}
+    \end{solution}
+    \subsubsection{Boundary Conditions}
+    \begin{definition}[Dirichlet Boundary Conditions]
+        Dirichlet boundary conditions are boundary conditions that specify the value of the function on the boundary of the domain.
+        $$ u = f(x) \quad \text{on} \quad \partial \Omega$$
+    \end{definition}
+    \begin{definition}[Neumann Boundary Conditions]
+        Neumann boundary conditions are boundary conditions that specify the derivative of the function on the boundary of the domain.
+        $$ \frac{\partial u}{\partial n} = f(x) \quad \text{on} \quad \partial \Omega$$
+    \end{definition}
+    \begin{definition}[Robin Boundary Conditions]
+        Robin boundary conditions are boundary conditions that specify a linear combination of the function and its derivative on the boundary of the domain.
+        $$ \alpha u + \beta \frac{\partial u}{\partial n} = f(x) \quad \text{on} \quad \partial \Omega$$
+    \end{definition}
+    \subsubsection{Well Posed Problems}
+    A well posed problem is a problem that has a unique solution and the solution depends continuously on the data. It has 3 main criteria:
+    \begin{itemize}
+        \item Existence: There exists a solution to the problem.
+        \item Uniqueness: The solution is unique.
+        \item Stability: The solution depends continuously on the data.
+    \end{itemize}
+    \subsubsection{Second Order Linear PDE}
+    A second order linear PDE is given by
+    \begin{align*}
+        a(x, y)u_{xx} + 2b(x, y)u_{xy} + c(x, y)u_{yy} + d(x, y)u_x + e(x, y)u_y + f(x, y)u = g(x, y)
+    \end{align*}
+    We have 3 main cases of second order linear PDEs:
+    \begin{itemize}
+        \item Elliptic PDEs: $b^2 - ac < 0$. $u_{xx} + u_{yy} + ... = 0$, All same sign eval
+        \item Parabolic PDEs: $b^2 - ac = 0$. $u_{xx} + ... = 0$, one 0 eval rest same sign
+        \item Hyperbolic PDEs: $b^2 - ac > 0$ $ u_{xx} - u_{yy} + ... = 0$, one positive/negative and rest negative/positive evals.
+    \end{itemize}
+    \subsection{Chapter 2}
+    \subsubsection{Wave Equation}
+    We write the wave equation as
+    \begin{align*}
+        u_{tt} = c^2 u_{xx} on -\infty < x < \infty, t > 0
+    \end{align*}
+    This is the simplest second order linear PDE. We can see it is two transport equations multiplied together. We can solve this by using the method of characteristics for each transport equation. We can see that the characteristic curves are given by
+    $$ (\frac{\partial }{\partial t} -c \frac{\partial}{\partial x})(\frac{\partial}{\partial t} + c \frac{\partial}{\partial x})u = 0$$
+    Thus the solution is given by
+    $$ u(x, t) = f(x - ct) + g(x + ct)$$
+    Solution by two transport equations.
+    \begin{solution}
+        We can start with the product of the two transport equations
+        $$ (\frac{\partial }{\partial t} -c \frac{\partial}{\partial x})(\frac{\partial}{\partial t} + c \frac{\partial}{\partial x})u = 0$$
+        We can solve this by solving one of the transport equations first, then substituting the solution into the other transport equation.\\
+        Let $v = u_t + cu_x$ then we have $v_t - cv_x = 0$. With this sysemt we can solve for $v$ and then solve for $u$.
+        $$ \begin{cases}
+            v_t - cv_x = 0\\
+            u_t + cu_x = v
+        \end{cases}$$
+        We can solve the first equation by noticing that the solution is constant along the characteristic curves. The characteristic curves are given by
+        $$ \frac{dx}{dt} = -c \implies x = -ct + C$$
+        Thus the solution is constant along the lines $x = -ct + C$. Thus the solution is given by
+        $$ v(x, t) = f(x + ct)$$
+        We can substitute this into the second equation to get
+        $$ u_t + cu_x = f(x + ct)$$
+        We can solve this by noticing that the solution is constant along the characteristic curves. The characteristic curves are given by
+        $$ \frac{dx}{dt} = c \implies x = ct + C$$
+        Thus the solution is constant along the lines $x = ct + C$. Thus the solution is given by
+        $$ u(x, t) = g(x - ct)$$
+        Thus the solution is given by
+        $$ u(x, t) = f(x + ct) + g(x - ct)$$
+    \end{solution}
+    Solution by characteristic coordinates.
+    \begin{solution}
+        We can also solve this by making a change of variables to the characteristic coordinates. Let $\xi = x + ct$ and $\eta = x - ct$. We can see that
+        $$ u_x = u_{\xi} + u_{\eta}, \quad u_t = c(u_{\xi} + u_{\eta})$$
+        Thus the wave equation becomes
+        $$ (\partial_t - c \partial_x)(\partial_t + c \partial_x)u = (-2c \partial_{\xi} )(2 c \partial_{\eta})u$$
+        Thus the solution is given by
+        $$ u_{\xi \eta} = 0 \implies u(\xi, \eta) = f(\xi) + g(\eta)$$
+    \end{solution}
+    A wave equation with initial conditions is given by
+    $$ \begin{cases}
+        u_{tt} = c^2 u_{xx}\\
+        u(x, 0) = \phi(x)\\
+        u_t(x, 0) = \psi(x)
+    \end{cases}$$
+    We can find a general solution by the following
+    \begin{solution}
+        We can see that $\phi(x) = f(x) + g(x)$ and $\psi(x) = cf'(x) - cg'(x)$. \\
+        Solving for $f', g'$ we get
+        $$ f' = \frac{1}{2}(\phi' + \frac{1}{c}\psi), \quad g' = \frac{1}{2}(\phi' - \frac{1}{c}\psi)$$
+        Integrating both equations we get
+        \begin{align*}
+            f(s) = \frac{1}{2} \phi(s) + \frac{1}{2c} \int_{0}^{s} \psi(\sigma) d\sigma + A\\
+            g(r) = \frac{1}{2} \phi(r) - \frac{1}{2c} \int_{0}^{r} \psi(\sigma) d\sigma + B
+        \end{align*}
+        Because of the IC that $\phi(x) = f(x) + g(x)$ we can see that $A + B = 0$. And substituting $s = x + ct$ and $r = x - ct$ we get
+        \begin{align*}
+            u(x, t) = \frac{1}{2}(\phi(x + ct) + \phi(x - ct)) + \frac{1}{2c} \int_{x - ct}^{x + ct} \psi(s) ds
+        \end{align*}
+        This is called D'Alembert's formula.
+    \end{solution}
+    \subsubsection{Causality and Energy}
+    We can see that the wave equation is causal. This means that the solution at a point $(x, t)$ only depends on the initial conditions in the past light cone of $(x, t)$. \\
+    In laymans terms, a finite speed of propagation which is $c$ in the wave equation.\\
+    We can also see that the wave equation conserves energy. The energy of the wave equation is given by
+    $$ E(t) = \int_{-\infty}^{\infty} \frac{1}{2}( \rho u_t^2 + T u_x^2) dx$$
+    Where $\rho$ is the density of the string and $T$ is the tension in the string. We can see that the energy is conserved as the energy is constant with respect to time.
+    \subsubsection{Diffusion Equation}
+    The diffusion equation is given by
+    \begin{align*}
+        u_t = k u_{xx}
+    \end{align*}
+    This is a harder PDE than the wave equation. So we will look at some properties of the diffusion equation.\\
+    \textbf{Maximum Principle}
+    \begin{theorem}
+        If $u(x, t)$ is a solution to the diffusion equation on a domain $\Omega$ then the maximum of $u(x, t)$ is on the boundary of $\Omega$.
+    \end{theorem}
+    This is a very useful property of the diffusion equation. It is also true for the minimum of $u(x, t)$ as if $u$ is a solution then $-u$ is also a solution.\\
+    \textbf{Uniqueness of Solutions}
+    \begin{theorem}
+        The diffusion equation has a unique solution given the initial conditions.
+        $$ \begin{cases}
+            u_t - k u_{xx} = f(x,t) \quad \text{for } 0 < x < L, \text{ and } t>0\\
+            u(x, 0) = \phi(x)\\
+            u(0,t) = g(t), u(L, t) = h(t)
+        \end{cases}$$
+        This means that a solution can be uniquely determined given $f, \phi, g, h$.
+    \end{theorem}
+    There are 2 main methods to prove uniqueness. The first is by using the maximum principle and the second is by using the energy method.\\
+    \textbf{Maximum Principle Proof}
+    \begin{solution}
+        We can prove uniqueness by assuming that there are two solutions $u_1, u_2$ that satisfy the same initial conditions. Let $w = u_1 - u_2$. We can see that $w$ satisfies the diffusion equation with $f = 0$ and $w(x, 0) = 0$. We can see that $w$ satisfies the maximum principle. Thus the maximum of $w$ is on the boundary of the domain. We can see that the maximum of $w$ is 0. Thus $u_1 = u_2$.
+    \end{solution}
+    \textbf{Energy Method Proof}
+    \begin{solution}
+        We can prove uniqueness by assuming that there are two solutions $u_1, u_2$ that satisfy the same initial conditions. Let $w = u_1 - u_2$. We can rewrite to diffusion equation as
+        \begin{align*}
+            0 &= 0 \cdot w\\
+            &= (w_t - k w_{xx})w\\
+            &= (\frac{1}{2} w^2)_t + (-kw_x w)_x + k w_x^2
+        \end{align*}
+        Then integrate over the interval $[0, L]$ 
+        \begin{align*}
+            0 = \int_{0}^{L} (\frac{1}{2} w^2)_t dx - k w_x w |_0^L + k \int_{0}^{L} w_x^2 dx
+        \end{align*}
+        Because of the initial conditions we can see the second term is 0. $$ \frac{d}{dt} \int_{0}^{L} \frac{1}{2} w^2 dx = -k \int_{0}^{L} w_x^2 dx \leq 0$$
+        Thus clealry $\int w^2 dx$ is decreasing \\
+        $$ \int_{0}^{L} w^2 dx = 0 \implies w = 0$$
+        Thus $u_1 = u_2$.
+    \end{solution}
+    \textbf{Stability}
+    \begin{theorem}
+        The diffusion equation is stable. This means that the solution depends continuously on the initial conditions.
+        $$ \int_0^l |u(x, t) - v(x, t)|^2 dx \leq \int_0^l |u(x, 0) - v(x, 0)|^2 dx$$
+    \end{theorem}
+    \subsubsection{Diffusion on the Whole Line}
+    We can solve the diffusion equation on the whole line which is given as 
+    \begin{align*}
+        u_t = k u_{xx} \quad -\infty < x < \infty, t > 0
+        u(x, 0) = \phi(x)
+    \end{align*}
+    To solve it we conider 5 invariance properties
+    \begin{itemize}
+        \item Translate $u(x, t) \to u(x - a, t)$
+        \item Any Derivative $u_x, u_t, u_{xx}, u_{xt}, u_{tt}$
+        \item Linear Combination $au + bv$
+        \item Integral $\int_{-\infty}^{\infty} S(x-y,t) g(y)dy$ if $S(x, t)$ is a solution to the diffusion equation.
+        \item Scaling $u(x, t) \to u(\lambda x, \lambda^2 t)$
+    \end{itemize}
+    Goal is to find a solution thay satisfies the initial condition $Q(x,0)= \begin{cases}
+        0 \quad x < 0\\
+        1 \quad x > 0
+    \end{cases}$ 
+    We have our solution as 
+    $$ Q(x,t) = \frac{1}{2} + \frac{1}{\sqrt{\pi}} \int_{0}^{\infty} e^{-s^2} ds$$
+    where $s = \frac{x}{\sqrt{4kt}}$. We can see that this solution satisfies the initial condition and is a solution to the diffusion equation.
+    And for an initial condition $u(x, 0) = \phi(x)$ we can solve it by
+    $$ u(x, t) = \int_{-\infty}^{\infty} \phi(y) \frac{1}{\sqrt{4 \pi k t}} e^{-\frac{(x-y)^2}{4kt}} dy$$
+    Think of this like for each t calculate the weighted average of the initial condition at each point.
+
+    \subsection{Chapter 4}
+    \subsubsection{Seperation of Variables, the Dirichlet Condition}
+    First lets consider the homogeneous Dirichlet condtion for the wave equation. 
+    $$ \begin{cases}
+        u_{tt} = c^2 u_{xx} \quad 0 < x < L, t > 0\\
+        u(0, t) = u(L, t) = 0\\
+        u(x, 0) = \phi(x), u_t(x, 0) = \psi(x)
+    \end{cases}$$
+    We will solve this by separation of variables. We will assume that the solution is of the form $u(x, t) = X(x)T(t)$. 
+    Then plugging it into the wave equation we get
+    $$ -\frac{T''}{c^2 T} = -\frac{X''}{X} = \lambda$$
+    Now we can seperatly solve the ODEs. We can see that the solution to the ODE is given by
+    \begin{align*}
+        X(x) &= A cos(\sqrt{\lambda} x) + B sin(\sqrt{\lambda} x)\\
+        T(t) &= C cos(c \sqrt{\lambda} t) + D sin(c \sqrt{\lambda} t)
+    \end{align*}
+    Now by imposing the BC for $X(x)$ we get that $A = 0$ and $sin(\sqrt{\lambda} L) = 0$. Thus $\sqrt{\lambda} = \frac{n \pi}{L}$. Thus the eigenfunctions are given by
+    $$ X_n(x) = sin(\frac{n \pi x}{L})$$
+    Thus there are an infinite number of seperated solutions:
+    $$ u_n(x, t) = sin(\frac{n \pi x}{L}) (C_n cos(\frac{n \pi c t}{L}) + D_n sin(\frac{n \pi c t}{L}))$$
+    And we can sum all of these solutions to get the general solution
+    $$u(x, t) = \sum_{n=1}^{\infty} sin(\frac{n \pi x}{L}) (C_n cos(\frac{n \pi c t}{L}) + D_n sin(\frac{n \pi c t}{L}))$$
+    Now to impose our IC we can see that we have
+    $$ \phi(x) = \sum_{n=1}^{\infty} C_n sin(\frac{n \pi x}{L})$$
+    $$ \psi(x) = \sum_{n=1}^{\infty} \frac{n \pi c}{L} D_n sin(\frac{n \pi x}{L})$$
+    We can solve for $C_n, D_n$ by using the orthogonality of the sine functions. We can see that
+    $$ \int_{0}^{L} sin(\frac{n \pi x}{L}) sin(\frac{m \pi x}{L}) dx = \begin{cases}
+        0 \quad n \neq m\\
+        \frac{L}{2} \quad n = m
+    \end{cases}$$
+    Thus we can solve for $C_n, D_n$ by multiplying by $sin(\frac{m \pi x}{L})$ and integrating over $[0, L]$.
+    $$ C_n = \frac{2}{L} \int_{0}^{L} \phi(x) sin(\frac{n \pi x}{L}) dx$$
+    $$ D_n = \frac{2}{n \pi c} \int_{0}^{L} \psi(x) sin(\frac{n \pi x}{L}) dx$$
+    There is a similar process for the diffusion equation. 
+    $$ \begin{cases}
+        u_t = k u_{xx} \quad 0 < x < L, t > 0\\
+        u(0, t) = u(L, t) = 0\\
+        u(x, 0) = \phi(x)
+    \end{cases}$$
+    We can solve this by seperation of variables. We can see that the solution is given by
+    $$ u(x, t) = \sum_{n=1}^{\infty} A_n sin(\frac{n \pi x}{L}) e^{-\frac{n^2 \pi^2 k t}{L^2}} $$
+    And we can solve for $A_n$ by using the orthogonality of the sine functions. We can see that
+    $$ A_n = \frac{2}{L} \int_{0}^{L} \phi(x) sin(\frac{n \pi x}{L}) dx$$
+    Similarly we can con
+
+
+    \subsubsection{Neumann Boundary Conditions}
+    Now lets consider the Neumann boundary conditions for the wave equation.
+    $$ \begin{cases}
+        u_{tt} = c^2 u_{xx} \quad 0 < x < L, t > 0\\
+        u_x(0, t) = u_x(L, t) = 0\\
+        u(x, 0) = \phi(x), u_t(x, 0) = \psi(x)
+    \end{cases}$$
+    We can solve this by seperation of variables. and we can see that 
+    \begin{align*}
+        X(x) &= A cos(\sqrt{\lambda} x) + B sin(\sqrt{\lambda} x)\\
+        T(t) &= C cos(c \sqrt{\lambda} t) + D sin(c \sqrt{\lambda} t)
+    \end{align*}
+    By imposing the BC we get that $A = 0$ and $cos(\sqrt{\lambda} L) = 0$. Thus $\sqrt{\lambda} = \frac{n\pi}{L}$. Thus the eigenfunctions are given by
+    $$ X_n(x) = cos(\frac{n \pi x}{L})$$
+    We can also see that $0$ is an eigenvalue with eigenfunction $X_0(x) = 1$. Thus the general solution is given by
+    We can also see that this is also true for the $T$ term thus our general solution is given by
+    $$ u(x, t) =  \frac{A_0}{2} + \frac{B_0}{2}t + \sum_{n=1}^{\infty} cos(\frac{n \pi x}{L}) (A_n cos(\frac{n \pi c t}{L}) + B_n sin(\frac{n \pi c t}{L}))$$
+    Similarly for the diffusion equation we have
+    $$ \begin{cases}
+        u_t = k u_{xx} \quad 0 < x < L, t > 0\\
+        u_x(0, t) = u_x(L, t) = 0\\
+        u(x, 0) = \phi(x)
+    \end{cases}$$
+    The solution is 
+    $$ u(x, t) = \frac{A_0}{2} + \sum_{n=1}^{\infty} A_n cos(\frac{n \pi x}{L}) e^{-\frac{n^2 \pi^2 k t}{L^2}}$$
+
+    \subsubsection{Robin Boundary Conditions}
+    Now lets consider the Robin boundary conditions 
+    \begin{align*}
+        X'(0) - a_0 X(0) = 0\\
+        X'(L) + a_1 X(L) = 0
+    \end{align*}
+    This is frankly such an annoying BC.\\
+    If $a_0, a_1$ are positive it is like radiation of energy\\
+    If $a_0, a_1$ are negative it is like absorption of energy.\\
+    If $a_0, a_1$ are 0 it is like an insulation boundary condition, whcih is just the neumann boundary condition.\\
+
+    \subsection{Chapter 5}
+    \subsubsection{Fourier Series coefficients}
+    We have seen many different forms of a Fourier series. We have 3 main forms of the Fourier series. Fourier Sine, Fourier Cosine, and the full Fourier Series.\\
+    We solve them by the orthogality property of the sine and cosine functions. We can see that
+    \begin{align*}
+        \int_{0}^{L} sin(nx) sin(mx) dx &= \begin{cases}
+            0 \quad n \neq m\\
+            \frac{L}{2} \quad n = m
+        \end{cases}\\
+        \int_{0}^{L} cos(nx) cos(mx) dx &= \begin{cases}
+            0 \quad n \neq m\\
+            \frac{L}{2} \quad n = m
+        \end{cases}\\
+        \int_{0}^{L} sin(nx) cos(mx) dx &= 0
+    \end{align*}    
+    
+    The first is the Fourier sine series which is given by
+    $$ \phi(x) = \sum_{n=1}^{\infty} B_n sin(\frac{n \pi x}{L})$$
+    It is solved by 
+    $$ B_n = \frac{2}{L} \int_{0}^{L} \phi(x) sin(\frac{n \pi x}{L}) dx$$
+
+    The second is the Fourier cosine series which is given by
+    $$ \phi(x) = \frac{A_0}{2} + \sum_{n=1}^{\infty} A_n cos(\frac{n \pi x}{L})$$
+    It is solved by
+    $$ A_0 = \frac{1}{L} \int_{0}^{L} \phi(x) dx$$
+    $$ A_n = \frac{2}{L} \int_{0}^{L} \phi(x) cos(\frac{n \pi x}{L}) dx$$
+
+    The third is the full Fourier series which is given by
+    $$ \phi(x) = \frac{A_0}{2} + \sum_{n=1}^{\infty} A_n cos(\frac{n \pi x}{L}) + B_n sin(\frac{n \pi x}{L})$$
+    It is solved by
+    $$ A_0 = \frac{1}{L} \int_{L}^{L} \phi(x) dx$$
+    $$ A_n = \frac{1}{L} \int_{L}^{L} \phi(x) cos(\frac{n \pi x}{L}) dx$$
+    $$ B_n = \frac{1}{L} \int_{L}^{L} \phi(x) sin(\frac{n \pi x}{L}) dx$$
+
+    \subsubsection{Fourier Series of an Even/Odd Function}
+    \textbf{DO THIS LATER}
+
+    \subsubsection{Fourier Series and Boundary Conditions}
+    We can see that for certain boundary conditions we can correspond them to certain Fourier series.\\
+    $u(0,t) = u(L,t) = 0$: Dirichlet Boundary Conditions $\to$ an odd function thus a Fourier sine series.\\
+    $u_x(0,t) = u_x(L,t) = 0$: Neumann Boundary Conditions $\to$ an even function thus a Fourier cosine series.\\
+    $u(l,t) =  u(-l,t), u_x(l,t) = u_x(-l,t)$: Periodic Boundary Conditions $\to$ the period extension of the function.\\
+
+    \subsubsection{Complex verion of the Fourier Series}
+    We can also write the Fourier series in terms of complex exponentials. We can see that
+    $$ e^{inx} = cos(nx) + i sin(nx)$$
+    $$ \phi(x) = \sum_{n=-\infty}^{\infty} c_n e^{inx}$$
+    We can solve for $c_n$ by multiplying by $e^{-imx}$ and integrating over $[-l, l]$. We can see that
+    $$ c_n = \frac{1}{2l} \int_{-l}^{l} \phi(x) e^{-inx/l} dx$$
+
+    \subsubsection{Convergence of the Fourier Series}
+    (138) /(126)
+    \textbf{DO THIS LATER}
+
+
+    \subsection{Chapter 6}
+    \subsubsection{Laplace's Equation}
+    Laplace's equation is given by
+    $$ \Delta u = 0$$
+    Where $\Delta = \nabla^2 = \nabla \cdot \nabla$. We can see that this is a second order linear PDE. \\
+    Solutions of Laplace's equation are called harmonic functions. We can see that the Laplace's equation is a special case of the Poisson equation: $\Delta u = f(x)$.\\
+    \textbf{Max Principle}
+    \begin{theorem}
+        If $u(x, y)$ is a solution to Laplace's equation on a domain $\Omega$ then the maximum of $u(x, y)$ is on the boundary of $\Omega$.
+    \end{theorem}
+    \textbf{Uniqueness of Solutions}
+    We can see that Laplace's equation has a unique solution given the boundary conditions.\\
+    We do this by taking the difference of two solutions $u_1, u_2$ and showing that the difference is 0 by using the max principle.\\
+    \textbf{Invariance in 2D}
+    We can see that Laplace's equation is invariant under rigid motions. This means that if $u(x, y)$ is a solution to Laplace's equation then $u(x+a, y+b)$ is also a solution as well as $u(x \cos(theta) + y \sin(theta), -x \sin(theta) + y \cos(theta))$.\\
+    
+    \subsubsection{Rectangles and Cubes}
+    Special Geometries can be solved for Laplace's equation. \\
+    \begin{itemize}
+        \item Look for separeted solutions of the PDE.
+        \item Put in the homogeneous BC to get eigenvalues. (this requires the special geoemtry)
+        \item Sum the series 
+        \item Put in the inhomogeneous BC to get the coefficients.
+    \end{itemize}
+    It is important to do the homogeneous then the inhomogeneous BCs.\\
+    Let use consider the rectangle $0 < x < a, 0 < y < b$. and the Laplace's equation with the BCs
+    \begin{align*}
+        \Delta u = 0 \quad \in D\\
+        u(0, y) = j(y)
+        u_y(x,0) + u(x, 0) = h(x)
+        u(x, b) = g(x)
+        u_x(a, y) = k(y)
+    \end{align*}
+    If we call this solution $u$ with data $(g,h,j,k)$ then we can write the solution as
+    $$ u = u_g + u_h + u_j + u_k$$
+    Where $u_g$ has all homogeneous BC except for $g$ and $u_h$ has all homogeneous BC except for $h$ and so on.\\
+    \textbf{DO EXAMPLE TO REVIEW TN}
+
+    \subsubsection{Circles, Wedges, and Annuli}
+    We can also solve Laplace's equation on circles, wedges, and annuli.\\
+    The idea is that when we have a equation we just consider which eigenfunctions to throw out based off what is finite in our domain.\\
+
+    \subsubsection{Poisson's Equation}
+    We can see that possion's formula are given by
+    $$ u(x) = \frac{a^2 - |x|^2}{2\pi a} \int_{|x'|=a} \frac{u(x')}{|x-x'|} ds(x')$$
+
+    \subsection{Chapter 7}
+    \subsubsection{Green's First Identity }
+    Green's first identity is given by
+    $$ \int_{\partial D} v \frac{\partial u}{\partial n} dS= \int_{D} \nabla  \cdot \nabla x dx + \int_{D} v \Delta u dx$$
+    This holds for any $u, v$ that are twice continuously differentiable.\\
+    When we take $v =1$ then we get 
+    $$ \int_{\partial D} \frac{\partial u}{\partial n} dS = \int_{D} \Delta u dx$$
+    This is super use ful in considering the Neuman problem 
+    $$ \begin{cases}
+        \Delta u = f(x) \quad \text{in } D\\
+        \frac{\partial u}{\partial n} = g(x) \quad \text{on } \partial D
+    \end{cases}$$
+    \textbf{Mean Value Principle}
+    In 3d, the average value of any harmoic function over any sphere is the value of the function at the center of the sphere.\\
+    We can see this as if we take our Greens first identity and take $v = 1$ and $u$ harmonic then we get
+    $$ \int_{\partial D} \frac{\partial u}{\partial n} dS = 0$$
+    Then writing in sphereical coordinantes and maipulating we get 
+    \begin{align*}
+        \int_0^{2\pi} \int_0^{\pi} u_r(a,\theta, \phi) a^2 sin(\phi) d\phi d\theta &= 0
+    \end{align*}
+    And if we divide this by the area of the body of the sphere we get
+    \begin{align*}
+        \frac{\partial}{\partial r} \frac{1}{4\pi} \int_{0}^{2\pi} \int_{0}^{\pi} u(a, \theta, \phi) sin(\phi) d\phi d\theta = 0
+    \end{align*}
+    Clealry this doesnet depend on the size of the sphere so we can take the limit as $a \to 0$ and we get
+    $$ \frac{1}{\text{area of }S} \int_{S} u dS = u(0)$$
+    And we can see this holds for all $r$
+    \textbf{Max Principle}
+    Similar to the diffusion equation, the max principle holds for Laplace's equation. This means that the maximum of a harmonic function is on the boundary of the domain.\\
+    
+\end{document}

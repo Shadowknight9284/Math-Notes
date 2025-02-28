@@ -1,0 +1,163 @@
+\documentclass{beamer}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+
+
+\setlength\parindent{0pt}
+
+\author{Pranav Tikkawar}
+\title{Introduction to Stochastic Calculus}
+
+\begin{document}
+
+
+\begin{frame}
+    \frametitle{Stochastic Calculus}
+    \titlepage
+\end{frame}
+
+% Script:
+% ODEs are used to model the evolution of a "thing" over time. Stocks, tempurate, population, etc.\\
+% Consider the growth of a company with constant groth rate: $dS_t = \mu S_t dt$: 
+% $S_t = S_0 e^{\mu t}$\\
+% But what if we add a random noise term: $dS_t = \mu S_t dt + \sigma S_t dB_t$\\
+% This is a Stochastic differential equation (SDE).\\
+% Explain Brownian motion and the Stochastic integral.\\
+% Explain the quadratic variation of Brownian motion: $dB_t^2 = dt$.\\
+% Explain Itô's formula: $dX_t = \mu dt + \sigma dB_t$\\
+% go back and solve for $S_t$\\
+
+
+
+% Outline: 
+% Present ODE, 
+% Add Variation (dBt) term, 
+% What is a Stochastic (specfically Brownian motion).
+% Stochastic Integral 
+% Explain $dBt^2 = dtea$ (quadratic variation)
+% SDE and Itô's formula (I for finding integral and II for finding SDE)
+% Product rule for Stochastic integrals
+% Solving the SDE
+
+% Note look at chapter 3 of StochasticFinDrp
+
+We use the power of ordiary differential equations to model the evolution of a "thing" over time.\\
+Consider the tempurate in this room through the years. \\
+Each day we can measure the tempurate and record it and grpah it and expect it to be some cyclic function of time. \\
+From our observations in physics we know that this tempurate is determined by the flux of the of the radiation emitted by the sun.\\
+Now is that the only thing that determines the tempurate?\\
+NO! there ar so many confounding variables, but we can chalk them up to be random noise.\\
+But how do we model this noise?\\
+We move from an ODE to an SDE. \\
+This noise is modeled by a Brownian motion: A random process (a Stochastic) that is continuous in time and has independent increments.\\
+
+
+
+
+\begin{frame}
+    \frametitle{Outline}
+    
+    
+\end{frame}
+
+
+
+
+
+\begin{frame}
+    \frametitle{Ordinary Differential Equations}
+    ODE 
+    
+
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+    \frametitle{Martingale}
+    A Martingale is a Stochastic process that has the property that, at any particular time in the realized sequence, the conditional expectation of the next value in the sequence is equal to the present observed value even given knowledge of all prior observed values.\\
+    \vspace{0.5cm}
+    If $X_1, X_2, X_3, \ldots$  is a sequence of random variables, then the filtration is the collection of all information available up to time $n$ and is denoted by $\{\mathcal{F}_n\}$.\\ 
+    \vspace{0.5cm}
+    Formally, a Martingale is a sequence of random variables $X_1, X_2, X_3, \ldots$ such that for all $n \geq 1$,
+    $$|\mathbb{E}[X_n]| < \infty$$
+    $$E[X_{n+1} | \mathcal{F}_n] = X_n$$
+    $$E[X_{n+1} - X_n | \mathcal{F}_n] = 0$$
+\end{frame}
+
+\begin{frame}
+    \frametitle{Brownian Motion}
+    Brownian motion is a Stochastic process that models random continuous motion.\\
+    A standard Brownian motion is one with drift $\mu=0$ and variation $\sigma^2= 1$\\
+    A Stochastic process $B_t$ is called a Brownian motion with drift $m$ and variance $\sigma^2$ starting at the origin if: (assuming if $s<t$)
+    \begin{itemize}
+        \item $B_0 = 0$
+        \item $B_t -B_s$ is normal with mean $\mu(t-s)$ and variance $\sigma^2(t-s)$
+        \item $B_t - B_s$ is independent of the values of $B_r$ for $r \leq s$
+        \item with probability one, the function $t \rightarrow B_t$ is a continuous function of t.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Stochastic Integral}
+    The Stochastic integral is a generalization of the Riemann integral to Stochastic processes. It is used to define the integral of a Stochastic process with respect to another Stochastic process.\\
+    \vspace{0.5cm}
+    Let $B_t$ be a standard one-dimensional Brownian motion. The Stochastic integral of a process $A_s$ with respect to $B_t$ is defined as
+    $$\int_{0}^{t} A_s dB_s = \lim_{\|P\| \to 0} \sum_{i=0}^{n-1} A_{t_{i}} (B_{t_{i+1}} - B_{t_{i}})$$
+    where the limit is taken over all partitions $P = \{0 = t_0 < t_1 < \ldots < t_n = t\}$ of the interval $[0,t]$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Quadratic Variation}
+    The quadratic variation of a Stochastic process is a measure of the total variation of the process over time. It is defined as the limit of the sum of the squares of the differences between consecutive values of the process.\\
+    \vspace{0.5cm}
+    Formally, let $X_t$ be a Stochastic process. The quadratic variation of $X_t$ is defined as
+    $$[X]_t = lim_{n \rightarrow infty} \sum_{j \leq tn} (X(\frac{j}{n}) + X(\frac{j-1}{n}) )^2 $$
+    Note that $[B]_t = t$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Stochastic Differential Equations}
+    A Stochastic differential equation (SDE) is an equation that describes the evolution of a Stochastic process over time. It is a differential equation that contains a Stochastic term.\\
+    \vspace{0.5cm}
+    A general SDE is given by
+    $$dX_t = mu(t,X_t) dtea + sigma(t,X_t) dB_t$$
+    where $X_t$ is the Stochastic process, $mu(t,X_t)$ is the drift term, $sigma(t,X_t)$ is the diffusion term, and $B_t$ is a Brownian motion.
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Ittô's Formula}
+    Itô's Formula is a fundamental theorem in Stochastic calculus that provides a formula for the differential of a function of a Stochastic process.\\
+    \vspace{0.5cm}
+    Let $f(t, x)$ be a function of $t$ and $X_t$. Then, Itô's formula states that
+    $$df(t,B_t) = \partial_x f(t,B_t) dB_t + [\partial_t f(t,Bt) + \frac{1}{2}\partial_{xx}f(t,B_t)]dtea $$
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Quotient Rule}
+    Itô's formula can be used to derive a product rule for Stochastic processes.\\
+    Suppose $X_t$ and $Y_t$ satisfy the Stochastic differential equations
+    $$dX_t = H_t dtea + A_t dB_t, dY_t = K_t dtea + C_t dB_t$$ 
+    Then, the quotient $Z_t = \frac{X_t}{Y_t}$ satisfies the following Stochastic differential equation:
+    \begin{align*}
+        dZ_t &= X_t dY_t + Y_t dX_t + [X^TY^T] dtea\\
+        &= X_t (K_t dtea + C_t dB_t) + Y_t (H_t dtea + A_t dB_t) + A_t C_t dtea
+    \end{align*}
+    
+    the last term, $A_t C_t$ is derived from the the quadratic covariation of $X_t$ and $Y_t$.
+\end{frame}
+
+
+
+\end{document}

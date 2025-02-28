@@ -1,0 +1,129 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{align*}
+    |+\rangle &= \begin{pmatrix}
+        \frac{1}{\sqrt{2}} \\
+        \frac{1}{\sqrt{2}} \\
+        \end{pmatrix} \\
+    |-\rangle &= \begin{pmatrix}
+        \frac{1}{\sqrt{2}} \\
+        -\frac{1}{\sqrt{2}} \\
+        \end{pmatrix} \\
+    |0\rangle &= \begin{pmatrix}
+        1 \\
+        0 \\
+        \end{pmatrix} \\
+    |1\rangle &= \begin{pmatrix}
+        0 \\
+        1 \\
+        \end{pmatrix} \\
+    X &= \begin{pmatrix}
+        0 & 1 \\
+        1 & 0 \\
+        \end{pmatrix} \\
+    Z &= \begin{pmatrix}
+        1 & 0 \\
+        0 & -1 \\
+        \end{pmatrix} \\
+    Y &= \begin{pmatrix}
+        0 & -i \\
+        i & 0 \\
+        \end{pmatrix} \\
+    X &= |+\rangle \langle +| - |-\rangle \langle -| \\
+    Z &= |0\rangle \langle 0| - |1\rangle \langle 1| \\
+\end{align*}
+\section*{L4}
+\textbf{Communation}\\
+A communation of $[A,B]$ is $\lambda AB - \lambda BA$ \\
+\textbf{Simelanousl Digonalization}\\
+Iff $[AB]=0$ thenthere is a baiss sutch that $A$ and $B$ are both digonal in that baiss.\\
+\subsection{Expection of an operator}
+The expectation value of an operator $\hat{O}$ in a state $\psi$ is given by:
+\[
+\langle \hat{O} \rangle = \langle \psi | \hat{O} | \psi \rangle
+\]
+Also 
+$$ \langle A \rangle_{\psi} = \langle \psi | A | \psi \rangle$$
+\begin{align*}
+    \langle A \rangle_{\psi} &= \langle \psi | A | \psi \rangle \\
+    &= \sum a_i \langle \psi | i \rangle \langle i | \psi \rangle \\
+    &= \sum a_i | \langle \psi | i  \rangle |^2 \\
+\end{align*} 
+\begin{example}
+    \begin{align*}
+        Z|0\rangle &= + 1 |0\rangle \\
+        Z|1\rangle &= - 1 |1\rangle \\
+        Z &= |0\rangle \langle 0| - |1\rangle \langle 1| \\
+    \end{align*}
+    \begin{align*}
+        \langle Z \rangle_\psi &= \langle \psi | 0 \rangle \langle 0 | \psi \rangle - \langle \psi | 1 \rangle \langle 1 | \psi \rangle \\
+        &= | \langle \psi | 0 \rangle |^2 - | \langle \psi | 1 \rangle |^2 \\
+        &= |\alpha|^2 - |\beta|^2 \\
+        &= p(0) - p(1) \\
+    \end{align*}
+\end{example}
+\begin{example}
+    \begin{align*}
+        |\psi \rangle &= |0\rangle\\
+        \langle Z \rangle_\psi &= 1 \\
+        \langle X \rangle_\psi &= 0 
+    \end{align*}
+\end{example}
+\subsection{Variance/Uncertainty of an operators}
+Given an operator $A$ define the operator \\
+$ \left( \Delta A \right)_{\psi} = A - \langle A \rangle_{\psi}$
+\begin{align*}
+    \langle \left( \Delta A \right)_{\psi} \rangle_{\psi} &= \langle \left( \Delta A \right) \rangle \\
+    &= \langle \left( A - \langle A \rangle \right) \rangle \\
+    &= \langle A^2 - 2A \langle A \rangle + \langle A \rangle^2 \rangle \\
+    &= \langle A^2 \rangle - \langle A \rangle^2 
+\end{align*}
+\subsection{Heisenburg Uncertainty Principle}
+For any two Hermitian operators $A$ and $B$ we have:
+$$ \langle (\Delta A)^2 \rangle \langle (\Delta B)^2 \rangle \geq \frac{1}{4} | \langle [A,B] \rangle |^2$$
+$$ \geq \frac{1}{4} | \langle AB- BA \rangle |^2$$
+When $A$ and $B$ commutes then the lower bound is 0.
+We can also use CS-inequality to show that:
+$$ \langle \alpha | \alpha \rangle \langle \beta | \beta \rangle \geq | \langle \alpha | \beta \rangle |^2$$
+$ \langle \psi | A | \psi \rangle $ is real if $A = A^{\dagger}$\\
+$ \langle \psi | A | \psi \rangle $ is imaginary if $A = - A^{\dagger}$\\
+\begin{example}
+    \begin{align*}
+        |\alpha \rangle = \Delta A | \psi \rangle \\
+        |\beta \rangle = \Delta B | \psi \rangle \\
+        \Delta A = A - \langle A \rangle \\
+        \Delta B = B - \langle B \rangle \\
+        \langle \alpha | \alpha \rangle \langle \beta | \beta \rangle &= \langle (\Delta A)^2 \rangle \langle (\Delta B)^2 \rangle \\
+        &\geq | \langle \psi | \Delta A \Delta B | \psi \rangle |^2 \\
+        (\Delta A)(\Delta B) &= \frac{1}{2} [A,B] + \frac{1}{2} \{ A,B \} \\
+    \end{align*}
+    Where $\{ A,B \} = AB + BA$ is the anti-commutator of $A$ and $B$.\\
+    Now we can see that 
+    \begin{align*}
+        \langle \psi | \Delta A \Delta B | \psi \rangle &= \frac{1}{2} \langle \psi | [A,B] | \psi \rangle + \frac{1}{2} \langle \psi | \{ A,B \} | \psi \rangle\\
+        &= \frac{1}{2}(c_1 + i c_2 )\\
+    \end{align*}
+    We can square it then see 
+    $$ \frac{c_1^2 + c_2^2}{4}$$
+    $$ \geq \frac{c_2 or c_1}{4}$$
+\end{example}
+\begin{example}
+    
+\end{example}
+
+\end{document}

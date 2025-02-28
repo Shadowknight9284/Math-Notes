@@ -129,6 +129,301 @@ This gives us Green's first identity.
     $$ \Delta u = 0 \text{ in } D \leftrightarrow E[u] = \min_{w \in A} E[w]$$
     Ie the minimum energy is harmonic in $D$\\
 \end{theorem}
+\begin{theorem}[Green's Functions]
+    $\Phi(\bar{x}) \begin{cases}
+        \frac{1}{2\pi} ln(|\bar{x}|) & \text{in } R^2\\
+        \frac{1}{4\pi |\bar{x}|} & \text{in } R^3
+    \end{cases}$
+\end{theorem}
+\begin{lemma}
+    For any $\bar{x}_0 \in R^d$
+    $$ \Delta \Phi(\bar{x} - \bar{x}_0) = \delta(\bar{x} - \bar{x}_0)$$
+    Distributional weak $\Delta$  
+\end{lemma}
+\begin{definition}
+    $D = R^d$
+    (G2) = 
+    $$ \int_D u \Delta v - v \Delta u d\bar{x} = \int_{\partial D} (u \partial_n v - v \partial_n u) d\bar{s}$$
+    suppose 
+    $v \in \mathcal{D} = C_c^{\infty}(R^d)$\\
+    Then the partials derivative of normal on v and v are 0.\\
+    Thus we get
+    $$ \int_D \Delta u v dx = \int_D u \Delta v dx$$
+    We can use this to define the weak laplacian which is used for "rough" functions $u \in L^2(D)$
+\end{definition}
+\begin{definition}[Weak Laplacian]
+    $ \Delta u$ to be a distribution such that $\mathcal{D} \to R$\\
+    $$ \langle \Delta u, v \rangle = \langle u, \Delta v \rangle$$
+    where $\langle \cdot, \cdot \rangle$ is $\int_D u v dx$\\
+    This is the weak laplacian.
+    $\langle \delta_0 , v \rangle = v(0)$
+\end{definition}
+\begin{lemma}
+    For any $\bar{x}_0 \in R^d$
+    $$ \Delta \Phi(\bar{x} - \bar{x}_0) = \delta(\bar{x} - \bar{x}_0)$$
+\end{lemma}
+\begin{definition}[Equality of Distributions]
+    $$\langle \Delta \Phi(x-x_0), v\rangle = - \langle \delta(x-x_0), v \rangle$$
+    $$\langle \Delta \Phi(x-x_0), v\rangle = - v(x_0)$$
+    $$ \int_{R^d} \Phi(x-x_0) \Delta v dx = - v(x_0)$$
+    \begin{proof}
+        Say $x_0 = 0$
+        $$ \int_{R^d} \Phi(x) \Delta v dx = \lim_{\epsilon \to 0} \int_{R^d} \Phi(x) \Delta v dx$$
+        $$ = \lim_{\epsilon \to 0} \int_{|x| = \epsilon} \Phi(x) \partial_n v - v \partial_n \Phi ds$$ 
+        Say $d =3$\\
+        $$ | \int_{|x| = \epsilon} \Phi(x) \partial_n ds| \leq C \cdot \frac{1}{\epsilon} \cdot \epsilon^2 = C \epsilon \to 0$$
+        Now consider $\partial_n \Phi v = \nabla \Phi(x) \cdot n(x) $
+        We know that $n(\bar{x}) = \frac{\bar{x}}{\epsilon}$\\
+        $$ \Phi(x) = \frac{1}{4\pi \sqrt{x^2 +y^2 + z^2}}$$
+        $$ \nabla \Phi(x) = (\Phi_x, \Phi_y, \Phi_z) = - \frac{1}{4\pi} \frac{1}{2} (x^2 + y^2 + z^2)^{-3/2} ( 2x, 2y, 2z)$$ 
+        $$ - \frac{1}{4\pi} (x^2 + y^2 + z^2)^{-3/2} (x, y, z)$$
+        $$ - \frac{1}{4\pi} \frac{\bar{x}}{|\bar{x}|^3}$$
+        $$ \partial_n \Phi(\bar{x}) = \frac{-\bar{x}}{4 \pi |\bar{x}|^3} \cdot \frac{\bar{x}}{\epsilon} = \frac{-1}{4\pi \epsilon^2}$$
+        $$ \lim_{\epsilon \to 0} \frac{1}{4\pi \epsilon^2} \int_{|x| = \epsilon} v(\bar{x}) ds = - v(0)$$
+        We show this by change of variable with $y = \frac{x}{\epsilon}$\\
+        Now $y$ has size 1 and 
+        $$ \int_{|x| = \epsilon} v(\bar{x}) ds = \int_{|y| = 1} v(\epsilon \bar{y}) \epsilon^2 dy $$
+        $$ = \frac{1}{4\pi} \int_{|y| = 1} \lim_{\epsilon \to 0} v(\epsilon \bar{y}) ds(\bar{y}) = - v(0)$$
+    \end{proof}
+\end{definition}
+\begin{lemma}[2: to solve possion Problems]
+    Let $f \in C^2_c (R^d)$ and let 
+    $$ u(x) = \int_{R^d} \Phi(x-y) f(y) dy$$
+    Then $\Delta u = -f$ in $R^d$\\
+    $$ \Delta u =\int_{R^d} \Delta_x \Phi(x-y) f(y) dy$$
+    When we use lemma one ($\Delta \Phi(x-y) = \delta(x-y)$)\\
+    $$ = \int_{R^d} \delta(x-y) f(y) dy = -f(x)$$
+    $$f(x) = \int_{R^d} \delta(x-y) f(y) dy$$
+    $$u(x) = \int_{R^d} \Phi(x-y) f(y) dy$$
+    $$L = -\Delta$$
+    $$k f(x) = \int_{R^d} \Phi(x-y) f(y) dy$$
+\end{lemma}
+Thus lemma 1 is saying $K L v = v$\\
+An Lemma 2 says $L K v = v$\\
+In otherwords $K$ is the inverse of $L$\\
+Goal: $Lu = f \implies u = L^{-1}f$\\
+$G_0 (x,y)$ the greens function for  the free space $R^d$\\
+When we consider the inverse, it is not unique 
+\begin{remark}
+    The solution to $Lu = f$ in $R^d$ is not unique.\\
+    As for any $\Delta \Phi = 0$\\
+    $u + \Phi$ is also a solution.\\
+    For uniqnuess we need conditions at infinite and $u \to 0$ as $|x| \to \infty$\\
+\end{remark}
+Bounded domain $D$\\
+$$ \begin{cases}
+    \Delta u = - f & \text{in } D\\
+    u = 0 & \text{on } \partial D
+\end{cases}$$
+\begin{definition}
+    Let $G(x,y)$ solbe for each 
+    $$ \begin{cases}
+        \Delta_x G(x,y) = \delta(x-y) & \text{in } D\\
+        G(x,y) = 0 & \text{on } \partial D
+    \end{cases}$$
+    this is called Green's functions for $D$ (with Dirichlet BC)\\
+    To find a representation formula for u, use Green's identity with u and G\\
+    $$\int_D u(x) \Delta_x G(x,y) - G(x,y) \Delta u(x) dx = \int_{\partial D} (u \partial_n G - G \partial_n u) ds$$
+    We can use some key facts to simplyfy this
+    \begin{align*}
+        \Delta_x G(x,y) &= \delta(x-y)\\
+        \Delta_x u(x) &= -f(x)\\
+        u(x) &= 0 \text{ on } \partial D\\
+        G(x,y) &= 0 \text{ on } \partial D
+    \end{align*} 
+    Now we can fix $y$ and use Greens for $u(x)$ and $G(x,y)$
+    $$ u(y) = \int_D G(x,y) f(x) dx$$
+\end{definition}
+We now have 2 natural questions
+\begin{enumerate}
+    \item Existence of $G(x,y)$
+    \item How to find $G(x,y)$
+\end{enumerate}
+\begin{remark}
+    if $\begin{cases}
+        \Delta u = f & \text{in } D\\
+        u = g & \text{on } \partial D
+    \end{cases}$
+    $u(x) = - \int_{\partial D} g(y) \partial_n G(x,y) ds(y) + \int_D G(x,y) f(y) dy$
+\end{remark}
+We know that 
+$$G_0(x,y) = \Phi(x-y)$$
+search for $G$ in the form of 
+$$G(x,y) = G_0(x,y) + \Phi^{x}(y)$$
+Fix $x$ and then 
+$$\Delta_y G(x,y) = \Delta_y G_0(x,y) + \Delta_y \phi^{x}(y) $$
+$$ = -\delta(x-y) + \Delta_y \phi^{x}(y)$$
+$$G(x,y) = 0 \implies \phi^{x}(y) = -G_0(x,y)$$
+Fixed $x \in D$\\
+$$\begin{cases}
+    \Delta \phi^{x}(y) = 0 & \text{in } D\\
+    \phi^{x}(y) = -\Phi(x,y) & \text{on } \partial D
+\end{cases}$$
+Where $\phi^{x}(y)$ is the corrector funciton \\
+$$G(x,y) = \Phi(x-y) + \phi^{x}(y)$$
 
+In 3D we have $G_0(x,y)$ is \\
+- the electrostatic potential ar y create by point charge at x\\
+- the gravitational potential at y created by point mass at x\\
+Now consider 
+$$ - \Delta u = f$$
+in $R^3$\\
+$$ u(x) = \int_{R^3} G_0(x,y) f(y) dy$$
+- the electrostatic potential at x due to the charge distribution defined by $f$\\
+- the gravitational potential at x due to the mass distribution defined by $f$\\
+
+This is also called newtonian potential\\
+
+\textbf{History!}\\
+Lagrange in 1774, moon motion\\
+$G_0$ and $u$ appeared
+Laplace in 1782, also in 1787, rings of saturn\\
+observed that $\Delta u =0$ outside the support of $f$\\
+Poisson in 1813\\
+$- \Delta u = f$ solves poisson problems\\
+
+For $D$ \\
+Grounded counductor\\
+$G_0$ is the electrostatic potnetial at y due to the charge at x in the presence of a grounded conductor on $\partial D$ (where $u = 0$ on $\partial D$)\\
+
+Conductive plane\\
+Place a charge at point near a conucting sheet\\
+Sicne the sheet is conducting, the things are free to move.\\
+We want to consider the eq state.\\
+We claim that this is the same as considering the charge with no conducting sheet, and then adding a point of oppisote charge on the other side of the sheet (where it would be).\\
+
+BC on a perfect conductor, $E$ must be normal to the conducting surface.\\
+This is due the fact that the rgad is perpendicualr to the level curves\\
+$L$ is a level curve of $u$ $\implies$ $ u $ is constant on $L$\\
+
+$$D = \setof{x \in R^3: x_3 > 0}$$
+$$\partial D = \setof{x \in R^3: x_3 = 0}$$
+Method of images \\
+$$\begin{cases}
+    \Delta \phi^{x}(y) = 0 & \text{in } D\\
+    \phi^{x}(y) = -\Phi(x,y) & \text{on } \partial D
+\end{cases}$$
+$x = (x_1, x_2, x_3)$\\
+$x* = (x_1, x_2, -x_3)$\\
+$\phi^{x}(y) = -\Phi(y-x*)$\\
+We can see that the conditions are met.\\
+Let $y \in \partial D$, $y = (y_1, y_2, 0)$\\
+Then $|y - x| = |y - x*|$\\
+Therfore $\Phi(y-x) = \Phi(y-x*)$\\
+$$G(x,y) = \Phi(y-x) - \Phi(y-x*)$$
+$$G(x,y) = \frac{1}{4\pi |y-x|} - \frac{1}{4\pi |y-x*|}$$
+Now using this we can cover the possion probelm in the half space\\
+Greens functions for D: fix $x \in D$\\
+$$\begin{cases}
+    -\Delta_y G(x,y) = \delta(x-y) & \text{in } D\\
+    G(x,y) = 0 & \text{on } \partial D
+\end{cases}$$
+$$G(x,y) = \Phi(y-x) - \phi^{x}(y)$$
+$$\begin{cases}
+    \Delta_y \phi^{x}(y) = 0 & \text{in } D\\
+    \phi^{x}(y) = \Phi(y-x) & \text{on } \partial D
+\end{cases}$$
+$$ \Phi(x) = \begin{cases}
+    \frac{1}{4\pi |x|} & \text{in } R^3\\
+    \frac{1}{2\pi} ln(|x|) & \text{in } R^2
+\end{cases}$$
+\textbf{3D Half Space}\\
+$$D = R^3_+ = \setof{x \in R^3: x_3 > 0}$$
+When reflecting the point $x, (x_1,x_2,x_3)$ over the plane $x_3 = 0$ aka $\partial D$ we get $x* = (x_1, x_2, -x_3)$\\
+$$\phi(y) = \Phi(y-x*)$$
+$$\begin{cases}
+    \Delta \phi= 0 & \text{in } D\\
+    \phi = \Phi(y-x) & \text{on } \partial D
+\end{cases}$$
+\begin{align*}
+    G(x,y) &= \Phi(y-x) - \Phi(y-x*)\\
+    &= \frac{1}{4\pi |y-x|} - \frac{1}{4\pi |y-x*|}\\
+    &= \frac{1}{4\pi \sqrt{(y_1-x_1)^2 + (y_2-x_2)^2 + (y_3-x_3)^2}} - \frac{1}{4\pi \sqrt{(y_1-x_1)^2 + (y_2-x_2)^2 + (y_3+x_3)^2}}
+\end{align*}
+$$\begin{cases}
+    \Delta u = 0 & \text{in } D\\
+    u = g & \text{on } \partial D
+\end{cases}$$
+$$u(x) = \int_{\partial D} g(y) \partial_n G(x,y) ds(y)$$
+\begin{align*}
+    \partial_{n_y} G(x,y) &= \nabla_y G(x,y) \cdot n(y)\\
+    &= \nabla_{y_3} G(x,y)
+\end{align*}
+\begin{align*}
+    4\pi \partial_{y_3} \phi &= \partial_{y_3}\left(\left[(y_1-x_1)^2 +  (y_2-x_2)^2 + (y_3-x_3)^2\right]^{-1/2}\right) \\
+    &= \frac{-1}{2} |y-x|^{-3} \cdot 2 (y_3-x_3)\\
+    &= -\frac{y_3 - x_3}{|y-x|^3}\\
+    -\partial_{y_3} G(x,y) &= \frac{1}{4\pi} \frac{(y_3 - x_3)}{|x-y|^3} - \frac{1}{4\pi} \frac{(y_3 + x_3)}{|x*-y|^3}\\
+    &= -\frac{x_3}{2\pi |x-y|^3}\\
+    u(x) &= - \int_{\partial D} g(y) \frac{x_3}{2\pi |x-y|^3} ds(y)\\
+    &= \frac{x_3}{2\pi} \int_{\partial D} \frac{g(y)}{|x-y|^3} ds(y)\\
+    u(x_1,x_2,x_3) &= \frac{x_3}{2\pi} \iint_{R^2} \frac{g(y_1,y_2)}{\sqrt{(x_1-y_1)^2 + (x_2-y_2)^2 + x_3^2}} dy_1 dy_2
+\end{align*}
+\textbf{2D Half Space}\\
+$$D = R^2_+ = \setof{x \in R^2: x_2 > 0}$$
+\begin{align*}
+    G(x,y) &= \Phi(y-x) - \Phi(y-x*)\\
+    &= -\frac{1}{2\pi} ln(|y-x|) + \frac{1}{2\pi} ln(|y-x*|)\\
+    u(x) &= \frac{x_2}{\pi} \int_{\partial D} \frac{g(y)}{|x-y|^2} ds(y)\\
+    &= \frac{x_2}{\pi} \int_{R} \frac{g(t)}{(t-x_1)^2 + x_2^2} dt
+\end{align*}
+$G$ is the poission kernal for the half space\\
+\textbf{Quarter space}\\
+We make multiple refection (3 in 2D) to get the quarter space\\
+\textbf{3D ball}\\
+$$D = B_1(0) = \setof{x = (x_1,x_2,x_3) \in R^3: |x| < 1}$$
+$$\partial D = \setof{x \in R^3: |x| = 1}$$
+Recall: For a point charge at 0, the e-field at $x$, $E= kq \frac{\hat{x}}{|x|^3}$\\
+Where $\hat{x} = \frac{x}{|x|}$\\
+$k = \frac{1}{4\pi \epsilon_0}$\\
+We know that $E = -\nabla v$ where v is the potential function\\
+$$v(x) = kq \frac{1}{|x|}$$
+Goal: given charge 1 ar $\bar{x}$ in $D$; find an image charge such that the potential by the these two charge system is 0 on $\partial D$\\
+$\bar{X} = c\bar{x}$ where we fix a point inside and outisde the ball that is colinear to the origin. \\
+Goal is to choose $c$ and $Q$ such that $v(\bar{y}) = 0$ for $\bar{y} \in \partial D$\\
+$$V = k q\frac{1}{|\bar{y} - \bar{x}|} - kQ \frac{1}{|\bar{y} - \bar{X}|}$$
+at $A$ (other side of points): $\frac{kq}{1+|x|} + \frac{kQ}{1+|c\bar{x}|} = 0$\\
+at $B$ (in betweeen points): $\frac{kq}{1-|x|} + \frac{kQ}{1-|c\bar{x}|} = 0$\\
+For ease take $r = |x|$
+$$\begin{cases}
+    \frac{1}{1+r} + \frac{Q}{1+cr} = 0\\
+    \frac{1}{1-r} + \frac{Q}{1-cr} = 0
+    \implies c = \frac{1}{r^2}
+\end{cases}$$
+$$Q = -\frac{1}{r}$$
+$$ \bar{X} = \frac{\bar{x}}{|x|^2}$$
+So if we put the charge at $\bar{X}$ of a charge of $-\frac{1}{r}$ then the potential is 0 on the boundary.\\
+\begin{definition}
+    $x^* = \frac{x}{|x|^2}$ is called the dual/ image point of $x$ in $B_1(0)$ with respect to $\partial B_1(0)$
+\end{definition}
+$G(x,y) = \frac{1}{4\pi} \left(\frac{1}{|y-x|} - \frac{1}{|x||y-x*|}\right)$\\
+Claim $G(x,y) = 0$ for $|y| = 1$\\
+\begin{proof}
+    $$|y-x| = |x| \cdot |y-x*|$$\\
+    $$ r^2 |y-x|^2 = r^2 (1-2yx \frac{1}{r^2} + \frac{1}{r^2})$$
+    $$ = r^2 - 2xy +1 = |x-y|^2$$
+\end{proof}
+at $x = 0$\\
+$x* = \frac{x}{|x|^2} = \infty???$\\
+\begin{align*}
+    \frac{1}{|x||y-x*|} &= \frac{1}{ry - \frac{x}{r}}\\
+    &= \frac{1}{ry - \hat{x}}\\
+    &= \lim_{r \to \infty} \frac{1}{|\hat{x}|} = 1
+\end{align*}
+$$G(0,y) = \frac{1}{4\pi} \frac{1}{|y|} - \frac{1}{4\pi} $$
+$$ \begin{cases}
+    \Delta u = 0 & \text{in } |x| < 1\\
+    u = g & \text{on } |x| = 1
+\end{cases}$$
+$$u(x) = \frac{1-|x|^2}{4\pi} \int_{|x| = 1} \frac{g(y)}{|y-x|^3} ds(y)$$
+this is for 3d.
+$$u(x) = \frac{1-|x|^2}{2\pi} \int_{|x| = 1} \frac{g(y)}{|y-x|^2} ds(y)$$
+2D with conformal mappings:\\
+We can use the half plane to find the disk.\\
+half plane: z $H^+$, and disk: w $D$\\
+$$w = \frac{z-i}{z+i}$$
+$$z = i\frac{1+w}{1-w}$$
+take any 2 points $w_1, w_2$ which map to $z_1, z_2$ in $D$, $G_D(w_1, w_2) = G_{H^+}(z_1, z_2)$\\
+where $f(w_1) = z_1$ and $f(w_2) = z_2$\\
 
 \end{document}

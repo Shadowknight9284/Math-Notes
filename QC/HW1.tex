@@ -1,0 +1,87 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Intro to Quantum Computating}
+\newcommand{\assignment}{Homework 1}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \question In the class, we showed that the eigenvectors of the Pauli Z operator are given by \(|0\rangle\), \(|1\rangle\) with eigenvalues 1, \(-1\) respectively:
+    \[ Z|0\rangle = |0\rangle, \quad Z|1\rangle = -|1\rangle, \]
+    where
+    \[ |0\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad |1\rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}. \]
+    Find the eigenvectors of the Pauli X operator and the corresponding eigenvalues. Find the \(2 \times 2\) matrix that relates the eigenvectors of the X operator to the eigenvectors of the Z operator.
+    \begin{solution}
+        We can do this by solving the eigenvalue equation
+        \[ X|v\rangle = \lambda |v\rangle, \]
+        where \(X\) is the Pauli X operator given by
+        \[ X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}. \]
+        The eigenvalues of the Pauli X operator are \(\lambda = 1\) and \(\lambda = -1\). The eigenvectors corresponding to these eigenvalues are
+        \[ |+\rangle = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \quad |-\rangle = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ -1 \end{pmatrix}. \]
+        The 2x2 matrix that relates the eigenvectors of the X operator to the eigenvectors of the Z operator is given by
+        \[ U = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}. \]
+    \end{solution}
+    \question  Recall that the commutator of two operators is given by \([A, B] = AB - BA\). Show that (below the symbol \(\dagger\) indicates Hermitian conjugation)
+    \begin{parts}
+        \part \([A, B]^\dagger = [B^\dagger, A^\dagger]\)
+        \part \([A, B] = -[B, A]\)
+        \part If \(A, B\) are Hermitian, then \(i[A, B]\) is also Hermitian
+    \end{parts}
+    \begin{solution}
+        \textbf{a} 
+        \begin{align*}
+            [A, B]^\dagger &= (AB - BA)^\dagger \\
+            &= (AB)^\dagger - (BA)^\dagger \\
+            &= B^\dagger A^\dagger - A^\dagger B^\dagger \\
+            &= [B^\dagger, A^\dagger]
+        \end{align*}
+        \textbf{b}
+        \begin{align*}
+            [A, B] &= AB - BA \\
+            &= -BA + AB \\
+            &= -[B, A]
+        \end{align*}
+        \textbf{c}
+        Suppose \(A, B\) are Hermitian, then $A = A^\dagger$ and \(B = B^\dagger\). Then we need that $i[A, B] = i[A, B]^\dagger$. We have
+        \begin{align*}
+            (i[A, B])^\dagger &= -i[B^\dagger, A^\dagger] \\
+            &= i[A^\dagger, B^\dagger] \\
+            &= i[A, B] \\
+            &= i[A, B]
+        \end{align*}
+        Thus \(i[A, B]\) is Hermitian.
+    \end{solution}
+    \question An operator \(A\) is called anti-Hermitian if \(A^\dagger = -A\).
+    \begin{parts}
+        \part Show that eigenvalues of anti-Hermitian operators are purely imaginary.
+        \part Show that expectation values of anti-Hermitian operators are purely imaginary for any given state \(|\psi\rangle\).
+    \end{parts}
+    \begin{solution}
+        \textbf{a} 
+        Suppose \(A\) is an anti-Hermitian operator with eigenvalue $a$ and eigenvector \(|a \rangle\). Then we have
+        \begin{align*}
+            A|a\rangle &= a |a\rangle \\
+            A^\dagger |a\rangle &= a^* |a\rangle \\
+            -A |a\rangle &= a^* |a\rangle \\
+            -a |a\rangle &= a^* |a\rangle \\
+            -a &= a^*
+        \end{align*}
+        Thus \(a\) is purely imaginary.
+        \textbf{b}
+        Suppose \(A\) is an anti-Hermitian operator and \(|\psi\rangle\) is any state. We want to show that \(\langle \psi | A | \psi \rangle^* = -\langle \psi | A | \psi \rangle\). We have
+        \begin{align*}
+            \langle \psi | A | \psi \rangle^* &= \langle \psi | A^\dagger | \psi \rangle \\
+            &= -\langle \psi | A | \psi \rangle
+        \end{align*} 
+        Thus \(\langle \psi | A | \psi \rangle\) is purely imaginary.
+    \end{solution}
+\end{questions}
+
+\end{document}

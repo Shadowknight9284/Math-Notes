@@ -1,0 +1,85 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Likelihood Ratio Test}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question Recall Exp($\theta$) population has PDF: $f(x) = \frac{1}{\theta} e^{-\frac{x}{\theta}}$.
+    Suppose $x_1, x_2, \ldots, x_n$ are observed sample values. Do the computation to find the value of $\theta$ (in terms of $x_1, x_2, \ldots, x_n$) where the likelihood function is maximized.
+    \begin{parts}
+        \part Remember, this value is the MLE estimator $\hat{\theta}_{MLE}$ and this is a computation we have done earlier, and the answer is $\bar{x}$. We are doing it again to review it. Steps: Write $L(\theta)$ and take $\ln$ then differentiate with respect to $\theta$, set to 0.
+    \end{parts}
+
+    \begin{solution}
+        \begin{align*}
+            L(\theta) &= \prod_{i=1}^{n} \frac{1}{\theta} e^{-\frac{x_i}{\theta}} \\
+            &= \frac{1}{\theta^n} e^{-\frac{\sum_{i=1}^{n} x_i}{\theta}} \\
+            \ln L(\theta) &= -n \ln \theta - \frac{\sum_{i=1}^{n} x_i}{\theta} \\
+            \frac{d}{d\theta} \ln L(\theta) &= -\frac{n}{\theta} + \frac{\sum_{i=1}^{n} x_i}{\theta^2} = 0 \\
+            \frac{n}{\theta} &= \frac{\sum_{i=1}^{n} x_i}{\theta^2} \\
+            \theta &= \frac{\sum_{i=1}^{n} x_i}{n} = \bar{x}
+        \end{align*}
+        
+
+    \end{solution}
+
+    \question This continues the previous question. A random sample of size $n$ is used to test the null hypothesis that the parameter $\lambda = \theta_0$ against the alternative that it doesn’t equal $\theta_0$.
+    \begin{parts}
+        \part Here, the likelihood function $L(\theta) =$
+        \part Here, max of likelihood function over parameters that are in the null hypothesis, $L_{\omega} =$
+        \part Here, max of likelihood function over all parameters (i.e., that in the null and alternative hypothesis), $L_{\Omega} =$
+        \part Using the above, determine the likelihood ratio statistic $\lambda(x_1, x_2, \ldots, x_n)$.
+        \part Use the previous part to show that the critical region of LRT has the form $\bar{x} e^{-\frac{\bar{x}}{\theta_0}} \leq K$
+    \end{parts}
+
+    \begin{solution}
+        \textbf{(a)}
+        \begin{align*}
+            L(\theta) &= \prod_{i=1}^{n} \frac{1}{\theta} e^{-\frac{x_i}{\theta}} \\
+            &= \frac{1}{\theta^n} e^{-\frac{\sum_{i=1}^{n} x_i}{\theta}}
+        \end{align*}
+        \textbf{(b)}
+        \begin{align*}
+            L_{\omega} &= \frac{1}{\theta_0^n} e^{-\frac{\sum_{i=1}^{n} x_i}{\theta_0}}
+        \end{align*}
+
+        \textbf{(c)}
+        \begin{align*}
+            L_{\Omega} &= \frac{1}{\bar{x}^n} e^{-n}
+        \end{align*}
+        \textbf{(d)}
+        \begin{align*}
+            \lambda(x_1, x_2, \ldots, x_n) &= \frac{L_{\omega}}{L_{\Omega}} \\
+            &= \frac{\frac{1}{\theta_0^n} e^{-\frac{\sum_{i=1}^{n} x_i}{\theta_0}}}{\frac{1}{\bar{x}^n} e^{-n}} \\
+            &= \left(\frac{\bar{x}}{\theta_0}\right)^n e^{n - \frac{n\bar{x}}{\theta_0}}
+        \end{align*}
+        \textbf{(e)}
+        To show that the critical region of LRT has the form $\bar{x} e^{-\frac{\bar{x}}{\theta_0}} \leq K$, we can see that 
+        \begin{align*}
+            \left(\frac{\bar{x}}{\theta_0}\right)^n e^{n - \frac{n\bar{x}}{\theta_0}} \leq k\\
+            (\bar{x} e^{1-\frac{\bar{x}}{\theta_0}} )^n < \theta_0^n k\\
+            \bar{x} e^{1-\frac{\bar{x}}{\theta_0}} < \theta_0 k^{1/n}\\
+            \bar{x} e^{-\frac{\bar{x}}{\theta_0}} < \theta_0 k^{1/n}e^{-1}
+        \end{align*}
+        Thus if we take $K = \theta_0 k^{1/n}e^{-1}$, we get the desired form of
+        $\bar{x} e^{-\frac{\bar{x}}{\theta_0}} \leq K$.
+
+
+    \end{solution}
+
+
+\end{questions}
+
+\end{document}

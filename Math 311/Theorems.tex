@@ -1,0 +1,74 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+This is a set of all of the theorems talked in class and in the book numbered.
+
+\newpage
+\begin{theorem}[0.0.0: Theorem Name]
+    This is a theorem. and a teplate for theorems..
+    \begin{proof}
+        This is a proof. \\
+        \begin{align*}
+            \text{This is a proof.} \quad e=mc^2
+        \end{align*}
+    \end{proof}
+\end{theorem}
+
+\newpage
+\begin{theorem}[Nested Interval Property: (s 1.4)]
+    If $I_1 \supseteq I_2 \supseteq I_3 \supseteq \dots$ is a sequence of closed intervals in $\mathbb{R}$ then $\bigcap_{n=1}^{\infty} I_n \neq \emptyset$.
+    \begin{proof}
+        Let $A = \{a_1, a_2, a_3, \dots\}$ be the set of left endpoints of the intervals. \\
+        Now since the $I_n$s are nested, $I_n \subseteq I_1$ for all $n$. \\
+        Thus each $a_n \in I_1$ for all $n$. \\
+        so $a_n \leq b_1.$ \\
+        It follows that $b_1$ is an upper bound for $A$ so sup $A$ exists. \\
+        Now we need to prove that $x \in \bigcap_{n=1}^{\infty} I_n$. \\
+        To do thi we need to how that $x \in I_n$ for all $n$. \\
+        This mean that $a_n \leq x \leq b_n$ for all $n$. \\
+        \textbf{Step 1} $a_n \leq x$ for all $n$. \\
+        Remember that $x = \sup A$. \\
+        So $a_n \leq x$ for all $n$. \\
+        \textbf{Step 2} $x \leq b_n$ for all $n$. \\
+        Since $x = \sup A$, $x$ i less than very upper bound of $A$ so it i enough to show that $b_n$ is an upper bound of $A$. \\
+        $b_n \geq a_m$ for all $m$. \\
+        \textbf{Case 1} $n > m$. \\
+        Then $I_n \subset I_m$ so $b_n \in [a_m, b_m] = I_m$. \\
+        \textbf{Case 2} $n \leq m$. \\
+        Then $I_m \subset I_n$ so $a_m \in [a_n, b_n] = I_n$. \\
+        so $a_m \leq b_n$. \\
+        This $b_n$ is an upper bound of $A$. \\
+        Thus $x \leq b_n$ for all $n$. \\
+        Thus $x \in I_n$ for all $n$. \\
+        Thus $x \in \bigcap_{n=1}^{\infty} I_n$. which means the intersection is not empty.
+    \end{proof}
+\end{theorem}
+\begin{theorem}[Archimedan Property]
+    The set $\mathbb{N}$ is not bounded above.\\
+    \begin{proof}
+        Suppose (by contradiction) $\mathbb{N}$ is bounded above. \\
+        Then by the least upper bound property, sup $\mathbb{N}$ exists. \\
+        Let us call $\alpha = \sup\mathbb{N}$ and it is a real number. \\
+        Thus $\alpha - 1 < \alpha$ so $\alpha - 1$ is not an upper bound of $\mathbb{N}$. \\
+        So we can fine an $n \in \mathbb{N}$ such that $ \alpha - 1 < n$. \\
+        Thus $\alpha < n + 1$. \\
+        But $n + 1 \in \mathbb{N}$ so $\alpha$ is not an upper bound of $\mathbb{N}$. \\
+    \end{proof}
+\end{theorem}
+\begin{theorem}[Density of $\mathbb{Q}$ in $\mathbb{R}$]
+    $\forall a < b \in \mathbb{R}$ there exists $q \in \mathbb{Q}$ such that $a < q < b$.
+\end{theorem}
+
+
+\end{document}

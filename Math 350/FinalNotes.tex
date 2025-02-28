@@ -1,0 +1,131 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350}
+\newcommand{\assignment}{Final Exam}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+\section*{Topics}
+\begin{itemize}
+    \item Abstract Vector Spaces
+    \item Span, Linear Independence, Basis, and Dimension
+    \item Linear Tranformations and Matrix Representations
+    \item Change of Coordinate Matrix
+    \item Determinants, Eigenvalues, and Eigenvectors
+    \item Characteristic Polynomial and Diagonalization
+    \item Invariant Subspaces and Cayley-Hamilton Theorem
+    \item Jordan Canonical Form
+    \item Real and Complex Inner Product Spaces
+    \item Normal, Self-Adjoint, Unitary, and Orthogonal Operators
+\end{itemize}
+Gaurenteed questions:\\
+Formulate and prove a theorem that asserts that the reduced row
+echelon form of a given mxn matrix over a field F is unique.  (Do not
+spend time defining RREF or "row-equivalence of matrices" or "pivot
+columns."  Use such concepts in your proof as appropriate.)\\
+\section{Notes}
+
+
+
+
+\subsubsection{Normal, Self-Adjoint, Unitary, and Orthogonal Operators}
+\begin{definition}[Symmetric Matrix]
+    A matrix $A$ is said to be symmetric if $A = A^T$.
+\end{definition}
+\begin{definition}[Orthogonal]
+    A matrix $A$ is said to be orthogonal if $A^TA = I$.\\
+    This is clear as each of the columns are orthogonal to each other.
+\end{definition}
+\begin{definition}[Orthonormal Matrix]
+    A matrix $A$ is said to be orthonormal if $A^TA = I$ and $A^T = A^{-1}$.\\
+    This is clear as each of the columns are orthogonal to each other and have a magnitude of 1.
+\end{definition}
+\begin{theorem}[Symmetric Matrix, Diagonalization]
+    If $A$ is a symmetric matrix, There exists an orthogonal matrix $P$ and a diagonal matrix $D$ such that $P^TAP = D$.
+\end{theorem}
+
+\begin{definition}[Unitary Matrix]
+    A matrix $A$ is said to be unitary if $A^*A = AA^* =I$.\\
+    This is the analog of orthogonal matrices in complex vector spaces.
+    This is clear as each of the columns are orthogonal to each other.\\
+    We need to remember the definition of inner product over $C$ to be $<x,y> = y^*x$.\\
+\end{definition}
+\begin{definition}[Hermitian Matrix]
+    A matrix $A$ is said to be Hermitian if $A = A^*$.\\
+    This is the analog of symmetric matrices in complex vector spaces.
+    Where $A^*$ is the conjugate transpose of $A$. \\
+    IE $$ A^* = \overline{A^T}$$
+\end{definition}
+\begin{definition}[Normal Matrix]
+    A matrix $A$ is said to be normal if $AA^* = A^*A$.\\
+    This basically means that $A$ and $A^*$ commute.
+\end{definition}
+\begin{theorem}[Unitary Diagonalization]
+    If $A$ is a Normal Matrix then there exists a unitary matrix $U$ and a diagonal matrix $D$ such that $U^*AU = D$.\\
+    And the converse\\
+    If $U$ is a unitary matrix and $D$ is a diagonal matrix such that $U^*AU = D$ then $A$ is a normal matrix.
+\end{theorem}
+
+
+\section*{Problems}
+\begin{questions}
+    \question Formulate and prove a theorem that asserts that the reduced row
+    echelon form of a given mxn matrix over a field F is unique.  (Do not
+    spend time defining RREF or "row-equivalence of matrices" or "pivot
+    columns."  Use such concepts in your proof as appropriate.)\\
+    \begin{solution}
+        Suppose $M$ is an $n \times m$ matrix over a field $F$.\\
+        Then the reduced row echelon form of $M$ is unique.\\
+        In other words, If $R$ and $S$ are both reduced row echelon forms of $M$ then $R = S$.\\
+        Let us denote $R = [r_1 ... r_m]$ and $S = [s_1 ... s_m]$. We need to show that $r_i = s_i$ for all $i$.\\
+        Note that if $r_i$ is a LC of prior rows then $s_i$ is also a LC of prior rows with same coeeficents by the CCP.\\
+        Similarly if $r_i$ is a pivot column then $s_i$ is also a pivot column with a one at the same index. 
+        We can prove this by induction over the number of columns of $M$.\\
+        \textbf{Base Case:} $r_1 = 0 \leftrightarrow s_1 = 0$ since $\setof{0}$ is Linearly Dependant set. Similarly, if $r_1 \neq 0$ then since it is in RREF it must be $[1,0,0,...]$ and $s_1$ must also be $[1,0,0,...]$ as $r_1 \neq 0 \leftrightarrow s_1 \neq 0$.\\
+        \textbf{Inductive Hypothesis:} Suppose $r_i = s_i$ for all $i \leq k$.\\
+        \textbf{Inductive Step:} We need to show that $r_{k+1} = s_{k+1}$.\\
+        We can either have $r_{k+1}$ a linear combination of prior pivot columns or not a linear combination of prior pivot columns.\\
+        Suppose there are $p$ prior pivot columns in $r_{k+1}$ \\
+        If $r_{k+1}$ is a linear combination of prior pivot columns then $s_{k+1}$ is also a linear combination of prior pivot columns with same coefficients by the CCP since $R$ and $S$ are both Row equivalent. \\
+        If $r_{k+1}$ is not a linear combination of prior pivot columns then it must be of form $[0,0,...,1,0,...]$ where the $1$ is in the $p+1$th index and $s_{k+1}$ must also be of the same form by the CCP.\\
+        Therefore $r_{k+1} = s_{k+1}$ and by induction $r_i = s_i$ for all $i$.
+    \end{solution}
+
+    \question 
+    In $\mathbb{F}^n$, every finite linearly independent set has at most $n$ elements, and if it has exactly $n$ elements, then it is a basis of $\mathbb{F}^n$.\\
+    \begin{solution}
+        Suppose $S = \setof{v_1,v_2,...,v_k}$ is a linearly independent set in $\mathbb{F}^n$.\\
+        Consider $A = [v_1 v_2 ... v_k]$ which is an $n \times k$ size matrix.\\
+        Let $R = \text{RREF}(A)$.\\
+        Since $A$ is a linearly independent set, $Rx = 0$ has only the trivial solution.\\
+        Thus the nullity of $R$ is $0$.\\
+        Thus $R$ must be of frm $\begin{bmatrix}
+            I_k \\
+            0
+        \end{bmatrix}$. 
+        Since there are $n$ rows, $k \leq n$.\\
+    \end{solution}
+    \question
+    In $\mathbb{F}^n$, every spanning set has at least $n$ elements, and if it has exactly $n$ elements, then it is a basis of $\mathbb{F}^n$.\\
+    \begin{solution}
+        Suppose $S = \setof{v_1,v_2,...,v_k}$ is a spanning set in $\mathbb{F}^n$.\\
+        Suppose $A = [v_1 v_2 ... v_k]$ is an $n \times k$ matrix.\\
+        Let $R = \text{RREF}(A)$.\\
+        Then $Col(A) = F^n$ implies $Col(R) = F^n$.\\
+        Thus $Ax =b$ is consistent and $Rx = c$ is consistent for all $b,c \in F^n$ and there are no zero rows in $R$.\\
+        Thus $k \geq n$.\\
+    \end{solution}
+
+\end{questions}
+
+\end{document}

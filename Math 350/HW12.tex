@@ -1,0 +1,200 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Homework 12}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question Section 6.2 Question 2(a)\\
+    In each part apply Gram-Scmidt to the given subset $S$ of the inner produt space $V$ to obtain an orthogonal basis for span $S$.\\
+    Then normaize the vectors in this basis to obtain an orthonormal basis $\beta$ for span $S$.\\
+    Then compute the fourier coefficients of the given vector relative to $\beta$\\
+    Finally use theorem 6.5 to verify your answer.\\
+    $$ V = R^3, S = \{[1,0,1].[0,1,1],[1,3,3]\}, x = [1,1,2]$$
+
+    \begin{solution}
+        (i) Gram-Schmidt\\
+        We can use the Gram-Schmidt process to find an orthogonal basis for $S$.\\
+        Let the orthogonal basis be $\gamma = \{w_1,w_2,w_3\}$\\
+        \begin{align*}
+            w_1 &= v_1 = [1,0,1]\\
+            w_2 &= v_2 - \frac{<v_2,w_1>}{||w_1||^2}w_1 = [0,1,1] - \frac{1}{2}[1,0,1] = \frac{[-1,2,1]}{2}\\
+            w_3 = v_3 - \frac{<v_3,w_1>}{||w_1||^2}w_1 - \frac{<v_3,w_2>}{||w_2||^2}w_2 &= [1,3,3] - \frac{4}{2}[1,0,1] - \frac{8}{6}[-1,2,1] = \frac{[1,1,-1]}{3}
+        \end{align*}
+        (ii) Normalize\\
+        We can normalize the vectors in $\gamma$ to get an orthonormal basis $\beta$\\
+        $$\beta = \{v_1,v_2,v_3\}$$
+        $$v_1 = \frac{[1,0,1]}{\sqrt{2}}$$
+        $$v_2 = \frac{[-1,2,1]}{2\sqrt{3/2}}$$
+        $$v_3 = \frac{[1,1,-1]}{3\sqrt{1/3}}$$
+
+        (iii) Fourier Coefficients\\
+        We can find the fourier coefficients of $x$ relative to $\beta$\\
+        \begin{align*}
+            <x,v_1> &= \frac{[1,1,2]\cdot[1,0,1]}{\sqrt{2}} = \frac{3}{\sqrt{2}}\\
+            <x,v_2> &= \frac{[1,1,2]\cdot[-1,2,1]}{2\sqrt{3/2}} = \frac{3}{2\sqrt{3/2}}\\
+            <x,v_3> &= \frac{[1,1,2]\cdot[1,1,-1]}{3\sqrt{1/3}} = \frac{0}{\sqrt{1}} = 0
+        \end{align*}
+        Thus the fourier coefficients of $x$ relative to $\beta$ are $\{3/\sqrt{2},3/2\sqrt{3/2},0\}$\\
+
+        (iv) Verify\\
+        By theorem 6.5, we can verify that the fourier coefficients of $x$ relative to $\beta$ are correct.\\
+        $$ x = \sum_{i=1}^{3} <x,v_i>v_i = \frac{3}{\sqrt{2}}\frac{[1,0,1]}{\sqrt{2}} + \frac{3}{2\sqrt{3/2}}\frac{[-1,2,1]}{2\sqrt{3/2}} + 0\frac{[1,1,-1]}{3\sqrt{1/3}} = [1,1,2]$$
+    \end{solution}
+    \question Section 6.2 Question 2(c)
+    In each part apply Gram-Scmidt to the given subset $S$ of the inner produt space $V$ to obtain an orthogonal basis for span $S$.\\
+    Then normaize the vectors in this basis to obtain an orthonormal basis $\beta$ for span $S$.\\
+    Then compute the fourier coefficients of the given vector relative to $\beta$\\
+    Finally use theorem 6.5 to verify your answer.\\
+    $$ V = P_2(R), <f,g> = \int_{0}^{1}f(x)g(x)dx, S = \{1,x,x^2\}, h(x) = 1+x$$
+    \begin{solution}
+        (i) Gram-Schmidt\\
+        We can use the Gram-Schmidt process to find an orthogonal basis for $S$.\\
+        Let the orthogonal basis be $\gamma = \{w_1,w_2,w_3\}$\\
+        \begin{align*}
+            w_1 &= 1\\
+            w_2 &= x - \frac{<x,1>}{||1||^2}1 = x - \frac{1/2}{1} = x - \frac{1}{2}\\
+            w_3 &= x^2 - \frac{<x^2,1>}{||1||^2}1 - \frac{<x^2,x-\frac{1}{2}>}{||x-\frac{1}{2}||^2}(x-\frac{1}{2}) = x^2 - \frac{1/3}{1} - \frac{1/12}{1/12}(x-\frac{1}{2}) = x^2 - x + \frac{1}{6}
+        \end{align*}
+        (ii) Normalize\\
+        We can normalize the vectors in $\gamma$ to get an orthonormal basis $\beta$\\
+        $$\beta = \{v_1,v_2,v_3\}$$
+        $$v_1 = \frac{1}{\sqrt{1}} = 1$$
+        $$v_2 = \frac{x-\frac{1}{2}}{\frac{\sqrt{3}}{6}}$$
+        $$v_3 = \frac{x^2-x+\frac{1}{6}}{\frac{\sqrt{5}}{30}}$$
+
+        (iii) Fourier Coefficients\\
+        We can find the fourier coefficients of $h(x)$ relative to $\beta$\\
+        \begin{align*}
+            <h(x),v_1> &= \int_{0}^{1}(1+x)dx = \frac{3}{2}\\
+            <h(x),v_2> &= 2\sqrt{3} \int_{0}^{1}(1+x)(x-\frac{1}{2}) dx = \sqrt{3}/6\\
+            <h(x),v_3> &= 6\sqrt{5} \int_{0}^{1}(1+x)(x^2-x+\frac{1}{6}) dx = 0
+        \end{align*}
+        Thus the fourier coefficients of $h(x)$ relative to $\beta$ are $\{3/2,\sqrt{3}/6,0\}$\\
+
+        (iv) Verify\\
+        By theorem 6.5, we can verify that the fourier coefficients of $h(x)$ relative to $\beta$ are correct.\\
+        $$ h(x) = \sum_{i=1}^{3} <h(x),v_i>v_i = \frac{3}{2}1 + \frac{\sqrt{3}}{6}\frac{x-\frac{1}{2}}{\frac{\sqrt{3}}{6}} + 0\frac{x^2-x+\frac{1}{6}}{\frac{\sqrt{5}}{30}} = 1+x$$
+    \end{solution}
+
+
+    \question Section 6.2 Question 3
+    in $R^2$ let 
+    $$ \beta = \left\{\left(\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\right), \left(\frac{1}{\sqrt{2}}, \frac{-1}{\sqrt{2}}\right)\right\}$$
+    Find the fourier coefficients of $(3,4)$ relative to $\beta$.
+
+    \begin{solution}
+        We can find the fourier coefficients of $(3,4)$ relative to $\beta$\\
+        \begin{align*}
+            <(3,4),\left(\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\right)> &= \frac{3}{\sqrt{2}} + \frac{4}{\sqrt{2}} = 7/\sqrt{2}\\
+            <(3,4),\left(\frac{1}{\sqrt{2}}, \frac{-1}{\sqrt{2}}\right)> &= \frac{3}{\sqrt{2}} - \frac{4}{\sqrt{2}} = -1/\sqrt{2}
+        \end{align*}
+        Thus the fourier coefficients of $(3,4)$ relative to $\beta$ are $\{7/\sqrt{2},-1/\sqrt{2}\}$
+    \end{solution}
+
+    \question Section 6.5 Question 12
+    Let $A$ be an $n \times n$ real symetric or complex nomral matrix.\\
+    Prove that 
+    $$ det(A) = \prod_{i=1}^{n}\lambda_i$$
+    where the $\lambda_i$ are the (not nessarily distinct) eigenvalues of $A$.
+
+    \begin{solution}
+        Since $A$ is a real symmetric or complex normal matrix, it must be normal. \\
+        Thus $A$ can be diagonalized by a unitary matrix $P$\\
+        $$ P^{-1}AP = D$$
+        where $D$ is a diagonal matrix with the eigenvalues of $A$ on the diagonal.\\
+        Since $P$ is unitary, $det(P) = 1$\\
+        Thus
+        \begin{align*}
+            A &= PDP^{-1}\\
+            det(A) &= det(PDP^{-1}) \\
+            &= det(P)det(D)det(P^{-1})\\
+            &= det(D)\\
+            &= \prod_{i=1}^{n}\lambda_i
+        \end{align*}
+        Therefore $det(A) = \prod_{i=1}^{n}\lambda_i$
+    \end{solution}
+
+    \question Section 6.5 Question 17
+
+    Prove that a matrix that is both unitary and upper triangular must be diagonal.
+
+    \begin{solution}
+        Let $A$ be a unitary and upper triangular matrix.\\
+        Thus $A$ can be written as
+        $$ A = \begin{bmatrix}
+            a_{11} & a_{12} & \cdots & a_{1n}\\
+            0 & a_{22} & \cdots & a_{2n}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            0 & 0 & \cdots & a_{nn}
+        \end{bmatrix}$$
+        Since $A$ is unitary, $A^*A = I$\\
+        Thus
+        \begin{align*}
+            A^*A &= \begin{bmatrix}
+                \overline{a_{11}} & 0 & \cdots & 0\\
+                \overline{a_{12}} & \overline{a_{22}} & \cdots & 0\\
+                \vdots & \vdots & \ddots & \vdots\\
+                \overline{a_{1n}} & \overline{a_{2n}} & \cdots & \overline{a_{nn}}
+            \end{bmatrix}
+            \begin{bmatrix}
+                a_{11} & a_{12} & \cdots & a_{1n}\\
+                0 & a_{22} & \cdots & a_{2n}\\
+                \vdots & \vdots & \ddots & \vdots\\
+                0 & 0 & \cdots & a_{nn}
+            \end{bmatrix} = I
+        \end{align*}
+        Notice that for all $i$ , $|a_{ii}| \neq 0$ since that leads to the rank of $A$ being less than $n$ and thus violating the orthogonalilty of each of the columns of $A$.\\
+        \begin{align*}
+            A^*A =  
+            \begin{bmatrix}
+                |a_{11}|^2 & \overline{a_{11}}a_{12} & \cdots & \overline{a_{11}}a_{1n}\\
+                a_{12}\overline{a_{11}} & |a_{12}|^2 + |a_{22}|^2 & \cdots & \overline{a_{22}}a_{2n}\\
+                \vdots & \vdots & \ddots & \vdots\\
+                a_{11}\overline{a_{1n}} & a_{12}\overline{a_{1n}} + a_{22}\overline{a_{2n}} & \cdots & |a_{1n}|^2 + |a_{2n}|^2 + |a_{nn}|^2
+            \end{bmatrix} = I
+        \end{align*}
+        The only way that the above matrix can be the identity matrix is if $a_{ij} = 0$ for all $i \neq j$\\
+        Thus $A$ is diagonal.
+    \end{solution}
+
+    \question Section 6.5 Question 18
+    Show that "is unitarily equivalent" is an equivalence relation on $M_{n\times n}(C)$
+    \begin{solution}
+        The relation "is unitarily equivalent" is an equivalence relation on $M_{n\times n}(C)$ if it is reflexive, symmetric, and transitive.\\
+        Also remember that a unitary matrix is a matrix $U$ such that $U^*U = UU^* = I$\\
+
+        (i) Reflexive\\
+        Let $A$ be a matrix in $M_{n\times n}(C)$.\\
+        $A$ is unitarily equivalent to itself since $A = IAI^{-1}$\\
+
+        (ii) Symmetric\\
+        Let $A$ and $B$ be matrices in $M_{n\times n}(C)$ such that $A$ is unitarily equivalent to $B$.\\
+        Need $B$ is unitarily equivalent to $A$.\\
+        Since $A$ is unitarily equivalent to $B$, there exists a unitary matrix $U$ such that $B = UAU^{-1}$\\
+        Thus $A = U^{-1}BU$\\
+        Since if $U$ is unitary, $U^{-1}$ is also unitary, $B$ is unitarily equivalent to $A$.\\
+
+        (iii) Transitive\\
+        Let $A$, $B$, and $C$ be matrices in $M_{n\times n}(C)$ such that $A$ is unitarily equivalent to $B$ and $B$ is unitarily equivalent to $C$.\\
+        Need $A$ is unitarily equivalent to $C$.\\
+        Since $A$ is unitarily equivalent to $B$, there exists a unitary matrix $U$ such that $B = UAU^{*}$\\
+        Since $B$ is unitarily equivalent to $C$, there exists a unitary matrix $V$ such that $C = VBV^{*}$\\
+        Thus $C = V(UAU^{*})V^{*} = (VU)A(VU)^{*}$\\
+        We can see that $VU$ is unitary since $V^*V = VV^* = I$ and $UU^* = U^*U = I$ then  $(VU)^*(VU) = U^*V^*VU = U^*U = I$ an $(VU)(VU)^* = VUU^*V^* = VV^* = I$\\
+        So the product of two unitary matrices is unitary.\\
+        Thus $A$ is unitarily equivalent to $C$.\\
+    \end{solution}
+
+\end{questions}
+
+\end{document}

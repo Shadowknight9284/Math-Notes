@@ -1,0 +1,262 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question[10] Section 5.4 Problem 5\\
+    Let $\phi(x) = 
+    \begin{cases} 
+    0 & \text{for } 0 < x < 1 \\
+    1 & \text{for } 1 < x < 3 
+    \end{cases}$.
+    \begin{parts}
+        \part Find the first four nonzero terms of its Fourier cosine series explicitly.
+        \part For each $x$ ($0 \leq x \leq 3$), what is the sum of this series?
+        \part Does it converge to $\phi(x)$ in the $L^2$ sense? Why?
+        \part Put $x = 0$ to find the sum 
+        \[
+        1 + \frac{1}{2} - \frac{1}{4} - \frac{1}{5} + \frac{1}{7} + \frac{1}{8} - \frac{1}{10} - \frac{1}{11} + \cdots.
+        \]
+    \end{parts}
+    \begin{solution}
+        \textbf{Part a:} \\
+        We can write the Fourier cosine series of $\phi(x)$ as
+        \[
+        \phi(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos \left( \frac{n\pi x}{l} \right).
+        \]
+        We can first solve for $a_0$:
+        \begin{align*}
+            a_0 &= \frac{2}{l} \int_{0}^{l} \phi(x) \, dx \\
+            &= \frac{2}{3} \int_{0}^{1} 0 \, dx + \frac{2}{3} \int_{1}^{3} 1 \, dx \\
+            &= \frac{2}{3} \left[ x \right]_{1}^{3} \\
+            &= \frac{2}{3} (3 - 1) \\
+            &= \frac{4}{3}.
+        \end{align*}
+        Next, we solve for $a_n$:
+        \begin{align*}
+            a_n &= \frac{2}{l} \int_{0}^{l} \phi(x) \cos \left( \frac{n\pi x}{l} \right) \, dx \\
+            &= \frac{2}{3} \int_{0}^{1} 0 \cos \left( \frac{n\pi x}{3} \right) \, dx + \frac{2}{3} \int_{1}^{3} 1 \cos \left( \frac{n\pi x}{3} \right) \, dx \\
+            &= \frac{2}{3} \int_{1}^{3} \cos \left( \frac{n\pi x}{3} \right) \, dx \\
+            &= \frac{2}{3} \left[ \frac{3}{n\pi} \sin \left( \frac{n\pi x}{3} \right) \right]_{1}^{3} \\
+            &= \frac{2}{3} \left[ \frac{3}{n\pi} \sin \left( n\pi \right) - \frac{3}{n\pi} \sin \left( \frac{n\pi}{3} \right) \right] \\
+            &= \frac{-2}{3} \left[\frac{3}{n\pi}\cdot \alpha \right]
+        \end{align*}
+        Where $\alpha = \begin{cases}
+            0 & \text{if } n \bmod 6 = 0 \\
+            \frac{\sqrt{3}}{2} & \text{if } n \bmod 6 = 1 \\
+            \frac{\sqrt{3}}{2} & \text{if } n \bmod 6 = 2 \\
+            0 & \text{if } n \bmod 6 = 3 \\
+            -\frac{\sqrt{3}}{2} & \text{if } n \bmod 6 = 4 \\
+            -\frac{\sqrt{3}}{2} & \text{if } n \bmod 6 = 5 
+        \end{cases}$
+        Thus the first four nonzero terms of the Fourier cosine series are
+        \[
+        \frac{2}{3} - \frac{\sqrt{3}}{\pi} \cos \left( \frac{\pi x}{3} \right) - \frac{\sqrt{3}}{\pi} \cdot \frac{1}{2} \cos \left( \frac{2\pi x}{3} \right) + \frac{\sqrt{3}}{\pi} \cdot \frac{1}{4} \cos \left( \frac{4\pi x}{3} \right).
+        \]
+        \textbf{Part b:} \\
+        We can see that for $x \in [0,1)$, the sum of the series is $0$ and for $x = 1$ the sum of the series is $1/2$. For $x \in (1,3]$, the sum of the series is $1$.\\
+    
+        \textbf{Part c:} \\
+        We want to see if 
+        $$ \int_0^3 [ \phi(x) - \sum_1^N b_n \sin(\frac{n\pi x}{3})]^2 dx = 0$$
+        as $N \to \infty$. \\
+        We can see that for the intevals $[0,1)\cup(1,3]$, the sum of the series is $0$ and $1$ respectively. \\
+        Thus if we seperate the integral into these two regions we can see each region does converge to $0$ and $1$ respectively. \\
+        Thus the series converges to $\phi(x)$ in the $L^2$ sense. \\
+
+        \textbf{Part d:} \\
+        If we take $x = 0$ and let the sum we are looking for as $S$
+        $$ 0 = \frac{2}{3} - \frac{\sqrt{3}}{2\pi} - \frac{\sqrt{3}}{4\pi} + \frac{\sqrt{3}}{8\pi} - \cdots$$
+        $$ -\frac{2}{3} = \frac{\sqrt{3}}{\pi} [S]$$
+        Thus 
+        $$S = \frac{2 \pi}{3\sqrt{3}}$$ 
+
+    \end{solution}
+
+    \question[10] Section 5.4 Problem 6\\
+    Find the sine series of the function $\cos x$ on the interval $(0, \pi)$. For each $x$ satisfying $-\pi \leq x \leq \pi$, what is the sum of the series?
+    \begin{solution}
+        The sine series of the function $\cos x$ on the interval $(0, \pi)$ is
+        \begin{align*}
+            \cos(x) &= \sum_{n=1}^{\infty} b_n \sin(\frac{nx}{\pi}) \\
+            b_n &= \frac{2}{\pi} \int_{0}^{\pi} \cos(x) \sin(\frac{nx}{\pi}) \, dx \\
+            &= \frac{(-1)^n +1 }{\pi(n+1)} + \frac{(-1)^n + 1}{\pi(n-1)} 
+        \end{align*}
+        Which simplifies to 
+        $$ b_n = \frac{4n}{\pi(n^2-1)}$$ 
+        for n even
+        Thus the sine series of the function $\cos x$ on the interval $(0, \pi)$ is
+        $$ \cos(x) = \sum_{n=1}^{\infty} \frac{4(2n-1)}{\pi((2n-1)^2-1)} \sin(\frac{(2n-1)x}{\pi})$$
+        For each $x$ satisfying $-\pi \leq x \leq \pi$, the sum of the series is $\cos(x)$.
+    \end{solution}
+
+    \question[10] Section 5.4 Problem 9\\
+    Let $f(x)$ be a function on $(-l, l)$ that has a continuous derivative and
+    satisfies the periodic boundary conditions. Let $a_n$ and $b_n$ be the Fourier coefficients of
+    $f(x)$, and let $a'_n$ and $b'_n$ be the Fourier coefficients of its derivative $f'(x)$.
+    Show that
+    \[
+    a'_n = \frac{n\pi b_n}{l} \quad \text{and} \quad b'_n = -\frac{n\pi a_n}{l} \quad \text{for } n \neq 0.
+    \]
+    (Hint: Write the formulas for $a'_n$ and $b'_n$ and integrate by parts.) This
+    means that the Fourier series of $f'(x)$ is what you’d obtain as if you
+    differentiated term by term. It does not mean that the differentiated series
+    converges.
+    \begin{solution}
+        We can see that the fomula for $a'_n$ and $b'_n$ are
+        \begin{align*}
+            a'_n &= \frac{2}{l} \int_{-l}^{l} f'(x) \cos \left( \frac{n\pi x}{l} \right) \, dx \\
+            b'_n &= \frac{2}{l} \int_{-l}^{l} f'(x) \sin \left( \frac{n\pi x}{l} \right) \, dx.
+        \end{align*}
+        We can integrate by parts to get
+        \begin{align*}
+            a'_n &= \frac{2}{l} \left[ f(x) \cos \left( \frac{n\pi x}{l} \right) \right]_{-l}^{l} - \frac{2n\pi}{l} \int_{-l}^{l} f(x) \sin \left( \frac{n\pi x}{l} \right) \, dx \\
+            &= \frac{2}{l} \left[ f(l) \cos \left( n\pi \right) - f(-l) \cos \left( -n\pi \right) \right] - \frac{2n\pi}{l} \int_{-l}^{l} f(x) \sin \left( \frac{n\pi x}{l} \right) \, dx \\
+            &= \frac{2}{l} \left[ f(l) - f(-l) \right] - \frac{2n\pi}{l} \int_{-l}^{l} f(x) \sin \left( \frac{n\pi x}{l} \right) \, dx \\
+            &= \frac{2}{l} \left[ f(l) - f(-l) \right] - \frac{2n\pi}{l} b_n.\\
+            &= \frac{2n\pi b_n}{l}.
+        \end{align*}
+        and 
+        \begin{align*}
+            b'_n &= \frac{2}{l} \left[ f(x) \sin \left( \frac{n\pi x}{l} \right) \right]_{-l}^{l} + \frac{2n\pi}{l} \int_{-l}^{l} f(x) \cos \left( \frac{n\pi x}{l} \right) \, dx \\
+            &= \frac{2}{l} \left[ f(l) \sin \left( n\pi \right) - f(-l) \sin \left( -n\pi \right) \right] + \frac{2n\pi}{l} \int_{-l}^{l} f(x) \cos \left( \frac{n\pi x}{l} \right) \, dx \\
+            &= \frac{2}{l} \left[ f(l) - f(-l) \right] + \frac{2n\pi}{l} \int_{-l}^{l} f(x) \cos \left( \frac{n\pi x}{l} \right) \, dx \\
+            &= \frac{2}{l} \left[ f(l) - f(-l) \right] + \frac{2n\pi}{l} a_n.\\
+            &= -\frac{2n\pi a_n}{l}.
+        \end{align*}
+    \end{solution}
+    \question[10] Section 5.4 Problem 10\\
+    Deduce from Exercise 9 that there is a constant $k$ so that
+    \[
+    |a_n| + |b_n| \leq \frac{k}{n} \quad \text{for all } n.
+    \]
+    \begin{solution}
+        We can see that for $a_n$ and $b_n$ we have\\
+        $$a_n = \frac{2}{l} \frac{f(x)}{n} sin(\frac{n\pi x}{l})|_{-l}^l - \frac{2}{nl} \int_{-l}^l f'(x) sin(n\pi x/ l) dx$$
+        $$b_n = \frac{2}{l} \frac{f(x)}{n} cos(\frac{n\pi x}{l})|_{-l}^l + \frac{2}{nl} \int_{-l}^l f'(x) cos(n \pi x/ l) dx$$
+        Thus we can see that
+        \begin{align*}
+            |a_n| \leq |\frac{2}{nl} \int_{-l}^l f'(x) cos(n \pi x/ l)| dx \leq |\frac{2}{nl} \int_{-l}^l |f'(x)| dx\\
+            |b_n| \leq |\frac{2}{nl} \int_{-l}^l f'(x) sin(n \pi x/ l)| dx \leq |\frac{2}{nl} \int_{-l}^l |f'(x)| dx
+        \end{align*}
+        Let $M$ be the maximum value of $|f'(x)|$ on $[-l,l]$. Then we have
+        \begin{align*}
+            |a_n| \leq \frac{2M}{nl} \int_{-l}^l dx = \frac{4Ml}{nl} = \frac{4M}{n} \\
+            |b_n| \leq \frac{2M}{nl} \int_{-l}^l dx = \frac{4Ml}{nl} = \frac{4M}{n}
+        \end{align*}
+        Thus we can see that $|a_n| + |b_n| \leq \frac{8M}{n}$ for all $n$.
+        
+    \end{solution}
+
+    \question[10] Section 5.4 Problem 12\\
+    Start with the Fourier sine series of $f(x) = x$ on the interval $(0, l)$. Apply
+    Parseval's equality. Find the sum 
+    \[
+    \sum_{n=1}^{\infty} \frac{1}{n^2}.
+    \]
+
+    \begin{solution}
+        We know from that the Fourier sine series of $f(x) = x$ on the interval $(0, l)$ is
+        \begin{align*}
+            x &= \sum_{n=1}^{\infty} b_n \sin \left( \frac{n\pi x}{l} \right)\\
+            b_n &= \frac{2}{l} \int_{0}^{l} x \sin \left( \frac{n\pi x}{l} \right) \, dx\\
+            b_n &= -x \frac{l}{n\pi} \cos \left( \frac{n\pi x}{l} \right) |_{0}^{l} + \frac{l}{n\pi}^2 \sin(\frac{n\pi x}{l})|_{0}^{l}\\ 
+            b_n &= \frac{(-1)^{n+1}l}{n\pi}
+        \end{align*}
+        We know that Parseval's equality is
+        \[
+        \int_{0}^{l} |f|^2(x) \, dx = \sum_{n=1}^{\infty} |b_n|^2 \int_0^l||X_n||^2
+        \]
+        Thus we can see that
+        $$ \int_{0}^{l} x^2 dx = \sum_{n=1}^{\infty} \frac{l^2}{n^2 \pi^2} \int_0^l \sin^2(n\pi x/ l)$$
+        $$ \frac{l^3}{3} = \sum_{n=1}^{\infty} \frac{l^2}{n^2 \pi^2} \frac{l}{2}$$
+        $$ \frac{2l^2}{3} = \sum_{n=1}^{\infty} \frac{l^2}{n^2 \pi^2}$$
+        $$ \frac{2}{3} = \sum_{n=1}^{\infty} \frac{1}{n^2 \pi^2}$$
+        $$ \frac{2\pi}{3} = \sum_{n=1}^{\infty} \frac{1}{n^2}$$
+    \end{solution}
+
+    \question[10] Section 5.5 Problem 3
+    Prove the inequality 
+    \[
+    l\int_0^l (f'(x))^2 dx \geq [f(l) - f(0)]^2
+    \]
+    for any real function \( f(x) \) whose derivative \( f'(x) \) is continuous. 
+    [Hint: Use Schwarz's inequality with the pair \( f'(x) \) and 1.] 
+    \begin{solution}
+        By Schwarz's inequality for g and h we have
+        $$ (\int_0^l g(x)h(x) dx)^2 \leq \int_0^l g(x)^2 dx \int_0^l h(x)^2 dx$$
+        Applyng this with $g(x) = f'(x)$ and $h(x) = 1$ we get
+        $$ (\int_0^l f'(x) dx)^2 \leq \int_0^l (f'(x))^2 dx \int_0^l 1 dx$$
+        $$ (f(l) - f(0))^2 \leq l \int_0^l (f'(x))^2 dx$$
+        $$ l\int_0^l (f'(x))^2 dx \geq [f(l) - f(0)]^2$$
+    \end{solution}
+    
+    \question[10] Section 6.3 Problem 1
+    Suppose that \( u \) is a harmonic function in the disk \( D = \{r < 2\} \) and that \( u = 3 \sin 2\theta + 1 \) for \( r = 2 \). Without finding the solution, answer the following questions.
+    \begin{parts}
+        \part Find the maximum value of \( u \) in \( D \).
+        \part Calculate the value of \( u \) at the origin.
+    \end{parts}
+    \begin{solution}
+        \textbf{Part a:} \\
+        We know that \( u \) is harmonic in \( D \) and that \( u = 3 \sin 2\theta + 1 \) for \( r = 2 \). Thus we can see that the maximum value of \( u \) in \( D \) is \( 4 \) by the maximum principle.\\
+        \textbf{Part b:} \\
+        We know that \( u \) is harmonic in \( D \) and that \( u = 3 \sin 2\theta + 1 \) for \( r = 2 \). Thus we can see that the value of \( u \) at the origin is \( 1 \) due to the fact that value at the origin is the average of the boundary values.\\
+    \end{solution}
+    
+
+    \question[10] Section 6.3 Problem 3
+    Solve $u_{xx} + u_{yy} = 0$ in the disk of $r < a$ with the following boundary conditions:
+    \(\sin 3\theta = 3 \sin \theta - 4 \sin^3 \theta\).
+    \begin{solution}
+        We can rewrite our BC as $ u = \frac{3sin(\theta) - 3sin(3\theta)}{4}$ on the boundary. \\
+        We can use the seperation of variables method to solve this. \\
+        We know the solution to be of the form of 
+        $$ u(r, \theta) = R(r) \Theta(\theta)$$
+        Thus we can see that
+        $$ \frac{R''}{R} + \frac{R'}{rR} = -\frac{\Theta''}{\Theta} = -\lambda$$
+        Thus we have
+        $$ \Theta'' + \lambda \Theta = 0$$
+        $$ R'' + \frac{R'}{r} - \lambda R = 0$$
+        We can see that the solution to the first equation is
+        $$ \Theta(\theta) = A \cos(\sqrt{\lambda} \theta) + B \sin(\sqrt{\lambda} \theta)$$
+        We can see that the solution to the second equation is
+        $$ R(r) = C r^{\sqrt{\lambda}} + D r^{-\sqrt{\lambda}}$$
+        For the R equation we can see that $D=0$ as the solution must be bounded at the origin. \\
+        Thus we have our complete solution as
+        $$ u(r, \theta) = \frac{A_0}{2} + \sum_{n=1}^{\infty} r^n [A_n \cos(n\theta) + B_n \sin(n\theta)]$$
+        Solving for $A_0$ we get
+        $$ A_0 = \frac{1}{\pi} \int_{-\pi}^{\pi} \frac{3sin(\theta) - 3sin(3\theta)}{4} d\theta = 0$$
+        For $A_n$ we get
+        $$ A_n = \frac{1}{\pi} \cdot \frac{1}{a^n} \int_{-\pi}^{\pi} \frac{3sin(\theta) - 3sin(3\theta)}{4} \cos(n\theta) d\theta = 0$$
+        For $B_1$ we get
+        $$ B_1 = \frac{1}{\pi} \cdot \frac{1}{a} \int_{-\pi}^{\pi} \frac{3sin(\theta) - 3sin(3\theta)}{4} \sin(\theta) d\theta = \frac{3}{4a}$$
+        For $B_2$ we get
+        $$ B_2 = \frac{1}{\pi} \cdot \frac{1}{a^2} \int_{-\pi}^{\pi} \frac{3sin(\theta) - 3sin(3\theta)}{4} \sin(2\theta) d\theta = 0$$
+        For $B_3$ we get
+        $$ B_3 = \frac{1}{\pi} \cdot \frac{1}{a^3} \int_{-\pi}^{\pi} \frac{3sin(\theta) - 3sin(3\theta)}{4} \sin(3\theta) d\theta = -\frac{1}{4a^3}$$
+        For all other $B_n$ we get
+        $$ B_n = 0$$
+        Thus we have our solution as
+        $$ u(r, \theta) = \frac{3}{4a} r \sin(\theta) - \frac{1}{4a^3} r^3 \sin(3\theta)$$
+
+        
+
+    \end{solution}
+
+\end{questions}
+
+\end{document}

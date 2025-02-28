@@ -1,0 +1,214 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+\usepackage{cancel} % Add this line to include the cancel package
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question Section 7.1 Problem 2\\
+    Prove the uniqueness up to constants of the Neumann problem using the energy method.
+    \begin{solution}
+        The Neumann problem is given by
+        \begin{align*}
+            \Delta u = f \quad \text{in } D\\
+            \frac{\partial u}{\partial n} = g \quad \text{on } \partial D
+        \end{align*}
+        Suppose there is another solution $v$ to the Neumann problem. Then, we have
+        \begin{align*}
+            \Delta v = f \quad \text{in } D\\
+            \frac{\partial v}{\partial n} = g \quad \text{on } \partial D
+        \end{align*}
+        Subtracting the two equations, we get
+        \begin{align*}
+            \Delta (u - v) = 0 \quad \text{in } D\\
+            \frac{\partial (u - v)}{\partial n} = 0 \quad \text{on } \partial D
+        \end{align*}
+        If we let $w = u - v$, then we have
+        \begin{align*}
+            \Delta w = 0 \quad \text{in } D\\
+            \frac{\partial w}{\partial n} = 0 \quad \text{on } \partial D
+        \end{align*}
+        We can use Green's first identity to get
+        \begin{align*}
+            \int_{\partial D} w \frac{\partial w}{\partial n} dS = \int_D |\nabla w|^2 dV + \int_D w \Delta w dV
+        \end{align*}
+        Since $\Delta w = 0$, the second term on the right-hand side is zero:
+        \begin{align*}
+            \int_{\partial D} w \cancel{\frac{\partial w}{\partial n}}^{\text{ goes to }0} dS &= \int_D |\nabla w|^2 dV + \int_D w \cancel{\Delta w}^{\text{ goes to }0} dV\\
+            0 &= \int_D |\nabla w|^2 dV\\
+            |\nabla w|^2 &= 0\\
+            \nabla w &= 0\\
+            w &= \text{constant}
+        \end{align*}
+        Therefore $u - v = w = \text{constant} \implies u = v + \text{constant}$ which proves the uniqueness of the solution up to constants.
+    \end{solution}
+    \question Section 7.1 Problem 5
+    Probe Dirichlet's prinicple for the Neueman boundary condition. It asserts that among all real valued functions $w(x)$ on $D$ the quantity
+    $$ E[w] = \frac{1}{2} \iiint_D |\nabla w|^2 \, dV - \iiint_{\partial d} h w \, dS $$
+    is the smallest for $w=u$ where $u$ is the solution of the Neumann problem
+    \begin{align*}
+        \Delta u = 0 \quad \text{in } D\\
+        \frac{\partial u}{\partial n} = h(x) \quad \text{on } \partial D
+    \end{align*}
+    It is required to assume that the average of the given function $h(x)$ is zero.\\
+    Notice 3 features of this prinicple:
+    \begin{parts}
+        \part There is no contraint at all on the trial functions $w(x)$.
+        \part the function $h(x)$ appears in the energy
+        \part the functional $E[w]$ does not change if a constant is added to $w(x)$.
+    \end{parts}
+
+    \begin{solution}
+        Let $u$ be the solution to the Neumann problem and $w$ be any other function. Then, we can say that $w = u -v$ for some function $v$. Now the energy of $w$ is given by
+        \begin{align*}
+            E[w] &= \frac{1}{2} \iiint_D |\nabla w|^2 \, dV - \iiint_{\partial d} h w \, dS\\
+            &= \frac{1}{2} \iiint_D |\nabla (u - v)|^2 \, dV - \iiint_{\partial d} h (u - v) \, dS\\
+            &= \frac{1}{2} \iiint_D |\nabla u|^2 - 2 \nabla u \cdot \nabla v + |\nabla v|^2 \, dV - \iiint_{\partial d} h u - \iiint_{\partial d} h v \, dS\\
+            &= \frac{1}{2} \iiint_D |\nabla u|^2 \, dV - \iiint_{\partial d} h u \, dS - \iiint_{D} \nabla u \nabla v \, dV + \frac{1}{2} \iiint_D |\nabla v|^2 \, dV - \iiint_{\partial d} h v \, dS\\
+            &= E[u] - \iiint_{D} \nabla u \nabla v \, dV + \frac{1}{2} \iiint_D |\nabla v|^2 \, dV + \iiint_{\partial d} h v \, dS
+        \end{align*}
+        Using green's first identity, we can write
+        \begin{align*}
+            \iiint_{D} \nabla u \nabla v \, dV = \iiint_{\partial D} v \frac{\partial u}{\partial n} \, dS - \iiint_{D} v \Delta u \, dV
+        \end{align*}
+        \begin{align*}
+            E[w] &= E[u] - \cancel{\iiint_{\partial D} v \frac{\partial u}{\partial n} \, dS} + \iiint_{D} v \cancel{\Delta u}^{\text{ goes to }0} \, dV + \frac{1}{2} \iiint_D |\nabla v|^2 \, dV + \cancel{\iiint_{\partial d} h v \, dS}\\
+            &= E[u] + \frac{1}{2} \iiint_D |\nabla v|^2 \, dV
+        \end{align*}
+        Clearly the second term of the RHS is non-negative. Therefore, $E[w] \geq E[u]$ and the energy is minimized if $w = u$.
+    \end{solution}
+    \question Section 7.2 Problem 2\\
+    Let $\phi(x)$ be any $C^2$ function defined on all of three-dimensional space that vanishes outside some sphere. Show that 
+    $$
+    \phi(0) = -\frac{1}{4\pi} \int \frac{\Delta \phi(x)}{|x|} \, dx.
+    $$
+    The integration is taken over the region where $\phi(x)$ is not zero.
+    \begin{solution}
+        We can let $u = \phi$ and $v = \frac{1}{4\pi|x|}$. Note that $\Delta v = 0$ since it is the fundamental solution of the laplacian in $R^3$ Then we can use Green's second identity to get
+        \begin{align*}
+            \iiint_D u \Delta v - v \Delta u \, dV &= \int_{\partial D} u \frac{\partial v}{\partial n} - v \frac{\partial u}{\partial n} \, dS\\
+            \iiint_D \left( \phi \Delta \left(\frac{1}{4\pi|x|}\right) - \frac{1}{4\pi|x|} \Delta \phi \right) \, dV &= \int_{\partial D} \phi \frac{\partial}{\partial n} \left(\frac{1}{4\pi|x|}\right) - \frac{1}{4\pi|x|} \frac{\partial \phi}{\partial n} \, dS\\
+            \iiint_D \frac{\Delta \phi}{4 \pi r} dV &= \frac{1}{4\pi} \int_{\partial D} -\phi \frac{\partial}{\partial n} \left(\frac{1}{r}\right) + \left( \frac{1}{r}\right) \frac{\partial \phi}{\partial n} \, dS\\
+            \iiint_D \frac{\Delta \phi}{4 \pi r} dV &= \frac{1}{4\pi} \int_{\partial D} \phi  \left(\frac{1}{r^2}\right) \, dS\\
+            \iiint_D \frac{\Delta \phi}{4 \pi r} dV &= -\frac{1}{4\pi R^2} \int_{\partial D} \phi \, dS\\
+            \iiint_D \frac{\Delta \phi}{4 \pi r} dV &= -\overline{\phi} \quad \text{where } \overline{\phi} \text{ is the average of } \phi \text{ over the sphere}
+        \end{align*} 
+        Now if we take the lim of $R \to 0$ we see that the RHS becomes $\phi(0)$ and the LHS becomes the integral we want to evaluate. Therefore, we have
+        $$
+        \phi(0) = -\frac{1}{4\pi} \int \frac{\Delta \phi(x)}{|x|} \, dx.
+        $$
+    \end{solution}
+    \question Section 7.3 Problem 2
+    Prove Theorm 2, which gives the solution of Poisson's equation in terms of the Green's Function.
+    \begin{solution}
+        Theorem 2 states:\\
+        The solution of 
+        $$\begin{cases}
+            \Delta u = f \quad \text{in } D\\
+            u = h \quad \text{on } \partial D
+        \end{cases}$$
+        is given by
+        $$u(x_0) = \int_{\partial D} h(x) \frac{\partial G(x_0, x)}{\partial n} \, dS + \int_D f(x) G(x,x_0) \, dV$$
+        Let us first consider the $\nabla \cdot (v \nabla u) = \nabla v \cdot \nabla u + v \Delta u$ and integrate over $D$ to get
+        \begin{align*}
+            \int_D \nabla \cdot (v \nabla u) \, dV &= \int_D \nabla v \cdot \nabla u + v \Delta u \, dV\\
+            \int_{\partial D} v \frac{\partial u}{\partial n} \, dS &= \int_D \nabla v \cdot \nabla u + v \Delta u \, dV \quad \text{by divergence theorem}\\
+            \int_{\partial D} v \frac{\partial u}{\partial n} \, dS &= \int_D \nabla v \cdot \nabla u \, dV + \int_D v \Delta u \, dV\\
+            \int_{\partial D} u \frac{\partial v}{\partial n} \, dS &= \int_D \nabla u \cdot \nabla v \, dV + \int_D u \Delta v \, dV \quad \text{since u, v are arbitrary we can switch them}\\
+            \int_{\partial D} u \frac{\partial v}{\partial n} - v \frac{\partial u}{\partial n} \, dS &= \int_D  u \cdot \Delta v -  v \cdot \Delta u \, dV \quad \text{subtracting the two equations}
+        \end{align*}
+        Replace $v = G(x, x_0)$ and $u = u(x_0)$ where 
+        $$\begin{cases}
+            \Delta G(x, x_0) = \delta(x - x_0) \quad \text{in } D\\
+            G(x, x_0) = 0 \quad \text{on } \partial D
+        \end{cases}$$
+        then we have 
+        \begin{align*}
+            \int_{\partial D} u \frac{\partial G(x, x_0)}{\partial n} - G(x, x_0) \frac{\partial u}{\partial n} \, dS &= \int_D u \Delta G(x, x_0) - G(x, x_0) \Delta u \, dV\\
+            \int_{\partial D} h \frac{\partial G(x, x_0)}{\partial n} \, dS &= \int_D u \delta(x - x_0) - G(x, x_0) f \, dV\\
+            \int_{\partial D} h \frac{\partial G(x, x_0)}{\partial n} \, dS &= u(x_0) - \int_D f(x) G(x, x_0) \, dV\\
+            u(x_0) &= \int_{\partial D} h(x) \frac{\partial G(x_0, x)}{\partial n} \, dS + \int_D f(x) G(x,x_0) \, dV
+        \end{align*}
+        As desired.
+    \end{solution}
+    \question Section 7.4 Problem 2
+    Verify directly from (3) or (4) that the solution of the half-space problem satisfies the condition at infinity: \( u(x) \to 0 \) as \( |x| \to \infty \). Assume that \( h(x,y) \) is a continuous function that vanishes outside some circle.
+    \begin{solution}
+        The solution of the half space probelm 
+        $$\begin{cases}
+            \Delta u = 0 \quad z >0 \\
+            u(x,y,0) = h(x,y)
+        \end{cases}$$
+        Is given by 
+        $$ u(x_0, y_0, z_0) = \frac{z_0}{2\pi} \int_{R^2} \frac{h(x,y)}{[(x-x_0)^2 + (y-y_0)^2 + z_0^2]^{3/2}} \, dx \, dy$$
+        We can then switch $x_0, y_0, z_0$ and $x, y, z$ 
+        $$ u(x, y, z) = \frac{z}{2\pi} \int_{R^2} \frac{h(x_0,y_0)}{[(x-x_0)^2 + (y-y_0)^2 + z^2]^{3/2}} \, dx_0 \, dy_0$$
+        To verify we can take an easy function for h in the circle and see if the solution goes to zero at infinity. Let $h(x,y) = 1$ for $x\leq 1, y \leq 1$ and $h(x,y) = 0$ otherwise. Then we have
+        \begin{align*}
+            u(x, y, z) &= \frac{z}{2\pi} \int_0^1 \int_0^1 \frac{1}{[(x-x_0)^2 + (y-y_0)^2 + z^2]^{3/2}} \, dx_0 \, dy_0
+        \end{align*}
+        Through some calculations that I did on on wolfram alpha, we can se that
+        $$ u = \frac{1}{2\pi}[\tan^{-1}\frac{x(1-y)}{z\sqrt{x^2+(1-y)^2+z^2}} - \tan^{-1}\frac{x(-y)}{z\sqrt{x^2+y^2+z^2}}$$
+        $$-\tan^{-1}\frac{(x-1)(y-1)}{z\sqrt{(1-x)^2+(1-y)^2+z^2}} - \tan^{-1}\frac{x(y)}{z\sqrt{(x-1)^2+(y)^2+z^2}}] $$
+        Now taking the limit as $|x| \to \infty$ we see that the function goes to zero. Therefore, the solution satisfies the condition at infinity.
+    \end{solution}
+    \question Section 7.4 Problem 5
+    Notice that the function \(xy\) is harmonic in the half-plane \(\{y > 0\}\) and vanishes on the boundary line \(\{y = 0\}\). The function \(0\) has the same properties. Does this mean that the solution is not unique? Explain.
+    \begin{solution}
+        While there may be multiple solutions for the Laplace equation in half space with the boundary line $y=0$, We need to ensure it also satisfies the condition at infinity. In this case, we want to show that $\lim_{x \to \pm \infty} u = 0$ and $\lim_{y \to \infty} u = 0$. We can see that by using green's second identity, we see that 
+        $$ 0 = \int_{D} \nabla u \nabla u \, dV$$
+        since $\Delta u = 0$ and $u = 0$ on the boundary.
+        This implies that 
+        \begin{align*}
+            \int_D <u_x, u_y>  \cdot <u_x, u_y> \, dV &= 0\\
+            \int_D |\nabla u|^2 \, dV &= 0
+            u_x^2 + u_y^2 &= 0
+            u_x = u_y = 0
+        \end{align*}
+        And to solve the BC at infinity, $u = 0$\\
+        Therefore, the solution is unique.\\
+        This emphasizes the importance of end behavior conditions for an unbounded domain. The uniqueness of the solution is guaranteed when the boundary conditions are given at infinity.
+    \end{solution}
+
+    \question Section 7.4 Problem 15
+    \begin{parts}
+        \part Show that if \( v(x,y) \) is harmonic, so is \( u(x,y) = v(x^2 - y^2, 2xy) \).
+        \part Show that the transformation \( (x,y) \rightarrow (x^2 - y^2, 2xy) \) maps the first quadrant onto the half-plane \( \{y > 0\} \). (Hint: Use either polar coordinates or complex variables.)
+    \end{parts}
+    \begin{solution}
+        Notice that $z = x + iy =  r e^{i\theta}$. Then $z^2 = x^2 - y^2 + i(2xy)$\\
+        Suppose $v(x,y)$ then it satisfies $\frac{\partial v^2}{\partial x^2} + \frac{\partial v^2}{\partial y^2} = 0$.\\
+        Make the change of variavles of $j(x,y) = x^2 - y^2$ and $k(x,y) = 2xy$. Then we have
+        \begin{align*}
+            \frac{\partial v}{\partial x} &= 2x \frac{\partial v}{\partial j} + 2y \frac{\partial v}{\partial k}\\
+            \frac{\partial v^2}{\partial x^2} &= 2 \frac{\partial v}{\partial j} + 4x^2 \frac{\partial^2 v}{\partial j^2} + 4xy \frac{\partial^2 v}{\partial j \partial k} + 4yx \frac{\partial^2 v}{\partial k \partial j} + 4y^2 \frac{\partial^2 v}{\partial k^2}\\  
+            \frac{\partial v}{\partial y} &= -2y \frac{\partial v}{\partial j} + 2x \frac{\partial v}{\partial k}\\
+            \frac{\partial v^2}{\partial y^2} &= 4y^2 \frac{\partial^2 v}{\partial j^2} - 4yx \frac{\partial^2 v}{\partial k \partial j} - 4xy \frac{\partial^2 v}{\partial j \partial k} + 4x^2 \frac{\partial^2 v}{\partial k^2}\\
+        \end{align*}
+        Adding the two equations we get
+        \begin{align*}
+            \frac{\partial v^2}{\partial x^2} + \frac{\partial v^2}{\partial y^2} &= 4x^2 \frac{\partial^2 v}{\partial j^2} + 4y^2 \frac{\partial^2 v}{\partial k^2} = 0\\
+            \frac{\partial^2 v}{\partial j^2} + \frac{\partial^2 v}{\partial k^2} &= 0
+        \end{align*}
+        Therefore, $u(x,y) = v(x^2 - y^2, 2xy)$ is harmonic.\\
+
+        We can also see that for the quarter plane $x > 0, y > 0$, with the change of variables we map to $-\infty < x < \infty, y > 0$.
+        
+
+
+    \end{solution}
+\end{questions}
+
+\end{document}

@@ -1,10 +1,10 @@
 # Fdb version 4
-["pdflatex"] 1731801823.57021 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 423/Exam2.tex" "Exam2.pdf" "Exam2" 1731801826.94746 0
-  "Exam2.aux" 1731801826 1466 8825588231e08c185300f43f41261e4f "pdflatex"
-  "Exam2.tex" 1731801820 5685 71782ffef14abef3717c31df0fa78467 ""
-  "Exam2.toc" 1731801826 539 a3dea37ed475fc6e61d115ae7f244b84 "pdflatex"
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 423/Exam2.tex" 1731801820 5685 71782ffef14abef3717c31df0fa78467 ""
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex" 1729643921 1468 a4dc3c5958f038d3f5eb0b6b0b3e5655 ""
+["pdflatex"] 1733447194.70667 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 423/Exam2.tex" "Exam2.pdf" "Exam2" 1733447196.81318 0
+  "Exam2.aux" 1733447196 2861 fea2a17ed7702a59349120f9bc2b7f01 "pdflatex"
+  "Exam2.tex" 1733447193 21033 9652862de8d169c589389adc02c87274 ""
+  "Exam2.toc" 1733447196 1177 8e8c8a96dc3b86b0d45fe5f5786796cf "pdflatex"
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 423/Exam2.tex" 1733447193 21033 9652862de8d169c589389adc02c87274 ""
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex" 1733272558 1507 f5970c8bf1f39ae25007191611565ec3 ""
   "c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1705504038 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1705505139 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1705504777 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -36,8 +36,10 @@
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1705503004 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1705503004 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1705503004 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1705503004 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1705503004 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1705503004 36118 fad905eba93cff5bce1e185fe980a177 ""
+  "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1705503004 34694 870c211f62cb72718a00e353f14f254d ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb" 1705504039 136101 b18d10b3436f8cb0cd04046deb340fe7 ""
   "c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1705507028 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "c:/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex" 1705507506 1016 1c2b89187d12a2768764b83b4945667c ""

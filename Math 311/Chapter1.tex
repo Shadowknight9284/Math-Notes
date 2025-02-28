@@ -1,0 +1,245 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311H}
+\newcommand{\assignment}{Chapter 1}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\section*{What are the Real Numbers?}
+The real numbers are a \textbf{complete ordered field}. \\
+This uniquely determines the real numbers. \\
+No what do these words mean: complete, ordered, field. \\
+\subsection{field}
+A field is a set of numbers with two operations, addition and multiplication, that satisfy the following properties $\forall x,y,z \in \mathbb{R}$:
+\begin{align*}
+    (x+y)+z &= x+(y+z)\\
+    x+y &= y+x\\
+    (x*y)*z &= x*(y*z)\\
+    x*y &= y*x\\
+    x*(y+z) &= x*y+x*z\\
+    \exists 0 \suchthat x+0 &= x\\
+    \forall x \exists -x \suchthat x+(-x) &= 0\\
+    \exists 1 \suchthat x*1 &= x\\
+    0 \neq 1\\
+    \forall x \neq 0 \exists x^{-1} \suchthat x*x^{-1} &= 1
+\end{align*}
+\begin{theorem}
+    For all real numbers $x$: $0x = 0$.
+    \begin{proof}
+        \begin{align*}
+            0*x + 0*x &= (0+0)*x\\
+            0*x + 0*x &= 0*x\\
+            0*x + 0*x &= 0*x + 0\\
+            0*x &= 0
+        \end{align*}
+    \end{proof}
+\end{theorem}
+\subsection{ordered}
+For all $x,y,z \in \mathbb{R}$:
+\begin{align*}
+    x<y &\implies x+z < y+z\\
+    x<y \text{ and } y < z &\implies x < z\\
+    \textbf{Trichotomy Law:} &x<y \text{ or } x=y \text{ or } x>y
+\end{align*}
+\begin{theorem}
+    $$ 0 < 1$$
+    \begin{proof}
+        We do this by the Trichotomy Law. \\
+        We know that $0 \neq 1$ \\
+        we can do this by contradiction: Suppose $1 < 0$
+        \begin{align*}
+            1+(-1) &< 0+(-1)\\
+            0 &< -1
+            1*(-1) &< 0*(-1)\\
+            1*(-1) &< 0 
+            1*(-1) + (1*1) < 0 + (1*1)\\
+            0 < 1
+        \end{align*}
+    \end{proof}
+\end{theorem}
+\begin{definition}
+    If $S$ is a set of real then we say b is an upper bound of $S$ if $\forall x \in S: x \leq b$.
+\end{definition}
+\begin{definition}
+    Given a set of $S$ of reals. we say $b$ is least uper bound or supremem of $S$ when 
+    \begin{enumerate}
+        \item $b$ is an upper bound of $S$
+        \item If $c$ is an upper bound of $S$ then $b \leq c$
+    \end{enumerate}
+    we denote this as $b = \sup S$
+\end{definition}
+\subsection{complete}
+Every non empty set of real numbers that is bounded above has a least upper bound. \\
+\begin{theorem}
+    $x = \sup S$ if and only if $x$ is an upper bound of S for all $\epsilon > 0$ there exists $s \in S$ such that $x-\epsilon < s$
+    \begin{proof}
+        $\implies$ Suppose $x = \sup S$ \\
+        Then $x$ is an upper bound of $S$ \\
+        We only need to show that for all $\epsilon > 0$ there exists $s \in S$ such that $x-\epsilon < s$ \\
+        Let $\epsilon > 0$ \\
+        Since $x = \sup S$ every other uppw bound of $S$ is greater than $x$ \\
+        So $x-\epsilon$ is not an upper bound of $S$ \\
+        So there exists $s \in S$ such that $x-\epsilon < s$ \\
+        Suppose for all $\epsilon > 0$ there exists $s \in S$ such that $x-\epsilon < s$ \\
+        We need to show that $x = \sup S$ \\
+        We know that $x$ is an upper bound of $S$ \\
+        And we know that is $b < x$ then $b$ is not an upper bound of $S$ \\
+        So $x- \epsilon$ is not an upper bound of $S$ \\
+        so there exists $s \in S$ such that $x-\epsilon < s$ \\
+        $\impliedby$ Now suppose $x$ is an ub $\forall \epsilon > 0$ there exists $s \in S$ such that $x-\epsilon < s$ \\
+        Since we know $x$ is an upper bound of $S$ we only need to show that if $b$ is an upper bound of $S$ then $b \geq x$ \\
+        By contrapoitive, this is equivalent to showing that if $b < x$ then $b$ is not an upper bound of $S$ \\
+        Let $\epsilon = x-b$ \\
+        Then there exists an $s \in S$ such that $x-\epsilon < s$ \\
+        and $x - \epsilon = b$ \\ 
+        and $b$ is not an upper bound of $S$ \\
+        Thus $x = \sup S$
+    \end{proof}
+\end{theorem}
+Note that we get that every non empty set of real numbers that is bounded below has a greatest lower bound for free from the completeness of the real numbers. \\
+This is due to the fact multiplication by $-1$ is a reflection across the origin which maps upper bounds to lower bounds. \\
+\begin{theorem}
+    Define $-S = \{-s \suchthat s \in S\}$ \\
+    Then if $b$ is an upper bound of $S$ then $-b$ is a lower bound of $-S$ \\
+    \begin{proof}
+        
+    \end{proof}
+\end{theorem}
+\begin{theorem}
+    If $b = \sup S$ then $-b = \inf -S$
+    \begin{proof}
+        HW
+    \end{proof}
+\end{theorem}
+\begin{theorem}[Nested Interval]
+    
+\end{theorem}
+\begin{theorem}[Archimedan property]
+    
+\end{theorem}
+\subsection{Existence of $\sqrt{2}$}
+\begin{lemma}
+    If $a >0$ and $b \in \R$ then $a^2 > b^2 \implies a > b$
+    \begin{proof}
+        By contrapositive, suppose $a \leq b$ \\
+        Then $a^2 \leq ab < b^2$ \\
+        So $a^2 < b^2$
+    \end{proof}
+\end{lemma}
+\begin{theorem}
+    There is an $x >0$ such that $x^2 = 2$
+    \begin{proof}
+        Let $S = \{s \in \R \suchthat s > 0 \text{ and } s^2 < 2\}$ \\
+        We can see that $0 \in S$ so $S$ is non empty \\
+        More over $2^2 = 4 > 2$ so $2 \notin S$ so $S$ is bounded above \\
+        Let $x = \sup S$ then we WTS $x^2 = 2$ \\
+        Suppose $x^2 > 2$ \\
+        Let $\epsilon=$ very small
+        Let us consider $(x-\frac{1}{n})^2$ \\
+        \begin{align*}
+            (x-\frac{1}{n})^2 &= x^2 - 2x\frac{1}{n} + \frac{1}{n}^2\\
+            &\geq x^2 - 2x\frac{1}{n}
+        \end{align*}
+        We want $x^2 - 2x\frac{1}{n} > 2$ \\
+        Know that $x^2 > 2$ \\
+        Thus $x^2 - 2 > \frac{2x}{n}$ and $\frac{1}{n} < \frac{x^2-2}{2x}$\\
+        So by the Archimedan property there exists, We can take an n such that $\frac{1}{n} < \frac{x^2-2}{2x}$ \\
+        Thus $(x-\frac{1}{n})^2 > 2$, so $x-\frac{1}{n}$ is an upper bound of S resulting in a contradiction.\\
+        Now consider $x^2 < 2$ \\
+        Let $\epsilon = 2-x^2$ \\
+        Then there exists $s \in S$ such that $x < s$ \\
+        Then $s^2 < 2$ \\
+        Then $s^2 < x^2$ \\
+        Then $s < x$ \\
+    \end{proof}
+\end{theorem}
+\begin{definition}
+    We say a set is countable if $A \sim \N$
+\end{definition}
+\begin{lemma}
+    Any infinite subset of a countable set is countable
+    \begin{proof}
+        Let $A \subset \N$ be infinite and we define $f: \N \to A$ \\
+        \begin{align*}
+            f(1) &= \min A\\
+            f(2) &= \min(A \setminus \{f(1)\})\\
+            f(3) &= \min(A \setminus \{f(1),f(2)\})\\
+            &\vdots\\
+            f(n) &= \min(A \setminus \{f(1),f(2),\dots,f(n-1)\})
+        \end{align*}
+        This is a bijection between $\N$ and $A$
+    \end{proof}
+\end{lemma}
+\begin{corollary}
+    If there exists an inject form $A to \N$ then either $A$ is finite or $A \sim \N$(countable)
+    \begin{proof}
+        If $A$ is finite then we are doen\\
+        If $A$ is infite the $f: A \to Im(f)$ stays injective and becmes surjective so $A \sim Im(f)$ Since $Im(f) \subset \N$ is infinite then $A \sim Im(f) \sim \N$
+    \end{proof}
+\end{corollary}
+\begin{proposition}
+    $\N \times \N$ is countable
+    \begin{proof}
+        $\N \times \N$ is inifite, so if we could contracit and inject $f: \N \times \N \to \N$ then $\N \times \N \sim \N$ \\
+        Let $f: \N \times \N \to \N$ \\
+        $f(a,b) = 2^a 3^b$ \\
+        By unique prime facotization if $(a,b) \neq (c,d)$ then $f(a,b) \neq f(c,d)$ \\
+        So $f$ is injective and the corollary gives us that $\N \times \N \sim \N$
+    \end{proof}
+\end{proposition}
+\begin{corollary}
+    $N^n$ is countable for all n. 
+\end{corollary}
+\begin{theorem}
+    If $S_1, S_2, \dots$ is a sequence of sets each finite or countable then $\cup_{n=1}^\infty S_n$ is finite or countable
+    \begin{proof}
+        By defining $\tilde{S_i} = \setof{s \in S: s \notin S_j \forall j < i}$ \\
+        We can assume WLOG that the $S_i$ are disjoint \\
+        Foreach $S_i$ we can enumrate the elements is $S_i = \setof{S_{i,1}, S_{i,2}, ...}$ and $S = \bigcup_{i=1}^\infty \setof{S_{1,1}... S_{1,n_1}, S_{2,1}... S_{2,n_2}, ...}$ \\
+        Each element of $S$ has a unique index, so the function is $f \to \N \times \N$ by $f(S_{i,j}) = (i,j)$ is well definied and injective. \\
+        Since $N \times \N$ is countable there is a bijeections $g$ and there is $h = g \circ f$ that is injectibve and so by the lemma $S$ is either finite or countable
+    \end{proof}
+\end{theorem}
+\begin{theorem}
+    $\Q$ is countable
+    \begin{proof}
+        Write $\Q - \bigcup_{i=1}^\infty A_i$\\
+        where $A_i = \setof{\pm \frac{a}{n}: a\in \N\cup\setof{0}, b \in \N, \text{ and } a+b = i}$\\
+        Now each $A_i$ is finite so by the previous theorem $\Q$ is countable
+    \end{proof}
+\end{theorem}
+\begin{theorem}
+    $\R$ is not countable
+    \begin{proof}
+        Suppose $f: \N \to \R$ we will prove that $f$ is not surjective \\
+        so $N \not \sim \R$ \\
+        First for each $n$ write $x_n = f(n)$ bw fore $n=1$ we can dind an inreral $I_1$ not contaieding $x_1$ now by splitting $I_1$ into 3 pieces we can always fine a piece excldieing $x_2$ Call this closed bounded interval $I_2$ and so on. \\
+        Iterating we get anested set of closed bounded intervals $I_1 \supset I_2 \supset I_3 \supset \dots$ with $x_n \notin I_n$ \\
+        Thus $x_n \notin \bigcap_{m=1}^\infty I_m$ \\
+        Property $\exists x \in \bigcap_{m=1}^\infty I_m$ by NIP
+        Since $x \neq x_n \forall n$ f is not surhective. and thus $\R$ is not countable
+
+    \end{proof}
+\end{theorem}
+\begin{theorem}
+    
+\end{theorem}
+\begin{theorem}
+    for any set $A$, $\setof{0,1}^A \sim P(A)$
+\end{theorem}
+\begin{theorem}
+    For any set $A$, $A \not \sim \setof{0,1}^A$
+\end{theorem}
+
+
+\end{document}

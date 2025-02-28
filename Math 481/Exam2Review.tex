@@ -1,0 +1,511 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Exam 2 Review}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+\newpage
+\section{Content}
+Topics will be everything after midterm 1 up to and including 12.2.  That is 10.2 (unbiased), 10.3 (efficiency/Cramer Rao), 10.7 (Method of moments) ,  Interval estimation (Chap 11: 1, 2, 3,  6,7) and Hypothesis testing (Introduction 12.1 and Testing 12.2). Also: Transformation theorem we practiced while determining pdf of t, f distributions. The transformation theorem itself is in sections 7.3 and 7.4.  Also, 8.5 (t-distribution), 8.6(f-distribution).
+\begin{itemize}
+    \item 10.2 (unbiased)
+    \item 10.3 (efficiency/Cramer Rao)
+    \item 10.7 (Method of moments)
+    \item 11.1 (Interval estimation)
+    \item 11.2
+    \item 11.3
+    \item 11.6
+    \item 11.7
+    \item 12.1 (hypothesis Testing)
+    \item 12.2
+    \item 7.3 \& 7.4 (Transformation theorem)
+    \item 8.5 (t-distribution)
+    \item 8.6 (f-distribution)
+\end{itemize}
+
+\textbf{Note: anything with stars are not explicitly stated but good to know}
+
+\section{Definitions and Notes:}
+\subsection{10.2 (unbiased)}
+\begin{definition}[Unbiased Estimator]
+    A statistic $\hat{\Theta}$ is an unbiased estimator of`' the parameter $\theta$ of a given distribution iff $E(\hat{\Theta}) = \theta$ for all possible values of $\theta$
+\end{definition}
+\begin{definition}[Asymptotically Unbiased Estimator]
+    We define bias $b_n(\theta) = E(\hat{\Theta}) - \theta$.\\
+    $\hat{\Theta}$ is an Asymptotically unbiased Estimator if 
+    $$ \lim_{n \to \infty} b_n(\theta) = 0$$
+    That is, with larger sample size makes the bias approach 0
+\end{definition}
+\begin{theorem}[$S^2$ is an unbiased estimatior of $\sigma^2$]
+    If $S^2$ is the variance of a random sample from an infinte population, with finite variance $\sigma^2$ then $E(S^2) =\sigma^2$
+\end{theorem}
+\subsection{10.3 (Efficiency)}
+\begin{definition}[Minimum Variance Unbiased Estimator]
+    The estimator for the parameter $\theta$ of a given distribution that has the smallest variance of all unbiased estimators for $\theta$ is called the \textbf{minimum variance unbiased estimator} or the best unbiased estimator for $\theta$
+\end{definition}
+\begin{definition}[Cramer-Rao inequality]
+    If $\hat{\Theta}$ is an unbiased estimator of $\theta$ and 
+    $$ var(\hat{\Theta}) = \frac{1}{n \cdot E\left[ \left( \frac{\partial \ln(f(X))}{\partial \theta} \right)^2 \right]} $$
+    Alternate form is 
+    $$ var(\hat{\Theta}) = \frac{-1}{n \cdot E\left[ \left( n \cdot E[\frac{\partial^2}{\partial\theta^2} ln(f(X))] \right) \right]} $$
+    then $\hat{\Theta}$ is the minimum variance unbiased estimator of $\theta$
+\end{definition}
+\begin{definition}[Mean Square Error]
+    We define Mean Square Error as 
+    $$ E[(\hat{\Theta} - \theta)^2]$$
+    This is used if $\hat{\Theta}$ is not an unbiased estimator of $\theta$. We judge it on the MSE basis instead of Variance
+\end{definition}
+
+\subsection{10.7 (Method of moments)}
+\begin{definition}[k-th Sample moment]
+    The kth sample moment of a set of obervations $\setof{x_i}_n$ is the mean of their kth powers denoted by $m_k'$
+    $$ m_k' = \frac{\sum_{i=1}^{n} x_i^k}{n}$$
+    We can use this to create a system of equations for our estimator based on the number of parameters we have
+\end{definition}
+
+\subsection{*10.8 - (Method of Max Likelihood)}
+\begin{definition}[Maximum Likelihood Estimator]
+    The Likelihood function of $\setof{x_i}$ is 
+    $$ L(\theta) = f(\setof{x_i}; \theta)$$
+    If we find the value of theta to maximize $L$ that is calle the maximum Likelihood estimator of $\theta$
+\end{definition}
+
+\subsection{11.1 (Interval estimation)}
+\begin{definition}[Confidence Interval]
+    If $\hat{\theta}_1$ and $\hat{\theta}_2$ are values of the random variables $\hat{\Theta}_1$ and $\hat{\Theta}_2$ such that 
+    $$ P(\hat{\Theta}_1 <\theta < \hat{\Theta}_2) = 1 - \alpha$$
+    For some specifed probability $1-\alpha$ we refer to the interval $\hat{\theta}_1 < \theta < \hat{\theta}_2$ as a $(1-\alpha)100$\% Confidence interval for $\theta$\\
+    $1-\alpha$ is our degree of Confidence.
+\end{definition}
+
+\subsection{11.2 (Estimaion of Means)}
+\begin{theorem}[Z-score interval of mean (known variance)]
+    If $\bar{X}$ is the mean of a random sample of size n from a normal population with known variance $\sigma^2$, is to be used as an estimator of the mean of the population, the probability is $1-\alpha$ that the error will be less that $z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}$
+\end{theorem}
+
+\begin{theorem}[Confidence Interval of mean (known variance) ]
+    If $\bar{x}$ is the balue of the mean of a random sample of size $n$ from a normal population with the known variance $\sigma^2$ then 
+    $$ \bar{x} - z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}} < \mu < \bar{x} + z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}$$
+    is a $(1-\alpha)100$\% confidence interval for the mean of the population $\mu$  
+\end{theorem}
+
+\begin{proof}[Derivation of the Confidence Interval of Population Mean with known Variance]
+    Pop with known variance $\sigma^2$\\
+    We know that $\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$\\
+    \begin{align*}
+        P(|Z| < z_{\alpha/2}) &= 1 - \alpha\\
+        P(-z_{\alpha/2} < Z < z_{\alpha/2}) &= 1 - \alpha\\
+    \end{align*}
+    We know that $Z = \frac{\bar{X} - \mu}{\frac{\sigma}{\sqrt{n}}}$
+    \begin{align*}
+        P(-z_{\alpha/2} < \frac{\bar{X} - \mu}{\frac{\sigma}{\sqrt{n}}} < z_{\alpha/2}) &= 1 - \alpha\\
+        P(-z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}} < \bar{X} - \mu < z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}) &= 1 - \alpha\\
+        P(\bar{X} - z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}} < \mu < \bar{X} + z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}) &= 1 - \alpha
+    \end{align*}
+    Thus we have our confidence interval
+\end{proof}
+
+\begin{theorem}[T-score interval of mean (unknown variance)]
+    If x and s are the values of the mean and the standard deviation of a random sample of size n from a normal population, then
+    $$ x - t_{\alpha/2} \cdot \frac{s}{\sqrt{n}} < \mu < x + t_{\alpha/2} \cdot \frac{s}{\sqrt{n}}$$
+    is a $(1-\alpha)100$\% confidence interval for the mean of the population $\mu$
+\end{theorem}
+
+\begin{proof}[Derivation of the CI of Pop mean with unknown variance]
+    We have sample mean $\bar{X}$ and sample standard deviation $S$\\
+    Thus if $\bar{x}$ is the sample mean and $s$ is the sample standard deviation, then $\bar{X} \sim t_{n-1}$\\
+    $T$ is the t-distribution with $n-1$ degrees of freedom\\
+    $$T = \frac{\bar{X} - \mu}{\frac{S}{\sqrt{n}}}$$
+    \begin{align*}
+        P(-t_{\alpha/2} < T < t_{\alpha/2}) &= 1 - \alpha\\
+        P(-t_{\alpha/2} \cdot \frac{S}{\sqrt{n}} < \bar{X} - \mu < t_{\alpha/2} \cdot \frac{S}{\sqrt{n}}) &= 1 - \alpha\\
+        P(\bar{X} - t_{\alpha/2} \cdot \frac{S}{\sqrt{n}} < \mu < \bar{X} + t_{\alpha/2} \cdot \frac{S}{\sqrt{n}}) &= 1 - \alpha
+    \end{align*}
+    Thus we have our confidence interval
+\end{proof}
+
+\subsection{11.3 (Estimation of Difference of Means)}
+\begin{definition}[Confidence Interval of Difference of 2 means with 2 know variances]
+    If $\bar{x}_1$ and $\bar{x}_2$ are the means of two random samples of sizes $n_1$ and $n_2$ from two normal populations with known variances $\sigma_1^2$ and $\sigma_2^2$ then,
+    $$(\bar{x}_1 - \bar{x}_2) - z_{\alpha/2} \cdot \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}} < \mu_1 - \mu_2< (\bar{x}_1 - \bar{x}_2) + z_{\alpha/2} \cdot \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}$$
+    is a $(1-\alpha)100$\% confidence interval for the difference of the means of the two populations
+\end{definition}
+\begin{definition}[CI of Difference of 2 means with $\sigma_1^2 = \sigma_2^2 = \sigma^2$ known]
+    If $\bar{x}_1$ and $\bar{x}_2$ are the means of two random samples of sizes $n_1$ and $n_2$ from two normal populations with the same variance $\sigma^2$ then,
+    $$(\bar{x}_1 - \bar{x}_2) - z_{\alpha/2} \cdot \sigma \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}} < \mu_1 - \mu_2< (\bar{x}_1 - \bar{x}_2) + z_{\alpha/2} \cdot \sigma \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$$
+    is a $(1-\alpha)100$\% confidence interval for the difference of the means of the two populations
+\end{definition}
+
+\begin{definition}[Pooled Variance]
+    If we take $S_1^2$ and $S_2^2$ as the sample variances distributions with the same variance $\sigma^2$ then the pooled variance is
+    $$ S_p^2 = \frac{(n_1 - 1)S_1^2 + (n_2 - 1)S_2^2}{n_1 + n_2 - 2}$$
+    This is similar to taking the weighted average of the variances
+\end{definition}
+
+\begin{definition}[CI of Difference of 2 means with $\sigma_1^2 = \sigma_2^2 = \sigma^2$ unknown]
+    If $\bar{x}_1$ and $\bar{x}_2$ are the means of two random samples of sizes $n_1$ and $n_2$ from two normal populations with the same variance $\sigma^2$ and $s_1^2$ and $s_2^2$ are the sample variances then,
+    $$(\bar{x}_1 - \bar{x}_2) - t_{\alpha/2, n_1 +n_2 -2} \cdot s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}} < \mu_1 - \mu_2< (\bar{x}_1 - \bar{x}_2) + t_{\alpha/2, n_1 +n_2 -2} \cdot s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$$
+    Where $s_p^2$ is the pooled variance given by 
+    $$ s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}$$
+    is a $(1-\alpha)100$\% confidence interval for the difference of the means of the two populations
+\end{definition}
+
+\begin{remark}
+    If $\bar{X}$ and $S^2$ are the sample mean and sample variance of a random sample of size $n$ from a normal population with unknown variance $\sigma^2$ then
+    \begin{itemize}
+        \item $\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$ and $S^2 \sim \chi^2_{n-1}$ and are both independent
+        \item $\setof{X_i} \sim \chi^2_{\nu = \nu_i}$ then $Y = \sum_{i=1}^{n} X_i \sim \chi^2_{\nu = \sum_{i=1}^{n} \nu_i}$
+    \end{itemize} 
+    Thus $S_p = \sqrt{\frac{(n_1 - 1)S_1^2 + (n_2 - 1)S_2^2}{n_1 + n_2 - 2}} \sim \chi^2_{\nu = n_1 + n_2 - 2}$ 
+    And $T = \frac{Z}{\sqrt{Y/n_1 + n_2 -2}}$ where $Z \sim N(0,1)$ and $Y = S_p \sim \chi^2_{n_1 + n_2 - 2} = t_{\alpha/2, \nu = n_1 + n_2 -2}$
+\end{remark}
+
+\subsection{11.6 (Estimation of Variances)}
+\begin{definition}[Confidence Interval of Variance]
+    If $S^2$ is the variance of a random sample of size $n$ from a normal population with variance $\sigma^2$ then
+    $$ \frac{(n-1)S^2}{\chi^2_{\alpha/2, n-1}} < \sigma^2 < \frac{(n-1)S^2}{\chi^2_{1-\alpha/2, n-1}}$$
+    is a $(1-\alpha)100$\% confidence interval for the variance of the population
+\end{definition}
+
+
+\subsection{11.7 (Estimation of Ratio of Variances)}
+\begin{definition}[Confidence Interval of Ratio of Variances]
+    If $S_1^2$ and $S_2^2$ are the variances of two random samples of sizes $n_1$ and $n_2$ from two normal populations with variances $\sigma_1^2$ and $\sigma_2^2$ then
+    $$ \frac{S_1^2}{S_2^2} \cdot \frac{1}{F_{\alpha/2, n_1 - 1, n_2 - 1}} < \frac{\sigma_1^2}{\sigma_2^2} < \frac{S_1^2}{S_2^2} \cdot F_{\alpha/2, n_1 - 1, n_2 - 1}$$
+    is a $(1-\alpha)100$\% confidence interval for the ratio of the variances of the two populations
+    
+\end{definition}
+\subsection{12.1 (Hypothesis Testing)}
+\begin{definition}[Statistical Hypothesis]
+    An assertion or conjecture about the distribution of one or more random variables is called a statistical hypothesis. If
+a statistical hypothesis completely specifies the distribution, it is called a simple
+hypothesis; if not, it is referred to as a composite hypothesis
+\end{definition}
+\subsection{12.2 (Testing a Statistical Hypothesis)}
+\begin{definition}[Types of errors]
+    These are the types of errors:\\
+    \begin{itemize}
+        \item Type I error: Rejecting a true null hypothesis
+        \item Type II error: Failing to reject a false null hypothesis
+    \end{itemize}
+    Type I error is denoted by $\alpha$ and Type II error is denoted by $\beta$
+\end{definition}
+\begin{definition}[Critical Region]
+    It is customary to refer to the rejection region for
+H0 as the critical region of a test. The probability of obtaining a value of the test
+statistic inside the critical region when H0 is true is called the size of the critical
+region. Thus, the size of the critical region is just the probability  of committing
+a type I error. This probability is also called the level of significance of the test
+(see the last part of Section 5)
+\end{definition}
+\subsection{7.3 \& 7.4 (Transformation theorem)}
+\begin{definition}[Transformation Theorem]
+    Let $f(x)$ be the value of a pdf of a random variable $X$ at $x$. Consider $Y = u(X)$ \\
+    Thus $y = u(x)$ and $x = u^{-1}(y)$\\
+    Let $w = u^{-1}$ thus $x = w(y)$\\
+    Then the pdf of $Y$ is given by $g(y) = f(w(y)) |w'(y)|$
+    \begin{proof}
+        Consider $y = u(x)$ and $x = w(y)$\\
+        Thus 
+        $$ P(a \leq Y \leq b) = P(w(a) \leq X \leq w(b)) = \int_{w(a)}^{w(b)} f(x) dx$$
+        By the fundamental theorem of calculus, we can differentiate the above equation to get the pdf of $Y$.
+        $$ g(y) = \frac{d}{dy} \int_{w(a)}^{w(b)} f(x) dx = \frac{d}{dy} \int_a^b f(w(y)) |w'(y)| dy = f(w(y)) |w'(y)|$$
+        We add the absolute value as $w'(y)$ is positive for increasing functions and negative for decreasing functions.
+    \end{proof}
+\end{definition}
+\begin{definition}[Transformation Theorem for multiple Variables to one Variable]
+    if we have a transformation $Y = u(X_1, X_2)$ then the pdf of $Y$ is given by
+    $$ g(y) = \int_{-\infty}^{\infty} f(x_1, x_2) \left| \frac{\partial x_1}{y} \right| dx_2$$
+    Essentially we convert one of the variables (WLOG we use $x_1$) in terms of $y$ and the other variable $x_2$ . Then we apply out transformation theorem and then integreate over the other variable.
+\end{definition}
+\subsection{8.5 (t-distribution)}
+\begin{definition}[t-distribution]
+    Also known as a students t-distribution. \\
+    If $Y$ and $Z$ are independent random variables with $Z \sim N(0,1)$ and $Y \sim \chi^2_{\nu}$ then the random variable $T = \frac{Z}{\sqrt{Y/\nu}}$ has a t-distribution with $\nu$ degrees of freedom.\\
+    The pdf of the t-distribution is given by
+    $$ f(t) = \frac{\Gamma(\frac{\nu + 1}{2})}{\sqrt{\nu \pi} \Gamma(\frac{\nu}{2})} \left( 1 + \frac{t^2}{\nu} \right)^{-\frac{\nu + 1}{2}}$$
+    \begin{proof}
+        We can use the transformation theorem to find the pdf of $T$ by finding the pdf of $Z$ and $Y$ and then using the transformation theorem to find the pdf of $T$
+        \begin{align*}
+            f(y,z) &= f(y) \cdot f(z)\\
+            &= \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \cdot \frac{1}{2^{\nu/2} \Gamma(\nu/2)} y^{\nu/2 - 1} e^{-y/2} \\
+        \end{align*}
+        We make the Change of Variables $t = \frac{z}{\sqrt{y/\nu}}$\\
+        $z = t \sqrt{y/\nu}$ and $\frac{\partial z}{\partial t} = \sqrt{y/\nu}$\\
+        Thus 
+        \begin{align*}
+            g(t,y) &= f(y,t \sqrt{y/\nu}) \left| \frac{\partial z}{\partial t} \right|\\
+            &= \frac{1}{\sqrt{2\pi \nu} \Gamma(\nu/2) 2^{\nu/2} } y^{(\nu-1)/2} e^{-y/2} e^{-t^2/2} \sqrt{y/\nu}\\
+        \end{align*}
+        We can integrate out with a w sub to get our pdf of $T$
+    \end{proof}
+    \begin{theorem}
+        If $\bar{X}$ and $S^2$ are the sample mean and sample variance of a random sample of size $n$ from a population with mean $\mu$ and variance $\sigma^2$ then
+        $$ T = \frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}$$
+    \end{theorem}
+\end{definition}
+\subsection{8.6 (f-distribution)}
+\begin{definition}[F-Distribution]
+    Also known as the Fischer distribution.\\
+    If $Y_1$ and $Y_2$ are independent random variables with $Y_1 \sim \chi^2_{\nu_1}$ and $Y_2 \sim \chi^2_{\nu_2}$ then the random variable $F = \frac{Y_1/\nu_1}{Y_2/\nu_2}$ has an F-distribution with $\nu_1$ and $\nu_2$ degrees of freedom.\\
+\end{definition}
+\begin{definition}[F-dsit to with ratio of sample Variance]
+    If $S_1^2$ and $S_2^2$ are the sample variances of two random samples of sizes $n_1$ and $n_2$ from two normal populations with variances $\sigma_1^2$ and $\sigma_2^2$ then
+    $$F = \frac{S_1^2}{\sigma_1^2} / \frac{S_2^2}{\sigma_2^2}$$
+    and $F$ has an F-distribution with $n_1 - 1$ and $n_2 - 1$ degrees of freedom
+\end{definition}
+
+\section{Questions}
+
+\section{Info needed on CheatSheet}
+Confidence Interval of mean (known variance)
+Confidence Interval of mean (unknown variance)
+CI for Dif of 2 means (2 known variances)
+CI for Dif of 2 means (2 unknown variances with same pop variance)
+CI for Variances 
+CI for Ratio of Variances
+Method of Moments
+Cramer Rao Inequality (Bias and Efficiency)
+Hypothesis Testing
+Types of Errors
+Transformation Theorem
+
+
+
+
+\section*{Review Sheet}
+
+\begin{questions}
+    \question[10] If $x_1, x_2$ are the values of a random sample of size 2 from a uniform population $U[0, \theta]$, find $k$ so that
+    $$0 < \theta < k(x_1 + x_2)$$  is a 95\% confidence interval for $\theta$.
+    The density function of $X_1 + X_2$ has the shape of a downward-opening triangle with base on $[0, 2\theta]$ and third vertex over $x = \theta$.
+    \begin{solution}
+        We can see this is a triangle with base $2\theta$ and height $\theta$. It is also symmetric vertically about $\theta$. 
+        We want to solve the following inequality
+        $$ P(0 < \theta < k(x_1 + x_2)) = 0.95$$
+        $$ P(\theta/k < x_1 + x_2 ) = 0.95$$
+        $$ \int_{\theta/k}^\infty f(x) dx = 0.95$$
+        $$ \int_0^{\theta/k} f(x) dx = 0.05$$
+        $$f(x) = \frac{x}{\theta^2}$$   
+        This is given by the area of the triangle. 
+        $$ \int_0^{\theta/k} \frac{x}{\theta^2} dx = 0.05$$
+        $$ \frac{1}{2k^2} = .05$$
+        $$ k = \sqrt{10}$$ 
+    \end{solution}
+    \question[10] Let $X_1$ and $X_2$ constitute a random sample from a normal population with variance $\sigma^2 = 1$. If the null hypothesis $\mu = 2$ is to be rejected in favor of the alternative hypothesis $\mu = 5$ when $\bar{x} > 4$, what is the size of the critical region (probability of committing a type I error)? Your answer should be expressed using $Z$ (standard normal) appropriately.
+    \begin{solution}
+        The size of the critical region is the probability of committing a type I error, which is the probability of rejecting the null hypothesis when it is true. This can be calculated as follows:
+        $$P(R H_0 | H_0 holds) = P(\bar{X} > 4 | \mu = 2) = \alpha$$
+        $$ P\left( \frac{\bar{X} - \mu}{\frac{\sigma}{\sqrt{n}}} > \frac{4 - 2}{\frac{1}{\sqrt{2}}} \right) = \alpha$$
+        We have values for $\mu$, $\sigma$, and $n$ so we can plug in the values to get the Z score
+        $$ P(Z > 2\sqrt{2}) = \alpha$$
+    \end{solution}
+
+    \question[10] Consider a population with density $f(x) = \alpha e^{\alpha x} / e^{\alpha}$ if $x < 1$, and zero for $x > 1$. Here $\alpha > 0$ is a parameter.
+    \begin{parts}
+        \part[2] Doing the necessary computation, decide if the sample mean, $\bar{X}$, is an unbiased estimator of $\alpha$.
+        \part[3] Compute the Cramer-Rao Lower bound for the variance of unbiased estimators of the parameter $\alpha$.
+        \part[2] What is meant by Minimum variance unbiased estimator? Can its variance be greater than CRLB?
+        \part[3] Determine $E[f(X)]$ where $X$ is a random variable from the population (and so has PDF $f$ that is given). Therefore, is the random variable $f(X)$ an unbiased estimator of $\alpha$?
+    \end{parts}
+    \begin{solution}
+        \textbf{a}:\\
+        \begin{align*}
+            E[\bar{X}] &= \int_{-\infty}^{1} x \cdot \frac{\alpha e^{\alpha x}}{e^{\alpha}} dx\\
+            &= \frac{\alpha}{e^\alpha} \int_{-\infty}^{1} x \cdot e^{\alpha x} dx\\
+            &= \frac{\alpha}{e^\alpha} \left[ \frac{1}{\alpha} e^{\alpha}x + \frac{1}{\alpha^2}e^{\alpha}  \right]_{-\infty}^{1}\\
+            &= \frac{\alpha}{e^\alpha} \left[ \frac{1}{\alpha} e^{\alpha} + \frac{1}{\alpha^2}e^{\alpha}  \right]\\
+            &= 1 - \frac{1}{\alpha}
+        \end{align*}
+        Thus $\bar{X}$ is not an unbiased estimator of $\alpha$\\
+
+        \textbf{b}:\\
+        The CRLB is 
+        \begin{align*}
+            ln(f) &= ln(\alpha) + \alpha x - \alpha\\
+            \frac{\partial ln(f)}{\partial \alpha} &= \frac{1}{\alpha} + x - 1\\
+            \left( \frac{\partial^2 ln(f)}{\partial \alpha^2} \right) &= -\frac{1}{\alpha^2}\\
+            E\left[ \left( \frac{\partial^2 ln(f)}{\partial \alpha^2} \right) \right] &= E\left[ \left( \frac{1}{\alpha^2} \right) \right] = \frac{-1}{\alpha^2}\\
+            CRLB &= \frac{1}{n \cdot E\left[ \left( \frac{1}{\alpha^2} \right) \right]} = \frac{\alpha^2}{n}
+        \end{align*}
+
+        \textbf{c}:\\
+        A minimum varience unbasie estimaotr is the estimator for the parameter (among all other estimators), the one with the lowest variance. It must be unbiased. The variance of the estimator can be greater than the CRLB, but there may not exist an estimator with same or lower variance than the CRLB.\\
+
+        \textbf{d}:\\
+        The expected value of $f(X)$ is
+        \begin{align*}
+            E[f(X)] &= \int_{-\infty}^{1} f(x) \cdot f(x) dx\\
+            &= \int_{-\infty}^{1} \frac{\alpha e^{\alpha x}}{e^{\alpha}} \cdot \frac{\alpha e^{\alpha x}}{e^{\alpha}} dx\\
+            &= \int_{-\infty}^{1} \frac{\alpha^2 e^{2\alpha x}}{e^{2\alpha}} dx\\
+            &= \frac{\alpha^2}{e^{2\alpha}} \int_{-\infty}^{1} e^{2\alpha x} dx\\
+            &= \frac{\alpha^2}{e^{2\alpha}} \left[ \frac{1}{2\alpha} e^{2\alpha x} \right]_{-\infty}^{1}\\
+            &= \frac{\alpha^2}{2e^{2\alpha}} \left[ e^{2\alpha} / \alpha \right]\\
+            &= \frac{\alpha}{2}
+        \end{align*}
+        This is not an unbiased estimator of $\alpha$\\
+        But by the linearity of expectation, we can see that $E[2f(X)] = \alpha$ and thus $2f(X)$ is an unbiased estimator of $\alpha$
+
+    \end{solution}
+
+    \question[10] The parts below ask you to apply a formula. You may have a subscript notation like $x_i$ that you have to leave as such. However, if tables are provided in the exam, you should know how to use them to get these values just like we did in class. Three independent observations are made from a normal population $N(\mu, \sigma^2)$. The observed values were $x_1 = 1$, $x_2 = 2$, $x_3 = 3$.
+    \begin{parts}
+        \part[5] Suppose the variance $\sigma^2$ is unknown. Use a formula we learnt to obtain a 95\% confidence interval that is symmetric about the sample mean, to estimate the population mean $\mu$.
+        \part[5] Now, suppose variance $\sigma^2 = 4$ is known. Use a formula we learnt, to obtain a 95\% confidence interval that is symmetric about the sample mean, to estimate the population mean $\mu$.
+    \end{parts}
+    \begin{solution}
+        \textbf{a}:\\
+        We know that $\bar{X} = \frac{1+2+3}{3} = 2$\\
+        We know that $S^2 = \frac{(1-2)^2 + (2-2)^2 + (3-2)^2}{3-1} = 1$\\
+        We know that $T = \frac{\bar{X} - \mu}{\frac{S}{\sqrt{n}}} \sim t_{n-1}$\\
+        We know that $t_{\alpha/2, n-1} = 2.92$\\
+        Thus the confidence interval is 
+        $$ 2 - t_{\alpha/2, 2} \cdot \frac{1}{\sqrt{3}} < \mu < 2 + t_{\alpha/2, 2} \cdot \frac{1}{\sqrt{3}}$$
+        \textbf{b}:\\
+        We know that $\bar{X} = 2$\\
+        We know that $Z = \frac{\bar{X} - \mu}{\frac{\sigma}{\sqrt{n}}} \sim N(0,1)$\\
+        We know that $z_{\alpha/2} = 1.96$\\
+        Thus the confidence interval is 
+        $$ 2 - z_{\alpha/2} \cdot \frac{2}{\sqrt{3}} < \mu < 2 + z_{\alpha/2} \cdot \frac{2}{\sqrt{3}}$$
+    \end{solution}
+
+    \question[5]
+    \begin{parts}
+        \part[2] Suppose the value of the cumulative distribution function $F(y) = P(X \leq y)$ of a random variable $X$ at $y = 1, 2, 3, 4, 5$ are $0.1, 0.3, 0.6, 0.9$ respectively. What is the value of $x_{0.1}$? That is, the value of $x_\alpha$ with $\alpha = 0.1$.
+        \part[1] Suppose $A, B, C$ are independent Chi-square distributed random variables with $\nu = 2, 6, 12$ degrees of freedom. Which of these has $F_{\nu_1, \nu_2}$ with $\nu_1 = 2, \nu_2 = 6$ degrees of freedom respectively.
+        \begin{choices}
+            \choice $3A / B$
+            \choice $B / 3A$
+            \choice $A / 3B$
+            \choice $6A / B$
+        \end{choices}
+        \part[1] Suppose $A, B, C$ are independent standard normal random variables. Then $\sqrt{2A} / \sqrt{B^2 + C^2}$ has a $T$ distribution. True or false?
+        \part[1] Suppose $A, B$ are unbiased estimators of a parameter $\alpha$. Then $C = 0.3A + 0.7B$ is also an unbiased estimator of $\alpha$. True or false?
+    \end{parts}
+    
+    \begin{solution}
+        \textbf{a}:\\
+        The value of $x_{0.1}$ is the value of $x$ such that $P(X \geq x) = 0.1$\\
+        so then $x_{0.1} = 5$\\
+
+        \textbf{b}:\\
+        We know that $F_{\nu_1, \nu_2} = \frac{A \nu_2}{B \nu_1}$\\
+        Thus $F_{2,6} = \frac{A \cdot 6}{B \cdot 2} = 3A/B$\\
+
+        \textbf{c REVIEW THIS}:\\
+        True since the numerator is a chi-square distribution and the denominator is a chi-square distribution since $Y \sim B^2 + C^2 \sim \chi^2_2$\\
+
+        \textbf{d}:\\
+        True due to linearty of expectation
+        $$ E[C] = 0.3E[A] + 0.7E[B] = 0.3\alpha + 0.7\alpha = \alpha$$
+    \end{solution}
+
+    \question[10] Method of moments estimator
+
+    \question[10] Use the transformation theorem to verify the hint in Question 1 ***\\
+    REVIEW THIS LATER
+    \begin{solution}
+        We know that $Y = X_1 + X_2$ and $X_1, X_2 \sim U[0, \theta]$\\
+        We know that $f_{X_1,X_2}(x_1, x_2) = \frac{1}{\theta^2}$\\
+        Thus we can see that 
+        $$ y = x_1 +x_2$$
+        Fixing $x_2$ we can see that as $y$ increases $x_1$ increases. 
+        $$x_1 = x_2 -y$$
+        Thus the joint density of $Y$ is
+        $$g(y,x_2) = f(x_1, x_2) \cdot |\frac{\partial x_1 }{ \partial y} |$$
+        $$g(y,x_2) = \frac{1}{\theta^2} \cdot 1$$
+        Now we cneed to consider the bounds
+        $$ 0 < Y < 2\theta$$
+        $$ y- \theta < x_2 < \theta, y$$
+        Thus we need to integreate from $0 to y$ an then $y - \theta$ to $\theta$\\
+        $$ \int_0^y \frac{1}{\theta^2}  dx$$
+    \end{solution}
+    
+    \question[10] Use the transformation theorem to compute the PDF of $U = XY$ if $X, Y$ are independent exponential random variables with $\lambda = 2, 3$ respectively. (Note: Use text/class PDF of exponential)
+
+    \begin{solution}
+        $$f(x,y) = \frac{1}{2}e^{-x/2} \cdot \frac{1}{3}e^{-y/3}$$
+        We can see that for $U = XY$ we have $u = xy$\\
+        With $x$ fixed $u$ increases as $y$ decreases.\\
+        Thus $y = u/x$\\
+        $$ \frac{\partial Y}{\partial U} = \frac{1}{x}$$
+        $$g(x,u) = f(x,y) \cdot |\frac{\partial Y}{\partial U}|$$
+        $$ g(x,u) = \frac{1}{6}e^{-x/2}e^{-u/3x} \cdot \frac{1}{x}$$
+        Now we need to integrate over all $x$ to get the marginal density of $U$
+        We know yhat $x \in (0, \infty)$ \\
+        $$ g(u) = \int_0^\infty \frac{1}{6}e^{-x/2 + -u/3x} \cdot \frac{1}{x} dx$$
+    \end{solution}
+    
+    \question[10] Express $\int_{0}^{\infty} x^4 e^{-3x} \, dx$ using the Gamma function, and then determine its value.
+    \begin{solution}
+        The integral $\int_{0}^{\infty} x^4 e^{-3x} \, dx$ can be expressed in terms of the Gamma function. Recall that the Gamma function is defined as:
+        $$ \Gamma(n) = \int_{0}^{\infty} x^{n-1} e^{-x} \, dx $$
+        To use the Gamma function, we need to transform the integral into the form of the Gamma function. We can do this by making a substitution. Let $u = 3x$, then $du = 3dx$ or $dx = \frac{du}{3}$. The limits of integration remain the same since $x$ ranges from $0$ to $\infty$.
+
+        Substituting $u = 3x$ into the integral, we get:
+        \begin{align*}
+            \int_{0}^{\infty} x^4 e^{-3x} \, dx &= \int_{0}^{\infty} \left(\frac{u}{3}\right)^4 e^{-u} \cdot \frac{du}{3} \\
+            &= \frac{1}{3^5} \int_{0}^{\infty} u^4 e^{-u} \, du \\
+            &= \frac{1}{243} \int_{0}^{\infty} u^4 e^{-u} \, du
+        \end{align*}
+
+        Now, we recognize that $\int_{0}^{\infty} u^4 e^{-u} \, du$ is in the form of the Gamma function with $n = 5$:
+        $$ \Gamma(5) = \int_{0}^{\infty} u^{5-1} e^{-u} \, du = \int_{0}^{\infty} u^4 e^{-u} \, du $$
+
+        We know that $\Gamma(n) = (n-1)!$, so:
+        $$ \Gamma(5) = 4! = 24 $$
+
+        Therefore, the value of the integral is:
+        \begin{align*}
+            \int_{0}^{\infty} x^4 e^{-3x} \, dx &= \frac{1}{243} \cdot 24 \\
+            &= \frac{24}{243} \\
+            &= \frac{8}{81}
+        \end{align*}
+    \end{solution}
+
+    \question Starting from the expression for pdf of t distribution with a chosen $\nu$, determine the value of the improper integral 
+    $$ \int_{0}^{\infty} \frac{1}{(1+m^2)^{3.5}} \, dm. $$ 
+    You may use $\Gamma(1) = 1$, $\Gamma(0.5) = \sqrt{\pi}$ and the recursive property of $\Gamma$.
+
+    \begin{solution}
+        We know tha gamma Distibutuion is given by:
+        $$ \Gamma_\nu = \frac{\Gamma(\frac{\nu +1}{2})}{\sqrt{\pi \nu} \Gamma(\frac{\nu}{2})}(1+ \frac{t^2}{\nu})^{-\frac{\nu +1}{2}}$$ 
+        We can then see that the integral is given by:
+        $$ \int_{0}^{\infty} \Gamma_\nu dt = .5$$ 
+        Since Gamma is symmetric about 0, we can see that the integral is equal to .5
+        We can take $3.5 = \frac{\nu+1}{2}$ and thus $\nu = 6$
+        $$ \int_{0}^{\infty} \frac{1}{(1+m^2)^{3.5}} \, dm = .5 \cdot \frac{\sqrt{\pi 6} \Gamma(3)}{\Gamma(3.5)} \cdot \sqrt{6}$$
+        We have the last term by taking a $m$ sub of $m = t/\sqrt{6}$\\
+        $$ = .5 \cdot \frac{\sqrt{6} \cdot 2}{\frac{5}{2} \cdot \frac{3}{2} \cdot \frac{1}{2}}$$
+        $$ = \frac{4}{15}$$ 
+    \end{solution}
+
+    \question We sample independently from two normal populations $N(\mu_1, \sigma_1^2)$, $N(\mu_2, \sigma_2^2)$, with $n_1$ random variables from the first and $n_2$ from the second population. Derive a one-sided, $1 - \alpha$ confidence interval for the ratio of variances, i.e., determine a statistic $L$ such that $L < \frac{\sigma_1^2}{\sigma_2^2}$ is a $(1 - \alpha)$ confidence interval.
+    \textbf{REVIEW THIS}
+
+    \begin{solution}
+        We can have the sample variances $S_1^2$ and $S_2^2$\\
+        We can use the F distribution to get the confidence interval for the ratio of variances.\\
+        $$L' = \frac{S_1^2}{S_2^2} $$
+        We know that $F = \frac{\chi_1^2/\nu_1}{\chi_2^2/\nu_2}$\\
+        We can then see that
+        $$ L' \sim \frac{\sigma_1^2}{\sigma_2^2} F$$
+        We want $L = \frac{L'}{F}$\\
+
+    \end{solution}
+    
+    
+
+\end{questions}
+\end{document}

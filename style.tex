@@ -11,15 +11,16 @@
 \usepackage{float}                  % Floating objects
 \usepackage{fancybox,framed}        % Frame
 \usepackage{tabularx}
+\usepackage{mathrsfs}
 \pgfplotsset{compat=1.18}
 
 %% Document Settings. Feel free to adjust it.
 % Page layout
 \pagestyle{head}
-\firstpageheader{\name}{\course}{\assignment}
-\firstpageheadrule
-\runningheader{\name}{\course}{\assignment}
-\runningheadrule
+% \firstpageheader{\name}{\course}{\assignment}
+% \firstpageheadrule
+% \runningheader{\name}{\course}{\assignment}
+% \runningheadrule
 
 % Custom environments
 \newtheorem{theorem}{Theorem}
@@ -35,10 +36,21 @@
 \newtheorem*{note}{Note}    
 
 
+
 % Custom command
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\var}{\text{Var}}
+\newcommand{\cov}{\text{Cov}}
 \newcommand{\setof}[1]{\left\{ {#1}\right\}}
 \newcommand{\setdef}[2]{\left\{{#1} : {#2}\right\}}
 \newcommand{\seq}[1]{\left\{{#1}\right\}_{n=1}^\infty}
+\newcommand{\suchthat}{\text{ s.t. }}
 
 % Augmented Matrix
 \makeatletter

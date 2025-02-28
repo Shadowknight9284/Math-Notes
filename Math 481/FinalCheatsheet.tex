@@ -1,0 +1,109 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+\usepackage{multirow}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+
+\usepackage[margin=.25in, includehead, includefoot, headheight=0pt]{geometry}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+    \textbf{Dist} & \textbf{PDF} & \textbf{Mean} & \textbf{Var} & \textbf{MGF} \\
+    \hline
+    \textbf{Normal} & $\frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right), -\infty<x<\infty$ & $\mu$ & $\sigma^2$ & $\exp\left(\mu t + \frac{1}{2}\sigma^2 t^2\right)$ \\
+    \hline
+    \textbf{Gamma} & $\frac{1}{\beta^\alpha\Gamma(\alpha)}x^{\alpha-1}e^{-x/\beta}, x>0$ & $\alpha\beta$ & $\alpha\beta^2$ & $(1-\beta t)^{-\alpha}$ \\
+    \hline
+    \textbf{Chi-square} & $\frac{1}{2^{\nu/2}\Gamma(\nu/2)}x^{(\nu-2)/2}e^{-x/2}, x>0$ & $\nu$&$2\nu$ & $(1-2t)^{-\nu/2}$\\
+    \hline
+    \textbf{Exponential} & $\frac{1}{\lambda}e^{-x/\lambda}, x>0$ & $\lambda$ & $\lambda^2$ & $(1-\lambda t)^{-1}$\\
+    \hline
+    \textbf{Uniform} & $\frac{1}{\beta-\alpha}, \alpha<x<\beta$ & $\frac{\alpha+\beta}{2}$ & $\frac{(\beta-\alpha)^2}{12}$ & $\frac{e^{\beta t}-e^{\alpha t}}{t(\beta-\alpha)}$ \\
+    \hline
+    \textbf{Bernoulli} & $p^x(1-p)^{1-x}, x=0,1$ & $p$ & $p(1-p)$ & $(1-p) + pe^{t}$\\
+    \hline
+    \textbf{Geometric} & $p(1-p)^{x-1}, x=1,2,\dots$ & $\frac{1}{p}$ & $\frac{1-p}{p^2}$ & $\frac{p}{1-(1-p)e^t}$\\
+    \hline
+    \textbf{Binomial} & $\binom{n}{x}p^{x}(1-p)^{n-x}, x=0,1,2,\dots,n$ & $np$ & $np(1-p)$ & $(1+p(e^t-1))^n$ \\
+    \hline
+    \textbf{Poisson} & $\frac{\lambda^x e^{-\lambda}}{x!}, x = 0,1,2,\dots$ & $\lambda$ & $\lambda$ & $e^{\lambda(e^t-1)}$ \\
+    \hline
+    \textbf{t-distribution} & $\frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\pi\nu}\Gamma\left(\frac{\nu}{2}\right)}\left(1 + \frac{t^2}{\nu}\right)^{-\frac{\nu+1}{2}}$ & $0$ & $\frac{\nu}{\nu-2}$ & $t \in R$ \\
+    \hline
+    \textbf{f-distribution} & $g(f) = \frac{\Gamma\left(\frac{\nu_1+\nu_2}{2}\right)}{\Gamma\left(\frac{\nu_1}{2}\right)\Gamma\left(\frac{\nu_2}{2}\right)} \left(\frac{\nu_1}{\nu_2}\right)^{\frac{\nu_1}{2}} f^{\frac{\nu_1}{2}-1}\left(1 + \frac{\nu_1}{\nu_2}f\right)^{-\frac{1}{2}(\nu_1+\nu_2)}$  & $f >0$
+   \end{tabular}
+  \end{table}
+\textbf{Gamma function}: $\Gamma(\alpha) = \int_0^\infty x^{\alpha-1}e^{-x}dx$, $\Gamma(n) = (n-1)!$ and $\Gamma(n) = (n-1)\Gamma(n-1)$\\
+\textbf{Variance Indentity:} $Var(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2$ and $Var(aX-bY+c) = a^2Var(X) + b^2Var(Y) + 2abCov(X,Y)$\\
+\textbf{Sum of Squares Identity:} $\sum_{i=1}^n (X_i - \bar{X})^2 = \sum_{i=1}^n (X_i - \mu)^2 + n(\bar{X} - \mu)^2$\\
+\textbf{Chebyshev's}: $\mathbb{P}(|X-\mu|< k) \geq 1 - \frac{\sigma^2}{k^2}$ and $\mathbb{P}(|X-\mu|< k\sigma) \geq 1 - \frac{1}{k^2}$\\
+\textbf{Weak Law of large numbers:} $P(|\bar{X} - \mu_{pop}| < k ) \geq 1 -\frac{\sigma^2_{pop}}{nk^2} $\\
+\textbf{Central Limit Theorem:} if $X_i ... X_n$ are iid from any pop w/$(\mu, \sigma^2)$ $Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$ as $n \to \infty$\\
+\textbf{Sum of Normal Squared:} If $X_1, X_2 ... X_n$ are iid $N(0,1)$, then $\sum_{i=1}^n X_i^2 \sim \chi^2_n$\\
+\textbf{Order Statistics:} $X_{(1)} < X_{(2)} < ... < X_{(n)}$. It is the $r$th item of a sample of $n$. \\
+$f_{X_{(r)}}(x) = \frac{n!}{(r-1)!(n-r)!}F(x)^{r-1}(1-F(x))^{n-r}f(x)$\\\\
+In general, if you repeat experiment $N$ times then $\theta \in \approx (1-\alpha)\%$\\
+$\boldsymbol{\mu}$ \textbf{w/ known} $\boldsymbol{\sigma}$: $\mu \in \left(\bar{x} - z_{\alpha/2}\frac{\sigma}{\sqrt{n}}, \bar{x} + z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\right)$\\ 
+$\boldsymbol{\mu}$ \textbf{w/ unknown} $\boldsymbol{\sigma}$: $\mu \in \left(\bar{x} - t_{\alpha/2, n-1}\frac{s}{\sqrt{n}}, \bar{x} + t_{\alpha/2, n-1}\frac{s}{\sqrt{n}}\right)$\\
+$\boldsymbol{\mu_1 - \mu_2}$, \textbf{w/known} $\boldsymbol{\sigma_1^2}$ \textbf{and} $\boldsymbol{\sigma_2^2}$: $\mu_1 - \mu_2 \in \left(\bar{x}_1 - \bar{x}_2 - z_{\alpha/2}\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}, \bar{x}_1 - \bar{x}_2 + z_{\alpha/2}\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}\right)$\\
+$\boldsymbol{\mu_1 - \mu_2}$, \textbf{w/unknown} $\boldsymbol{\sigma_1^2 = \sigma_2^2 = \sigma^2}$:\\
+$\mu_1 - \mu_2 \in \left(\bar{x}_1 - \bar{x}_2 - t_{\alpha/2, n_1+n_2-2}s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}, \bar{x}_1 - \bar{x}_2 + t_{\alpha/2, n_1+n_2-2}s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}\right)$\\ 
+$Z = \frac{(\bar{X}_1 - \bar{X}_2) - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \sim N(0,1)$  Comes from MGF, Add Variance\\
+$S_p = \sqrt{\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2}}$ aka Weighted average of $S_1$ and $S_2$. $\frac{(n_1 + n_2 - 2) S_p}{\sigma^2} \sim \chi_{n_1+n_2 -2}$\\
+$T = \frac{Z}{\sqrt{Y / (\nu_1 + \nu_2 -2 )}} \sim t_{\alpha/2 , \nu_1 + \nu_2 - 2}$, where $Z =\sim N(0,1)$ and $Y \sim \chi_{\nu_1 + \nu_2 - 2}$\\
+$\boldsymbol{\sigma^2}$: $\sigma^2 \in \left(\frac{(n-1)s^2}{\chi_{\alpha/2, n-1}^2}, \frac{(n-1)s^2}{\chi_{1-\alpha/2, n-1}^2}\right)$\\
+$\boldsymbol{\frac{\sigma_1^2}{\sigma_2^2}}$: $\frac{\sigma_1^2}{\sigma_2^2} \in \left(\frac{s_1^2}{s_2^2}\frac{1}{F_{\alpha/2, n_1-1, n_2-1}}, \frac{s_1^2}{s_2^2}F_{\alpha/2, n_1-1, n_2-1}\right)$ Remember that $F_{1-\alpha/2, n_1, n_2} = \frac{1}{F_{\alpha/2, n_2, n_1}}$\\
+$F = \frac{U / \nu_1}{V / \nu_2} \sim F_{\nu_1, \nu_2}$, where $U \sim \chi_{\nu_1}^2$ and $V \sim \chi_{\nu_2}^2$ \\\\
+\textbf{Type I Error}: Rejecting $H_0$ when it is true. $\alpha = P(\text{Type I Error})$: $\alpha = P(\text{Reject } H_0 | H_0 \text{ is true})$ False Positive\\
+\textbf{Type II Error}: Failing to reject $H_0$ when it is false. $\beta = P(\text{Type II Error})$ : $\beta = P(\text{Fail to Reject } H_0 | H_0 \text{ is false})$ False Negative\\
+\textbf{Critical Region}: The set of values of the test statistic that leads to rejection of $H_0$. \\
+We find the Critical Region by making a plot of $\setof{x_i}$ and use our test (usually $\bar{X} > c$) and plot the critical region.\\
+\textbf{Power}: $1-\beta = P(\text{Reject } H_0 | H_0 \text{ is false})$ This is the probability of correctly rejecting $H_0$ aka how many hits\\\\
+\textbf{Transformation of 1 var to 1 var}: $Y = u(X)$, $X = u^{-1}(Y) = w(Y)$, $g(y) =  f(w(y))|\frac{d}{dy}w(y)| $\\
+\textbf{Transformation of 2 var to 1 var}: $Y = u(X_1, X_2)$, $X_1 = w(Y, X_2)$, $g(y) = \int_R f(w(y, x_2))|\frac{\partial}{\partial y}w(y, x_2)|dx_2$\\\
+\textbf{Method of Moments}: $m_k' = \frac{\sum_{i=1}^{n} x_i^k}{n} = E[X^k]$ is the kth sample moment and by setting $\mu_k' = E[X^k]$ and solving for $\mu_k'$, we get the kth population moment.\\
+\textbf{Max Likelihood:} $\hat{\theta}$ is max of $L(\theta) = \prod_{i=1}^n f(x_i|\theta)$ or $l(\theta) = \sum_{i=1}^n \log f(x_i|\theta)$\\\\
+\textbf{Bias}: $B(\hat{\theta}) = \mathbb{E}[\hat{\theta}] - \theta$. We say something is unbasied if $B(\hat{\theta}) = 0$ and asymptotically unbiased if $\lim_{n\to\infty} B(\hat{\theta}) = 0$\\
+\textbf{Cramer-Rao}: $Var(\hat{\theta}) \geq \frac{1}{nI(\theta)}$ where $I(\theta) = -\mathbb{E}\left[\frac{\partial^2}{\partial \theta^2}\log f(x|\theta)\right]$ or $I(\theta) = \mathbb{E}\left[\left(\frac{\partial}{\partial \theta}\log f(x|\theta)\right)^2\right]$\\
+\textbf{Neyman-Pearson Lemma}: $\frac{L_0}{L_1} \leq k, \forall C$ of size $\alpha$ is the most powerful test. Convert to nice form for test\\
+\textbf{Likelihood Ratio Test}: $\Lambda = \frac{L_{\omega}}{L_{\Omega}}$ and solve similarly for nice form. large $n$, $-2ln(\Lambda) \sim \chi^2_1$\\\\
+\textbf{Steps of a Test}: 1. State Hypothesis 2. Choose Test Statistic 3. Find Critical Region 4. Make Decision\\
+\textbf{REMEMBER CLT for $n>30$}\\
+$\boldsymbol{\mu}$ \textbf{w/} $\boldsymbol{\sigma};$ or $n \geq 30$: $Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$\\
+$H_0: \mu = \mu_0 \quad H_1: \mu \neq \mu_0, H_1: \mu < \mu_0, H_1: \mu > \mu_0$\\
+for $|z| \geq z_{\alpha/2}$, $z \geq z_{\alpha}$, $z \leq -z_{\alpha}$\\
+$\boldsymbol{\mu}$ \textbf{w/ unknown} $\boldsymbol{\sigma}; n<30 $: $T = \frac{\bar{X} - \mu}{s/\sqrt{n}} \sim t_{n-1} \quad H_0: \mu = \mu_0$\\
+$H_1: \mu \neq \mu_0, H_1: \mu < \mu_0, H_1: \mu > \mu_0$\\
+for $|t| \geq t_{\alpha/2, n-1}$, $t \geq t_{\alpha, n-1}$, $t \leq -t_{\alpha, n-1}$\\ 
+$\boldsymbol{\mu_1 - \mu_2}$, \textbf{w/known} $\boldsymbol{\sigma_1^2}$ \textbf{and} $\boldsymbol{\sigma_2^2}$: $Z = \frac{(\bar{X}_1 - \bar{X}_2) - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \sim N(0,1)$\\
+$H_0: \mu_1 - \mu_2 = \delta \quad H_1: \mu_1 - \mu_2 \neq \delta, H_1: \mu_1 - \mu_2 < \delta, H_1: \mu_1 - \mu_2 > \delta$\\
+for $|z| \geq z_{\alpha/2}$, $z \geq z_{\alpha}$, $z \leq -z_{\alpha}$\\
+$\boldsymbol{\mu_1 - \mu_2}$, \textbf{w/unknown} $\boldsymbol{\sigma_1^2 = \sigma_2^2 = \sigma^2}$: $T = \frac{(\bar{X}_1 - \bar{X}_2) - (\mu_1 - \mu_2)}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t_{n_1+n_2-2}$\\
+$H_0: \mu_1 - \mu_2 = \delta \quad H_1: \mu_1 - \mu_2 \neq \delta, H_1: \mu_1 - \mu_2 < \delta, H_1: \mu_1 - \mu_2 > \delta$\\
+for $|t| \geq t_{\alpha/2, n_1+n_2-2}$, $t \geq t_{\alpha, n_1+n_2-2}$, $t \leq -t_{\alpha, n_1+n_2-2}$\\
+$\boldsymbol{\sigma^2}$: $\chi^2 = \frac{(n-1)s^2}{\sigma^2} \sim \chi_{n-1}^2$\\
+$H_0: \sigma^2 = \sigma_0^2 \quad H_1: \sigma^2 \neq \sigma_0^2, H_1: \sigma^2 < \sigma_0^2, H_1: \sigma^2 > \sigma_0^2$\\
+for $\chi^2 \geq \chi_{\alpha/2, n-1}^2$, $\chi^2 \geq \chi_{1-\alpha/2, n-1}^2, \quad \chi^2 \leq \chi_{\alpha/2, n-1}^2, \quad \chi^2 \leq \chi_{1-\alpha/2, n-1}^2$\\
+$\boldsymbol{\frac{\sigma_1^2}{\sigma_2^2}}$: $F = \frac{s_1^2}{s_2^2} \sim F_{n_1-1, n_2-1}$\\
+$H_0: \frac{\sigma_1^2}{\sigma_2^2} = 1 \quad H_1: \frac{\sigma_1^2}{\sigma_2^2} \neq 1, H_1: \frac{\sigma_1^2}{\sigma_2^2} < 1, H_1: \frac{\sigma_1^2}{\sigma_2^2} > 1$\\
+for $F \geq F_{\alpha/2, n_1-1, n_2-1}$, $F \geq F_{1-\alpha/2, n_1-1, n_2-1}$\\
+Note that is like like if statistic $\theta \notin $ Confidence Interval, reject $H_0$\\\\
+\textbf{Expectation:} $\int_{-\infty}^\infty xf(x)dx$. Is linear!\\
+\textbf{Variance:} $Var(X) = \mathbb{E}[(X-E[X])^2] = \mathbb{E}[X^2] - \mathbb{E}[X]^2$\\
+$Var(aX+bY+c) = a^2Var(X) + b^2Var(Y) + 2abCov(X,Y)$\\
+\textbf{Covariance:} $\text{Cov}(X,Y) = \mathbb{E}[(X-\mu_X)(Y-\mu_Y)]$ and $\text{Cov}(X,Y) = \int_R \int_S (x-\mu_X)(y-\mu_Y)f(x,y)dxdy$\\
+\textbf{MGF} $M_X(t) = \mathbb{E}[e^{tX}]$. $M_{aX+bY+c}(t) = e^{ct}M_X(at)M_Y(bt)$ if X,Y are independent. \\
+$\frac{d^r}{dt^r} M_X(t = 0) = \mu_r' $ rth moment of X
+
+
+\end{document}

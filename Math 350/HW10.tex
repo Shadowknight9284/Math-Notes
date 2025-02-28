@@ -5,14 +5,14 @@
 
 % Header
 \newcommand{\name}{Pranav Tikkawar}
-\newcommand{\course}{01:XXX:XXX}
-\newcommand{\assignment}{Homework n}
+\newcommand{\course}{01:640:350H}
+\newcommand{\assignment}{Homework 10}
 \author{\name}
 \title{\course \ - \assignment}
 
 \begin{document}
 \maketitle
-
+\textbf{Note:} Due to the sheer amount of compuation to transcribe to latex, I plan to omit the computation for the most part and focus on the conceptual understanding of the problem. I will ensure to keep any relevant computation that is necessary for the understanding of the problem, but any trivial computations (like row reduction or determinant calculations) will be omitted.
 
 \newpage
 \begin{questions}
@@ -54,12 +54,12 @@
             \end{bmatrix}
             &\implies
             \begin{bmatrix}[cc|c]
-                1 & -1 & 1 \\
+                1 & -1 & -1 \\
                 0 & 0 & 0
             \end{bmatrix}
         \end{align*}
-        Thus our generalized eigenvectors solve the equation $x_1 + x_2 =1$. We can choose $x_1 = 1$ to get the generalized eigenvector $\begin{bmatrix} 1\\ 0 \end{bmatrix}$. \\
-        Thus, the basis for the generalized eigenspace of $A$ is $\left\{ \begin{bmatrix} 1\\ 1 \end{bmatrix}, \begin{bmatrix} 1\\ 0 \end{bmatrix} \right\}$. \\
+        Thus our generalized eigenvectors solve the equation $x_1 - x_2 =-1$. We can choose $x_2 = 0$ to get the generalized eigenvector $\begin{bmatrix} -1\\ 0 \end{bmatrix}$. \\
+        Thus, the basis for the generalized eigenspace of $A$ is $\left\{ \begin{bmatrix} 1\\ 1 \end{bmatrix}, \begin{bmatrix} -1\\ 0 \end{bmatrix} \right\}$. \\
         We can now find the Jordan canonical form of $A$ by constructing the matrix $P$ whose columns are the basis vectors of the generalized eigenspaces of $A$.
         \begin{align*}
             J &= \begin{bmatrix}
@@ -67,48 +67,263 @@
                 0 & 2
             \end{bmatrix}
         \end{align*}
-
+        We can let $\beta = \left\{ \begin{bmatrix} 1\\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \end{bmatrix} \right\}$ and $\beta' = \left\{ \begin{bmatrix} 1\\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 0 \end{bmatrix} \right\}$. We can find the matrix $Q = \begin{bmatrix}
+            1 & -1 \\
+            1 & 0
+        \end{bmatrix}$
+        such that $J = Q^{-1}AQ$.
     \end{solution}
-    \question Sec 7.1 2(b)
+    \question Sec 7.1 2(c)
     $$A = \begin{bmatrix}
-        1 & 2\\
-        3 & 2\\
+        11 & -4 & -5\\
+        21 & -8 & -11\\
+        3 & -1 & 0
     \end{bmatrix}$$
     \begin{solution}
-        We must first find the eigenvalues of $A$. The characteristic polynomial of $A$ is given by
+        We can first find the characteristic polynomial of $A$.
         \begin{align*}
             \det(A - \lambda I) &= \begin{vmatrix}
-                1 - \lambda & 2 \\
-                3 & 2 - \lambda
-            \end{vmatrix} \\
-            &= (1 - \lambda)(2 - \lambda) - 6 \\
-            &= \lambda^2 - 3\lambda - 4 \\
-            &= (\lambda - 4)(\lambda + 1)
+                11 - \lambda & -4 & -5 \\
+                21 & -8 - \lambda & -11 \\
+                3 & -1 & -\lambda
+            \end{vmatrix}
+            &= -(\lambda-2)^2(\lambda+1)
         \end{align*}
-        Thus, the eigenvalues of $A$ are $\lambda = 4, -1$. We can now find the eigenvectors of $A$ by solving the system $(A - 4I)\vec{x} = \vec{0}$.
+        Thus the eigenvalues of $A$ are $\lambda = 2$ with multiplicity 2 and $\lambda = -1$. We can now find the eigenvectors of $A$ by solving the system $(A - 2I)\vec{v} = \vec{0}$.
+        \begin{align*} \det(A - 2I) = \begin{bmatrix}
+            9 & -4 & -5 \\
+            21 & -10 & -11 \\
+            3 & -1 & -2
+        \end{bmatrix} 
+        &\implies \begin{bmatrix}
+            1 & 0 & -1 \\
+            0 & 1 & -1 \\
+            0 & 0 & 0
+        \end{bmatrix}
+        \end{align*}
+        Thus our first eigenvector is the vector $\begin{bmatrix} 1\\ 1\\ 1 \end{bmatrix}$. \\
+        Since $\lambda = 2$ has multiplicity 2, we can find the generalized eigenvectors of $A$ by solving the system $(A - 2I)\vec{x} = \vec{v}$ where $\vec{v}$ is the eigenvector we found earlier.
         \begin{align*}
-            \begin{bmatrix}[cc|c]
-                -3 & 2 & 0 \\
-                3 & -2 & 0
+            \begin{bmatrix}[ccc|c]
+                9 & -4 & -5 & 1 \\
+                21 & -10 & -11 & 1 \\
+                3 & -1 & -2 & 1
+            \end{bmatrix}
+            &\implies
+            \begin{bmatrix}[ccc|c]
+                1 & 0 & -1 & 1 \\
+                0 & 1 & -1 & 2 \\
+                0 & 0 & 0 & 0
             \end{bmatrix}
         \end{align*}
-        Thus our eigenvectors are of the form $\begin{bmatrix} 2a\\ 3a \end{bmatrix}$. We can choose $a = 1$ to get the eigenvector $\begin{bmatrix} 2\\ 3 \end{bmatrix}$. \\
-        We can now find the generalized eigenvectors of $A$ for $\lambda = -4$ by solving the system $(A + 4I)\vec{x} = \vec{v}$ where $\vec{v}$ is the eigenvector we found earlier. 
-
-
+        We can see that our generalized eigenvectors will solve $x_1 - x_3 = 1$ and $x_2 - x_3 = 2$. We can choose $x_3 = 0$ to get the generalized eigenvector $\begin{bmatrix} 1\\ 2\\ 0 \end{bmatrix}$. \\
+        Thus, the basis for the generalized eigenspace of $A$ is $\left\{ \begin{bmatrix} 1\\ 1\\ 1 \end{bmatrix}, \begin{bmatrix} 1\\ 2\\ 0 \end{bmatrix} \right\}$. \\
+        We can now find the eigenvector of $A$ corresponding to $\lambda = -1$ by solving the system $(A + I)\vec{v} = \vec{0}$.
+        \begin{align*}
+            \det(A + I) = \begin{bmatrix}
+                12 & -4 & -5 \\
+                21 & -7 & -11 \\
+                3 & -1 & 1
+            \end{bmatrix}
+            &\implies \begin{bmatrix}
+                1 & -1/3 & 0 \\
+                0 & 0 & 1 \\
+                0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        Thus our eigenvector is $\begin{bmatrix} 1\\ 3\\ 0 \end{bmatrix}$. \\
+        We can see that our $J = \begin{bmatrix}
+            2 & 1 & 0 \\
+            0 & 2 & 0 \\
+            0 & 0 & -1
+        \end{bmatrix}$. We can let $\beta = \left\{e_1, e_2, e_3 \right\}$ and $\beta' = \left\{ \begin{bmatrix} 1\\ 1\\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 2\\ 0 \end{bmatrix}, \begin{bmatrix} 1 \\ 3\\ 0 \end{bmatrix} \right\}$. We can find the matrix $Q = \begin{bmatrix}
+            1 & 1 & 1 \\
+            1 & 2 & 3 \\
+            1 & 0 & 0
+        \end{bmatrix}$
+        such that $J = Q^{-1}AQ$.
     \end{solution}
 
     \question Sec 7.1 3(a)
     For each linear operator $T$ find a basis for each generalized eigenspace of $T$ consiting of a union of disjoint cycles of generalized eigenvectors. Then find a Jordan canonical form $J$ for $T$.
     $$ \text{Define } T \text{ on } P_2(R) \text{ by } T(f(x)) = 2f(x) - f'(x)$$
     \begin{solution}
-        
+       Since $T$ is a linear operator on $P_2(R)$, we can find that $T = L_A$ for some $A$ where $A$ is the matrix representation of $T_\beta$ for $\beta = \setof{1, x, x^2}$. 
+       \begin{align*}
+        T(1) &= 2\\
+        T(x) &= 2x - 1\\
+        T(x^2) &= 2x^2 - 2x
+       \end{align*}
+       Thus $A = \begin{bmatrix}
+           2 & -1 & 0 \\
+           0 & 2 & -2 \\
+           0 & 0 & 2
+         \end{bmatrix}$. We can now find the characteristic polynomial of $A$.
+            \begin{align*}
+                \det(A - \lambda I) &= \begin{vmatrix}
+                    2 - \lambda & -1 & 0 \\
+                    0 & 2 - \lambda & -2 \\
+                    0 & 0 & 2 - \lambda
+                \end{vmatrix} \\
+                &= (2 - \lambda)^3
+            \end{align*}
+            Thus the eigenvalue of $A$ is $\lambda = 2$ with multiplicity 3. We can now find the eigenvectors of $A$ by solving the system $(A - 2I)\vec{v} = \vec{0}$.
+            \begin{align*}
+                \begin{bmatrix}
+                    0 & -1 & 0 \\
+                    0 & 0 & -2 \\
+                    0 & 0 & 0
+                \end{bmatrix}
+            \end{align*}
+            Thus our eigenvector is $\begin{bmatrix} 1\\ 0\\ 0 \end{bmatrix}$. \\
+            Since $\lambda = 2$ has multiplicity 3, we can find the generalized eigenvectors of $A$ by solving the system $(A - 2I)\vec{x} = \vec{v}$ where $\vec{v}$ is the eigenvector we found earlier.
+            \begin{align*}
+                \begin{bmatrix}[ccc|c]
+                    0 & -1 & 0 & 1 \\
+                    0 & 0 & -2 & 0 \\
+                    0 & 0 & 0 & 0
+                \end{bmatrix}
+            \end{align*}
+            We can see that our generalized eigenvectors will solve $-x_2 = 1$ and $-2x_3 = 0$. We can choose $x_2 = -1$ to get the generalized eigenvector $\begin{bmatrix} 0\\ -1\\ 0 \end{bmatrix}$. \\
+            Now we still need another generalized eigenvector since we need 3 LI vectors to form a basis for the generalized eigenspace of $A$. We can repeat the process to find $(A-2I)\vec{y} = \vec{x}$ where $\vec{x}$ is the generalized eigenvector we found earlier.
+            \begin{align*}
+                \begin{bmatrix}[ccc|c]
+                    0 & -1 & 0 & 0 \\
+                    0 & 0 & -2 & -1 \\
+                    0 & 0 & 0 & 0
+                \end{bmatrix}
+            \end{align*}
+            We can see that our generalized eigenvectors will solve $-x_2 = 0$ and $-2x_3 = -1$. We can choose $x_2 = 0$ to get the generalized eigenvector $\begin{bmatrix} 0\\ 0\\ 1/2 \end{bmatrix}$. \\
+            Thus we have 3 LI vectors $\left\{ \begin{bmatrix} 1\\ 0\\ 0 \end{bmatrix}, \begin{bmatrix} 0\\ -1\\ 0 \end{bmatrix}, \begin{bmatrix} 0\\ 0\\ 1/2 \end{bmatrix} \right\}$ that form a basis for the generalized eigenspace of $A$. \\
+            Thus our basis $\beta'$ for $P_2(R)$ is $\setof{1, -x, \frac{1}{2}x^2}$. We can now find the Jordan canonical form of $A$ by constructing the matrix $P$ whose columns are the basis vectors of the generalized eigenspaces of $A$.
+            We can see that $J = \begin{bmatrix}
+                2 & 1 & 0 \\
+                0 & 2 & 1 \\
+                0 & 0 & 2
+            \end{bmatrix}$. We can have $\beta$ and $\beta'$ and see that $Q = \begin{bmatrix}
+                1 & 0 & 0 \\
+                0 & -1 & 0 \\
+                0 & 0 & 1/2
+            \end{bmatrix}$ such that $J = Q^{-1}AQ$.
     \end{solution}
 
     \question Sec 7.1 3(b)
-    $$ V \text{ is the real vector space of functions spanned by the set of real valued functions } \setof{1, t, t^2, e^t, te^t} \text{, and } T \text{ is the linear operator on } V \text{ defined by } T(f(t)) = f'(t)$$
+    $$ V \text{ is the real vector space of functions spanned by the set of real valued functions }$$
+    $$\setof{1, t, t^2, e^t, te^t}$$
+    $$\text{and } T \text{ is the linear operator on } V \text{ defined by } T(f(t)) = f'(t)$$
+    \textbf{Aditionally:} Prove that the five functions actually do form a LI set.\\
+    Hint: Set a linear combination of them equal to zero. then tech several derivatives and exploit what happens when you set t equal to a special value.
     \begin{solution}
-        
+        We can see that $T = L_A$ for some $A$ where $A$ is the matrix representation of $T_\beta$ for $\beta = \setof{1, t, t^2, e^t, te^t}$.
+        \begin{align*}
+            T(1) &= 0\\
+            T(t) &= 1\\
+            T(t^2) &= 2t\\
+            T(e^t) &= e^t\\
+            T(te^t) &= e^t + te^t
+        \end{align*}
+        Thus $A = \begin{bmatrix}
+            0 & 1 & 0 & 0 & 0 \\
+            0 & 0 & 2 & 0 & 1 \\
+            0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 1 & 1 \\
+            0 & 0 & 0 & 0 & 1
+        \end{bmatrix}$. We can now find the characteristic polynomial of $A$.
+        $$\det(A - \lambda I) = \begin{vmatrix}
+            -\lambda & 1 & 0 & 0 & 0 \\
+            0 & -\lambda & 2 & 0 & 1 \\
+            0 & 0 & -\lambda & 0 & 0 \\
+            0 & 0 & 0 & 1 - \lambda & 1 \\
+            0 & 0 & 0 & 0 & 1 - \lambda
+        \end{vmatrix} = (-\lambda)^3 (1-\lambda)^2$$
+        Thus the eigenvalues of $A$ are $\lambda = 0$ with multiplicity 3 and $\lambda = 1$ with multiplicity 2. We can now find the eigenvectors of $A$ by solving the system $(A - 0I)\vec{v} = \vec{0}$.
+        \begin{align*}
+            \begin{bmatrix}
+                0 & 1 & 0 & 0 & 0 \\
+                0 & 0 & 2 & 0 & 1 \\
+                0 & 0 & 0 & 0 & 0 \\
+                0 & 0 & 0 & 1 & 1 \\
+                0 & 0 & 0 & 0 & 1
+            \end{bmatrix}
+        \end{align*}
+        Thus our eigenvector is $\begin{bmatrix} 1\\ 0\\ 0\\ 0\\ 0 \end{bmatrix}$. \\
+        We can then find the generalized eigenvectors of $A$ by solving the system $(A - 0I)\vec{x} = \vec{v}$ where $\vec{v}$ is the eigenvector we found earlier.
+        \begin{align*}
+            \begin{bmatrix}[ccccc|c]
+                0 & 1 & 0 & 0 & 0 & 1 \\
+                0 & 0 & 2 & 0 & 1 & 0 \\
+                0 & 0 & 0 & 0 & 0 & 0 \\
+                0 & 0 & 0 & 1 & 1 & 0 \\
+                0 & 0 & 0 & 0 & 1 & 0
+            \end{bmatrix}
+        \end{align*}
+        We can see that our generalized eigenvectors will solve $x_2 = 1$ and $2x_3 + x_5 = 0$. We can choose $x_3 = -1/2$ to get the generalized eigenvector $\begin{bmatrix} 0 \\ 1\\ 0 \\0 \\0\end{bmatrix}$. \\
+        We can repeat the process to find another generalized eigenvector by solving $(A - 0I)\vec{y} = \vec{x}$ where $\vec{x}$ is the generalized eigenvector we found earlier.
+        \begin{align*}
+            \begin{bmatrix}[ccccc|c]
+                0 & 1 & 0 & 0 & 0 & 0 \\
+                0 & 0 & 2 & 0 & 1 & 1 \\
+                0 & 0 & 0 & 0 & 0 & 0 \\
+                0 & 0 & 0 & 1 & 1 & 0 \\
+                0 & 0 & 0 & 0 & 1 & 0
+            \end{bmatrix}
+        \end{align*}
+        We can see that our generalized eigenvectors will be $\begin{bmatrix}
+            0 \\ 0 \\ 1/2 \\ 0 \\ 0
+        \end{bmatrix}$\\
+        Thus we have 3 LI vectors $\left\{ \begin{bmatrix} 1\\ 0\\ 0\\ 0\\ 0 \end{bmatrix}, \begin{bmatrix} 0\\ 1\\ 0\\ 0\\ 0 \end{bmatrix}, \begin{bmatrix} 0\\ 0\\ 1/2\\ 0\\ 0 \end{bmatrix} \right\}$ for the generalized eigenspace of the $A$ for $\lambda = 0$. \\
+        We can now find the eigenvector of $A$ corresponding to $\lambda = 1$ by solving the system $(A - I)\vec{v} = \vec{0}$.
+        \begin{align*}
+            \begin{bmatrix}
+                -1 & 1 & 0 & 0 & 0 \\
+                0 & -1 & 2 & 0 & 1 \\
+                0 & 0 & -1 & 0 & 0 \\
+                0 & 0 & 0 & 0 & 1 \\
+                0 & 0 & 0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        Thus our eigenvector is $\begin{bmatrix} 0 \\ 0 \\ 0\\ 1\\ 0 \end{bmatrix}$. \\
+        Now we can find the generalized eigenvectors of $A$ by solving $(A - I)\vec{x} = \vec{v}$ where $\vec{v}$ is the eigenvector we found earlier.
+        \begin{align*}
+            \begin{bmatrix}[ccccc|c]
+                -1 & 1 & 0 & 0 & 0 & 0 \\
+                0 & -1 & 2 & 0 & 1 & 0 \\
+                0 & 0 & -1 & 0 & 0 & 0 \\
+                0 & 0 & 0 & 0 & 1 & 1 \\
+                0 & 0 & 0 & 0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        We can clealy see that our generalized eigenvectors will be $\begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}$. \\
+        Thus we have 2 LI vectors $\left\{ \begin{bmatrix} 0\\ 0\\ 0\\ 1\\ 0 \end{bmatrix}, \begin{bmatrix} 0\\ 0\\ 0\\ 0\\ 1 \end{bmatrix} \right\}$ for the generalized eigenspace of the $A$ for $\lambda = 1$. \\
+        Thus our $J$ is $\begin{bmatrix}
+            0 & 1 & 0 & 0 & 0 \\
+            0 & 0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 1 & 1 \\
+            0 & 0 & 0 & 0 & 1
+        \end{bmatrix}$.
+        We can let $\beta = \setof{1, t, t^2, e^t, te^t}$ and\\
+        $\beta' = \setof{\begin{bmatrix} 1\\ 0\\ 0\\ 0\\ 0 \end{bmatrix}, \begin{bmatrix} 0\\ 1\\ 0\\ 0\\ 0 \end{bmatrix}, \begin{bmatrix} 0\\ 0\\ 1/2\\ 0\\ 0 \end{bmatrix}, \begin{bmatrix} 0\\ 0\\ 0\\ 1\\ 0 \end{bmatrix}, \begin{bmatrix} 0\\ 0\\ 0\\ 0\\ 1 \end{bmatrix}}$. We can find the matrix\\ $Q = \begin{bmatrix}
+            1 & 0 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 0 & 0 \\
+            0 & 0 & 1/2 & 0 & 0 \\
+            0 & 0 & 0 & 1 & 0 \\
+            0 & 0 & 0 & 0 & 1
+        \end{bmatrix}$ such that $J = Q^{-1}AQ$.
+        \textbf{Additionally:}\\
+        To prove that the 5 functions form a LI set, we can set a linear combination of them equal to zero and then take several derivatives and exploit what happens when we set $t$ equal to a special value.\\
+        \begin{align*}
+            0 &= c_1 + c_2t + c_3t^2 + c_4e^t + c_5te^t\\
+            \frac{d}{dt} 0 &= \frac{d}{dt} c_1 + c_2t + c_3t^2 + c_4e^t + c_5te^t\\
+            &= c_2 + 2c_3t + c_4e^t + c_5e^t + c_5te^t\\
+            \frac{d^2}{dt^2} 0 &= \frac{d^2}{dt^2} c_1 + c_2t + c_3t^2 + c_4e^t + c_5te^t\\
+            &= 2c_3 + c_4e^t + 2c_5e^t + c_5te^t\\
+            \frac{d^3}{dt^3} 0 &= \frac{d^3}{dt^3} c_1 + c_2t + c_3t^2 + c_4e^t + c_5te^t\\
+            &= c_4 e^t + 3c_5e^t + c_5te^t
+        \end{align*}
+        We can see that for $t=0$ we can see that $c_4 = -3c_5$
+        But if $c_4$ is non zero then we can then $c_5te^t$ must be nonzero. Thus $c_4 = 0$ and $c_5 = 0$.\\
+        And we can see that $c_3 = 0$ and $c_2 = 0$ and $c_1 = 0$ as we work back up the derivatives. Thus the 5 functions form a LI set.
     \end{solution} 
 
     \question Sec 7.2 4(a)
@@ -119,7 +334,66 @@
         1 & -1 & 2
     \end{bmatrix}$$
     \begin{solution}
-        
+        We can first find the characteristic polynomial of $A$.
+        \begin{align*}
+            \det(A - \lambda I) &= \begin{vmatrix}
+                -3 - \lambda & 3 & -2 \\
+                -7 & 6 - \lambda & -3 \\
+                1 & -1 & 2 - \lambda
+            \end{vmatrix} \\
+            &= (1- \lambda)(2-\lambda)^2
+        \end{align*}
+        Thus the eigenvalues of $A$ are $\lambda = 1$ with multiplicity 1 and $\lambda = 2$ with multiplicity 2. We can now find the eigenvectors of $A$ by solving the system $(A - 1I)\vec{v} = \vec{0}$.
+        \begin{align*}
+            \begin{bmatrix}
+                -4 & 3 & -2 \\
+                -7 & 5 & -3 \\
+                1 & -1 & 1
+            \end{bmatrix}
+            \implies \begin{bmatrix}
+                1 & 0 & -1 \\
+                0 & 1 & -2 \\
+                0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        Thus our eigenvector is $\begin{bmatrix} 1\\ 2\\ 1 \end{bmatrix}$. \\
+        Since $\lambda = 2$ has multiplicity 2, we can find the eigenvectors of $A$ by solving the system $(A - 2I)\vec{v} = \vec{0}$.
+        \begin{align*}
+            \begin{bmatrix}
+                -5 & 3 & -2 \\
+                -7 & 4 & -3 \\
+                1 & -1 & 0
+            \end{bmatrix}
+            \implies \begin{bmatrix}
+                1 & 0 & 1 \\
+                0 & 1 & 1 \\
+                0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        Thus our eigenvector is $\begin{bmatrix} -1\\ -1\\ 1 \end{bmatrix}$. \\
+        Since this is the only eigenvector, we need another generalized eigenvector. We can solve $(A - 2I)\vec{x} = \vec{v}$ where $\vec{v}$ is the eigenvector we found earlier.
+        \begin{align*}
+            \begin{bmatrix}[ccc|c]
+                -5 & 3 & -2 & -1 \\
+                -7 & 4 & -3 & -1 \\
+                1 & -1 & 0 & 1
+            \end{bmatrix}
+            \implies \begin{bmatrix}[ccc|c]
+                1 & 0 & 1 & -1 \\
+                0 & 1 & 1 & -2 \\
+                0 & 0 & 0 & 0
+            \end{bmatrix}
+        \end{align*}
+        Thus our generalized solves $x_1 + x_3 = -1$ and $x_2 + x_3 = -2$. We can choose $x_3 = 0$ to get the generalized eigenvector $\begin{bmatrix} -1\\ -2\\ 0 \end{bmatrix}$. \\
+        Thus our Jordan canonical form is $J = \begin{bmatrix}
+            2 & 1 & 0 \\
+            0 & 2 & 0 \\
+            0 & 0 & 1
+        \end{bmatrix}$. We can let $\beta = \setof{1, x, x^2}$ and $\beta' = \setof{\begin{bmatrix} 1\\ 2\\ 1 \end{bmatrix}, \begin{bmatrix} -1\\ -1\\ 1 \end{bmatrix}, \begin{bmatrix} -1\\ -2\\ 0 \end{bmatrix}}$. We can find the matrix $Q = \begin{bmatrix}
+            1 & -1 & -1 \\
+            2 & -1 & -2 \\
+            1 & 1 & 0
+        \end{bmatrix}$ such that $J = Q^{-1}AQ$.
     \end{solution}
 
 \end{questions}

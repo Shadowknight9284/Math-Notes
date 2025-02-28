@@ -1,0 +1,201 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\section{2/19}
+$$ d B_{f(t)} = \sqrt{f'(t)} dB_t $$
+Loo into hornstin olbeck process
+Understand Stationatiy (strong and weak)
+Resad about ARMA and ARIMA what they mean, what they do, and differences
+\subsection{Reading 2/19-2/26}
+\begin{definition}[Ergodic Property with a constant limit]
+    also known as EPCL
+    $$ \exists \mu \in \R \suchthat \Prob( \lim_{n \to \infty} \bar{x} = \mu) = 1 $$
+    where $\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$
+\end{definition}
+\begin{definition}[$L^2$ - Ergodic propetty with a constant limit]
+    also known as $L^2$-EPCL
+    $$ \exists \mu \in \R \suchthat \lim_{n \to \infty} \E((\bar{x} - \mu)^2) = 0 $$
+\end{definition}
+EPLC doesnt hold in a lack of stablilty, high variabilty of marginal distributions, and absobsing states.\\
+\begin{definition}[Strict Stationarity]
+    $X_t \in \R (t \in \Z)$ is said to be strictly stationary if 
+    \begin{align*}
+        \forall k \in \Z, \forall m \in \N, \forall t_1, t_2, \ldots, t_m \in \Z\\
+        (X)_{t_1}, (X)_{t_2}, \ldots, (X)_{t_m} =_d (X)_{t_1 + k}, (X)_{t_2 + k}, \ldots, (X)_{t_m + k}
+    \end{align*}
+    In other words, the colllection of distributions of the random variables $(X)_{t_1}, (X)_{t_2}, \ldots, (X)_{t_m}$ is the same as the collection of distributions of the random variables shifted over $(X)_{t_1 + k}, (X)_{t_2 + k}, \ldots, (X)_{t_m + k}$
+    \begin{example}[Moverage Average Process of order q]
+        $X_t = \sum_{j=0}^{q} \psi_j \epsilon_{t-1} (t \in \Z)$
+        where $\epsilon_t \in \R$ iid, $\psi_j \in \R$ and $j = 0, 1, \ldots, q$.
+    \end{example}
+\end{definition}
+\begin{definition}[Weak Stationarity]
+    Let $X_t \in \R (t \in \Z)$ s.t. $\forall t \in \Z$, $\E(|X_t|) < \infty$ \\
+    Then $\mu_t = \E(X_t)$ is called the expected balue funtion or mean function of the process.\\
+    IF $E(x_t^2) < \infty$ then $\gamma: \Z \times \Z \to \R$ with $\gamma(s,t) = \cov(X_s, X_t)$ is called the autocovariance function of the process. (acf)\\
+    Also $\E{(X_s - \mu_s)(X_t - \mu_t)} = \cov(X_s, X_t)$\\
+    Additionally 
+    $$ \rho(s,t) = \text{corr}(X_s, X_t) = \frac{\cov(X_s, X_t)}{\sqrt{\var(X_s) \var(X_t)}}$$
+    is called the autocorrelation function of the process. (acf)\\
+    We can also say something is weakly stationary if\\
+    \begin{align*}
+        \E{X_t^2} < \infty \\
+        \exists \mu \in \R \suchthat \E(X_t) = \mu \\
+        \exists \gamma: \Z \to \R \suchthat \forall s,t \in \Z: \cov(X_s, X_t) = \gamma(t-s)
+    \end{align*}
+\end{definition}
+\begin{definition}[k-step prediction mean squared error]
+    Let $\mathscr{F}_{\leq t} = \sigma(X_s, s \leq t)$ \\
+    $\mathscr{X}_t = \{Y | Y \in L^2(\Omega), \mathscr{F}_{\leq t}-\text{measurable}\}$\\
+    Then the $k$-step prediction mean squared error is defined for $k \geq 1$ and $Y \in \mathscr{X}_t$ as\\
+    $$\sigma_k^2(Y) = \E((X_{t+k} - Y)^2 $$ 
+    
+\end{definition}
+\textbf{ASK to explain thm 2.1 (pg 23) and thm 2.2 (pg 24)}\\
+\begin{definition}[Orthogonal Complement]
+    Let $(H,\langle \cdot, \cdot \rangle)$ be a Hilbert space and $A \subseteq H$ be a closed subspace of $H$.\\
+    The orthogonal complement of $A$ is defined as
+    $$A^{\perp} = \{x: x\in H \suchthat \forall y \in A: \langle x,y \rangle = 0\}$$
+    We also write $A \perp B \iff \forall x \in A, y \in B: \langle x,y \rangle = 0$\\
+    Note that $A^{\perp}$ is a closed linear subspace of $H$ 
+\end{definition}
+\textbf{Dont understand the implications of corollary 2.3 pg 26}
+\begin{definition}[Optimal Forecast]
+    Let $X_t \in \R (t \in \Z)$ be a weakly stationary process. \\
+    \begin{align*}
+        \mathscr{F}_{\leq t} = \sigma(X_s: s \leq t)\\
+        \mathscr{X}_t = \{ Y | Y \in L^2(\Omega), \mathscr{F}_{\leq t}-\text{measurable} \}\\
+        k \in \N, \hat{X}_{t+k} \in \mathscr{X}_t
+    \end{align*}
+    Then $\hat{X}_{t+k}$ is the optimal forecast of $X_{t+k}$ given the information up to time $t$ (i.e. $\mathscr{F}_{\leq t}$)
+    $$\iff$$
+    $$\sigma_k^2(\hat{X}_{t+k}) = \inf_{Y \in \mathscr{X}_t} \sigma^2(Y)$$
+\end{definition}
+\begin{definition}[Conditional Expectation]
+    A $\mathscr{G}$-measurable random variable $Y$ is said to be the conditional expectation of $X$ given $\mathscr{G}$ if
+    \begin{align*}
+        \E(X | \mathscr{G}) = Y \\
+        \iff \forall A \in \mathscr{G}: \int_A X dP = \int_A Y dP
+    \end{align*}
+    \textbf{Note:} $\E(X | \mathscr{G})$ is a $\mathscr{G}$-measurable random variable.\\
+\end{definition}
+\begin{corollary}
+    \begin{align*}
+        X_t \in \R (t \in \Z \text{ is a weakly stationary process})\\
+        \hat{X}_{t+k} \in \mathscr{X}_t\\
+        \sigma_k^2(\hat{X}_{t+k}) = \inf_{Y \in \mathscr{X}_t} \sigma^2(Y) \iff \hat{X}_{t+k} = \E(X_{t+k} | \mathscr{F}_{\leq t})\\
+    \end{align*}
+    In other words the optimal forecast of $X_{t+k}$ given the information up to time $t$ is the conditional expectation of $X_{t+k}$ given $\mathscr{F}_{\leq t}$
+\end{corollary}
+\begin{definition}[Infinte linear past of $X_t$]
+    \begin{align*}
+        L_t^0 = \left\{Y | Y = \sum_{j=1}^k a_j X_{t_j}, k \in \N, a_j \in \R, t_j \in \Z, t_j \leq t \right\}\\
+        L_t = \overline{L_t^0} = \left\{Y | \exists Y \in L_t^0 (n \in \N) \suchthat \lim_{n\to \infty} || Y - Y_t||^2_{L^2(\Omega)} = 0\right\}\\
+        L_{-\infty} = \bigcap_{t = -\infty}^{\infty} L_t = \text{infinite linear past of $X_t$}
+    \end{align*}
+\end{definition}
+\begin{definition}[Optimal Linear Forcast of $X_{t+k}$ given $\mathscr{F}_{\leq t}$]
+    Let $X_t \in \R (t \in \Z)$ be a weakly stationary process with $k \geq 1$ and $\hat{X}_{t+k} \in L_t$\\
+    Then
+    \begin{align*}
+        \hat{X}_{t+k} = \text{optimal linear forecast of $X_{t+k}$ given $\mathscr{F}_{\leq t}$} \\
+        \iff \\
+        \sigma_k^2(\hat{X}_{t+k}) = \inf_{Y \in \mathscr{X}_t} \sigma^2(Y)\\
+    \end{align*}
+\end{definition}
+\begin{definition}[Deterministic Stochastic]
+    Let $X_t \in \R (t \in \Z)$ be a weakly stationary process.\\
+    It is called deterministic if $\sigma_k^2(X_{t+k}) = 0$ \\
+    More generally:
+    \begin{align*}
+        \forall t \in \Z: \inf_{Y \in L_t} \mathbb{E}\left[(Z_{t+1} - Y)^2\right] =0
+    \end{align*}
+\end{definition}
+\begin{theorem}[Wold Decomposition Theorem]
+    Let $X_t \in \R (t \in \Z)$ be a weakly stationary process.\\
+    Then 
+    \begin{align*}
+        \exists a_0, a_1, a_2, \ldots \text{ s.t. } a_0 = 1, \sum_{j=1}^{\infty} a_j^2 < \infty
+    \end{align*}
+    and 
+    \begin{align*}
+        \exists \epsilon_t, \mu_t (t \in \Z) \text{ s.t. } \forall s,t \in \Z:\\
+        \epsilon_t \in L_t, \mu_t \in L_{-\infty}\\
+        E(\epsilon_t) = 0, \cov(\epsilon_s, \epsilon_t) \sigma_{\epsilon}^2 \delta_{s,t} \leq \infty, \cov(\epsilon_s, \mu_t) = 0\\
+        X_{t_{a.s., L^2(\Omega)}} = \mu_t + \sum_{j=0}^{\infty} a_j \epsilon_{t-j} (t \in \Z)
+    \end{align*}
+    pg(26/34)
+    This is literally fourier series for time series.\\
+    https://math.stackexchange.com/questions/703246/i-have-trouble-understanding-the-proof-of-the-wold-decomposition-theorem
+\end{theorem}
+\begin{definition}[Purely Stochastic or Regular]
+    We say if $X_t$ has wold decomposition with $\mu_t \equiv \mu \in \R, \sigma_{\epsilon}^2 > 0$\\
+    Then $X_t$ is called purely stochastic or regular.\\
+\end{definition}
+\begin{definition}
+    Let $a = \{a_j\}_{j\in \N} \in \R^{\N}$ , $0 < \beta < \infty$\\
+    Then 
+    \begin{align*}
+        || a ||_{\ell^{\beta}} = \left( \sum_{j=1}^{\infty} |a_j|^{\beta} \right)^{\frac{1}{\beta}} < \infty\\
+    \end{align*}
+\end{definition}
+\begin{definition}[Future and Asymptotic events]
+    \begin{align*}
+        \mathscr{F}_t(t \in \Z) = \text{ sequence of $\sigma$-algebras on } \Omega\\
+        \mathscr{F}_{>t} = \sigma\left( \bigcup_{s=t+1}^{\infty} \mathscr{F}_s \right) \text{future events}\\
+        \mathscr{F}^{\infty} = \bigcap_{t=1}^{\infty} \mathscr{F}_{>t} \text{ asymptotic events}\\
+    \end{align*}
+\end{definition}
+\begin{definition}[Ergodic Processes]
+    Let $X_t(t \in \Z)$ be $\mathscr{F}_t$-measurable.\\
+    \begin{gather*}
+        X_t \text{ is an Ergodic process} \\
+        \iff \\
+        \forall B \in \mathscr{F}^{\infty}: \Prob^2(B) = \Prob(B) \\
+        \iff \\
+        \forall B \in \mathscr{F}^{\infty}: \Prob(B) \in \{0,1\}
+    \end{gather*}
+\end{definition}
+\begin{theorem}[Kolmogorov's 0-1 Law]
+    \begin{gather*}
+        X_t (t \in \Z) \text{ iid } \implies X_t \text{ is ergodic} \\ 
+    \end{gather*}
+\end{theorem}
+\begin{theorem}[Birkhoff's Ergodic Theorem]
+    \begin{gather*}
+        X_t (t\in \Z) \text{ strictly stationary, ergodic}, \mathbb{E}(|X_t|) < \infty \\
+        \implies \\
+        \mu = E(X_t) \in \R \text{ and } \overline{x} \to \mu \text{ a.s.} 
+    \end{gather*}
+    
+\end{theorem}
+\section{2/26}
+\begin{definition}[Fockker Plank]
+    \begin{gather*}
+        \frac{d p(t,x)}{dt} = \frac{d}{dx} (\mu(t,x)p(t,x)) + \frac{d^2}{dx^2} (\sigma(t,x)p(t,x))\\  
+    \end{gather*}
+    where $p(t,x)$ is the probability density function of the process $X_t$\\
+\end{definition}
+\begin{definition}[$B_{f(t)}$]
+    $d B_{f(t)} = \sqrt{f'(t)} dB_t$\\
+    \begin{gather*}
+        X_t = \frac{B_{e^t}}{\sqrt{e^t}} \\
+        dX_t = \frac{dB_{e^t}}{e^{t/2}} + \frac{B_{e^t}}de^{-t/2} + \lbrace 
+    \end{gather*}
+\end{definition}
+Look through example of Random walk +1,-1 and the linear past of it. 
+\end{document}

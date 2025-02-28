@@ -1,0 +1,71 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Homework 7}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question 12.14\\
+    A single observation of a random variable having a geometric distribution is to be used
+    to test the null hypothesis that its parameter equals \(\theta_0\) against the alternative that it
+    equals \(\theta_1 > \theta_0\). Use the Neyman-Pearson lemma to find the best critical region of size \(\alpha\).
+    \begin{solution}
+        Let \(X\) be the random variable with the geometric distribution. The likelihood function is given by
+        \[L(\theta) = \theta(1-\theta)^{x-1}\]
+        By NPL the ratio of the likelihoods is bounded by a constant \(k\). That is,
+        \begin{align*}
+            \frac{L(\theta_0)}{L(\theta_1)} = \left(\frac{\theta_0 \cdot (1-\theta_0)^{x-1}}{\theta_1 \cdot (1-\theta_1)^{x-1}}\right) &\leq k\\
+            ln\left(\frac{\theta_0 \cdot (1-\theta_0)^{-1}}{\theta_1 \cdot (1-\theta_1)^{-1}}\right) + x \cdot ln\left(\frac{1-\theta_0}{1-\theta_1}\right) &\leq ln(k)\\
+            x &\leq \frac{ln(k) - ln\left(\frac{\theta_0 \cdot (1-\theta_0)^{-1}}{\theta_1 \cdot (1-\theta_1)^{-1}}\right)}{ln\left(\frac{1-\theta_0}{1-\theta_1}\right)}
+        \end{align*}
+        Thus if we take the critical region to be \(x \leq c\) where \(c\) is the above expression, we have the best critical region of size \(\alpha\).
+    \end{solution}
+
+    \question 12.24\\
+    Given a random sample of size \(n\) from a normal population with unknown mean and
+    variance, find an expression for the likelihood ratio statistic for testing the null hypothesis
+    \(\sigma = \sigma_0\) against the alternative hypothesis \(\sigma \neq \sigma_0\).
+
+    \begin{solution}
+        Let $X$ be the random variable with the normal distribution with a pdf of 
+        \[f(x|\mu, \sigma) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]
+        The likelihood function is given by
+        \[L(\mu, \sigma) = \frac{1}{(2\pi)^{n/2}\sigma^n}e^{-\frac{1}{2\sigma^2}\sum_{i=1}^{n}(x_i-\mu)^2}\]
+        The likelihood ratio statistic is given by
+        $\Lambda = \frac{L(\mu, \sigma_0)}{L(\mu, \hat{\sigma}_{MLE})}$
+        where $\hat{\sigma}_{MLE}$ is the maximum likelihood estimator of $\sigma$.
+        The MLE of $\sigma$ is $\hat{\sigma}_{MLE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x_i-\mu)^2}$
+        Thus 
+        \begin{align*}
+            \Lambda &= \frac{\sigma_{MLE}}{\sigma_0} e^{-\frac{1}{2\sigma_{MLE}^2}\sum_{i=1}^{n}(x_i-\mu)^2 + \frac{1}{2\sigma_0^2}\sum_{i=1}^{n}(x_i-\mu)^2}\\
+            &= (\frac{\sum_{i=1}^n(x_i-\bar{x})}{n \sigma^2_0})^{n/2}e^{\frac{1}{2} [ \frac{\sum_{i=1}^n(x_i -\bar{x})^2}{\sigma_0^2} - n]}
+        \end{align*}
+
+    \end{solution}
+
+    \question 13.1\\
+    Given a random sample of size \(n\) from a normal population with the known variance \(\sigma^2\),
+    show that the null hypothesis \(\mu = \mu_0\) can be tested against the alternative hypothesis
+    \(\mu \neq \mu_0\) with the use of a one-tailed criterion based on the chi-square distribution.
+
+    \begin{solution}
+        Let $X$ be a random variable. The sample mean is given by $\bar{X}$ and $Z = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}}$ is a standard normal random variable under the null hypothesis. \\
+        $Z^2 \sim \chi^2_1$ under the null hypothesis. Thus by the 1 tail test
+        $$ \frac{n (\bar{X} - \mu_0)^2 }{\sigma^2} \geq \chi^2_{1, \alpha}$$
+        Where $\chi^2_{1, \alpha}$ is the critical value of the chi-square distribution with 1 degree of freedom at the $\alpha$ level of significance.
+    \end{solution}
+
+\end{questions}
+
+\end{document}

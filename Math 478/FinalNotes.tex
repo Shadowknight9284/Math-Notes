@@ -1,0 +1,337 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\section*{In Class Final Information}
+Cumulative!!!\\
+Simple topics\\
+\begin{itemize}
+    \item Markov Chains (chapter 4)
+    \begin{itemize}
+        \item Using Chapman-Kolmogorov equations
+        \item If we have TPM, calc the probability of somethin after $n$ iterations
+        \item Classification of states
+        \item Long Run proportions
+        \item Limiting probabilities
+    \end{itemize}
+    \item Exponential distribution and Poisson processes (chapter 5)
+    \begin{itemize}
+        \item Properties of exponential distribution/races (min, sum, etc)
+        \item Poisson processes (interarrival times, number of arrivals, etc) w/ hw problem 5.86, 5.62
+    \end{itemize}
+    \item Continuous time Markov Chains (chapter 6)
+    \begin{itemize}
+        \item Birth and death processes (6.3)
+        \item Limiting probabilities 
+        \item $P_{ij}(t)$ - transition probably function
+        \item Time reversibility
+    \end{itemize}
+    \item Renewal Theory (chapter 7)
+    \begin{itemize}
+        \item Applications using Renewal rewards theorem
+    \end{itemize}
+    \item Queing Theory (chapter 8)
+    \begin{itemize}
+        \item Little's law (look at class examples and HW)
+        \item M/M/1, and M/M/2, or custormer arrivaials 
+    \end{itemize}
+    \item Brownian Motion (chapter 10)
+    \begin{itemize}
+        \item Hitting times
+        \item Max of a Brownian motion in an interval
+        \item BM with a drift
+        \item Geometric Brownian Motion
+    \end{itemize}
+\end{itemize}
+8 problems in 3 hours\\
+He will post study guide\\
+\newpage
+\section*{Markov Chains}
+\begin{definition}[Tranisition probability Matrix]
+    It is a matrix that's enerties represent the probability of transitioning from one state to another(i to j).\\
+    We assume it follows the Markov property of only depending on the current state for the next state.\\
+    $$P{X_{n+1} = j| X_n = i} = P_{ij}$$
+    The rows of the matrix sum to 1.
+\end{definition}
+\begin{definition}[Chapman-Kolmogorov equations]
+    We can define $n$ step transition probabilities using the TPM.\\
+    $P_{ij}^{(n)} = P(X_{n+m} = j | X_m = i)$
+    This is the probability of transitioning from state $i$ to state $j$ in $n$ steps.\\
+    The CK equations are
+    $$ P_{ij}^{(n+m)} = \sum_{k} P_{ik}^{(n)}P_{kj}^{(m)}$$
+    This is essential the probability of transitioning from $i$ to $j$ in $n+m$ steps is the sum of the probabilities of transitioning from $i$ to $k$ in $n$ steps and then from $k$ to $j$ in $m$ steps.
+    \begin{proof}
+        \begin{align*}
+            P_{ij}^{(n+m)} &= P(X_{n+m} = j | X_0 = i)\\
+            &= \sum_{k} P(X_{n+m} = j, X_n = k | X_0 = i)\\
+            &= \sum_{k} P(X_{n+m} = j | X_n = k, X_0 = i)P(X_n = k | X_0 = i)\\
+            &= \sum_{k} P(X_{n+m} = j | X_n = k)P(X_n = k | X_0 = i)\\
+            &= \sum_{k} P_{kj}^{(m)}P_{ik}^{(n)}
+        \end{align*}
+    \end{proof}
+    If we have $\mathbf{P}$ as the TPM, then $\mathbf{P}^n$ is the $n$ step TPM.
+\end{definition}
+\begin{definition}[Classification of States]
+    We have many diffierent Classifications of states in a Markov Chain.\\
+    \textbf{Accessiblility}\\
+    State j is accessible from state i if $P_{ij}^{(n)} > 0$ for some $n$.\\
+    State i and j communicate if $i$ is accessible from $j$ and $j$ is accessible from $i$.\\
+    Note that communication is an equivalence relation.\\
+    A MC that is irreducible if there is only one class of states.\\
+    \textbf{Periodicity}\\
+    A state is recurrent if it returns to itself with probability 1 or $\sum_{n=1}^{\infty} P_{ii}^{(n)} = \infty$\\
+    A state is transient if it returns to itself with probability less than 1 or $\sum_{n=1}^{\infty} P_{ii}^{(n)} < \infty$\\
+    Note that in a finite state space MC, there must be at least one recurrent state.\\
+    Note that if a state i is recurrent, and it communicates with a state j, then j is also recurrent.
+\end{definition}
+\begin{definition}[Long Run Proportions]
+    For a pair of thats $i \neq j$, let $f_{ij}$ deonte the probability that the MC starting in state i will eventually be in state j.\\
+    $$f_{ij} = P(X_n = j \text{ for some } n | X_0 = i)$$
+    If i is recurrent and i and j communicate, then $f_{ij} = 1$\\
+    If a state j is recurrent, let $m_j$ denote the expected number transitions that it taes the MC when starting in state j to return to state j.
+    $$N_j = \min{n >0: X_n = j}, \quad m_j = E[N_j|X_0 = j]$$
+    A recurrent state is positive recurrent if $m_j < \infty$ and null recurrent if $m_j = \infty$\\
+    if an MC is irreducible and positive recurrent, then there exists a unique stationary distribution $\pi$ such that
+    $$\pi_j = \frac{1}{m_j} $$
+    This is the long run proportion of time spent in state j. Thus  for an irreducible MC, if the chain is positive recurrent, then the long run proportion is solved by this system
+    $$ \pi_j = \sum_{i} \pi_i P_{ij}, \quad \sum_j \pi_j = 1$$
+    If there is no solution to this system, then the MC is either transient or null recurrent.
+\end{definition}
+\begin{definition}[Limiting Probabilities]
+    As we take the limit of the TPM as $n \to \infty$, we get the limiting TPM.\\
+    $$\lim_{n \to \infty} P_{ij}^{(n)} = \pi_j$$
+    This is the probability of transitioning from state i to state j after an infinite number of steps.\\
+    We can see this makes sense intuitively as the long run proportion of time spent in state j would be the same as the probability of transitioning to state j after an infinite number of steps.
+\end{definition}
+\begin{definition}[Time Reversibility]
+    An ergodic MC is a MC that has been running a long time and has reached a steady state.\\
+    A MC is time reversible if the limiting probabilities satisfy the detailed balance equations.\\
+    $$\pi_i P_{ij} = \pi_j P_{ji}$$
+    This is the probability of transitioning from state i to state j is the same as the probability of transitioning from state j to state i.\\
+    To check if a MC is time reversible, we can check if the limiting probabilities satisfy the system
+    $$ \sum_{i} \pi_i P_{ij} = \sum_{i} \pi_j P_{ji}, \quad \sum_i x_i = 1$$
+    Note that if there is a unique solution then $x_i = \pi_i$ and the MC is time reversible.
+\end{definition}
+
+\section*{Exponential Distribution and Poisson Processes}
+\begin{definition}[Exponential Distribution]
+    A Continuous random variable $X$ is exponentially distributed with rate $\lambda$ if it has the PDF
+    $$f(x) = \begin{cases}
+        \lambda e^{-\lambda x} & x \geq 0\\
+        0 & x < 0
+    \end{cases}$$
+    and the CDF
+    $$F(x) = \begin{cases}
+        1 - e^{-\lambda x} & x \geq 0\\
+        0 & x < 0
+    \end{cases}$$
+    The expected value of an exponentially distributed random variable is $\frac{1}{\lambda}$ and the variance is $\frac{1}{\lambda^2}$
+    The exponential distribution is memoryless, meaning that the probability of an event happening in the next $t$ units of time is the same as the probability of the event happening in the next $t$ units of time given that the event has not happened in the first $s$ units of time.
+    $$P(X > s+t | X > s) = P(X > t)$$
+    $$P(X > s+t) = P(X > s)P(X > t)$$
+    If we have $X_1, X_2, \ldots, X_n$ as independent exponentially distributed random variables with mean $\frac{1}{\lambda}$ then the sum of these $\sum_i X_i$ is a gamma distributed random variable with parameters $n$ and $\lambda$.
+    If we have $X_1, X_2, \ldots, X_n$ as independent exponentially distributed random variables rates $\lambda_1, \lambda_2, \ldots, \lambda_n$ then the minimum of these $min_i X_i$ is exponentially distributed with rate $\sum_i \lambda_i$.
+\end{definition}
+\begin{definition}[Counting Process]
+    A counting process $\setof{N(t), t \geq 0}$ is a stochasitic process that represents the number of events that have occurred up to time $t$.\\
+    A counting process must satisfy
+    \begin{enumerate}
+        \item $N(0) = 0$
+        \item $N(t)$ is integer valued
+        \item If $s < t$ then $N(s) \leq N(t)$ (non-decreasing)
+        \item For $s < t$, $N(t) - N(s)$ is the number of events that occur in the interval $(s,t]$
+    \end{enumerate}
+    A coutning process is said to have independent increments if the number of events that occour in disjoint time intevals are independent.\\
+    This essentially means that the number of events that occur in $(s,t]$ is independent of the number of events that occur in $(u,v]$ if $(s,t] \cap (u,v] = \emptyset$
+\end{definition}
+\begin{definition}[Poisson Process]
+    A Poisson process is a counting process that satisfies the following properties
+    \begin{enumerate}
+        \item $N(0) = 0$
+        \item Independent increments
+        \item $P(N(t+h) - N(t) = 1) = \lambda h + o(h)$
+        \item $P(N(t+h) - N(t) \geq 2) = o(h)$
+    \end{enumerate}
+    where a function $f(h)$ is $o(h)$ if $\lim_{h \to 0} \frac{f(h)}{h} = 0$\\
+    If $T_n$ is the time of the $n$th event, then the interarrival times $X_n = T_n - T_{n-1}$ are independent and exponentially distributed with rate $\lambda$.\\
+    If $\setof{N(t), t \geq 0}$ is a Poisson process with rate $\lambda$, then $N(t)$ is a Poisson distributed random variable with mean $\lambda t$.
+\end{definition}
+\section*{Continuous Time Markov Chains}
+\begin{definition}[CTMC]
+    A CTMC $\setof{X(t), t \geq 0}$ is a stochastic process that satisfies the Markov property and the distribution of a futue state given the present and past states depends only on the present state and is independent of the past states.\\
+    If $P(X(t+s) = j | X(t) = i)$ is independent of s, the the ctmc has stationary transition probabilities.\\
+    Also if we denote $T_i$ to be the amount of time the process stays in state i before making a transition into another state then $T_i$ is exponentially distributed. as $P(T_i > t+s | T_i > s) = P(T_i > t)$.
+\end{definition}
+\begin{definition}[Birth-Death Processes]
+    A Birth and Death process is a CTMC that has states has distinct integer states. New states arrive at rate $\lambda_i$ and leave at rate $\mu_i$. In the system when there are $n$ states occupied the time to next arrival is exponentially distributed with rate $\lambda_n$ and the time to next departure is exponentially distributed with rate $\mu_n$.\\
+    \begin{align*}
+        v_0 &= \lambda_0\\
+        v_i &= \lambda_i + \mu_i\\
+        P_{0,1} &= 1\\
+        P_{i,i+1} &= \frac{\lambda_i}{\lambda_i + \mu_i}\\
+        P_{i,i-1} &= \frac{\mu_i}{\lambda_i + \mu_i}
+    \end{align*}
+\end{definition}
+\begin{definition}[M/M/1]
+    Suppose you have a queue which is a poisson process whcih arrives at rate $\lambda$ ie in between succesuve arrivals are independent exponentially distributed random variables with mean $\frac{1}{\lambda}$. Also the service time is exponentially distributed with rate $\mu$.\\
+    The M/M/1 queue is a queue with one server.\\
+    This is clearly a birth and death process with $\lambda_i = \lambda$ and $\mu_i = \mu$\\
+\end{definition}
+\begin{definition}[Transition Probability Function]
+    Let $P_{ij}(t) = P(X(t+s) = j|X(s)=i)$ be the probability that the CTMC is in state j after time t given that it started in state i.\\
+    For a pure birth process we can see this become the probability that the sum of all of the $X$ from $X_i$ to $X_j$ is greater than to t.\\
+    ie $P(X(t) < j | X(0) = i) = \sum_{k=i}^{j-1} X_k > t $
+\end{definition}
+\begin{definition}[Rate of Transition]
+    We can define the rate of transition from state i to state j as
+    $$ q_{ij} = v_i P_{ij}$$
+    as $v_i$ is the rate of leaving state i. and $P_{ij}$ is the probability of transitioning from state i to state j.
+    $q_{ij}$ is also known as the intsanteous rate of transition from state i to state j as $v_i = \sum_{j} q_{ij}$ and $P_{ij} = \frac{q_{ij}}{v_i} = \frac{q_{ij}}{\sum_{j} q_{ij}}$
+\end{definition}
+\begin{lemma}
+    \begin{align*}
+        \lim_{h\to\infty} \frac{1-P_{ii}(h)}{h} = \frac{1}{m_i} = v_i\\
+        \lim_{h\to\infty} \frac{P_{ij}(h)}{h} = q_{ij}
+    \end{align*}
+    This is true as 
+    \begin{align*}
+        1- P_{ii}(h) &= v_i h + o(h)\\
+    \end{align*}
+    and 
+    \begin{align*}
+        P_{ij}(h) &= h v_i P_{ij} + o(h)\\
+    \end{align*}
+\end{lemma}
+\begin{definition}[Chapman-Kolmogorov equations]
+    the CKE still hold for CTMCs in the same way as they do for DTMCs.\\
+    \begin{align*}
+        P_{ij}(t+s) &= \sum_{k} P_{ik}(t)P_{kj}(s)\\
+    \end{align*}
+\end{definition}
+\begin{definition}[Kolmogorov Backwards Equation]
+    The Kolmogorov Backwards Equation is the differential equation that describes the rate of change of the TPM.\\
+    \begin{align*}
+        \frac{d}{dt} P(t) &= P(t)Q\\
+        \frac{d}{dt} P_{ij}(t) &= \sum_{k \neq i} q_{ik}P_{kj}(t) - v_i P_{ij}(t)
+    \end{align*}
+\end{definition}
+\begin{definition}[Kolmogorov Forwards Equaion]
+    The Kolmogorov Forwards Equation is the differential equation that describes the rate of change of the TPM.\\
+    \begin{align*}
+        \frac{d}{dt} P(t) &= QP(t)\\
+        \frac{d}{dt} P_{ij}(t) &= \sum_{k \neq j} P_{ik}(t)q_{kj} - P_{ij}(t)v_j
+    \end{align*}
+\end{definition}
+\begin{definition}[Limiting Probabilities]
+    In the analoug to DTMC, the probability that a CTMC will be in state j after an infinite amount of time is the limiting probability $\pi_j$ or $P_j$\\
+    Using the KBE, we can see that the limiting probabilities satisfy the system
+    \begin{align*}
+        v_j P_j = \sum_{k \neq j} q_{kj}P_k\\
+        \sum_{j} P_j = 1
+    \end{align*}
+\end{definition}
+\begin{definition}[BD Balance Eq]
+    The following are the balance equations for a birth and death process
+    \begin{align*}
+        \lambda_0 P_0 &= \mu_1 P_1\\
+        (\lambda_n + \mu_n) P_n &= \lambda_{n-1} P_{n-1} + \mu_{n+1} P_{n+1}
+    \end{align*}
+    Thus we can see that the limiting probabilities are
+    \begin{align*}
+        P_0 =\frac{1}{1+ \sum_{n=1}^{\infty} \frac{\lambda_0}{\mu_1}\ldots\frac{\lambda_{n-1}}{\mu_n}}\\
+        P_n = P_0 \frac{\lambda_0}{\mu_1}\ldots\frac{\lambda_{n-1}}{\mu_n}
+    \end{align*}
+\end{definition}
+\begin{definition}[Time Reversibility]
+    A time reversible CTMC is one where the limiting probabilities satisfy 
+    $$ \pi_i P_{ij} = \pi_j P_{ji}$$
+    $$ P_i  q_{ij} = P_j q_{ji}$$
+    Note that an ergodic birth and death process is time reversible.
+\end{definition}
+\begin{definition}[Renewal Theory]
+        A Renewal process is a counting process that has a sequence of nonnegative random variables $\setof{X_n}$ that are iid and have the same distribution then the counting processes $\setof{N(t)}$ is a renewal process.\\
+        By strong law of large numbers: $\frac{S_n}{n} = \mu, \quad n \to 
+        \infty$
+\end{definition}
+\begin{definition}[Limit Theorems]
+    \begin{align*}
+        \frac{N(t)}{t} &\to \frac{1}{\mu} \quad \text{as} \quad t \to \infty\\
+        \frac{m(t)}{t} &\to \frac{1}{\mu} \quad \text{as} \quad t \to \infty
+    \end{align*}
+\end{definition}
+\begin{definition}[Wald's Equation]
+    \textbf{Stopping Time:} $N$ is a Stoppung time for a sequence for a sequence of random variables $\setof{X_i}$ if that even $\setof{N=n}$ is independent of $\setof{X_{n+i}}$ for all $i$\\
+    The idea is that we observe value, and then stop and it is not dependant on the future values.\\
+    \textbf{Wald's Equation:}
+    If $\setof{X_i}$ are iid with finite expected value $E[X]$ and $N$ is a stopping time for this sequence with finite expected value $E[N]$ then
+    $$ E[\sum_{i=1}^{N} X_i] = E[X]E[N]$$
+    \begin{proof}
+        \begin{align*}
+            \sum_{n=1}^{N} X_n &= \sum_{n=1}^{\infty} X_n I_n\\
+            E[\sum_{n=1}^{N} X_n] &= E[\sum_{n=1}^{\infty} X_n I_n]\\
+            &= \sum_{n=1}^{\infty} E[X_n I_n]\\
+            &= E[X]\sum_{n=1}^{\infty} E[I_n]\\
+            &= E[X]E[N]
+        \end{align*}
+    \end{proof}
+\end{definition}
+\begin{definition}[Renewal Rewards]
+    If we deonte $R_n$ as the reward earned at the time of the nth renewal, then the total reward earned in the first $n$ renewals is
+    $$ R(t) = \sum_{n=1}^{N(t)} R_n$$
+    If $E[R] < \infty$ and $E[X] < \infty$ then
+    \begin{align*}
+        \lim_{t \to \infty} \frac{R(t)}{t} &= \frac{E[R]}{E[X]}\\
+        \lim_{t \to \infty} \frac{E[R(t)]}{t} &= \frac{E[R]}{E[X]}\\
+        \lim_{t \to \infty} \frac{\sum_{n=1}^{N(t)} R_n}{N(t)} &= E[R] \quad \text{by law of large numbers}\\
+        \lim_{t \to \infty} \frac{N(t)}{t} &= \frac{1}{E[X]} 
+    \end{align*}
+\end{definition}
+\begin{definition}[Queuing Theory]
+    \textbf{Cost equations:}
+    L = the average number of customers in the system\\
+    Lq = the average number of customers in the queue\\
+    W = the average time a customer spends in the system\\
+    Wq = the average time a customer spends in the queue\\
+    $\lambda$ = the average number of customers arriving per unit time $= \lim_{t \to \infty} \frac{N(t)}{t}$\\
+    Littles Law: $L = \lambda W$ and $Lq = \lambda Wq$\\
+    average number of customers in service = $\lambda E[S]$ where $E[S]$ is the average service time
+\end{definition}
+\begin{definition}[M/M/1 queue]
+    For an M/M/1 queue, the arrival rate is $\lambda$ and the service rate is $\mu$ thus we can simplify alot of the equations.\\
+    \begin{align*}
+        P_0 = 1 - \frac{\lambda}{\mu}\\
+        P_n = (1 - \frac{\lambda}{\mu}) (\frac{\lambda}{\mu})^n\\
+    \end{align*}
+    Note that $L = $ expectaion of the number of customers in the system = $\sum_{n=0}^{\infty} n P_n = \frac{\lambda}{\mu - \lambda}$\\
+    \begin{align*}
+        L &= \frac{\lambda}{\mu - \lambda}\\
+        W &= \frac{1}{\mu - \lambda}\\
+        Wq &= W - E[S] = W - \frac{1}{\mu} = \frac{\lambda}{\mu(\mu - \lambda)}\\
+        Lq &= \lambda Wq = \frac{\lambda^2}{\mu(\mu - \lambda)}
+    \end{align*}
+\end{definition}
+\begin{definition}[Brownian Motion]
+    A stochasitic procces is said to be a Brownian motion if it satisfies the following properties
+    \begin{enumerate}
+        \item $B(0) = 0$
+        \item $B(t)$ has independent increments
+        \item $B(t)$ has stationary increments
+        \item $B(t)$ has continuous paths
+        \item $B(t)$ has normally distributed increments
+        \item $B(t)$ has mean 0 and variance $\sigma^2 t$
+    \end{enumerate}
+\end{definition}
+\end{document}

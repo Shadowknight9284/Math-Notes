@@ -1,0 +1,2 @@
+\contentsline {section}{\numberline {1}Notes}{2}{}%
+\contentsline {subsubsection}{\numberline {1.0.1}Normal, Self-Adjoint, Unitary, and Orthogonal Operators}{2}{}%

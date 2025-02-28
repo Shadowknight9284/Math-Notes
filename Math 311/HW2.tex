@@ -1,0 +1,168 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311H}
+\newcommand{\assignment}{Homework 2}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \question Prove the following statements using the $\epsilon$–$N$ definition of the limit:
+        \begin{parts}
+            \part $\lim_{n \to \infty} \frac{n-4}{n+7} = 1$
+            \part $\lim_{n \to \infty} \frac{2n-3}{n+5} = 2$
+        \end{parts}
+\begin{solution}
+    \textbf{(a)}: We want to show that for any $\epsilon > 0$, there exists an $N \in \mathbb{N}$ such that for all $n > N$, 
+    \begin{align*}
+        \left| \frac{n-4}{n+7} - 1 \right| < \epsilon\\
+    \end{align*}
+    Take $N = \frac{11}{\epsilon} - 7$.\\
+    \begin{align*}
+        n > \frac{11}{\epsilon} - 7\\
+        \frac{11}{n+7} < \epsilon\\
+        \left| \frac{-11}{n+7} \right| < \epsilon\\
+        \left| \frac{n-4}{n+7} - 1 \right| < \epsilon\\
+    \end{align*}
+    
+    \textbf{(b)}: We want to show that for any $\epsilon > 0$, there exists an $N \in \mathbb{N}$ such that for all $n > N$,
+    \begin{align*}
+        \left| \frac{2n-3}{n+5} - 2 \right| < \epsilon\\
+    \end{align*}
+    Take $N = \frac{13}{\epsilon} - 5$.\\
+    \begin{align*}
+        n > \frac{13}{\epsilon} - 5\\
+        \frac{13}{n+5} < \epsilon\\
+        \left| \frac{-13}{n+5} \right| < \epsilon\\
+        \left| \frac{2n-3}{n+5} - 2 \right| < \epsilon\\
+    \end{align*}
+\end{solution}
+    \question 
+        \begin{parts}
+            \part We say that a function $f : \mathbb{R} \to \mathbb{R}$ is Lipschitz continuous if there exists an $L$ such that for all $x, y \in \mathbb{R}$,
+            \[
+            |f(x) - f(y)| \leq L|x - y|
+            \]
+            Show that if $\{x_n\}_{n=1}^{\infty} \to x$ and $f(x)$ is Lipschitz, then $\{f(x_n)\}_{n=1}^{\infty}$ converges to $f(x)$.
+            
+            \part We say that a function $g : \mathbb{R} \to \mathbb{R}$ is $\alpha$-Hölder continuous if there exists an $L \in \mathbb{R}$ such that for every $x, y \in \mathbb{R}$,
+            \[
+            |g(x) - g(y)| \leq L|x - y|^\alpha
+            \]
+            (In particular, Lipschitz functions are Hölder continuous with Hölder exponent $\alpha = 1$). Prove that if $x_n \to x$ and $g$ is $\alpha$-Hölder continuous for $\alpha \in (0, 1)$, then $g(x_n) \to g(x)$.
+        \end{parts}
+        \begin{solution}
+            \textbf{(a)}: Suppose that $\setof{x_n}_{n=1}^{\infty} \to x$ and $f$ is Lipschitz continuous. Need to show that $\setof{f(x_n)}_{n=1}^{\infty} \to f(x)$. Fix $L >0$ from the Lipschitz condition. Then if we take $y = x$ and $x = x_n$, in the Lipschitz definition, we have
+            \begin{align*}
+                |f(x_n) - f(x)| \leq L|x_n - x|\\
+            \end{align*}
+            We also know that there exists an $N \in \mathbb{N}$ such that for all $n > N$, we have
+            \begin{align*}
+                |x_n - x| < \frac{\epsilon}{L}\\
+            \end{align*}
+            Thus, we have
+            \begin{align*}
+                |f(x_n) - f(x)| \leq L|x_n - x| < L\frac{\epsilon}{L} = \epsilon\\
+            \end{align*}
+            Thus, We have $\setof{f(x_n)}_{n=1}^{\infty} \to f(x)$.
+            \textbf{b}: 
+            Suppose that $\setof{x_n}_{n=1}^{\infty} \to x$ and $g$ is $\alpha$-Hölder continuous for $\alpha \in (0,1)$. Need to show that $\setof{g(x_n)}_{n=1}^{\infty} \to g(x)$
+            Fix $L > 0$ from the Hölder condition. Then if we take $y = x$ and $x = x_n$, in the Hölder definition, we have
+            \begin{align*}
+                |g(x_n) - g(x)| \leq L|x_n - x|^\alpha\\
+            \end{align*}
+            We also know that there exists an $N \in \mathbb{N}$ such that for all $n > N$, we have
+            \begin{align*}
+                |x_n - x| < (\frac{\epsilon}{L})^{\frac{1}{\alpha}}\\
+            \end{align*}
+            Thus, we have
+            \begin{align*}
+                |g(x_n) - g(x)| \leq L|x_n - x|^\alpha < \epsilon\\
+            \end{align*}
+            Thus, We have $\setof{g(x_n)}_{n=1}^{\infty} \to g(x)$.
+        \end{solution}
+        \question Let ${x_n}_{n=1}^{\infty}$ and ${y_n}_{n=1}^{\infty}$ be sequences and define 
+        \begin{align*}
+            \setof{z_n}_{n=1}^{\infty} = \setof{x_1, y_1, x_2, y_2, \ldots}_{n=1}^{\infty}
+        \end{align*}
+        Show that if $z_n \to x$ then $\setof{x_n}_{n=1}^{\infty} \to x$ and $\setof{y_n}_{n=1}^{\infty} \to x$.
+        \begin{solution}
+            Suppose that $\setof{z_n}_{n=1}^{\infty} \to x$. We want to show that $\setof{x_n}_{n=1}^{\infty} \to x$ and $\setof{y_n}_{n=1}^{\infty} \to x$. 
+            We can see that the subsequence $\setof{z_{2n}}_{n=1}^{\infty} = \setof{x_n}_{n=1}^{\infty}$ and $\setof{z_{2n-1}}_{n=1}^{\infty} = \setof{y_n}_{n=1}^{\infty}$. We also know that $2n - 1 > 2n > n$ for all $n \in \mathbb{N}$ and thus must converge if our original sequence converges. Thus, we have $\setof{x_n}_{n=1}^{\infty} \to x$ and $\setof{y_n}_{n=1}^{\infty} \to x$.
+        \end{solution}
+        \question Let $T : \mathbb{N} \to \mathbb{N}$ be an injective function. Prove that if $\{x_n\}_{n=1}^{\infty}$ converges to $x$, then $\{x_{T(n)}\}_{n=1}^{\infty}$ also converges to $x$.
+        \begin{solution}
+            Suppose that $\setof{x_n}_{n=1}^{\infty} \to x$. We want to show that $\setof{x_{T(n)}}_{n=1}^{\infty} \to x$. \\
+            We know that if $x_n \to x$, in a topological sense, a sequence converges to $x$ if and only if any given neighborhood of $x$ contains all but finitely many terms of the sequence. \\
+            Thus the set $S = \setof{n: n \in N \text{ and } x_n \notin V_{\epsilon}(x)}$ is a finite set. Aslo since $T$ is injective the set $S' = \setof{n: n \in N \text{ and } x_{T(n)} \notin V_{\epsilon}(x)}$ is also finite since as each element of the image of $T$ has a unique inverse. Thus we have that for all $\epsilon > 0$ there exists a finite set of elements not in the neighborhood of $x$. Thus, we have $\setof{x_{T(n)}}_{n=1}^{\infty} \to x$.
+        \end{solution}
+        \question Let $a$ be a positive real number.
+        \begin{parts}
+            \part Assuming $a > 1$, write an $\epsilon-n$ proof that $a^\frac{1}{n} \to 1$. (Hint: Bernoulli's inequality, which you proved in HW 1, may be helpful.)
+            \part Explain how your answer for part (a) can be used to prove $a^{\frac{1}{n}} \to 1$ for all positive real numbers $a$.
+        \end{parts}
+        \begin{solution}
+            \textbf{(a)}: Suppose $a > 1$. We want to show that $a^{\frac{1}{n}} \to 1$. For all $\epsilon > 0$. We need to show there exists an $N \in \mathbb{N}$ such that for all $n > N$, the following holds:
+            \begin{align*}
+                |a^{\frac{1}{n}} - 1| < \epsilon\\
+            \end{align*}
+            We can take $N = \frac{a -1}{\epsilon}$ ie $a = 1+ \epsilon N$ and. Then for all $n > N$, 
+            \begin{align*}
+                a < 1 + \epsilon n \\
+                a < (1 + \epsilon)^n\\
+                a^{\frac{1}{n}} < 1 + \epsilon\\
+                a^{\frac{1}{n}} - 1 < \epsilon\\
+                |a^{\frac{1}{n}} - 1| < \epsilon\\
+            \end{align*}
+            \textbf{(b)}: \\
+            \textbf{Case: 1} $a >1 $ then the proof follows from part (a)\\
+            \textbf{Case: 2} $a = 1$ then $a^{\frac{1}{n}} = 1$ for all $n \in \mathbb{N}$\\
+            \textbf{Case: 3} $0 < a < 1$ Then we know that $\setof{\frac{1}{a^{\frac{1}{n}}}}_{n=1}^{\infty} \to 1$ by part (a) and the algebraic limit theorem. 
+            Thus, we have $a^{\frac{1}{n}} \to 1$.
+        \end{solution}
+        \question Given a sequence $\{x_n\}_{n=1}^{\infty}$, define the sequence $\{s_n\}_{n=1}^{\infty}$ with general term
+        \[
+        s_n = \frac{1}{n} \sum_{k=1}^{n} x_k
+        \]
+        Prove that if $\{s_n\}_{n=1}^{\infty}$ is convergent, then
+        \[
+        \lim_{n \to \infty} \frac{x_n}{n} = 0
+        \]
+        (Hint: Try to express $\frac{x_n}{n}$ in terms of $s_n$.)
+        \begin{solution}
+            Suppose that $\setof{s_n}_{n=1}^{\infty}$ is convergent. We want to show that $\lim_{n \to \infty} \frac{x_n}{n} = 0$.\\
+            We can first notice what $\frac{x_n}{n}$ is in terms of $s_n$. We can see that
+            \begin{align*}
+                s_n = \frac{1}{n} \sum_{k=1}^{n} x_k\\
+                n s_n = \sum_{k=1}^{n} x_k\\
+                n s_n - (n-1)s_{n-1} = x_n\\
+                \frac{x_n}{n} = s_n - s_{n-1} + \frac{1}{n}s_{n-1}\\
+            \end{align*}
+            We can use the algebraic limit theorem to consider each term in the limit. \begin{align*}
+                \lim_{n \to \infty} \frac{x_n}{n} = \lim_{n \to \infty} s_n - s_{n-1} + \frac{1}{n} s_{n-1}\\
+                \lim_{n \to \infty} s_n - \lim_{n \to \infty} s_{n-1} + \lim_{n \to \infty} \frac{1}{n}s_{n-1}\\
+            \end{align*}
+            Since we know that $\setof{s_n}_{n=1}^{\infty}$ is convergent, let us call the value it converges to $s$ thus we have
+            \begin{align*}
+                \lim_{n \to \infty} s_n = s\\
+                \lim_{n \to \infty} s_{n-1} = s\\
+            \end{align*}
+            Thus clearly 
+            \begin{align*}
+                \lim_{n \to \infty} \frac{1}{n} s_{n-1} = 0\\
+            \end{align*}
+            Thus, we have
+            \begin{align*}
+                \lim_{n \to \infty} \frac{x_n}{n} = s - s + 0 = 0\\
+            \end{align*}
+            Thus, we have $\lim_{n \to \infty} \frac{x_n}{n} = 0$.
+        \end{solution}
+\end{questions}
+
+\end{document}

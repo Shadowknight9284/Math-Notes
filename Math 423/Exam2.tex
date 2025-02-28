@@ -98,7 +98,7 @@
         \item Translation $u(x - y, t)$ is a solution if $u(x,t)$ is a solution.
         \item Any derivative of $u(x,t)$ is a solution. 
         \item A linear combination of solutions is a solution.
-        \item An integral of a solution is a solution. Thus if $S(x,t)$ is a solution then so is $S(x - y, t)$ and so is $v(x,t) = \int_{-\infty}^x S(x - y, t) g(y) dy$. for any $g(y)$.
+        \item An integral of a solution is a solution. Thus if $S(x,t)$ is a solution then so is $S(x - y, t)$ and so is $v(x,t) = \int_{-\infty}^\infty S(x - y, t) g(y) dy$. for any $g(y)$.
         \item Dilation. If $u(x,t)$ is a solution then so is $u(\sqrt{a}x, at)$ for any $a > 0$.
     \end{itemize}
 \end{definition}
@@ -126,15 +126,351 @@ Information & Transported & Lost gradually \\ \hline
 \label{tab:comparison}
 \end{table}
 \subsubsection{4.1 - Seperation of Variables}
+\begin{definition}[Seperation Solution Process for waves]
+    We can consider the homogeneous Dirichlet problem for wave Equation.
+    Due to linearity we can see that we have a seperated solution of the form $u(x,t) = X(x)T(t)$.\\
+    $$ \begin{cases}
+        u_{tt} = c^2 u_{xx} \\
+        u(0,t) = u(L,t) = 0 \\
+        u(x,0) = \phi(x) \\
+        u_t(x,0) = \psi(x)
+    \end{cases}$$
+    Thus we can see the following ratios:
+    $$ -\frac{T''}{cT} = -\frac{X''}{X} = \lambda$$
+    We know this must be a consant since it doesnt depend on $x$ or $t$.\\
+    We can now do our test cases: \\
+    $$\begin{cases}
+        \lambda = \beta^2 \\
+        \lambda = 0 \\
+        \lambda = -\beta^2
+    \end{cases}
+    $$
+    We can Clearly see that this doesn't make sense for $\lambda = 0$ and $\lambda = -\beta^2$. they lead to solutions that are trivial and solutions that do not follow the boundary conditions.\\
+    Thus for $\lambda = \beta^2$ we have the following:
+    $$\begin{cases}
+        X'' + \beta^2 X = 0 \\
+        T'' + c^2\beta^2 T = 0
+    \end{cases}
+    \begin{cases}
+        X(x) = A \cos(\beta x) + B \sin(\beta x) \\
+        T(t) = C \cos(\beta ct) + D \sin(\beta ct)
+    \end{cases}
+    $$
+    Thus by imposing the BC we see that $A = 0$ and $B sin(\beta l) = 0$. Thus for non trivial solutions we have $\beta = n\pi/l$.
+    Thus our $\lambda = (n\pi/l)^2$ and our particualr eigenfunction correspodning to this eigenvalue is $X_n(x) = \sin(n\pi x/l)$ and $T_n(t) = \cos(n\pi ct/l) + \sin(n \pi ct/t)$.\\
+    When we take our particualr solutions $u_n(x,t) = (A_n \cos(n\pi ct/l) + B_n \sin(n\pi ct/l)) \sin(n\pi x/l)$ we can see that we can form any solution as a linear combination of these solutions.
+    $$ u(x,t) = \sum_{n=1}^\infty (A_n \cos(n\pi ct/l) + B_n \sin(n\pi ct/l)) \sin(n\pi x/l)$$
+    We also require our IC to be satisfied. 
+    $$ \phi(x) = \sum_{n=1}^\infty A_n \sin(n\pi x/l)$$
+    $$ \psi(x) = \sum_{n=1}^\infty B_n \sin(n\pi x/l)$$
+\end{definition}
+\begin{definition}[Seperation Solution Process for Diffusion]
+    We can consider the homogeneous Dirichlet problem for Diffusion Equation.
+    $$ \begin{cases}
+        u_t = ku_{xx} \\
+        u(0,t) = u(L,t) = 0 \\
+        u(x,0) = \phi(x)
+    \end{cases}$$
+    We can see that we have a seperated solution of the form $u(x,t) = X(x)T(t)$.\\
+    $$ \begin{cases}
+        -\frac{T'}{kT} = -\frac{X''}{X} = \lambda
+    \end{cases}
+    $$
+    We can now do our test cases: \\
+    $$\begin{cases}
+        \lambda = \beta^2 \\
+        \lambda = 0 \\
+        \lambda = -\beta^2
+    \end{cases}$$
+    We can see that this is the same $X''/X$ as the wave equation. Thus we have the same solutions.
+    Thus our $\lambda = (n\pi/l)^2$ For $n \in \mathbb{Z}$ thus our $T_n(t) = e^{-k(n\pi/l)^2 t}$ and $X_n(x) = \sin(n\pi x/l)$.\\
+    Thus our particualr solutions $u_n(x,t) = A_n e^{-k(n\pi/l)^2 t} \sin(n\pi x/l)$ and we can form any solution as a linear combination of these solutions.
+    $$ u(x,t) = \sum_{n=1}^\infty A_n e^{-k(n\pi/l)^2 t} \sin(n\pi x/l)$$
+    We also require our IC to be satisfied.
+    $$ \phi(x) = \sum_{n=1}^\infty A_n \sin(n\pi x/l)$$
+\end{definition}
+\subsubsection{4.2 - The Neumann Condition}
+\begin{definition}[Neumann Condition for Diffusion]
+    The Neumann Condition is the following:
+    $$ \begin{cases}
+        u_t = ku_{xx} \\
+        u_x(0,t) = u_x(L,t) = 0 \\
+        u(x,0) = \phi(x)
+    \end{cases}$$
+    We can see that we can reach the same eigenvalues but we need to check the eigenfunctions for solving the IC. \\
+    Thus we can see that $X'(l) = 0 = -C \beta \sin(\beta l)$. Thus $\beta = n\pi/l$ and $X_n(x) = \cos(n\pi x/l)$ and $T_n(t) = e^{-k(n\pi/l)^2 t}$.\\
+    Additionally $0$ is an eigenvalue and $X_0(x) = 1$ and $T_0(t) = 1$. (which makes it a consntant)\\
+    Thus our particualr solutions $u_n(x,t) = A_n e^{-k(n\pi/l)^2 t} \cos(n\pi x/l)$ and we can form any solution as a linear combination of these solutions.
+    $$ u(x,t) = A_0/2 + \sum_{n=1}^\infty A_n e^{-k(n\pi/l)^2 t} \cos(n\pi x/l)$$
+    We also require our IC to be satisfied.
+    $$ \phi(x) = A_0/2 + \sum_{n=1}^\infty A_n \cos(n\pi x/l)$$
+\end{definition}
+\begin{definition}[Neumann Condition for Waves]
+    $$\begin{cases}
+        u_{tt} = c^2 u_{xx} \\
+        u_x(0,t) = u_x(L,t) = 0 \\
+        u(x,0) = \phi(x) \\
+        u_t(x,0) = \psi(x)
+    \end{cases}$$
+    We can see that we can reach the same eigenvalues but we also see that $0$ is an eigenvalue with $X_0(x) = 1$ and $T_0(t) = A + Bt$.\\
+    Thus we can say the LC of our particulars 
+    $$ u(x,t) = A_0/2 + B_0 t/2 + \sum_{n=1}^\infty (A_n \cos(n\pi ct/l) + B_n \sin(n\pi ct/l)) \cos(n\pi x/l)$$
+    We also require our IC to be satisfied.
+    $$ \phi(x) = A_0/2 + \sum_{n=1}^\infty A_n \cos(n\pi x/l)$$
+    $$ \psi(x) = B_0/2 + \sum_{n=1}^\infty (n \pi c/l) B_n \cos(n\pi x/l)$$ 
+\end{definition}
+\subsubsection{4.3 - The Robin Condition}
+\begin{definition}[Robin Condition for Diffusion]
+    The Robin Condition is the following:
+    $$ \begin{cases}
+        u_t = ku_{xx} \\
+        u_x(0,t) - a_0 u(0,t) = 0\\
+        u_x(L,t) + a_L u(L,t) = 0 \\
+        u(x,0) = \phi(x)
+    \end{cases}$$
+    \textbf{THIS IS EXCESSIVE JUST DO ALGEBRA}
 
+\end{definition}
+
+\subsubsection{6.1 - Laplace's Equation}
+\begin{definition}[Laplace's Equation]
+    We define Laplace's Equation (homogeneous) as the following:
+    $$ \begin{cases}
+        \Delta u = 0
+    \end{cases}$$
+    And the inhomogeneous Laplace's Equation as the following:
+    $$ \begin{cases}
+        \Delta u = f(x) 
+    \end{cases}$$
+\end{definition}
+\begin{definition}[Max Principle]
+    The Max is on the boundary of the region.
+    The max can be inside the region if the region if the solution is constant.
+\end{definition}
+\begin{definition}[Invariance Properties]
+    We say Laplace's Equation is invariant under all rigid motions.\\
+    A rigid motion in the plane consists of tranlations and rotations.\\
+    IE 
+    $$ x' = x + a, y' = y + b$$
+    and
+    $$ x' = x \cos(\theta) - y \sin(\theta), y' = x \sin(\theta) + y \cos(\theta)$$ 
+\end{definition}
+\begin{definition}[Laplacian in Polar]
+    We can define the 2-D Laplacian in polar coordinates as the following:
+    $$ \Delta_2 = \frac{\partial^2 }{\partial x^2} + \frac{\partial^2 }{\partial y^2} $$
+    We can prove that if we take the following change of variables:
+    $$ x = r \cos(\theta), y = r \sin(\theta)$$
+    That the Laplacian in polar coordinates is the following:
+    $$ \Delta_2 = \frac{\partial^2 }{\partial r^2} + \frac{1}{r} \frac{\partial }{\partial r} + \frac{1}{r^2} \frac{\partial^2 }{\partial \theta^2}$$
+    \textbf{Note:} $log(r)$ is the fundamental solution to the Laplacian in 2-D as it solves the rotationally invariant polar Laplacian.
+\end{definition}
+
+\subsubsection{6.2 - Rectangles and Cubes}
+\textbf{This is a bitch to do, just know that we seperate it into a LC of each BC and solve each one in order of homogeneous then inhomogeneous}
+
+\subsubsection{6.4 - Circles, Wedges and Annuli}
+\begin{definition}[Wedge]
+    We can take a wegde being 
+    $$\setof{0 < \theta < \theta_0, 0 < r < a}$$
+    Where our BC are 
+    $$ u(r,0) =  u(r,\beta) = 0, u_r(a, \theta) = h(\theta)$$
+    We can seperate the variables into 
+    \begin{align*}
+        u(r,\theta) &= R(r)\Theta(\theta) \\
+        \Theta'' + \lambda \Theta &= 0 \\
+        r^2 R'' + r R' - \lambda R &= 0
+    \end{align*}
+    \begin{align*}
+        \Theta(\theta) &= \sin\frac{n \pi \theta}{\beta} \\
+        R(r) &= r^{\alpha} \text{ for }  \alpha = \pm \sqrt{\lambda} = \pm \frac{n \pi }{\beta}
+    \end{align*}
+    Thus the LC of our solution is 
+    $$ u(r,\theta) = \sum_{n=1}^{\infty} A_n r^{n \pi / \beta} \sin \frac{n \pi \theta}{\beta}$$
+    We can solve the inhomogeneous BC
+    $$ h(\theta) = \sum_{n=1}^{\infty} A_n \frac{n \pi}{\beta} a^{n \pi /B -1} \sin \frac{n \pi \theta}{\beta}$$
+    We can sove for $A_n$ by recognizing that the RHS is the Fourier Sine Series of $h(\theta)$.
+    $$ A_n = a^{1 - n \pi / \beta} \frac{2}{n \pi} \int_0^{\beta} h(\theta) \sin \frac{n \pi \theta}{\beta} d\theta$$
+\end{definition}
+\begin{definition}[Annulus]
+    
+\end{definition}
+\begin{definition}[Exterior of a Circle]
+    
+\end{definition}
+
+\subsubsection{5.1 - The Fourier Coefficients}
+\begin{definition}[Fourier Sine Series]
+    These following integrals show the orthogonality of $sin$ and $cos$ functions.
+    $$ \int_0^l \sin(n\pi x/l) \sin(m\pi x/l) dx = \begin{cases}
+        0 & \text{ if } n \neq m \\
+        l/2 & \text{ if } n = m
+    \end{cases}$$
+    Thus if we consider the following:
+    \begin{align*}
+        \phi(x) &= \sum_{n=1}^\infty A_n \sin(n\pi x/l)\\
+        \phi(x) \sin(m\pi x/l) &= \sum_{n=1}^\infty A_n \sin(n\pi x/l) \sin(m\pi x/l)\\
+        \int_0^l \phi(x) \sin(m\pi x/l) dx& = \sum_{n=1}^\infty A_n \int_0^l \sin(n\pi x/l) \sin(m\pi x/l) dx\\
+        \int_0^l \phi(x) \sin(m\pi x/l) dx &= A_m l/2\\
+        A_m &= \frac{2}{l} \int_0^l \phi(x) \sin(m\pi x/l) dx
+    \end{align*}
+    Thus we can see that the $A_n$ are the Fourier Sine Coefficients.
+    We can continue for all values of $n$ to get the entire series.
+\end{definition}
+\begin{definition}[Fourier Cosine Series]
+    These following integrals show the orthogonality of $sin$ and $cos$ functions.
+    $$ \int_0^l \cos(n\pi x/l) \cos(m\pi x/l) dx = \begin{cases}
+        0 & \text{ if } n \neq m \\
+        l/2 & \text{ if } n = m
+    \end{cases}$$
+    Thus if we consider the following:
+    \begin{align*}
+        \phi(x) &= A_0/2 + \sum_{n=1}^\infty A_n \cos(n\pi x/l)\\
+        \phi(x) \cos(m\pi x/l) &= A_0/2 \cos(m\pi x/l) + \sum_{n=1}^\infty A_n \cos(n\pi x/l) \cos(m\pi x/l)\\
+        \int_0^l \phi(x) \cos(m\pi x/l) dx& = A_0/2 \int_0^l \cos(m\pi x/l) dx + \sum_{n=1}^\infty A_n \int_0^l \cos(n\pi x/l) \cos(m\pi x/l) dx\\
+        \int_0^l \phi(x) \cos(m\pi x/l) dx &= A_m l/2\\
+        A_m &= \frac{2}{l} \int_0^l \phi(x) \cos(m\pi x/l) dx
+    \end{align*}
+    We can see that the $A_0$ has $n=0$ and the $cos$ term is 1. Thus $A_0 = 2/l \int_0^l \phi(x) dx$.\\
+    Thus we can see that the $A_n$ are the Fourier Cosine Coefficients.
+    We can continue for all values of $n$ to get the entire series.
+\end{definition}
+\begin{definition}[Full Fourier Series]
+    We can see that the full Fourier Series is the sum of the Sine and Cosine Series.
+    $$ \phi(x) = \frac{a_0}{2} + \sum_{n=1}^\infty a_n \cos(n\pi x/l) + \sum_{n=1}^\infty b_n \sin(n\pi x/l)$$
+    We can see that the interval is $[-l,l]$ and our eigenfunctions are $\setof{1, \cos(n\pi x/l), \sin(n\pi x/l)}$.Thus we can mulitply any two of these and integrate to get the orthogonality.\\
+    Thus we can see that 
+    $$ \begin{cases}
+        A_n = \frac{1}{l} \int_{-l}^l \phi(x) \cos(n\pi x/l) dx\\
+        B_n = \frac{1}{l} \int_{-l}^l \phi(x) \sin(n\pi x/l) dx
+    \end{cases}$$
+\end{definition}
+\begin{definition}[$c_n, a_n, b_n$]
+   .\\
+    $a_n = c_n + c_{-n}$\\
+    $b_n = i(c_n - c_{-n})$
+\end{definition}
 
 
 \newpage
+\section{Content to Review}
+4.1 - Seperation of Variables for waves\\
+4.3 - Robin Bounding Coundition
+5.1 - Recognizing Fourier Series
 
+\newpage
 \section{Problems}
 \begin{questions}
-    \question Question 1.
+    \question Pg(110): \\
+    Solve the following problem:
+    \begin{align*}
+        u_tt &= c^2 u_xx \\
+        u(0,t) &= u(L,t) = 0 \\
+        u(x,0) &= x \\
+        u_t(x,0) &= 0
+    \end{align*}
+    We know that for the wave equation \\
+    $$u(x,t) = \sum_1^\infty (A_n \cos(n\pi ct/l) + B_n \sin(n\pi ct/l)) \sin(n\pi x/l)$$
+    $$ u_t(x,t) = \sum_1^\infty (-A_n \sin(n\pi ct/l) + B_n \cos(n\pi ct/l)) \frac{n\pi c}{l} \sin(n\pi x/l)$$
+    Thus from our IC
+    $$ 0 = \sum_1^\infty \frac{n\pi c}{l} B_n \sin(n\pi x/l)$$
+    Thus $B_n = 0$ for all $n$.\\
+    Now for our other IC
+    $$ x = \sum_1^\infty A_n \sin(n\pi x/l)$$
+    We can see that $\setof{A_i}$ is the Fourier Sine Coefficients of $x$.\\
+
+
+
+
+
 \end{questions}
+
+\newpage
+\section{Review after exam}
+\begin{questions}
+    \question 3\\
+    $$\begin{cases}
+        \Delta u = 0 \text{ in } x^2+y^2 > 1\\
+        u = y^2 \text{ on } x^2 + y^2 = 1
+        u \text{ is bounded as } x^2 + y^2 \to \infty 
+    \end{cases}$$
+    \begin{solution}
+        Sol in form of 
+    $$ u(r, \theta) = \frac{a_0}{2} + \sum_{n=1}^\infty r^{-n} (a_n \cos(n\theta) + b_n \sin(n\theta))$$
+    We can see that the BC is $y^2 = r^2 \sin^2(\theta)$
+    $$ \frac{a_0}{2} + \sum_{n=1}^\infty r^{-n} (a_n \cos(n\theta) + b_n \sin(n\theta)) = sin^2(\theta) $$
+    $$ sin^2(\theta) = \frac{1}{2} - \frac{1}{2} \cos(2\theta)$$
+    $$\begin{cases}
+        a_0 = 1\\
+        b_n = 0 \\
+        a_2 = -1/2
+    \end{cases}
+    $$
+    So our solution is 
+    $$u(r, \theta) = 1/2 - \frac{1}{2r^2}cos(2\theta)$$
+    \end{solution}
+    
+
+    \question 4\\
+    $$\begin{cases}
+        \Delta u = \lambda u \text{ in } D\\
+        u = 0 \text{ on } \partial D
+    \end{cases}$$
+    \begin{solution}
+        Separating of variables\\
+        $$ u(x,y) = X(x)Y(y)$$
+        $$ X''Y + XY'' = \lambda XY$$
+        $$ \frac{X''}{X} = - \frac{Y''}{Y} + \lambda = \alpha$$
+        We solve in $X$
+        $$ \begin{cases}
+            X'' - \alpha X = 0\\
+            X(0) = X(\pi) = 0
+        \end{cases}$$
+        $\alpha = -n^2$ and $X_n = \sin(nx)$\\
+        We solve in $Y$
+        $$ \begin{cases}
+            Y'' - (\lambda - \alpha)Y = 0\\
+            Y(0) = Y(\pi) = 0
+        \end{cases}$$
+        $\lambda - \alpha = -m^2$ and $Y_m = \sin(mx)$\\
+        Thus $\lambda = -m^2 - n^2$. 
+        $$ u_{n,m}(x,y) = \sin(nx) \sin(my)$$
+        for $n,m \in \mathbb{N}$
+        Notice that each lamda is not uniquely detemrined 
+    \end{solution}
+
+    \question 5\\
+    $$ \partial_{xx}u + \partial_{yy}u + \partial_{xy}u = 0$$
+    $u$ is in form of $u(x,y) = X(x)Y(y)$
+    \begin{solution}
+        \begin{align*}
+            X''Y + XY'' + X'Y' &= 0 \\
+            \frac{X''}{X} + \frac{X'Y'}{XY} &= - \frac{Y''}{Y}\\
+            \text{Take partial x}\\
+            \frac{\partial}{\partial x} \left[ (\frac{X''}{X})' + \frac{X'}{X}' \frac{Y'}{Y}\right] &= 0\\
+            \frac{Y'}{Y} = -\frac{\frac{X''}{X}'}{\frac{X'}{X}'} &= \alpha\\
+            Y' = \alpha Y &\implies Y(y) = e^{\alpha y}\\
+            \frac{X''}{X} + \frac{X'}{X} \alpha = - \alpha^2 &\implies X'' + \alpha X' + \alpha^2 X = 0\\
+            \lambda = \frac{-1\pm i\sqrt{3}}{2}\alpha\\
+            X_1(x) = e^{\lambda_0 \alpha x}\\
+            X_2(x) = e^{\overline{\lambda_0} \alpha x}\\
+        \end{align*}
+
+        \textbf{Transport method}
+        $$ (\partial_{x}^2 + \partial_{y}^2 + \partial_{x}\partial_{y} )u= 0$$
+        Factor as 
+        $$ (x-\lambda y )( x - \overline{\lambda} y)$$
+        Thus our operator is 
+        $$ (\partial_x - \lambda \partial_y)(\partial_x - \overline{\lambda} \partial_y)u = 0$$
+        $$u(x,y) = f(\lambda x +y) + g(\overline{\lambda} x + y)$$
+        If we take $f, g$ to be exponential then we can see that the solution is sepeble\\
+        $$ e^{\lambda x} e^{y} + e^{\overline{\lambda} x} e^{y}$$
+        Take $f(z) = e^{\alpha z} = g(z)$
+
+
+    \end{solution}
+\end{questions}
+
+
 
 
 

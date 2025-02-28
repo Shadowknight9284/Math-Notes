@@ -1,9 +1,9 @@
 # Fdb version 4
-["pdflatex"] 1731694195.61867 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 481/Chapter11.tex" "Chapter11.pdf" "Chapter11" 1731694197.74954 0
-  "Chapter11.aux" 1731694197 449 a57a60dfd5f74012d8418558946b5869 "pdflatex"
-  "Chapter11.tex" 1731694194 6977 cd37c9a6a8b85b11a163814ce63827f3 ""
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 481/Chapter11.tex" 1731694194 6977 cd37c9a6a8b85b11a163814ce63827f3 ""
-  "c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex" 1729643921 1468 a4dc3c5958f038d3f5eb0b6b0b3e5655 ""
+["pdflatex"] 1733851761.41033 "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 481/Chapter11.tex" "Chapter11.pdf" "Chapter11" 1733851763.50898 0
+  "Chapter11.aux" 1733851763 449 634f27e5a658aea092ef92ae73f59306 "pdflatex"
+  "Chapter11.tex" 1733851760 12124 4bc7c66a66eb99933b4ba4f6c411d05e ""
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/Math 481/Chapter11.tex" 1733851760 12124 4bc7c66a66eb99933b4ba4f6c411d05e ""
+  "c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex" 1733272558 1507 f5970c8bf1f39ae25007191611565ec3 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1705505139 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1705503004 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1705503004 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -34,8 +34,11 @@
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1705503004 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1705503004 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1705503004 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1705503004 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1705503004 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1705503004 36118 fad905eba93cff5bce1e185fe980a177 ""
+  "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb" 1705503004 30457 bc0868ebece724ed7c3d37e3d9bff7bd ""
+  "c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb" 1705503004 30273 87a352d78b6810ae5cfdc68d2fb827b2 ""
   "c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1705507028 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "c:/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex" 1705507506 1016 1c2b89187d12a2768764b83b4945667c ""
   "c:/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex" 1705507506 43820 1fef971b75380574ab35a0d37fd92608 ""

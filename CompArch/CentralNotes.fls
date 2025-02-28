@@ -306,6 +306,10 @@ INPUT c:/texlive/2023/texmf-dist/tex/latex/tools/array.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/tools/array.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/tools/array.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/tools/array.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT ./CentralNotes.aux
@@ -338,6 +342,12 @@ INPUT c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
+INPUT c:/texlive/2023/texmf-dist/tex/latex/jknapltx/ursfs.fd
+INPUT c:/texlive/2023/texmf-dist/tex/latex/jknapltx/ursfs.fd
+INPUT c:/texlive/2023/texmf-dist/tex/latex/jknapltx/ursfs.fd
+INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
+INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
+INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs7.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT ./CentralNotes.toc
@@ -361,6 +371,9 @@ INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
+INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
+INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
+INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs5.tfm
 OUTPUT CentralNotes.pdf
 INPUT c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 OUTPUT CentralNotes.toc

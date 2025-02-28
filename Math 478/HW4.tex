@@ -1,0 +1,185 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:478}
+\newcommand{\assignment}{Homework 4}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question 1
+    Let \(\{N_1(t), t \geq 0\}\) and \(\{N_2(t), t \geq 0\}\) be independent renewal processes. Let \(N(t) = N_1(t) + N_2(t)\)
+    \begin{parts}
+        \part Are the interarrival times of \(\{N(t), t \geq 0\}\) independent?
+        \part Are they identically distributed?
+        \part Is \(\{N(t), t \geq 0\}\) a renewal process?
+    \end{parts}
+    \begin{solution}
+        (i) No, the interarrival times of \(\{N(t), t \geq 0\}\) are not independent.\\
+        This is due to the fact that the interarrival times of \(\{N_1(t), t \geq 0\}\) and \(\{N_2(t), t \geq 0\}\) are independent, but the sum of two independent random variables is not independent but is given by the min of the two random variables.\\
+
+        (ii) No, the interarrival times of \(\{N(t), t \geq 0\}\) are not identically distributed.\\
+        This is due to the fact that the interarrival times of \(\{N_1(t), t \geq 0\}\) and \(\{N_2(t), t \geq 0\}\) are independent, but the sum of two independent random variables is not identically distributed but is given by the sum of the two random variables.\\
+
+        (iii) No, since the interarrival times of \(\{N(t), t \geq 0\}\) are not independent nor identically distributed, \(\{N(t), t \geq 0\}\) is not a renewal process.\\
+
+    \end{solution}
+
+    \question 2
+    A worker sequentially works on jobs. Each time a job is completed, a new one is begun. Each
+    job, independently, takes a random amount of time having distribution \(F\) to complete. However,
+    independently of this, shocks occur according to a Poisson process with rate \(\lambda\). Whenever a shock
+    occurs, the worker discontinues working on the present job and starts a new one. In the long run,
+    at what rate are jobs completed?\\
+    Hint: Let \(T\) be the time it takes to complete a job. Let \(W\) be the time it would take to complete
+    the first job attempted. Let \(S\) be the time of the first shock. To compute \(\mathbb{E}[T]\), develop an
+    equation for it, by conditioning on the possible outcomes of \(W\); i.e., compute \(\mathbb{E}[T]\) by computing
+    \(\mathbb{E}[\mathbb{E}[T \mid W]]\). To compute \(\mathbb{E}[T \mid W = w]\), compute \(\mathbb{E}[T \mid W = w, S = x]\), multiply by the density
+    \(f_S(x)\) and integrate over \(x\).
+    \begin{solution}
+        We can take $T$ to be the time it takes to complete a job.\\
+        We can take $W$ to be the time it would take to complete the first job attempted.\\
+        We can take $S$ to be the time of the first shock.\\
+        To compute $E[T]$, we can develop an equation for it, by conditioning on the possible outcomes of $W$; i.e., compute $E[T]$ by computing $E[E[T | W]]$.\\
+        To compute $E[T | W = w]$, we can compute $E[T | W = w, S = x]$, multiply by the density $f_S(x)$ and integrate over $x$.\\
+        We can see that $E[T | W = w] = E[T | W = w, S < w]P(S < w) + E[T | W = w, S > w]P(S > w)$\\
+        \begin{align*}
+            P(S < w) &= 1 - e^{-\lambda w}\\
+            P(S \geq w) &= e^{-\lambda w}\\
+            E[T | W = w, S \geq w] &= w \quad \text{Job comlpleted before shock}\\
+            E[T | W = w, S < w] &= w + E[T] \quad \text{Job not comlpleted before shock an restart}
+        \end{align*}
+        Thus we have that
+        \begin{align*}
+            E[T | W = w] &= (w + E[T])(1 - e^{-\lambda w}) + w e^{-\lambda w}\\
+            &= w + E[T] - E[T] e^{-\lambda w} 
+        \end{align*}
+        Thus we have that
+        \begin{align*}
+            E[T] &= E[E[T | W]]\\
+            &= E[w + E[T] - E[T] e^{-\lambda w}]\\
+            &= E[w] + E[E[T]] - E[E[T] E[e^{-\lambda w}]]\\
+            &= E[w] + E[T] - E[T] E[e^{-\lambda w}]\\
+            E[T] &= \frac{E[W]}{E[e^{-\lambda w}]}
+        \end{align*}
+        Thus be solving for $1/ E[T]$, which is the rate at which jobs are completed, we have that
+        $$ \text{Rate at which jobs are completed} = \frac{1}{E[T]} = \frac{E[e^{-\lambda W}]}{E[W]}$$
+
+        
+
+    
+    \end{solution}
+
+    \question 3
+    Machines in a factory break down at an exponential rate of six per hour. There is a single repairman
+    who fixes machines at an exponential rate of eight per hour. The cost incurred in lost production
+    when machines are out of service is \$10 per hour per machine. What is the average cost rate
+    incurred due to failed machines?\\
+    Hint: Model this as an M/M/1 queue.
+    \begin{solution}
+        We know that the rate at which machines break down is $\lambda = 6$ and the rate at which the repairman fixes machines is $\mu = 8$.\\
+        The cost incurred in lost production when machines are out of service is \$10 per hour per machine.\\
+        We can model this as an M/M/1 queue.\\
+        The average cost rate incurred due to failed machines is given by:
+        \begin{align*}
+            \text{Average cost rate} &= \text{Cost per hour per machine} \times \text{Average number of machines in the system}\\
+            &= 10 \times \text{Average number of machines in the system}
+        \end{align*}
+        We know that the average number of machines in the system is given by:
+        \begin{align*}
+            L = \frac{\lambda}{\mu - \lambda}
+        \end{align*}
+        Thus the average cost rate incurred due to failed machines is given by:
+        \begin{align*}
+            \text{Average cost rate} &= 10 \times \frac{6}{8 - 6}\\
+            &= 10 \times 3\\
+            &= 30
+        \end{align*}
+        Thus the average cost rate incurred due to failed machines is \$30 per hour.
+    \end{solution}
+
+    \question 4
+    For an M/M/1 queue with capacity \(N < \infty\), show that the average number of customers being
+    served (under steady state conditions) is approximately \(\rho\) when \(\rho\) is very small, and that it is
+    approximately \(1 - \rho^{-N}\) when \(\rho\) is very large.
+    Hint: See what we did in class on analysis of the finite capacity queues
+    \begin{solution}
+        We know that the average number of customers being served is given by:
+        \begin{align*}
+            L = \frac{\rho(1-(N+1)\rho^N + N\rho^{N+1})}{(1-\rho)1-\rho^{N+1}}
+        \end{align*}
+        For very small $\rho$, we can see that $\rho^N$ is very small and thus we can ignore the term as well as $1-\rho \approx 1$
+        \begin{align*}
+            L &\approx \frac{\rho}{1}\\
+            &= \rho
+        \end{align*}
+        For very large $\rho$, we can consider the probability of having n customers in the system to be
+        $$ P_n = \frac{(1-\rho)\rho^n}{1-\rho^{N+1}}$$
+       The average number of customers beign served equicalent to 1 minus the probability of having 0 customers in the system.
+       $$1 - P_0 = 1 - \frac{(1-\rho)\rho^0}{1-\rho^{N+1}} = 1 - \frac{1-\rho}{1-\rho^{N+1}} = \frac{\rho - \rho^{N+1}}{1-\rho^{N+1}} =  1 - \rho^{-N}$$
+    \end{solution}
+
+    \question 
+    A bank plans to install an ATM. From past experience they know that a user spends 3 minutes on
+average doing a transaction. They also want the average number of users at the facility (in the line
+and at the machine) at a given time to be 3. Assume Poisson arrivals, exponential service times,
+and steady state conditions.
+1
+(i) What will be the maximum average number of users per hour the ATM will serve?
+(ii) What will be the average queue time for a customer?
+(iii) If the average number of users double, i.e. L = 6, how would the answers to the previous
+parts change?
+Hint: This description fits the model of a M/M/1 queue with infinite capacity
+
+\begin{solution}
+    \textbf{(i)} We know that the average number of users at the facility is given by:
+    \begin{align*}
+        L = \frac{\rho}{1 - \rho}
+    \end{align*}
+    Thus $L = 3$ implies that $\rho = \frac{3}{4}$.\\
+    Since we have that $\mu = \frac{1}{3}$, then $\lambda = \frac{3}{4} \times \frac{1}{3} = \frac{1}{4}$.\\
+    Converting to per hour, we have that the maximum average number of users per hour the ATM will serve is given by:
+    \begin{align*}
+        \lambda = \frac{1}{4} \times 60 = 15
+    \end{align*}
+    Thus the maximum average number of users per hour the ATM will serve is 15.\\
+
+    \textbf{(ii)} The average queue time for a customer is given by:
+    $$W_q = \frac{L_q}{\lambda} = \frac{\rho^2}{\lambda(1-\rho)}$$
+    Thus the average queue time for a customer is given by:
+    \begin{align*}
+        W_q = \frac{(.75)^2}{(.25)(1-.75)} = 9
+    \end{align*}
+    Thus the average queue time for a customer is 9 minutes.\\
+
+    \textbf{(iii)} If the average number of users double, i.e. $L = 6$, then $\rho = \frac{6}{7}$.\\
+    Then with $\mu = 1/3$, we have that $\lambda = \frac{6}{7} \times \frac{1}{3} = \frac{2}{7}$.\\
+    Converting to per hour, we have that the maximum average number of users per hour the ATM will serve is given by:
+    \begin{align*}
+        \lambda = \frac{2}{7} \times 60 = 17.14
+    \end{align*}
+
+    The average queue time for a customer is given by:
+    $$W_q = \frac{L_q}{\lambda} = \frac{\rho^2}{\lambda(1-\rho)}$$
+    Thus the average queue time for a customer is given by:
+    \begin{align*}
+        W_q = \frac{(6/7)^2}{(2/7)(1-6/7)} = 18
+    \end{align*}
+
+    Thus the average queue time for a customer is 18 minutes.\\
+
+
+\end{solution}
+
+\end{questions}
+
+\end{document}

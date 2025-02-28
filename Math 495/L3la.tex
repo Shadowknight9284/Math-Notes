@@ -1,0 +1,175 @@
+
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:495}
+\newcommand{\assignment}{Lecture 3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\subsection*{Problem 1}
+Let $P_1,P_2$ be the set of polynomials in $x$ with degree at most $1$ and $2$ respectively, endowed with the usual $+$ and scalar multiplication with real numbers.\\
+
+(a) Consider $x^2$ a "vector" in $P_2$. What are its coordinates with respect to the ordered basis $B:1,x,x^2$?
+\begin{solution}
+    The coordinates are $\begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}$
+\end{solution}
+(b) What are its coordinates with respect to the basis $B':(x)(x+1),(x-1)(x+1),(x-1)(x)$?
+\begin{solution}
+    The coordinates are $\begin{bmatrix} \frac{1}{2} \\ 0 \\ \frac{1}{2} \end{bmatrix}$ \\
+    This is due to the fact that $x^2=\frac{1}{2}(x)(x+1)+\frac{1}{2}(x-1)(x)$
+\end{solution}
+
+(b) Obtain $\Phi:R^3\to R^3$ the map that converts coordinates in terms of $B$ to in terms of $B'$.
+\begin{solution}
+    The map from $B$ to $B'$ is given by the matrix 
+    $\begin{bmatrix} 
+        \frac{1}{2} & \frac{1}{2} & \frac{1}{2} \\
+        -1 & 0 & 0\\
+        \frac{1}{2} & -\frac{1}{2} & \frac{1}{2}
+    \end{bmatrix}$\\
+    Clealry clear the $i$th element of $B$ when multiplied $\Phi$ is the $i$th element of $B'$\\
+    Note this can be written as 
+    $\begin{bmatrix}
+        \frac{a_1}{2} + \frac{a_2}{2} + \frac{a_3}{2} \\
+        -a_1 \\
+        \frac{a_1}{2} - \frac{a_2}{2} + \frac{a_3}{2}
+    \end{bmatrix}$
+\end{solution}
+(c) Obtain $\Psi:R^3\to R^3$ the map that converts coordinates in terms of $B'$ to in terms of $B$.
+\begin{solution}
+    The map from $B'$ to $B$ is given by the matrix 
+    $\begin{bmatrix} 
+        0 & -1 & 0 \\
+        1 & 0 & -1\\
+        1 & 1 & 1
+    \end{bmatrix}$\\
+    Clealry clear the $i$th element of $B'$ when multiplied $\Psi$ is the $i$th element of $B$\\
+    It is also the inverse of $\Phi$\\
+    Note this can be written as
+    $\begin{bmatrix}
+        -a_2 \\
+        a_1-a_3 \\
+        a_1+a_2+a_3
+    \end{bmatrix}$
+\end{solution}
+
+(d) Show that their compositions are identity maps $\Phi\circ\Psi(\vec a)=\vec a$ (and $\Phi\circ\Psi(\vec a)=\vec a$)
+\begin{solution}
+    Cleary $\Phi\circ\Psi(\vec a)=\vec a$ since by definiton they are the inverse of each other\\
+    Intuitively, $\Phi$ is the map that takes vectors in the basis of $B$ to the coordinates in $B'$ and $\Psi$ is the map that takes vectors in the basis of $B'$ to the coordinates in $B$\\
+    So composing those two maps gives the identity map\\
+    This is also true when taking $\Psi\circ\Phi$\\
+\end{solution}
+
+(e) Write $M_\Phi$ and $M_\Phi$ be the matrices (with respect to the standard basis) and check using matrix multiplication that their product is identity matrix.
+\begin{solution}
+    \begin{align*}
+        M_\Phi &= \begin{bmatrix} 
+            \frac{1}{2} & \frac{1}{2} & \frac{1}{2} \\
+            -1 & 0 & 0\\
+            \frac{1}{2} & -\frac{1}{2} & \frac{1}{2}
+        \end{bmatrix} \\
+        M_\Psi &= \begin{bmatrix} 
+            0 & -1 & 0 \\
+            1 & 0 & -1\\
+            1 & 1 & 1
+        \end{bmatrix} \\
+        M_\Phi M_\Psi &= \begin{bmatrix} 
+            1 & 0 & 0 \\
+            0 & 1 & 0\\
+            0 & 0 & 1
+        \end{bmatrix} \\
+        M_\Psi M_\Phi &= \begin{bmatrix} 
+            1 & 0 & 0 \\
+            0 & 1 & 0\\
+            0 & 0 & 1
+        \end{bmatrix}
+    \end{align*}
+\end{solution}
+
+\subsection*{Problem 2}
+Consider a map $F:P_2\to P_1$ defined by $F(f)=f'$, that maps a polynomial to its derivative with respect to $x$.\\
+
+(a) Say why the map is well defined -ie, why $F(f)\in P_1$.
+\begin{solution}
+    This is due to the fact tat any arbitray element of $P_2$ is a polynomial of degree at most $2$ an thus can be represented as $f(x)=a_2x^2+a_1x+a_0$\\
+    Thus $F(f)=f'=\frac{d}{dx}(a_2x^2+a_1x+a_0)=2a_2x+a_1$\\
+    This is a polynomial of degree at most $1$ and thus is in $P_1$\\
+\end{solution}
+
+(b) Show the map is linear.
+\begin{solution}
+    We need to show that $F(f + g) = F(f) + F(g)$ and $F(cf) = cF(f)$ for all $f,g\in P_2,c\in R$.\\
+    \begin{align*}
+        F(f + g) &= (f + g)' = f' + g' = F(f) + F(g) \\
+        F(cf) &= (cf)' = cf' = cF(f)
+    \end{align*}
+\end{solution}
+
+(c) Describe $ker(F),im(F)$ and obtain their dimensions.
+\begin{solution}
+    Clearly $ker(F)=\{f\in P_2:f'=0\}=\{a_2x^2+a_1x+a_0:a_2=0,a_1=0\} = span\{1\}$\\
+    Thus $dim(ker(F))=1$\\
+    Now $im(F)=\{f\in P_1: f= F(g) \textbf{ for some } g \in P_2\}$ thus $im(F)=span\{x, 1\}$
+    Thus $dim(im(F))=2$
+\end{solution}
+
+(d) Write the matrix of $F$ with basis $B$ of $P_2$ and $1,x$ of $P_1$.
+\begin{solution}
+    The matrix is given by 
+    $\begin{bmatrix} 
+        0 & 1 & 0 \\
+        0 & 0 & 2
+    \end{bmatrix}$
+\end{solution}
+
+(e) Write the matrix of $F$ with basis $B'$ of $P_2$ and $1,x$ of $P_1$.
+\begin{solution}
+    The matrix is given by 
+    $\begin{bmatrix} 
+        1 & 0 & -1 \\
+        2 & 2 & 2
+    \end{bmatrix}$
+\end{solution}
+
+(f) Now, regard $F:P_2\to P_2$ without changing its defining formula. What is the matrix of $F$ with basis $B$ of $P_2$? With basis $B'$?
+\begin{solution}
+    The matrix from in basis $B$ is given by 
+    $\begin{bmatrix} 
+        0 & 1 & 0 \\
+        0 & 0 & 2\\
+        0 & 0 & 0
+    \end{bmatrix}$\\
+    The matrix from in basis $B'$ is given by
+    $\begin{bmatrix} 
+        1 & 0 & -1 \\
+        2 & 2 & 2\\
+        0 & 0 & 0
+    \end{bmatrix}$
+\end{solution}
+
+(g) What is the rank of each of the matrices above?
+\begin{solution}
+    The rank of the matrix in basis $B$ is $2$\\
+    The rank of the matrix in basis $B'$ is $2$
+\end{solution}
+
+
+\subsection*{Problem 3}
+Let $S$ be the set of $\begin{bmatrix}x_1\\x_2\\x_3\\x_4\end{bmatrix}$ satisfying $x_1+2x_2-x_3=0$. It is a subspace of $R^4$.\\
+
+
+(a) Find a basis of $S$.\\
+
+
+(b) Re-trace the steps in the derivation of the projection formula and obtain matrix (with respect to the standard basis of $R^4$) of $\pi:R^4\to S$, the orthogonal project.
+
+\end{document}

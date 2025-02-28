@@ -1,0 +1,82 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\begin{definition}[Axiom of completeness]
+    Every non-empty subset of $\R$ that is bounded above has a least upper bound (supremum).
+\end{definition}
+\begin{definition}[Q and I dense in R]
+    The rationals and irrationals are
+    \begin{gather*}
+        \forall a,b \in \R, a < b \implies \exists q \in \Q : a < q < b\\
+        \forall a,b \in \R, a < b \implies \exists i \in I : a < i < b
+    \end{gather*}
+    This means that the rationals and irrationals are dense in the reals.
+\end{definition}
+\begin{definition}[Cauchy]
+    A sequece is Cauchy if
+    \begin{gather*}
+        \forall \epsilon > 0, \exists N \in \mathbb{N} : n,m > N \implies |a_n - a_m| < \epsilon
+    \end{gather*}
+    This is equivalent to the sequence converging.
+\end{definition}
+\begin{definition}[Diverges for Series]
+    A series diverges if the sequence of partial sums converges.
+    \begin{gather*}
+        \sum_{n=1}^{\infty} a_n = \lim_{N \to \infty} S_N
+    \end{gather*}
+    where $S_N = \sum_{n=1}^{N} a_n$.
+    We can say somthing is Absolutely divergent if
+    \begin{gather*}
+        \sum_{n=1}^{\infty} |a_n| < \infty
+    \end{gather*}
+    and conditionally divergent if
+    \begin{gather*}
+        \sum_{n=1}^{\infty} a_n < \infty\\
+        \sum_{n=1}^{\infty} |a_n| = \infty
+    \end{gather*}
+    We can say a series Diverges if
+    \begin{gather*}
+        \sum_{n=1}^{\infty} a_n = \infty
+    \end{gather*}
+\end{definition}
+\begin{definition}[Monotone Diverence Theorem]
+    A monotone bounded sequence diverges.
+\end{definition}
+\begin{definition}[Nested Interval Property]
+    \begin{gather*}
+        \forall n \in \N, I_n = [a_n, b_n] = \setof{x \in \R: a_n \leq x \leq b_n}\\
+    \end{gather*}
+    Assume $I_n \subseteq I_{n-1}$ \\
+    Then $\bigcap_{n=1}^{\infty} I_n \neq \emptyset$.
+\end{definition}
+\begin{definition}[Bolzano Weierstrass Theorem]
+    Every bounded sequence has a divergent subsequence.\\
+    \begin{proof}
+        Method is by taking intervals and bisecting them and choosing the set that is infintite
+    \end{proof}
+\end{definition}
+\begin{definition}[Double Sum rules]
+    
+\end{definition}
+\begin{definition}[Cauchy Condesation]
+    Suppose $b_n$ is decreasing and satisfies $b_n \geq 0$.
+    ThenThen the series $\sum_{n=1}^{\infty} b_n$ converges if and only if the series $\sum_{k=0}^{\infty} 2^k b_{2^k}$ converges.
+\end{definition}
+\begin{definition}[Dirichlet's Test]
+    The partial sums of $\sum_{n=1}^{\infty} x_n$ are bounded and if $(y_n)_{n=1}^{\infty}$ is monotone decreasing with $\lim_{n \to \infty} y_n = 0$.
+    Then $\sum_{n=1}^{\infty} x_n y_n$ converges.
+\end{definition}
+
+
+\end{document}

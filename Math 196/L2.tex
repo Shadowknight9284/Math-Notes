@@ -1,0 +1,35 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+
+\section{Fair Pricing of a random payment}
+\textbf{Theme} Exchange a fixed payment for a random payment.\\
+Q: What criterion can we apply to justify fairness in the exchange?\\
+Point: There are more than one criteria. Under which condition the criterion apply, and which do not?\\
+1) Suppose $X$ is a random payment, then $E(X)$ is the fair price of $X$.\\
+Justified by the LLN.\\
+So the criteria must be that the payment is repeated many times and independent.\\
+\textbf{Call Option}
+on a fixed day the holder can choose to buy a share of stock for fixed price $K$.\\
+Let $S$ be the price of the stock on that day and our profit is $X = (S-K)_+$.\\
+Clealry this cannot follow LLN because we only have one day.\\
+\textbf{Pricing by Risk Prefrence}: Utility function: $U:$ cash $\to$ happiness \\
+\textbf{Indifference pricing}: $\phi$ is our utility function, then our indeffrence price is $\phi^{-1}(\mathbb{E}(\phi(X)))$\\
+\textbf{Jensen's Inequality}: $\phi$ convex $\implies \mathbb{E}(\phi(X)) \geq \phi(\mathbb{E}(X))$\\
+\textbf{Risk Aversion}: $\phi$ concave $\implies \mathbb{E}(\phi(X)) \leq \phi(\mathbb{E}(X))$\\
+
+\end{document}

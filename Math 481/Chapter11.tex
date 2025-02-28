@@ -137,9 +137,111 @@ This is useful for a CI for ratio of variances.\\
     We can use the CDF of the exponential distribution to find these values.\\
     
 \end{example}
+\textbf{Context:}\\
+Given pdf type, parameters unnown: \\
+Two statements: $H_0$ and $H_1$\\
+Base on sample decide among these two.\\
+Test spifies criterion on sample under which $H_0$ is rejected.\\
+Where if Outcomes falls $H_0$ is rejected\\
+This reigon is called the critical region.\\
+With error $\alpha = P(\text{reject } H_0 | H_0 \text{ is true})$\\
+$\alpha$ is the area of the critical region or level of significance.\\
+Now define $1-\beta$ as the power of the test.\\
+\begin{definition}[Power of a Test]
+    The power of a test is the probability of rejecting $H_0$ when $H_1$ is true.\\
+    ie $1 - \beta = P(\text{reject } H_0 | H_1 \text{ is true})$
+\end{definition}
+If we have multiple $x_i$ we use jpdf. \\
+\begin{definition}[Neyman-Pearson Lemma]
+    Suppose $H_0: \theta = \theta_0$ and $H_1: \theta = \theta_1$\\
+    These are both simple\\
+    Let $L_0(x_1 ... x_n) = f(x_1 ... x_n | \theta_0)$ ie the jpf of $\theta = \theta_0$\\
+    Similarly $L_1(x_1 ... x_n) = f(x_1 ... x_n | \theta_1)$ ie the jpf of $\theta = \theta_1$\\
+    Suppose $C$ is a reigon in the coutocme space where $L_0/L_1 \leq k$\\
+    But outside $C$ $L_0/L_1 > k$\\
+    Then the test that rejects $H_0$ if $L_0/L_1 \leq k$ is the most powerful test of size $\alpha$
+\end{definition}
+\begin{example}
+    $N(\mu, \sigma^2)$\\
+    $H_0: \mu = 1$\\
+    $H_1: \mu = 3$\\
+    Find max power crit region\\
+    $L_0 = f(x_1 ... x_n | \mu = 1)$\\
+    $L_1 = f(x_1 ... x_n | \mu = 3)$\\
+    $L_0/L_1 = \frac{e^{-\frac{1}{2\sigma^2} \sum_i^n (x_i - 1)^2}}{e^{-\frac{1}{2\sigma^2} \sum_i^n (x_i - 3)^2}} = e^{-\frac{1}{2}\sum_i^n\left( (x_i-1)^2 - (x_i-3)^2 \right)}$\\
+    $$ e^{-\sum_i^n \left( 2x_i - 4 \right)} \leq k$$
+\end{example}
+\begin{definition}[Likelihood Ratio Test]
+    Last class considered the NPL for simple hypothesis.\\
+    $H_0: \theta = \theta_0$\\
+    $H_1: \theta = \theta_1$\\
+    $L_0, L_1$ are functions of $x_1 ... x_n$\\
+    $C = \setof{x_1 ... x_n | L_0/L_1 \leq k}$\\
+    For some $k$\\
+    aka it is smaller up to a scaling factor.\\
+    Then $C$ is the Critical region with max power $(1- \beta)$ among all tests of same $\alpha$\\
+\end{definition}
+We can consider $w, w'$ as two non-intersection subsets of the parameter space\\
+Consider that $H_0: \theta \in w$ and $H_1: \theta \in w'$\\
+\begin{example}
+    $N(\mu, \sigma^2 = 1)$\\
+    $H_0: \mu = 2$\\
+    $H_1: \mu \neq 2$\\
+    Clealry this is simple and composite hypothesis respectively.\\
+    $w = \setof{2}$ and $w' = R \setminus \setof{2}$\\
+\end{example}
+"Meaningful" tests Reject $H_0$ iff the Likelihood that $\Theta$ is in $w$ is small.\\
+We can see that Likelihood is now 
+$$L_w ( x_1 ... x_n) = \max_{\theta \in w} f(x_1 ... x_n | \theta)$$
+$L_{\Omega} = \max_{\theta \in \Omega} f(x_1 ... x_n | \theta)$\\
+Let $\Lambda = \frac{L_w}{L_{\Omega}}$\\
+\begin{remark}
+    $L_{\Omega}$ is at least as large as $L_w$\\
+    Thus $\Lambda$ is in $0,1$
+\end{remark}
+\begin{definition}[Likelihood Ratio Test]
+   Reject $H_0$ if $\Lambda \leq k$\\
+   where $k$ is fixed number between 0 and 1\\
+\end{definition}
+\begin{example}
+    $N(\mu, \sigma^1 = 1)$
+    $H_0: \mu = 2$\\
+    $H_1: \mu \neq 2$\\
+    Now when we have $L(x_1 ... x_n | \mu)$ for this to maximize we take a same method as MLE.
+    We see that $\mu = \mu_{MLE} = \bar{X}$\\
+    So for Likelihood ratio statistic
+    $$ \Lambda = \frac{L_w}{L_{\Omega}} $$
+    $$ = e^{-\frac{1}{2} \sum_i^n (x_i - 2)^2} / e^{-\frac{1}{2} \sum_i^n (x_i - \bar{X})^2}$$
+    Now we can simplify since the function is monotone inc.\\
+    thus 
+    $$ln(\Lambda) = \frac{1}{2} \sum_i^n (x_i - \bar{X})^2 - \frac{1}{2} \sum_i^n (x_i - 2)^2$$
+    Doing some math we get 
+    $$ |\bar{x} - 2| \geq  \sqrt{\frac{-2ln(k)}{n}}$$
+    Rename constants without $x_i$ as $\tilde{k}$\\
+    $$ |\bar{x} - 2| \geq \tilde{k}$$
+\end{example}
 
+\newpage
+\section*{Review}
+\begin{definition}[F distribution]
+    F dist with $\nu_1 > 0$ and $\nu_2 > 0$ degrees of freedom is defined by
+    $$F = \frac{\frac{U}{\nu_1}}{\frac{V}{\nu_2}}$$
+    where $U \sim \chi^2_{\nu_1}$ and $V \sim \chi^2_{\nu_2}$\\
+    If rv $F \sim f_{\nu_1, \nu_2}$ then the rv $\frac{1}{F} = f_{\nu_2, \nu_1}$ ie indices are swapped.\\
+    Now consider $f_{\nu_1, \nu_2, \alpha} $ which is $P(F > f_{\nu_1, \nu_2, \alpha}) = \alpha$\\
+    Thus $P(F \geq f_{\nu_1, \nu_2, 1 - \alpha}) = \alpha \leftrightarrow P(\frac{1}{F} \leq \frac{1}{f_{\nu_1, \nu_2, \alpha}}) = \alpha$\\
+    $$ P(\frac{1}{F} \geq \frac{1}{f_{\nu_1, \nu_2,\alpha}}) = 1- \alpha$$
+    Since $\frac{1}{F} \sim f_{\nu_2, \nu_1}$
+    $$ f_{\nu_2, \nu_1, 1 - \alpha} = \frac{1}{f_{\nu_1, \nu_2, \alpha}}$$
+\end{definition}
 
-
+\begin{definition}[Test of Significance]
+    $H_0: \theta = \theta_0$\\ 
+    $H_1: \theta \neq \theta_0$ or $H_1: \theta > \theta_0$ or $H_1: \theta < \theta_0$\\
+    Idea of test: given $\alpha$, $\beta$ not specified. \\
+    Outcome: Reject $H_0$ or Fail to reject $H_0$\\ 
+    Test: Compare the value of a test stat with a fixed value that depends on dist $\propto \alpha$
+\end{definition}
 
 
 

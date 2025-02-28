@@ -1,0 +1,153 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311H}
+\newcommand{\assignment}{Homework 1}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\begin{questions}
+    \question If $x \geq 0$ and $y \geq 0$, prove that $\sqrt{xy} \leq \frac{x+y}{2}$. (Hint: Use the fact that $(\sqrt{x} - \sqrt{y})^2 \geq 0$)
+    \begin{solution}
+        Suppose $x \geq 0$ and $y \geq 0$. \\
+        Then, we have
+        \begin{align*}
+            (\sqrt{x} - \sqrt{y})^2 &\geq 0 \\
+            \sqrt{x}^2 - 2\sqrt{xy} + \sqrt{y}^2 &\geq 0 \\
+            x - 2\sqrt{xy} + y &\geq 0 \\
+            x + y &\geq 2\sqrt{xy}\\
+            \sqrt{xy} &\leq \frac{x+y}{2}
+        \end{align*}
+    \end{solution}
+    \question Bernoulli’s inequality states that for every integer $n \geq 0$ and real numbers $x \geq -1$, $(1 + x)^n \geq 1 + nx$. Use induction to prove this inequality.
+    \begin{solution}
+        We will prove this by induction on $n$. \\
+        Suppose $x \geq -1$. \\
+        \textbf{Base Case:} $n = 0$ \\
+        Then, we have
+        \begin{align*}
+            (1 + x)^0 &\geq 1 + 0 \\
+            1 &\geq 1
+        \end{align*}
+        \textbf{inductive hypothesis:} Suppose that for some $k \geq 0$, $(1 + x)^k \geq 1 + kx$. \\
+        \textbf{Inductive Step:} We want to show that $(1 + x)^{k+1} \geq 1 + (k+1)x$. \\
+        Then, we have
+        \begin{align*}
+            (1 + x)^{k+1} &\geq 1 + (k+1)x \\
+            (1 + x)(1 + x)^k &\geq 1 + (k+1)x \\
+            (1 + x)(1 + kx) &\geq 1 + (k+1)x \\
+            1 + kx + x + kx^2 &\geq 1 + (k+1)x \\
+            kx^2 &\geq 0
+        \end{align*}
+        Since $x \geq -1$, we have $kx^2 \geq 0$. \\
+        Thus, by induction, we have $(1 + x)^n \geq 1 + nx$ for all $n \geq 0$.
+    \end{solution}
+
+    \question Let $S = \mathbb{Q} \cap [a, b]$. Prove that $\sup S = b$. (Note that $b$ could be rational or irrational).
+    \begin{solution}
+        Suppose $S = \mathbb{Q} \cap [a, b]$. \\
+        Clealry $b$ is an upper bound of $S$. \\
+        Suppose $b'$ is another upper bound of $S$ such that $b' < b$. \\
+        By the density of the rationals in the reals, we can find a $c$ such that $b' < c < b$. \\
+        Clealry this $c$ is in $S$. and hence $b'$ is not an upper bound of $S$ which leads to a contradiction. \\
+        Thus, $b$ is the least upper bound of $S$.
+    \end{solution}
+
+    \question Recall that in class, we defined the set $-A = \{-a : a \in A\}$
+    \begin{parts}
+        \part Prove that if $x$ is a lower bound of $-A$, then $-x$ is an upper bound of $A$. (Note: We proved the opposite implication in class.)
+        \begin{solution}
+            Let $x$ be a lower bound of $-A$. \\
+            Then for all $a \in -A$, $x \leq a$. \\
+            Thus $-x \geq -a$. \\
+            Thus, $-x$ is an upper bound of $A$.
+        \end{solution}
+        \part Prove that if $A$ is a set of real numbers that is bounded above, then $\inf(-A) = -\sup A$.
+        \begin{solution}
+            Suppose $A$ is a set of real numbers that is bounded above. \\
+            Then $-A = \{-a : a \in A\}$. \\
+            Suppose $M = \inf(-A)$. \\
+            Then $M$ is a lower bound of $-A$. \\
+            Thus, $-M$ is an upper bound of $A$. \\
+            Also $M$ is greater than any lower bound of $-A$. \\
+            We need that $-M$ is less than any upper bound of $A$. \\
+            We can see that for all lower bounds of $-A$ (call it $L$), we have $M \geq L$. \\
+            Thus, $-M \leq -L$ \\
+            We can see that $-L$ is an upper bound of $A$. \\
+            and hence $-M$ is less than any upper bound of $A$. \\
+            Thus, $-M$ is the least upper bound of $A$. \\
+            Thus, we have $M = -\sup A$.            
+        \end{solution}
+        \part Prove that if $A$ is a nonempty set of real numbers that is bounded below, then $A$ has a greatest lower bound. (In other words, the completeness axiom also holds for inf’s.)
+        \begin{solution}
+            We can see that it holds by considering the set $-A$. \\
+            We can see that $-A$ is bounded above. \\
+            Thus, by the completeness axiom, $-A$ has a least upper bound. \\
+            Now considering $- -A$ we can see that it has a greatest lower bound by the earlier part. \\
+            Clearly $- -A = A$ and thus $A$ has a greatest lower bound.
+        \end{solution}
+    \end{parts}
+
+    \question The Cut Property of the real numbers states that if $A$ and $B$ are disjoint sets with $A \cup B = \mathbb{R}$ such that for all $a \in A$ and $b \in B$, $a < b$, then there exists a $c \in \mathbb{R}$ such that $a \leq c$ for all $a \in A$ and $c \leq b$ for all $b \in B$.
+    \begin{parts}
+        \part Use the Axiom of Completeness to prove the Cut Property.
+        \begin{solution}
+            Suppose $A$ and $B$ are disjoint sets with $A \cup B = \mathbb{R}$ such that for all $a \in A$ and $b \in B$, $a < b$. \\
+            Clealry $A$ is bounded above and $B$ is bounded below. \\
+            Thus, by the completeness axiom, $A$ has a least upper bound $sup A$ and $B$ has a greatest lower bound $inf B$. \\
+            We need to show that $sup A \leq inf B$. \\
+            Suppose not. \\
+            Then, we have $sup A > inf B$. \\
+            Then we have that the the infimum of $B$ is less than the supremum of $A$ and thus is in $A$ which leads to a contradiction or $inf B < a$ for all $a \in A$ which is also a contradiction. \\
+            Thus, we have $sup A \leq inf B$. \\
+            Since $A \cup B = \mathbb{R}$ we must have that $supA = inf B$. \\
+            We can then take that to be our $c$.
+        \end{solution}
+        \part Show that the implication goes the other way: that is, assume that $\mathbb{R}$ has the Cut Property and $E \subset \mathbb{R}$ is bounded above, and prove that $\sup E$ exists.
+        \begin{solution}
+            Suppose $E$ is nonempty and bounded above. \\
+            Let $B$ be the set of all upper bounds of $E$. \\
+            Let $A = \R \setminus B$. \\
+            Thus they are disjoint sets with $A \cup B = \mathbb{R}$ and for all $a \in A$ and $b \in B$, $a < b$. \\
+            Thus, by the cut property, there exists a $c \in \mathbb{R}$ such that $a \leq c$ for all $a \in A$ and $c \leq b$ for all $b \in B$. \\
+            Clealry $c$ is an upper bound of $A$ and since $E \subset A$ then $c$ is an upper bound of $E$. \\
+            We need to show that $c$ is the least upper bound of $E$. \\
+            Consider another upper bound $c'$ of $E$. \\
+            Then, we have $c' \in B$ by definition of $B$. \\
+            Thus, we have $c \leq c'$ and hence $c$ is the least upper bound of $E$.
+            Thus, we have that $\sup E$ exists.
+        \end{solution}
+    \end{parts}
+
+    \question Remember that in class we said that a set $S$ was dense in $\mathbb{R}$ if for every $a, b \in \mathbb{R}$ with $a < b$, there existed an element $s \in S \cap (a, b)$. Prove that a set $S$ is dense iff for every $a, b \in \mathbb{R}$ with $a < b$, the set $S \cap (a, b)$ is infinite. (You may freely use the fact that a finite set has a minimum element and a maximum element).
+    \begin{solution}
+        $\implies$ Suppose $S$ is dense. \\
+        Prove for every $a, b \in \mathbb{R}$ with $a < b$, there exists an element $s \in S \cap (a, b)$. \\
+        Assume for contradiction that $S \cap (a, b)$ is finite. \\
+        Then, we can see that $S \cap (a, b)$ has a minimum element and a maximum element. \\
+        Let $M$ be the maximum element of $S \cap (a, b)$. \\
+        Then we have $M \in \R$ and by density of $S$, we can find an $s$ such that $M < s < b$. \\
+        But then $M$ is not the maximum element of $S \cap (a, b)$ which leads to a contradiction. \\
+        Thus, we have that $S \cap (a, b)$ is infinite. \\
+        $\impliedby$ Suppose for every $a, b \in \mathbb{R}$ with $a < b$, the set $S \cap (a, b)$ is infinite. \\
+        Prove that $S$ is dense. \\
+        Assume for contradiction that $S$ is not dense. \\
+        Then, there exists an $a, b \in \mathbb{R}$ with $a < b$ such that there does not exist an element $s \in S \cap (a, b)$. \\
+        But then $S \cap (a, b)$ is finite which leads to a contradiction. \\
+    \end{solution}
+
+
+
+
+\end{questions}
+
+\end{document}

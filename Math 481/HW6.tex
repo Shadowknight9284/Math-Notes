@@ -1,0 +1,122 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:481}
+\newcommand{\assignment}{Homework 6}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question 8.38
+    Show that for \(\nu_2 > 2\) the mean of the \(F\) distribution is \(\frac{\nu_2}{\nu_2 - 2}\), making use of the definition of \(F\) in Theorem 14 and the fact that for a random variable \(V\) having the chi-square distribution with \(\nu_2\) degrees of freedom,
+    \[ E \left( \frac{1}{V} \right) = \frac{1}{\nu_2 - 2}. \]
+    \begin{solution}
+        By theorem 14 $F = \frac{U/\nu_1}{V/\nu_2}$ where \(U\) and \(V\) are independent chi-square random variables with \(\nu_1\) and \(\nu_2\) degrees of freedom respectively. 
+        \begin{align*}
+            E(F) &= E \left( \frac{U/\nu_1}{V/\nu_2} \right) \\
+            &= \frac{\nu_2}{\nu_1} E \left( \frac{U}{V} \right) \\
+            &= \frac{\nu_2}{\nu_1} E(U) E \left( \frac{1}{V} \right) \\
+            &= \frac{\nu_2}{\nu_1} \nu_1 \frac{1}{\nu_2} \\
+            &= \frac{\nu_2}{\nu_2 - 2}
+        \end{align*}
+        Therefore, the mean of the \(F\) distribution is \(\frac{\nu_2}{\nu_2 - 2}\).
+    \end{solution}
+
+    \question 11.19
+    For large \(n\), the sampling distribution of \(S\) is sometimes approximated with a normal distribution having the mean \(\sigma\) and the variance \(\frac{\sigma^2}{2n}\). Show that this approximation leads to the following \((1 - \alpha)100\%\) large-sample confidence interval for \(\sigma\):
+    \[
+    s / \left(1 + \frac{z_{\alpha/2}}{\sqrt{2n}}\right) < \sigma < s / \left(1 - \frac{z_{\alpha/2}}{\sqrt{2n}}\right)
+    \]
+    \begin{solution}
+        Since we know that $S \sim N(\sigma, \frac{\sigma^2}{2n})$, we can normalized it by
+        \[Z = \frac{S-\sigma}{\sigma/ \sqrt{2n}} \sim N(0,1)\]
+        Therefore, we can write the confidence interval as
+        \begin{align*}
+            P \left( -z_{\alpha/2} < Z < z_{\alpha/2} \right) &= 1 - \alpha \\
+            P \left( -z_{\alpha/2} < \frac{S-\sigma}{\sigma/ \sqrt{2n}} < z_{\alpha/2} \right) &= 1 - \alpha \\
+        \end{align*}
+        We can rewrite inequality as
+        $$ -z_{\alpha/2} < \frac{S-\sigma}{\sigma/ \sqrt{2n}} < z_{\alpha/2} \implies -z_{\alpha/2} < \frac{S-\sigma}{\sigma/ \sqrt{2n}} \text{ and } \frac{S-\sigma}{\sigma/ \sqrt{2n}} < z_{\alpha/2}$$
+        Thus our new inequality becomes
+        $$ \sigma < S / \left(1 - \frac{z_{\alpha/2}}{\sqrt{2n}}\right) \text{ and } \sigma > S / \left(1 + \frac{z_{\alpha/2}}{\sqrt{2n}}\right)$$
+        Thus, the confidence interval is
+        \begin{align*}
+            P(S / \left(1 + \frac{z_{\alpha/2}}{\sqrt{2n}}\right) < \sigma < S / \left(1 - \frac{z_{\alpha/2}}{\sqrt{2n}}\right)) &= 1 - \alpha
+        \end{align*}
+        Thus our conficence interval is
+        \[s / \left(1 + \frac{z_{\alpha/2}}{\sqrt{2n}}\right) < \sigma < s / \left(1 - \frac{z_{\alpha/2}}{\sqrt{2n}}\right)\]
+    \end{solution}
+
+    \question 12.5
+    A single observation of a random variable having a geometric distribution is used to test the null hypothesis \(\theta = \theta_0\) against the alternative hypothesis \(\theta = \theta_1 > \theta_0\). If the null hypothesis is rejected if and only if the observed value of the random variable is greater than or equal to the positive integer \(k\), find expressions for the probabilities of type I and type II errors.
+
+    \begin{solution}
+        We know that this distribution is geometric, thus $X \sim Geom(\theta)$. \\
+        The probability of type I error is the probability of rejecting the null hypothesis when it is true. Thus, the probability of type I error is
+        \begin{align*}
+            \alpha &= P(X \geq k | \theta = \theta_0) \\
+            &= \sum_{i=k}^{\infty} (1-\theta_0)^{i-1} \theta_0 \\
+            &= \theta_0 \sum_{i=k}^{\infty} (1-\theta_0)^{i-1} \\
+            &= \theta_0 \left( \frac{(1-\theta_0)^{k-1}}{1-(1-\theta_0)} \right) \\
+            &= (1-\theta_0)^{k-1}
+        \end{align*}
+        The probability of type II error is the probability of accepting the null hypothesis when it is false. Thus, the probability of type II error is
+        \begin{align*}
+            \beta &= P(X < k | \theta = \theta_1) \\
+            &= 1 - P(X \geq k | \theta = \theta_1) \\
+            &= 1 - \sum_{i=k}^{\infty} (1-\theta_1)^{i-1} \theta_1 \\
+            &= 1 - \theta_1 \sum_{i=k}^{\infty} (1-\theta_1)^{i-1} \\
+            &= 1 - \theta_1 \left( \frac{(1-\theta_1)^{k-1}}{1-(1-\theta_1)} \right) \\
+            &= 1 - (1-\theta_1)^{k-1}
+        \end{align*}
+        Thus our expressions for the probabilities of type I and type II errors are
+        \[\alpha = (1-\theta_0)^{k-1} \text{ and } \beta = 1 - (1-\theta_1)^{k-1}\]
+    \end{solution}
+    
+    \question 12.6
+    A single observation of a random variable having an exponential distribution is used to test the null hypothesis that the mean of the distribution is \(\theta = 2\) against the alternative that it is \(\theta = 5\). If the null hypothesis is accepted if and only if the observed value of the random variable is less than 3, find the probabilities of type I and type II errors.
+    
+    \begin{solution}
+        We know that this distribution is exponential, thus $X \sim Exp(\theta)$. \\
+        The probability of type I error is the probability of rejecting the null hypothesis when it is true. Thus, the probability of type I error is
+        \begin{align*}
+            \alpha &= P(X \geq 3 | \theta = 2) \\
+            &= 1 - P(X < 3 | \theta = 2) \\
+            &= 1 - (1 - e^{-3/2}) \\
+            &= e^{-3/2}
+        \end{align*}
+        The probability of type II error is the probability of accepting the null hypothesis when it is false. Thus, the probability of type II error is
+        \begin{align*}
+            \beta &= P(X < 3 | \theta = 5) \\
+            &=  1 - e^{-3/5}
+        \end{align*}
+        Thus our expressions for the probabilities of type I and type II errors are
+        \[\alpha = e^{-3/2} \text{ and } \beta = 1 - e^{-3/5}\]
+    \end{solution}
+
+    \question 12.7
+    Let \(X_1\) and \(X_2\) constitute a random sample from a normal population with \(\sigma^2 = 1\). If the null hypothesis \(\mu = \mu_0\) is to be rejected in favor of the alternative hypothesis \(\mu = \mu_1 > \mu_0\) when \(x > \mu_0 + 1\), what is the size of the critical region?
+
+    \begin{solution}
+        We know that $\bar{X} \sim N(\mu, \frac{\sigma^2}{n} = 1/2)$. \\
+        The size of the critical region is the probability of rejecting the null hypothesis when it is true. Thus, the size of the critical region is
+        \begin{align*}
+            \text{Crit} &= P(\bar{X} > \mu_0 + 1 | \mu = \mu_0) \\
+            &= P\left(\frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} > \frac{(\mu_0 + 1) - \mu_0}{\sigma/ \sqrt{n}}\right)\\
+            &= P(Z > \sqrt{2})
+        \end{align*}
+        Thus the size of the critical region is about 0.079
+    \end{solution}
+
+
+
+\end{questions}
+
+\end{document}

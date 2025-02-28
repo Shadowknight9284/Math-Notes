@@ -1,0 +1,159 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311H}
+\newcommand{\assignment}{Homework 3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question This question shows that the Monotone Convergence Theorem (for sequences) can replace the Axiom of Completeness.
+    \begin{parts}
+        \part Assuming only the Monotone Convergence Theorem (for sequences) and the axioms of an ordered field (without the completeness axiom), prove that the set $\mathbb{N}$ is unbounded. (Hint: $\mathbb{N}$ is the range of the sequence $\{n\}_{n=1}^{\infty}$.)
+        \begin{solution}
+            We know that from $MCT$ that is a sequence is monotone and bounded, then it converges. Considering the contrapositive, we can say that if a sequence does not converge, then it is unbounded or not monotone.\\
+            Now, we know that $\mathbb{N}$ is the range of the sequence $\{n\}_{n=1}^{\infty}$.\\
+            Clearly this sequence is monotone.\\
+            Suppose this sequence converges to some $L > 0$.\\
+            Then there exists $N \in \mathbb{N}$ such that for all $n \geq N$, $|n - L| < \frac{1}{2}$.\\
+            Thus $ L - \frac{1}{2} < n < L + \frac{1}{2}$.\\
+            But then $L + \frac{1}{2} < n +1$ and $|n+1 - L| \not < \frac{1}{2}$.\\
+            Which is a contradiction.\\
+            Thus the sequence $\{n\}_{n=1}^{\infty}$ is unbounded.
+        \end{solution}
+        \part Using your answer to part (a), prove that any set $S$ of real numbers which is bounded above has a least upper bound. (Hint: Consider the sequence $x_n = \min \left\{ \frac{m}{2^n} : m \in \mathbb{N} \text{ and } \frac{m}{2^n} \text{ is an upper bound of } S \right\}$.)
+        \begin{solution}
+            Let $S$ be a set of real numbers which is bounded above.\\
+            Then consider some $x_n = \min \left\{ \frac{m}{2^n} : m \in \mathbb{N} \text{ and } \frac{m}{2^n} \text{ is an upper bound of } S \right\}$.\\
+            Since $S$ is bounded above, we have at least one upper bound.\\
+            We know from part (a) that $\N$ is unbounded and thus for any $n \in \N$, there exists $m \in \N$ such that $\frac{m}{2^n}$ is an upper bound of $S$. So we know that this sequence is defined. We can also see that that this sequence is monotone decreasing since $\frac{m}{2^{n+1}} = \frac{m}{2^n} \times \frac{1}{2} < \frac{m}{2^n}$. and thus $x_{n+1} < x_n$.\\
+            We can also see that by definition this sequence is bounded below by $S$ and thus must converge by the Monotone Convergence Theorem. Suppose itconverges to $L$.\\
+            Now we need to show that $L$ is the least upper bound of $S$.\\
+            Let $\epsilon >0$ and $s \in S$. Since we know that $L$ is the limit of the sequence, there exists $N \in \N$ such that for all $n \geq N$, $|x_n - L| < \epsilon$.\\
+            and since $x_n$ is an upper bound of $S$, 
+            $$s \leq x_n < L + \epsilon \implies s < L + \epsilon$$
+            If we suppose $s > L$ for contradtion then there exist an $\epsilon = s - L > 0$. But this leads to $s \geq L + \epsilon$ which is a contradiction.\\
+            Thus $L$ is the least upper bound of $S$.
+        \end{solution}
+    \end{parts}
+
+    \question (The Babylonian algorithm for square roots: Let $p \geq 1$ be a real number, and recursively define the sequence $\{x_n\}_{n=1}^{\infty}$ by setting $x_1 = p$ and then defining $x_{n+1} = \frac{1}{2} \left( x_n + \frac{p}{x_n} \right)$.)
+    \begin{parts}
+        \part Prove that $x_n^2 \geq p$ for all $n$.
+        \begin{solution}
+            We prove this by induction.\\
+            \textbf{Base Case:} $n = 1$.\\
+            Then $x_1^2 = p^2 \geq p$ since $p \geq 1$.\\
+            \textbf{Inductive Hypothesis:} Assume that $x_i^2 \geq p$ for all $i < n$.\\
+            \textbf{Inductive Step:} We need to show that $x_{n+1}^2 \geq p$.\\
+            $$ x_{n+1}^2 = \left( \frac{1}{2} \left( x_n + \frac{p}{x_n} \right) \right)^2 = \frac{1}{4} \left( x_n^2 + 2p + \frac{p^2}{x_n^2} \right)$$
+            We know that $x_n^2 \geq p$ for all $i < n$. thus 
+            $$ x_{n+1}^2 = \frac{1}{4} \left( x_n^2 + 2p + \frac{p^2}{x_n^2} \right) \geq \frac{1}{4} \left( p + 2p + p \right) = p$$
+            Thus $x_{n+1}^2 \geq p$.
+        \end{solution}
+        \part Using part (a), prove that $\{x_n\}_{n=1}^{\infty}$ is monotone decreasing.
+        \begin{solution}
+            We need to show that $x_{n+1} \leq x_n$.\\
+            We know that $x_n^2 \geq p$ for all $n \in \N$.\\
+            Thus $x_n^2 \geq p \implies \frac{p}{x_n} < x_n$.\\
+            Thus $x_{n+1} = \frac{1}{2} \left( x_n + \frac{p}{x_n} \right) \leq \frac{1}{2} \left( x_n + x_n \right) = x_n$.
+            Thus $x_{n+1} \leq x_n$.
+        \end{solution}
+        \part Using parts (a) and (b), argue that $\{x_n\}_{n=1}^{\infty}$ must converge, and show that $x_n \to \sqrt{p}$. This shows that we can approximate a square root arbitrarily well using only addition, multiplication, and division. It is recorded in the work of Hero of Alexandria in 60 CE (despite the name, it is not clear if it was known to the ancient Babylonians).
+        \begin{solution}
+            We know that $\{x_n\}_{n=1}^{\infty}$ is monotone decreasing and bounded below by $\sqrt{p}$.\\
+            Thus by the Monotone Convergence Theorem, $\{x_n\}_{n=1}^{\infty}$ converges.\\
+            Let $L = \lim_{n \to \infty} x_n$.\\
+            Then if we consider the limit of the recursive definition, we have
+            $$ L = \frac{1}{2} \left( L + \frac{p}{L} \right) $$
+            $$ \implies 2L = L + \frac{p}{L} $$
+            $$ \implies L^2 = p$$
+            Thus $L = \sqrt{p}$.
+        \end{solution}
+    \end{parts}
+
+    \question Suppose $\sum_{n=1}^{\infty} x_n$ converges and $x_n \geq 0$ for all $n$. Prove that $\sum_{n=1}^{\infty} x_n^2$ also converges.
+    \begin{solution}
+        Suppose $\sum_{n=1}^{\infty} x_n$ converges and $x_n \geq 0$ for all $n$.\\
+        Then consider the sequence of partial sums $s_n = \sum_{i=1}^{n} x_i$.\\
+        Then we know that $s_n$ is a monotone increasing sequence and it is bounded above due to convergence.\\
+        Suppose $s_n \to L$.\\
+        Then by Algebraic Limit Theorem, we see that $s_n \times s_n = s_n^2 = L^2$.\\
+        Clealry $\sum_{n=1}^{\infty} x_n^2 \leq (\sum_{n=1}^{\infty} x_n )^2 = s_n^2 = L^2$.
+        We can also see that $s_n^2$ is monotone increasing due to the fact that $s_n$ is monotone increasing. and squaring a positive number does not change the sign.\\
+        Thus $\sum_{n=1}^{\infty} x_n^2$ converges since it is bounded above by $L^2$ and is monotone increasing.
+    \end{solution}
+
+    \question Let $\{x_n\}_{n=1}^{\infty}$ be a bounded sequence, and define $\mathscr{L} = \{ x : \text{there exists a subsequence } \{x_{n_k}\}_{k=1}^{\infty}$ $\text{ of } \{x_n\}_{n=1}^{\infty} \text{ with } x_{n_k} \to x \}$ to be the set of subsequential limits of $\{x_n\}_{n=1}^{\infty}$.
+        \begin{parts}
+            \part Prove that $\mathscr{L}$ is nonempty and bounded above.
+            \begin{solution}
+                $\mathscr{L}$ is nonempty by the Bolzano-Weierstrass theorem (there exists at least one convergent subsequence of a bounded sequence)\\
+                We also know that $\sup x_n \to L$ for some $L \in \mathbb{R}$. since $\{x_n\}_{n=1}^{\infty}$ is bounded. By the Order Limit Theorem, $L$ is an upper bound of $\mathscr{L}$.
+            \end{solution}
+            \part Prove that $\sup \mathscr{L} \in \mathscr{L}$ (that is, that $\mathscr{L}$ has a maximal element). (Hint: A certain problem from the Feb. 12th recitation will be helpful here...)
+            \begin{solution}
+                Let $L = \sup \mathscr{L}$.\\
+                Then for all $\epsilon > 0$, there exists $x \in \mathscr{L}$ such that $L - \epsilon < x \leq L$.\\
+                Thus there exists a subsequence $\{x_{n_k}\}_{k=1}^{\infty}$ of $\{x_n\}_{n=1}^{\infty}$ such that $x_{n_k} \to x$.\\
+                Thus for all $\epsilon > 0$, there exists $N \in \mathbb{N}$ such that for all $k \geq N$, $|x_{n_k} - x| < \epsilon$.\\
+                Thus for all $\epsilon > 0$, there exists $N \in \mathbb{N}$ such that for all $k \geq N$, $L - \epsilon < x_{n_k} < L + \epsilon$.\\
+                Thus we have shown that $L$ is a subsequential limit of $\{x_n\}_{n=1}^{\infty}$.\\
+                Thus $L \in \mathscr{L}$.
+            \end{solution}
+        \end{parts}
+
+    \question Suppose that $\{x_n\}_{n=1}^{\infty}$ and $\{y_n\}_{n=1}^{\infty}$ are sequences with $y_n \to 0$. Prove that if for all $k$ and $m \geq k$, $|x_m - x_k| \leq y_k$ then $\{x_n\}_{n=1}^{\infty}$ is Cauchy.
+    \begin{solution}
+        Suppose $\setof{x_n}_{n=1}^{\infty}$ and $\setof{y_n}_{n=1}^{\infty}$ are sequences with $y_n \to 0$ and that for all $k$ and $m \geq k$, $|x_m - x_k| \leq y_k$.\\
+        Let $\epsilon > 0$.\\
+        Then since $y_n \to 0$, there exists $N \in \mathbb{N}$ such that for all $n \geq N$, $y_n < \epsilon$.\\
+        We know that for all $k$ and $m \geq k$, $|x_m - x_k| \leq y_k$.\\
+        Thus for all $k \geq N$, $|x_m - x_k| \leq y_k < \epsilon$.\\
+        Thus $\{x_n\}_{n=1}^{\infty}$ is Cauchy.
+    \end{solution}
+
+    \question This question relates to the various completeness results we have proved in class:
+    \begin{parts}
+        \part Give a proof of the Monotone Convergence Theorem using the Bolzano-Weierstrass theorem.
+        \begin{solution}
+            Suppose the contents of the Bolzano-Weierstrass theorem are true.\\
+            Ie that every bounded sequence has a convergent subsequence.\\
+            We need to show that if $\{x_n\}_{n=1}^{\infty}$ is a bounded, monotone increasing sequence, then it converges.\\
+            Suppsoe $\{x_n\}_{n=1}^{\infty}$ is a bounded, monotone increasing sequence.\\
+            Then by the Bolzano-Weierstrass theorem, there exists a convergent subsequence $\{x_{n_k}\}_{k=1}^{\infty}$ of $\{x_n\}_{n=1}^{\infty}$.\\
+            Let it converge to some $L \in \mathbb{R}$.\\
+            Then for all $\epsilon > 0$, there exists $K \in \mathbb{N}$ such that for all $k \geq K$, $L - \epsilon < x_{n_k} < L + \epsilon$.\\
+            Since $k < n_k$ and $x_n$ is monotone increasing, then $x_k < x_{n_k}$ and then $x_n < L$ by Order Limit Theorem.\\
+            Thus 
+            $$ L - \epsilon < x_{n_k}  < x_n < L < L + \epsilon$$
+            Thus $x_n \to L$.
+
+        \end{solution}
+        \part Give a proof of the Bolzano-Weierstrass theorem which uses the Cauchy Criterion (“every Cauchy sequence converges”) and the fact that $\frac{1}{2^n} \to 0$. (In particular, your proof cannot use the Nested Interval Property.)
+        \begin{solution}
+            Let $x_n$ be a bounded sequence we must show that there is a convergent subsequence $x_{n_k}$.\\
+            We can look at the book's construction of closed intervals in the proof of the Bolzano-Weierstrass theorem. In summary $I_{n+1} \subset I_n$ and $I_n$ has lengrth $\frac{M}{2^{n-1}}$ for some $M$ such that $|x_n| \leq M$ for all $n$.\\
+            We can see that $I_n$ is a nested sequence of closed intervals (though we will not use NIP to show that the intersection is nonempty).\\
+            Let $\epsilon>0$ and choose $N \in \N$ s.t. $\frac{M}{2^{N-1}} < \epsilon$.\\
+            Then for all $k,j \geq N$, and $x_{n_k}, x_{n_j} \in I_N$, we have $|x_{n_k} - x_{n_j}| <  \frac{M}{2^{N-1}} < \epsilon$.\\
+            Thus $\{x_n\}_{n=1}^{\infty}$ is Cauchy.\\
+            Since $\{x_n\}_{n=1}^{\infty}$ is Cauchy, it converges by the Cauchy Criterion.
+            Thus there exists a convergent subsequence $x_{n_k}$.
+        \end{solution}
+    \end{parts}
+
+
+
+
+\end{questions}
+
+\end{document}

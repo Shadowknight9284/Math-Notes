@@ -17,6 +17,10 @@ INPUT c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT c:/texlive/2023/texmf-dist/tex/latex/import/import.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/import/import.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/multirow/multirow.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/multirow/multirow.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/setspace/setspace.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/setspace/setspace.sty
 INPUT c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex
 INPUT c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex
 INPUT c:/Users/prana/OneDrive/Desktop/MathNotes/style.tex
@@ -312,8 +316,6 @@ INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifvtex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifvtex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/iftex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/iftex.sty
-INPUT c:/texlive/2023/texmf-dist/tex/latex/setspace/setspace.sty
-INPUT c:/texlive/2023/texmf-dist/tex/latex/setspace/setspace.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT ./CheatSheet.aux
