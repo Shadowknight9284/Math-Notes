@@ -225,5 +225,25 @@ $$ \langle x, y \rangle = \sum w_i x_i y_i$$
 And then we can then define our $P$ as:
 $$ P = B(B^T B)^{-1}B^T$$
 Where $B^T B$ is the matrix of inner products with ordinary dot product as the inner product.
+\section*{Lecture 12}
+\subsection{Neural Net}
+Key ideas, \\
+Forward propogration you evaluate the value\\
+Test error\\
+Backwards propogation for the partial derivatives\\
+Remember to use chain rule as 
+$$ \frac{\partial f(g(x))}{\partial x} = \frac{\partial f}{\partial g} \frac{\partial g}{\partial x}$$
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.5\textwidth]{NN.jpg}
+        \caption{Neural Net}
+        \label{fig:example_image}
+    \end{figure}
+
+
+
+
+
+
 
 \end{document}

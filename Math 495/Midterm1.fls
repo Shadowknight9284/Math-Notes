@@ -2,8 +2,8 @@ PWD c:/Users/prana/OneDrive/Desktop/MathNotes/Math 495
 INPUT c:/texlive/2023/texmf.cnf
 INPUT c:/texlive/2023/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/prana/OneDrive/Desktop/MathNotes/Math 495/Chapter1.tex
-OUTPUT Chapter1.log
+INPUT c:/Users/prana/OneDrive/Desktop/MathNotes/Math 495/Midterm1.tex
+OUTPUT Midterm1.log
 INPUT c:/texlive/2023/texmf-dist/tex/latex/exam/exam.cls
 INPUT c:/texlive/2023/texmf-dist/tex/latex/exam/exam.cls
 INPUT c:/texlive/2023/texmf-dist/tex/latex/base/ifthen.sty
@@ -312,10 +312,10 @@ INPUT c:/texlive/2023/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-INPUT ./Chapter1.aux
-INPUT ./Chapter1.aux
-INPUT Chapter1.aux
-OUTPUT Chapter1.aux
+INPUT ./Midterm1.aux
+INPUT ./Midterm1.aux
+INPUT Midterm1.aux
+OUTPUT Midterm1.aux
 INPUT c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -348,9 +348,8 @@ INPUT c:/texlive/2023/texmf-dist/tex/latex/jknapltx/ursfs.fd
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs7.tfm
-OUTPUT Chapter1.pdf
+OUTPUT Midterm1.pdf
 INPUT c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map
-INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
@@ -372,21 +371,17 @@ INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/rsfs/rsfs5.tfm
-INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT c:/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT ./NN.jpg
-INPUT ./NN.jpg
-INPUT ./NN.jpg
-INPUT ./NN.jpg
-INPUT ./NN.jpg
-INPUT Chapter1.aux
+INPUT Midterm1.aux
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
+INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
+INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
+INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
-INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb

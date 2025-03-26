@@ -69,6 +69,75 @@ This is a set of all of the theorems talked in class and in the book numbered.
 \begin{theorem}[Density of $\mathbb{Q}$ in $\mathbb{R}$]
     $\forall a < b \in \mathbb{R}$ there exists $q \in \mathbb{Q}$ such that $a < q < b$.
 \end{theorem}
+\newpage
+
+\begin{definition}[Open Set]
+    An open set is a set $S$ that for all $x \in S$ for all epsilon neighborhoods $V_\epsilon(x)$ of $x$, $V_\epsilon(x) \subseteq S$.\\
+    In other words, any point has a circle that can be drawn around it that is completely contained in the set.\\
+    The union of open sets is open.\\
+    The intersection of finitely many open sets is open.\\
+    A set is open iff its compliment is closed.
+\end{definition}
+\begin{definition}[Closed Set]
+    A closed set is a set $S$ it contains all of its limit points.\\
+    A set is closed iff every cauchy sequence contained in $S$ has limit in $S$.\\
+    The intersection of closed sets is closed.\\
+    The union of finitely many closed sets is closed.\\
+    A set is closed iff its compliment is open.
+\end{definition}
+\begin{definition}[Limit Point]
+    A point $x$ is a limit point of a set $S$ if every epsilon neighborhood $V_\epsilon(x)$ of $x$ intersects the set $S$ at a point other than $x$.\\
+    In other words $x$ is a limit point if there is a sequence of points in $S$ that converges to $x$ where the sequence does not contain $x$.
+\end{definition}
+\begin{definition}[Isolated Point]
+    An isolated point is a point $x$ in a set $S$ that is not a limit point of $S$.\\
+    In other words, there exists an epsilon neighborhood $V_\epsilon(x)$ of $x$ such that $V_\epsilon(x) \cap S = \{x\}$.
+\end{definition}
+\begin{definition}[Closure and Interior]
+    The closure of a set $S$ denoted by $\overline{S}$ is the union of $S$ and all of its limit points.\\
+    The interior of a set $S$ denoted by $S^\circ$ is the collection of all points $x \in S$ such that there exists an epsilon neighborhood $V_\epsilon(x)$ of $x$ that is completely contained in $S$.\\
+    Let $S$ be a set then:\\
+    $S$ is closed iff $S = \overline{S}$.\\
+    $S$ is open iff $S = S^\circ$.
+\end{definition}
+\begin{definition}[Compact Set]
+    A compact set is a set that every Sequence in $K$ has a subsequence that converges to a point in $K$.\\
+    A set is compact if and only if it is closed and bounded.\\
+    A set is compact if and only if every open cover has a finite subcover.
+\end{definition}
+\begin{definition}[Open Cover]
+    An open cover of a set $S$ is a collection of open sets $\{U_\alpha\}$ such that union of all the open sets contains $S$.\\
+    In other words, $S \subseteq \bigcup_{\alpha} U_\alpha$.
+\end{definition}
+\begin{theorem}[Hiene-Borel Theorem]
+    A subset of $\mathbb{R}$ is compact if and only if it is closed and bounded.
+\end{theorem}
+\begin{definition}[Perfect Set]
+    A Perfect set is a set $S$ thtat is closed and contains no isolated points.\\
+    A nonempty perfect set is uncountable.\\
+    Examples are Cantor Set and the set of all real numbers.
+\end{definition}
+\begin{definition}[Seperated, Disconnected, and Connected Set]
+    Two sets $A$ and $B$ are seperated if $\overline{A} \cap B = A \cap \overline{B} = \emptyset$.\\
+    A set $S$ is disconnected if it can be written as the union of two nonempty seperated sets.\\
+    A set $S$ is connected if it is not disconnected.
+\end{definition}
+\begin{definition}[$F_\sigma$ set]
+    A set $S$ is an $F_\sigma$ set if it is the countable union of closed sets.
+    A set is $F_\sigma$ if and only if its compliment is $G_\delta$.
+\end{definition}
+\begin{definition}[$G_\delta$ set]
+    A set $S$ is an $G_\delta$ set if it is the countable intersection of open sets.
+    A set is $G_\delta$ if and only if its compliment is $F_\sigma$.
+\end{definition}
+\begin{definition}[Dense and Nowhere-Dense Set]
+    We say a set $S$ is dense in $X$ if $\overline{S} = X$.\\
+    A set $S$ is nowhere-dense if $\overline{S}$ contains no open interval. ie $\overline{S}^\circ = \emptyset$.\\
+    A set $E$ is nowhere-dense in $R$ iff $\overline{E}^c$ is dense in $R$. 
+\end{definition}
+\begin{definition}[Baire's Theorem]
+    The set of Real numbers $R$ cannot be written as the countable union of nowhere-dense sets.
+\end{definition}
 
 
 \end{document}

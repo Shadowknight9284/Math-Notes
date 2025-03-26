@@ -1,0 +1,74 @@
+\section{Notes}
+\begin{definition}[Basis]
+    A basis $\beta$ for a vector space $V$ is a set of vectors in $V$ such that:
+    \begin{enumerate}
+        \item $\beta$ is a linearly independent set.
+        \item $\beta$ spans $V$.
+    \end{enumerate}
+\end{definition}
+\begin{definition}[Coordinate Vector]
+    A coordinate vector is a vector that has entries as the coefficients of the linear combination of a certain basis that spans a vector space.
+    \begin{example}
+        Let $V = \mathbb{R}^2$ and $\beta = \{(1,0),(1, 1)\}$. Then the coordinate vector of $(2,3)$ with respect to $\beta$ is:
+        \[
+            \begin{bmatrix}
+                -1 \\
+                3
+            \end{bmatrix}
+        \]
+        because:
+        \[
+            (2,3) = -1(1,0) + 3(1,1)
+        \]
+    \end{example}
+    Notice that we must have the basis be an orderded basis to have a unique coordinate vector.
+\end{definition}
+\begin{definition}[Change of Coordinate Matrix]
+    If we have two bases $\beta$ and $\gamma$ for a vector space $V$, then the change of coordinate matrix from $\beta$ to $\gamma$ is the matrix $P_{\beta \to \gamma}$ such that:
+    \[
+        [\mathbf{v}]_{\gamma} = P_{\beta \to \gamma}[\mathbf{v}]_{\beta}
+    \]
+    where $[\mathbf{v}]_{\beta}$ is the coordinate vector of $\mathbf{v}$ with respect to $\beta$ and $[\mathbf{v}]_{\gamma}$ is the coordinate vector of $\mathbf{v}$ with respect to $\gamma$.
+    \begin{example}
+        Let $V = \mathbb{R}^2$ and $\beta = \{(1,0),(1, 1)\}$ and $\gamma = \{(1,0),(2,1)\}$. Then the change of coordinate matrix from $\beta$ to $\gamma$ is:
+        \begin{align*}
+            (1,0) = & 1(1,0) + 0(2,1) \\
+            (1,1) = & -1(1,0) + 1(2,1)
+        \end{align*}
+        So the change of coordinate matrix is:
+        \[
+            P_{\beta \to \gamma} = \begin{bmatrix}
+                1 & -1 \\
+                0 & 1
+            \end{bmatrix}
+        \]
+    \end{example}
+\end{definition}
+\begin{definition}[Inner Product]
+    When we have a vector space $V$ over $\mathbb{R}$, an inner product is a function $\langle \cdot, \cdot \rangle: V \times V \to \mathbb{R}$ such that:
+    \begin{enumerate}
+        \item $\langle \mathbf{u}, \mathbf{v} \rangle = \langle \mathbf{v}, \mathbf{u} \rangle$ (Symmetry)
+        \item $\langle a\mathbf{u}, b\mathbf{v} \rangle = ab\langle \mathbf{u}, \mathbf{v} \rangle$ (Linearity in each argument)
+        \item $\langle \mathbf{u}, \mathbf{u} \rangle > 0$ for all $\mathbf{u} \neq 0$ (Positivity)
+        \item $\langle \mathbf{u}, \mathbf{u} \rangle = 0$ if and only if $\mathbf{u} = 0$ (Definiteness)
+    \end{enumerate}
+    The inner product is a generalization of the dot product.
+    \begin{example}
+        Let $V = \mathbb{R}^2$ and $\langle \mathbf{u}, \mathbf{v} \rangle = u_1v_1 + u_2v_2$. Then this is an inner product.
+    \end{example}
+\end{definition}
+\begin{definition}[Orthogonal Projection]
+    Let $V$ be a vector space with an inner product and let $W$ be a subspace of $V$. The orthogonal projection of $\mathbf{v} \in V$ onto $W$ is the vector $\mathbf{p} \in W$ such that:
+    \[
+        \mathbf{v} - \mathbf{p} \perp W
+    \]
+    In other words, $\mathbf{p}$ is the vector in $W$ that is closest to $\mathbf{v}$.
+    \begin{example}
+        Let $V = \mathbb{R}^2$ and $W = \text{span}\{(1,0)\}$. Then the orthogonal projection of $(2,3)$ onto $W$ is $(2,0)$.
+    \end{example}
+    To calculate the orthogonal projection of $\mathbf{v}$ onto $W$, we can use the following formula:
+    \[
+        \mathbf{p} = \sum_{i=1}^n \frac{\langle \mathbf{v}, \mathbf{w}_i \rangle}{\langle \mathbf{w}_i, \mathbf{w}_i \rangle} \mathbf{w}_i
+    \]
+\end{definition}
+

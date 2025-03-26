@@ -1,0 +1,130 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311H}
+\newcommand{\assignment}{Homework 5}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\begin{questions}
+    \question Consider the sets
+    \[
+    A = \left\{ (-1)^n + \frac{2}{n} : n \in \mathbb{N} \right\}, \quad B = \{ q \in \mathbb{Q} : q \in [0, 1] \}
+    \]
+    Answer the following questions for each set. Do not give proofs.
+    \begin{parts}
+        \part What are the limit points?
+        \begin{solution}
+            The limit points of $A$ are $1$ and $-1$. The limit points of $B$ are all the real numbers in $[0, 1]$.
+        \end{solution}
+        \part Is the set open? Is it closed?
+        \begin{solution}
+            Both the sets are neither open nor closed.
+        \end{solution}
+        \part Does the set contain any isolated point(s), and if so, what is/are they?
+        \begin{solution}
+            Every point in set $A$ Except for 1 is an isolated point. The set $B$ has no isolated points.
+        \end{solution}
+        \part What is the closure of the set?
+        \begin{solution}
+            The closure of $A$ is $\{ -1\}\cup A$. The closure of $B$ is $[0, 1]$.
+        \end{solution}
+    \end{parts}
+
+    \question The Bolzano-Weierstrass Theorem for sets says that any bounded infinite subset of $\mathbb{R}$ has a limit point. Prove the Bolzano-Weierstrass Theorem for sets. (Hint: You can (and should!) use the Bolzano-Weierstrass Theorem for sequences. Be careful with the conditions for Theorem 3.2.5.)
+    \begin{solution}
+        Suppose we have a bounded infinite subset of $\R$ called $A$. Since $A$ is bounded, it must have a supremum and an infimum. Let $a = \inf A$ and $b = \sup A$. Now we can construct a sequence $\{a_n\}$ of distinct elements of $A$. Since $A$ is infinite will will always be able to contrsuct some sequence. We know by BW for sequences that a bounded sequence must have a convergent subsequence. Let $\{a_{n_k}\}$ be a convergent subsequence of $\{a_n\}$. Since $a_{n_k}$ is a subsequence of $a_n$, it must converge to some limit $L$. Since we had that the elements of $a_n$ were distinct, can be certain that the limit $L$ is not an element of the subsequence. Since $a_{n_k}$ is a subsequence of $a_n$, it must also be a sequence in $A$. Thus by definition of limit point, $L$ is a limit point of $A$.
+    \end{solution}
+    \question Let $A$ be nonempty and bounded above.
+    \begin{parts}
+        \part Prove that $\sup A \in \overline{A}$.
+        \begin{solution}
+            We can do this by cases: either $\sup A \in A$ or $\sup A \notin A$.\\
+            If $\sup A \in A$, then $\sup A \in \overline{A}$.\\
+            If $\sup A \notin A$, let $s = \sup A$.\\
+            Since $s \notin A$ then $\forall \epsilon > 0, \exists a \in A$ such that $s - \epsilon < a < s$.\\
+            Since $s \notin A$ then $a \neq s$ \\
+            Thus for every epsilon neightborhood of $s$, there is a point in $A$ not equal to $s$. So that $s$ is a limit point of $A$.\\
+            Thus $s \in \overline{A}$.
+        \end{solution}
+        \part Can an open set contain its supremum? If yes, give an example; if no, give a proof.
+        \begin{solution}
+            No. This is because if we assume that an open set contains its supremem, then we can construct an epsilon ball around the supremum that is contained in the set. This would imply that the supremum is not the supremum of the set, which is a contradiction.
+        \end{solution}
+    \end{parts}
+
+    \question Let $A \subset \mathbb{R}$, and let $L$ be the set of limit points of $A$. Prove that $L$ is closed.
+    \begin{solution}
+        We can prove this by showing that $L = \overline{L}$.\\
+        We know that $L \subset \overline{L}$ because the closure of a set is the union of the set and its limit points.\\
+        Now we need to show that $\overline{L} \subset L$.\\
+        Let $x \in \overline{L}$. This means that $x$ is a limit point of $L$.\\
+        Since $x$ is a limit point of $L$, every neighborhood of $x$ contains a point of $L$.\\
+        Since every neighborhood of $x$ contains a point of $L$, $x$ is a limit point of $A$.\\
+        Thus $x \in L$.\\
+        Therefore, $L = \overline{L}$, and $L$ is closed.
+    \end{solution}
+
+    \question In this exercise, you will prove De Morgan’s laws. Let $\{E_\alpha\}_{\alpha \in A}$ be an indexed collection of subsets of $\mathbb{R}$.
+    \begin{parts}
+        \part Prove that
+        \[
+        \left( \bigcup_{\alpha \in A} E_\alpha \right)^c = \bigcap_{\alpha \in A} E_\alpha^c
+        \]
+        \begin{solution}
+            \begin{align*}
+                x \in \left( \bigcup_{\alpha \in A} E_\alpha \right)^c &\iff x \notin \bigcup_{\alpha \in A} E_\alpha\\
+                &\iff x \notin E_\alpha \text{ for all } \alpha \in A\\
+                &\iff x \in E_\alpha^c \text{ for all } \alpha \in A\\
+                &\iff x \in \bigcap_{\alpha \in A} E_\alpha^c
+            \end{align*}
+        \end{solution}
+        \part Prove that
+        \[
+        \left( \bigcap_{\alpha \in A} E_\alpha \right)^c = \bigcup_{\alpha \in A} E_\alpha^c
+        \]
+        \begin{solution}
+            \begin{align*}
+                x \in \left( \bigcap_{\alpha \in A} E_\alpha \right)^c &\iff x \notin \bigcap_{\alpha \in A} E_\alpha\\
+                &\iff x \notin E_\alpha \text{ for some } \alpha \in A\\
+                &\iff x \in E_\alpha^c \text{ for some } \alpha \in A\\
+                &\iff x \in \bigcup_{\alpha \in A} E_\alpha^c
+            \end{align*}
+        \end{solution}
+    \end{parts}
+
+    \question A set $A$ is called an $F_\sigma$ set when it can be written as the countable union of closed sets, and a set $B$ is called a $G_\delta$ set when it can be written as the countable intersection of open sets. Using these definitions, answer the following questions:
+    \begin{parts}
+        \part Show that a closed interval $[a, b]$ is a $G_\delta$ set.
+        \begin{solution}
+            We can write $[a, b]$ as the intersection of the open sets\\
+            $\bigcap_{n=1}^{\infty} \left( a - \frac{1}{n}, b + \frac{1}{n} \right)$.
+        \end{solution}
+        \part Show that the half-open interval $(a, b]$ is both a $G_\delta$ set and an $F_\sigma$ set.
+        \begin{solution}
+            We can write $(a, b]$ as the intersection of the open sets $\bigcap_{n=1}^{\infty} \left( a, b + \frac{1}{n} \right)$, and we can write $(a, b]$ as the union of the closed sets $\bigcup_{n=1}^{\infty} \left[ a + \frac{1}{n}, b \right]$.
+        \end{solution}
+        \part Show that $\mathbb{Q}$ is an $F_\sigma$ set, and the set of irrational numbers $\mathbb{R} \setminus \mathbb{Q}$ is a $G_\delta$ set.
+        \begin{solution}
+            We know since $\Q$ is countable, we can consider the union of the singleton sets of the elemtns of $\Q$. Thus $\Q$ is an $F_\sigma$ set.\\
+            To show that $\R \setminus \Q$ is a $G_\delta$ set, we can use De Morgan's laws.
+            \begin{align*}
+                \R \setminus Q &= Q^c\\
+                &= \left( \bigcup_{q \in Q} \{q\} \right)^c\\
+                &= \bigcap_{q \in Q} \{q\}^c\\
+                &= \bigcap_{q \in Q} (R \setminus \{q\})
+            \end{align*}
+            Clealry $\R \setminus \{q\}$ is open for all $q \in Q$. And thus $\R \setminus Q$ is a $G_\delta$ set.
+        \end{solution}
+    \end{parts}
+\end{questions}
+
+\end{document}

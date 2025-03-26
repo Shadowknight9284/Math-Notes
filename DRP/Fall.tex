@@ -198,4 +198,53 @@ EPLC doesnt hold in a lack of stablilty, high variabilty of marginal distributio
     \end{gather*}
 \end{definition}
 Look through example of Random walk +1,-1 and the linear past of it. 
+
+
+\subsection{Reading 2/26-3/5}
+
+\begin{definition}[A1-A4]
+    \begin{align}
+        \forall t \in \Z: \mu_t = \E(X_t) \in \R\\
+        \forall t \in \Z: \sigma^2_t = \var(X_t) < \infty\\
+        \exists \mu \in \R \suchthat \lim_{t \to \infty} \mu_t = \mu\\
+        \lim_{t \to \infty} \text{cov}(\bar{x_n}, X_n)= 0
+    \end{align}
+    Weak stationarity implies A1-A3\\
+    \begin{align*}
+        \lim_{k \to \infty} \gamma_X(k) = 0 \\
+        \gamma_{X}(k) \text{ Cesaro summable with limit 0}\\
+        \lim_{k \to \infty} \cov(\bar{x_n} , X_n) = \lim_{n \to \infty} \frac{1}{n} \sum_{k=1}^{n-1} \gamma_X(k) = 0
+        A4
+    \end{align*}
+    This is an implication from top to bottom for A4
+\end{definition}
+\begin{definition}[Backshift/ Lag Operator]
+    \begin{align*}
+        B: \R^{\Z} \to \R^{\Z}\\
+        x = \{x_t\}_{t \in \Z} \to y = Bx \\
+        \text{with } y_t = x_{t-1} \\
+    \end{align*}
+    This shifts the sequence to the left by 1.
+\end{definition}
+\begin{definition}[Linear Process]
+    $X_t \in \R (t \in \Z), \mathbb{E} (X_t) = \mu \in \R$ is a linear cprocess in $L^2(\Omega)$ if 
+    $$ \exists \epsilon_t \in \R (t \in \Z) \text{ iid } \mathbb{E}(\epsilon_t) = 0, \sigma^2_{\epsilon} = \text{var}(\epsilon_t) < \infty$$
+    and 
+    $$ \exists a_j \in \R (j \in \Z), \sum_{j=-\infty}^{\infty} a_j^2 < \infty$$
+    s.t.
+    $$ \forall t \in \Z: \lim_{N \to \infty} || X_t - X_{t,N}||^2_{L^2(\Omega)} = 0$$
+    We then write 
+    $$ X_t = \mu + \sum_{j=-\infty}^{\infty} a_j \epsilon_{t-j} (t \in \Z) = \mu + \left( \sum_{j = -\infty}^\infty a_j B^j \right) \epsilon_t$$
+    If $a_j = 0$ for $j < 0$ then we call it a causal linear process.\\
+    By definition if $X_t$ is a linear process then it is weakly and strictly stationary.\\
+\end{definition}
+\textbf{NOTE: I am skipping most of the rest of the specific assumtions in favor of Reading more Probability Measures for Time Series}
+
+
+
+
+
+
+
+
 \end{document}
