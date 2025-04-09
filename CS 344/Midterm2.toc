@@ -1,0 +1,3 @@
+\contentsline {section}{\numberline {1}In person Notes on Midterm 2}{2}{}%
+\contentsline {section}{\numberline {2}Greedy Algorithms}{3}{}%
+\contentsline {subsection}{\numberline {2.1}Greedy Continued}{5}{}%

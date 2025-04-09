@@ -1,0 +1,105 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311}
+\newcommand{\assignment}{Homework 6}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+\question A set is called clopen when it is both closed and open. Prove that the only clopen subsets of $\mathbb{R}$ are $\mathbb{R}$ and $\emptyset$. (Hint: $\mathbb{R}$ is connected.)
+\begin{solution}
+    We will first prove that $\emptyset$ is clopen. Clearly it is vacously true that $\emptyset$ is both open and closed ie clopen. We know that the compliment of an open set is closed and the compliment of a closed set is open. Thus, the compliment of $\emptyset$ is $\mathbb{R}$ thus $\mathbb{R}$ is clopen. \\\\
+    Now we will prove that the only clopen subsets of $\mathbb{R}$ are $\mathbb{R}$ and $\emptyset$. Let $A$ be a clopen subset of $\mathbb{R}$. Then we know that $A^c \cup A = \R$ since $A$ is both open and closed, but this is only possible if $A^c$ is empty or $A$ is empty since $\R$ is connected. \\
+    Thus $A^c = \emptyset$ or $A = \emptyset$. Hence $A = \R$ or $A = \emptyset$. Thus the only clopen subsets of $\mathbb{R}$ are $\mathbb{R}$ and $\emptyset$.
+\end{solution}
+
+\question Using the concept of open covers and compactness (and explicitly avoiding the Bolzano–Weierstrass Theorem for sequences or Problem 2 from Homework 5), prove that every bounded infinite set has a limit point.
+\begin{solution}
+    Suppose $A$ is a infinite bounded set bounded by $[-M,M]$ and suppose $A$ has no limit points. Then there exists an $\epsilon >0$ such that $V_\epsilon(x) \cap A = \setof{x}$ for all $x \in A$. This means we can find an open cover of $A$ which is finite since we can take the open cover $\setof{V_\epsilon(x)}_{x \in A}$. This contradicts the fact that $A$ is infinite. Thus every bounded infinite set has a limit point. 
+\end{solution}
+
+\question Prove that every closed connected set containing at least two points is perfect.
+\begin{solution}
+    Suppose $A$ is a closed connected set containing at least two points. We need show that $A$ is perfect, that $A$ has no isolated points, or every point in $A$ is a limit point of $A$. \\
+    Suppose $x \in A$ is an isolated point. Then there exists an $\epsilon > 0$ such that $V_\epsilon(x) \cap A = \setof{x}$. This means we can find an open cover of $A$ which is finite since we can take the open cover $\setof{V_\epsilon(x)}_{x \in A}$. This contradicts the fact that $A$ is connected. Thus every point in $A$ is a limit point of $A$. Hence $A$ is perfect.
+\end{solution}
+
+\question Let $Q = \{q_1, q_2, \cdots, q_n, \cdots\}$. Also define $\epsilon_n = 2^{-n}$ and let
+\[
+U = \bigcup_{n=1}^\infty V_{\epsilon_n}(q_n), \quad F = U^c
+\]
+\begin{parts}
+    \part Prove that $F$ is a closed, nonempty set containing only irrational numbers.
+    \begin{solution}
+        We can see that $F$ is closed since $U$ is the union of open sets, and thus open. We know that the compliment of an open set is closed. Thus $F$ is closed.\\
+        To show that $F$ is nonempty, we can by contradiction take $F = \emptyset$ and thus $U = \mathbb{R}$. Now we can consider the idea that The "length" of the interval of $V_{\epsilon_n}(q_n)$ is $2\epsilon_n = 2^{-n+1}$. Thus we can see that the total length of the union of all the intervals is $\sum_{n=1}^\infty 2^{-n+1} = 2$. Thus we can see that the union of all the intervals is bounded by $2$ and thus $U$ cannot be $\mathbb{R}$. Thus $F$ is nonempty. \\
+        To show that $F$ contains only irrational numbers, we can see that by definition $\Q \subset U$. Thus since $F = U^c$, we can see that $F$ cannot contain any rational numbers. Thus $F$ contains only irrational numbers.
+    \end{solution}
+    \part Does $F$ contain any nonempty open intervals?
+    \begin{solution}
+        Let us assume by contradiction that there is a nonempty open interval $O$ contained in $F$. We know that by the density of $\Q$ in $\R$, there will exist a rational number $q \in O$. This means that $q$ is in the open interval $O$ and thus $q \in F$. But we know that $F$ contains only irrational numbers. Thus we can see that there cannot be a nonempty open interval contained in $F$. \\
+        Thus we can see that $F$ does not contain any nonempty open intervals.
+    \end{solution}
+\end{parts}
+
+\question Let $C$ be the Cantor set, and define
+\[
+C + C = \{x + y : x, y \in C\}
+\]
+Since $C \subset [0, 1]$, $C + C \subseteq [0, 2]$. Surprisingly, we also have that $C + C \supseteq [0, 2]$. Let $s \in [0, 2]$ be arbitrary.
+\begin{parts}
+    \part If $C_1 = [0, 1/3] \cup [2/3, 1]$ is the first level Cantor set, prove that there exist points $x_1, y_1 \in C$ such that $x_1 + y_1 = s$.
+    \begin{solution}
+        Let $s \in [0, 2]$. Then either $s \in [0,2/3], s \in [2/3, 4/3]$ or $s \in [4/3, 2]$. Let us label the closed intervals $A_1, A_2, A_3$ respectively. Also let us define $B_1 = [0, 1/3]$ and $B_2 = [2/3, 1]$. Then we can see that $C_1 = B_1 \cup B_2$. \\
+        If $s \in [0, 2/3]$, then we can see for $x_1, y_1 \in B_1$, $x_1 + y_1 \in A_1$ and thus $x_1 + y_1 = s$. \\
+        If $s \in [4/3, 2]$, then we can see for $x_1, y_1 \in B_2$, $x_1 + y_1 \in A_3$ and thus $x_1 + y_1 = s$. \\
+        If $s \in [2/3, 4/3]$, then we can see WLOG $x_1 \in B_1$ and $y_1 \in B_2$, $x_1 + y_1 \in A_2$ and thus $x_1 + y_1 = s$. \\
+        Thus we can see that for any $s \in [0,2]$, we can find $x_1, y_1 \in C_1$ such that $x_1 + y_1 = s$.
+    \end{solution}
+    \part Now, let $C_n$ denote the $n$th level Cantor set. Prove that there exist $x_n, y_n \in C_n$ such that $x_n + y_n = s$.
+    \begin{solution}
+        We can do this by induction on the number of levels of the Cantor set, $n$. We can clealy see the base case is true by part a.\\
+        Our induction hypothesis is that for all $n \leq k$, there exist $x_n, y_n \in C_n$ such that $x_n + y_n = s$. \\
+        Now we will show that for $n = k+1$, there exist $x_{k+1}, y_{k+1} \in C_{k+1}$ such that $x_{k+1} + y_{k+1} = s$. 
+        \begin{align*}
+            C_{k+1} + C_{k+1} &= \left(\left(\frac{1}{3}C_{k} \right) \cup \left(\frac{2}{3} + \frac{C_{k}}{3}\right) \right) + \left(\left(\frac{1}{3}C_{k} \right) \cup \left(\frac{2}{3} + \frac{C_{k}}{3}\right) \right) \\
+            &= \left(\frac{2}{3}(C_k + C_k) \right) \cup \left(\frac{1}{3}(C_k + C_k) + \frac{2}{3} \right) \cup \left( \frac{4}{3} +\frac{1}{3}(C_k + C_k) \right) \\
+            &= \left(\frac{2}{3}[0,2] \right) \cup \left(\frac{1}{3}[0,2] + \frac{2}{3} \right) \cup \left( \frac{4}{3} +\frac{1}{3}[0,2] \right) \\
+            &= [0, \frac{4}{3}] \cup [\frac{2}{3}, \frac{4}{3}] \cup [\frac{4}{3}, 2] \\
+            &= [0,2].
+        \end{align*}
+        Thus we can see that for $n = k+1$, there exist $x_{k+1}, y_{k+1} \in C_{k+1}$ such that $x_{k+1} + y_{k+1} = s$. \\
+        Thus by induction we can see that for all $n \in \N$, there exist $x_n, y_n \in C_n$ such that $x_n + y_n = s$.
+    \end{solution}
+    \part The sequences $\{x_n\}_{n=1}^\infty$ and $\{y_n\}_{n=1}^\infty$ you constructed may not converge. Prove, nevertheless, that there exist $x, y \in C$ with $x + y = s$.
+    \begin{solution}
+        The sequences sequences $\setof{x_n}$ and $\setof{}$ are bounded by $[0,2]$ and thus by Bolzano-Weierstrass, they have convergent subsequences. Let us call the convergent subsequences $\setof{x_{n_k}}$ and $\setof{y_{n_k}}$. and suppose they converge to $x, y$ respectively. Since the Cantor set is compact we can also say that these limits are also in $C$. Thus we can see that $x + y = s$. \\
+        Thus we can see that there exist $x, y \in C$ with $x + y = s$.
+    \end{solution}
+\end{parts}
+
+\question (The Lebesgue covering lemma) Suppose $K$ is compact and $\mathscr{y_nU}= \{U_\alpha\}_{\alpha \in A}$ is an open cover of $K$. Prove that there exists a $\delta > 0$ such that for every $x \in K$, there exists an $\alpha$ such that
+\[
+V_\delta(x) \subset U_\alpha.
+\]
+\begin{solution}
+    Suppose by $K$ is a compact set with an open cover $\mathscr{U}$. Since $K$ is compact then there is a finite subcover from $\mathscr{U}$ let us call it $F = \{U_1, U_2, \cdots, U_n\}$ for $n \in \N$  such that $K \subseteq \bigcup_{i=1}^n U_i$. Let $x \in K$ be arbitrary. Then \\
+    \begin{align*}
+        x \in K &\implies x \in \bigcup_{i=1}^n U_i \\
+        &\implies \exists i \in \setof{1,2,\cdots,n} \text{ such that } x \in U_i \\
+        &\implies V_{\delta_x}(x) \subset U_i \text{ for some } \delta_x > 0.
+    \end{align*}
+    We can say the the collection of these $V_{\delta_x}(x)$ is an open cover of $K$. Since $K$ is compact, we can find a finite subcover of $K$ from the collection of $V_{\delta_x}(x)$. Let us call this finite subcover $F = \{V_{\delta_{x_1}}(x_1), V_{\delta_{x_2}}(x_2), \cdots, V_{\delta_{x_n}}(x_n)\}$. Let $\delta = \min\setof{\delta_{x_1}, \delta_{x_2}, \cdots, \delta_{x_n}}$. Then we can see that for every $x \in K$, there exists an $\alpha$ such that $V_\delta(x) \subset U_\alpha$. \\
+    Thus we can see that there exists a $\delta > 0$ such that for every $x \in K$, there exists an $\alpha$ such that $V_\delta(x) \subset U_\alpha$.
+\end{solution}
+\end{questions}
+
+\end{document}

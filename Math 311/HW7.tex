@@ -1,0 +1,110 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311H}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question Write an $\varepsilon$-$\delta$ proof that the function $f(x) = x^2 - 2x$ is continuous at $x = 2$.
+    \begin{solution}
+        Let $\epsilon > 0$. Take $\delta = \min\left(1, \frac{\epsilon}{3}\right)$. Since $|x-2|<1 \implies |x| <|x-2|+2 < 1+2 =3$. Also not that $f(2) = 0$. Then, we have
+        \begin{align*}
+            |x - 2| < \delta &\implies |f(x)| = |x^2 - 2x| = |x(x - 2)| \\
+            &= |x| \cdot |x - 2| < |x| \cdot \delta \\
+            &= 3 \cdot \frac{\epsilon}{3} = \epsilon
+        \end{align*}
+    \end{solution}
+
+    \question Suppose $f : A \to \mathbb{R}$ is continuous at a point $c \in A$. Prove that if $f(c) \neq 0$, then there exists a $\delta > 0$ such that $f(x) \neq 0$ for any $x \in V_\delta(c) \cap A$.
+    \begin{solution}
+        Let $\epsilon = |f(c) - 0| > 0$. Since $f$ is continuous at $c$, there exists $\delta > 0$ such that $|f(x) - f(c)| < \epsilon$ for all $x \in V_\epsilon(c) \cap A$.\\
+        Then, we have
+        \begin{align*}
+            |f(x) - f(c)| < \epsilon \\
+            -\epsilon < f(x) - f(c) < \epsilon \\
+            -|f(c)| < f(x) - f(c) < |f(c)|
+        \end{align*}
+        Either $f(x) < 0$ or $f(x) > 0$.\\
+        If $f(x) < 0$, then $2f(c) < f(x) <0$\\
+        If $f(x) > 0$, then $0 < f(x) < 2f(c)$\\
+        Thus, $f(x) \neq 0$ for all $x \in V_\delta(c) \cap A$.
+    \end{solution}
+
+    \question Using only the $\varepsilon$-$\delta$ definition of continuity, prove that if $f, g : A \to \mathbb{R}$ are continuous at a point $c \in A$, then $f + g$ is also continuous at $c$.
+    \begin{solution}
+        Suppose $f$ and $g$ are continuous at $c$. Then, for any $\epsilon > 0$, there exists $\delta_1 > 0$ such that $|f(x) - f(c)| < \frac{\epsilon}{2}$ for all $x \in V_{\delta_1}(c) \cap A$ and there exists $\delta_2 > 0$ such that $|g(x) - g(c)| < \frac{\epsilon}{2}$ for all $x \in V_{\delta_2}(c) \cap A$.\\
+        Let $\delta = \min(\delta_1, \delta_2)$. Then, for all $x \in V_\delta(c) \cap A$, we have
+        \begin{align*}
+            |(f + g)(x) - (f + g)(c)| &= |f(x) + g(x) - f(c) - g(c)| \\
+            &= |(f(x) - f(c)) + (g(x) - g(c))| \\
+            &\leq |f(x) - f(c)| + |g(x) - g(c)| \\
+            &< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+        \end{align*}
+        Thus, $f + g$ is continuous at $c$.
+    \end{solution}
+
+    \question Prove that if $f : \mathbb{R} \to \mathbb{R}$ is continuous and $U$ is open, then $f^{-1}(U) = \{x \in \mathbb{R} : f(x) \in U\}$ is open.
+    \begin{solution}
+        Suppose $f$ is continuous and $U$ is open. Let $ x \in f^{-1}(U)$ then $f(x) \in U$. \\
+        Since $U$ is open there exists an $\epsilon>0$ such that there exist $V_{\epsilon}(f(x)) \subset U$ \\
+        Since $f$ is continous we know there exists a $\delta > 0$ such that $|y -x| < \delta \implies |f(y) - f(x)| < \epsilon$ for all $y \in \R$.\\
+        Thus for an arbitrary $y \in V_{\delta}(x)$ we have $f(y) \in V_{\epsilon}(f(x)) \subset U$\\
+        Thus $y \in f^{-1}(U)$ and hence $V_{\delta}(x) \subset f^{-1}(U)$\\
+        Thus $f^{-1}(U)$ is open.
+    \end{solution}
+
+    \question Suppose $f, g : [a, b] \to \mathbb{R}$ are two continuous functions. Prove that the set $T = \{x : f(x) = g(x)\}$ is a closed set.
+    \begin{solution}
+        Suppose $x$ is a limit point of $T$. Then there exists a sequence $\{x_n\} \subset T$ such that $x_n \to x$ and $x_n \neq x$ for all $n$.\\
+        Since $f$ and $g$ are continuous, we have $\lim_{n \to \infty} f(x_n) = f(x)$ and $\lim_{n \to \infty} g(x_n) = g(x)$.\\
+        Since we have that $f(x_n) = g(x_n)$ for all $n$, we have $f(x) = g(x)$.\\
+        Thus, $x \in T$ and hence $T$ is closed.
+    \end{solution}
+
+    \question Let $f : [a, b] \to \mathbb{R}$ be increasing. Prove that $\lim_{x \to a^+} f(x)$ exists.
+    \begin{solution}
+        Since \( f \) is increasing on \([a, b]\), the set \( S = \{f(x) : x \in (a, b]\} \) is bounded below by \( f(a) \). By the completeness of \( \mathbb{R} \), \( S \) has a greatest lower bound (infimum). Let:
+\[
+L = \inf S = \inf \{f(x) : x \in (a, b]\}.
+\]
+
+We will show that \( \lim_{x \to a^+} f(x) = L \).
+
+\begin{enumerate}
+    \item Let \( \epsilon > 0 \). By the definition of infimum, there exists \( y \in (a, b] \) such that:
+    \[
+    f(y) < L + \epsilon.
+    \]
+    
+    \item Let \( \delta = y - a > 0 \). For all \( x \) satisfying \( a < x < a + \delta \), we have:
+    \[
+    a < x < y \leq b.
+    \]
+    
+    \item Since \( f \) is increasing:
+    \[
+    L \leq f(x) \leq f(y) < L + \epsilon.
+    \]
+    
+    \item Combining these inequalities:
+    \[
+    |f(x) - L| = f(x) - L < \epsilon \quad \text{for all } x \in (a, a + \delta).
+    \]
+\end{enumerate}
+
+By the definition of a right-hand limit, we conclude:
+\[
+\lim_{x \to a^+} f(x) = L. \]
+    \end{solution}
+\end{questions}
+
+\end{document}

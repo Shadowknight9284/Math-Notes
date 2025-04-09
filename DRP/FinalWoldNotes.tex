@@ -1,0 +1,92 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\setlength{\emergencystretch}{3em} % Prevent overfull hbox warnings
+\usepackage{import}
+\usepackage{hyperref}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\begin{theorem}
+    Suppose $X_t \in \R (t \in \Z)$ is a \hyperlink{weakly_stationary}{weakly stationary} stochastic process \\
+    Then 
+    \begin{align*}
+        \exists a_0, a_1, \ldots, \text{such that} a_0 = 1, \sum_{j=1}^{\infty} a_j^2 < \infty \\
+        \exists \epsilon_t , \mu_t (t \in \Z) \text{ such that } \forall s, t \in \Z: \\
+        \epsilon_t \in L_t, \mu_t \in L_{-\infty} \\
+        E(\epsilon_t) = 0, \cov(\epsilon_t, \epsilon_s) = \sigma_{\epsilon}^2 \delta_{t,s} < \infty, \cov(\epsilon_s, \mu_t) = 0 \\
+        X_{t_{a.s L^2(\Omega)}} = \mu_t + \sum_{j=0}^{\infty} a_j \epsilon_{t-j} (t \in \Z) 
+    \end{align*}
+    Where $L_t$ is the infinite linear past of $X_t$.***
+\end{theorem}
+
+    
+\begin{definition}[\hypertarget{weakly_stationary}{Weakly Stationary}]
+    A process $X_t$ is weakly stationary if the mean and covariance are time invariant. That is, $\mu_X(t) = \mu_X$ and $\gamma_X(t_1, t_2) = \gamma_X(t_1 - t_2)$ for all $t_1, t_2 \in Z$.
+\end{definition}
+\begin{definition}[Linear Past]
+    
+\end{definition}
+\begin{definition}
+    
+\end{definition}
+\newpage
+%  Outline
+\begin{itemize}
+    \item Time Series data vs IID Data
+    \begin{itemize}
+        \item Glivenko-Cantelli theorem
+    \end{itemize}
+    \item Ergodic Property with a Cosntant Limit
+    \begin{itemize}
+        \item $L^2$ EPCL
+        \item E1, E2, E3 (pg 6-7)
+        \item Strict and Weak Stationary
+        \item Covariance, Correlation, Autocovariance, Autocorrelation
+    \end{itemize}
+    \item Weak Stationary and Hilbert Space
+    \begin{itemize}
+        \item Measure Theory 
+        \begin{itemize}
+            \item $\sigma$-algebra
+            \item $L^2$ space
+            \item Completeness 
+            \item Hilbert space 
+        \end{itemize}
+        \item K-step mean squared error
+        \begin{itemize}
+            \item What method to minimize k-step MSE?
+            \item Closed Convex Hilbert space
+            \item Optimal Forecast
+            \item $L^2$-projection
+        \end{itemize}
+    \end{itemize}
+    \item Conditional Expectation
+    \item Linear Past 
+    \item Deterministic process
+    \item Wold Decomposition
+    \begin{itemize}
+        \item Karhunan Lovuve theorem
+        \item Wold's theorem
+        \item Tie Everythig Together
+    \end{itemize}
+    \item Purely stochastic process
+    \item Why we care now 
+    \begin{itemize}
+        \item AR Model 
+        \item MA Model
+        \item ARMA Model
+        \item ARIMA Model
+        \item SV Model
+    \end{itemize}
+\end{itemize}
+
+
+\end{document}
