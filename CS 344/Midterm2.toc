@@ -1,3 +1,7 @@
 \contentsline {section}{\numberline {1}In person Notes on Midterm 2}{2}{}%
 \contentsline {section}{\numberline {2}Greedy Algorithms}{3}{}%
 \contentsline {subsection}{\numberline {2.1}Greedy Continued}{5}{}%
+\contentsline {section}{\numberline {3}Minimum Spanning Tree}{7}{}%
+\contentsline {section}{\numberline {4}Shortest Path}{7}{}%
+\contentsline {section}{\numberline {5}MISC}{8}{}%
+\contentsline {section}{\numberline {6}Practice Midterm}{9}{}%

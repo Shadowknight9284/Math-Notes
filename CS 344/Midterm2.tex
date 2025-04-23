@@ -132,6 +132,114 @@ Given $n$ piles of stones with sizes $a_1, a_2, \dots, a_n$. We want to mergae a
     \end{proof}
 \end{solution}
 
+\section{Minimum Spanning Tree}
+\begin{definition}[MST]
+    A minimum spanning tree of a graph is a spanning tree with the minimum weight.
+    A spanning tree of a graph is a subgraph that is a tree and contains all the vertices of the graph.
+\end{definition}
+\begin{definition}[Cut Set]
+    A cut of a graoh is the partition of the vertices in a graoh into two disjoint subsets. The cut set is the set of edges that cross the cut.
+\end{definition}
+\begin{theorem}[Cut Property]
+    In any cut-set of the graph if an edge $e$ is strictly lighter than every other edge it must belong to every minimized spanning tree.
+\end{theorem}
+\begin{definition}[Cycle Property]
+    In any simple cycle of the graph if an edge $e$ is strictly heavier than every other edge it must not belong to any minimum spanning tree.
+\end{definition}
+\begin{definition}[Prim's Algorithm]
+    Prim's algorithm is as follows:\\
+    1. Maintain a set of reachble vertices $S$ initialize with an arbitray vertex $v$.\\
+    2. In eah step add the edge with the smallest weight that connects $S$ and $V \setminus S$ to $S$ and update $S$ 
+    3. Repeat until $S = V$.\\
+    This works since It is repeated application of the cut property
+\end{definition}
+\begin{definition}[Kruskal's Algorithm]
+    Kruskal's algorithm is as follows:\\
+    1. Sort the edges in increasing order of weight.\\
+    2. Initialize $T = \emptyset$\\
+    3. if there is an edge that connects two seperate connected components add it to the solution.\\
+    4. Repeat until $T$ is a spanning tree.
+\end{definition}
+\begin{definition}[Boruvka's Algorithm]
+    Initially ever vertex is a seperate group\\
+    In each round we dint the lightest edge from each group and merge the groups.\\
+    Repeat until there is only one group left.
+\end{definition}
+\section{Shortest Path}
+\begin{definition}[Dijkstra's Algorithm]
+    Dijkstra's algorithm is as follows:\\
+    Maintain a set $S$ of decided vertices. Initially $S$ is just the source $s$ and we maintain a distance for each vertex $d_v$ where $d_v$ is the shortest path from $s$ to $v$ only given known vertices.\\
+    We update distances as $\min(d_u, d_v + e(u,v))$ 
+\end{definition}
+\begin{definition}[Bellman-Ford Algorithm]
+    The Bellman-Ford algorithm is as follows:\\
+    It is a DP algorithm that works for negative weights.\\
+    $f(k,v)$ is the shortest distance from $s$ to $v$ with at most $k$ edges.\\
+    $$f(k,v) = \min \begin{cases}
+        f(k-1,v) \\
+        f(k-1,u) + e(u,v) & \text{if} (u,v) \in E
+    \end{cases}$$
+    This runs in $O(nm)$ time.
+\end{definition}
+\begin{definition}[Floyd-Warshall Algorithm]
+    
+    
+\end{definition}
+
+\section{MISC}
+\question\textbf{Longest Increasing Subsequence}\\
+Given a sequence of $n$ distinct integers $a_1, a_2, \dots, a_n$, find the length of the longest increasing subsequence.
+\begin{solution}
+    We can this using DP. where we have the function $f(t)$ being the longest increasing subsequence ending at $t$.
+    $$ f(t)  = 1 + \max_{0 < i < t: a_i < a_t} f(i)$$
+    This runs in $O(n^2)$ time.
+\end{solution}
+
+
+\newpage
+\section{Practice Midterm}
+Decide whether each of the following statements is true or false. If it is true, give a brief explanation. If it is false, give a counterexample.
+\begin{enumerate}
+    \item Every simple undirected graph with 10 vertices cannot have exactly 11 different minimum spanning trees. (An undirected graph is simple if there is at most one edge between each pair of vertices, and no edge connects a vertex to itself.)
+    \begin{solution}
+        False, we can make a graph where every edge has the same weight and then there are $C(10,2) = 45$ edges. Then we can take any $11$ edges and they will all be the same weight.\\
+        Thus we can have $C(11,2) = 55$ different minimum spanning trees.
+    \end{solution}
+    \item In the single-source shortest path problem where every edge has a positive weight, the $s$–$t$ shortest path cannot change if we replace the weight of every edge $w_e$ by its square $w_e^2$.
+    \begin{solution}
+        False since we can take agraph with 3 vertexes $A,B,C$ with weights $1/3, 1/3, 1/2$ for $AB, BC, AC$ respectively. Then the shortest path from $A$ to $C$ is $AC$ with weight $1/2$. But if we square the weights then the shortest path is $AB + BC$ with weight $1/9 + 1/9 = 2/9 < 2/4$.
+
+    \end{solution}
+\end{enumerate}
+We have an array of $n$ distinct integers $(a_1, a_2, \dots, a_n)$ and a parameter $k \in \{1, 2, \dots, n\}$. The goal is to find $k$ increasing subsequences that are pairwise disjoint, so that the total number of elements in them is maximized. We only need to find the maximum number, not the subsequences themselves. For example, if the input is $n = 8$, $k = 2$, $a = (1, 3, 6, 2, 4, 9, 7, 0)$, then the output should be $7$. (These two subsequences can be $(1, 3, 6, 7)$ and $(2, 4, 9)$.)
+
+\begin{enumerate}
+    \item When $k = 1$, the problem is equivalent to the longest increasing subsequence problem. Give an algorithm for it that runs in at most $O(n^2)$ time, and briefly justify its correctness.
+    \begin{solution}
+        We can use DP where we have the function $f(t)$ being the longest increasing subsequence ending at $t$.
+        $$ f(t)  = 1 + \max_{0 < i < t: a_i < a_t} f(i)$$
+        This runs in $O(n^2)$ time.
+    \end{solution}
+    \item Consider the following greedy algorithm for the case where $k = 2$: We find an arbitrary longest increasing subsequence $s_1$, delete it from the original array, and then find another longest increasing subsequence $s_2$ in the remaining array and output the sum of lengths of $s_1$ and $s_2$. Decide whether this algorithm is (always) correct. If so, give a brief explanation, and if not, give a counterexample.
+    \begin{solution}
+        No, it is not always correct. Is is possible that there is a sequence in the first round that takes up elements that would be better fit in the second round. For example, if we have $5, 1, 2, 3, 6, 7, 8, 4$ then the first round would take $ 1, 2, 3, 5, 6, 7, 8$ and the second round would take $4$ but we could have taken $1, 2, 3, 4$ in the first round and $5, 6, 7, 8$ in the second round.\\
+        Thus the greedy algorithm is not optimal.
+    \end{solution}
+\end{enumerate}
+Continuing with the setting in Problem 2, we aim to design algorithms for it
+when $k$ is larger. Clearly describe your algorithms and briefly justify their
+correctness. 
+\begin{enumerate}
+    \item Assume $k = n - 1$. Give an algorithm that runs in $O(n)$ time.
+    \begin{solution}
+        What we can do is we can go linearly through the list with a counter of a min and recaclulating the min up to the $i$th element. If there is a certain point where we dont recaclulate the min then there is an increasing pair and take that as a subsequence and the rest as singleton subsequences.\\
+        This results in $n$ subsequences if sequence is not decreasing and $n-1$ if it is.\\
+    \end{solution}
+    \item Now we drop the assumption that $k = n - 1$ and consider a general $k \in \{1, 2, \dots, n\}$ instead. Give an algorithm that runs in polynomial time.
+    \begin{solution}
+        We can constrc
+    \end{solution}
+\end{enumerate}
 
 
 
