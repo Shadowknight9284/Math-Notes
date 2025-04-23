@@ -1,0 +1,131 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311}
+\newcommand{\assignment}{Homework 8}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question Suppose that \(f, g : A \to \mathbb{R}\) are both uniformly continuous. Prove that \(f + g\) is also uniformly continuous.
+    \begin{solution}
+    Supose $f, g: A \to \R$ are uniformly continuous. Then for every $\epsilon > 0$, there exists $\delta_1, \delta_2 > 0$ such that for all $x, y \in A$ with $|x - y| < \delta_1$ and $|x - y| < \delta_2$, we have $|f(x) - f(y)| < \frac{\epsilon}{2}$ and $|g(x) - g(y)| < \frac{\epsilon}{2}$.\\
+    Thus if we take $\delta = \min(\delta_1, \delta_2) $ for all $x, y \in A$ with $|x - y| < \delta $, we have:
+\begin{align*}
+    |f(x) + g(x) - f(y) - g(y)| & = |(f(x) - f(y)) + (g(x) - g(y))| \\
+    & \leq |f(x) - f(y)| + |g(x) - g(y)| \\
+    & < \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+    & < \epsilon.
+\end{align*}
+    Therefore, \(f + g\) is uniformly continuous.
+    \end{solution}
+
+    \question
+    \begin{parts}
+        \part Give an example of uniformly continuous functions \(f\) and \(g\) such that \(fg\) is not uniformly continuous.
+        \begin{solution}
+        We can take $f:\R \to \R, f(x) := x$ and $g:\R \to \R, g(x) := x$.\\
+        It is clear that $f$ and $g$ are uniformly continuous since $\forall x, y \in \R$, we have $|f(x) - f(y)| = |x - y|$ and $|g(x) - g(y)| = |x-y|$. Thus we can take $\delta = \epsilon$.\\
+        But we have $fg:\R \to \R, fg(x) = x^2$ which is not uniformly continuous.
+        \end{solution}
+
+        \part Prove that if \(f, g : A \to \mathbb{R}\) are uniformly continuous and bounded, then \(fg\) is uniformly continuous.
+        \begin{solution}
+        Let \(f, g : A \to \mathbb{R}\) be uniformly continuous and bounded. Then there exists \(M_1, M_2 > 0\) such that \(|f(x)| < M_1\) and \(|g(x)| < M_2\) for all \(x \in A\). \\
+        Since $f,g$ uniformly continuous, for every $\epsilon > 0$, there exists $\delta_1, \delta_2 > 0$ such that for all $x, y \in A$ with $|x - y| < \delta_1$ and $|x - y| < \delta_2$, we have $|f(x) - f(y)| < \frac{\epsilon}{2M_2}$ and $|g(x) - g(y)| < \frac{\epsilon}{2M_1}$.\\
+        Thus if we take $\delta = \min(\delta_1, \delta_2) $ for all $x, y \in A$ with $|x - y| < \delta $, we have:
+\begin{align*}
+    |f(x)g(x) - f(y)g(y)| & = |f(x)(g(x) - g(y)) + g(y)(f(x) - f(y))| \\
+    & \leq |f(x)||g(x) - g(y)| + |g(y)||f(x) - f(y)| \\
+    & < M_1\frac{\epsilon}{2M_1} + M_2\frac{\epsilon}{2M_2} \\
+    & = \frac{\epsilon}{2} + \frac{\epsilon}{2} \\
+    & = \epsilon.
+\end{align*}
+    Therefore, \(fg\) is uniformly continuous.
+        \end{solution}
+    \end{parts}
+
+    \question Suppose that \(f : \mathbb{R} \to \mathbb{R}\) is continuous, and let \(K\) be a compact subset of \(\mathbb{R}\). Using only the open cover characterization of continuity, prove that \(f(K)\) is compact. (Hint: Question 4 from homework 7 is useful here!).
+    \begin{solution}
+        Suppose $f$ is continuous and $K$ is a compact subset of $\R$.\\
+        Remember that the open cover characterization of continuity states that for every open cover $\{U_i\}_{i \in I}$ of a compact set $K$, there exists a finite subcover $\{U_{i_1}, U_{i_2}, \ldots, U_{i_n}\}$ such that $K \subseteq \bigcup_{j=1}^n U_{i_j}$.\\
+        We also know from the HW 7 question 4 that if $f$ is continous and $U$ is open then $f^{-1}(U)$ is open.\\
+        Let $\{U_i\}_{i \in I}$ be an open cover of $f(K)$.\\
+        Then for each $i \in I$, we have $f^{-1}(U_i)$ is open by the statment from the HW. \\
+        Then we can say that $\{f^{-1}(U_i)\}_{i \in I}$ is an open cover of $K$.\\
+        Since $K$ is compact, there exists a finite subcover $\{f^{-1}(U_{i_1}), f^{-1}(U_{i_2}), \ldots, f^{-1}(U_{i_n})\}$ such that $K \subseteq \bigcup_{j=1}^n f^{-1}(U_{i_j})$.\\
+        Then we have $f(K) \subseteq \bigcup_{j=1}^n U_{i_j}$, which is a finite subcover of $f(K)$.\\
+        Therefore, \(f(K)\) is compact.
+    \end{solution}
+
+    \question Suppose \(f : A \to \mathbb{R}\) is uniformly continuous and \(a \notin A\) is a limit point of \(A\).
+    \begin{parts}
+        \part Prove that if \(\{x_n\}_{n=1}^\infty\) is a Cauchy sequence in \(A\), then \(\{f(x_n)\}_{n=1}^\infty\) is Cauchy.
+        \begin{solution}
+            Let $\epsilon >0 $. Since $f$ is uniformly continuous, there exists $\delta > 0$ such that for all $x, y \in A$ with $|x - y| < \delta$, we have $|f(x) - f(y)| < \epsilon$.\\
+            Since $\{x_n\}$ is a Cauchy sequence, there exists $N \in \N$ such that for all $m, n \geq N$, we have $|x_m - x_n| < \delta$.\\
+            By uniform continuity of $f$, we have:
+\begin{align*}
+    |x_m - x_n| < \delta & \implies |f(x_m) - f(x_n)| < \epsilon.
+\end{align*}
+            Therefore, \(\{f(x_n)\}_{n=1}^\infty\) is Cauchy.
+        \end{solution}
+
+        \part Let \(\{x_n\}_{n=1}^\infty\) be a sequence in \(A\) converging to \(a\). Explain why the limit \(\lim_{n \to \infty} f(x_n)\) exists.
+        \begin{solution}
+            We know that since $\{x_n\}$ is a Cauchy sequence and from the prior part, we have that $\{f(x_n)\}$ is also a Cauchy sequence.\\
+            Since every Cauchy sequence converges, we have that $\{f(x_n)\}$ converges to some $L \in \R$.
+        \end{solution}
+
+        \part Suppose \(\{y_n\}_{n=1}^\infty\) is another sequence in \(A\) that converges to \(a\). Prove that \(\lim_{n \to \infty} f(y_n) = \lim_{n \to \infty} f(x_n)\).
+        \begin{solution}
+            Let $\epsilon > 0$. Since $f$ is uniformly continuous, there exists $\delta > 0$ such that for all $x, y \in A$ with $|x - y| < \delta$, we have $|f(x) - f(y)| < \epsilon$.\\
+            Since $\{x_n\}$ and $\{y_n\}$ both converge to $a$, there exists $N_1, N_2 \in \N$ such that for all $n \geq N_1$, we have $|x_n - a| < \frac{\delta}{2}$ and for all $n \geq N_2$, we have $|y_n - a| < \frac{\delta}{2}$.\\
+            Thus taking $N = \max(N_1, N_2)$, we have for all $n \geq N$:
+\begin{align*}
+    |x_n - y_n| & \leq |x_n - a| + |y_n - a| \\
+    & < \frac{\delta}{2} + \frac{\delta}{2} \\
+    & = \delta.\\
+    & \implies |f(x_n) - f(y_n)| < \epsilon.
+\end{align*}
+            Therefore, we have: \(\lim_{n \to \infty} f(y_n) = \lim_{n \to \infty} f(x_n)\).
+        \end{solution}
+
+        \part Prove that \(\lim_{x \to a} f(x)\) exists.
+        \begin{solution}
+            Since $\{x_n\}$ and $\{y_n\}$ both converge to $a$, and we have that $\lim_{n \to \infty} f(x_n) = \lim_{n \to \infty} f(y_n)$ from the prior part, we have that $\lim_{x \to a} f(x)$ exists by the contrapositive of the divergence criterion of functional limits.
+        \end{solution}
+    \end{parts}
+
+    \question Suppose \(f : [0, 1] \to [0, 1]\) is continuous. Prove that there exists an \(x \in [0, 1]\) with \(f(x) = x\).
+    \begin{solution}
+        Let \(g(x) = f(x) - x\). Then \(g\) is continuous on \([0, 1]\).\\
+        We have \(g(0) = f(0) - 0 \geq 0\) and \(g(1) = f(1) - 1 \leq 0\).\\
+        Since \(g\) is continuous and \(g(0) \geq 0\) and \(g(1) \leq 0\), by the intermediate value theorem, there exists \(c \in [0, 1]\) such that \(g(c) = 0\).\\
+        More rigorously, we have that $g(0) \geq 0 \geq g(1)$. and since $g$ is continuous, we have that $g$ takes all values between $g(0)$ and $g(1)$.\\
+        Thus, there exists \(c \in [0, 1]\) such that \(g(c) = 0\).\\
+        Thus, we have \(f(c) = c\).
+    \end{solution}
+
+    \question A function \(f : A \to \mathbb{R}\) is said to be increasing when for every \(x, y \in A\) with \(x \leq y\), \(f(x) \leq f(y)\). Prove that if \(f\) is increasing and has the intermediate value property, then \(f\) is continuous on \(A\).
+    \begin{solution}
+        Suppose $f$ is increasing and has the intermediate value property.\\
+        Let $\epsilon >0$ and $x \in A^\circ$.\\
+        Since $f$ has the intermediate value property and is increasing, we have that there exists $x_1, x_2 \in A$ such that $x_1 < x_0 < x_2$ and $f(x) - \epsilon < f(x_1) < f(x) < f(x_2) < f(x) + \epsilon$.\\
+        For all $c \in A$ such that $x_1 < c < x_2$, we have $f(c) \in (f(x_1), f(x_2))$.\\
+        Take $\delta = \min(x - x_1, x_2 - x)$.\\
+        Then for all $x \in A$ such that $|x - c| < \delta \implies x-\delta < c < x - \delta \implies x_1 < c < x_2 \implies f(x_1) < f(c) < f(x_2) \implies f(x) - \epsilon < f(c) < f(x) + \epsilon \implies |f(x) - f(c)| < \epsilon$.\\
+        Thus we have that $f$ is continuous at $x$.
+        Since $x$ was arbitrary, we have that $f$ is continuous on $A$ and the boundary of the points of $A$ are continous as well with the only change of the proof being that we take the single sided limit instead of the two sided limit.
+    \end{solution}
+    
+\end{questions}
+
+\end{document}

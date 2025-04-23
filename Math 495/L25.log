@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  9 APR 2025 16:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  19 APR 2025 20:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/prana/OneDrive/Desktop/MathNotes/CS 344/Midterm2.tex"
-(c:/Users/prana/OneDrive/Desktop/MathNotes/CS 344/Midterm2.tex
+**"c:/Users/prana/OneDrive/Desktop/MathNotes/Math 495/L25.tex"
+(c:/Users/prana/OneDrive/Desktop/MathNotes/Math 495/L25.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
 (c:/texlive/2023/texmf-dist/tex/latex/exam/exam.cls
@@ -518,8 +518,8 @@ Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count350
 \l__pdf_internal_box=\box73
-) (./Midterm2.aux)
-\openout1 = `Midterm2.aux'.
+) (./L25.aux)
+\openout1 = `L25.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
@@ -567,55 +567,31 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 LaTeX Font Info:    Trying to load font information for U+rsfs on input line 14.
  (c:/texlive/2023/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
-) (./Midterm2.toc)
-\tf@toc=\write5
-\openout5 = `Midterm2.toc'.
+) [1
 
- [1
-
-{c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-Overfull \hbox (25.4354pt too wide) in paragraph at lines 61--65
-\OT1/cmr/m/n/12 sort the jobs in in-creas-ing or-der of $\OML/cmm/m/it/12 r[]$\OT1/cmr/m/n/12 . Then we take the func-tion $\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 k\OT1/cmr/m/n/12 ) = [][] [] +
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 61--65
-
- []
-
-[4] [5] [6]
-Underfull \hbox (badness 10000) in paragraph at lines 175--178
-
- []
-
-[7] [8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 235--237
-
- []
-
-[10]
-This exam contains 12 questions with 0 parts, 0 subparts, and 0 subsubparts.
+{c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+This exam contains 2 questions with 0 parts, 0 subparts, and 0 subsubparts.
 This exam has a total of 0 points.
 This exam has a total of 0 bonus points.
-(./Midterm2.aux)
+(./L25.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 25238 strings out of 474166
- 634147 string characters out of 5749518
- 1936542 words of memory out of 5000000
- 47136 multiletter control sequences out of 15000+600000
- 568169 words of font info for 77 fonts, out of 8000000 for 9000
+ 25131 strings out of 474166
+ 632489 string characters out of 5749518
+ 1927542 words of memory out of 5000000
+ 47041 multiletter control sequences out of 15000+600000
+ 562068 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 90i,11n,103p,860b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Midterm2.pdf (10 pages, 147894 bytes).
+ 90i,10n,103p,857b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on L25.pdf (2 pages, 35619 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
+ 29 PDF objects out of 1000 (max. 8388607)
+ 18 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
