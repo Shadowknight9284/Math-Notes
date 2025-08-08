@@ -1,0 +1,227 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:640:311H}
+\newcommand{\assignment}{Homework 9}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+
+\question Define \( h(x) = 
+\begin{cases} 
+x^3 \sin\left(\frac{1}{x}\right) & x \neq 0 \\ 
+0 & x = 0 
+\end{cases} \)
+\begin{parts}
+    \part Show that \( h \) is differentiable everywhere.
+    \begin{solution}
+    To show that \( h \) is differentiable everywhere, we need to show that the limit $\lim_{x \to c} \frac{h(x) - h(c)}{x - c}$ exists for all \( c \in \mathbb{R} \).
+    We can see that for \( c \neq 0 \), the function is differentiable since it is a composition of differentiable functions. For \( c = 0 \), we need to check the limit:
+    \[
+    h'(0) = \lim_{x \to 0} \frac{h(x) - h(0)}{x - 0} = \lim_{x \to 0} \frac{x^3 \sin\left(\frac{1}{x}\right)}{x} = \lim_{x \to 0} x^2 \sin\left(\frac{1}{x}\right) = 0.
+    \]
+    Thus, \( h \) is differentiable at \( x = 0 \) and hence differentiable everywhere.
+    \end{solution}
+    
+    \part Show that \( h' \) is continuous everywhere.
+    \begin{solution}
+    Consider $h' =\begin{cases}
+        3x^2 \sin\left(\frac{1}{x}\right) - x\cos\left(\frac{1}{x}\right) & x \neq 0 \\
+        0 & x = 0
+    \end{cases} $ 
+    To show that \( h' \) is continuous everywhere, we need to show that \( \lim_{x \to c} h'(x) = h'(c) \) for all \( c \in \mathbb{R} \).
+    For \( c \neq 0 \), \( h' \) is continuous since it is a composition of continuous functions. For \( c = 0 \), we can let $\epsilon > 0$ be given. 
+    \begin{align*}
+        |h'(x) - h'(0)| &= \left| 3x^2 \sin\left(\frac{1}{x}\right) - x\cos\left(\frac{1}{x}\right) \right| \\
+        &\leq |3x^2| + |x|\\
+        &\leq 4|x|
+    \end{align*}
+    If we take \( \delta = \min\left(1, \sqrt{\frac{\epsilon}{4}}\right) \), then for \( |x| < \delta \), we have
+    \begin{align*}
+        |h'(x) - h'(0)| &\leq 3|x|^2 + |x| \\
+        &\leq 4|x| < 4\delta \\
+        &< \epsilon.
+    \end{align*} 
+    Therefore, \( h' \) is continuous at \( x = 0 \) and hence continuous everywhere.
+    \end{solution}
+    \part Show that \( h' \) is not differentiable at \( x = 0 \).
+    \begin{solution}
+    To show that \( h' \) is not differentiable at \( x = 0 \), we need to check the limit
+    \[
+    h''(0) = \lim_{x \to 0} \frac{h'(x) - h'(0)}{x - 0} = \lim_{x \to 0} \frac{3x^2 \sin\left(\frac{1}{x}\right) - x\cos\left(\frac{1}{x}\right)}{x}.
+    \]
+    This simplifies to
+    \begin{align*}
+        h''(0) &= \lim_{x \to 0} \left( 3x \sin\left(\frac{1}{x}\right) - \cos\left(\frac{1}{x}\right) \right) \\
+        &= \lim_{x \to 0} 3x \sin\left(\frac{1}{x}\right) - \lim_{x \to 0} \cos\left(\frac{1}{x}\right).
+    \end{align*}
+    This limit does not exist. Since we can take two sequences approaching 0, \(x_n = \frac{1}{n\pi} \) and \( y_n = \frac{1}{n\pi + \frac{\pi}{2}} \), we find that they concerge to different values. Thus, \( h' \) is not differentiable at \( x = 0 \).
+    \end{solution}
+\end{parts}
+
+\question Suppose \( f : (a, b) \to \mathbb{R} \) is continuous on \( (a, b) \) and differentiable at \( c \in (a, b) \). Prove that the function \( g : (a, b) \to \mathbb{R} \) defined as
+\[
+g(x) = 
+\begin{cases} 
+\frac{f(x) - f(c)}{x - c} & x \neq c \\ 
+f'(c) & x = c 
+\end{cases}
+\]
+is continuous.
+\begin{solution}
+To show that \( g \) is continuous at \( c \), we need to show that for all \( \epsilon > 0 \), there exists a \( \delta > 0 \) such that if \( |x - c| < \delta \), then \( |g(x) - g(c)| < \epsilon \).
+We know that since \( f \) is differentiable at \( c \), we have that there exists a $\delta > 0$
+    such that
+
+    \begin{align*}
+        |x-c| < \delta &\implies \left| \frac{f(x) - f(c)}{x - c} - f'(c) \right| < \epsilon 
+    \end{align*}
+We also know that
+\begin{align*}
+    |g(x) - g(c)| &= \left| \frac{f(x) - f(c)}{x - c} - f'(c) \right| \\
+    &< \epsilon \quad \text{for } |x - c| < \delta.
+\end{align*}
+Thus, we have shown that \( g \) is continuous at \( c \). Since \( c \) was arbitrary, \( g \) is continuous on \( (a, b) \).
+\end{solution}
+
+\question Prove that \( f : I \to \mathbb{R} \) is differentiable at \( c \in I \) with derivative \( f'(c) \) if and only if we can write 
+\[
+f(x) = f(c) + f'(c)(x - c) + R_c(x)(x - c)
+\]
+where \( R_c(x) \) is continuous at \( x = c \) and \( R_c(c) = 0 \).
+\begin{solution}
+\textbf{Forward Direction:} Assume \( f \) is differentiable at \( c \) with derivative \( f'(c) \). \\
+Then we can construct $R_c(x)$ as follows:
+\begin{align*}
+    R_c(x) &= \begin{cases}
+        \frac{f(x)-f(c)-f'(c)(x-c)}{x-c} & x \neq c \\
+        0 & x = c
+    \end{cases}
+\end{align*}
+Clealry \( R_c(c) = 0 \) and the equation holds for all \( x \in I \). Now, we need to show that \( R_c(x) \) is continuous at \( c \). We have
+\begin{align*}
+    \lim_{x \to c} R_c(x) &= \lim_{x \to c} \frac{f(x) - f(c) - f'(c)(x - c)}{x - c} \\
+    &= \lim_{x \to c} \frac{f(x) - f(c)}{x - c} - f'(c) \\
+    &= f'(c) - f'(c) = 0.
+\end{align*}
+Thus, \( R_c(x) \) is continuous at \( c \) and the forward direction is proved.\\
+\textbf{Backward Direction:} Assume that we can write
+\[
+f(x) = f(c) + f'(c)(x - c) + R_c(x)(x - c)
+\]
+where \( R_c(x) \) is continuous at \( c \) and \( R_c(c) = 0 \). \\
+Then we can rearrange this to get
+\begin{align*}
+    \frac{f(x) - f(c)}{x - c} - f'(c) &= R_c(x).
+\end{align*}
+Since \( R_c(x) \) is continuous at \( c \) and \( R_c(c) = 0 \), we have that for arbitrary $\epsilon>0$ there exists a \( \delta > 0 \) such that for all \( |x - c| < \delta \), we have
+\begin{align*}
+    \left| R_c(x) \right| < \epsilon.
+\end{align*}
+Thus we can write
+\begin{align*}
+    \lim_{x \to c } \left| \frac{f(x) - f(c)}{x - c} - f'(c) \right| = \lim_{x \to c} \left| R_c(x) \right| < \epsilon.
+\end{align*}
+And thus we have shown that \( f \) is differentiable at \( c \) with derivative \( f'(c) \).\\
+\end{solution}
+
+\question Given a differentiable function \( f : A \to \mathbb{R} \), we say that \( f \) is uniformly differentiable on \( A \) when for any \( \epsilon > 0 \), there exists a \( \delta > 0 \) such that if \( |x - y| < \delta \), then 
+\[
+\left| \frac{f(x) - f(y)}{x - y} - f'(y) \right| < \epsilon.
+\]
+\begin{parts}
+    \part Is \( f(x) = x^2 \) uniformly differentiable on \( \mathbb{R} \)?
+    \begin{solution}
+        Let $\epsilon >0$ then take $\delta = \epsilon$. Then for any \( |x - y| < \delta \), we have
+        \begin{align*}
+            \left| \frac{f(x) - f(y)}{x - y} - f'(y) \right| &= \left| \frac{x^2 - y^2}{x - y} - 2y \right| \\
+            &= \left| (x + y) - 2y \right| \\
+            &= |x - y| < \delta = \epsilon.
+        \end{align*}
+        Thus, \( f(x) = x^2 \) is uniformly differentiable on \( \mathbb{R} \).
+    \end{solution}
+    
+    \part Is \( g(x) = x^3 \) uniformly differentiable on \( \mathbb{R} \)?
+    \begin{solution}
+    Note that 
+    \begin{align*}
+        \left| \frac{g(x) - g(y)}{x - y} - g'(y) \right| &= \left| \frac{x^3 - y^3}{x - y} - 3y^2 \right| \\
+        &= |x^2 + xy - 2y^2|\\
+        &= |(x - y)(x + y) + y(x - y)|\\
+        &= |x - y| |x+2y|
+    \end{align*}
+    Since there is a $|x +2y|$ term, there are issues with the uniformity of the derivative. \\
+    Specifically taking $x_n = n$ and $y_n = n + \frac{1}{n}$, we have
+    \begin{align*}
+        \lim |x_n - y_n| &= 0\\
+        \frac{f(x_n) - f(y_n)}{x_n-y_n} &= 3n^2 + 3 + \frac{1}{n^2}
+    \end{align*}
+    which converges to $3$ as $n \to \infty$. Thus the limit does not converge to $g'(y)$ uniformly. Therefore, \( g(x) = x^3 \) is not uniformly differentiable on \( \mathbb{R} \).
+    \end{solution}
+    
+    \part Show that if \( f \) is uniformly differentiable on an interval \( I \), then \( f' \) must be continuous on \( I \).
+    \begin{solution}
+        Suppose $f$ is uniformly differentiable on an interval \( I \). By definition, for any \( \epsilon > 0 \), there exists a \( \delta > 0 \) such that if \( |x - y| < \delta \), then
+        \[
+        \left| \frac{f(x) - f(y)}{x - y} - f'(y) \right| < \epsilon/2
+        \]
+        and
+        \[
+        \left| \frac{f(x) - f(y)}{x - y} - f'(x) \right| < \epsilon/2.
+        \]
+        This implies that
+        \begin{align*}
+            |f'(x) - f'(y)| &= \left| \frac{f(x) - f(y)}{x - y} - f'(y) + f'(y) - f'(x) \right| \\
+            &\leq \left| \frac{f(x) - f(y)}{x - y} - f'(y) \right| + \left| f'(y) - f'(x) \right| \\
+            &< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.
+        \end{align*}
+    \end{solution}
+    
+    \part If \( f \) is differentiable on a closed, bounded interval \([a, b]\), is \( f \) necessarily uniformly differentiable there? Give a proof or a counterexample to support your answer.
+    \begin{solution}
+        No, We can use the textbooks example of $g(x) = \begin{cases}
+            x^2 sin(\frac{1}{x}) & x \neq 0 \\
+            0 & x = 0
+        \end{cases}$ on the interval of $[-1,1]$
+        We know that $g(x)$ is differentiable on $[-1,1]$ but not uniformly differentiable. To see this, we can take the sequences $x_n = \frac{1}{n\pi}$ and $y_n = \frac{1}{n\pi + \frac{\pi}{2}}$ each converging to $0$ and thus their difference converges to $0$ but the limit of the difference quotient does not converge. 
+        \begin{align*}
+            \lim \frac{g(x_n) - g(y_n)}{x_n - y_n} \to \infty \text{ as } n \to \infty.
+        \end{align*}
+        and $g'(y_n) = 2y_n \sin(\frac{1}{y_n}) - \cos(\frac{1}{y_n}) \to 0$ 
+        Thus the limit does not converge uniformly to $g'(y)$ and thus $g$ is not uniformly differentiable on $[-1,1]$.
+    \end{solution}
+\end{parts}
+
+\question If \( f \) is twice differentiable on an open interval containing \( c \) and \( f'' \) is continuous at \( c \), prove that 
+\[
+f''(c) = \lim_{h \to 0} \frac{f(c + h) + f(c - h) - 2f(c)}{h^2}.
+\]
+\begin{solution}
+Consider the follow limits and applying L'Hospital's rule twice where needed
+\begin{align*}
+    \lim_{h \to 0} \frac{f(c + h) + f(c - h) - 2f(c)}{h^2} &= \lim_{h \to 0} \frac{f'(c + h) - f'(c-h)}{2h} \\
+    &= \lim_{h \to 0} \frac{f''(c + h) + f''(c - h)}{2} \\
+    &= \frac{f''(c) + f''(c)}{2} \\
+    &= f''(c).
+\end{align*}
+\end{solution}
+
+\question Suppose that \( g : A \to \mathbb{R} \) and \( a \) is a limit point of \( A \). Also assume that \( g(x) \neq 0 \) for any \( x \in A \). Show that if \( \lim_{x \to a} g(x) = \infty \), then \( \lim_{x \to a} \frac{1}{g(x)} = 0 \).
+\begin{solution}
+Let $\epsilon > 0$. We know that by the archimedian property of the real numbers there exists and $N \in \mathbb{N}$ such that $\frac{1}{N} < \epsilon$. \\
+We also know that since \( \lim_{x \to a} g(x) = \infty \), for all \( M \in \N \) there exists a \( \delta > 0 \) such that if \( 0 < |x - a| < \delta \), then \( g(x) > M \). \\
+Thus, we can take \( M = N \) then when $0 < |x - a| < \delta$ we have $0 < \frac{1}{g(x)} < \frac{1}{N} < \epsilon$. \\
+Thus we have shown that \( \lim_{x \to a} \frac{1}{g(x)} = 0 \).
+\end{solution}
+
+\end{questions}
+
+\end{document}

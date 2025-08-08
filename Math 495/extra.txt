@@ -1,0 +1,134 @@
+\subsection{Loss Function}
+The loss function is a measure of how well the autoencoder is performing. It quantifies the difference between the input data $x$ and the reconstructed output $x'$. We can define the loss function as $L(x, x')$, where $x$ is the input data and $x'$ is the reconstructed output and our goal is to minimize this. The most common loss function used for autoencoders is the mean squared error (MSE) loss function, which is defined as:
+\begin{equation}
+    L_{MSE}(x, x') = ||x - x'||^2 = \frac{1}{M} \sum_{i=1}^{M} (x_i - x'_i)^2 = \sum_{i=1}^{M} (x_i - D_\theta(E_\phi(x)))^2
+\end{equation}
+Where $M$ is the number of samples in the dataset. Notice that this is essentially the same as the loss function used in linear regression where our $x \sim x_i$ and $y \sim D_\theta(E_\phi(x))$.\\
+This model of loss function also satisfies that property that has a global minimum at the point where the encoder and decoder are perfect ie $I = D_\theta(E_\phi(x))$. 
+\begin{proof}
+    We know that the loss minimized at $\frac{\partial L_{MSE}}{\partial x'} = 0$ and $\frac{\partial^2 L_{MSE}}{\partial x'^2} > 0$.  \\
+    Clearly, 
+    \begin{align*}
+        \frac{\partial L_{MSE}}{\partial x'} &= \frac{1}{M} \sum_{i=1}^{M} 2(x'_i - x_i) = 0 \\
+        \Rightarrow x' &= x \\
+        \frac{\partial^2 L_{MSE}}{\partial x'^2} &= \frac{1}{M} \sum_{i=1}^{M} 2 > 0\\
+        \Rightarrow x' &\text{ is a minimum}
+    \end{align*} 
+\end{proof}
+We can also use cross entropy loss function for binary data, which is defined as:
+\begin{equation}
+    L_{CE}(x, x') = -\frac{1}{M} \sum_{i=1}^{M} \sum_{j=1}^{n} (x_{j,i} \log(x'_{j,i}) + (1 - x_{j,i}) \log(1 - x'_{j,i}))
+\end{equation}
+Where $M$ is the number of samples in the dataset, $x_{j,i}$ is the $j^{th}$ component of the $i^{th}$ sample, and the sum over all the elements of the sample and each component of the element. This is used when we have inputs that are normalized to be between 0 and 1. This is usually done by using a sigmoid activation function or a softmax activation function. We can similarly see that the best choice of $x'$ is when $x' = x$ but the proof is not as straightforward as the MSE loss function.
+\begin{proof}
+    We know that the loss minimized at $\frac{\partial L_{CE}}{\partial x'} = 0$ and $\frac{\partial^2 L_{CE}}{\partial x'^2} > 0$.  \\
+    We can calculate the first derivative of the loss function as:
+    \begin{equation}
+        \frac{\partial L_{CE}}{\partial x'} = -\frac{1}{M} \sum_{i=1}^{M} \sum_{j=1}^{n} \left( \frac{x_{j,i}}{x'_{j,i}} - \frac{1 - x_{j,i}}{1 - x'_{j,i}} \right) = -\frac{1}{M} \sum_{i=1}^{M} \sum_{j=1}^{n} \left( \frac{x_{j,i} - x'_{j,i}}{x'_{j,i}(1 - x'_{j,i})} \right) = 0
+    \end{equation}
+    We can see that this is a bit more complicated than the MSE loss function, but we can still see that the partial derivative is equal to 0 when $x' = x$.\\
+    Now we can calculate the second derivative of the loss function as:
+    \begin{equation}
+        \frac{\partial^2 L_{CE}}{\partial x'^2}\big|_{x_{j,i} = x_{j,i}'} = -\frac{1}{M} \sum_{i=1}^{M} \sum_{j=1}^{n} \left( - \frac{x_{j,i}}{{x'_{j,i}}^2} - \frac{1-x_{j,i}}{(1-{x_{j,i}'})^2} \right) > 0
+    \end{equation}
+
+\end{proof}
+
+
+\subsection{Regularization Paradigms}
+From the construction of the loss function for the autoencoder, we can see that there is a very likely possibility that the autoencoder will overfit to the training data and choose functions $E_\theta$ and $D_\theta$ that reconstruct the training data perfectly. This is not what we want, as we want the autoencoder to learn a general representation of the data that can be used for other tasks. To prevent this overfilling, we can use a few different training paradigms to regularize the autoencoder.
+\begin{itemize}
+    \item \textbf{Bottleneck:} A bottleneck is a layer in the autoencoder that has a smaller number of neurons than dimension of the decoded data. This leads to a "bow-tie" shape in the architecture of the autoencoder. The idea is that the bottleneck forces the autoencoder to learn a compressed representation of the data, which can help prevent overfitting. We can call this representation the latent features. The bottleneck can be thought of as a constraint on the encoder and decoder functions, which forces them to learn a more general representation of the data.
+    \item \textbf{L1/L2 Regularization:} This is a common regularization technique used in statistics and modeling, I have see in used in many different contexts from linear regression to neural networks. The idea is to add a penalty term to the loss function that discourages large weights in the model. This can be done by adding the L1(sum) or L2(squared sum) norm of the weights to the loss function. Mathematially this is done by adding a term $\lambda ||\theta||_1$ or $\lambda ||\theta||_2$ to the loss function.
+    \item \textbf{Dropout:} Dropout is a regularization technique that randomly drops out a certain percentage of neurons in the network during training. This is a common neural network regularization technique that helps prevent overfitting by ensuring that the network does not rely too heavily on any one set of neurons. 
+    \item \textbf{Weight Tying:} Weight tying is a technique that forces the sum of the weights of the encoder and decoder. This ensure that the encoder and decoder have somewhat equally "complex" functions. Mathematially this is essentially the same as $\sum_{i=1}^{k} \phi_i = \sum_{i=1}^{j} \theta_i$ where $\phi_i$ and $\theta_i$ are the weights of the encoder and decoder respectively.
+\end{itemize}
+There are many other regularization techniques that can be used, but these are the most common ones that I have seen used in practice. For my Applied Statistical Learning I used L1 and L2 regularization and Dropout regularization. The other forms of regularization are more common in the context of autoencoders. 
+
+\subsection{Feed Forward Autoencoder}
+The Feed Forward Autoencoder is the most basic type of autoencoder. It has been described in the previous sections, and it is most commonly used for dimensionality reduction and feature extraction. Below is a diagram of the typical architecture of a feed forward autoencoder where the left two layers are the encoder and the right two layers are the decoder. The middle layer is the bottleneck layer, which has a smaller number of neurons than the input and output layers. 
+\begin{center}
+\begin{tikzpicture}[scale=0.8, transform shape]
+
+% Input layer (5 neurons)
+\foreach \i in {1,...,5} {
+    \node[circle, draw, minimum size=0.6cm] (input\i) at (0, {-(\i - 3) * 1.5}) {};
+}
+
+% Hidden layer 1 (3 neurons)
+\foreach \i in {1,...,3} {
+    \node[circle, draw, minimum size=0.6cm] (hidden1\i) at (2, {-(\i - 2) * 2}) {};
+}
+
+% Bottleneck layer (2 neurons)
+\foreach \i in {1,...,2} {
+    \node[circle, draw, minimum size=0.6cm] (bottleneck\i) at (4, {-(\i - 1.5) * 3}) {};
+}
+
+% Hidden layer 2 (3 neurons)
+\foreach \i in {1,...,3} {
+    \node[circle, draw, minimum size=0.6cm] (hidden2\i) at (6, {-(\i - 2) * 2}) {};
+}
+
+% Output layer (5 neurons)
+\foreach \i in {1,...,5} {
+    \node[circle, draw, minimum size=0.6cm] (output\i) at (8, {-(\i - 3) * 1.5}) {};
+}
+
+% Connections from input to hidden layer 1
+\foreach \i in {1,...,5} {
+    \foreach \j in {1,...,3} {
+        \draw[->] (input\i) -- (hidden1\j);
+    }
+}
+
+% Connections from hidden layer 1 to bottleneck
+\foreach \i in {1,...,3} {
+    \foreach \j in {1,...,2} {
+        \draw[->] (hidden1\i) -- (bottleneck\j);
+    }
+}
+
+% Connections from bottleneck to hidden layer 2
+\foreach \i in {1,...,2} {
+    \foreach \j in {1,...,3} {
+        \draw[->] (bottleneck\i) -- (hidden2\j);
+    }
+}
+
+% Connections from hidden layer 2 to output
+\foreach \i in {1,...,3} {
+    \foreach \j in {1,...,5} {
+        \draw[->] (hidden2\i) -- (output\j);
+    }
+}
+
+\end{tikzpicture}
+\end{center}
+
+
+\section{Denoising Autoencoder}
+Now that we have a basic understanding of autoencoders, we can move on to a specific type of autoencoder called the denoising autoencoder (DAE). The DAE is a type of autoencoder that is trained to reconstruct the original data from a corrupted version of the data. The idea is to add noise to the input data and then train the autoencoder to reconstruct the original data from the noisy input. This can be done by adding noise of different forms to the input data. Popular methods are adding Gaussian noise, salt and pepper noise, and masking noise. Gaussian noise is the most common type of noise added to the input data, and it is done by adding a random value from a Gaussian distribution to each element of the input data. Salt and pepper noise is done by randomly setting a certain percentage of the input data to 0 or 1. Masking noise is done by randomly setting a certain percentage of the input data to 0, essentially dropping out a certain percentage of the input data. I will be predominantly highlighting the Gaussian noise method, but the other methods are also relatively common. \\
+The DAE is trained using the same loss function as the basic autoencoder, but the input data is corrupted with noise before being fed into the encoder. The loss function is still defined as $L(x, x')$, where $x$ is the original data and $x'$ is the reconstructed output. The goal of training a DAE is to minimize the difference between the original uncorrupted data and the reconstructed output. \\
+The flow of the DAE is as follows:
+\begin{center}
+\begin{tikzpicture}[node distance=6cm, auto] % Increased node distance to 4cm
+
+% Original Data
+\node[circle, draw, minimum size=1.2cm] (original) {Original};
+
+% Corrupted Data
+\node[circle, draw, minimum size=1.2cm, right of=original] (corrupted) {Corrupted};
+
+% Reconstructed Data
+\node[circle, draw, minimum size=1.2cm, right of=corrupted] (reconstructed) {Reconstructed};
+
+% Arrows
+\draw[->, thick] (original) -- (corrupted) node[midway, above] {Noising};
+\draw[->, thick] (corrupted) -- (reconstructed) node[midway, above] {Autoencoder};
+
+\end{tikzpicture}
+\end{center}
+
+
+\section{Conclusion}

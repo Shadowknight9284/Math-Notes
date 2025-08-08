@@ -1,0 +1,229 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{mathrsfs}
+
+\let\P\relax
+\newcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\var}{\text{Var}}
+
+\title{Wold Decomposition Theorem}
+\author{Pranav Tikkawar}
+\date{\today}
+
+\begin{document} 
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+\section{Introduction}
+\begin{frame}{Introduction}
+    My goal is to frame the Wold Decomposition Theorem. 
+    \begin{itemize}
+        \item What is the Wold Decomposition Theorem and where does it apply?
+        \item What content is required to understand the Wold Decomposition Theorem? 
+        \item Why we care about this theorem?
+    \end{itemize}
+    \begin{definition}
+        Simply put, any weakly stationary stochastic process can be expressed as a sum of a deterministic component and a stochastic component which is a Infinite Order Moving Average model.
+    \end{definition}
+\end{frame}
+
+\section{Time Series Data VS IID Data}
+\begin{frame}{Time Series Data VS IID Data}
+    \begin{itemize}
+        \item Time Series Data
+        \begin{itemize}
+            \item A sequence of data points indexed in time order by Integers
+            \item Each data point is dependent on the previous one.
+        \end{itemize}
+        \item IID Data
+        \begin{itemize}
+            \item Independent and identically distributed data.
+            \item Each data point is independent of the others.
+        \end{itemize}
+    \end{itemize}
+    \begin{theorem}[Glivenko-Cantelli Theorem]
+        Suppose $X_1, X_2, \ldots, X_n$ are IID random variables with a common distribution function $F$. Then the empirical distribution function $F_n(x)$ converges uniformly to $F(x)$ as $n \to \infty$.
+    \end{theorem}
+    However, unlike IID data, no uniform convergence is guaranteed for time series data. due to the fact that the data points are dependent on each other.
+\end{frame}
+
+\section{Ergodicity and Potential Issues}
+\begin{frame}
+    \frametitle{Ergodicity}
+    \begin{definition}[Almost Sure Ergodic Property with a Constant Limit (EPCL)]
+        $X_t \in \mathbb{R} \; (t \in \mathbb{Z})$ has this property if $\exists \mu \in \mathbb{R}$ such that $
+        \P(\lim_{n \to \infty} \frac{1}{n} \sum_{t=1}^{n} X_t = \mu) = 1$.\\
+        In other words the time average converges to a constant almost surely.
+    \end{definition}
+    Similarly, $L^2$-EPCL requires convergence in the $L-2$ sense i.e. $\lim_{n \to \infty} E[(\frac{1}{n} \sum_{t=1}^{n} X_t - \mu)^2] = 0$.\\
+    These properties are nice, but there are some circumstances where they do not hold like
+    \begin{itemize}
+        \item Lack of Stability 
+        \item High Variance
+        \item Absorbing States
+    \end{itemize}
+\end{frame}
+
+\section{Stationarity}
+\begin{frame}
+    \frametitle{Stationarity}
+    We can use stationarity to help solves these issues that might come with a lack of ergodicity.\\
+    \begin{definition}[Weak Stationarity]
+        $X_t \in \mathbb{R} \; (t \in \mathbb{Z})$ is weakly stationary if:
+        \begin{itemize}
+            \item $E[X_t^2] < \infty$
+            \item $\exists \mu \in \mathbb{R}$ such that $\forall t \in \mathbb{Z}, E[X_t] = \mu$ for all $t$.
+            \item $\exists \gamma: \mathbb{Z} \to \mathbb{R}$ such that $\forall s,t \in \mathbb{Z}$, $Cov(X_s, X_t) = \gamma(t-s)$.
+        \end{itemize}
+        Simply put, a weakly stationary process has a constant mean and its covariance only depends on the time difference (lag) between two points, not on the actual time points themselves.
+    \end{definition}
+    \begin{theorem}[Birkhoff's Ergodic Theorem]
+        If $X_t$ is a $L^2$ (weakly stationary) process and $\mu$ is the mean of the process, then $\lim_{n \to \infty} \frac{1}{n} \sum_{t=1}^{n} X_t = \mu$ almost surely.
+    \end{theorem}
+\end{frame}
+
+
+\section{Hilbert Spaces}
+\begin{frame}
+    \frametitle{Hilbert Spaces}
+    Consider $\mathscr{R}$ which is the space of real-valued random variables on a probability space $(\Omega, \mathcal{F}, \P)$. \\
+    Define $L^2(\Omega) = \{X: X \in \mathscr{R} \text{ s.t. } E[X^2] < \infty\}$, which is the space of square integrable random variables.\\
+    This space is a Hilbert space with the inner product defined as:
+        $$\langle X, Y \rangle = E[XY] \quad \text{for } X, Y \in L^2(\Omega)$$
+    \begin{definition}[Projection on subspace]
+        We can also define the projection of a random variable $X$ onto a subspace $V \subseteq L^2(\Omega)$ as $P_V(X)$ 
+        such that $P_V(X)$ is the unique element in $V$ that minimizes the distance to $X$, i.e. $\|X - P_V(X)\|^2 = \inf_{Y \in V} \|X - Y\|^2$.
+    \end{definition}
+\end{frame}
+
+\section{Sigma Algebra and Filtration}
+\begin{frame}
+    \frametitle{Sigma Algebra and Filtration}
+    \begin{definition}[Sigma Algebra]
+        A $\sigma$-algebra $\mathcal{F}$ on a set $\Omega$ is a collection of subsets of $\Omega$ that is closed under complementation and countable unions.
+    \end{definition}
+    \begin{definition}[Filtration]
+        A filtration $\{\mathcal{F}_t\}_{t \in \Z}$ is a family of $\sigma$-algebras such that $\mathcal{F}_s \subseteq \mathcal{F}_t$ for all $s < t$.
+    \end{definition}
+    This allows us to define the information available at time $t$.
+\end{frame}
+
+\section{Optimal Forecast}
+\begin{frame}
+    \frametitle{Optimal Forecast}
+    \begin{definition}[K-step prediction Mean Square Error ]
+        Let $\mathcal{F}_t$ be the $\sigma$-algebra generated by the process up to time $t$. And $\mathscr{X} = \{Y | Y \in L^2(\Omega), \mathcal{F}_t - \text{measureable}\}$ 
+        Then for $k \geq 1$ and $Y \in \mathscr{X}$, the $k$-step prediction mean square error of $Y$ is defined as:
+        $\sigma^2_k(Y) = E[(X_{t+k} - Y)^2]$
+    \end{definition}
+    The prediction of $X_{t+k}$ given $\mathcal{F}_t$ is optimal if it minimizes the $k$-step prediction mean square error. 
+    \begin{theorem}[Optimal Forecast]
+        The optimal forecast ($\hat{X}_{t+k}$) of $X_{t+k}$ given $\mathcal{F}_t$ is $\sigma^2_k(X_{t+k}) = \inf_{Y \in \mathscr{X}} \sigma^2_k(Y)$\\
+        Or equivalently $\hat{X}_{t+k} = E[X_{t+k} | \mathcal{F}_t]$.\\
+        In other words, the best prediction of $X_{t+k}$ based on the information available up to time $t$ is the conditional expectation of $X_{t+k}$ given $\mathcal{F}_t$.
+    \end{theorem}
+    \begin{theorem}
+        If $E(X)$ exists then $E(X | \mathcal{F}_t)$ exists and is unique.
+    \end{theorem}
+\end{frame}
+
+\section{Optimal Linear Forecast}
+\begin{frame}
+    \frametitle{Optimal Linear Forecast}
+    Similarly we can consider the optimal linear forecast of $X_{t+k}$ given $\mathcal{F}_t$.\\
+    \begin{definition}[Linear Past]
+        The linear past of a process $X_t$ is the closure of the set of all linear combinations of past values of the process, i.e.
+        $L_t = \{Y |Y \in L^2(\Omega), Y = \sum_{i=0}^{n} a_i X_{t-i}, a_i \in \R, n \in \mathbb{N}\}$.\\
+        The infinite linear past is defined as $L_{-\infty} = \bigcap_{t=-\infty}^{\infty} L_t$.
+    \end{definition}
+    \begin{definition}[Optimal Linear Forecast]
+        The optimal linear forecast of $X_{t+k}$ given $\mathcal{F}_t$ when the follow holds: $\sigma^2_k(X_{t+k}) = \inf_{Y \in L_t} \sigma^2_k(Y)$,\\
+        Then we can write $\sigma^2_{k,\text{opt}} = \sigma^2_k(X_{t+k})$\\
+        Note that the optimal linear forecast is essentaly the orthogonal projection of $X_{t+k}$ onto the linear past $L_t$.
+    \end{definition}
+\end{frame}
+
+\section{Deterministic Process}
+\begin{frame}
+    \frametitle{Deterministic Process}
+        \begin{definition}[Deterministic]
+            We say a process $X_t$ (weakly stationary) is deterministic if $\sigma^2_{1, \text{opt}} = 0$ \\
+            More generally, we say a process $Z_t$ is deterministic with respect to $X_t$ if $\forall t \in \Z$, $\inf_{Y \in L_t} E[(Z_t - Y)^2] = 0$.\\
+            This implies that $\sigma^2_{k, \text{opt}} = 0$ for all $k \geq 1$, meaning that the process can be perfectly predicted from its past values.\\
+            Note that if $Z_t$ is a deterministic process with respect to $X_t$ then $Z_t$ is in the infinite linear past of $X_t$.
+        \end{definition}
+        Now we are ready to define the Wold Decomposition Theorem.
+\end{frame}
+
+\section{Wold Decomposition Theorem}
+\begin{frame}
+    \frametitle{Wold Decomposition Theorem}
+    \begin{theorem}[Wold Decomposition Theorem]
+        Plainly put, any $L^2$/weakly stationary process $X_t \in \R (t \in \Z)$ can be decomposed into a deterministic component and a stochastic component where the stochastic component is an Infinite Order Moving Average (IOMA) process.\\
+        More formally:
+        \begin{align*}
+            X_t \in \R(t \in \Z) \text{weakly stationary} \implies\\
+            \exists a_n, \in \R, n \in \Z, a_0 = 1, \sum_{n=-\infty}^{\infty} a_n^2 < \infty \\
+            \exists \epsilon_t, \mu_t (t \in \Z) \forall s,t \in \Z \text{ such that }\\
+            \epsilon_t \in L_t, \mu_t \in L_{-infty},\\
+            \E(\epsilon_t) = 0, \cov(\epsilon_s, \epsilon_t) = \delta_{s,t} \sigma^2 < \infty, \cov(\epsilon_s, \mu_t) = 0\\
+            X_t = \mu_t + \sum_{j=0}^{\infty} a_j \epsilon_{t-j}
+        \end{align*}
+    \end{theorem}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Wold Decomposition Theorem Proof}
+    Since $X_t$ is weakly stationary, can write is as the sum of its projection onto the linear past upt to time $t-1$ and an element of the orthogonal complement of the linear past, i.e.
+    $$X_t = P_{L_{t-1}}(X_t) + \epsilon_t, \text{ where } \epsilon_t \in L_{t-1}^\perp \cap L_t$$ 
+    $$\sigma^2_\epsilon = \var(\epsilon_t)  = \sigma^2_{1, \text{opt}}, \cov(X_s, \epsilon_t) = 0 (s \leq t -1)$$
+    Next we can define $a_j$ as the coefficients of the linear combination of given by $\frac{\langle X_t, \epsilon_{t-j} \rangle}{\sigma^2_\epsilon}$ and since $X_t$ is weakly stationary, $a_j$ is independent of $t$.\\
+    Now we can consider $E_t^0 = \{ Y \in L_t | Y = \sum_{j=1}^k a_j \epsilon_{t_{j}}, k \in \N, a_j \in \R, t_j \in \Z, t_j \leq t \}$ and its closure $E_t$ Then we can $\sum_{j=0}^{\infty} a_j \epsilon_{t-j} \in E_t \subseteq L_t$ and then we can define $\mu_t := X_t - \sum_{j=0}^{\infty} a_j \epsilon_{t-j} \in L_t$ ,  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Wold Decomposition Theorem Proof (cont.)}
+    Clearly with this we have the the inner product $\langle \mu_t, \epsilon_{t-j} \rangle = 0$ for all $j$\\
+    Then $\forall l \geq 1$: $P_{L_{t-l}}(X_t) = P_{L_{t-l}}(\mu_t) + \sum_{j=0}^{\infty} a_j P_{L_{t-l}}(\epsilon_{t-j})$\\
+    $= \mu_t + \sum_{j=l}^{\infty} a_j \epsilon_{t-j} \in L_{t-1}$\\
+    Since $\sum_{j=l}^{\infty} a_j \epsilon_{t-j} \in L_{t-1}$\\ 
+    We can write $\forall l \geq 1$: $\mu_t = P_{L_{t-1}}(X_t) - \sum_{j=l}^{\infty} a_j \epsilon_{t-j}$\\ 
+    And thus $\mu_t \in L_{-\infty}$, and deterministic with respect to $X_t$\\
+    \textbf{Remark:} The $\epsilon_t$ are only uncorrelated not necessarily independent. 
+\end{frame}
+
+\section{Applications of Wold Decomposition Theorem}
+\begin{frame}
+    \frametitle{Applications of Wold Decomposition Theorem}
+    The largest implication of the Wold Decomposition Theorem is that it allows us to decompose any weakly stationary process into something that is reliably predictable (the deterministic component) and something that is just pure noise (the stochastic component).\\
+    This is useful in many applications such as:
+    \begin{itemize}
+        \item Economic Forecasting
+        \item Signal Processing
+        \item Weather Prediction
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Thanks for Listening!}
+    I would like to thank my graduate mentor Forrest Thurman for his guidance and the DRP program for facilitating these amazing presentations! The book I used for this presentation is \textit{Mathematical Foundations of Time Series Analysis: A Concise Introduction} by Jan Beran.
+
+
+\end{frame}
+
+
+\end{document}

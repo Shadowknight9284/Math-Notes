@@ -1,0 +1,415 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+
+\section{Model Formulation}
+Consider a directed graph $G(V,E)$ with components $\{C_i\}_{i=1}^n$ over discrete time $t \in \{1,\dots,T\}$. Each component $C_i$ has:
+\begin{itemize}
+    \item State space $S^{(i)} = \{s^{(i)}_1,\dots,s^{(i)}_{m_i}\}$
+    \item Time-homogeneous transition matrix $P^{(i)}$ where $P^{(i)}_{jk} = \mathbb{P}(C_i(t) = k \mid C_i(t-1) = j)$
+\end{itemize}
+
+Edge weights $w_{ij} \in \mathbb{R}$ quantify dependency strength. The \textbf{aggregated influence} on $C_j$ is:
+\begin{equation}
+W_j = \sum_{i \in \mathcal{I}_j} w_{ij}, \quad \mathcal{I}_j = \{i : (C_i, C_j) \in E\}
+\end{equation}
+
+The adjusted transition matrix $\widetilde{P}^{(j)}$ is defined per row $k$:
+\begin{align}
+\widetilde{P}^{(j)}_{kk} &= \sigma\left( \mathrm{logit}\left(P^{(j)}_{kk}\right) + W_j \right) \\
+\widetilde{P}^{(j)}_{kl} &= P^{(j)}_{kl} \cdot \frac{1 - \widetilde{P}^{(j)}_{kk}}{1 - P^{(j)}_{kk}}, \quad l \neq k
+\end{align}
+where $\sigma(z) = (1 + e^{-z})^{-1}$ and $\mathrm{logit}(x) = \log(x/(1-x))$.
+
+\section{Parameter Estimation Framework}
+
+\subsection{Data Requirements}
+The estimation requires:
+\begin{itemize}
+    \item Component state trajectories $\mathcal{D} = \{\mathbf{s}(t)\}_{t=0}^T$
+    \item Graph topology $G(V,E)$
+    \item Transition records with $T \gg \max_j |S^{(j)}|^2$ for reliability
+\end{itemize}
+
+\subsection{Maximum Likelihood Estimation}
+
+\subsubsection{Base Transition Probabilities ($P^{(i)}$)}
+The MLE for $P^{(i)}_{jk}$ is derived from the categorical likelihood:
+\begin{equation}
+\mathcal{L}(P^{(i)}) = \prod_{j=1}^{m_i} \prod_{k=1}^{m_i} (P^{(i)}_{jk})^{N^{(i)}_{jk}}
+\end{equation}
+where $N^{(i)}_{jk}$ counts $j \to k$ transitions. Maximizing under $\sum_k P^{(i)}_{jk} = 1$ yields:
+\begin{equation}
+\hat{P}^{(i)}_{jk} = \frac{N^{(i)}_{jk}}{\sum_{l=1}^{m_i} N^{(i)}_{jl}}
+\end{equation}
+
+\textbf{Proof}: The Lagrangian is:
+\begin{equation}
+\mathcal{L} = \sum_{j,k} N^{(i)}_{jk} \ln P^{(i)}_{jk} + \sum_j \lambda_j \left(1 - \sum_k P^{(i)}_{jk}\right)
+\end{equation}
+Setting $\partial\mathcal{L}/\partial P^{(i)}_{jk} = 0$ gives $P^{(i)}_{jk} = N^{(i)}_{jk}/\lambda_j$. The constraint implies $\lambda_j = \sum_l N^{(i)}_{jl}$.
+
+\subsubsection{Edge Weights ($w_{ij}$)}
+The complete-data log-likelihood is:
+\begin{equation}
+\mathcal{L}(\mathbf{w}) = \sum_{t=1}^{T-1} \sum_{j=1}^{|V|} \ln \widetilde{P}^{(j)}_{s_j(t), s_j(t+1)}(\mathbf{w})
+\end{equation}
+
+The gradient components are:
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial w_{ij}} = \sum_{t=1}^{T-1} 
+\begin{cases} 
+1 - \widetilde{P}^{(j)}_{k_t k_t}(\mathbf{w}) & \text{if } s_j(t+1) = k_t \\
+-\dfrac{\widetilde{P}^{(j)}_{k_t k_t}(\mathbf{w}) \widetilde{P}^{(j)}_{k_t l_t}(\mathbf{w})}{P^{(j)}_{k_t l_t}} & \text{otherwise}
+\end{cases}
+\end{equation}
+where $k_t = s_j(t)$. Optimization uses gradient ascent:
+\begin{equation}
+\mathbf{w}^{(n+1)} = \mathbf{w}^{(n)} + \gamma_n \nabla_{\mathbf{w}} \mathcal{L}(\mathbf{w}^{(n)})
+\end{equation}
+
+\subsection{Expectation-Maximization Algorithm for Incomplete Data}
+
+\subsubsection{Setup}
+When states are partially observed:
+\begin{itemize}
+    \item Observed data: $\mathbf{Y} = \{\mathbf{s}(t)\}_{t \in \mathcal{O}}$
+    \item Latent variables: $\mathbf{Z} = \{\mathbf{s}(t)\}_{t \notin \mathcal{O}}$
+    \item Complete-data likelihood: $\mathcal{L}_c(\theta) = \mathbb{P}(\mathbf{Y},\mathbf{Z} \mid \theta)$
+\end{itemize}
+
+\subsubsection{Algorithm}
+\begin{enumerate}
+    \item \textbf{Initialize}: $\theta^{(0)} = (\hat{P}^{(i)}, \mathbf{w}^{(0)})$
+    
+    \item \textbf{E-step}: Compute
+    \begin{equation}
+    Q(\theta \mid \theta^{(n)}) = \mathbb{E}_{\mathbf{Z}|\mathbf{Y},\theta^{(n)}}[\ln \mathcal{L}_c(\theta)]
+    \end{equation}
+    using forward-backward algorithm for expected transition counts:
+    \begin{equation}
+    \bar{N}^{(j)}_{kl} = \sum_{t=1}^{T-1} \mathbb{P}(s_j(t)=k, s_j(t+1)=l \mid \mathbf{Y}, \theta^{(n)})
+    \end{equation}
+    
+    \item \textbf{M-step}: Update parameters
+    \begin{align}
+    \hat{P}^{(i)}_{jk} &= \frac{\bar{N}^{(i)}_{jk}}{\sum_l \bar{N}^{(i)}_{jl}} \\
+    \mathbf{w}^{(n+1)} &= \underset{\mathbf{w}}{\mathrm{argmax}}\  Q(\theta \mid \theta^{(n)})
+    \end{align}
+    
+    \item \textbf{Iterate} until $|\mathcal{L}(\theta^{(n+1)}) - \mathcal{L}(\theta^{(n)})| < \epsilon$
+\end{enumerate}
+
+\subsubsection{Theoretical Guarantees}
+\begin{theorem}[Monotonicity]
+$\mathcal{L}(\theta^{(n+1)}) \geq \mathcal{L}(\theta^{(n)})$ with equality iff $\theta^{(n)}$ is stationary point.
+\end{theorem}
+\textbf{Proof}: By Jensen's inequality and properties of conditional expectation.
+
+\section{Theoretical Properties}
+
+\subsection{Consistency}
+Under regularity conditions:
+\begin{equation}
+\hat{\theta}_T \xrightarrow{p} \theta_0 \quad \text{as} \quad T \to \infty
+\end{equation}
+where $\theta_0$ is the true parameter vector.
+
+\subsection{Asymptotic Normality}
+\begin{equation}
+\sqrt{T} (\hat{\theta}_T - \theta_0) \xrightarrow{d} \mathcal{N}(0, \mathcal{I}^{-1}(\theta_0))
+\end{equation}
+where $\mathcal{I}(\theta)$ is the Fisher information matrix.
+
+\section{Implementation Considerations}
+
+\subsection{Regularization}
+\begin{itemize}
+    \item \textbf{Base probabilities}: Dirichlet prior with parameter $\alpha$
+    \begin{equation}
+    \tilde{P}^{(i)}_{jk} = \frac{N^{(i)}_{jk} + \alpha}{\sum_l N^{(i)}_{jl} + m_i \alpha}
+    \end{equation}
+    
+    \item \textbf{Edge weights}: $L_2$ regularization
+    \begin{equation}
+    \mathcal{L}_{\text{reg}}(\mathbf{w}) = \mathcal{L}(\mathbf{w}) - \lambda \|\mathbf{w}\|_2^2
+    \end{equation}
+\end{itemize}
+
+\subsection{Identifiability Conditions}
+For unique parameter identification:
+\begin{enumerate}
+    \item $\widetilde{P}^{(j)}(\mathbf{w}_1) = \widetilde{P}^{(j)}(\mathbf{w}_2) \: \forall j \implies \mathbf{w}_1 = \mathbf{w}_2$
+    \item Each component has $\deg_{\text{in}}(C_j) \geq 1$
+    \item $G(V,E)$ is directed acyclic
+\end{enumerate}
+
+\section{Conclusion}
+This framework provides statistically rigorous estimation for stochastic graph models. The MLE and EM algorithms offer efficient parameter recovery with theoretical guarantees, enabling application to reliability analysis and networked systems.
+
+
+\newpage
+
+\section{Model Formulation}
+Consider a directed graph $G(V,E)$ representing a system of $n$ components over discrete time $t = 1, 2, \dots, T$. Each component $C_i \in V$ has:
+
+\begin{itemize}
+    \item State space $S^{(i)} = \{s^{(i)}_1, s^{(i)}_2, \dots, s^{(i)}_{m_i}\}$
+    \item Time-homogeneous transition matrix $P^{(i)} = [P^{(i)}_{jk}]$ where:
+    \begin{equation}
+        P^{(i)}_{jk} = \mathbb{P}(C_i(t) = s^{(i)}_k \mid C_i(t-1) = s^{(i)}_j)
+    \end{equation}
+\end{itemize}
+
+Edges $(C_i, C_j) \in E$ carry weights $w_{ij} \in \mathbb{R}$ quantifying dependency strength. The \textbf{aggregated influence} on component $C_j$ is:
+\begin{equation}
+    W_j = \sum_{i \in \mathscr{I}_j} w_{ij}, \quad \mathscr{I}_j = \{i : (C_i, C_j) \in E\}
+\end{equation}
+
+The adjusted transition matrix $\widetilde{P}^{(j)}$ is defined per row $k$ as:
+\begin{align}
+    \widetilde{P}^{(j)}_{kk} &= \sigma\left( \mathrm{logit}\left(P^{(j)}_{kk}\right) + W_j \right) \label{eq:diag_adj} \\
+    \widetilde{P}^{(j)}_{kl} &= P^{(j)}_{kl} \cdot \frac{1 - \widetilde{P}^{(j)}_{kk}}{1 - P^{(j)}_{kk}}, \quad l \neq k \label{eq:offdiag_adj}
+\end{align}
+where $\sigma(z) = (1 + e^{-z})^{-1}$ is the sigmoid function and $\mathrm{logit}(x) = \log(x/(1-x))$.
+
+\section{Parameter Estimation Framework}
+
+\subsection{Data Requirements}
+The estimation requires:
+\begin{itemize}
+    \item \textbf{State trajectories}: $\mathscr{D} = \{\mathbf{s}(t)\}_{t=0}^T$ where $\mathbf{s}(t) = (s_1(t), \dots, s_n(t))$ and $s_j(t) \in S^{(j)}$
+    \item \textbf{Graph topology}: Directed graph $G(V,E)$
+    \item \textbf{Transition records}: Documented state transitions with $T \gg \max_j |S^{(j)}|^2$ for reliability
+\end{itemize}
+
+\subsection{Maximum Likelihood Estimation}
+
+\subsubsection{Base Transition Probabilities ($P^{(i)}$)}
+The likelihood for component $C_i$'s transitions follows a categorical distribution:
+\begin{equation}
+    \mathscr{L}(P^{(i)}) = \prod_{j=1}^{m_i} \prod_{k=1}^{m_i} (P^{(i)}_{jk})^{N^{(i)}_{jk}}
+\end{equation}
+where $N^{(i)}_{jk}$ counts observed transitions from state $j$ to $k$.
+
+\begin{theorem}[MLE for $P^{(i)}$]
+The maximum likelihood estimator is:
+\begin{equation}
+    \hat{P}^{(i)}_{jk} = \frac{N^{(i)}_{jk}}{\sum_{l=1}^{m_i} N^{(i)}_{jl}} \label{eq:mle_base}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Maximize the log-likelihood $\ell(P^{(i)}) = \sum_{j,k} N^{(i)}_{jk} \ln P^{(i)}_{jk}$ subject to $\sum_k P^{(i)}_{jk} = 1$. Introduce Lagrange multipliers $\lambda_j$:
+\begin{equation}
+    \mathscr{L} = \sum_{j,k} N^{(i)}_{jk} \ln P^{(i)}_{jk} + \sum_j \lambda_j \left(1 - \sum_k P^{(i)}_{jk}\right)
+\end{equation}
+Taking derivatives:
+\begin{align}
+    \frac{\partial \mathscr{L}}{\partial P^{(i)}_{jk}} &= \frac{N^{(i)}_{jk}}{P^{(i)}_{jk}} - \lambda_j = 0 \implies P^{(i)}_{jk} = \frac{N^{(i)}_{jk}}{\lambda_j} \\
+    \sum_k P^{(i)}_{jk} &= \frac{1}{\lambda_j} \sum_k N^{(i)}_{jk} = 1 \implies \lambda_j = \sum_k N^{(i)}_{jk}
+\end{align}
+Substituting yields (\ref{eq:mle_base}). The Hessian matrix is negative semi-definite, confirming a maximum.
+\end{proof}
+
+\subsubsection{Edge Weights ($w_{ij}$)}
+The complete-data log-likelihood is:
+\begin{equation}
+    \ell(\mathbf{w}) = \sum_{t=1}^{T-1} \sum_{j=1}^{n} \ln \widetilde{P}^{(j)}_{s_j(t), s_j(t+1)}(\mathbf{w}) \label{eq:full_ll}
+\end{equation}
+where $\widetilde{P}^{(j)}$ depends on $\mathbf{w} = \{w_{ij}\}_{(i,j)\in E}$ through (\ref{eq:diag_adj}) and (\ref{eq:offdiag_adj}).
+
+\begin{theorem}[Gradient of Log-Likelihood]
+The gradient component for edge $(i,j)$ is:
+\begin{equation}
+    \frac{\partial \ell}{\partial w_{ij}} = \sum_{t=1}^{T-1} 
+    \begin{cases} 
+        1 - \widetilde{P}^{(j)}_{k_t k_t}(\mathbf{w}) & \text{if } s_j(t+1) = k_t \\
+        -\dfrac{\widetilde{P}^{(j)}_{k_t k_t}(\mathbf{w}) \widetilde{P}^{(j)}_{k_t l_t}(\mathbf{w})}{P^{(j)}_{k_t l_t}} & \text{otherwise}
+    \end{cases}
+    \label{eq:gradient}
+\end{equation}
+where $k_t = s_j(t)$, $l_t = s_j(t+1)$.
+\end{theorem}
+
+\begin{proof}
+Consider two cases for each transition $s_j(t) \to s_j(t+1)$:
+
+\textbf{Case 1:} $s_j(t+1) = s_j(t) = k_t$
+\begin{align}
+    \frac{\partial}{\partial w_{ij}} \ln \widetilde{P}^{(j)}_{k_t k_t} &= \frac{1}{\widetilde{P}^{(j)}_{k_t k_t}} \cdot \frac{\partial}{\partial w_{ij}} \sigma(\mathrm{logit}(P^{(j)}_{k_t k_t}) + W_j) \\
+    &= \frac{1}{\widetilde{P}^{(j)}_{k_t k_t}} \cdot \sigma'(\cdot) \cdot 1 \\
+    &= 1 - \widetilde{P}^{(j)}_{k_t k_t}
+\end{align}
+since $\sigma'(z) = \sigma(z)(1 - \sigma(z))$.
+
+\textbf{Case 2:} $s_j(t+1) = l_t \neq k_t$
+\begin{align}
+    \frac{\partial}{\partial w_{ij}} \ln \widetilde{P}^{(j)}_{k_t l_t} &= \frac{1}{\widetilde{P}^{(j)}_{k_t l_t}} \cdot P^{(j)}_{k_t l_t} \frac{\partial}{\partial w_{ij}} \left( \frac{1 - \widetilde{P}^{(j)}_{k_t k_t}}{1 - P^{(j)}_{k_t k_t}} \right) \\
+    &= \frac{1}{\widetilde{P}^{(j)}_{k_t l_t}} \cdot P^{(j)}_{k_t l_t} \cdot \frac{ - \frac{\partial \widetilde{P}^{(j)}_{k_t k_t}}{\partial w_{ij}} }{1 - P^{(j)}_{k_t k_t}} \\
+    &= -\dfrac{\widetilde{P}^{(j)}_{k_t k_t} \widetilde{P}^{(j)}_{k_t l_t}}{P^{(j)}_{k_t l_t}}
+\end{align}
+Summing over time points gives (\ref{eq:gradient}).
+\end{proof}
+
+Optimization is performed via gradient ascent:
+\begin{equation}
+    \mathbf{w}^{(n+1)} = \mathbf{w}^{(n)} + \gamma_n \nabla_{\mathbf{w}} \ell(\mathbf{w}^{(n)})
+\end{equation}
+with adaptive step size $\gamma_n$.
+
+\subsection{Expectation-Maximization Algorithm for Incomplete Data}
+
+\subsubsection{Problem Setup}
+When state observations are incomplete:
+\begin{itemize}
+    \item Observed data: $\mathscr{Y} = \{\mathbf{s}(t)\}_{t \in \mathscr{O}}$
+    \item Latent variables: $\mathscr{Z} = \{\mathbf{s}(t)\}_{t \notin \mathscr{O}}$
+    \item Complete data: $(\mathscr{Y}, \mathscr{Z})$
+\end{itemize}
+
+\subsubsection{Algorithm Derivation}
+The complete-data log-likelihood is:
+\begin{equation}
+    \ell_c(\theta) = \sum_{t=1}^{T-1} \sum_{j=1}^{n} \ln \widetilde{P}^{(j)}_{s_j(t), s_j(t+1)}(\mathbf{w})
+\end{equation}
+
+\begin{enumerate}
+    \item \textbf{Initialization}: Set $\theta^{(0)} = (\hat{P}^{(i)}, \mathbf{w}^{(0)})$
+    
+    \item \textbf{E-step}: Compute expected log-likelihood
+    \begin{equation}
+        Q(\theta \mid \theta^{(n)}) = \mathbb{E}_{\mathscr{Z}|\mathscr{Y}, \theta^{(n)}} [\ell_c(\theta)]
+    \end{equation}
+    Key quantities are expected transition counts:
+    \begin{equation}
+        \bar{N}^{(j)}_{kl} = \sum_{t=1}^{T-1} \mathbb{P}(s_j(t)=k, s_j(t+1)=l \mid \mathscr{Y}, \theta^{(n)})
+    \end{equation}
+    Computed via the forward-backward algorithm:
+    \begin{align}
+        \alpha_t(j,k) &= \mathbb{P}(\mathscr{Y}_{1:t}, s_j(t)=k) \\
+        \beta_t(j,k) &= \mathbb{P}(\mathscr{Y}_{t+1:T} \mid s_j(t)=k) \\
+        \mathbb{P}(s_j(t)=k, s_j(t+1)=l \mid \mathscr{Y}) &\propto \alpha_t(j,k) \widetilde{P}^{(j)}_{kl}(\mathbf{w}^{(n)}) \beta_{t+1}(j,l)
+    \end{align}
+    
+    \item \textbf{M-step}: Update parameters
+    \begin{align}
+        \hat{P}^{(i)}_{jk} &= \frac{\bar{N}^{(i)}_{jk}}{\sum_l \bar{N}^{(i)}_{jl}} \\
+        \mathbf{w}^{(n+1)} &= \underset{\mathbf{w}}{\mathrm{argmax}}  Q(\theta \mid \theta^{(n)})
+    \end{align}
+    solved via gradient ascent on $Q$
+    
+    \item \textbf{Convergence}: Stop when $|\ell(\theta^{(n+1)}) - \ell(\theta^{(n)})| < \epsilon$
+\end{enumerate}
+
+\begin{theorem}[Monotonicity of EM]
+$\ell(\theta^{(n+1)}) \geq \ell(\theta^{(n)})$ with equality iff $\theta^{(n)}$ is a stationary point.
+\end{theorem}
+\begin{proof}
+By Jensen's inequality:
+\begin{align}
+    \ell(\theta) - \ell(\theta^{(n)}) &\geq Q(\theta \mid \theta^{(n)}) - Q(\theta^{(n)} \mid \theta^{(n)}) \\
+    \ell(\theta^{(n+1)}) - \ell(\theta^{(n)}) &\geq Q(\theta^{(n+1)} \mid \theta^{(n)}) - Q(\theta^{(n)} \mid \theta^{(n)}) \geq 0
+\end{align}
+since $\theta^{(n+1)}$ maximizes $Q(\cdot \mid \theta^{(n)})$.
+\end{proof}
+
+\section{Theoretical Properties}
+
+\subsection{Consistency}
+\begin{assumption}[Regularity Conditions]
+A1: Parameter space $\Theta$ is compact \\
+A2: True parameter $\theta_0 \in \text{int}(\Theta)$ \\
+A3: Model is identifiable \\
+A4: $\ell(\theta)$ is continuous in $\theta$ and differentiable in $\text{int}(\Theta)$ \\
+A5: Dominated convergence applies to derivatives
+\end{assumption}
+
+\begin{theorem}[Consistency]
+Under A1-A5, the MLE satisfies:
+\begin{equation}
+    \hat{\theta}_T \xrightarrow{p} \theta_0 \quad \text{as} \quad T \to \infty
+\end{equation}
+\end{theorem}
+
+\subsection{Asymptotic Normality}
+\begin{theorem}[Asymptotic Normality]
+Under regularity conditions:
+\begin{equation}
+    \sqrt{T} (\hat{\theta}_T - \theta_0) \xrightarrow{d} \mathcal{N}(0, \mathscr{I}^{-1}(\theta_0))
+\end{equation}
+where $\mathscr{I}(\theta)$ is the Fisher information matrix:
+\begin{equation}
+    \mathscr{I}(\theta)_{ij} = -\mathbb{E}\left[ \frac{\partial^2 \ell}{\partial \theta_i \partial \theta_j} \right]
+\end{equation}
+\end{theorem}
+
+\subsection{Identifiability Conditions}
+For unique parameter identification:
+\begin{enumerate}
+    \item \textbf{Observational equivalence}: $\widetilde{P}^{(j)}(\mathbf{w}_1) = \widetilde{P}^{(j)}(\mathbf{w}_2) \: \forall j \implies \mathbf{w}_1 = \mathbf{w}_2$
+    \item \textbf{Connectivity}: $\deg_{\text{in}}(C_j) \geq 1$ for all $j$
+    \item \textbf{Acyclicity}: $G(V,E)$ is directed acyclic
+\end{enumerate}
+
+\section{Implementation Considerations}
+
+\subsection{Regularization}
+\begin{itemize}
+    \item \textbf{Base probabilities}: Dirichlet prior
+    \begin{equation}
+        \tilde{P}^{(i)}_{jk} = \frac{N^{(i)}_{jk} + \alpha}{\sum_l N^{(i)}_{jl} + m_i \alpha}, \quad \alpha > 0
+    \end{equation}
+    
+    \item \textbf{Edge weights}: $L_2$ regularization
+    \begin{equation}
+        \ell_{\text{reg}}(\mathbf{w}) = \ell(\mathbf{w}) - \lambda \|\mathbf{w}\|_2^2, \quad \lambda > 0
+    \end{equation}
+\end{itemize}
+
+\subsection{Computational Complexity}
+\begin{itemize}
+    \item \textbf{Gradient computation}: $\mathscr{O}(|E| \cdot T \cdot \max_j m_j^2)$ per iteration
+    \item \textbf{Forward-backward}: $\mathscr{O}(T \cdot \max_j m_j^2)$ per component per E-step
+    \item \textbf{Parallelization}: Component-wise independence allows distributed computation
+\end{itemize}
+
+\subsection{Validation Metrics}
+\begin{itemize}
+    \item \textbf{Brier score}:
+    \begin{equation}
+        \text{BS} = \frac{1}{T-1} \sum_{t=1}^{T-1} \sum_{j=1}^{n} \| \mathbf{e}_{s_j(t+1)} - \widetilde{\mathbf{p}}^{(j)}(t) \|^2
+    \end{equation}
+    where $\widetilde{\mathbf{p}}^{(j)}(t)$ is predicted state distribution
+    
+    \item \textbf{Transition KL-divergence}:
+    \begin{equation}
+        D_{KL} = \sum_{j} \sum_{k} \hat{\pi}^{(j)}_k \sum_{l} \hat{P}^{(j)}_{kl} \ln \frac{\hat{P}^{(j)}_{kl}}{\widetilde{P}^{(j)}_{kl}}
+    \end{equation}
+    with $\hat{\pi}^{(j)}$ empirical state occupancy
+\end{itemize}
+
+\section{Conclusion}
+This framework provides a mathematically rigorous foundation for parameter estimation in stochastic graph transition models. The MLE derivation offers statistically efficient estimators, while the EM algorithm extends applicability to partially observed systems. Theoretical guarantees ensure reliability, and implementation strategies address practical challenges in complex systems.
+
+\newpage
+
+
+
+
+
+\end{document}

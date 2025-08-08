@@ -1,0 +1,307 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\author{\name}
+\title{Utilizing Finite State Stochastic Graphs for Reliability Analysis in Aircraft Systems}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    This paper presents a novel approach for reliability analysis in aircraft systems by utilizing finite state stochastic graphs. Traditional methods often rely on the Weibull distribution to model time-to-failure, which requires extensive failure and repair data that may not always be available. Our method leverages finite state stochastic graphs to approximate system reliability, capturing component states and their transitions without the need for detailed historical data. Through simulations, we demonstrate how this framework can effectively analyze and predict the reliability of complex aircraft systems, offering a practical alternative for scenarios with limited data.
+\end{abstract}
+
+\section{Introduction}
+\subsection{Background}
+% *** GIVE EXPLANTION OF RELIABILITY ANALYSIS IN AIRCRAFT SYSTEMS AND THE NEED FOR A NEW APPROACH. ***
+
+\subsection{Components and States}
+Consider the system to be a collection of components denoted by $C = \{C_1, C_2, \ldots, C_n\}$. Each component $C_i$, there exists a finite number of states it could be in, denoted by $S_i = \{s_{i1}, s_{i2}, \ldots, s_{im}\}$. The states represent the operational conditions of the component, such as new, functional, degraded, or failed. The transition between these states is governed by a set of probabilities, which can be represented as a transition matrix $P_i$ for each component $C_i$. The transition matrix captures the likelihood of moving from one state to another over time. With the assumption that the system does not require the specific time a component is in a state, we can consider the distribution of changing states over time to follow an exponential distribution with a parameter $\lambda_{i,j}$ representing the rate of transition from state $s_{i,j}$ to state $s_{ik}$. The mean time to transition is given by $\frac{1}{\lambda_{ij}}$.\\
+% We can also consider the generator matrix $Q^{(i)}$ for the $i$th component where the off-diagonal entries $Q_{jk}^{(i)}$ represent the transition rates from state $s_{i,j}$ to state $s_{i,k}$, and the diagonal entries $Q_{jj}^{(i)}$ are defined such that the sum of each row is zero, i.e., $Q_{jj}^{(i)} = -\sum_{k \neq j} Q_{jk}^{(i)}$. The generator matrix provides a continuous-time Markov chain representation of the component's state transitions.
+
+\subsection{Graph Representation}
+We can represent the system as a directed graph where each component $C_i$ is a vertex and the edges represent the dependencies between components. The edges can be weighted to indicate the strength of the dependency, which can affect the transition probabilities of connected components. This graph representation allows us to visualize and analyze the relationships between components and their states.
+
+% \section{Methodology}
+
+% \subsection{Finite State Discrete Time Stochastic Directed Graph}
+% Now consider a Directed Graph $G(V, E)$ where the vertices $V$ represent the components of the system and the edges $E$ represent the dependencies between these components. An edge from vertex $C_i$ to vertex $C_j$ indicates that the state of component $C_i$ can influence the state of component $C_j$. The weight of the edge can represent the strength of this dependency given by a value $w_{ij} \in \mathbb{R}$. This can be interpreted as the proportion adjustment of not transitioning to a new state for component $C_j$ when component $C_i$ transitions to a new state. \\
+% \subsection{Adjustment of Transition Probabilities}
+% Assume that $G(V, E)$ is a directed graph representing a system of components over a interval of time $T$, where each vertex $C_i$ is a random variable respresenting a components with a corresponding set of states 
+% $$S^{(i)} = \{s^{(i)}_{1},s^{(i)}_{2}, \ldots s^{(i)}_{n}\}$$ 
+% With the probability of transitioning from state $s^{(i)}_{j}$ to state $s^{(i)}_{k}$ given by a transition matrix $P^{(i)}$ where 
+% $$P^{(i)}_{jk}(t) = P(C_i(t) = k | C_i(t-1) = j)$$ 
+% and $\forall s,t \in T$, $P^{(i)}_{jk}(t) = P^{(i)}_{jk}(s)$. \\
+% Due to this assumption we will omit the $t$ dependency of the matrix.\\\\
+% Let $E = \{(C_i, C_j) | C_i \in V, C_j \in V\}$ be the set of edges in the graph. The weight of an edge $(C_i, C_j)$ is given by $w_{ij} \in \mathbb{R}$. \\
+% The transition probabilities can be adjusted based on the weights of the edges given by the pair of functions $f_{w_{ij}}(x)$ and $g_{w_{ij}}(x)$, where $f_{w_{ij}}(x)$ is a function that adjusts the diagonal entries transition probability matrix of component $C_j$ based on the weight of the edge $(C_i, C_j)$, similarly $g_{w_{ij}}(x)$ adjusts the off-diagonal entries of the transition probability matrix of component $C_j$. The adjusted transition probabilities can be represented as follows:
+% \begin{align*}
+%     P^{(j)}_{jk} &= \begin{cases}
+%         f_{w_{ij}}(P^{(j)}_{lk}) & \text{if } l = k \\
+%         g_{w_{ij}}(P^{(j)}_{lk}) & \text{if } l \neq k
+%     \end{cases}
+% \end{align*}
+% There are many choices for the functions $f_{w_{ij}}(x)$ and $g_{w_{ij}}(x)$, but we require that they satisfy the following conditions:
+% % \begin{itemize}
+% %     \item Probability Range Preservation
+% %     \item Identity at Zero Weight
+% %     \item Full Probability Coverage
+% %     \item Row-Stochastic Preservation
+% %     \item Boundary Consistency
+% %     \item Monotonicity
+% %     \item Continuity
+% % \end{itemize}
+% \begin{itemize}
+%     \item $f_{w_{ij}}(x) \in [0, 1]$ for all $x \in [0, 1]$
+%     \item $g_{w_{ij}}(x) \in [0, 1]$ for all $x \in [0, 1]$
+%     \item $\{x_i\}_{i=1}^{n} \in [0, 1]$ such that if $\sum_{i=1}^{n} x_i = 1$, then $f_{w_{ij}}(x_1) + \sum_{i=2}^{n} g_{w_{ij}}(x_i) = 1$
+%     \item $\forall x \in [0, 1]$ and $\forall y \in [0, 1]$, $\exists w$ such that $f_{w}(x) = y$ 
+%     \item If $w_{ij} = 0$, then $f_{w_{ij}}(x) = x$ and $g_{w_{ij}}(x) = x$ 
+% \end{itemize}
+% Though these conditions seem restrictive, they allow for a wide range of functions to be used. But the function that provides the best results will the Logit-Adjusted Transition Probability Function. 
+% \begin{align*}
+%     f_{w_{ij}}(x) &= \sigma( \text{logit}(x) + w_{ij}) \\
+%     g_{w_{ij}}(y) &= y \cdot \frac{1-f_{w_{ij}}(x)}{1-x}
+% \end{align*}
+%  where $\sigma(x) = \frac{1}{1 + e^{-x}}$ is the sigmoid function and $\text{logit}(x) = \log\left(\frac{x}{1-x}\right)$ is the logit function. The logit-adjusted transition probability function allows for a smooth adjustment of the transition probabilities based on the weight of the edge, while preserving the properties of probability distributions. The interpretation of the weight $w_{ij}$ is that it is the log-odds adjustment per unit of dependency strength. 
+% \begin{align*}
+%     \underbrace{\ln\left(\frac{f_w(x)}{1-f_w(x)}\right)}_{\text{New log-odds}}
+%     &= 
+%     \underbrace{\ln\left(\frac{x}{1-x}\right)}_{\text{Original log odds}}+ w_{ij}
+% \end{align*}
+% A positive weight indicates an increase in self transition probability, ie a increase in stability, while a negative weight indicates a decrease in self transition probability, ie a decrease in stability. The off-diagonal entries of the transition probability matrix are adjusted similarly, but the adjustment is based on the product of original transition probability and a term derived from the self transition probability. 
+
+
+\section{Stochastic Graph Model for Component Transitions}
+
+Consider a directed graph $G(V, E)$ representing a system of components over discrete time $t \in \{1, \dots, T\}$. Each vertex $C_i \in V$ represents a component with state space $S^{(i)} = \{s^{(i)}_1, s^{(i)}_2, \ldots, s^{(i)}_{n_i}\}$. The transition matrix $P^{(i)}$ is time-homogeneous with entries:
+\begin{align*}
+P^{(A)}_{ij} &= \mathbb{P}(A(t) = j \mid A(t-1)= i)
+\end{align*}
+\begin{align*}
+    P^{(A)} &= \begin{bmatrix}
+    P^{(A)}_{11} & P^{(A)}_{12} & \cdots & P^{(A)}_{1n} \\
+    P^{(A)}_{21} & P^{(A)}_{22} & \cdots & P^{(A)}_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    P^{(A)}_{n1} & P^{(A)}_{n2} & \cdots & P^{(A)}_{nn}
+    \end{bmatrix}
+\end{align*}
+
+The edge set $E = \{(C_a, C_b) \mid C_a C_b \in V\}$ has a influence/weight matrix $W$ where the weight $w_{ij}$ represents the adjustment in the jth row's probability in the target $C_b$ when the component $C_a$ transitions to the state $i$ when it was priorly not in state $i$. Note that the matrix $W$ must be of size $n \times m$ where $n$ is the size 
+
+\begin{align*}
+    W = \begin{bmatrix}
+    w_{11} & w_{12} & w_{13} & \cdots & w_{1m} \\
+    w_{21} & w_{22} & w_{23} & \cdots & w_{2m} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    w_{n1} & w_{n2} & w_{n3} & \cdots & w_{nm}
+    \end{bmatrix}
+\end{align*}
+
+The adjusted transition matrix $\widetilde{P}^{(j)}$ is defined per row $k$ as:
+\begin{align*}
+\widetilde{P}^{(j)}_{kk} &= \sigma\left( \mathrm{logit}\left(P^{(j)}_{kk}\right) + W_j \right) \\
+\widetilde{P}^{(j)}_{kl} &= P^{(j)}_{kl} \cdot \frac{1 - \widetilde{P}^{(j)}_{kk}}{1 - P^{(j)}_{kk}}, \quad l \neq k
+\end{align*}
+where $\sigma(z) = (1 + e^{-z})^{-1}$ is the sigmoid function and $\mathrm{logit}(x) = \log(x/(1-x))$.
+
+
+\begin{align*}
+    \tilde{P}_{kk}^{(b)} &= \sigma \left( \ell (P^{(b)}_{kk}) + \sum_{n \in \mathcal{M}} W^{(n,b)}[i] \right) \\
+    \tilde{P}_{kl}^{(b)} &= P^{(b)}_{kl} \cdot \frac{1 - \tilde{P}_{kk}^{(b)}}{1 - P^{(b)}_{kk}}, \quad l \neq k
+\end{align*}
+
+\begin{align*}
+    \sigma(z) &= \frac{1}{1 + e^{-z}} \\
+    \ell(z) &= \log\left(\frac{z}{1-z}\right)
+\end{align*}
+
+\subsection*{Model Properties}
+
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Probability Preservation}: $\widetilde{P}^{(j)}_{kl} \in [0,1]$ for all $k,l$
+    \item \textbf{Idempotence at Zero Influence}: $W_j = 0 \implies \widetilde{P}^{(j)} = P^{(j)}$
+    \item \textbf{Row-Stochasticity}: $\sum_l \widetilde{P}^{(j)}_{kl} = 1$ for all $k$
+    \item \textbf{Surjective Adjustment}: $\forall y \in (0,1), \exists W_j$ such that $\widetilde{P}^{(j)}_{kk} = y$
+    \item \textbf{Interpretability}: $W_j$ represents additive log-odds adjustment:
+    \[
+    \log\left(\frac{\widetilde{P}^{(j)}_{kk}}{1-\widetilde{P}^{(j)}_{kk}}\right) = \log\left(\frac{P^{(j)}_{kk}}{1-P^{(j)}_{kk}}\right) + W_j
+    \]
+\end{enumerate}
+
+\subsection*{Advantages Over Initial Formulation}
+
+\begin{itemize}
+    \item \textbf{Aggregated Influence}: Handles multiple dependencies via $W_j = \sum_{i} w_{ij}$, eliminating edge-order ambiguity
+    \item \textbf{Row-Consistent Adjustment}: Off-diagonal terms explicitly reference same-row diagonal probability
+    \item \textbf{Stochasticity Guarantee}: Row sums remain unity by construction
+    \item \textbf{Probabilistic Coherence}: Maintains interpretable log-odds relationship
+\end{itemize}
+
+\subsection*{Limitations and Extensions}
+
+\begin{itemize}
+    \item \textbf{State-Independent Weights}: Future work may incorporate $w_{ij}(s_i,s_j)$
+    \item \textbf{Temporal Dynamics}: Extension to time-varying $W_j(t)$ possible
+    \item \textbf{Higher-Order Dependencies}: Non-Markovian edges could be considered
+\end{itemize}
+
+\section{Parameter Estimation Framework}
+This paper presents a rigorous parameter estimation framework for stochastic graph models with logit-adjusted transition probabilities. Given a directed graph $G(V,E)$ with components $\{C_i\}_{i=1}^n$ and state spaces $\{S^{(i)}\}_{i=1}^n$, we estimate:
+\begin{enumerate}[label=(\roman*)]
+    \item Base transition probabilities $P^{(i)} = [P^{(i)}_{jk}]$
+    \item Edge weights $\mathbf{w} = \{w_{ij}\}_{(i,j)\in E}$
+\end{enumerate}
+from observed state transition data.
+
+\section{Data Requirements}
+The estimation framework requires the following data:
+\begin{itemize}
+    \item \textbf{State trajectories}: Time-series $\mathcal{D} = \{\mathbf{s}(t)\}_{t=0}^T$ where $\mathbf{s}(t) = (s_1(t), \dots, s_n(t))$ and $s_j(t) \in S^{(j)}$
+    \item \textbf{Graph topology}: Known directed graph $G(V,E)$
+    \item \textbf{Transition records}: Documented state transitions for all components
+\end{itemize}
+
+\section{Estimation of Base Transition Probabilities}
+The base transition matrices $P^{(i)}$ are estimated independently per component.
+
+\subsection{Maximum Likelihood Estimation}
+For each component $C_i$, the transition probability from state $j$ to $k$ is:
+\begin{equation}
+\hat{P}^{(i)}_{jk} = \frac{N^{(i)}_{jk}}{\sum_{l=1}^{|S^{(i)}|} N^{(i)}_{jl}}
+\end{equation}
+where $N^{(i)}_{jk}$ counts observed transitions $j \to k$.
+
+\subsection{Regularization}
+For sparse data, apply Dirichlet smoothing:
+\begin{equation}
+\tilde{P}^{(i)}_{jk} = \frac{N^{(i)}_{jk} + \alpha}{\sum_{l=1}^{|S^{(i)}|} N^{(i)}_{jl} + |S^{(i)}| \alpha}, \quad \alpha > 0
+\end{equation}
+
+\section{Estimation of Edge Weights}
+The edge weights $\mathbf{w} = \{w_{ij}\}_{(i,j)\in E}$ are estimated jointly via maximum likelihood.
+
+\subsection{Likelihood Formulation}
+EM formula:
+
+\[
+\begin{aligned}
+    L(\theta : X) &= p(X \mid \theta)\\
+    Q(\theta \mid \theta^{(n)}) &= \mathbb{E}_{Z \mid X, \theta^{(n)}} \left[ \ln p(X, Z \mid \theta) \right] \\
+    \theta^{(n+1)} &= \underset{\theta}{\mathrm{argmax}} \; Q(\theta \mid \theta^{(n)})
+\end{aligned}
+\]
+
+
+The complete-data log-likelihood is:
+\begin{equation}
+\mathcal{L}(\mathbf{w}) = \sum_{t=1}^{T-1} \sum_{j=1}^{|V|} \ln \widetilde{P}^{(j)}_{s_j(t), s_j(t+1)}(\mathbf{w})
+\end{equation}
+where $\widetilde{P}^{(j)}$ is the adjusted transition matrix:
+\begin{align*}
+\widetilde{P}^{(j)}_{kk}(\mathbf{w}) &= \sigma\left( \mathrm{logit}(P^{(j)}_{kk}) + W_j \right) \\
+\widetilde{P}^{(j)}_{kl}(\mathbf{w}) &= P^{(j)}_{kl} \cdot \frac{1 - \widetilde{P}^{(j)}_{kk}(\mathbf{w})}{1 - P^{(j)}_{kk}}, \quad l \neq k
+\end{align*}
+with $W_j = \sum_{i:(i,j)\in E} w_{ij}$.
+
+\subsection{Optimization}
+Maximize the log-likelihood:
+\begin{equation}
+\mathbf{w}^* = \underset{\mathbf{w}}{\mathrm{argmax}}  \mathcal{L}(\mathbf{w})
+\end{equation}
+using gradient-based methods. The gradient components are:
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial w_{ij}} = \sum_{t=1}^{T-1} \frac{1}{\widetilde{P}^{(j)}_{k_t l_t}} \frac{\partial \widetilde{P}^{(j)}_{k_t l_t}}{\partial w_{ij}}
+\end{equation}
+where $k_t = s_j(t)$, $l_t = s_j(t+1)$.
+
+\section{Estimation Algorithm}
+The joint estimation procedure is:
+
+\begin{enumerate}
+    \item \textbf{Initialize}:
+    \begin{align*}
+        \hat{P}^{(i)}_{jk} &\gets \frac{N^{(i)}_{jk} + \alpha}{\sum_l N^{(i)}_{jl} + |S^{(i)}|\alpha} \\
+        \mathbf{w}^{(0)} &\gets \mathbf{0}
+    \end{align*}
+    
+    \item \textbf{Iterate until convergence}:
+    \begin{align*}
+        \mathbf{w}^{(n+1)} = \mathbf{w}^{(n)} + \gamma_n \nabla_{\mathbf{w}} \mathcal{L}(\mathbf{w}^{(n)})
+    \end{align*}
+    with adaptive step size $\gamma_n$.
+    
+    \item \textbf{Convergence criterion}:
+    \begin{equation}
+        \| \nabla_{\mathbf{w}} \mathcal{L}(\mathbf{w}^{(n)}) \|_2 < \epsilon
+    \end{equation}
+\end{enumerate}
+
+\section{Regularization}
+To prevent overfitting, use Tikhonov regularization:
+\begin{equation}
+\mathcal{L}_{\text{reg}}(\mathbf{w}) = \mathcal{L}(\mathbf{w}) - \lambda \|\mathbf{w}\|_2^2, \quad \lambda > 0
+\end{equation}
+
+\section{Asymptotic Properties}
+Under standard regularity conditions:
+
+\begin{theorem}[Consistency]
+As $T \to \infty$, the MLE satisfies:
+\begin{equation}
+\hat{\mathbf{w}}_T \xrightarrow{p} \mathbf{w}_0
+\end{equation}
+where $\mathbf{w}_0$ is the true parameter vector.
+\end{theorem}
+
+\begin{theorem}[Asymptotic Normality]
+\begin{equation}
+\sqrt{T} (\hat{\mathbf{w}}_T - \mathbf{w}_0) \xrightarrow{d} \mathcal{N}(0, \mathcal{I}^{-1}(\mathbf{w}_0))
+\end{equation}
+where $\mathcal{I}(\mathbf{w})$ is the Fisher information matrix.
+\end{theorem}
+
+\section{Identifiability Conditions}
+For unique identifiability, we require:
+\begin{enumerate}
+    \item \textbf{Observational equivalence}: $\widetilde{P}^{(j)}(\mathbf{w}_1) = \widetilde{P}^{(j)}(\mathbf{w}_2) \: \forall j \implies \mathbf{w}_1 = \mathbf{w}_2$
+    \item \textbf{Connectivity}: Each component has $\deg_{\text{in}}(C_j) \geq 1$
+    \item \textbf{Acyclicity}: $G(V,E)$ is a directed acyclic graph
+\end{enumerate}
+
+\section{Practical Considerations}
+\begin{itemize}
+    \item \textbf{Data requirements}: Minimum trajectory length $T \gg \max_j |S^{(j)}|^2$
+    \item \textbf{Initialization}: Warm-start weights using correlation analysis
+    \item \textbf{Validation}: Use k-fold cross-validation for hyperparameter tuning
+\end{itemize}
+
+\section{Conclusion}
+This framework provides statistically rigorous methods for estimating parameters in stochastic graph transition models. The maximum likelihood approach with gradient-based optimization ensures consistent estimates while preserving model structure and interpretability.
+
+
+
+\section{Results}
+
+
+
+\subsection{Simulation Setup}
+
+\subsection{Simulation Results}
+\section{Discussion}
+
+\section{Conclusion}
+
+\section{Future Work}
+
+\section{References}
+
+
+
+
+
+
+\end{document}

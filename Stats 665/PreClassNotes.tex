@@ -12,15 +12,55 @@
 
 \begin{document}
 \maketitle
-
+\tableofcontents
 \newpage
-\begin{questions}
-\question Question 1.
-\begin{solution}
-This is my solution
-\end{solution}
-Testing
-\question Insert Question
-\end{questions}
+\section{Multiple Time Series}
+\subsection{Introductory Theory}
+\subsubsection{Introduction}
+Considering a Probability space triplet: $\Omega, \mathscr{A}, \mathbb{P}$. We can consider $\Omega$ to be our sample space. The borel algebra $\mathscr{A}$ to be the collection of historic events. And the Probability Measure $\mathbb{P}$.\\
+We are mainly concerned with the finite second moments of the Stochastic. 
+\begin{align*}
+	\E(x_j(s), x_k(t)) = \gamma_{j,k}(s,t) < \infty
+\end{align*}
+We can arrange this into a Symmetric Matrix $\Gamma(s,t)$
+\begin{theorem}
+    In order that $\gamma_{j,k}(s,t)$ may be continuous, $j,k = 1, \dots, p$, it is necessary and sufficient that $\gamma_j(s,t)$ be continuous at $s=t$ for $j =1, \dots, p$
+    \begin{proof}
+        pg 5
+    \end{proof}
+\end{theorem}
+This equivalent to $\lim_{u \to 0} \E[(x_j(s+u)-x_j(s))^2] = 0$, $j = 1, \dots, p$. This is called mean-square continuity.
+\subsubsection{Differentiation and Integration of Stochastic Processes}
+\begin{definition}[Convergence in the Mean-Square Sense]
+    Let ${x_n}_{n=1}^{\infty}$, be a sequence of random variables, $\E{|x_n|^2}<\infty$. Then the seqeuences converges to R.V $x$ if
+    $$\lim_{n} \E[|x-x_n|^2] = ||x - x_n||^2 = 0$$
+    To denote this we write $x_n \to x$
+\end{definition}
+\begin{definition}[Cauchy Condition]
+    $$\lim_{n,m}||x_n-x_m|| = 0$$
+\end{definition}
+Note if $\E[x \bar{y}]$ is a continuous function of $x$ and $y$, so that $||x_n||$ and $||y_n||$ are finite and $x_n \to x$ and $y_n \to y$ then $\E(x_n \bar{y}_n) \to \E(x\bar{y})$
+\begin{definition}[Mean-Square Differentiable]
+    We say a the scalar process $x(t)$ is MS Differentiable at $t$ if $\delta^{-1}[x(t+\delta) - x(t)]$ has a unique limit as $\delta \to 0$\\
+    The cauchy criterion for MS Diff. is as follows: 
+    $$\lim_{\delta_1, \delta_2 \to 0} ||\delta_1^{-1}[x(t+\delta_1) - x(t)] - \delta_2^{-1}[x(t+\delta_2) - x(t)] || = 0$$
+    Then a nessesary and sufficient condition for the cauchy criterion definition is as follows:
+    
+    \begin{align*}
+        \lim_{\delta_1, \delta_2 \to 0} \E[\delta_1^{-1}[x(t+\delta_1) - x(t)] - \delta_2^{-1}[x(t+\delta_2) - x(t)]] =\\
+        \lim_{\delta_1, \delta_2 \to 0} \frac{\gamma(t+\delta_1, t+ \delta_2) - \gamma(t +\delta_1, t) - \gamma(t, t+ \delta_2) + \gamma(t, t)}{\delta_1 \delta_2}
+    \end{align*}
+    In turn it is sufficient that $\frac{\partial^2 \gamma(s,t)}{\partial s \partial t}$ exists and be continuous.
+\end{definition}
+If $\dot{x}(t)$ is the MS derivative, this equation above has covariance function $\frac{\partial^2 \gamma(s,t)}{\partial s \partial t}$ and $\E[x(s)\dot{x}(t)] = \frac{\partial \gamma(s,t)}{\partial t}$\\
+We want to represent this in the form of $\int_{-\infty}^{\infty}x(t) m(dt)$ where $m$ is a $\sigma$-finite measure adjusted* so that the corresponding distribution function is continuous from the right. \\
+Similarly we only consider mean-square continuous functions and functions of the form $\iint_{-\infty}^{\infty} \gamma(s,t) m(ds) m(dt) < \infty$\\ 
+We can consider the integral $\int_{a}^{b} x(t) m(dt)$ by approximating sums $\sum_{i=1}^{n} x(t_i) m((s_{j-1}, s_j))$ wherein the points $s_j$ divide the interval $[a,b]$ into intervals less than $\epsilon$ and $t_i \in (s_{j-1}, s_j)$. We call this the integral of $x(t)$ wrt $m(t)$ over $[a,b]$ This is called the Riemann-Stieltjes integral.\\
+
+
+
+
+\textbf{Bookmark} pg 8 
+
 
 \end{document}

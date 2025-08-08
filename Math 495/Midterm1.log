@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  9 MAR 2025 18:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  12 MAY 2025 10:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -605,6 +605,56 @@ Underfull \hbox (badness 10000) in paragraph at lines 72--73
  []
 
 [3]
+Underfull \hbox (badness 10000) in paragraph at lines 89--90
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 92--94
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--110
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 121--123
+
+ []
+
+[4]
+Overfull \hbox (20.77861pt too wide) in paragraph at lines 124--125
+[]\OT1/cmr/bx/n/12 SVM EX: \OT1/cmr/m/n/12 Given the points $\OML/cmm/m/it/12 P \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OT1/cmr/m/n/12 (\OMS/cmsy/m/n/12 ^^@\OT1/cmr/m/n/12 1\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 0)\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 (0\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1)\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 (\OMS/cmsy/m/n/12 ^^@\OT1/cmr/m/n/12 3\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 4)\OMS/cmsy/m/n/12 g$\OT1/cmr/m/n/12 , $\OML/cmm/m/it/12 N \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OT1/cmr/m/n/12 (0\OML/cmm/m/it/12 ; \OMS/cmsy/m/n/12 ^^@\OT1/cmr/m/n/12 1)\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 (1\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 0)\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 (2\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 0)\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 (3\OML/cmm/m/it/12 ; \OMS/cmsy/m/n/12 ^^@\OT1/cmr/m/n/12 5)\OMS/cmsy/m/n/12 g$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 132--136
+
+ []
+
+[5]
+Overfull \hbox (5.91664pt too wide) in paragraph at lines 141--147
+\OT1/cmr/m/n/12 Considering the en-tire like-li-hood func-tion, we have $\OML/cmm/m/it/12 L\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 ^^R\OT1/cmr/m/n/12 ) = [][] \OML/cmm/m/it/12 p\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x[]\OMS/cmsy/m/n/12 j\OML/cmm/m/it/12 ^^R\OT1/cmr/m/n/12 ) = [][] [][] \OML/cmm/m/it/12 w[]p[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x[]\OT1/cmr/m/n/12 )$.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--147
+
+ []
+
+[6]
 This exam contains 0 questions with 0 parts, 0 subparts, and 0 subsubparts.
 This exam has a total of 0 points.
 This exam has a total of 0 bonus points.
@@ -621,12 +671,12 @@ Here is how much of TeX's memory you used:
  47051 multiletter control sequences out of 15000+600000
  566909 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 90i,11n,103p,868b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,11n,103p,1151b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on Midterm1.pdf (3 pages, 148473 bytes).
+Output written on Midterm1.pdf (6 pages, 171592 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 91 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
