@@ -1,0 +1,49 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Luvalle Independent Study}
+\newcommand{\assignment}{Stochastic Directed Graphs and Randomized Linear Algebra}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Overview of Model}
+This is a pretty brief write up that I will be updating later tonight (9/3) but I wanted to get something down without just copy pasting my manuscript. I also need to make sure that notation is ... normal.
+\subsection{Inspiration}
+I found the notion of modeling using a Transition Probability super interesting. Both the Transition Probability Matrix for the Discrete time Markov Chains, and the rate matrix for continuous-time Markov Chains provide a powerful method to understand how a memoryless process evolves over time.\\
+I wanted to see if there was a method to loosen the memoryless property in order to model more complex systems with less Parameters. Thus I wanted to pursue a method of incoportating the "heuristic" that when a single part starts to fail, the other parts are more likely to fail and vice versa.\\
+\subsection{Model}
+This model aims to model systems where each Independent component can be in a finite number of states. Each component is represented as a vertex in a directed graph, and the edges represent the influence that one component has on another. Each edge has a weight that represents the strength of the influence.
+\subsection{Vertex}
+A vertex models a component in a system. Each vertex has a corresponding Transition Probability matrix to describe the possible states of the component and the transitions between those states.
+\subsection{Edge}
+A directed weighted edge represents the influence that one component has on another. Each edge has a weight/influence matrix that represents the strength of the influence. The weight element can be thought of as the degree to which one component's state affects another's state when the source component transitions.
+\subsection{Graph}
+Combined together, the vertices and edges form a directed graph that captures the relationships and dependencies between the components in the system. The graph structure allows for the modeling of complex interactions and the propagation of state changes throughout the system.
+\section{What I need to work on}
+\subsection{Long Run Probability}
+I want to know that for a given collection of parameters for a system, what is the long run Probabilities of the system being in each state.\\
+Does it blow up? Does it stabilize? Does it oscillate?\\
+What are some condition that guarantee one of these outcomes?\\
+Does there exist a unique stationary distribution for the system?
+\subsubsection{Simulation}
+This can be done through massive simulations, which I have the initial code for.\\
+I would like to learn better methods for simulating these systems other than just brute forcing it.
+\subsubsection{Theoretical Analysis}
+Can look at it with the KBE or Masters Equations.\\
+Taking a pure math perspective is ... hard.\\
+I want to learn the basics of stochastic processes and their applications in this context.
+\subsection{Parameter Estimation}
+I want to learn that given the data what is the "inverse problem" of determining the parameters of the model that best explain the observed behavior of the system.\\
+I had the idea of EM with the Bayesian perspective of "assume nothing connected" and each pass move toward the max likelyhood parameters.\\
+\section{Conclusion}
+I want to spend time honing the ideas presented in this write-up and further exploring the implications of stochastic directed graphs in various applications.
+
+\end{document}

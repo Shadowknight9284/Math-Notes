@@ -1,0 +1,727 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{16:960:665}
+\newcommand{\assignment}{Syllabus}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section*{Syllabus}
+
+Time Series: Theory and Methods. Brockwell and Davis\\
+Asymtotic Theory of Weakly dependent Random Process\\
+Martingale Limit Theory\\
+
+Durret - Probability Theory and Examples\\
+
+\section*{Questions}
+Ask what I need to get and review before classes start\\
+Measure Theory: not hardcore\\ 
+look into textbooks and ergodic theory\\
+Ask the professors of the classes to audit \\
+What is the $X.(\omega)$ noations
+
+\section*{Acronyms}
+R.V. - Random Variable\\
+S.P. - Stochastic Process\\
+fn - Function\\
+dist - Distribution\\
+G.P. - Gaussian Process\\
+iid - independent and identically distributed\\
+a.s. - Almost Surely\\
+w.p 1 - with probability 1\\
+
+\section{Notes}
+\subsection{9/2/2025 Lecture 1}
+\textbf{We use Stochastic Process to model time series data}
+\begin{definition}[Stochastic Process]
+    A stochastic process is a family of random variables $\{X_t : t \in \mathcal{T}\}$ defined on a common probability space $(\Omega, \mathcal{F}, \Prob)$.\\
+    $\mathcal{T} = \mathbb{N}, \mathbb{Z}$ Discrete Time\\
+    $\mathcal{T} = \mathbb{R}$ Continuous Time (not focusing on this)\\
+    $\mathcal{T} \subseteq \mathbb{R}^n$ Geospatial, with location and time, (not focusing on this) \\
+    $\mathcal{T} \subseteq \mathbb{S}^3$ Unit Sphere w/Geophysics.
+\end{definition}
+\begin{definition}[Realization of a S.P.]
+    The functions $\{X.(\omega), \omega \in \Omega \} (\mathcal{T} \to \mathbb{R})$ are realizations or sample passes of the process.
+    \begin{itemize}
+        \item Fix $t$, $X_t$ is a fn of $\Omega$
+        \item Fix an outcome $\omega \in \Omega$, $X.(\omega)$ is a fn on $\mathcal{T}$
+        \item The time series we observe is a realization of the S.P.
+        \item Conventionally the observed time series is indexed by $\{1,2, \ldots, n\}$ ie $\{X_1, X_2, \ldots, X_n\}$ (known as the lens/sample size)
+    \end{itemize}
+\end{definition}
+\begin{example}[1.2.1 from book]
+    Suppose $A \geq 0$ is a R.V and given by $\Theta \sim Uniform(0,2\pi)$. and they are independent. and $v > 0$ is a known constant\\
+    Then $X_t = A \cos(vt + \Theta), t \in \mathbb{Z}$\\
+    Fore every $\omega \in \Omega$, $A(\omega), \Theta(\omega)$ are fixed\\
+    $X_t(\omega) = A(\omega) \cos(vt + \Theta(\omega))$\\
+    $A$ determines the amplitude and $\Theta$ determines the phase. \\
+    What we do is we take a model, and have the data as a realization, and solve the inverse problem of determining the parameters of the model.
+\end{example}
+\begin{example}[1.2.2 from the book] 
+    Consider $X_1, X_2, X_3, \ldots$ are IID and take value $1, -1$ with probability $1/2$\\
+    Im considering to use some binomal theorem thing...
+\end{example}
+\begin{example}[1.2.3 from the book]
+    Suppose $X_t$ coming from prior question.\\
+    $S_t = \sum_{i = 1}^{t} X_i = X_1 + X_2 + \ldots + X_t$
+    $S_t: t \in \mathbb{N}$ is a S.P. called a simple symmetric random walk\\
+    Consider a man in 1D who starts at 0, and takes a random draw to walk left or right. The path of this miserable guys is $S_t$\\
+    The realization is a plot of $S_t(\omega)$ against $t$.
+\end{example}
+\begin{definition}[The Distribution of a Stochastic Process]
+    Let $\mathcal{I}$ be the collection of all tuples $\{\mathbf{t} = (t_1, t_2, \ldots, t_n)' \in \mathcal{T}, t_1 < t_2 < \ldots < t_n\}$ The finite dimensional dist. fns of $\{X_t, t \in \mathcal{T}\}$ are the collection of fns $\{ F_t(\cdot) \mathbf{t} \in \mathcal{I} \}$ where
+    $$ F_{\mathbf{t}}(\mathbf{x}) =  P(X_{\mathbf{t_1}} = x_1, X_{\mathbf{t_2}} = x_2, \ldots, X_{\mathbf{t_n}} = x_n)$$
+    $$ \mathbf{x} = (x_1, x_2, \ldots, x_n)' \in \mathbb{R}^n$$
+    ie $F_{\mathbf{t}}(\mathbf{x})$ is the joint distribution of the process of the R.V. $\mathbf{x}$.\\
+\end{definition}
+\begin{theorem}[Kolmogrov (consistincy) Theorem]
+    The prob. distribution fns $\{ F_{\mathbf{t}}(\cdot) : \mathbf{t} \in \mathcal{I} \}$ are the distribution functions of some S.P. $\iff$ for any $n \in \mathbb{N}$, $\mathbf{t} = (t_1, t_2, \ldots, t_n)' \in \mathcal{T}$ and $1 \leq i \leq n$
+    $$ \lim_{x_i \to \infty} F_{\mathbf{t}}(\mathbf{x}) = F_{\mathbf{t_i}}(\mathbf{x_i})$$
+    Where $\mathbf{x} = (x_1, x_2, \ldots, x_n)'$,\\
+    $\mathbf{t_i} = (t_1, t_2, \ldots, t_{i-1}, t_{i+1}, \ldots, t_n)'$ and $\mathbf{x_i} = (x_1, x_2, \ldots, x_{i-1}, x_{i+1}, \ldots, x_n)'$ \\
+    essentially the $i$ are the missing ones
+    \begin{align*}
+        F(x_1, x_2) = \Prob (X_1 \leq x_1, X_2 \leq x_2)\\
+        \lim_{x_2 \to \infty} F(x_1, x_2) = \Prob(X_1 \leq x_1)
+    \end{align*}
+    "https://en.wikipedia.org/wiki/Kolmogorov\_extension\_theorem"\\
+    We essentially only need to specify the consistency of the finite dimensional distributions to define a S.P.
+\end{theorem}
+\subsection{9/9/2025 Lecture 2}
+\begin{definition}[Autocovariance function]
+    If ${X_t, t \in \mathcal{T}}$ is a S.P. s.t $E(X_t^2) < \infty$, then for every $t \in \mathcal{T}$ the the autocovariance function is defined as
+    $$ \gamma_x(r, s) = Cov(X_r, X_s), r,s \in \mathcal{T}$$
+\end{definition}
+\begin{definition}[Autocorrelation function]
+    If ${X_t, t \in \mathcal{T}}$ is a S.P. s.t $E(X_t^2) < \infty$, then for every $t \in \mathcal{T}$ the the autocorrelation function is defined as
+    $$ \rho_x(r, s) = Corr(X_r, X_s) = \frac{\gamma_x(r,s)}{\sqrt{\gamma_x(r,r)\gamma_x(s,s)}}, r,s \in \mathcal{T}$$
+\end{definition}
+\begin{definition}[Stationary S.P]
+    A stochastic process ${X_t, t \in \mathcal{T}}$ is said to be stationary 
+    \begin{itemize}
+        \item $E(X_t^2) < \infty$ for all $t \in \mathcal{T}$
+        \item $E(X_t) = \mu$ for all $t \in \mathcal{T}$
+        \item $\gamma_x(r,s) = \gamma_x(r+h, s+h)$ for all $r,s,h \in \mathcal{T}$
+    \end{itemize}
+    Weakly Stationary/Covariance Stationary/Wide Sense Stationary/Second Order Stationary\\
+    \fbox{\textbf{ASK: If our $\mathcal{T}$ is a non convex set, does this still hold?}}\\
+    Also if ${X_t}$ is stationary, then $\gamma_x(r,s) = \gamma_x(0, s-r) = \gamma_x(s-r)$ ie we can define the autocovariance as a fn of the one variable: the lag $h = s-r$\\
+    Similarly $\rho_x(h) = \frac{\gamma_x(h)}{\gamma_x(0)}$
+\end{definition}
+\begin{definition}[Strict Stationarity]
+    A stochastic process ${X_t, t \in \mathcal{T}}$ is said to be strictly stationary if for every $n \in \mathbb{N}$, $t_1, t_2, \ldots, t_n \in \mathcal{T}$ and $h \in \mathcal{T}$ the random vectors $(X_{t_1}, X_{t_2}, \ldots, X_{t_n})'$ and $(X_{t_1 + h}, X_{t_2 + h}, \ldots, X_{t_n + h})'$ have the same distribution.\\
+    ie the finite dimensional distributions are shift invariant.\\
+    If Strict Stationarity with finite second moments $\implies$ Weak Stationarity.
+\end{definition}
+\begin{definition}[Gaussian Time Series (S.P)]
+    A Gaussian S.P. is a S.P. ${X_t, t \in \mathcal{T}}$ if all the finite dimensional distributions fns of $\{X_t\}$ are multivariate normal. \\
+    ie for every $n \in \mathbb{N}$ and $t_1, t_2, \ldots, t_n \in \mathcal{T}$ the random vector $(X_{t_1}, X_{t_2}, \ldots, X_{t_n})'$ has a multivariate normal distribution.
+    - IF a G.P. is stationary, then it is strictly stationary.
+\end{definition}
+\begin{definition}[Stationarity of IID]
+    IID variables are strictly stationary.
+\end{definition}
+\begin{definition}[White Noise]
+    A S.P. ${X_t}$ is said to be white noise if can also be written as $WN(0, \sigma^2)$ 
+    \begin{itemize}
+        \item $E(X_t) = 0$ for all $t$
+        \item $Var(X_t) = \sigma^2 < \infty$ for all $t$
+        \item $Cov(X_t, X_s) = 0$ for all $t \neq s$
+    \end{itemize}
+    It is a weakly stationary S.P.
+\end{definition}
+\begin{example}[Example of White Noise not Strictly Stationary]
+    Let $X_t$ with $t = even$ be $N(0,1)$ and $X_t$ with $t = odd$ be $Rademacher(0,1)$\\
+    Then $X_t$ is white noise but not strictly stationary.
+\end{example}
+\begin{example}[1.3.1]
+    $X_t = A \cos(\Theta t) + B \sin(\Theta t)$ where $E(A) = E(B) = 0$, $Var(A) = Var(B) = 1$, $Cov(A,B) = 0$\\
+    \begin{itemize}
+        \item $E(X_t) = 0$
+        \item $Var(X_t) = E(A^2 \cos^2(\Theta t) + B^2 \sin^2(\Theta t)) = \cos^2(\Theta t) + \sin^2(\Theta t) = 1$
+        \item $Cov(X_t, X_s) = E(X_t X_s) = E[(A \cos(\Theta t) + B \sin(\Theta t))(A \cos(\Theta s) + B \sin(\Theta s))] = E[A^2] \cos(\Theta t) \cos(\Theta s) + E[B^2] \sin(\Theta t) \sin(\Theta s) = \cos(\Theta t) \cos(\Theta s) + \sin(\Theta t) \sin(\Theta s) = \cos(\Theta(t-s))$
+    \end{itemize}
+    Note that the $Cov(X_t, X_s)$ is only a fn of $t-s$\\
+    Thus $X_t$ is weakly stationary.
+\end{example}
+\begin{example}[1.3.2]
+    Let $Z_t, t \in \mathbb{Z}$ be IID(0, $\sigma^2$)\\
+    $X_t = Z_t + \Theta Z_{t-1}$
+    \begin{itemize}
+        \item $E(X_t) = 0$
+        \item $Var(X_t) = Var(Z_t) + \Theta^2 Var(Z_{t-1}) = (1 + \Theta^2)\sigma^2$
+        \item $Cov(X_t, X_s) = E(X_t X_s) = E[(Z_t + \Theta Z_{t-1})(Z_s + \Theta Z_{s-1})] = \Theta \sigma^2$ if $|t-s| = 1$, $(1 + \Theta^2)\sigma^2$ if $t=s$, $0$ otherwise
+    \end{itemize}
+    Thus $X_t$ is weakly stationary.
+\end{example}
+\begin{example}[1.3.4]
+    Assume ${X_t}$ is IID(0, $\sigma^2$)\\
+    $S_t = X_1 + X_2 + \ldots + X_t$ $t \geq 1$
+    \begin{itemize}
+        \item $E(S_t) = 0$
+        \item $Var(S_t) = t \sigma^2$ Not constant 
+        \item $Cov(S_r, S_t) = E(S_r S_t) = r \sigma^2$ WLOG $r \leq t$
+        \item $Cov(S_r, S_t) = (r \wedge t) \sigma^2$
+    \end{itemize}
+\end{example}
+\begin{proposition}[1.5.1]
+    Suppose ${X_t}$ is weakly stationary with $\gamma_x(h), \rho_x(h)$ as the autocovariance and autocorrelation fns. Then
+    \begin{itemize}
+        \item $\gamma_x(0) \geq 0$
+        \item $|\gamma_x(h)| \leq \gamma_x(0)$ for all $h \in \mathcal{T}$
+        \item $\gamma_x(h) = \gamma_x(-h)$ for all $h \in \mathcal{T}$
+    \end{itemize}
+\end{proposition}
+\begin{remark}[Some Statistics...]
+    Observe $\{X_t\}, t = 1, 2, \ldots, n$
+    Want to estimate $\mu, \gamma(0), \gamma(1), \ldots, \gamma(n-1)$
+    \begin{align*}
+        \hat{\mu} = \frac{1}{n} \sum_{i=1}^{n} X_i := \bar{X}\\
+        \hat{\gamma}(0) = \frac{1}{n} \sum_{i=1}^{n} (X_i - \bar{X})^2\\
+        \hat{\gamma}(1) = \frac{1}{n} \sum_{i=1}^{n-1} (X_i - \bar{X})(X_{i+1} - \bar{X})\\
+        \hat{\gamma}(h) = \frac{1}{n} \sum_{i=1}^{n-h} (X_i - \bar{X})(X_{i+h} - \bar{X})\\
+    \end{align*}
+    The reason why we divide by $n$ we want to shrink it. intuition is that we want to make autocorrelation smaller as $n$ increases.
+\end{remark}
+\subsection{9/11/2025 Lecture 3}
+\begin{remark}[Matrix Form of Autocovariance]
+    Observe $X_1, X_2, \ldots, X_n$ \\
+    $\hat{\gamma}(h) = \frac{1}{n} \sum_{i=1}^{n-h} (X_i - \bar{X})(X_{i+h} - \bar{X})$.\\
+    $$ \Gamma_n = \cov\begin{bmatrix}
+        X_1\\
+        X_2\\
+        \vdots\\
+        X_n
+    \end{bmatrix} = \begin{bmatrix}
+        \gamma_x(0) & \gamma_x(1) & \gamma_x(2) & \ldots & \gamma_x(n-1)\\
+        \gamma_x(1) & \gamma_x(0) & \gamma_x(1) & \ldots & \gamma_x(n-2)\\
+        \vdots & \vdots & \vdots & \ddots & \vdots\\
+        \gamma_x(n-1) & \gamma_x(n-2) & \gamma_x(n-3) & \ldots & \gamma_x(0)
+    \end{bmatrix}$$
+    This is a Toeplitz matrix. ie constant along the diagonals. It is also positive semidefinite. ie $a' \Gamma_n a \geq 0$ for all $a \in \mathbb{R}^n$.\\
+    For the Sample version, we have
+    $$ \hat{\Gamma}_n = \begin{bmatrix}
+        \hat{\gamma}(0) & \hat{\gamma}(1) & \hat{\gamma}(2) & \ldots & \hat{\gamma}(n-1)\\
+        \hat{\gamma}(1) & \hat{\gamma}(0) & \hat{\gamma}(1) & \ldots & \hat{\gamma}(n-2)\\
+        \vdots & \vdots & \vdots & \ddots & \vdots\\
+        \hat{\gamma}(n-1) & \hat{\gamma}(n-2) & \hat{\gamma}(n-3) & \ldots & \hat{\gamma}(0)
+    \end{bmatrix}$$
+    We use $n$ as a common denominator to ensure that $\hat{\Gamma}_n$ is positive semidefinite.\\
+    $\Gamma_n$ is called the order-$n$ autocovariance matrix of the process.\\
+    $\hat{\Gamma}_n$ is called the order-$n$ sample autocovariance
+\end{remark}
+\begin{theorem}[]
+    A real valued fn defined on the integers is the autocovariance fn of a weakly stationary Time Series $iff$ \\
+    \begin{itemize}
+        \item It is even. ie $\gamma(h) = \gamma(-h)$ for all $h \in \mathbb{\mathcal{T}}$
+        \item It is non-negative definite. ie for every $n \in \mathbb{N}$ and $a_1, a_2, \ldots, a_n \in \mathbb{R}$
+    \end{itemize}
+    IE $\sum_{i,j}^n a_i k(t_i - t_j) a_j \geq 0$ for all $n \geq 1, \mathbf{t} = (t_1, t_2, \ldots, t_n)' \in \mathbb{N}^{n}$, and $\mathbf{a} = (a_1, a_2, \ldots, a_n)' \in \mathbb{R}^n$
+    \begin{proof}
+        \textbf{LOOK MORE INTO THIS THEOREM}\\
+        $\implies$\\
+        It is straightforward to see that $\gamma_x(h)$ is even.\\
+        Let $n \in \mathbb{N}$, $\mathbf{t} =
+        (t_1, t_2, \ldots, t_n)' \in \mathbb{N}^{n}$, and $\mathbf{a} = (a_1, a_2, \ldots, a_n)' \in \mathbb{R}^n$\\
+        $$ \sum_{i,j}^n a_i \gamma_x(t_i - t_j) a_j = \sum_{i,j}^n a_i Cov(X_{t_i}, X_{t_j}) a_j = Cov(\sum_{i=1}^{n} a_i X_{t_i}, \sum_{j=1}^{n} a_j X_{t_j}) = Var(\sum_{i=1}^{n} a_i X_{t_i}) \geq 0$$\\
+        $\impliedby$\\
+        Let $k(h)$ be a real valued fn defined on the integers which is even and non-negative definite.\\
+        Let $n \in \mathbb{N}$, $\mathbf{t} =
+        (t_1, t_2, \ldots, t_n)' \in \mathbb{N}^{n}$, and $\mathbf{a} = (a_1, a_2, \ldots, a_n)' \in \mathbb{R}^n$\\
+        Define $\Gamma_n = [k(t_i -t_j)]_{i,j=1}^{n}$\\
+        Then $\Gamma_n$ is a non-negative definite matrix. ie $a' \Gamma_n a \geq 0$ for all $a \in \mathbb{R}^n$.\\
+        Thus by the spectral theorem, there exists a random vector $\mathbf{X} = (X_{t_1}, X_{t_2}, \ldots, X_{t_n})'$ with mean 0 and covariance matrix $\Gamma_n$. ie $E(\mathbf{X}) = 0$ and $Cov(\mathbf{X}) = \Gamma_n$.\\
+        ie $Cov(X_{t_i}, X_{t_j}) = k(t_i - t_j)$ for all $1 \leq i,j \leq n$\\
+        By Kolmogorov's theorem, there exists a S.P. ${X_t, t \in \mathbb{Z}}$ with autocovariance fn $k(h)$.
+
+    \end{proof}
+\end{theorem}
+\begin{example}
+    Suppose $k(h) = \begin{cases}
+        1 & h = 0\\
+        \rho & h = \pm 1\\
+        0 & otherwise
+    \end{cases}$\\
+    When is $k$ an autocovariance fn of a weakly stationary S.P.?
+    \begin{itemize}
+        \item $|\rho| \leq .5$ then 
+    \end{itemize}
+    Remember $Z_t$ is IID(0,$\sigma^2$), $X_t = Z_t + \Theta Z_{t-1}$ with acovf $\gamma_x(h) = \begin{cases}
+        (1 + \Theta^2)\sigma^2 & h = 0\\
+        \Theta \sigma^2 & h = \pm 1\\
+        0 & otherwise
+    \end{cases}$\\
+    $\rho(1) = \frac{\Theta}{1 + \Theta^2}$ then $1+ \Theta^2 \leq 2\theta$ ie $|\rho| \leq .5$\\
+    \begin{itemize}
+        \item If $.5 < \rho \leq 1$ then $k(h)$ is not an acovf.\\
+    \end{itemize}
+    Then you can find a $n$ s.t.
+    $$ \sum_{i,j}^{2n} a_i a_j k(i-j) = 2n - 2(n-1)\rho < 0$$
+    \fbox{\textbf{Where does this formula on the RHS come from?}}
+    \begin{itemize}
+        \item If $-1 \leq \rho < -.5$ then $k(h)$ is not an acovf.\\
+    \end{itemize}
+\end{example}
+\begin{definition}[Mixing Conditions]
+    Suppose $\mathcal{G}$ and $\mathcal{H}$ are two sub $\sigma$-fields on the same probability space $(\Omega, \mathcal{F}, \Prob)$. $\mathcal{G} \subset \mathcal{F}$ and $\mathcal{H} \subset \mathcal{F}$.
+\end{definition}
+\begin{definition}[$\alpha$-mixing:] 
+    $\alpha$-mixing: $\alpha(\mathcal{G}, \mathcal{H}) = \sup_{G \in \mathcal{G}, H \in \mathcal{H}} \big|\Prob(G \cap H) - \Prob(G)\Prob(H)\big|$\\
+    $X_1$ and $X_2$ are independent $\mathcal{G} = \sigma(X_1) = \sigma \langle [X_1 \leq c], c \in \mathbb{R} \rangle$ and $\mathcal{H} = \sigma(X_2)$
+    \begin{itemize}
+        \item $\alpha(\mathcal{G}, \mathcal{H}) = 0$ $iff$ $\mathcal{G}$ and $\mathcal{H}$ are independent
+        \item $0 \leq \alpha(\mathcal{G}, \mathcal{H}) \leq .25$ for all $\mathcal{G}, \mathcal{H}$ sub $\sigma$-fields of $\mathcal{F}$
+        \item $\Prob(G \cap H) - \Prob(G)\Prob(H) = \E[I_G I_H] - \E[I_G]\E[I_H] = Cov(I_G, I_H)$
+    \end{itemize}
+    $|Cov(c_1 I_G, c_2 I_H)| \leq c_1 c_2 \alpha(\mathcal{G}, \mathcal{H})$
+\end{definition}
+\begin{definition}[$\phi$-mixing:]
+    $\phi$-mixing: $\phi(\mathcal{G}, \mathcal{H}) = \sup_{G \in \mathcal{G}, H \in \mathcal{H}, \Prob(G) > 0} |\Prob(H|G) - \Prob(H)|$
+    \begin{itemize}
+        \item $\phi(\mathcal{G}, \mathcal{H}) = 0$ $iff$ $\mathcal{G}$ and $\mathcal{H}$ are independent
+        \item $0 \leq \phi(\mathcal{G}, \mathcal{H}) \leq 1$ for all $\mathcal{G}, \mathcal{H}$ sub $\sigma$-fields of $\mathcal{F}$
+        \item $\alpha(\mathcal{G}, \mathcal{H}) \leq \frac{1}{2} \phi(\mathcal{G}, \mathcal{H})$
+    \end{itemize}
+\end{definition}
+\begin{example}
+    $X$ is $G$-measureable and $Y$ is $H$-measureable, $|X| \leq C_1$ and $|Y| \leq C_2$ a.s.\\
+    Then $|\cov(X,Y)| \leq 4 C_1 C_2 \alpha(\mathcal{G}, \mathcal{H})$
+\end{example}
+
+\subsection{9/16/2025 Lecture 4}
+\begin{remark}[Last Class Review]
+    Mixing Conditions:\\
+    Suppose $\mathcal{G}$ and $\mathcal{H}$ are two sub $\sigma$-fields on the same probability space $(\Omega, \mathcal{F}, \Prob)$. $\mathcal{G} \subset \mathcal{F}$ and $\mathcal{H} \subset \mathcal{F}$.
+    \fbox{LOOK INTO TEXTBOOK ASSIGNMENTS}
+    \begin{itemize}
+        \item $\alpha$-mixing: $\alpha(\mathcal{G}, \mathcal{H}) = \sup_{G \in \mathcal{G}, H \in \mathcal{H}} \big|\Prob(G \cap H) - \Prob(G)\Prob(H)\big|$
+        \item $\phi$-mixing: $\phi(\mathcal{G}, \mathcal{H}) = \sup_{G \in \mathcal{G}, H \in \mathcal{H}, \Prob(G) > 0} |\Prob(H|G) - \Prob(H)|$
+    \end{itemize}
+    \begin{enumerate}
+        \item $\alpha(\mathcal{G}, \mathcal{H}) = 0$ $iff$ $\mathcal{G}$ and $\mathcal{H}$ are independent
+        \item $0 \leq \alpha(\mathcal{G}, \mathcal{H}) \leq .25$ for all $\mathcal{G}, \mathcal{H}$ sub $\sigma$-fields of $\mathcal{F}$, $0 \leq \phi(\mathcal{G}, \mathcal{H}) \leq 1$ for all $\mathcal{G}, \mathcal{H}$ sub $\sigma$-fields of $\mathcal{F}$
+        \item $\alpha(\mathcal{G}, \mathcal{H}) \leq \frac{1}{2} \phi(\mathcal{G}, \mathcal{H})$
+    \end{enumerate}
+    Equal definition: $\alpha(X,Y) = \sup_{c_1, c_2 \in \mathbb{R}} | \Prob(X \leq c_1, Y \leq c_2) - \Prob(X \leq c_1)\Prob(Y \leq c_2)|$\\
+    Equal definition: $\phi(X,Y) = \sup_{c_1, c_2 \in \mathbb{R}, \Prob(X \leq c_1) > 0} |\Prob(Y \leq c_2 | X \leq c_1) - \Prob(Y \leq c_2)|$\\
+\end{remark}
+\begin{theorem}[Ibragimov 1962]
+    $\Prob(G \cap H) - \Prob(G)\Prob(H) = \cov(I_G, I_H)$\\
+    $|Cov(c_1 I_G, c_2 I_H)| \leq c_1 c_2 \alpha(\mathcal{G}, \mathcal{H})$\\
+    Sup. $|X| \leq C_1$ and $|Y| \leq C_2$ a.s.\\
+    Then $|E(XY) - E(X)E(Y)| \leq 4 c_1 c_2 \alpha(\mathcal{G}, \mathcal{H})$
+    \begin{proof}
+        \begin{align*}
+            E(XY) - E(X)E(Y) &= E[X(Y-E(Y))]\\
+            &= E[X (E(Y|X) - E(Y))]\\
+            &= E[E(XY|X) - E(Y)] \\ %help? 
+            |E(XY) - E(X)E(Y)| &= | E[X(E(Y|X) - E(Y))] |\\
+            &\leq c_1 E|E(Y|X) - E(Y)|\\
+            \text{Define } \eta = \text{sign}(E(Y|X) - E(Y))\\
+            &= c_1 E[\eta(E(Y|X) - E(Y))]\\
+            \eta E(Y|X) &= E(\eta Y|X)\\
+            c_1 E [E (\eta Y|X) - \eta E(Y)] &= c_1 [E(\eta Y) - E(\eta)E(Y)]\\
+            E(\eta Y) - E(\eta)E(Y) &\leq E [ Y[E(\eta|Y) - E(\eta)] ]\\
+            \text{Let } \xi = \text{sign}(E(\eta|Y) - E(\eta))\\
+            E(\eta Y) - E(\eta)E(Y) &\leq c_2( E[\xi \eta] - E(\xi)E(\eta))\\
+            E(XY) - E(X)E(Y) &\leq  c_1 c_2 (E[\xi \eta] - E(\xi)E(\eta))\\
+            \eta = I_{\eta = 1} -  I_{\eta = -1} &, \xi = I_{\xi = 1} - I_{\xi = -1}\\
+            \cov(\xi, \eta) &= \cov(I_{\xi = 1} - I_{\xi = -1}, I_{\eta = 1} - I_{\eta = -1})\\
+            &= \cov(I_{\xi = 1}, I_{\eta = 1}) + \cov(I_{\xi = -1}, I_{\eta = -1}) \\
+            &- \cov(I_{\xi = 1}, I_{\eta = -1}) - \cov(I_{\xi = -1}, I_{\eta = 1})\\
+            \implies |\cov(\xi, \eta)| &\leq 4 \alpha(\mathcal{G}, \mathcal{H})\\
+            |E(XY) - E(X)E(Y)| &\leq 4 c_1 c_2 \alpha(\mathcal{G}, \mathcal{H}) 
+        \end{align*}
+    \end{proof}
+    Why are we doing this?\\
+    Consider $X_1, X_2, \ldots$ IID(0, $\sigma^2$)\\
+    $\frac{X_1 + X_2 + \ldots + X_n}{n} \xrightarrow{d} N(0, \sigma^2)$\\
+    Now how do we get CLT?\\
+    Consider $X_1, X_2, \ldots$ is a weakly stationary S.P, with $E(X_t) = 0$\\
+    $\frac{X_1 + X_2 + \ldots + X_n}{n} \xrightarrow{d} N(0, \sigma^2)$\\
+    We can see this is the variance $S_n = X_1 + X_2 + \ldots + X_n$\\
+    $Var(S_n) = \sum_{i=1}^{n} Var(X_i) + 2 \sum_{1 \leq i < j \leq n} Cov(X_i, X_j)$\\
+    $= n \gamma_x(0) + 2 \sum_{1 \leq i < j \leq n} (\gamma_x(j-i))$\\
+    $= n \gamma_x(0) + 2 \sum_{h=1}^{n-1} (n-h) \gamma_x(h)$\\
+    $Var(\frac{S_n}{\sqrt{n}}) = \gamma_x(0) + 2 \sum_{h=1}^{n-1} (1 - \frac{h}{n}) \gamma_x(h)$\\
+    $\lim_{n \to \infty} Var(\frac{S_n}{\sqrt{n}}) = \gamma_x(0) + 2 \sum_{h=1}^{\infty} \gamma_x(h)$\\
+    We want this infinite series to converge. ie $\sum_{h=1}^{\infty} |\gamma_x(h)| < \infty$.\\\\
+    Consider $X_1, X_2, \ldots$ is a strictly stationary S.P.\\
+    Define $\alpha_0 = \frac{1}{2}$, and $\alpha_n = \alpha(X_0, X_n)$ for $n \geq 1$\\
+    Assume $E|X_0|^{p} < \infty$ for some $p > 2$ \\
+    Then $|\gamma_x(k)| = |\cov(X_0, X_k)| \leq 8 ||X_0||_p^2 \alpha_k^{1 - \frac{2}{p}}$
+\end{theorem}
+\begin{corollary}[Only $Y$ is bounded]
+    Suppose $E[X^2] < \infty$ for some $p > 1$ and $|Y| \leq C$ a.s.\\
+    Then $E(XY) - E(X)E(Y) \leq 6 C ||X||_p [\alpha(X, Y)]^{1 - \frac{1}{p}}$ where $||X||_p = (E|X|^p)^{\frac{1}{p}}$
+    \begin{proof}
+        Through Truncation:\\
+        $X_1 = X I_{|X| \leq C_1}$ and $X_2 = X - X_1$\\
+        \begin{align*}
+            |E(XY) - E(X)E(Y)| &\leq | E(X_1 Y) - E(X_1)E(Y)| + |E(X_2 Y) - E(X_2)E(Y)|\\
+            &\leq 4 C C_1 \alpha(X, Y) + 2 C E|X_2|\\
+            E|X_2| &= E|X I_{|X| > C_1}| \leq \frac{E|X|^p}{C_1^{p-1}}\\
+            I_{|X| > C_1} &< \frac{|X|^p}{C_1^{p-1}}\\
+            &= \frac{||X||_p^p}{C_1^{p-1}}\\
+        \end{align*}
+        Thus $|E(XY) - E(X)E(Y)| \leq 4 C C_1 \alpha(X, Y) + \frac{||X||_p^p}{C_1^{p-1}}$.\\
+        Take $C_1 = \alpha^{-\frac{1}{p}} ||X||_p$ to get best bound.\\
+        Then the corollary follows.\\
+        \fbox{Look into bernstein inequality}
+    \end{proof}
+\end{corollary}
+\begin{corollary}[No bounded (Davydov 1968)]
+    Suppose $E|X|^p < \infty$  and $E|Y|^q < \infty$ for some $p, q > 1$ and $\frac{1}{p} + \frac{1}{q} < 1$ then \\
+    $|E(XY) - E(X)E(Y)| \leq 8 ||X||_p ||Y||_q [\alpha(X,Y)]^{1 - \frac{1}{p} - \frac{1}{q}}$  
+\end{corollary}
+\textbf{Review of Hilbert Spaces}\\
+\begin{definition}[Inner Product Space]
+    A vector space $\mathcal{V}$ over the field $\mathbb{F}$ is called an inner product space if there exists a fn $\innerprod{\cdot}{\cdot}$
+    \begin{itemize}
+        \item $\innerprod{u}{v} = \overline{\innerprod{v}{u}}$ for all $u,v \in \mathcal{V}$
+        \item $\innerprod{u+v}{w} = \innerprod{u}{w} + \innerprod{v}{w}$ for all $u,v,w \in \mathcal{V}$
+        \item $\innerprod{cu}{v} = c \innerprod{u}{v}$ for all $u,v \in \mathcal{V}$ and $c \in \mathbb{F}$
+        \item $\innerprod{u}{u} \geq 0$ for all $u \in \mathcal{V}$
+        \item $\innerprod{u}{u} = 0$ iff $u = 0$ 
+    \end{itemize}
+    We will see that for the prob space $\innerprod{X}{Y} = E[XY]$ but this only holds a.s.
+\end{definition}
+\subsection{9/18/2025 Lecture 5}
+\begin{definition}[Inner Product Space]
+    $\mathcal{H}$ is an inner product space with inner product $\innerprod{\cdot}{\cdot}$\\
+\end{definition}
+\begin{example}[2.2.2]
+    $L^2(\Omega, \mathcal{F}, \Prob) = \{X: \Omega \to \mathbb{R} | X \text{ is measurable and } E(X^2) < \infty\}$\\
+    $\innerprod{X}{Y} = E(XY) = \int_{\Omega} X(\omega) Y(\omega) d\Prob(\omega)$\\
+    $\innerprod{X}{X} = E(X^2) = 0 \implies X = 0$ a.s.\\
+    Define an equivalence relation $X \sim Y$ if $X = Y$ a.s.\\
+    \begin{itemize}
+        \item The elements of $L^2$ are equivalence classes
+        \item $||X|| = \sqrt{\innerprod{X}{X}} = \sqrt{E(X^2)}$ is a norm on $L^2$
+    \end{itemize}
+\end{example}
+\begin{remark}
+    IP Properties:\\
+    \begin{itemize}
+        \item $| \innerprod{x}{y} | \leq ||x|| ||y||$ (Cauchy-Schwarz Inequality)
+        \item $||x+y|| \leq ||x|| + ||y||$ (Triangle Inequality)
+        \item If $||x_n -x|| \to 0$ and $||y_n - y|| \to 0$ then $\innerprod{x_n}{y_n} \to \innerprod{x}{y}$ (Continuity of Inner Product)
+    \end{itemize}
+\end{remark}
+\begin{definition}[Limit of a Sequence in Hilbert Space]
+    Let $\mathcal{H}$ be a Hilbert Space and $\{x_n\}$ be a sequence in $\mathcal{H}$\\
+    We say that $x_n \to x$ if $||x_n - x|| \to 0$ as $n \to \infty$.\\\\
+    Suppose $\{X_n\}$ is a sequence of random variables in $L^2(\Omega, \mathcal{F}, \Prob)$ which converges to $X$. Then consider the RV $1$ (constant)\\
+    Consider $\innerprod{X_n}{1} \to \innerprod{X}{1}$\\
+    ie $E(X_n) \to E(X)$\\\\
+    $X_n \to X$ \\
+    $\innerprod{X_n}{X_n} \to \innerprod{X}{X}$
+    ie $E(X_n^2) \to E(X^2)$\\\\
+    $X_n \to X$, $Y_n \to Y$\\
+    $\innerprod{X_n}{Y_n} \to \innerprod{X}{Y}$\\
+    ie $E(X_n Y_n) \to E(XY)$
+\end{definition}
+\begin{definition}[Cauchy Sequence]
+    A sequence of elemnts $\{x_n\}$ in an inner product space $\mathcal{H}$ is called a Cauchy sequence if for every $\epsilon > 0$ there exists $N \in \mathbb{N}$ such that $||x_n - x_m|| < \epsilon$ for all $n,m \geq N$.
+\end{definition}
+\begin{definition}[Hilbert Space]
+    An inner product space $\mathcal{H}$ is called a Hilbert Space if every Cauchy sequence in $\mathcal{H}$ converges to an element in $\mathcal{H}$.
+\end{definition}
+\begin{example}
+    Consider $\mathcal{M}(\Omega, \mathcal{F}, \Prob) = \{X: |X| \leq C, C > 0\}$\\
+    $\innerprod{X}{Y} = E(XY)$\\
+    $X \sim N(0,1)$\\
+    $X_n = X I_{|X| \leq n}$\\
+    $E|X-X_n|^2 = E[X^2 I_{|X| > n}] \to 0$ by DCT (Dominated Convergence Theorem)\\
+    So $X_n \to X$ in $L^2$ but $X \notin \mathcal{M}$\\
+    Thus $\mathcal{M}$ is not a Hilbert Space.
+\end{example}
+\begin{definition}[Complex Random Variable]
+    A complex random variable is a fn $Z: \Omega \to \mathbb{C}$ such that $Z = X + iY$ where $X, Y$ are real random variables.
+\end{definition}
+\begin{definition}[Closed Subspace]
+    A linear subspace of a Hilbert Space $\mathcal{H}$ is called a closed subspace if $\mathcal{M}$ contains its limit points. ie if $\{x_n\} \subset \mathcal{M}$ and $x_n \to x$ in $\mathcal{H}$ then $x \in \mathcal{M}$.
+\end{definition}
+\begin{proposition}[2.3.1] \fbox{Review the definition}
+    If $\mathcal{M}$ is a closed subset of a H.S $\mathcal{H}$ then the orthogonal compliment $\mathcal{M}^{\perp} = \{x \in \mathcal{H}: x \perp y, \forall y \in \mathcal{M} \}$ closed linear subspace of $\mathcal{H}$.
+\end{proposition}
+\begin{theorem}[2.3.1 Projection Theorm]
+    If $\mathcal{M}$ is a closed linear subspace of a H.S $\mathcal{H}$ and $x \in \mathcal{H}$ then \\
+    (i) there is a unique element $\hat{x} \in \mathcal{M}$ such that $||x - \hat{x}|| = \inf_{y \in \mathcal{M}} ||x - y||$\\
+    (ii) $\hat{x} \in \mathcal{M}$ and $||x - \hat{x}|| = \inf_{y \in \mathcal{M}} ||x - y||$ iff 
+    $\hat{x} \in \mathcal{M}$ and $x - \hat{x} \in \mathcal{M}^{\perp}$\\
+\end{theorem}
+\begin{definition}[2.4.1 Closed Span]
+    The closed span $\overline{sp} \{X_t, t \in \mathcal{T}\}$ of any subset $\{X_t, t \in \mathcal{T}\}$ of a H.S $\mathcal{H}$ is the smallest closed linear subspace of $\mathcal{H}$ containing $\{X_t, t \in \mathcal{T}\}$. 
+\end{definition}
+\begin{definition}[Orthonormal Set]
+    A set $\{e_t: t \in \mathcal{T} \}$ of element of an IP space is said to be orthonormal if $\innerprod{e_s}{e_t} = \begin{cases}
+        1 & s = t\\
+        0 & s \neq t
+    \end{cases}$ for all $s,t \in \mathcal{T}$
+\end{definition}
+\begin{definition}[Complete Orthonormal Set]
+    An orthonormal set $\{e_t: t \in \mathcal{T} \}$ in a H.S $\mathcal{H}$ is said to be complete if $\overline{sp}\{e_t, t \in \mathcal{T}\} = \mathcal{H}$
+\end{definition}
+\begin{definition}[Seperability]
+    The HS is separable if it has a finite or countable infinite complete orthonormal set.
+\end{definition}
+\begin{example}[Separable HS]
+    1. $\mathbb{R}^d$ \\
+    2. $L^2(\Omega, \mathcal{F}, \Prob)$
+\end{example}
+\begin{theorem}[2.4.2]
+    If $\mathcal{H}$ is a separable H.S and $\mathcal{H} = \overline{sp}\{e_t: t \in \mathcal{T}\}$ where $\{e_t: t \in \mathcal{T}\}$ is an orthonormal set then 
+    \begin{itemize}
+        \item The set of all finite linear combinations of $\{e_t: t \in \mathcal{T}\}$ is dense in $\mathcal{H}$. ie for every $x \in \mathcal{H}$ and $\epsilon > 0$ there exists $y = \sum_{j=1}^{n} a_j e_{t_j}$ such that $||x - y|| < \epsilon$
+        \item $ x  = \sum_{i = 1}^{\infty} \innerprod{x}{e_i} e_i$ for each $x \in \mathcal{H}$ ie $||x - \sum_{i=1}^{n} \innerprod{x}{e_i} e_i|| \to 0$ as $n \to \infty$
+        \item $||x||^2 = \sum_{i=1}^{\infty} |\innerprod{x}{e_i}|^2$ for each $x \in \mathcal{H}$ (Parseval's Identity)
+        \item $\innerprod{x}{y} = \sum_{i=1}^{\infty} \innerprod{x}{e_i} \innerprod{y}{e_i}$ for all $x,y \in \mathcal{H}$
+        \item $x = 0 \iff \innerprod{x}{e_i} = 0$ for all $i \geq 1$
+    \end{itemize}
+\end{theorem}
+\subsection{9/23/2025 Lecture 6}
+\begin{definition}[ARMA models: ARMA$(p,q)$]
+    Let $\{Z_t\} \sim WN(0, \sigma^2)$. The process $\{X_t, t \in \mathbb{Z}\}$ is said to be an $ARMA(p,q)$ process if
+    \begin{itemize}
+        \item $\{X_t\}$ is stationary for all $t \in \mathbb{Z}$
+        \item $X_t - \phi_1 X_{t-1} - \ldots - \phi_p X_{t-p} = Z_t + \theta_1 Z_{t-1} + \ldots + \theta_q Z_{t-q}$ for all $t \in \mathbb{Z}$ where $\phi_1, \ldots, \phi_p, \theta_1, \ldots, \theta_q$ are real constants with $\phi_p, \theta_q \neq 0$.
+    \end{itemize}
+\end{definition}
+\begin{remark}
+    There are a few special cases of the $ARMA(p,q)$ model:
+    \begin{itemize}
+        \item When $q = 0$ we can write the model as $X_t - \phi_1 X_{t-1} - \ldots - \phi_p X_{t-p} = Z_t$ and call it an $AR(p)$ model.
+        \item When $p = 0$ we can write the model as $X_t = Z_t + \theta_1 Z_{t-1} + \ldots + \theta_q Z_{t-q}$ and call it a $MA(q)$ model.
+        \item When $p = 0$ and $q = 0$ we have $X_t = Z_t$ and call it a white noise model.
+        \item $\{X_t\}$ is defined relative to the white noise process $\{Z_t\}$. 
+        \item Staitionarity is a critial requirement for the $ARMA(p,q)$ model.
+    \end{itemize}
+    \begin{itemize}
+        \item AR polynomial: $\phi(z) = 1 - \phi_1 z - \ldots - \phi_p z^p$
+        \item MA polynomial: $\theta(z) = 1 + \theta_1 z + \ldots + \theta_q z^q$
+        \item Backshift operator: $B X_t = X_{t-1}$, $B^2 X_t = X_{t-2}$, $\ldots$, $B^k X_t = X_{t-k}$
+        \item AR$(p)$ model: $\phi(B) X_t = Z_t$
+        \item MA$(q)$ model: $X_t = \theta(B) Z_t$
+        \item ARMA$(p,q)$ model: $\phi(B) X_t = \theta(B) Z_t$
+        \item More general model with a mean: $\{X_t + \mu: t \in \mathbb{Z}\}$
+        \item Can also be characterized by $X_t = \phi_0 + \phi_1 X_{t-1} + \ldots + \phi_p X_{t-p} + Z_t + \theta_1 Z_{t-1} + \ldots + \theta_q Z_{t-q}$ where $\phi_0 = \mu (1 - \phi_1 - \ldots - \phi_p)$
+    \end{itemize}
+\end{remark}
+\begin{example}[Staitionary solution to AR$(1)$]
+    \begin{align*}
+        X_t &= \phi X_{t-1} + Z_t \\
+        &= Z_t + \phi (Z_{t-1} + \phi X_{t-2}) = Z_t + \phi Z_{t-1} + \phi^2 X_{t-2}\\
+        &= Z_t + \phi Z_{t-1} + \phi^2 (Z_{t-2} + \phi X_{t-3}) = Z_t + \phi Z_{t-1} + \phi^2 Z_{t-2} + \phi^3 X_{t-3}\\
+        &\vdots \\
+        &= Z_t + \phi Z_{t-1} + \phi^2 Z_{t-2} + \ldots + \phi^k Z_{t-k} + \phi^{k+1} X_{t-(k+1)}
+    \end{align*}
+    If $|\phi| < 1$ then $\phi^{k+1} X_{t-(k+1)} \to 0$ as $k \to \infty$\\
+    Thus the stationary solution is $X_t = \sum_{j=0}^{\infty} \phi^j Z_{t-j}$\\
+    If $|\phi| \geq 1$ then there is no stationary solution since we can see that 
+    $X_{t+1} = \phi X_t + Z_{t+1} \iff X_t = -\frac{1}{\phi} Z_{t+1} + \frac{1}{\phi} X_{t+1}$
+    \begin{align*}
+        X_t &= \phi^{-1} X_{t+1} - \phi^{-1} Z_{t+1} \\
+        &= \phi^{-1} (\phi^{-1} X_{t+2} - \phi^{-1} Z_{t+2}) - \phi^{-1} Z_{t+1}\\
+        &= \phi^{-2} X_{t+2} - \phi^{-1} Z_{t+1} - \phi^{-2} Z_{t+2}\\
+        &\vdots \\
+        &= \phi^{-k} X_{t+k} - \sum_{j=1}^{k} \phi^{-j} Z_{t+j} \\
+        &= - \sum_{j=1}^{\infty} \phi^{-j} Z_{t+j}
+    \end{align*}
+    \fbox{We will see later that why this is the unique stationary solution when $|\phi| < 1$}
+\end{example}
+\begin{remark}
+    Uniqueness of stationary solution to AR$(1)$:\\
+    \begin{itemize}
+        \item If $X_t = \phi X_{t-1} + Z_t$, where $|\phi| > 1$ then we can rewrite this as $X_t = \phi^{\star} X_{t-1} + Z_t^{\star}$ with $\phi^{\star} < 1$ and $Z_t^{\star} \sim WN(0, \sigma^2)$
+        \fbox{Homework problem}
+    \end{itemize}
+\end{remark}
+\begin{definition}[3.1.3: Causality]
+    An ARMA$(p,q)$ process $\phi(B)X_t = \theta(B) Z_t$ is said to be causal if ther exists a sequence of constants $\{\psi_j\}$ such that $\sum_{j=0}^{\infty} |\psi_j| < \infty$ and $X_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j}$ for all $t \in \mathbb{Z}$.
+\end{definition}
+\begin{proposition}[3.1.1]
+    If $\{X_t, t \in \mathbb{Z}\}$ is a sequence of rv st. $\sup_t E|X_t| < \infty$ and if $\{\psi_j\}_{j \geq 0}$ is a sequence of numbers s.t $\sum_{j=0}^{\infty} |\psi_j| < \infty$ then the series $\psi(B) X_t = \left( \sum_{j=0}^{\infty} \psi_j B^j \right) X_t = \sum_{j=0}^{\infty} \psi_j X_{t-j}$ converges absolutely w.p 1\\
+    If in addition $\sup_t E(X_t^2) < \infty$ then the series converges in $L^2$ to the same limit.
+    \begin{proof}
+        \begin{itemize}
+            \item Consider $\sum_{j=0}^{\infty} |\psi_j| |X_{t-j}|$, which always exists (may be infinite)
+            \item Monotone Convergence Theorem implies $E \left( \sum_{j=0}^{\infty} |\psi_j| |X_{t-j}| \right) = \sum_{j=0}^{\infty} |\psi_j| E|X_{t-j}| \leq \left( \sup_t E|X_t| \right) \sum_{j=0}^{\infty} |\psi_j| < \infty \implies \sum_{j=0}^{\infty} |\psi_j| |X_{t-j}| < \infty$ w.p 1
+            \item $\implies \sum_{j=0}^{\infty} \psi_j X_{t-j}$ converges absolutely w.p 1, call the limit $W_t$.
+            \item Verify $\sum_{j=0}^{n} \psi_j X_{t-j}$ is a Cauchy sequence in $L^2$: We do this by showing $|| \sum_{j=n}^{m} \psi_j X_{t-j} ||_2 \to 0$ as $n,m \to \infty$.\\
+            \item So it converges in $L^2$ to some limit $S_t$.
+            \item $E(S_t - W_t)^2 = E[ \lim \inf_n (S - \sum_{j=0}^{n} \psi_j X_{t-j})^2]$ by Fatou's Lemma\\
+            $\leq \lim \inf_n E(S - \sum_{j=0}^{n} \psi_j X_{t-j})^2 = 0$\\
+            $\implies S_t = W_t$ a.s. since the second moment is 0.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+\subsection{9/25/2025 Lecture 7}
+\begin{remark}[Review]
+    Review of last week:
+    \begin{itemize}
+        \item ARMA$(p,q)$ process: $\phi(B) X_t = \theta(B) Z_t$ where $\{Z_t\} \sim WN(0, \sigma^2)$
+        \item MA$(q)$ process: $X_t = \theta(B) Z_t$
+    \end{itemize}
+\end{remark}
+\begin{proposition}[3.1.2]
+    If $\{X_t\}$ is a staitionary process with autocovariance function $\gamma_x(\cdot)$ and if $\{\psi_j\}_{j \geq 0}$, $\sum_{j=0} |\psi_j| < \infty$, define $Y_t = \sum_{j=0}^{\infty} \psi_j X_{t-j}$ (converges absolutely, w.p 1).\\
+    Then $Y_t$ is also staitionary with autocovariance function $\gamma_y(h) = \sum_{j=-\infty}^{\infty} \sum_{k=-\infty}^{\infty} \psi_j \psi_k \gamma_x(h + j - k)$ where $\psi_j = 0$ for $j < 0$.
+    \begin{proof}
+        We need to show that $E(Y_t)$ is constant and $\cov(Y_{t+h}, Y_t)$ depends only on $h$.\\
+        \begin{align*}
+            E(Y_t) &= E \left( \sum_{j=0}^{\infty} \psi_j X_{t-j} \right) = \sum_{j=0}^{\infty} \psi_j E(X_{t-j}) = \mu_x \sum_{j=0}^{\infty} \psi_j \text{ (constant)}\\
+            \cov(Y_{t+h}, Y_t) &= E[(Y_{t+h} - E(Y_{t+h}))(Y_t - E(Y_t))]\\
+            &= E \left[ \left( \sum_{j=0}^{\infty} \psi_j (X_{t+h-j} - \mu_x) \right) \left( \sum_{k=0}^{\infty} \psi_k (X_{t-k} - \mu_x) \right) \right]\\
+            &= E \left[ \sum_{j=0}^{\infty} \sum_{k=0}^{\infty} \psi_j \psi_k (X_{t+h-j} - \mu_x)(X_{t-k} - \mu_x) \right]\\
+            &= \sum_{j=0}^{\infty} \sum_{k=0}^{\infty} \psi_j \psi_k E[(X_{t+h-j} - \mu_x)(X_{t-k} - \mu_x)]\\
+            &= \sum_{j=0}^{\infty} \sum_{k=0}^{\infty} \psi_j \psi_k \gamma_x(h + j - k)\\
+            &= \sum_{j=-\infty}^{\infty} \sum_{k=-\infty}^{\infty} \psi_j \psi_k \gamma_x(h + j - k) \text{ where } \psi_j = 0 \text{ for } j < 0
+        \end{align*}
+    \end{proof}
+\end{proposition}
+\begin{remark}
+    Let $\alpha(B) = \sum_{j=0}^{\infty} \alpha_j B^j$ and $\beta(B) = \sum_{j=0}^{\infty} \beta_j B^j$ $\sum_{j=0}^{\infty} |\alpha_j| < \infty$ $\sum_{j=0}^{\infty} |\beta_j| < \infty$.\\
+    Then the product $\psi(B) = \alpha(B) \beta(B) = \sum_{j=0}^{\infty} \psi_j B^j$ then $\sum_{j=0}^{\infty} |\psi_j| < \infty$ 
+\end{remark}
+\begin{theorem}[3.1.1.a]
+    If $\phi(z)$ and $\theta(z)$ have no common zeros, if $phi(z) \neq 0$ for $|z| = 1$ and if $\{Z_t\} \sim WN(0, \sigma^2)$ then exists a unique stationary solution given by 
+    $$ X_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j} \text{ where } \psi(z) = \frac{\theta(z)}{\phi(z)} = \sum_{j=0}^{\infty} \psi_j z^j$$
+    and $\sum_{j=0}^{\infty} |\psi_j| < \infty$. so that $X_t$ is well-defined and causal.
+    \begin{proof}
+        (i) Find Solution\\
+        If $\phi(z) \neq 0$ for $|z| = 1$ then $\exists \epsilon > 0$ such that 
+        \begin{align*}
+            \frac{1}{\phi(z)} &:= \sum_{j=0}^{\infty} \zeta_j z^j =: \zeta(z), |z| \leq 1 + \epsilon\\
+            &\implies |\zeta_j| \leq (1 + \epsilon/2)^{-j} \text{ for some } K > 0
+        \end{align*}
+        Consider $\frac{1}{1-z} = \sum_{j=0}^{\infty} z^j$ for $|z| < 1$\\
+        Consider $\frac{1}{1 - 0.5z} = \sum_{j=0}^{\infty} (0.5z)^j$ for $|z| < 2$\\
+        $\phi(z) = \prod_{j=1}^{p} (1 - w_j z)$, ie each of the roots are $\frac{1}{w_j}$.\\
+        Then $\frac{1}{\phi(z)} = \prod_{j=1}^{p} \frac{1}{1 - w_j z}$\\
+        $\implies \frac{1}{\phi(z)} = \sum_{j=0}^{\infty} \zeta_j z^j$ for $|z| < \min_{1 \leq j \leq p} |w_j|^{-1}$\\
+        We know that $\forall j, |w_j| < 1$ and then if we take $\epsilon = \min_{1 \leq j \leq p} |w_j|^{-1} - 1 > 0$ then we are done.\\
+        (ii) Find Stationary Solution\\
+        Define $X_t = \frac{\theta(B)}{\phi(B)} Z_t$ which is staitionary\\
+        $\phi(B) X_t = \theta(B) Z_t$\\
+        (iii) Uniqueness of Stationary Solution\\
+        Suppose $\{W_t\}$ is another stationary solution to $\phi(B) W_t = \theta(B) Z_t$\\
+        \begin{align*}
+            \phi(B) W_t &= \theta(B) Z_t \\
+            \zeta(B [ \phi(B) W_t]) &= \zeta(B [ \theta(B) Z_t])\\
+            \implies W_t &= \zeta(B) [\theta(B) Z_t] = \frac{\theta(B)}{\phi(B)} Z_t = X_t
+        \end{align*}
+    \end{proof}
+\end{theorem}
+\begin{theorem}[3.1.1.b]
+    Assume $\phi(z)$ and $\theta(z)$ have no common zeros. If there exists a stationary solution which is also causal then $\phi(z) \neq 0$ for $|z| \leq 1$.
+\end{theorem}
+\subsection{9/30/2025 Lecture 8}
+\begin{remark}[Review]
+    Prior class review:
+    \begin{itemize}
+        \item ARMA$(p,q)$ process: $\phi(B) X_t = \theta(B) Z_t$ where $\{Z_t\} \sim WN(0, \sigma^2)$
+    \end{itemize}
+    $\phi(z)$ and $\theta(z)$ have no common zeros.\\
+\end{remark}
+\begin{theorem}[3.1.1.a \& .b]
+    (a) If $\phi(z) \neq 0$ for all $|z| \leq 1$ then there exists a unique stationary solution given by
+    $$ X_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j} \text{ where } \psi(z) = \frac{\theta(z)}{\phi(z)} = \sum_{j=0}^{\infty} \psi_j z^j$$
+    and they satisfy $\sum_{j=0}^{\infty} |\psi_j| < \infty$. \\
+    (b) If there exists a stationary solution which is also causal then $\phi(z) \neq 0$ for all $|z| \leq 1$.
+\end{theorem}
+\begin{remark}
+    Not proving
+    \begin{itemize}
+        \item If $\phi(z) \neq 0$ for all $|z| = 1$ then there a unique stationary solution. 
+        \item If $\phi(z) = 0$ for some $|z| = 1$ then there is no stationary solution.
+        \item If $\phi(z) \neq 0$ for all $|z| = 1$ and $\{X_t\}$ is the unique staitionary solution then one can find $\hat{phi}(z)$ and $WN\{Z_t^*\}$ st $\hat{\phi}(z) X_t = \phi(B) Z_t^*$ and $\hat{\phi}(z) \neq 0$ for all $|z| \leq 1$. 
+        \item Only Focus on Causal and Invertable ARMA models
+    \end{itemize}
+\end{remark}
+\begin{definition}[3.1.4]
+    Suppose $\{X_t\}$ is a staitionary solution of $\phi(B) X_t = \theta(B) Z_t$, it is said to be invertible if $\exists{\pi_j}$ such that $\sum_{j=0}^{\infty} |\pi_j| < \infty$  and $Z_t = \sum_{j=0}^{\infty} \pi_j X_{t-j}$ for all $t \in \mathbb{Z}$.
+\end{definition}
+\begin{theorem}[3.1.2]
+    Suppose $X_t$ is the unique stationary solution of $\phi(B) X_t = \theta(B) Z_t$, then it is invertible iff $\theta(z) \neq 0$ for all $|z| \leq 1$. \\
+    When the condition holds $\{\pi_j\}$ are determined by $\pi(z) = \frac{\phi(z)}{\theta(z)} = \sum_{j=0}^{\infty} \pi_j z^j$.
+\end{theorem}
+\begin{remark}
+    IF the definition of invertability is relaxted to:
+    $$ Z_t \in \overline{sp} \{X_{t}, X_{t-1}, \ldots \}$$
+    then the condition relaxted to $\theta(z) \neq 0$ for all $|z| < 1$
+\end{remark}
+\begin{definition}[3.2.1]
+    Suppose $\{Z_t\} \sim WN(0, \sigma^2)$, we say $\{X_t\}$ is an infinite order moving average denoted by $MA(\infty)$ if
+    $$\exists \{\psi_j\} \text{ such that } \sum_{j=0}^{\infty} |\psi_j| < \infty \text{ and } X_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j}$$
+    May relax condition to $\sum_{j=0}^{\infty} \psi_j^2 < \infty$ then take $X_t$ as the $L^2$ limit.\\
+    Sometimes MA$(\infty)$ is called the linear process.\\
+    This is related to the Wold Decomposition Theorem.
+\end{definition}
+\begin{proposition}[3.2.1]
+    If $\{X_t\}$ is a zero-mean stationary process with autocovariance function $\gamma_x(\cdot)$ such that $\gamma_x(h) = 0$ for $|h| > q$ and $\gamma_x(q) \neq 0$ then $\{X_t\}$ is an $MA(q)$ process.\\
+    IE: $\exists WN \{Z_t\}$ s.t. $X_t = Z_t + \theta_1 Z_{t-1} + \ldots + \theta_q Z_{t-q}$ where $\theta_q \neq 0$.
+    \begin{proof}
+        \begin{itemize}
+            \item  Find the WN $\{Z_t\}$
+            \item Show that $X_t = Z_t + \theta_1 Z_{t-1} + \ldots + \theta_q Z_{t-q}$ for some $\theta_1, \ldots, \theta_q$ with $\theta_q \neq 0$
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+\begin{definition}[Linear Predictor]
+    Suppose $Y \in \mathbb{R}$, $E[Y] = 0$, $\mathbf{X} \in \mathbb{R}^d$, $E[\mathbf{X}] = \mathbf{0}$.
+    $$ \cov(\begin{bmatrix}
+    Y \\
+    \mathbf{X}
+    \end{bmatrix}) = \begin{bmatrix}
+    \sigma_Y^2 & \mathbf{\sigma_{YX}'} \\
+    \mathbf{\sigma_{YX}} & \Sigma_X
+    \end{bmatrix} $$
+    A linear predictor takes the form $C^T X$ where $C \in \mathbb{R}^d$.\\
+    The best linear predictor (BLP) of $Y$ based on $\mathbf{X}$ is the linear predictor $\hat{Y} = C^T \mathbf{X}$ that minimizes the mean squared error $\min_{C \in \mathbb{R}^d} E[(Y - C^T \mathbf{X})^2]$.
+    \begin{align*}
+        E[(Y - C^T \mathbf{X})^2] &= E[Y^2] - 2C^T E[Y \mathbf{X}] + C^T E[\mathbf{X} \mathbf{X}^T] C \\
+        &= \sigma_Y^2 - 2C^T \mathbf{\sigma_{YX}} + C^T \Sigma_X C
+    \end{align*}
+    The best solution is given taking the partial derivative and setting it to 0:
+    \begin{align*}
+        \frac{\partial}{\partial C} E[(Y - C^T \mathbf{X})^2] &= -2 \mathbf{\sigma_{YX}} + 2 \Sigma_X C = 0\\
+        \implies \hat{C} &= \Sigma_X^{-1} \mathbf{\sigma_{YX}}\\
+        \implies \hat{Y} &= \hat{C}^T \mathbf{X} = \mathbf{\sigma_{YX}'} \Sigma_X^{-1} \mathbf{X}
+    \end{align*}
+    $$E[(Y - \hat{Y})^2] = \sigma_Y^2 - \mathbf{\sigma_{YX}'} \Sigma_X^{-1} \mathbf{\sigma_{YX}}$$
+\end{definition}
+\begin{remark}
+    $\{X_t\}$ is a mean-zero stationary process.\\
+    Want to predict $X_{k+1}$ based on $\{X_1, \ldots, X_k\}$.\\
+    $$ \min_{\phi_1, \ldots, \phi_k} E[(X_{k+1} - \hat{X}_{k+1})^2] $$
+    Where $\hat{X}_{k+1} = \sum_{j=1}^{k} \phi_j X_{k+1-j}$\\
+    $$Gamma_{k+1} =\cov(\begin{bmatrix}
+    X_{k+1} \\
+    X_k \\
+    \vdots \\
+    X_1
+    \end{bmatrix}) = \begin{bmatrix}
+        \gamma(0) & \mathbf{\gamma(k)}' \\
+        \mathbf{\gamma(k)} & \Gamma_k
+    \end{bmatrix}$$ 
+    Where $\mathbf{gamma(k)} = [\gamma(1), \ldots, \gamma(k)]'$ and $\Gamma_k = [\gamma(i-j)]_{i,j=1}^{k}$\\
+    $$\begin{bmatrix}
+    \hat{\phi}_1 \\
+    \hat{\phi}_2 \\
+    \vdots \\
+    \hat{\phi}_k
+    \end{bmatrix} = \Gamma_k^{-1} \mathbf{\gamma(k)}$$
+\end{remark}
+
+
+\end{document}

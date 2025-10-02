@@ -1,1 +1,7 @@
-\contentsline {section}{\numberline {1}North Brunswick August Bootcamp}{2}{section.1}%
+\contentsline {section}{\numberline {1}Session 1}{2}{section.1}%
+\contentsline {section}{\numberline {2}Session 2}{3}{section.2}%
+\contentsline {section}{\numberline {3}Session 3}{4}{section.3}%
+\contentsline {section}{\numberline {4}Day 1 Summary}{4}{section.4}%
+\contentsline {section}{\numberline {5}Day 2: Session 4}{5}{section.5}%
+\contentsline {section}{\numberline {6}Session 5}{6}{section.6}%
+\contentsline {section}{\numberline {7}Review}{7}{section.7}%

@@ -1,0 +1,313 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{16:960:665}
+\newcommand{\assignment}{Homework 1}
+\author{\name}
+\title{\course \ - \assignment}
+
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\subsection*{Homework 01, Due 09/25/2025}
+
+\begin{exercise}\hfill
+    \begin{itemize}
+        \item [(a)] Let $\{Z_t,\;t\in\Z\}$ be a Gaussian white noise with variance 1, and consider the time series
+            \begin{equation*}
+                X_t=Z_tZ_{t-1}, \quad Y_t=X_t^2.
+            \end{equation*}
+            Find the mean, autocovariance, and autocorrelation
+            functions of $X_t$ and $Y_t$.
+            \begin{solution}
+                $X_t$:\\
+                Mean: $\E[X_t] = \E[Z_t Z_{t-1}] = \E[Z_t]\E[Z_{t-1}] $ (since $Z_t$ and $Z_{t-1}$ are independent) $= 0 \cdot 0 = 0$.\\
+                Autocovariance: For $h=0$, $\gamma_X(0) = \E[X_t^2] - (\E[X_t])^2 = \E[Z_t^2 Z_{t-1}^2] - 0$\\ $= \E[Z_t^2]\E[Z_{t-1}^2] = 1 \cdot 1 = 1$.\\ 
+                for $h \neq 0$, $\gamma_X(h) = \E[X_t X_{t+h}] - (\E[X_t])^2 = \E[Z_t Z_{t-1} Z_{t+h} Z_{t+h-1}] - 0$\\
+                Since $Z_t$ are independent for $h=1,-1,0$,\\
+                $\E[Z_t Z_{t-1} Z_{t+h} Z_{t+h-1}] = \E[Z_t]\E[Z_{t-1}]\E[Z_{t+h}]\E[Z_{t+h-1}] = 0$.\\
+                For $h=1$, $\E[Z_t Z_{t-1} Z_{t+1} Z_t] = \E[Z_t^2]\E[Z_{t-1}]\E[Z_{t+1}] = 1 \cdot 0 \cdot 0 = 0$.\\
+                For $h=-1$, $\E[Z_t Z_{t-1} Z_{t-1} Z_{t-2}] = \E[Z_{t-1}^2]\E[Z_t]\E[Z_{t-2}] = 1 \cdot 0 \cdot 0 = 0$.\\
+                Thus, $\gamma_X(h) = 0$ for $h \neq 0$.\\
+                Thus, $\gamma_X(h) \begin{cases}
+                    1, & h=0 \\
+                    0, & h \neq 0
+                \end{cases}
+                $\\
+                Autocorrelation: $\rho_X(h) = \frac{\gamma_X(h)}{\gamma_X(0)} = \begin{cases}
+                    1, & h=0 \\
+                    0, & h \neq 0
+                \end{cases}$\\
+                $Y_t$:\\
+                Mean: $\E[Y_t] = \E[X_t^2] = \E[Z_t^2 Z_{t-1}^2] = \E[Z_t^2]\E[Z_{t-1}^2] = 1 \cdot 1 = 1$.\\
+                Autocovariance: For $h=0$, $\gamma_Y(0) = \E[Y_t^2] - (\E[Y_t])^2 = \E[X_t^4] - 1$.\\
+                Since $X_t = Z_t Z_{t-1}$, $X_t^4 = Z_t^4 Z_{t-1}^4$. Thus, $\E[X_t^4] = \E[Z_t^4]\E[Z_{t-1}^4]$. We know that for a standard normal variable $Z$ $\E[Z^4] = 3$. Thus, $\E[X_t^4] = 3 \cdot 3 = 9$. Therefore, $\gamma_Y(0) = 9 - 1 = 8$.\\
+                For $h \neq 0$, $\gamma_Y(h) = \E[Y_t Y_{t+h}] - (\E[Y_t])^2 = \E[X_t^2 X_{t+h}^2] - 1$.\\
+                Since $X_t$ and $X_{t+h}$ are independent for $h \neq 0,1, -1$ for $|h| > 1$, $\E[X_t^2 X_{t+h}^2] = \E[X_t^2]\E[X_{t+h}^2] = 1 \cdot 1 = 1$. Thus, $\gamma_Y(h) = 1 - 1 = 0$ for $|h| > 1$.\\
+                For $h=1$, $\E[X_t^2 X_{t+1}^2] = \E[Z_t^2 Z_{t-1}^2 Z_{t+1}^2 Z_t^2] = \E[Z_t^4]\E[Z_{t-1}^2]\E[Z_{t+1}^2] = 3 \cdot 1 \cdot 1 = 3$. Thus, $\gamma_Y(1) = 3 - 1 = 2$.\\
+                For $h=-1$, $\E[X_t^2 X_{t-1}^2] = \E[Z_t^2 Z_{t-1}^2 Z_{t-1}^2 Z_{t-2}^2] = \E[Z_{t-1}^4]\E[Z_t^2]\E[Z_{t-2}^2] = 3 \cdot 1 \cdot 1 = 3$. Thus, $\gamma_Y(-1) = 3 - 1 = 2$.\\
+                Thus, $\gamma_Y(h) = \begin{cases}
+                    8, & h=0 \\
+                    2, & |h|=1 \\
+                    0, & |h| > 1
+                \end{cases}$\\
+                Autocorrelation: $\rho_Y(h) = \frac{\gamma_Y(h)}{\gamma_Y(0)} = \begin{cases}
+                    1, & h=0 \\
+                    \frac{2}{8} = \frac{1}{4}, & |h|=1 \\
+                    0, & |h| > 1
+                \end{cases}$\\
+                \fbox{Final Answers:}
+                \begin{align*}
+                    \E[X_t] &= 0, & \gamma_X(h) &= \begin{cases}
+                        1, & h=0 \\
+                        0, & h \neq 0
+                    \end{cases}, & \rho_X(h) &= \begin{cases}
+                        1, & h=0 \\
+                        0, & h \neq 0
+                    \end{cases} \\
+                    \E[Y_t] &= 1, & \gamma_Y(h) &= \begin{cases}
+                        8, & h=0 \\
+                        2, & |h|=1 \\
+                        0, & |h| > 1
+                    \end{cases}, & \rho_Y(h) &= \begin{cases}
+                        1, & h=0 \\
+                        \frac{1}{4}, & |h|=1 \\
+                        0, & |h| > 1
+                    \end{cases}
+                \end{align*}
+            \end{solution}
+        \item [(b)] Let $X_t$ be a stationary Gaussian process with mean $\mu$ and autocovariance function $\gamma_X(\cdot)$. Define the nonlinear time series
+            \begin{equation*}
+                Y_t=\exp\{X_t\}.
+            \end{equation*}
+            Find the mean, autocovariance, and autocorrelation functions of $Y_t$.
+            \begin{solution}
+                Mean: $\E[Y_t] = \E[\exp\{X_t\}]$. 
+                \begin{align*}
+                    \E[\exp\{X_t\}] &= \int_{-\infty}^{\infty} \exp\{x\} f_{X_t}(x) dx \\
+                    &= \int_{-\infty}^{\infty} \exp\{ x ^{\frac{1}{\sqrt{2\pi \gamma_X(0)}} \exp\left\{-\frac{(x-\mu)^2}{2\gamma_X(0)}\right\}} \}dx \\
+                    &= \exp\{\mu + \frac{1}{2}\gamma_X(0)\} \\
+                    &\text{ (Using moment generating function of normal distribution)}
+                \end{align*}
+                Autocovariance: For $h=0$, $\gamma_Y(0) = \E[Y_t^2] - (\E[Y_t])^2$\\
+                $= \E[\exp\{2X_t\}] - (\exp\{\mu + \frac{1}{2}\gamma_X(0)\})^2$.\\
+                \begin{align*}
+                    \E[\exp\{2X_t\}] &= \int_{-\infty}^{\infty} \exp\{2x\} f_{X_t}(x) dx \\
+                    &= \int_{-\infty}^{\infty} \exp\{ 2x ^{\frac{1}{\sqrt{2\pi \gamma_X(0)}} \exp\left\{-\frac{(x-\mu)^2}{2\gamma_X(0)}\right\}} \}dx \\
+                    &= \exp\{2\mu + 2\gamma_X(0)\} \\
+                    &\text{ (Using moment generating function of normal distribution)}
+                \end{align*}
+                Thus, $\gamma_Y(0) = \exp\{2\mu + 2\gamma_X(0)\} - \exp\{2\mu + \gamma_X(0)\}$\\
+                For $h \neq 0$, $\gamma_Y(h) = \E[Y_t Y_{t+h}] - (\E[Y_t])^2$\\
+                \begin{align*}
+                    \E[Y_t Y_{t+h}] &= \E[\exp\{X_t + X_{t+h}\}] \\
+                    \E[X_t + X_{t+h}] &= 2 \mu\\
+                    \var(X_t + X_{t+h}) &= \var(X_t) + \var(X_{t+h}) + 2\cov(X_t, X_{t+h}) \\
+                    &= 2\gamma_X(0) + 2\gamma_X(h)\\
+                    \E[\exp\{X_t + X_{t+h}\}] &= \exp\{2\mu + \frac{1}{2}(2\gamma_X(0) + 2\gamma_X(h))\} \\
+                    &= \exp\{2\mu + \gamma_X(0) + \gamma_X(h)\} \\
+                \end{align*}
+                Thus,
+                \begin{align*}
+                    \gamma_Y(h) &= \exp\{2\mu + \gamma_X(0) + \gamma_X(h)\} - \exp\{2\mu + \gamma_X(0)\} 
+                \end{align*}
+                Autocorrelation: $\rho_Y(h) = \frac{\gamma_Y(h)}{\gamma_Y(0)}$\\
+                \begin{align*}
+                    \rho_Y(h) &= \frac{\exp\{2\mu + \gamma_X(0) + \gamma_X(h)\} - \exp\{2\mu + \gamma_X(0)\}}{\exp\{2\mu + 2\gamma_X(0)\} - \exp\{2\mu + \gamma_X(0)\}} \\
+                    &= \frac{\exp\{\gamma_X(h)\} - 1}{\exp\{\gamma_X(0)\} - 1}
+                \end{align*}
+                \fbox{Final Answers:}
+                \begin{align*}
+                    \E[Y_t] &= \exp\{\mu + \frac{1}{2}\gamma_X(0)\} \\
+                    \gamma_Y(h) &= \exp\{2\mu + \gamma_X(0) + \gamma_X(h)\} - \exp\{2\mu + \gamma_X(0)\} \\
+                    \rho_Y(h) &= \begin{cases}
+                        1, & h=0 \\
+                        \frac{\exp\{\gamma_X(h)\} - 1}{\exp\{\gamma_X(0)\} - 1}, & h \neq 0
+                    \end{cases}
+                \end{align*}
+            \end{solution}
+    \end{itemize}
+\end{exercise}
+\begin{exercise}
+    Suppose we have observed a time series $\{X_1,X_2,\ldots,X_n\}$ which is assumed to be stationary. Let $\hat\gamma(h)=\tfrac{1}{n}\sum_{i=1}^{n-|h|} (X_{t+|h|}-\bar X)(X_t-\bar X)$ be the lag-$h$ sample autocovariance, for every $|h|<n$. Prove that the order-$n$ sample autocovariance matrix $\hat\Gamma_n:=[\hat\gamma(r-s)]_{r,s=1}^n$ is positive semi-definite.
+    \begin{solution}
+        In order to prove that the sample autocovariance matrix $\hat\Gamma_n$ is positive semi-definite, we need to show that for any non-zero vector $c \in \mathbb{R}^n$, the following holds:
+        $$ c^T \hat\Gamma_n c \geq 0. $$
+        Let's denote the elements of the vector $c$ as $c = (c_1, c_2, \ldots, c_n)^T$. Then we can express the quadratic form as follows:
+        $$ c^T \hat\Gamma_n c = \sum_{r=1}^n \sum_{s=1}^n c_r c_s \hat\gamma(r-s). $$
+        We can clearly see that this is symmetric since $\hat\gamma(h) = \hat\gamma(-h)$.\\
+        Substituting the definition of $\hat\gamma(h)$, we have:
+        $$ c^T \hat\Gamma_n c = \sum_{r=1}^n \sum_{s=1}^n c_r c_s \left( \frac{1}{n} \sum_{t=1}^{n-|r-s|} (X_{t+|r-s|} - \bar{X})(X_t - \bar{X}) \right). $$
+        Rearranging the sums, we get:
+        $$ c^T \hat\Gamma_n c = \frac{1}{n} \sum_{t=1}^{n-1} \sum_{r=1}^n \sum_{s=1}^n c_r c_s (X_{t+|r-s|} - \bar{X})(X_t - \bar{X}). $$
+        Now, we can interpret this expression as a weighted sum of products of deviations from the mean. Since $(X_t - \bar{X})$ represents deviations from the mean, and since the weights $c_r c_s$ are real numbers, we can see that this sum is essentially a sum of squares (or products) of these deviations.
+        $$ c^T \hat\Gamma_n c = \frac{1}{n} \sum_{i=1}^n \left( \sum_{r=1}^n c_r (X_{i+r-1} - \bar{X}) \right)^2. $$
+        We can see that the right-hand side is a sum of squares, which is always non-negative. Therefore, we conclude that:
+        $$ c^T \hat\Gamma_n c \geq 0, $$
+        for any non-zero vector $c$. This implies that the sample autocovariance matrix $\hat\Gamma_n$ is positive semi-definite.
+    \end{solution}  
+\end{exercise}
+\begin{exercise}\hfill
+    \begin{itemize}
+        \item [(a)] Let $Z_1$ and $Z_2$ be IID $N(0,1)$ random variables, and $\omega\in(-\pi,\pi]$ be a constant. Define a stochastic process
+            \begin{equation*}
+                Y_t=Z_1\cos(\omega t)+Z_2\sin(\omega t).
+            \end{equation*}
+            Calculate its autocovariance function and autocorrelation function. Is the time series stationary? Is it strictly stationary?
+            \begin{solution}
+                The mean is given by:
+                $\E[Y_t] = \E[Z_1]\cos(\omega t) + \E[Z_2]\sin(\omega t) = 0 \cdot \cos(\omega t) + 0 \cdot \sin(\omega t) = 0$.\\
+                The autocovariance function is given by: $\gamma_Y(h) = \E[(Y_t - \E[Y_t])(Y_{t+h} - \E[Y_{t+h}])] = \E[Y_t Y_{t+h}] - (\E[Y_t])^2$.\\
+                Since $Z_1$ and $Z_2$ are independent, we have:
+                \begin{align*}
+                    \E[Y_t Y_{t+h}] &= \E[(Z_1\cos(\omega t) + Z_2\sin(\omega t))(Z_1\cos(\omega (t+h)) + Z_2\sin(\omega (t+h)))] \\
+                    &= \E[Z_1^2]\cos(\omega t)\cos(\omega (t+h)) + \E[Z_2^2]\sin(\omega t)\sin(\omega (t+h)) \\
+                    &= 1 \cdot \cos(\omega t)\cos(\omega (t+h)) + 1 \cdot \sin(\omega t)\sin(\omega (t+h)) \\
+                    &= \cos(\omega h)
+                \end{align*}
+                The autocovariance function is given by: $\gamma_Y(h) = \cos(\omega h)$.\\
+                The autocorrelation function is given by: $\rho_Y(h) = \frac{\gamma_Y(h)}{\gamma_Y(0)} = \frac{\cos(\omega h)}{\cos(0)} = \cos(\omega h)$.\\
+                Since the mean is constant and the autocovariance function depends only on the lag $h$, the time series is weakly stationary.\\
+                To see if it is strictly stationary, we note that $Y_t$ is a linear combination of Gaussian random variables, and thus $Y_t$ is also Gaussian. The joint distribution of $(Y_{t_1}, Y_{t_2}, \ldots, Y_{t_k})$ for any set of time points $t_1, t_2, \ldots, t_k$ depends only on the differences $t_i - t_j$, which means the joint distribution is invariant under time shifts. Therefore, the process is strictly stationary as well.
+            \end{solution}
+        \item [(b)] From now on assume $n$ is an even integer. Take $n=200$ or 500, or whatever even integer you would like to choose, and set $\omega_j:=(2\pi j)/n$ for $j=0,1,\ldots,n/2$. Now simulate $(n/2+1)$ time series of length $n$ as described below
+            \begin{align*}
+                X_{0t}&=Z_0,&&\hbox{ where } Z_0\sim N(0,1)\\
+                X_{jt}&=Z_{j1}\cos(\omega_jt)+Z_{j2}\sin(\omega_jt),  &&\hbox{ where } Z_{j1}, Z_{j2} \sim N(0,2), 1\leq j<n/2\\
+                X_{n/2,t}&=Z_{n/2}(-1)^t,\quad &&\hbox{ where } Z_{n/2}\sim N(0,1);
+            \end{align*}
+            where all the $Z_{\bullet}$ random variables are also assumed to be mutually independent. Finally add the $(n/2+1)$ series that you have simulated together, and call it ${X_t}$
+            \begin{equation*}
+                X_t=\frac{1}{\sqrt{n}}\sum_{j=0}^{n/2}X_{jt}.
+            \end{equation*}
+            Show a time series plot (i.e. data vs time, and the data points are connected by lines as opposed to a scatterplot) of $\{X_t\}$.
+            \begin{solution}
+                % Add img
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{C:/Users/prana/OneDrive/Desktop/MathNotes/Stats 665/img/HW1_img1.png}
+                    \caption{Time Series Plot of $X_t$ with length $n=200$}
+                \end{figure}
+            \end{solution}
+        \item [(c)] Simulate IID $N(0,1)$ with length $n$, and show the corresponding time series plot.
+        \begin{solution}
+            % Add img
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.8\textwidth]{C:/Users/prana/OneDrive/Desktop/MathNotes/Stats 665/img/HW1_img2.png}
+                \caption{Time Series Plot of IID $N(0,1)$ with length $n=200$}
+            \end{figure}
+        \end{solution}
+        \item [(d)] Compare the two plots you've obtained, do they look similar? Can you explain why?
+        \begin{solution}
+            They do look similar because both time series are stationary with mean 0 and variance 1. But it is clear that the first one has more structure to it. It clearly is periodic as the peaks and valley has similar spacing.\\
+            The first time series is a sum of sinusoidal functions with random coefficients, which gives it a periodic structure. The second time series is purely random noise without any underlying pattern. However, both series have the same statistical properties (mean and variance), which is why they may appear similar at a glance.
+        \end{solution}
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}
+    Which, if any, of the following functions defined on the integers is the autocovariance function of a stationary time series? Prove your results.
+    \begin{equation*}
+        \begin{array}{cl}
+            \hbox{(a)} & f(h) = (-1)^{|h|} \\
+            \hbox{(b)} & f(h)=1+\cos\tfrac{\pi h}{2} + \cos\tfrac{\pi h}{4} \\
+            \hbox{(c)} & f(h)=1+\cos\tfrac{\pi h}{2} - \cos\tfrac{\pi h}{4} \\
+            \hbox{(d)} & f(h)=\left\{\begin{array}{cl}
+                1 & \hbox{if } h=0 \\
+                .6 & \hbox{if } h=\pm 1\\
+                0 & \hbox{otherwise}
+            \end{array}\right.
+        \end{array}
+    \end{equation*}
+    \begin{solution}
+        Note that having a negative eigenvalue would imply that there exists a vector $c$ such that $c^T \Gamma c < 0$ and thus the function would not be positive semi-definite.
+        \begin{enumerate}
+            \item[(a)] $f(h) = (-1)^{|h|}$\\
+            This function is not a valid autocovariance function because it does not satisfy the positive semi-definite condition. For example, consider the vector $c = (1, 1)^T$. Then,
+            \begin{align*}
+                c^T \Gamma c &= \sum_{r=1}^2 \sum_{s=1}^2 c_r c_s f(r-s) \\
+                &= 1 \cdot 1 \cdot f(0) + 1 \cdot 1 \cdot f(1) + 1 \cdot 1 \cdot f(-1) + 1 \cdot 1 \cdot f(0) \\
+                &= 1 + (-1) + (-1) + 1 = 0
+            \end{align*}
+            And thus the function is not positive semi-definite and thus not a valid autocovariance function.\\
+            \item[(b)] $f(h)=1+\cos\tfrac{\pi h}{2} + \cos\tfrac{\pi h}{4}$\\
+            This function is a valid autocovariance function because it is symmetric and satisfies the positive semi-definite condition. \\ 
+            We can clearly see that $f(h) = f(-h)$, so it is symmetric.\\
+            To show that this function is positive semi-definite, we can use the fact that the sum of two positive semi-definite functions is also positive semi-definite. \\
+            Both $\cos(\frac{\pi h}{2})$ and $\cos(\frac{\pi h}{4})$ are valid autocovariance functions ($Y_t = Z_1 \cos(\omega t) + Z_2 \sin(\omega t)$ with $Z_1, Z_2 \sim N(0,1)$ and $\omega \in [0,2\pi]$ has autocovariance function $\cos(\omega h)$).\\
+            Adding a constant (1) does not affect the positive semi-definiteness.\\
+            Therefore, $f(h)$ is a valid autocovariance function.\\
+            \item[(c)] $f(h)=1+\cos\tfrac{\pi h}{2} - \cos\tfrac{\pi h}{4}$
+            This function is not a valid autocovariance function because it does not satisfy the positive semi-definite condition. Consider the $n=5$ case, the matrix is given by:
+            $\begin{bmatrix}
+                1 & .2929 & 0 & 1.7071 & 3 \\
+                .2929 & 1 & .2929 & 0 & 1.7071 \\
+                0 & .2929 & 1 & .2929 & 0 \\
+                1.7071 & 0 & .2929 & 1 & .2929 \\
+                3 & 1.7071 & 0 & .2929 & 1
+            \end{bmatrix}$
+            The eigenvalues of this matrix are approximately $5.00, 1.56, 1.11, -0.11, -2.56$. Since there are negative eigenvalues, the function is not positive semi-definite and thus not a valid autocovariance function.\\
+            \item[(d)] $f(h)=\left\{\begin{array}{cl}
+                1 & \hbox{if } h=0 \\
+                .6 & \hbox{if } h=\pm 1\\
+                0 & \hbox{otherwise}
+            \end{array}\right.$\\
+            This function is not a valid autocovariance function because it does not satisfy the positive semi-definite condition. Consider the $n=5$ case, the matrix is given by:
+        $\begin{bmatrix}
+            1 & .6 & 0 & 0 & 0 \\
+            .6 & 1 & .6 & 0 & 0 \\
+            0 & .6 & 1 & .6 & 0 \\
+            0 & 0 & .6 & 1 & .6 \\
+            0 & 0 & 0 & .6 & 1
+        \end{bmatrix}$
+        The eigenvalues of this matrix are approximately $2.0, 1.6, 1, 0.4, -0.04$. Since there is a negative eigenvalue, the function is not positive semi-definite and thus not a valid autocovariance function.
+        \end{enumerate}
+    \end{solution}
+\end{exercise}
+
+\begin{exercise}
+    Prove that $\alpha(\mathscr G, \mathscr H) \leq \tfrac{1}{2}\phi(\mathscr G, \mathscr H)$.
+    \begin{solution}
+        By definition, we have:
+        $$ \alpha(\mathscr{G}, \mathscr{H}) = \sup_{A \in \mathscr{G}, B \in \mathscr{H}} |P(A \cap B) - P(A)P(B)|, $$
+        and
+        $$ \phi(\mathscr{G}, \mathscr{H}) = \sup_{A \in \mathscr{G}, B \in \mathscr{H}, P(B) > 0} |P(A|B) - P(A)|. $$
+        \begin{align*}
+            \alpha(\mathscr{G}, \mathscr{H}) &= \sup_{A \in \mathscr{G}, B \in \mathscr{H}} |P(A \cap B) - P(A)P(B)| \\
+            &= \sup_{A \in \mathscr{G}, B \in \mathscr{H}} |P(B)(P(A|B) - P(A))| \\
+            &= \sup_{A \in \mathscr{G}, B \in \mathscr{H}} P(B) |P(A|B) - P(A)| \\
+            f(p) &:= p |P(A|B) - P(B)| (\text{where } P(B) = p) \\
+            P(A) &= P(A|B)P(B) + P(A|B^c)P(B^c) = pP(A|B) + (1-p)P(A|B^c) \\
+            P(A) &= pa + (1-p)b \quad (\text{where } P(A|B) = a, P(A|B^c) = b) \\
+            P(B)|P(A|B) - P(A)| &= p|a - (pa + (1-p)b)| = p(1-p)|(a-b)|\\ 
+            \alpha(\mathscr{G}, \mathscr{H}) &= \sup_{A \in \mathscr{G}, B \in \mathscr{H}} p(1-p)|a-b| 
+        \end{align*}
+        Considering $\phi(\mathscr{G}, \mathscr{H})$:
+        \begin{align*}
+            \phi(\mathscr{G}, \mathscr{H}) &= \sup_{A \in \mathscr{G}, B \in \mathscr{H}, P(B) > 0} |P(A|B) - P(A)| \\
+            &= \sup_{A \in \mathscr{G}, B \in \mathscr{H}, P(B) > 0} |a - (pa + (1-p)b)| \\
+            &= \sup_{A \in \mathscr{G}, B \in \mathscr{H}, P(B) > 0} (1-p)|a-b| 
+        \end{align*}
+        Now for any fixed $a,b$ the maximum of $p(1-p)|a-b|$ over $p \in [0,1]$ is attained at $p = \frac{1}{2}$ and the maximum value is $\frac{1}{4}|a-b|$.\\
+        \begin{align*}
+            \alpha(\mathscr{G}, \mathscr{H}) &\leq \sup_{a,b \in [0,1]} \frac{1}{4}|a-b| = \frac{1}{4} \phi(\mathscr{G}, \mathscr{H}) / \frac{1}{2} 
+        \end{align*} 
+        but since $(1-p) \leq 1$ for all $p \in [0,1]$, we have $\phi(\mathscr{G}, \mathscr{H}) \geq \sup_{a,b \in [0,1]} \frac{1}{2}|a-b|$.\\
+        Thus, we conclude that:
+        $$ \alpha(\mathscr{G}, \mathscr{H}) \leq \frac{1}{2} \phi(\mathscr{G}, \mathscr{H}). $$
+    \end{solution}
+\end{exercise}
+
+
+
+
+
+\end{document}

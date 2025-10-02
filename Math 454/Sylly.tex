@@ -1,0 +1,59 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Problems}
+\begin{example}[3 Coloring of NxN]
+    what is the number of all 3 colorings of an NxN grid such that no two adjacent cells have the same color?
+    LB = $\sqrt{2}^{n^2}$\\
+    UB = $3*2^{n^2}$\\
+    $$N(n) \sim \frac{4}{3}^{\frac{3}{2}^{n^2}}$$
+    this number is the squareice constant\\
+    Ice Problem Elliot Lieb
+\end{example}
+\begin{example}[Domino Tilings of NxN]
+    what is the number of ways to tile an NxN grid with 2x1 dominoes?
+    Not possible if N is odd\\
+    Im thinking LB is $(\frac{N}{2})^2$\\
+    UB is $N!$\\
+    $$N(n) \sim $$
+    For $N(8) = 12988816$\\
+    We know for $N$ even it exists\\
+\end{example}
+\begin{example}[Magic Square]
+    MS for n=2 does not exist\\
+    \begin{proof}
+        Let the square be 
+        \[
+        \begin{bmatrix}
+            a & b\\
+            c & d
+        \end{bmatrix}
+        \]
+        then we have $a+b=c+d$ and $a+c=b+d$ and $a+d=b+c$\\
+        then $a=d$ and $b=c$ and $a=b=c=d$\\
+        so all numbers are equal which is not possible since we want distinct positive integers.
+    \end{proof}
+\end{example}
+
+
+
+
+
+
+
+
+
+\end{document}
