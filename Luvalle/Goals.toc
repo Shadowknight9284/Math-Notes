@@ -1,4 +1,0 @@
-\contentsline {section}{\numberline {1}Questions}{2}{}%
-\contentsline {section}{\numberline {2}TODO for this week}{2}{}%
-\contentsline {section}{\numberline {3}Notes}{2}{}%
-\contentsline {subsection}{\numberline {3.1}Acceleration Transforms and Statistical Kinetic Models}{2}{}%
