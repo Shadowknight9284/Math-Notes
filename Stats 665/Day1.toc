@@ -7,3 +7,5 @@
 \contentsline {subsection}{\numberline {1.6}9/23/2025 Lecture 6}{13}{}%
 \contentsline {subsection}{\numberline {1.7}9/25/2025 Lecture 7}{15}{}%
 \contentsline {subsection}{\numberline {1.8}9/30/2025 Lecture 8}{17}{}%
+\contentsline {subsection}{\numberline {1.9}10/2/2025 Lecture 9}{19}{}%
+\contentsline {subsection}{\numberline {1.10}10/7/2025 Lecture 10}{21}{}%

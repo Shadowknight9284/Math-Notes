@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1758482666.18119 "c:/Users/prana/OneDrive/Desktop/MathNotes/test.tex" "test.pdf" "test" 1758482667.51677 0
+["pdflatex"] 1759432227.6507 "c:/Users/prana/OneDrive/Desktop/MathNotes/test.tex" "test.pdf" "test" 1759432228.80406 0
   "c:/Users/prana/OneDrive/Desktop/MathNotes/test.tex" 1746828732 513 7e5c61a77a607ba219fba0c1f4d921e6 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1705505139 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1705503004 1004 54797486969f23fa377b128694d548df ""
@@ -165,8 +165,8 @@
   "c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1705509774 5035139 e8cdab388a5f122f6094769190400852 ""
   "c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1705510268 8218970 09154cb4e9293ce11fe281527b453358 ""
   "c:/texlive/2023/texmf.cnf" 1705509744 713 e69b156964470283e0530f5060668171 ""
-  "style.tex" 1758482665 1910 a6330eca73083a8a72c7c3e33ee30247 ""
-  "test.aux" 1758482667 603 d541f3d2c80d375895adc6574d2b3047 "pdflatex"
+  "style.tex" 1759432227 1944 f06492acac0cabe866b708a85c590e6d ""
+  "test.aux" 1759432228 603 d541f3d2c80d375895adc6574d2b3047 "pdflatex"
   "test.tex" 1746828732 513 7e5c61a77a607ba219fba0c1f4d921e6 ""
   (generated)
   "test.aux"

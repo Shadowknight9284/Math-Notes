@@ -1,0 +1,179 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{16:960:665 - Time Series Analysis}
+\newcommand{\assignment}{Homework 2}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\begin{exercise}[6]
+    \begin{enumerate}
+        \item [(a)] Suppose $\mathscr H$ is a separable Hilbert space and $\mathscr H = \overline{\mathrm{sp}}\{x_i,\; i=1,2,\infty\}. $Let $x$ be an element of $\mathscr H$. Show that
+        \begin{equation*}
+            P_{\overline{\mathrm{sp}}\{x_1,x_2,\ldots,x_n\}}(x) \rightarrow x \quad\hbox{ as } n\rightarrow\infty.
+        \end{equation*}
+        \begin{solution}
+            
+        \end{solution}
+        \item[(b)] Suppose $\{X_t,\;t\in\mathbb{Z}\}$ is a stationary process. Show that
+        \begin{equation*}
+            P_{\overline{\mathrm{sp}}\{X_{n-j},\;1\leq j\leq\infty\}}(X_n) = \lim_{r\rightarrow\infty} P_{\overline{\mathrm{sp}}\{X_{n-1},X_{n-2},\ldots,X_{n-r}\}}(X_n).
+        \end{equation*}
+        \begin{solution}
+            
+        \end{solution}
+    \end{enumerate}
+\end{exercise}
+
+
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\begin{exercise}[7]
+  Consider the following ARMA processes.
+  \begin{enumerate}
+  \item[(i)] AR(3): $r_t=0.3+0.8r_{t-1}-.5r_{t-2}-.2r_{t-3}+a_t$.
+  \item[(ii)] MA(3): $r_t=0.3+a_t+0.8a_{t-1}-.5a_{t-2}-.2a_{t-3}$.
+  \item [(iii)] ARMA(3,2): $r_t=0.3+0.8r_{t-1}-.5r_{t-2}-.2r_{t-3}+a_t+0.5a_{t-1}+0.3a_{t-2}$.
+  \end{enumerate}
+  Assume all $a_t$ are i.i.d $N(0,4)$. For each of the three preceding
+  process, do the following:
+  \begin{enumerate}
+  \item [(a)] Calculate the ACF up to lag 12. [Hint. You may need to read
+    Section~3.3 before trying (iii).]
+    \begin{solution}
+        
+    \end{solution}
+  \item [(b)] Simulate a series of length $T=250$, give the time series plot.
+    \begin{solution}
+        
+    \end{solution}
+  \item [(c)] Compare the true ACF plot (plot what you obtained in Part (a))
+    with the sample ACF plot (use the {\tt R} function {\tt acf()}).
+    \begin{solution}
+        
+    \end{solution}
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[8]
+  Consider the AR(1) process $X_t=2X_{t-1}+Z_t$, where
+  ${Z_t}\sim\hbox{WN}(0,\sigma^2)$. Define
+  \begin{equation*}
+    Z_t^*:= .25Z_t-\frac{3}{4}\sum_{j=1}^\infty2^{-j}Z_{t+j}.
+  \end{equation*}
+  
+  \begin{enumerate}
+  \item Express the unique stationary solution $X_t$ in terms of $Z_t$.
+  \begin{solution}
+    
+  \end{solution}
+  \item Prove that $\{Z_t^*\}$ is a white noise. What is its variance?
+  \begin{solution}
+    
+  \end{solution}
+  \item Prove that $X_t=.5X_{t-1}+Z_t^*$.
+  \begin{solution}
+    
+  \end{solution}
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[9]
+  Suppose that $\{X_t\}$ and $\{Y_t\}$ are two zero-mean stationary
+  processes with the same autocovariance function, and that $Y_t$ is
+  an ARMA($p,q$) process.
+  \begin{enumerate}
+  \item If $\phi_1,\ldots,\phi_p$ are the AR coefficients for $Y_t$,
+    define $W_t:=X_t-\phi_1X_{t-1}-\cdots-\phi_pX_{t-p}$. Show that
+    $\{W_t\}$ has an autocovariance function which is zero for lags
+    $|h|>q$.
+    \begin{solution}
+        
+    \end{solution}
+  \item Apply Proposition~3.2.1 to $\{W_t\}$ to conclude that
+    $\{X_t\}$ is also an ARMA($p,q$) process.
+    \begin{solution}
+        
+    \end{solution}
+  \end{enumerate}
+\end{exercise}
+
+
+\begin{exercise}[10]
+  Read Proposition~5.1.1 and its proof (a very nice one!) before you work on this problem. Suppose there are $n$ observations
+  $X_1,X_2,\ldots,X_n$ of a stationary time series. Define
+  \begin{equation*}
+    \hat\gamma(h)=\left\{
+      \begin{array}{ll}
+        n^{-1}\sum_{t=1}^{n-|h|}(X_{t+h}-\bar X)(X_t-\bar X) & \hbox{if } |h|<n,\\
+        0 &\hbox{if } |h|>n.
+      \end{array}\right.
+  \end{equation*}
+  Note that although the sample autocovariannces are usually only
+  defined for lags $|h|<n$, here $\hat\gamma(\cdot)$ is defined as a
+  function on all integers, where it takes value 0 when $|h|\geq n$.
+  \begin{enumerate}
+  \item Show that the function $\hat\gamma(\cdot)$ is non-negative definite.
+  \begin{solution}
+    
+  \end{solution}
+  \item There is nothing you need to do for this part. But observe
+    that (i) by Theorem~1.5.1, there exists some stationary process
+    $\{Y_t\}$ of which $\hat\gamma(\cdot)$ is the autocovariance
+    function; and (ii) from Proposition~3.2.1 it then follows that
+    $\{Y_t\}$ is an MA($n-1$) process.
+    \begin{solution}
+        
+    \end{solution}
+  \item Prove that if $\hat\gamma(0)>0$, then $\hat\Gamma_n$ is
+    non-singular. (In the last Homework, you showed that
+    $\hat\Gamma_n$ is non-negative definite, and now you know that it
+    is also strictly positive-definite unless the $n$ observations are
+    all equal.) 
+    \begin{solution}
+        
+    \end{solution}
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[11]\hfill
+
+  \begin{enumerate}
+  \item Consider a MA($\infty$) process $X_t=\sum_{j=0}^\infty
+    \psi_{j}Z_{t-j}$, where $\{Z_t\}\sim\hbox{WN}(0,\sigma^2)$, and
+    $\sum_{j=0}^\infty|\psi_j|<\infty$. Show that the autocovariance
+    function $\gamma(\cdot)$ of $\{X_t\}$ satisfies
+    $\sum_{h=-\infty}^\infty|\gamma(h)|<\infty$.
+    \begin{solution}
+        
+    \end{solution}
+  \item Let $\{X_t\}$ be a causal ARMA process with autocovariance
+    function $\gamma(\cdot)$. Show that there exist a constant $C>0$
+    and another constant $s\in(0,1)$ such that $|\gamma(h)|\leq
+    Cs^{|h|}$ for all $h\in\mathbb{Z}$, and hence
+    $\sum_{h}|\gamma(h)|<\infty$.
+    \begin{solution}
+        
+    \end{solution}
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[12]
+  The process $X_t=Z_t-Z_{t-1}$, where
+  $\{Z_t\}\sim\hbox{WN}(0,\sigma^2)$, is not invertible according to
+  Definition~3.1.4. Show however that
+  $Z_t\in\overline{\hbox{sp}}\{X_j,\,-\infty<j\leq t\}$ by considering
+  the mean square limit of the sequence $\sum_{j=0}^n(1-j/n)X_{t-j}$
+  as $n\rightarrow\infty$.
+  \begin{solution}
+    
+  \end{solution}
+\end{exercise}
+
+
+\end{document}

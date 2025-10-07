@@ -722,6 +722,152 @@ w.p 1 - with probability 1\\
     \hat{\phi}_k
     \end{bmatrix} = \Gamma_k^{-1} \mathbf{\gamma(k)}$$
 \end{remark}
+\subsection{10/2/2025 Lecture 9}
+\begin{proposition}[3.2.1]
+    IF $\{X_t\}$ is a zero-mean stationary process with autocovariance function $\gamma_x(\cdot)$ such that $\gamma_x(h) = 0$ for $|h| > q$ and $\gamma_x(q) \neq 0$ then $\{X_t\}$ is an $MA(q)$ process.\\
+    \begin{proof}
+        Need to show 
+        \begin{itemize}
+            \item Find $WN \{Z_t\}$
+            \item Show that $X_t = Z_t + \theta_1 Z_{t-1} + \ldots + \theta_q Z_{t-q}$ for some $\theta_1, \ldots, \theta_q$ with $\theta_q \neq 0$
+        \end{itemize}
+        Linear prediction problem: Predict $X_{k+1}$ using $X_1, \ldots, X_k$
+        \begin{align*}
+            \underline{\hat{\phi_{k}}} &= \arg \min_{\phi_1, \ldots, \phi_k} E[(X_{k+1} - \hat{X}_{k+1})^2] \\
+            \hat{X}_{k+1} &= \sum_{j=1}^{k} \phi_j X_{k+1-j}
+        \end{align*}
+        $ \underline{\hat{\phi_k}} = \Gamma_k^{-1} \underline{\gamma(k)}$ where $\underline{\gamma(k)} = [\gamma(1), \ldots, \gamma(k)]'$\\
+        $E[(X_{k+1} - \hat{\phi_k}' \underline{X_k})^2] = \gamma(0) - \underline{\hat{\gamma(k)}}' \Gamma_k^{-1} \underline{\gamma(k)} = \nu_k$\\
+        Note that if we want 
+        \begin{align*}
+            X_t &= Z_t + \theta_1 Z_{t-1} + \ldots + \theta_q Z_{t-q} \\
+            Z_t &= \sum_{j=0}^{\infty} \psi_j X_{t-j} \\
+            Z_{t-1}, \ldots, Z_{t-q} &\in \overline{sp} \{X_{t-1}, X_{t-2}, \ldots \}
+        \end{align*}
+        \textbf{Proof:}\\
+        Define $\mathcal{M}_{t} = \overline{sp} \{X_{t}, X_{t-1}, \ldots\}$ and $Z_t = X_t - \mathcal{P}_{\mathcal{M}_{t-1}} (X_t)$ Notice that $Z_t \in \mathcal{M}_t$ and $Z_t \perp \mathcal{M}_{t-1}$\\
+        \begin{itemize}
+            \item $E[Z_s Z_t] = 0$ if $s \neq t$
+            $s > t$ . \\
+        \begin{align*}
+            Z_t &\in \mathcal{M}_t \subset \mathcal{M}_{s-1} \\
+            Z_s &:= X_s - \mathcal{P}_{\mathcal{M}_{s-1}}(X_s)\\
+            Z_s \perp \mathcal{M}_{s-1} & \implies Z_s \perp Z_t \\
+            X_t &= Z_t + \phi_1 Z_{t-1} + \ldots + \phi_q Z_{t-q} \text{ for some } \phi_1, \ldots, \phi_q\\
+            Z_t &= \sum_{j=0}^{\infty} \psi_j X_{t-j} \text{ for some } \psi_j\\
+            Z_{t-1}, \ldots, Z_{t-q} &\in \overline{sp} \{X_{t-1}, X_{t-2}, \ldots\}
+        \end{align*}
+        and $\mathcal{P}_{\overline{sp} \{X_{t-1}, X_{t-2}, \ldots\}} (X_t) \to \mathcal{P}_{\mathcal{M}_{t}} X_t$ in $L^2$ as $k \to \infty$.
+        \item $||Z_t|| = \lim_{n \to \infty} ||X_t - \mathcal{P}_{\overline{sp} \{X_{t-1}, \ldots, X_{t-n}\}} (X_t)|| $\\
+        $ = \lim_{n \to \infty} E[(X_{t-1} - \mathcal{P}_{\overline{sp} \{X_{t-2}, \ldots, X_{t-n-1}\}} (X_t))] = ||Z_{t-1}||$\\
+        Denote $\sigma^2 = ||Z_t||^2$ then $\{Z_t\} \sim WN(0, \sigma^2)$
+        \item $\mathcal{M}_{t-1} = \overline{sp} \{X_{t-1}, X_{t-2}, \ldots\} = \overline{sp} \{Z_{t-1},\ldots Z_{t-q}, \ldots X_{t-q-1}, X_{t-q-2}, \ldots\}$\\
+        Also $\overline{sp} \{Z_{t-1}, \ldots, Z_{t-q}\} \perp \overline{sp} \{X_{t-q-1}, X_{t-q-2}, \ldots\}$\\
+        So $\mathcal{M}_{t-1} = \overline{sp} \{Z_{t-1}, \ldots, Z_{t-q}\} \oplus \mathcal{M}_{t-q-1}$\\
+        \begin{align*}
+            \mathcal{P}_{\mathcal{M}_{t-1}} (X_t) &= \mathcal{P}_{\overline{sp} \{Z_{t-1}, \ldots, Z_{t-q}\}} (X_t) + \mathcal{P}_{\mathcal{M}_{t-q-1}} (X_t)\\
+            &= \frac{\innerprod{X_t}{Z_{t-1}}}{\innerprod{Z_{t-1}}{Z_{t-1}}} Z_{t-1} + \ldots + \frac{\innerprod{X_t}{Z_{t-q}}}{\innerprod{Z_{t-q}}{Z_{t-q}}} Z_{t-q} + \mathcal{P}_{\mathcal{M}_{t-q-1}} (X_t)\\
+            \text{Note that } \gamma_x(h) = 0 \text{ for } |h| > q &\implies \mathcal{P}_{\mathcal{M}_{t-q-1}} (X_t) = 0\\
+            \implies X_t &= Z_t + \sum_{j=1}^{q} \frac{\innerprod{X_t}{Z_{t-j}}}{\sigma^2} Z_{t-j}
+        \end{align*}
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+\begin{proposition}[5.2.1 Durbin Levinson Algorithm]
+    Suppose $\{X_t\}$ is a zero-mean stationary process with autocovariance function $\gamma(\cdot)$. Such that $\gamma(0) > 0$ and $\gamma(h) \to 0$ as $h \to \infty$.\\
+    Then $\phi_{11} = \rho(1)$ and $\nu_1 = \gamma(0) (1 - \rho(1)^2)$\\
+    $ \phi_{nn} = [\gamma(n) - \sum_{j=1}^{n-1} \phi_{n-1,j} \gamma(n-j)] \nu_{n-1}^{-1}$ for $n \geq 2$\\
+    \begin{align*}
+        \begin{bmatrix}
+        \phi_{n1} \\
+        \phi_{n2} \\
+        \vdots \\
+        \phi_{n,n-1} 
+        \end{bmatrix} = \begin{bmatrix}
+        \phi_{n-1,1} \\
+        \phi_{n-1,2} \\
+        \vdots \\
+        \phi_{n-1,n-1}
+        \end{bmatrix} - \phi_{nn} \begin{bmatrix} 
+        \phi_{n-1,n-1} \\
+        \phi_{n-1,n-2} \\
+        \vdots \\
+        \phi_{n-1,1}
+        \end{bmatrix} \text{ for } n \geq 2
+    \end{align*}
+    $\nu_n = \nu_{n-1} (1 - \phi_{nn}^2)$\\
+    Given $\phi_{n-1}$ and $\nu_{n-1}$ How do we get $\phi_n$ and $\nu_n$?\\
+    The complexity is $O(n^2)$ instead of $O(n^3)$.
+    \begin{proof}
+        (1) $\phi_{11} = \rho(1)$ and $\nu_1 = \gamma(0) [1 - \rho(1)^2]$\\
+        Suppose we have $\underline{\phi_{n-1}}$ and $\nu_{n-1}$, we want to find $\underline{\phi_n}$ and $\nu_n$.\\
+        Want: $\mathcal{P}_{\overline{sp} \{X_1, \ldots, X_{n}\}} (X_{n+1})$\\ 
+        Let $w_1 = X_1 - \mathcal{P}_{\overline{sp} \{X_2, \ldots, X_n\}} (X_1)$ then $\begin{cases}
+            w_1 \perp \overline{sp} \{X_{n}, \ldots, X_{n-2}\}\\
+            \overline{sp} \{X_1, \ldots, X_n\} = \overline{sp} \{w_1\} \oplus \overline{sp} \{X_2, \ldots, X_n\}
+        \end{cases}$\\
+        $\mathcal{P}_{\spn\{X_n \ldots X_2\}}(X_{n+1}) = \underline{\phi_{n-1}}' \begin{bmatrix}
+        X_n \\
+        X_{n-1} \\
+        \vdots \\
+        X_2
+        \end{bmatrix}$ Then want $\frac{\innerprod{X_{n+1}}{w_1}}{\innerprod{w_1}{w_1}} w_1$\\
+        $\mathcal{P}_{\overline{sp} \{X_n, \ldots, X_{n-2}\}} (X_1) = \underline{\phi_{n-1}}' \begin{bmatrix}
+            X_1 \\
+            X_2 \\
+            \vdots \\
+            X_{n}
+        \end{bmatrix}$\\
+        $ w_1 = X_1 - \underline{\phi_{n-1}}' \begin{bmatrix}
+            X_1 \\
+            X_2 \\
+            \vdots \\
+            X_{n}
+        \end{bmatrix} \quad || w_1||^2 = \nu_{n-1} \quad \innerprod{X_{n+1}}{w_1} = \gamma(n) - \underline{\phi_{n-1}}' \begin{bmatrix}
+            \gamma(n-1) \\
+            \gamma(n-2) \\
+            \vdots \\
+            \gamma(1)
+        \end{bmatrix}$\\
+        $\mathcal{P}_{\spn_{w_1}} (X_{n+1}) = \frac{\innerprod{X_{n+1}}{w_1}}{\innerprod{w_1}{w_1}} w_1 = \phi_{nn} w_1$ 
+        $\underline{\phi_n}' \begin{bmatrix}
+            X_n \\
+            X_{n-1} \\
+            \vdots \\
+            X_1
+        \end{bmatrix} - \phi_{nn} \begin{bmatrix}
+            \phi_{n-1,n-1} \\
+            \phi_{n-1,n-2} \\
+            \vdots \\
+            \phi_{n-1,1}
+        \end{bmatrix}$
+        $\nu_n = \nu_{n-1} - \phi_{nn}^2 \nu_{n-1} = (1 - \phi_{nn}^2) \nu_{n-1}$
+    \end{proof}
+    \fbox{PLEASE REVIEW THIS WHAT THE HELL IS THIS}
+\end{proposition}
+\subsection{10/7/2025 Lecture 10}
+\begin{remark}
+    Review of last class:
+    \begin{itemize}
+        \item Linear Predictor: Suppose $Y \in \mathbb{R}$, $E[Y] = 0$, $\mathbf{X} \in \mathbb{R}^d$, $E[\mathbf{X}] = \mathbf{0}$.
+        $$ \cov(\begin{bmatrix} Y \\ \mathbf{X} \end{bmatrix}) = \begin{bmatrix} \sigma_Y^2 & \Sigma_{YX} \\ \Sigma_{XY} & \Sigma_X \end{bmatrix} $$
+    \end{itemize}
+    The BLP is given by $\hat{X} = \phi_n' X_n$ where $\phi_n = \begin{bmatrix}
+    \phi_{n1} \\
+    \phi_{n2} \\
+    \vdots \\
+    \phi_{nn}
+    \end{bmatrix}$ and $X_n = \begin{bmatrix}
+    X_n \\
+    X_{n-1} \\
+    \vdots \\
+    X_1
+    \end{bmatrix}$\\
+
+    Suppose $\{X_t\}$ follows causal AR$(p)$ process: $\phi(B) X_t = Z_t$ where $\{Z_t\} \sim WN(0, \sigma^2)$\\
+    Predict $X_{t}$ based on $X_{t-1}, \ldots, X_{t-p}$ 
+    
+\end{remark}
 
 
 \end{document}
