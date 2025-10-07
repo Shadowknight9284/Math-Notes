@@ -12,7 +12,6 @@
 *.nav
 *.snm
 *.vrb
-*.pdf
 
 # ---- LaTeX build directories ----
 _minted-* 
@@ -25,9 +24,9 @@ latex.out
 *.nbconvert
 *.nb.html
 
-# If you export to html/pdf in the repo ignore those by pattern
+# If you export to html in the repo ignore those by pattern
+# (PDFs are intentionally kept tracked in this repo)
 *.html
-*.pdf
 
 # ---- Python ----
 __pycache__/
