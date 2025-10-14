@@ -1,7 +1,10 @@
-\documentclass[answers,12pt,addpoints]{exam} 
+\documentclass[answers,10pt,addpoints]{exam} 
 \usepackage{import}
 
 \import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Margins
+\usepackage[margin=.25in]{geometry}
 
 % Header
 \newcommand{\name}{Pranav Tikkawar}
@@ -45,10 +48,27 @@
 \textbf{IDF} Inverse Document Frequency: ${idf}_{i} = log\frac{|D|}{|\{j: t_i \in d_j\}|}$ where $|D|$ is the total number of documents and the denominator is the number of documents containing term $t_i$. Defined for words, not documents. Want to show how important a word is to a document. Higher IDF means more important. Lower IDF means more common. \\
 \textbf{TF-IDF} ${tfidf}_{i,j} = {tf}_{i,j} * {idf}_{i}$ Scaling the term frequency by the inverse document frequency. Helps to reduce the weight of common words and increase the weight of rare words. \\
 \textbf{Cosine Similarity} measures the cosine of the angle between two non-zero vectors. How similar are two documents. 
+\textbf{Manhattan Distance} sum of absolute differences between two vectors. $|x-y|_1 = \sum |x_i - y_i|$ \\
 \textbf{WordNet} A lexical database for the English language. Groups words into sets of synonyms called synsets, provides short definitions and usage examples, and records various semantic relations between these synonym sets. 
 \begin{center}
     Language Models
 \end{center}
+\textbf{Bag of words} Surprisingly good performance on text classification tasks, but ignores word order and context. \\
+\textbf{Probabilistic LM} $P(w_i | w_1, w_2, ..., w_{i-1})$ Probability of word given previous words. Approx: $P(w_i | w_{i-n+1}, ..., w_{i-1}) = \frac{\# w_{i-n+1 , \ldots w_{i}}}{\# w_{i-n+1 , \ldots w_{i-1}}}$ \\
+\textbf{Word2Vec} Represents words as dense vector embeddings. Vectors capture semantic relationships between words. CBOW: predicts a word given its context. Skip-gram: predicts context words given a target word. \\
+\begin{center}
+    Data Visualization
+\end{center}
+\textbf{NORI} Name, Objective, Representation, Insight. \\
+\textbf{TODO AFTER VIDEO:}
+\begin{center}
+    Matrix and Linear Algebra
+\end{center}
+\textbf{Word2Vec} Semantic meaning of words based on embeddings \\
+\textbf{Vector Space} $v+u \in V$, $cv \in V$, $v+u = u+v$, $(u+v)+w = u+(v+w)$, $v+0=v$, $v+(-v)=0$, $c(u+v)=cu+cv$, $(c+d)v=cv+dv$, $c(dv)=(cd)v$, $1v=v$ \\
+\textbf{Cosine}: $cos(\theta) = \frac{u \cdot v}{||u|| ||v||}$ \\
+\textbf{Data Redundency} Cosine Sim, Jaccard Sim (for sets), Hamming Dist (for binary features). Hash based uniqueness check, Statistical entropy: $H(X) = -\sum p(x) log(p(x))$ \\
+\textbf{Sparce Matrix} COO: store row, col, data arrays. CSR: store row pointers, col indices, data arrays. CSC: store col pointers, row indices, data arrays. \\
 
 
 \newpage

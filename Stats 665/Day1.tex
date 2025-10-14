@@ -1029,8 +1029,86 @@ Then take $\hat{\alpha}(k) = \hat{\phi}_{k}$
     This means the sum of the auto and cross covariance functions do not depend on $t$.\\
     \fbox{If a process is complex-valued stationary process does it imply that the real and imaginary parts are stationary? NO}
 \end{definition}
-
-
+\subsubsection{10/14/2025 Lecture 12}
+\begin{remark}
+    Review of last class:
+    \begin{itemize}
+        \item $X = X_1 + i X_2$ where $X_1, X_2$ are real random variables
+        \item $E[X] = E[X_1] + i E[X_2]$
+        \item $\innerprod{X}{Y} = E[X \overline{Y}]$
+        \item $\cov(X, Y) = E[(X - E[X]) \overline{(Y - E[Y])}] = \innerprod{X}{Y} - \innerprod{E[X]}{E[Y]}$
+        \item Complex $L^2$ space
+        \item Complex-valued stationary process:
+        \begin{itemize}
+            \item $E[|X_t|^2] < \infty$
+            \item $E[X_t]$ does not depend on $t$
+            \item $E[X_{t+h} \overline{X_t}]$ does not depend on $t$
+        \end{itemize}
+        \item the autocovariance of a complex-valued stationary process is $\gamma(h) = E[X_{t+h} \overline{X_t}] = \innerprod{X_{t+h}}{X_t} - \innerprod{E[X_{t+h}]}{E[X_t]}$. \item $\gamma(h) = \overline{\gamma(-h)}$ it is hermitian
+    \end{itemize}
+\end{remark}
+\begin{theorem}[4.1.1]
+    A function $k(\cdot)$ defined on the integers is an autocovariance function of a complex valued stationary process if and only if it is non-negative definite.\\
+    IE $\sum_{j,k =1}^{n} a_j k(j-k) \overline{a_k} \geq 0$ for all $n \geq 1$ and $a_1, \ldots, a_n \in \mathbb{C}$\\
+    \textit{This also implies that the acf is also hermitian}
+    \begin{proof}
+        $\implies$: \fbox{Left As excerise}\\
+        $\impliedby$: NND when $n=1$ $a_1=1$ implies $k(0) \geq 0$\\
+        NND when $n=2$ take $a_1 = 1$, $k(0) + k(0)\cdot|a_2|^2 + k(-1) \overline{a_2} + k(1) a_2 \geq 0$\\
+        it is always real $\implies k(1) = -{k(-1)}$\\
+        for an arbitrary $n$ take $a_j = 0$ for $j \neq 1, n$\\
+        $a_1 = 1$, $k(1-n) = -k(n-1)$\\ 
+        Suppose $k(\cdot)$ is the acf of $X_t = Y_t + i Z_t$ where $Y_t, Z_t$ are real-valued stationary processes with mean 0\\
+        Let $\underbar{X} = (X_1, \ldots, X_n)'$ and $\underbar{X} = \underbar{Y} + i \underbar{Z}$\\
+        $\cov(\underbar{X}) = E[\underbar{X} \underbar{X}^*] = E[(\underbar{Y} + i \underbar{Z})(\underbar{Y}' - i \underbar{Z}')] $\\
+        $ = \Sigma_{yy} + \Sigma_{zz} + i (\Sigma_{zy} - \Sigma_{yz})$ \\
+        $\cov(\underbar{X}) = \begin{bmatrix}
+            k(0) & k(-1) & k(-2) & \ldots & k(1-n) \\
+            k(1) & k(0) & k(-1) & \ldots & k(2-n) \\
+            k(2) & k(1) & k(0) & \ldots & k(3-n) \\
+            \vdots & \vdots & \vdots & \ddots & \vdots \\
+            k(n-1) & k(n-2) & k(n-3) & \ldots & k(0)
+        \end{bmatrix} = K_1 + i K_2$ where $K_1$ and $K_2$ are real  matrices.\\
+        write $\underbar{a} = (a_1, \ldots, a_n)' = \underbar{b} + i \underbar{c}$\\
+        \begin{align*}
+            \sum_{j,k=1}^{n} a_j k(j-k) \overline{a_k} &= \underbar{a}' \underbar{K} \overline{\underbar{a}}\\
+            &= (\underbar{b} + i \underbar{c})' (K_1 + i K_2) (\underbar{b} - i \underbar{c})\\
+            \text{Consider the transpose}: &= (\underbar{b}' - i \underbar{c}') (K_1 - i K_2)' (\underbar{b} + i \underbar{c})\\
+            &= (\underbar{b}' - i \underbar{c}') (K_1 + i K_2) (\underbar{b} + i \underbar{c}) \text{since hermitian}\\
+            &= b' K_1 b + c' K_1 c + 2 c' K_2 b \\
+            &\geq 0
+        \end{align*}
+        Take $\Sigma_{yy} = \Sigma_{zz} = \frac{1}{2} K_1$ and $\Sigma_{zy} = \frac{1}{2} K_2$, $\Sigma_{yz} = \frac{1}{2} K_2' = -\frac{1}{2} K_2$\\
+        $K_1' - iK_2' = K_1 + i K_2$ thus $K_2' = -K_2$\\
+        Construct $\begin{bmatrix}
+            \underbar{Y}\\
+            \underbar{Z}
+        \end{bmatrix} \sim N(0, \frac{1}{2} \begin{bmatrix}
+            K_1 & K_2' \\
+            K_2 & K_1
+        \end{bmatrix})$
+    \end{proof}
+\end{theorem}
+\begin{example}
+    $X_t = \sum_{j=1}^n A_j e^{i t \lambda_j}$ 
+    \begin{itemize}
+        \item $-\pi < \lambda_1 < \lambda_2 < \ldots < \lambda_n = \pi$
+        \item $A_j$ are complex-valued random variables
+        \item $E[A_j] = 0$, $E[A_j \overline{A_k}] = 0$ for $j \neq k, E[|A_j|^2] = \sigma_j^2 < \infty$
+    \end{itemize}
+    Write $A_j = C_j + i D_j$ then
+    \begin{align*}
+        (C_j + iD_j)e^{i t \lambda_j} &= (C_j + i D_j)(\cos(t \lambda_j) + i \sin(t \lambda_j))\\
+        &= (C_j \cos(t \lambda_j) - D_j \sin(t \lambda_j)) + i (C_j \sin(t \lambda_j) + D_j \cos(t \lambda_j))
+    \end{align*}
+    We can see that this is a complex-valued stationary process, but if I want the $X$ to be real then we require the conition that $C_j \sin(t \lambda_j) + D_j \cos(t \lambda_j) = 0$\\
+    Want $X_t$ to be real valued $\begin{cases}
+        \lambda_j = -\lambda_{n-j} \text{ for } j = 1, \ldots, n-1\\
+        A(\lambda_j) = \overline{A(\lambda_{n-j})} \text{ for } j = 1, \ldots, n-1\\
+        A_n \text{ is real}
+    \end{cases}$\\
+    This 
+\end{example}
 
 
 \end{document}
