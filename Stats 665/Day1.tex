@@ -865,9 +865,172 @@ w.p 1 - with probability 1\\
     \end{bmatrix}$\\
 
     Suppose $\{X_t\}$ follows causal AR$(p)$ process: $\phi(B) X_t = Z_t$ where $\{Z_t\} \sim WN(0, \sigma^2)$\\
-    Predict $X_{t}$ based on $X_{t-1}, \ldots, X_{t-p}$ 
-    
+    Predict $X_{t}$ based on $X_{t-1}, \ldots, X_{t-p}$ Then use $\phi_p = \begin{bmatrix}
+    \phi_1 \\
+    \phi_2 \\
+    \vdots \\
+    \phi_p
+    \end{bmatrix}$  
 \end{remark}
+\begin{definition}[Partial Autocorrelation Function]
+    LLet $\{X_t\}$ be a mean-zero stationary process. Its partial autocorrelation function (PACF) $\alpha(\cdot)$ is a function on positive integers defined as follows:
+    \begin{itemize}
+        \item $\alpha(1) = \rho(1)$
+        \item $\alpha(k) = \text{Cor}[X_{k+1} - \mathcal{P}_{\overline{sp} \{X_k, \ldots, X_2\}} (X_{k+1}), X_1 - \mathcal{P}_{\overline{sp} \{X_2, \ldots, X_k\}} (X_1)]$ for $k \geq 2$
+    \end{itemize}
+\end{definition}
+\begin{example}[3.4.1]
+    AR$(1)$ process: $X_t = \phi X_{t-1} + Z_t$ 
+    \begin{align*}
+        \alpha(1) &= \rho(1) = \phi\\
+        \alpha(2) &= \text{Cor}[X_3 - \mathcal{P}_{\spn\{X_2\}}(X_3), X_1 - \mathcal{P}_{\spn\{X_2\}}(X_1)]\\
+        &= \text{Cor}[X_3 - \phi X_2, X_1 - \phi X_2]\\
+        &= \text{Cor}[Z_3, X_1 - \phi X_2] = 0\\
+        \alpha(k) &= 0 \text{ for } k > 1
+    \end{align*}
+\end{example}
+\begin{example}[3.4.2]
+    $MA(1)$ process: $X_t = Z_t + \theta Z_{t-1}$ where $\{Z_t\} \sim WN(0, \sigma^2)$
+    \begin{align*}
+        \alpha(1) &= \rho(1) = \frac{\theta}{1 + \theta^2}\\
+        \alpha(2) &= \text{Cor}[X_3 - \mathcal{P}_{\spn\{X_2\}}(X_3), X_1 - \mathcal{P}_{\spn\{X_2\}}(X_1)]\\
+        &= \text{Cor}[X_3 - \rho(1) X_2, X_1 - \rho(1) X_2]\\
+        &= \frac{-\theta^2}{1 + \theta^2 + \theta^4}
+    \end{align*}
+\end{example}
+\begin{definition}[Partial Least Squares]
+Model 1: $y_i = \beta_0 + \sum_{j=1}^{p} \beta_j x_{ij} + \epsilon_i$ for $i = 1, \ldots, n$\\
+Model 2: $y_i = \beta_0 + \sum_{j=1}^{k} \beta_j z_{ij} + \epsilon_i$ for $i = 1, \ldots, n$\\
+PLS procedure:
+Set LSE $\hat{\beta}_{(p-1)}$ based on Model 2
+\begin{itemize}
+    \item regress $\underline{x_p}$ on $\underline{x_1}, \ldots, \underline{x_{p-1}}$ set the LSE to $\hat{\gamma}$ ie $\underline{x_p} = \sum_{j=1}^{p-1} \gamma_j \underline{x_j} + \underline{z_p}$
+    \item Regress $\underline{y}$ on $\underline{z_p}$, minimize $||\underline{y} - c \underline{z}_{p-1}||$ 
+    $\hat{c} = \frac{\innerprod{y}{z_p}}{\innerprod{z_p}{z_p}}$
+    \item get the LSE $\hat{\beta}_p$ BAsed on Model 1
+    \item See that $\hat{c} = \hat{\beta}_p $
+\end{itemize}
+\end{definition}
+\begin{remark}
+    Prediction probkem 1:\\
+    Predict $X_k$ using $X_2, \ldots, X_{k-1}$\\
+    Prediction problem 2:\\
+    Predict $X_k$ using $X_{k-1}, \ldots, X_2, X_1$\\
+    Question how much does $X_1$ help in predicting $X_k$ given $X_2, \ldots, X_{k-1}$\\
+    use $\frac{\innerprod{X_1 - \mathcal{P}_{\spn\{X_2, \ldots, X_{k-1}\}}(X_1)}{X_{k
+    +1} - \mathcal{P}_{\spn\{X_2, \ldots, X_{k-1}\}}(X_{k+1})}}{|| X_1 - \mathcal{P}_{\spn\{X_2, \ldots, X_{k-1}\}}(X_1)||^2}$
+    $w_1 = X_1 - \mathcal{P}_{\spn\{X_2, \ldots, X_{k-1}\}}(X_1)$\\
+    $w_1 = X_1 - \phi_{k-1,1} X_2 - \ldots - \phi_{k-1,k-1} X_{k}$
+    \begin{align*}
+        \mathcal{P}_{\spn\{X_k \ldots X_1\}}(X_{k+1}) &= \mathcal{P}_{\spn\{X_k \ldots X_2\}}(X_{k}) + \mathcal{P}_{\spn\{w_1\}}(X_{k+1}) \text{ where } w_1 = X_1 - \mathcal{P}_{\spn\{X_2, \ldots, X_{k-1}\}}(X_1)\\
+        &= \phi_{k-1,1} X_k + \ldots + \phi_{k-1,k-1} X_2 + \hat{c} \left(X_1 - \phi_{k-1,1} X_2 - \ldots - \phi_{k-1,k-1} X_k\right)\\
+        &= \hat{c} X_1 + \ldots  
+        &= \phi_{k,k} X_1 + \ldots 
+    \end{align*}
+    Thus $\alpha(k) = \phi_{kk}$
+\end{remark}
+\begin{example}
+    AR$(p)$ process: $\phi(B) X_t = Z_t$ 
+    \begin{align*}
+        \alpha(1) &= \rho(1) = \phi_1\\
+        \alpha(p) &= \phi_p\\
+        \alpha(k) &= 0 \text{ for } k > p 
+    \end{align*}
+\end{example}
+
+
+\begin{table}[ht]
+\centering
+\caption{Theoretical behaviour of the ACF and PACF for common linear time series models}
+\label{tab:acf_pacf}
+\begin{tabular}{p{2.5cm} p{5cm} p{5cm} p{3.5cm}}
+\hline
+Model & ACF behaviour & PACF behaviour & Identification rule (sample) \\
+\hline
+AR($p$) & Tails off (exponential or damped sinusoid depending on roots). & Cuts off after lag $p$ (i.e. $\alpha(k)\approx 0$ for $k>p$). & If sample ACF decays and sample PACF shows a clear cutoff at lag $p$, prefer AR($p$). \\
+MA($q$) & Cuts off after lag $q$ (theoretical autocorrelations $\rho_k=0$ for $k>q$). & Tails off (no finite cutoff). & If sample ACF has significant spikes up to lag $q$ then $\approx 0$ afterwards, prefer MA($q$). \\
+ARMA($p,q$) & Tails off (mixture-shaped decay from both AR and MA parts). & Tails off (mixture-shaped). & If both sample ACF and PACF tail off (no short cutoff), try ARMA($p,q$) and select $(p,q)$ by AIC/BIC. \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\subsection{10/9/2025 Lecture 11}
+\begin{remark}[Estimating The PACF]
+    Assume $\{X_t\}$ is a mean-zero stationary process . \\
+    Predict $X_{k+1}$ based on $X_k, \ldots, X_1$\\
+    Then the coeeficient of $X_1$  is $\alpha(k)$\\
+\textbf{Method 1} $\underline{\phi}_k = \Gamma_k^{-1} \underline{\gamma}_{k+1}$ where $\underline{\gamma}_{k} = [\gamma(1), \ldots, \gamma(k)]'$ and $\Gamma_k = [\gamma(i-j)]_{i,j=1}^{k}$\\
+Plug in the sample autocovariance function $\hat{\gamma}(h)$ to get an estimated $\hat{phi_k}$ and take $\hat{\alpha}(k) = \hat{\phi}_{kk}$\\
+\textbf{Method 2} $\min_{\phi_1, \ldots, \phi_k} \sum_{t= k+1}^{n} (X_t - \mathcal{P}_{\spn\{X_{k+1}, \ldots, X_1\}}(X_t))^2$\\
+$ = \sum_{t=k+1}^{n} (X_t - \phi_{k1} X_{t-1} - \ldots - \phi_{kk} X_{t-k})^2$\\
+Then take $\hat{\alpha}(k) = \hat{\phi}_{k}$
+\end{remark}
+\begin{remark}[ACF and PACF Estimation for ARMA$(p,q)$]
+    Assume $\{X_t\}$ is a mean-zero stationary process and a causal and invertable ARMA$(p,q)$ process.\\
+    \textit{How to calculate the ACF?}\\
+    \begin{itemize}
+        \item AR(1): $X_t = \phi X_{t-1} + Z_t$\\
+        $\gamma(0) = \phi^2 \gamma(0) + \sigma^2 \implies \gamma(0) = \frac{\sigma^2}{1 - \phi^2}$ note that it needs to be causal so $|\phi| < 1$.\\
+        $\gamma(h) = \phi \gamma(h-1) $ for $h \geq 1$\\
+        $\implies \gamma(h) = \phi^{|h|} \gamma(0)$\\
+        \item AR(2): $X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + Z_t$\\
+        covariance with $X_{t-1}$ is $\gamma(1) = \phi_1 \gamma(0) + \phi_2 \gamma(1) \implies \rho(1) = \phi_1 + \phi_2 \rho(1) \implies \rho(1) = \frac{\phi_1}{1 - \phi_2}$\\
+        $\gamma(h) = \phi_1 \gamma(h-1) + \phi_2 \gamma(h-2)$ for $h \geq 2 \implies \rho(h) = \phi_1 \rho(h-1) + \phi_2 \rho(h-2)$ for $h \geq 2$
+        \item General ARMA$(p,q)$: \\
+        Method 1: Write $X_t = \frac{\theta(B) Z_t}{\phi(B)} = \psi(B) Z_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j}$\\
+        $\gamma(0) = \psi_0^2 \sigma^2 + \psi_1^2 \sigma^2 + \ldots = \sigma^2 \sum_{j=0}^{\infty} \psi_j^2$\\
+        $\gamma(h) = \sigma^2 \sum_{j=0}^{\infty} \psi_j \psi_{j+|h|}$ for $h \geq 1$\\
+    \end{itemize}
+    $\psi(z) = \frac{\theta(z)}{\phi(z)} \implies \phi(z) \psi(z) = \theta(z)$\\
+    $(1- \phi_1 z - \ldots - \phi_p z^p)(\psi_0 + \psi_1 z + \psi_2 z^2 + \ldots) = 1 + \theta_1 z + \ldots + \theta_q z^q$\\
+    Match the coefficients of $z^j$ for $j = 0, 1, 2, \ldots$ to get $\psi_0, \psi_1, \ldots$\\
+    \begin{itemize}
+        \item $\psi_0 = 1$
+        \item $\psi_1 - \phi_1 \psi_0 = \theta_1 \implies \psi_1 = \phi_1 + \theta_1$
+        \item $\psi_2 - \phi_1 \psi_1 - \phi_2 \psi_0 = \theta_2 \implies \psi_2 = \phi_1 \psi_1 + \phi_2 + \theta_2$
+    \end{itemize}
+    Method 2: Example ARMA(2,2) $X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + Z_t + \theta_1 Z_{t-1} + \theta_2 Z_{t-2}$\\
+    Covariance with $X_{t}$: $\gamma(0) = \phi_1 \gamma(1) + \phi_2 \gamma(2) + \sigma^2 (1 + \theta_1\psi_1 + \theta_2\psi_2)$\\
+    Covariance with $X_{t-1}$: $\gamma(1) = \phi_1 \gamma(0) + \phi_2 \gamma(1) + \sigma^2 (\theta_1 + \theta_2 \psi_1)$\\
+    Covariance with $X_{t-2}$: $\gamma(2) = \phi_1 \gamma(1) + \phi_2 \gamma(0) + \sigma^2 \theta_2$\\
+    Now we can solve for $\gamma(0), \gamma(1), \gamma(2)$\\
+    Covariance with $X_{t-h}$ for $h \geq 3$: $\gamma(h) = \phi_1 \gamma(h-1) + \phi_2 \gamma(h-2)$\\
+    Method 2.1: Solve the Difference Equation\\
+    Method 2.2: Get $\gamma(h)$ recursively \\
+    In general ARMA$(p,q)$: make a system of $p+1$ equations. 
+\end{remark}
+\begin{remark}[Statistical infrence]
+    Ask the questions: How do I know the order of the model? How do I estimate the parameters? How do I check if the model is good?\\
+\end{remark}
+\begin{remark}[Spectral Representaions of Staitionary Processes]
+    New Chapter
+\end{remark}
+\begin{definition}[Complex Random Variable]
+    $X = Re(X) + i Im(X)$ where $Re(X), Im(X)$ are real random variables.\\
+    or $X = X_1 + iX_2$ where $X_1, X_2$ are real random variables on the same probability space.\\
+    \textbf{Properties}\\
+    $E[X] = E[X_1] + i E[X_2]$\\
+    Suppose $Y = Y_1 + i Y_2$ is another complex random variable.\\
+    $\cov(X, Y) = E[(X - E[X]) \overline{(Y - E[Y])}]$ \\
+    $\cov(X, Y) = \overline{\cov(Y, X)}$\\
+    Assume $E[X] = 0$ then $\var(X) = E[(X+ iX_2)(X - iX_2)] = E[X_1^2 + X_2^2] \geq 0$\\
+    To get Properties of $X_1, X_2$ from $X$ use Variance and Second moment\\
+    $L^2_c(\Omega, \mathcal{F}, P) = \{X: X = X_1 + iX_2, X_1, X_2 \in L^2(\Omega, \mathcal{F}, P)\}$
+\end{definition}
+\begin{definition}[Stationary Process for Complex Random Variables]
+    $\{X_t\}$ is a complex-valued process.\\
+    It is a complex valed staition ary process if $E[|X_t|^2] < \infty$ and $E[X_t]$ does depend on $t$ and $E[X_{t+h} \overline{X_t}]$ does not depend on $t$.\\
+    Write $X_t = X_{t1} + i X_{t2}$ where $X_{t1}, X_{t2}$ are real-valued processes.\\
+    \begin{align*}
+        E[X_{t+h} \overline{X_t}] &= E[(X_{t+h,1} + i X_{t+h,2})(X_{t1} - i X_{t2})] \\
+        &= E[X_{t+h,1} X_{t1}] + E[X_{t+h,2} X_{t2}] + i (E[X_{t+h,2} X_{t1}] - E[X_{t+h,1} X_{t2}])
+    \end{align*}
+    This means the sum of the auto and cross covariance functions do not depend on $t$.\\
+    \fbox{If a process is complex-valued stationary process does it imply that the real and imaginary parts are stationary? NO}
+\end{definition}
+
+
 
 
 \end{document}

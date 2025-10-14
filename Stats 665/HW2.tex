@@ -16,17 +16,33 @@
     \begin{enumerate}
         \item [(a)] Suppose $\mathscr H$ is a separable Hilbert space and $\mathscr H = \overline{\mathrm{sp}}\{x_i,\; i=1,2,\infty\}. $Let $x$ be an element of $\mathscr H$. Show that
         \begin{equation*}
-            P_{\overline{\mathrm{sp}}\{x_1,x_2,\ldots,x_n\}}(x) \rightarrow x \quad\hbox{ as } n\rightarrow\infty.
+            \mathcal{P}_{\overline{\mathrm{sp}}\{x_1,x_2,\ldots,x_n\}}(x) \rightarrow x \quad\hbox{ as } n\rightarrow\infty.
         \end{equation*}
         \begin{solution}
-            
+          Let $V_n = \overline{\mathrm{sp}}\{x_1,x_2,\ldots,x_n\}$. Since $V_n \subseteq V_{n+1}$, we have a nested sequence of closed subspaces. Since $\mathscr H$ is separable, then $\bigcup_{n=1}^{\infty} V_n$ is dense in $\mathscr H$. Therefore, for any $x \in \mathscr H$ and any $\epsilon > 0$, there exists an $N$ such that for all $n \geq N$, there exists a $y_n \in V_n$ with $\|x - y_n\| < \epsilon$.\\
+          Since $\mathcal{P}_{V_n}(x)$ is the orthogonal projection of $x$ onto $V_n$, it minimizes the distance from $x$ to any point in $V_n$. Thus, we have:
+          \begin{align*}
+              \|x - \mathcal{P}_{V_n}(x)\| &\leq \|x - y_n\| < \epsilon \quad \text{for all } n \geq N.
+          \end{align*}
+          This shows that $\|x - \mathcal{P}_{V_n}(x)\| \to 0$ as $n \to \infty$, which implies that $\mathcal{P}_{V_n}(x) \to x$ in the norm of $\mathscr H$. Hence, we conclude that:
+          \begin{equation*}
+              \mathcal{P}_{\overline{\mathrm{sp}}\{x_1,x_2,\ldots,x_n\}}(x) \rightarrow x \quad\hbox{ as } n\rightarrow\infty.
+          \end{equation*}
         \end{solution}
         \item[(b)] Suppose $\{X_t,\;t\in\mathbb{Z}\}$ is a stationary process. Show that
         \begin{equation*}
-            P_{\overline{\mathrm{sp}}\{X_{n-j},\;1\leq j\leq\infty\}}(X_n) = \lim_{r\rightarrow\infty} P_{\overline{\mathrm{sp}}\{X_{n-1},X_{n-2},\ldots,X_{n-r}\}}(X_n).
+            \mathcal{P}_{\overline{\mathrm{sp}}\{X_{n-j},\;1\leq j\leq\infty\}}(X_n) = \lim_{r\rightarrow\infty} \mathcal{P}_{\overline{\mathrm{sp}}\{X_{n-1},X_{n-2},\ldots,X_{n-r}\}}(X_n).
         \end{equation*}
         \begin{solution}
-            
+            Let $V_r = \overline{\mathrm{sp}}\{X_{n-1},X_{n-2},\ldots,X_{n-r}\}$. Since $V_r \subseteq V_{r+1}$, we have a nested sequence of closed subspaces. The union $\bigcup_{r=1}^{\infty} V_r$ is dense in $V_\infty := \overline{\mathrm{sp}}\{X_{n-j},\;1\leq j\leq\infty\}$ because it includes all finite linear combinations of the $X_{n-j}$'s.\\
+            For any $X_n \in \mathscr H$, and any $\epsilon > 0$, there exists an $R$ such that for all $r \geq R$, there exists a $Y_r \in V_r$ with $\|X_n - Y_r\| < \epsilon$. Since $\mathcal{P}_{V_r}(X_n)$ is the orthogonal projection of $X_n$ onto $V_r$, it minimizes the distance from $X_n$ to any point in $V_r$. Thus, we have:
+            \begin{align*}
+                \|X_n - \mathcal{P}_{V_r}(X_n)\| &\leq \|X_n - Y_r\| < \epsilon \quad \text{for all } r \geq R.
+            \end{align*}
+            This shows that $\|X_n - \mathcal{P}_{V_r}(X_n)\| \to 0$ as $r \to \infty$, which implies that $\mathcal{P}_{V_r}(X_n) \to X_n$ in the norm of $\mathscr H$. Hence, we conclude that:
+            \begin{equation*}
+                \mathcal{P}_{\overline{\mathrm{sp}}\{X_{n-j},\;1\leq j\leq\infty\}}(X_n) = \lim_{r\rightarrow\infty} \mathcal{P}_{\overline{\mathrm{sp}}\{X_{n-1},X_{n-2},\ldots,X_{n-r}\}}(X_n).
+            \end{equation*}
         \end{solution}
     \end{enumerate}
 \end{exercise}
@@ -46,7 +62,13 @@
   \item [(a)] Calculate the ACF up to lag 12. [Hint. You may need to read
     Section~3.3 before trying (iii).]
     \begin{solution}
-        
+        \begin{itemize}
+          \item[(i)] AR(3): \\
+          
+          \item[(ii)] MA(3): \\
+          \item[] 
+          \item[(iii)] ARMA(3,2): \\
+        \end{itemize}
     \end{solution}
   \item [(b)] Simulate a series of length $T=250$, give the time series plot.
     \begin{solution}
@@ -64,7 +86,7 @@
   Consider the AR(1) process $X_t=2X_{t-1}+Z_t$, where
   ${Z_t}\sim\hbox{WN}(0,\sigma^2)$. Define
   \begin{equation*}
-    Z_t^*:= .25Z_t-\frac{3}{4}\sum_{j=1}^\infty2^{-j}Z_{t+j}.
+    Z_t^*:= .25Z_t-\frac{3}{4}\sum_{j=1}^\infty2^{-j}Z_{t+j}
   \end{equation*}
   
   \begin{enumerate}
@@ -74,6 +96,23 @@
   \end{solution}
   \item Prove that $\{Z_t^*\}$ is a white noise. What is its variance?
   \begin{solution}
+    Mean:
+    \begin{align*}
+      E[Z_t^*] &= .25E[Z_t] - \frac{3}{4}\sum_{j=1}^\infty2^{-j}E[Z_{t+j}] \\
+      &= 0 - 0 = 0 \\
+    \end{align*}
+    Variance:
+    \begin{align*}
+      \var(Z_t^*) &= E[(Z_t^*)^2] \\
+      &= E\left[\left(.25Z_t - \frac{3}{4}\sum_{j=1}^\infty2^{-j}Z_{t+j}\right)^2\right] \\
+      &= E\left[\frac{1}{16}Z_t^2 - \frac{3}{8}Z_t\sum_{j=1}^\infty2^{-j}Z_{t+j} + \frac{9}{16}\left(\sum_{j=1}^\infty2^{-j}Z_{t+j}\right)^2\right] \\
+      &= \frac{1}{16}E[Z_t^2] + \frac{3}{8}E\left[Z_t\sum_{j=1}^\infty2^{-j}Z_{t+j}\right] + \frac{9}{16}E\left[\left(\sum_{j=1}^\infty2^{-j}Z_{t+j}\right)^2\right] \\
+      &= \frac{1}{16}\sigma^2 + 0 + \frac{9}{16}E\left[\sum_{j=1}^\infty 4^{-j}Z_{t+j}^2\right] \\
+      &= \frac{1}{16}\sigma^2 + \frac{9}{16}\sum_{j=1}^\infty 4^{-j}E[Z_{t+j}^2] \\
+      &= \frac{1}{16}\sigma^2 + \frac{9}{16}\sum_{j=1}^\infty 4^{-j}\sigma^2 \\
+      &= \frac{1}{16}\sigma^2 + \frac{3}{16}\sigma^2 \\
+      &= \frac{1}{4}\sigma^2
+    \end{align*}
     
   \end{solution}
   \item Prove that $X_t=.5X_{t-1}+Z_t^*$.

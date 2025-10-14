@@ -1,0 +1,66 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+
+\newpage
+
+\begin{center}
+    Python Basis
+\end{center}
+\textbf{List Slicing} list[start:stop:step] [start, stop)  
+\begin{center}
+    NumPy \& Pandas
+\end{center}
+\textbf{Memory} Int32 blocks is 4 bytes, Int64 blocks is 8 bytes. Axis 0 is row, Axis 1 is column. \\
+\textbf{Joins} Inner Join: intersection of keys, Outer Join: union of keys, Left Join: all keys from left table, Right Join: all keys from right table.\\
+\textbf{GroupBy} split-apply-combine. Split the data into groups based on some criteria. Apply a function to each group independently. Combine the results into a data structure. ex: df.groupby('column\_name').mean() \\
+\textbf{Lambda} anonymous function. ex: df.apply(lambda x: x + 1) 
+\begin{center}
+    Text Data
+\end{center}
+\textbf{Text Cleaning} lower(), upper(), strip(): (remove whitespace), split(a): (split string into list at a), replace(a,b): (replace a with b).\\
+\begin{center}
+    Regex
+\end{center}
+\textbf{Regex} \textasciicircum : start of string, \$ : end of string, . : any character except newline, * : 0 or more, + : 1 or more, ? : 0 or 1, \textbackslash s : whitespace, \textbackslash S : non-whitespace, \textbackslash d : digit, \textbackslash D : non-digit, \textbackslash w : word character (alphanumeric + \_), \textbackslash W : non-word character.\\
+\textbf{RE functions} findall(): returns all non-overlapping matches of pattern in string, search(): searches for pattern in string and returns a match object, sub(): replaces occurrences of pattern with repl in string. split(): splits string by occurrences of pattern.\\
+\textbf{Grouping Regex} parentheses () to create groups. ex: (\textbackslash d{3})-(\textbackslash d{2})-(\textbackslash d{4}) matches a pattern like 123-45-6789 and creates three groups: 123, 45, and 6789. brackets [] to create character classes. ex: [aeiou] matches any vowel. \\
+\begin{center}
+    NLP \& Sentiment Analysis
+\end{center}
+\textbf{Sentiment Analysis} A technique used to determine the sentiment or emotion expressed in a piece of text. It can be used to analyze customer reviews, social media posts, and other forms of text data to gain insights into customer opinions and feelings. \\
+\textbf{Vader} Valence Aware Dictionary and sEntiment Reasoner. Short emotive sentiment lexicon tool for text, social media. Encodes slang, emojis, acronyms and punctuation/case. \\
+\textbf{Bag of Words} Document as a vector of word counts, ignoring grammar and word order but keeping multiplicity.
+\textbf{TF} Term Frequency: ${tf}_{i,j} = \frac{n_{i,j}}{\sum_k n_{k,j}}$ where $n_{i,j}$ is the number of times term $t_i$ appears in document $d_j$ and the denominator is the total number of terms in document $d_j$. Can also use binary (1 if present, 0 if not) or log scalings. \\
+\textbf{IDF} Inverse Document Frequency: ${idf}_{i} = log\frac{|D|}{|\{j: t_i \in d_j\}|}$ where $|D|$ is the total number of documents and the denominator is the number of documents containing term $t_i$. Defined for words, not documents. Want to show how important a word is to a document. Higher IDF means more important. Lower IDF means more common. \\
+\textbf{TF-IDF} ${tfidf}_{i,j} = {tf}_{i,j} * {idf}_{i}$ Scaling the term frequency by the inverse document frequency. Helps to reduce the weight of common words and increase the weight of rare words. \\
+\textbf{Cosine Similarity} measures the cosine of the angle between two non-zero vectors. How similar are two documents. 
+\textbf{WordNet} A lexical database for the English language. Groups words into sets of synonyms called synsets, provides short definitions and usage examples, and records various semantic relations between these synonym sets. 
+\begin{center}
+    Language Models
+\end{center}
+
+
+\newpage
+\begin{center}
+    IMPT Pandas functions
+\end{center}
+fillna(): fills NA/NaN values using the specified method. \\
+dropna(): removes missing values. \\
+value\_counts(): returns a Series containing counts of unique values. \\
+loc[]: access a group of rows and columns by labels or a boolean array. \\
+iloc[]: access a group of rows and columns by integer position. \\
+
+
+
+\end{document}
