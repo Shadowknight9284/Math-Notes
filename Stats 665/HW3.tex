@@ -1,0 +1,168 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{16:960:665}
+\newcommand{\assignment}{Homework 3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\begin{exercise}[13]
+  Assume that $K(\cdot)$ is a complex-valued function defined on $\Z$,
+  and that $K(\cdot)$ is non-negative definite.
+  \begin{enumerate}
+  \item Prove that $K(\cdot)$ is Hermitian, {\it i.e.}
+    $K(h)=\overline{K(-h)}$.
+  \begin{solution}
+    We know that since $K(\cdot)$ is non-negative definite, thus
+    \begin{align*}
+      \sum_{j=1}^n \sum_{k=1}^n a_j\overline{a_k}K(j-k)\geq 0
+    \end{align*}
+    for any complex numbers $a_1,a_2,\ldots,a_n$ and any positive
+    integer $n$. \\
+    Let the matrix $\Gamma$ be defined as
+    \begin{align*}
+      \Gamma_{j,k} = K(j-k)
+    \end{align*}
+    for $1\leq j,k\leq n$. \\
+    Since we know that $\Gamma$ is non-negative definite, thus
+    \begin{align*}
+      a^*\Gamma a \geq 0
+    \end{align*}
+    Then $\Gamma$ is also Hermitian, which means that
+    \begin{align*}
+      \Gamma = \overline{\Gamma}^T
+    \end{align*}
+    Thus by matching the elements of the matrices, we have
+    \begin{align*}
+      K(j-k) = \overline{K(k-j)}
+    \end{align*}
+    for all $j,k\in\Z$. \\
+    Let $h=j-k$, then we have
+    \begin{align*}
+      K(h) = \overline{K(-h)}
+    \end{align*}
+    for all $h\in\Z$ as desired.
+  \end{solution}
+  \item Let $K_1(\cdot)$ and $K_2(\cdot)$ be the real and imaginary
+    part of $K(\cdot)$, {\it i.e.} $K(h)=K_1(h)+iK_2(h)$ for all
+    $h\in\Z$. According to Part~(a), we know that $K_1(\cdot)$ is even
+    and $K_2(\cdot)$ is odd. For any positive integer $n$, define the
+    $(2n)\times(2n)$ matrix
+    \begin{equation*}
+      L^{(n)} = \frac{1}{2}
+      \begin{pmatrix}
+        K_1^{(n)} & -K_2^{(n)} \\
+        K_2^{(n)} & K_1^{(n)} 
+      \end{pmatrix},\quad\hbox{where }
+      K_1^{(n)}:=[K_1(j-k)]_{j,k=1}^n \hbox{ and }
+      K_2^{(n)}:=[K_2(j-k)]_{j,k=1}^n.
+    \end{equation*}
+    Prove that $L^{(n)}$ is symmetric and non-negative
+    definite. [Hint. Here you need to use the non-negative
+    definiteness of $K(\cdot)$.]
+    \begin{solution}
+      Let us write $K(\cdot) = K_1(\cdot) + iK_2(\cdot)$ as given and let $x = u + iv$ where $u,v\in\R^n$. \\
+      Then let
+      \begin{align*}
+        Q = \sum_{j=1}^n \sum_{k=1}^n x_j \overline{x_k} K(j-k) 
+      \end{align*}
+      Expanding $x_j \overline{x_k} = (u_j + iv_j)(u_k - iv_k)$ as $u_ju_k + v_jv_k + i(v_ju_k - u_jv_k)$, we have
+      \begin{align*}
+        Q= Q_1 + iQ_2
+      \end{align*}
+      where
+      \begin{align*}
+        Q_1 &= \sum_{j=1}^n \sum_{k=1}^n (u_ju_k + v_jv_k) K_1(j-k) + (v_ju_k - u_jv_k) K_2(j-k) \\
+        Q_2 &= \sum_{j=1}^n \sum_{k=1}^n (v_ju_k - u_jv_k) K_1(j-k) + (u_ju_k + v_jv_k) K_2(j-k)
+      \end{align*}
+      This is the same quadratic form as
+      \begin{align*}
+        Q = 
+        \begin{pmatrix}
+          u' & v'
+        \end{pmatrix}
+        L^{(n)}
+        \begin{pmatrix}
+          u \\
+          v
+        \end{pmatrix}
+      \end{align*}
+      We can see that $Q \geq 0$ since $K(\cdot)$ is non-negative definite, thus $L^{(n)}$ is also non-negative definite. \\
+      Also, since $K_1(\cdot)$ is even and $K_2(\cdot)$ is odd, we have
+      \begin{align*}
+        L^{(n)} = (L^{(n)})'
+      \end{align*}
+      Thus $L^{(n)}$ is symmetric and non-negative definite as desired.
+    \end{solution}
+  \item Let $(Y_1,\ldots,Y_n,Z_1,\ldots,Z_n)'$ be a random vector
+    which has a multivariate normal distribution with mean zero and
+    covariance matrix $L^{(n)}$. Define $W_t=Y_t+iZ_t$ for
+    $1\leq t\leq n$. Show that the covariance matrix of
+    $(W_1,\ldots,W_n)'$ is given by $K^{(n)}:=[K(j-k)]_{j,k=1}^n$.
+    \begin{solution}
+      
+    \end{solution}
+  \item Apply the Kolmogorov's Existence Theorem to deduce that there
+    exist a bivariate mean zero Gaussian process $(Y_t,Z_t)'$ such
+    that
+    \begin{align*}
+      \E(Y_{t+h}Y_t)&=\E(Z_{t+h}Z_t)=\tfrac{1}{2}K_1(h) \\
+      \E(Z_{t+h}Y_t)&=-\E(Y_{t+h}Z_t)=\tfrac{1}{2}K_2(h).
+    \end{align*}
+  \item Show that $\{X_t=Y_t+iZ_t,\,t\in\Z\}$ is a complex-valued
+    process with autocovariance function $K(\cdot)$.
+  \end{enumerate}
+\end{exercise}
+
+
+\begin{exercise}[14]
+  Consider $n$ frequencies
+  $-\pi<\lambda_1<\lambda_2<\cdots<\lambda_n=\pi$.
+  \begin{enumerate}
+  \item Let $a_1,a_2,\ldots,a_n$ be complex numbers. Prove that if
+    \begin{equation*}
+      \sum_{j=1}^n a_je^{it\lambda_j}=0\quad\hbox{for all }t\in\Z
+    \end{equation*}
+    then it must hold that $a_1=a_2=\cdots=a_n=0$.
+  \item Let $A_1,A_2,\ldots A_n$ be complex random variables, and
+    define $X_t=\sum_{j=1}^nA_je^{it\lambda_j}$. Show that the process
+    $\{X_t,\,t\in\Z\}$ is real-valued if and only if
+    $\lambda_j=-\lambda_{n-j}$ and $A_j=\bar A_{n-j}$ for $1\leq j<n$,
+    and $A_n$ is real.
+  \end{enumerate}
+\end{exercise}
+
+
+\begin{exercise}[15]
+  Prove that if $\gamma(\cdot)$ is real, then its spectral
+  distribution $F(\cdot)$ is symmetric in the sense
+  \begin{equation*}
+    F(\lambda)=F(\pi^-)-F(-\lambda^{-}),\quad -\pi<\lambda<\pi.
+  \end{equation*}
+\end{exercise}
+
+\begin{exercise}[16]
+  Give an expression and a plot for the spectral density of each of
+  the following processes. [Try to plot many more for fun!]
+  \begin{enumerate}
+  \item MA(1). $X_t=Z_t\pm 0.9Z_{t-1}$, where $\{Z_t\}\sim \hbox{WN}(0,2)$.
+  \item AR(1). $X_t=\pm0.9X_{t-1}+Z_t$, where $\{Z_t\}\sim \hbox{WN}(0,3)$.
+  \item Each of the processes in Problem~7.
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[17]
+Suppose $\gamma(\cdot)$ is a real-valued autocovariance function such that $\gamma(0)>0$, and the covariance matrix $\Gamma_n$ is singular for some $n>1$. Find out the spectral distribution of $\gamma(\cdot)$.
+\end{exercise}
+
+
+\end{document}

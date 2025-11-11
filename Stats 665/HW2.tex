@@ -62,12 +62,72 @@
   \item [(a)] Calculate the ACF up to lag 12. [Hint. You may need to read
     Section~3.3 before trying (iii).]
     \begin{solution}
+      We can approach this by using the 
         \begin{itemize}
-          \item[(i)] AR(3): \\
+          \item[(i)] AR(3): $r_t =0.3+0.8r_{t-1}-.5r_{t-2}-.2r_{t-3}+a_t$.\\
+          Write it in the form of: $\phi(B)r_t = a_t$ where $\phi(B) = 1 - 0.8B + 0.5B^2 + 0.2B^3$.\\
+          We can then write the system of equations for the ACF $\rho(h)$ as follows:
+          \begin{align*}
+            \rho(0) &= 1\\
+            \rho(1) &= 0.8 - 0.5\rho(1) - 0.2\rho(2) \\
+            \rho(2) &= 0.8\rho(1) - 0.5 - 0.2\rho(1) \\
+            \rho(3) &= 0.8\rho(2) - 0.5\rho(1) - 0.2 \\
+          \end{align*}
+          We can see that by solving this we get $\rho(1) = .556$, $\rho(2) = -.167$, $\rho(3) = -.611$. For $h > 3$, we can use the recursive relation:
+          \begin{equation*}
+            \rho(h) = 0.8\rho(h-1) - 0.5\rho(h-2) - 0.2\rho(h-3)
+          \end{equation*}
+          Thus we get the values:
+          \begin{align*}
+            \rho(4) &= -.517\\
+            \rho(5) &= -.074\\
+            \rho(6) &= -.321\\
+            \rho(7) &= .397\\
+            \rho(8) &= .172\\
+            \rho(9) &= -.125\\
+            \rho(10) &= -.266\\
+            \rho(11) &= -.184\\
+            \rho(12) &= -.010
+          \end{align*}
           
-          \item[(ii)] MA(3): \\
-          \item[] 
-          \item[(iii)] ARMA(3,2): \\
+          \item[(ii)] MA(3): $r_t=0.3+a_t+0.8a_{t-1}-.5a_{t-2}-.2a_{t-3}$.\\
+          We have $\theta(B) = 1 + 0.8B - 0.5B^2 - 0.2B^3$. The ACF for an MA(q) process is given by:
+          \begin{align*}
+            \gamma(h) &= \sigma^2 \sum_{j=0}^{q-h} \theta_j \theta_{j+h} \quad \text{for } h = 0, 1, \ldots, q \\
+            \gamma(h) &= 0 \quad \text{for } h > q 
+          \end{align*}
+          Thuswe can calculate:
+          \begin{align*}
+            \gamma(0) &= 4(1^2 + 0.8^2 + (-0.5)^2 + (-0.2)^2) = 4(1 + 0.64 + 0.25 + 0.04) = 4(1.93) = 7.72 \\
+            \gamma(1) &= 4(1*0.8 + 0.8*(-0.5) + (-0.5)*(-0.2)) = 4(0.8 - 0.4 + 0.1) = 4(0.5) = 2 \\
+            \gamma(2) &= 4(1*(-0.5) + 0.8*(-0.2)) = 4(-0.5 - 0.16) = 4(-0.66) = -2.64 \\
+            \gamma(3) &= 4(1*(-0.2)) = -0.8 \\
+            \gamma(h) &= 0 \quad \text{for } h > 3
+          \end{align*}
+          Now we can divide by $\gamma(0)$ to get the ACF:
+          \begin{align*}
+            \rho(0) &= 1 \\
+            \rho(1) &= \frac{2}{7.72} \approx 0.259 \\
+            \rho(2) &= \frac{-2.64}{7.72} \approx -0.342 \\
+            \rho(3) &= \frac{-0.8}{7.72} \approx -0.104 \\
+            \rho(h) &= 0 \quad \text{for } h > 3
+          \end{align*}
+
+          \item[(iii)] ARMA(3,2): $r_t=0.3+0.8r_{t-1}-.5r_{t-2}-.2r_{t-3}+a_t+0.5a_{t-1}+0.3a_{t-2}$.\\
+          We can write it in the form of: $\phi(B)r_t = c + \theta(B)a_t$ where $\phi(B) = 1 - 0.8B + 0.5B^2 + 0.2B^3$ and $\theta(B) = 1 + 0.5B + 0.3B^2$.\\
+          To find the ACF, we can use the formula for ARMA processes:
+          \begin{align*}
+            \gamma(h) &= \sigma^2 \sum_{j=0}^{\infty} \psi_j \psi_{j+h} \\
+          \end{align*}
+          where $\psi(z) = \frac{\theta(z)}{\phi(z)}$.\\
+          The solution for the ACF is given by 
+          \begin{align*}
+            \psi_0 &= \theta_0 = 1 \\
+            \psi_1 &= \theta_1 + \phi_1\psi_0 = 0.5 + 0.8*1 = 1.3 \\
+            \psi_2 &= \theta_2 + \phi_1\psi_1 + \phi_2\psi_0 = \theta_2 + \phi_2 + \theta_1\phi_1 + \phi_1^2 = .3 + .5 + .4 + .64 = 1.84 \\
+            \psi_n &= ***
+          \end{align*}
+
         \end{itemize}
     \end{solution}
   \item [(b)] Simulate a series of length $T=250$, give the time series plot.
@@ -92,7 +152,17 @@
   \begin{enumerate}
   \item Express the unique stationary solution $X_t$ in terms of $Z_t$.
   \begin{solution}
-    
+    We can write the AR(1) process as:
+    \begin{equation*}
+      (1 - 2B)X_t = Z_t
+    \end{equation*}
+    The unique stationary solution is given by:
+    \begin{align*}
+      X_t &= \frac{1}{1 - 2B}Z_t \\
+      &= -\frac{1}{2B}\frac{1}{1 - \frac{1}{2B}}Z_t \\
+      &= -\sum_{j=1}^{\infty}2^{-j}Z_{t+j} 
+    \end{align*}
+    This is the unique stationary solution for $X_t$ in terms of $Z_t$. Note this is not causal.
   \end{solution}
   \item Prove that $\{Z_t^*\}$ is a white noise. What is its variance?
   \begin{solution}
@@ -117,7 +187,22 @@
   \end{solution}
   \item Prove that $X_t=.5X_{t-1}+Z_t^*$.
   \begin{solution}
-    
+    Note the noncausal solution for $X_t$ from part (a):
+    \begin{equation*}
+      X_t = -\sum_{j=1}^{\infty}2^{-j}Z_{t+j}
+    \end{equation*}
+    Computing $.5*X_{t-1}$:
+    \begin{align*}
+      X_{t-1} &= -\sum_{j=1}^{\infty}2^{-j}Z_{t-1+j} \\
+      &= -\frac{1}{2}Z_t - \sum_{j=1}^{\infty}2^{-j+1}Z_{t+j} \\
+      .5X_{t-1} &= -\frac{1}{4}Z_t - \frac{1}{4}\sum_{j=1}^{\infty}2^{-j}Z_{t+j} \\
+    \end{align*}
+    Then $X_t - .5X_{t-1}$:
+    \begin{align*}
+      X_t - .5X_{t-1} &= -\sum_{j=1}^{\infty}2^{-j}Z_{t+j} + \frac{1}{4}Z_t + \frac{1}{4}\sum_{j=1}^{\infty}2^{-j}Z_{t+j} \\
+      X_t - .5X_{t-1} &= .25Z_t - \frac{3}{4}\sum_{j=1}^\infty2^{-j}Z_{t+j} \\  `'
+      X_t - .5X_{t-1} &= Z_t^*
+    \end{align*}
   \end{solution}
   \end{enumerate}
 \end{exercise}
@@ -132,12 +217,36 @@
     $\{W_t\}$ has an autocovariance function which is zero for lags
     $|h|>q$.
     \begin{solution}
-        
+        Note $W_t$ is a linear combination of $X_t$'s. Since $\{X_t\}$ is stationary, $W_t$ is also stationary. The autocovariance function of $W_t$ is given by:
+        \begin{align*}
+          \gamma_W(h) &= \cov(W_t, W_{t+h}) \\
+          &= \cov\left(X_t - \sum_{i=1}^p \phi_i X_{t-i}, X_{t+h} - \sum_{j=1}^p \phi_j X_{t+h-j}\right) \\
+          \text{If } |h| > p, \text{WLOG } h= p+1  &= \cov\left(X_t - \sum_{i=1}^p \phi_i X_{t-i}, X_{t+p+1} - \sum_{j=1}^p \phi_j X_{t+p+1-j}\right) 
+        \end{align*}
+        Note that There are no overlapping terms between $X_t - \sum_{i=1}^p \phi_i X_{t-i}$ and $X_{t+p+1} - \sum_{j=1}^p \phi_j X_{t+p+1-j}$ since the maximum lag in the first term is $p$ and the minimum lag in the second term is $p+1$. And for any other choice of $h$ the difference in lags will also be bigger. Therefore, all covariance terms will be zero. Thus, we have:
+        \begin{equation*}
+          \gamma_W(h) = 0 \quad \text{for } |h| > p
+        \end{equation*}
     \end{solution}
   \item Apply Proposition~3.2.1 to $\{W_t\}$ to conclude that
     $\{X_t\}$ is also an ARMA($p,q$) process.
     \begin{solution}
-        
+        Note that Proposition $3.2.1$ states: If $\{X_t\}$ is a zero-mean stationary process with an autocovariance function $\gamma(\cdot)$ such that $\gamma(h) = 0$ for $|h| > q$, then $\{X_t\}$ is an MA($q$) process.\\
+        From part (a), we have shown that $\{W_t\}$ has an autocovariance function $\gamma_W(h)$ such that $\gamma_W(h) = 0$ for $|h| > q$. Thus by Proposition $3.2.1$, $\{W_t\}$ is an MA($q$) process. IE it can be written as:
+        \begin{align*}
+          W_t &= Z_t + \theta_1 Z_{t-1} + \theta_2 Z_{t-2} + ... + \theta_q Z_{t-q} \\
+          \text{where } Z_t &\sim WN(0, \sigma^2)
+        \end{align*}
+        Now, recall the definition of $W_t$:
+        \begin{equation*}
+          W_t = X_t - \phi_1 X_{t-1} - ... - \phi_p X_{t-p}
+        \end{equation*}
+        Equating the two expressions for $W_t$, we have:
+        \begin{align*}
+          X_t - \phi_1 X_{t-1} - ... - \phi_p X_{t-p} &= Z_t + \theta_1 Z_{t-1} + ... + \theta_q Z_{t-q} \\
+          \Rightarrow X_t &= \phi_1 X_{t-1} + ... + \phi_p X_{t-p} + Z_t + \theta_1 Z_{t-1} + ... + \theta_q Z_{t-q}
+        \end{align*}
+        Thus we have expressed $X_t$ as an ARMA($p,q$) process. Hence, we conclude that $\{X_t\}$ is also an ARMA($p,q$) process.
     \end{solution}
   \end{enumerate}
 \end{exercise}
@@ -155,11 +264,22 @@
   \end{equation*}
   Note that although the sample autocovariannces are usually only
   defined for lags $|h|<n$, here $\hat\gamma(\cdot)$ is defined as a
-  function on all integers, where it takes value 0 when $|h|\geq n$.
+  function on all integers, where it takes value 0 when $|h|\geq n$.\\
+  \begin{proposition}[5.1.1]
+    If $\gamma(0) > 0$ and $\gamma(h) \to 0$ as $|h| \to \infty$, then the Covariance Matrix $\Gamma_n$ is non-singular for all $n$.
+  \end{proposition}
   \begin{enumerate}
   \item Show that the function $\hat\gamma(\cdot)$ is non-negative definite.
   \begin{solution}
-    
+    To show that $\hat\gamma(\cdot)$ is non-negative definite, we need $\sum_{i=1}^{m}\sum_{j=1}^{m} a_i a_j \hat\gamma(i-j) \geq 0$ for any finite set of real numbers $a_1, a_2, \ldots, a_m$.\\
+    Consider:
+    \begin{align*}
+      Q &= \sum_{i=1}^{m}\sum_{j=1}^{m} a_i a_j \hat\gamma(i-j) \\
+      \text{By definition} &= \sum_{i=1}^{m}\sum_{j=1}^{m} a_i a_j \left( n^{-1}\sum_{t=1}^{n-|i-j|}(X_{t+i-j}-\bar X)(X_t-\bar X) \right) \\
+      \text{rearranging the sums} 
+      &= n^{-1}\sum_{t=1}^{n} \left( \sum_{i=1}^{m}a_i (X_t-\bar{X})\right)^2
+    \end{align*}
+    This is a sum of squares, and thus is always non-negative. Therefore, we conclude that $\hat\gamma(\cdot)$ is non-negative definite.
   \end{solution}
   \item There is nothing you need to do for this part. But observe
     that (i) by Theorem~1.5.1, there exists some stationary process
@@ -167,7 +287,7 @@
     function; and (ii) from Proposition~3.2.1 it then follows that
     $\{Y_t\}$ is an MA($n-1$) process.
     \begin{solution}
-        
+        Nice!
     \end{solution}
   \item Prove that if $\hat\gamma(0)>0$, then $\hat\Gamma_n$ is
     non-singular. (In the last Homework, you showed that
@@ -175,7 +295,17 @@
     is also strictly positive-definite unless the $n$ observations are
     all equal.) 
     \begin{solution}
-        
+      from part (a), we know that 
+      \begin{align*}
+        a^T \hat\Gamma_n a &= n^{-1}\sum_{t=1}^{n} \left( \sum_{i=1}^{n}a_i (X_t-\bar{X})\right)^2
+      \end{align*}
+      We know that since $\gamma(0) > 0$, not all $X_t$ are equal. Therefore, there exists at least one $t$ such that $X_t - \bar{X} \neq 0$. Thus, for any non-zero vector $a$, the term $\left( \sum_{i=1}^{n}a_i (X_t-\bar{X})\right)^2$ will be positive for at least one $t$. Hence, we have:
+      \begin{align*}
+        a^T \hat\Gamma_n a &> 0 \quad \text{for all non-zero } a
+      \end{align*}
+      This implies that $\hat\Gamma_n$ is strictly positive-definite, and therefore non singular.
+      
+      
     \end{solution}
   \end{enumerate}
 \end{exercise}
@@ -189,7 +319,19 @@
     function $\gamma(\cdot)$ of $\{X_t\}$ satisfies
     $\sum_{h=-\infty}^\infty|\gamma(h)|<\infty$.
     \begin{solution}
-        
+        We know that the autocovariance function for an MA($\infty$) process is given by:
+        \begin{align*}
+          \gamma(h) &= \sigma^2 \sum_{j=0}^{\infty} \psi_j \psi_{j+|h|}
+        \end{align*}
+        Now we can compute the sum of absolute values of the autocovariances:
+        \begin{align*}
+          |\gamma(h)| &= \sigma^2 \left| \sum_{j=0}^{\infty} \psi_j \psi_{j+|h|} \right| \\
+          &\leq \sigma^2 \sum_{j=0}^{\infty} |\psi_j| |\psi_{j+|h|}| \quad \text{(by triangle inequality)}\\
+          \sum_{h=-\infty}^{\infty} |\gamma(h)| &= |\gamma(0)| + 2\sum_{h=1}^{\infty} |\gamma(h)| \\
+          \sum_{h=0}^{\infty} |\gamma(h)| &\leq \sigma^2 \sum_{h=0}^{\infty} \sum_{j=0}^{\infty} |\psi_j| |\psi_{j+h}| \\
+          &= \sigma^2 \left( \sum_{j=0}^{\infty} |\psi_j| \right) \left( \sum_{k=0}^{\infty} |\psi_k| \right) \quad \text{(by changing index)}\\
+          &= \sigma^2 \left( \sum_{j=0}^{\infty} |\psi_j| \right)^2 < \infty \quad \text{(by our assumption)}
+        \end{align*}
     \end{solution}
   \item Let $\{X_t\}$ be a causal ARMA process with autocovariance
     function $\gamma(\cdot)$. Show that there exist a constant $C>0$
@@ -197,7 +339,34 @@
     Cs^{|h|}$ for all $h\in\mathbb{Z}$, and hence
     $\sum_{h}|\gamma(h)|<\infty$.
     \begin{solution}
-        
+      We know that for a causal ARMA process, the autocovariance function $\gamma(h)$ it can be expressed as an MA($\infty$) process:
+      \begin{align*}
+        X_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j}
+      \end{align*}
+      where $\psi_j$ are the coefficients of the MA($\infty$) representation.\\
+      THe acf of this process is given by:
+      \begin{align*}
+        \gamma(h) &= \sigma^2 \sum_{j=0}^{\infty} \psi_j \psi_{j+|h|}
+      \end{align*}
+      We know that for $h > \max(p,q)$ the acf satisfies the recursive relation:
+      \begin{align*}
+        \gamma(h) &= \phi_1 \gamma(h-1) + \phi_2 \gamma(h-2) + ... + \phi_p \gamma(h-p)
+      \end{align*}
+      And the general solution to this is of the form:
+      \begin{align*}
+        \gamma(h) &= \sum_{i=1}^{k} C_i r_i^{|h|}
+      \end{align*}
+      Thus we can bound $|\gamma(h)|$ as follows:
+      \begin{align*}
+        |\gamma(h)| &\leq \sum_{i=1}^{k} |C_i| |r_i|^{|h|} \\
+        &\leq C s^{|h|} \quad \text{where } C = \sum_{i=1}^{k} |C_i| \text{ and } s = \max_{i} |r_i| < 1
+      \end{align*}
+      Since $s \in (0,1)$, we have:
+      \begin{align*}
+        \sum_{h=-\infty}^{\infty} |\gamma(h)| &\leq \sum_{h=-\infty}^{\infty} C s^{|h|} \\
+        &= C \left( 1 + 2\sum_{h=1}^{\infty} s^h \right) \\
+        &= C \left( 1 + 2\frac{s}{1-s} \right) < \infty
+      \end{align*}
     \end{solution}
   \end{enumerate}
 \end{exercise}
@@ -210,7 +379,32 @@
   the mean square limit of the sequence $\sum_{j=0}^n(1-j/n)X_{t-j}$
   as $n\rightarrow\infty$.
   \begin{solution}
-    
+    \begin{definition}[3.1.4]
+        Suppose $\{X_t\}$ is a staitionary solution of $\phi(B) X_t = \theta(B) Z_t$, it is said to be invertible if $\exists{\pi_j}$ such that $\sum_{j=0}^{\infty} |\pi_j| < \infty$  and $Z_t = \sum_{j=0}^{\infty} \pi_j X_{t-j}$ for all $t \in \mathbb{Z}$.
+      \end{definition}
+    We have $X_t = Z_t - Z_{t-1}$. Rearranging, we get $Z_t = X_t + Z_{t-1}$. Iterating this, we have:
+    \begin{align*}
+      Z_t &= X_t + X_{t-1} + Z_{t-2} \\
+      &= X_t + X_{t-1} + X_{t-2} + Z_{t-3} \\
+      &\vdots \\
+      &= \sum_{j=0}^{n} X_{t-j} + Z_{t-n-1}
+    \end{align*}
+    Now, consider the sequence $\sum_{j=0}^n(1-j/n)X_{t-j}$:
+    \begin{align*}
+      S_n &= \sum_{j=0}^n(1-j/n)X_{t-j} \\
+      &= \sum_{j=0}^n(1-j/n)(Z_{t-j} - Z_{t-j-1}) \\
+      &= \sum_{j=0}^n(1-j/n)Z_{t-j} - \sum_{j=0}^n(1-j/n)Z_{t-j-1} \\
+      &= Z_t - \frac{1}{n}\sum_{j=1}^n Z_{t-j} - (1 - \frac{n+1}{n})Z_{t-n-1} + \frac{1}{n}\sum_{j=0}^{n-1} Z_{t-j-1} \\
+      &= Z_t - \frac{1}{n}Z_{t-n-1}
+    \end{align*}
+    As $n \to \infty$, the term $\frac{1}{n}Z_{t-n-1} \to 0$ in mean square since $Z_t$ is white noise with finite variance. Therefore, we have:
+    \begin{align*}
+      \lim_{n \to \infty} S_n &= Z_t
+    \end{align*}
+    This shows that $Z_t$ can be expressed as the mean square limit of a sequence of linear combinations of $X_j$'s for $j \leq t$. Hence, we conclude that:
+    \begin{equation*}
+      Z_t \in \overline{\mathrm{sp}}\{X_j, -\infty < j \leq t\}
+    \end{equation*}
   \end{solution}
 \end{exercise}
 

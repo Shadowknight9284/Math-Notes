@@ -12,6 +12,7 @@
 \usepackage{fancybox,framed}        % Frame
 \usepackage{tabularx}
 \usepackage{mathrsfs}
+\usepackage{mathtools}              % Mathtools package (extends amsmath)
 \pgfplotsset{compat=1.18}
 
 %% Document Settings. Feel free to adjust it.
@@ -38,6 +39,7 @@
 
 
 % Custom command
+% USE MATHOPERATORS FOR FUNCTIONS
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
@@ -45,12 +47,13 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\Prob}{\mathbb{P}}
 \newcommand{\E}{\mathbb{E}}
-\newcommand{\var}{\text{Var}}
-\newcommand{\cov}{\text{Cov}}
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\cov}{Cov}
 \newcommand{\setof}[1]{\left\{ {#1}\right\}}
 \newcommand{\setdef}[2]{\left\{{#1} : {#2}\right\}}
 \newcommand{\seq}[1]{\left\{{#1}\right\}_{n=1}^\infty}
 \newcommand{\suchthat}{\text{ s.t. }}
+% \DeclarePairedDelimiter{\innerprod}{\langle}{\rangle}
 \newcommand{\innerprod}[2]{\langle {#1} , {#2} \rangle}
 \newcommand{\spn}{\overline{sp}}
 

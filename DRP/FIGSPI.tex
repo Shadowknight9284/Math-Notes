@@ -1,0 +1,179 @@
+% Beamer presentation: Introduction to College-Level Math
+\documentclass[11pt]{beamer}
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\title{Birthday Paradox: Making the Unintuitive Intuitive}
+\author{Pranav Tikkawar}
+\institute{FIGS PI Interview}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+    \tableofcontents
+\end{frame}
+
+\section{About Me}
+\begin{frame}{About Me}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{itemize}
+            \item Hi! My name is Pranav Tikkawar!
+            \item Quadruple major in Math, Computer Science, Statistics, and Data Science
+            \item Researching in Applied Math Modeling and Machine Learning
+            \item Active in Clubs like Data Science Club, Quantitative Finance Club, and RUCATS 
+            \item Enthusiastic about reformulating math education into engaging experiences
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \includegraphics[width=\textwidth]{headshot.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\section{About Mathematics}
+\begin{frame}{Why Math?}
+    \begin{center}
+        \Large{Math is the Language of Modeling}
+    \end{center}
+    \vspace{1em}
+
+    \large{Math provides the tools to abstract away from complex real-world problems and create simplified models that can be analyzed and understood across various disciplines.}
+    \vspace{1em}
+
+    \large{For every personal interest, hobby, or career path, there exists a branch of mathematics that can enhance understanding and problem-solving abilities in that area, ultimately making your life easier!}
+\end{frame}
+
+\section{Birthday Paradox}
+\subsection{Question}
+\begin{frame}{The Birthday Paradox: Questions}
+  \begin{center}
+    \centering \large{Let's say you are an aspiring mathematician who loves hosting birthday parties for your friends and wants to know the following:}
+    \vspace{1em}
+
+    \setlength{\fboxsep}{8pt}
+    \setlength{\fboxrule}{0.6pt}
+
+    \fbox{\begin{minipage}{0.9\textwidth}\centering What do you think is the probability that someone in this call shares your birthday?\end{minipage}}
+    \vspace{0.8em}
+
+    \fbox{\begin{minipage}{0.9\textwidth}\centering When is each person's birthday?\end{minipage}}
+    \vspace{0.8em}
+
+    \fbox{\begin{minipage}{0.9\textwidth}\centering How many people do you think are needed in a room to have a 50\% chance that two people share a birthday?\end{minipage}}
+  \end{center}
+\end{frame}
+
+\subsection{Surprise Results}
+\begin{frame}{The Birthday Paradox: Surprise!}
+  \begin{itemize}
+    \item The Birthday Paradox refers to the counterintuitive probability that in a group of just 23 people, there is a better than $50\%$ chance that two people share the same birthday.
+    \item This paradox highlights how human intuition about probability can often be misleading.
+    \item It is a classic example used to show the power of combinatorial mathematics and probability theory that also has real-world applications.
+  \end{itemize}
+\end{frame}
+
+\subsection{Explanation}
+\begin{frame}{Birthday Paradox: Explanation}
+    \begin{itemize}
+        \item Assume there are 365 days in a year and each birthday is equally likely and independent of others.
+        \item To find the probability that at least two people share a birthday, it's easier to calculate the complement: the probability that no one shares a birthday.
+        \[
+        P(\text{at least one shared birthday}) = 1 - P(\text{no shared birthdays})
+        \]
+        \item This is known as the complement rule in probability as generally when considering two complementary events $A$ and $B$, $P(A) = 1 - P(B)$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Birthday Paradox: Explanation (Continued)}
+    \begin{itemize}
+        \item For the first person, there are 365 choices for their birthday. For the second person, there are 364 choices (to avoid matching the first), for the third person, 363 choices, and so on.
+        \item The probability that no two people share a birthday in a group of \( n \) people is given by:
+        \[
+        P(\text{no shared birthdays}) = \frac{365}{365} \times \frac{364}{365} \times \frac{363}{365} \times \ldots \times \frac{365 - n + 1}{365}
+        \]
+        \item Now we can substitute this into the complement rule:
+        \[
+        P(\text{at least one shared birthday}) = 1 - P(\text{no shared birthdays})
+        \]
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Birthday Paradox: Explanation (Continued)}
+    \begin{itemize}
+        \item For \( n = 23 \):
+        \[
+        P(\text{no shared birthdays}) \approx 0.4927
+        \]
+        \item Therefore:
+        \[
+        P(\text{at least one shared birthday}) = 1 - 0.4927 \approx 0.5073
+        \]
+        \item This means there is approximately a 50.73\% chance that in a group of 23 people, at least two will share a birthday.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Birthday Paradox: Explanation (Continued)}
+    \begin{itemize}
+        \item As the number of people increases, the probability of shared birthdays increases rapidly.
+        \item For example, with 57 people, the probability exceeds 99\%.
+        \item When considering a room and pairs of people, each new person "multiplies" the number of potential connections, increasing the likelihood of shared birthdays.
+        \begin{itemize}
+            \item With 23 people, there are \( \binom{23}{2} = 253 \) unique pairs of people.
+            \item $\binom{n}{2} = \frac{n(n-1)}{2}$ gives the number of ways to choose 2 people from \( n \) people.
+        \end{itemize}
+    \end{itemize}
+    
+\end{frame}
+
+\subsection{Visualization}
+\begin{frame}{Birthday Paradox: Visualization}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{birthdayplot.png}
+        \caption{Plot of the probability of at least one shared birthday versus the number of people in the room.}
+        \label{fig:birthdayplot}
+    \end{figure}
+\end{frame}
+
+\section{Making the Unintuitive Intuitive}
+\begin{frame}{Making the Unintuitive Intuitive}
+    \begin{itemize}
+        \item By breaking down complex problems into simpler components, mathematics allows us to analyze and understand situations that may initially seem counterintuitive.
+        \item Mathematical models and visualizations can help illustrate concepts that are difficult to grasp through intuition alone.
+        \item Especially with the advancements in AI, mathematics remains the building block to understanding and solving complex problems.
+    \end{itemize}
+\end{frame}
+
+\section{Real World Application}
+\begin{frame}{Real World Application of Mathematical Modeling}
+    \begin{itemize}
+        \item The Birthday Paradox has practical applications in fields such as cryptography, where it informs the design of hash functions and digital signatures.
+        \item It also has implications in data security, particularly in understanding collision probabilities in hash tables.
+        \item Additionally, the principles behind the Birthday Paradox can be applied to network security, epidemiology, and social network analysis.
+    \end{itemize}
+\end{frame}
+
+
+\section{Conclusion}
+\begin{frame}{Next Steps for Aspiring Mathematicians (or Party Planners)}
+    \begin{itemize}
+        \item Continue exploring various branches of mathematics to find your area of interest.
+        \item Engage in clubs and extracurricular activities related to mathematics to build a community to share and grow your mathematical interests.
+        \item Take advantage of the Rutgers resources such as tutoring centers, research opportunities, and faculty office hours to deepen your understanding.
+        \item Stay curious and keep learning, as mathematics is a vast and ever-evolving field.
+    \end{itemize}
+    
+\end{frame}
+
+
+
+\end{document}

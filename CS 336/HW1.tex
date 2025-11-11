@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Homework 1 Solutions}
+\author{Student Name}
+\date{October 2025}
+\maketitle
+
+\section*{Problem 1: Relational Algebra Expressions}
+
+1. Find the name of each employee who lives in city Miami.
+
+\textbf{Solution:}
+\[
+\pi_{\text{person\_name}}(\sigma_{\text{city} = \text{'Miami'}}(\text{employee}))
+\]
+
+2. Find the name of each employee whose salary is greater than 100,000.
+
+\textbf{Solution:}
+\[
+\pi_{\text{person\_name}}(\sigma_{\text{salary} > 100000}(\text{employee} \bowtie \text{works}))
+\]
+
+3. Find the name of each employee who lives in Miami and whose salary is greater than 100,000.
+
+\textbf{Solution:}
+\[
+\pi_{\text{person\_name}}(\sigma_{\text{city} = 'Miami' \land \text{salary} > 100000}(\text{employee} \bowtie \text{works}))
+\]
+
+4. Find the ID and name of each employee who does not work for BigBank.
+
+\textbf{Solution:}
+\[
+\pi_{\text{ID}, \text{person\_name}}(\sigma_{\text{companyname} \neq 'BigBank'}(\text{employee} \bowtie \text{works}))
+\]
+
+5. Find the ID and name of each employee who earns at least as much as every employee in the database.
+
+\textbf{Solution:}
+\[
+\pi_{\text{ID}, \text{person\_name}} (\text{employee} \bowtie \text{works} - \]
+\[\pi_{\text{employee1ID}, \text{personname1}} (\sigma_{\text{salary1} < \text{salary2}}(\rho_{\text{salary1}, \text{employee1ID}, \text{personname1}}(\text{works}) \times \rho_{\text{salary2}}(\text{works}))))
+\]
+
+
+\section*{Problem 2: Schedule}
+
+1. Give the dependency graph for the schedule in the figure.
+
+\textbf{Solution:}
+Draw nodes for each transaction ($T_A, T_B, T_C$). For each pair of conflicting actions (read/write), draw edges from one transaction to another if the first's action comes before the other's and both access the same object.
+
+2. Is the schedule conflict-serializable?
+
+\textbf{Solution:}
+Yes/No. (Requires analyzing the graph. Yes if acyclic, No if cycles)
+
+3. If yes, serial equivalent; if not, explanation.
+
+\textbf{Solution:}
+If the dependency graph is acyclic, list transactions in any topological order. If cyclic, explain which actions cause cycles.
+
+
+\section*{Problem 3: Serializability True/False}
+
+1. A schedule with exactly one transaction is always conflict-equivalent to a serial schedule.
+
+\textbf{Solution:}
+True
+
+2. If each transaction preserves database consistency, every serializable schedule also preserves consistency.
+
+\textbf{Solution:}
+True
+
+3. A schedule is conflict serializable if and only if its dependency graph is acyclic.
+
+\textbf{Solution:}
+True
+
+4. All schedules that avoid cascading aborts are recoverable.
+
+\textbf{Solution:}
+True
+
+5. All schedules that avoid cascading aborts are conflict-serializable.
+
+\textbf{Solution:}
+False
+
+
+\section*{Problem 4: Two-Phase Locking (2PL)}
+
+1. Add lock/unlock instructions so transactions obey 2PL.
+
+\textbf{Solution:}
+All locks must be acquired before any unlocks for each transaction. Example order: Lock-SA, Lock-XB, then UnlockA, UnlockB.
+
+2. Can the execution result in deadlock?
+
+\textbf{Solution:}
+Yes
+
+\end{document}

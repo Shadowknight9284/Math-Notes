@@ -1,0 +1,170 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{multicol}
+\setlength{\columnsep}{1em}
+\setlength{\columnseprule}{0.1pt}
+
+\begin{document}
+
+\begin{center}
+    {\Large\bf Advanced Simulation Methods for Finance}
+    \newline
+    {\small Min-ge Xie, Rutgers University}
+    \newline
+    \vspace{0.3em}
+    {\bf Cheatsheet}
+\end{center}
+\hrule
+
+\begin{multicols}{2}
+
+\section*{Monte Carlo Integration (MCI)}
+\begin{align*}
+    & E[g(X)] = \int g(x)f(x)dx \approx \frac{1}{N}\sum_{i=1}^{N}g(x_i) \
+    & x_i \sim f(x),\quad \text{MSE} = \frac{1}{N}\operatorname{var}\{g(X)\}
+\end{align*}
+Law of Large Numbers (LLN): $\bar{X}_N \to \mu$ as $N \to \infty$
+
+\section*{Simulation From Distributions}
+\textbf{Inverse Transform Method:} $U \sim \operatorname{Unif}(0,1)$, $X = F^{-1}(U) \sim F$
+
+\textbf{Box-Muller for $N(0,1)$:}
+\begin{align*}
+    & U_1, U_2 \sim \operatorname{Unif}(0,1) \\
+    & \theta = 2\pi U_1, \quad r = \sqrt{-2\ln(U_2)} \\
+    & X = r\cos\theta, \quad Y = r\sin\theta
+\end{align*}
+
+\textbf{Exponential:} $X = -(1/\lambda)\ln U$
+
+\textbf{Binomial: } $Y = \sum_{i=1}^n 1\{U_i < p\}$
+
+\section*{Sampling Techniques}
+\textbf{Rejection Sampling:}
+\begin{align*}
+  & \text{Sample } Z \sim g(x), U \sim \operatorname{Unif}(0,1) \\
+  & \text{Accept } Z \text{ if } U \le \frac{f(Z)}{c g(Z)}
+\end{align*}
+Efficiency $= 1/c$. Choose $c$ small.
+
+\textbf{Importance Sampling:}
+\begin{align*}
+    \hat{E}[a(X)] = \frac{1}{N}\sum_{j=1}^N a(z_j)\omega_j,~\omega_j = \frac{f(z_j)}{g(z_j)},~z_j \sim g(x)
+\end{align*}
+
+\textbf{Gibbs Sampling (MCMC):}
+\begin{align*}
+    & (x^{(0)}, y^{(0)}, z^{(0)}) \\\n    & x^{(k+1)} \sim f(x | y^{(k)}, z^{(k)}) \\
+    & y^{(k+1)} \sim f(y | x^{(k+1)}, z^{(k)}) \\
+    & z^{(k+1)} \sim f(z | x^{(k+1)}, y^{(k+1)})
+\end{align*}
+Burn-in: Discard first $N$ iterations.
+
+\textbf{Metropolis-Hastings:}
+\begin{align*}
+    & z \sim g(\cdot | x^{(k)}) \\
+    & \alpha = \min\left(1, \frac{f(z) g(x^{(k)} | z)}{f(x^{(k)}) g(z | x^{(k)})}\right) \\
+    & x^{(k+1)} = z ~\text{with prob } \alpha;~ x^{(k+1)} = x^{(k)} \text{ otherwise}
+\end{align*}
+
+\section*{Correlation Measures}
+\textbf{Pearson:}
+\begin{align*}
+    \rho(X,Y) = \frac{\operatorname{Cov}(X,Y)}{\sqrt{\operatorname{Var}(X)\operatorname{Var}(Y)}}
+\end{align*}
+\textbf{Spearman: } Based on ranks, $\rho_S(X,Y) = \rho(F_1(X),F_2(Y))$
+
+\textbf{Kendall: } $\tau_K = P[(X-X')(Y-Y')>0] - P[(X-X')(Y-Y')<0]$
+
+\section*{Copulas}
+\textbf{Definition:} $F(x,y) = C(F_1(x), F_2(y))$ \newline
+\textbf{Gaussian:}
+\begin{align*}
+    & \text{Simulate } z \sim N(0,I) \rightarrow z^* = A z \\
+    & u_i = \Phi(z^*_i / \sigma_i) \\
+    & x_i = F_i^{-1}(u_i)
+\end{align*}
+\textbf{Cholesky: } $\Sigma = A A^T$
+
+\textbf{Archimedean: } $C(u,v) = h^{-1}(h(u) + h(v))$
+
+\textbf{Student $t$ Copula:} Use scale from $\chi^2$ variable.
+
+\section*{Bootstrap}
+{\bf Algorithm:}
+Resample with replacement from $\{x_1,...,x_n\}$, create $B$ samples, compute $\theta^*$.\newline
+{\bf Standard Error: } $SE_B = \sqrt{ (1/B) \sum_{i=1}^B (\theta^*_i - \bar{\theta}^*)^2 }$\newline
+{\bf Bias: } $Bias_B = (1/B)\sum \theta^*_i - \hat{\theta}$
+
+Aliases: CI symmetric $[\theta^*_{\alpha/2}, \theta^*_{1-\alpha/2}]$; Asymmetric $[2\hat{\theta} - \theta^*_{1-\alpha/2}, 2\hat{\theta} - \theta^*_{\alpha/2}]$
+
+\section*{Bayesian Inference}
+{\bf Bayes Formula:}
+\begin{align*}
+p(\theta|y) = \frac{p(y|\theta)\pi(\theta)}{ \int p(y|\theta)\pi(\theta)d\theta }
+\end{align*}
+Posterior $\propto$ Likelihood $\times$ Prior
+
+Prior types: \textbf{Conjugate} | \textbf{Elicited} | \textbf{Noninformative}
+Credible intervals: $P(\theta\in C|y)\geq 1-\alpha$
+Bayes factor: $BF = p(y|M_1)/p(y|M_2)$ (Jeffreys scale interpretation)
+
+Bayesian computing: Sample from $p(\theta|y)$ using MCMC/Gibbs/Metropolis-Hastings
+
+\columnbreak
+
+% Right column - Practical tips, complexity, pitfalls
+\section*{Practical Tips}
+\begin{itemize}
+    \item Monte Carlo: Larger $N$ yields better results; $\sqrt N$ convergence rate
+    \item Rejection sampling: Pick $g$ close to $f$; minimize $c$
+    \item Always check MCMC convergence; discard burn-in
+    \item Bootstrap: $B=1000{-}5000$ typically
+    \item Gaussian copula for normal-like marginals; $t$ copula for tail dependence
+    \item Use informative priors in Bayesian models when available
+\end{itemize}
+
+\section*{Computational Complexity}
+\begin{align*}
+    \text{MCI: } O(N) \\ 
+    \text{Rejection: } O(N\cdot c) \\ 
+    \text{Gibbs: } O(Kp) \text{ (dimensions $p$, iterations $K$)} \\ 
+    \text{Bootstrap: } O(B\cdot cost(\hat{\theta}))
+\end{align*}
+
+\section*{Pitfalls}
+\begin{itemize}
+  \item Curse of Dimensionality: MC poorly scales in high dimensions
+  \item MCMC: Not discarding burn-in increases bias
+  \item Bootstrap: May break dependence structure
+  \item Rejection: Large $c$ makes the algorithm inefficient
+  \item Importance: Poor $g$ increases estimator variance
+  \item Bayesian: Improper priors can yield improper posteriors
+\end{itemize}
+
+\section*{Key Formulas}
+\textbf{Multivariate Normal:}
+\begin{align*}
+    X \sim N(\mu, \Sigma)
+\end{align*}
+Simulate: $X = \mu + Az $, $z \sim N(0,I)$, $\Sigma = AA^T$
+
+\textbf{MCMC Convergence}
+\begin{align*}
+& \text{Invariant: } f(x_{k+1}) = \int p(x_{k+1}|x_k)f(x_k)dx_k \\
+& \text{Required: $\pi$-irreducible, aperiodic; }
+\end{align*}
+Converges: $X_k \to f(x)$ as $k \to \infty$
+
+Bootstrap CLT:
+$ (\theta^* - \hat{\theta})/SE_{\hat{\theta}} \sim (\hat{\theta} - \theta_0)/SE_{\theta_0} $
+
+\end{multicols}
+\vspace{0.5em}
+\hrule
+\begin{center}
+    \scriptsize End of Cheatsheet · Advanced Simulation Methods for Finance
+\end{center}
+
+\end{document}

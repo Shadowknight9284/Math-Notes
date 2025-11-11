@@ -169,7 +169,7 @@ w.p 1 - with probability 1\\
     \begin{itemize}
         \item $E(S_t) = 0$
         \item $Var(S_t) = t \sigma^2$ Not constant 
-        \item $Cov(S_r, S_t) = E(S_r S_t) = r \sigma^2$ WLOG $r \leq t$
+        \item $\cov(S_r, S_t) = E(S_r S_t) = r \sigma^2$ WLOG $r \leq t$
         \item $Cov(S_r, S_t) = (r \wedge t) \sigma^2$
     \end{itemize}
 \end{example}
@@ -307,7 +307,7 @@ w.p 1 - with probability 1\\
         \item $\phi$-mixing: $\phi(\mathcal{G}, \mathcal{H}) = \sup_{G \in \mathcal{G}, H \in \mathcal{H}, \Prob(G) > 0} |\Prob(H|G) - \Prob(H)|$
     \end{itemize}
     \begin{enumerate}
-        \item $\alpha(\mathcal{G}, \mathcal{H}) = 0$ $iff$ $\mathcal{G}$ and $\mathcal{H}$ are independent
+        \item $\alpha(\mathcal{G}, \mathcal{H}) = 0$ $\iff$ $\mathcal{G}$ and $\mathcal{H}$ are independent
         \item $0 \leq \alpha(\mathcal{G}, \mathcal{H}) \leq .25$ for all $\mathcal{G}, \mathcal{H}$ sub $\sigma$-fields of $\mathcal{F}$, $0 \leq \phi(\mathcal{G}, \mathcal{H}) \leq 1$ for all $\mathcal{G}, \mathcal{H}$ sub $\sigma$-fields of $\mathcal{F}$
         \item $\alpha(\mathcal{G}, \mathcal{H}) \leq \frac{1}{2} \phi(\mathcal{G}, \mathcal{H})$
     \end{enumerate}
@@ -316,7 +316,7 @@ w.p 1 - with probability 1\\
 \end{remark}
 \begin{theorem}[Ibragimov 1962]
     $\Prob(G \cap H) - \Prob(G)\Prob(H) = \cov(I_G, I_H)$\\
-    $|Cov(c_1 I_G, c_2 I_H)| \leq c_1 c_2 \alpha(\mathcal{G}, \mathcal{H})$\\
+    $|\cov(c_1 I_G, c_2 I_H)| \leq c_1 c_2 \alpha(\mathcal{G}, \mathcal{H})$\\
     Sup. $|X| \leq C_1$ and $|Y| \leq C_2$ a.s.\\
     Then $|E(XY) - E(X)E(Y)| \leq 4 c_1 c_2 \alpha(\mathcal{G}, \mathcal{H})$
     \begin{proof}
@@ -1029,7 +1029,7 @@ Then take $\hat{\alpha}(k) = \hat{\phi}_{k}$
     This means the sum of the auto and cross covariance functions do not depend on $t$.\\
     \fbox{If a process is complex-valued stationary process does it imply that the real and imaginary parts are stationary? NO}
 \end{definition}
-\subsubsection{10/14/2025 Lecture 12}
+\subsection{10/14/2025 Lecture 12}
 \begin{remark}
     Review of last class:
     \begin{itemize}
@@ -1073,10 +1073,14 @@ Then take $\hat{\alpha}(k) = \hat{\phi}_{k}$
         \begin{align*}
             \sum_{j,k=1}^{n} a_j k(j-k) \overline{a_k} &= \underbar{a}' \underbar{K} \overline{\underbar{a}}\\
             &= (\underbar{b} + i \underbar{c})' (K_1 + i K_2) (\underbar{b} - i \underbar{c})\\
-            \text{Consider the transpose}: &= (\underbar{b}' - i \underbar{c}') (K_1 - i K_2)' (\underbar{b} + i \underbar{c})\\
-            &= (\underbar{b}' - i \underbar{c}') (K_1 + i K_2) (\underbar{b} + i \underbar{c}) \text{since hermitian}\\
-            &= b' K_1 b + c' K_1 c + 2 c' K_2 b \\
-            &\geq 0
+            &= \underbar{b}' K_1 \underbar{b} + \underbar{c}' K_1 \underbar{c} + b' K_2 c - c' K_2 b \\
+            \text{same as} &= (b_1' - c') \begin{bmatrix}
+                k_1 &k_2'\\
+                k_2 & k_1
+            \end{bmatrix} \begin{bmatrix}
+                b \\
+                c
+            \end{bmatrix} \geq 0
         \end{align*}
         Take $\Sigma_{yy} = \Sigma_{zz} = \frac{1}{2} K_1$ and $\Sigma_{zy} = \frac{1}{2} K_2$, $\Sigma_{yz} = \frac{1}{2} K_2' = -\frac{1}{2} K_2$\\
         $K_1' - iK_2' = K_1 + i K_2$ thus $K_2' = -K_2$\\
@@ -1109,6 +1113,508 @@ Then take $\hat{\alpha}(k) = \hat{\phi}_{k}$
     \end{cases}$\\
     This 
 \end{example}
+\subsection{10/16/2025 Lecture 13}
+\begin{remark}
+    Review of what we are looking at \\
+    $$ X_t= \sum_{j=1}^n A_j e^{i t \lambda_j} $$
+    where $\begin{cases}
+        -\pi < \lambda_1 < \lambda_2 < \ldots < \lambda_n = \pi\\
+        A_j \text{ are uncorrelated complex-valued random variables}\\
+        E[A_j] = 0, E[A_j \overline{A_k}] = 0 \text{ for } j \neq k, E[|A_j|^2] = \sigma_j^2 < \infty
+    \end{cases}$\\
+    When is $X_t$ real-valued?
+    $\begin{cases}
+        \lambda_j = -\lambda_{n-j} \quad 1 \leq j \leq n-1\\
+        A_j = \overline{A_{n-j}} \quad 1 \leq j \leq n-1\\
+        A_n \text{ is real}
+    \end{cases}$
+    Is $X_t$ stationary?
+    \begin{align*}
+        E(X_{t+h} \overline{X_t}) &= E\left[
+            \left(\sum_{j=1}^n A_j e^{i (t+h) \lambda_j}\right) \left(\sum_{k=1}^n \overline{A_k} e^{-i t \lambda_k}\right)
+            \right]
+        &= E\left[
+            A_1 \overline{A_1} e^{i h \lambda_1} + A_2 \overline{A_2} e^{i h \lambda_2} + \ldots + A_n \overline{A_n} e^{i h \lambda_n}
+            \right]\\
+        &= \sum_{j=1}^n \sigma_j^2 e^{i h \lambda_j}
+    \end{align*}
+    This does not depend on $t$ so it is stationary.\\
+    $\gamma(h) = \int_{-\pi}^{\pi} e^{i h \nu} dF(\nu)$ where $F(\nu) = \sum_{j: \lambda_j \leq \nu} \sigma_j^2$ 
+    This is the Reimann-Stieltjes integral
+    This is a step function with jumps of size $\sigma_j^2$ at $\lambda_j$ for $j = 1, \ldots, n$ \\
+    View $F(\nu)$ as a measure on $(-\pi, \pi]$ which assigns point measures $m(\nu) = \sigma_j^2$ \\
+    The function $e^{i h \nu}$ takes on values $e^{i h \lambda_j}$ at the points $\lambda_j$ with value $\sigma_j^2$\\
+    Every mean-zero stationary process $\{X_t\}$ has a representation
+    $$ X_t = \int_{-\pi}^{\pi} e^{i t \nu} dZ(\nu) $$
+    \fbox{If we have a continous path, everywhere differentialble, how is the different from the Riemann-Stieltjes}
+    where $Z(\nu)$ is a complex-valued process with the following properties:
+    \begin{itemize}
+        \item $E[dZ(\nu)] = 0$
+        \item $E[|dZ(\nu)|^2] = dF(\nu)$ where $F(\nu)$ is a non-decreasing function on $(-\pi, \pi]$ with $F(-\pi) = 0$ and $F(\pi) = \gamma(0)$
+        \item $E[dZ(\nu) \overline{dZ(\lambda)}] = 0$ for $\nu \neq \lambda$
+    \end{itemize}
+    Correspondingly $\gamma_X(h) = \int_{-\pi}^{\pi} e^{i h \nu} dF(\nu)$
+    \textbf{Riemann integral}: $\int_{a}^{b} g(x) dx$ where $g(x)$ is a function on $[a,b]$\\
+    $\lim_{\max |a_j - a_{j-1}| \to 0} \sum_{j=1}^{n} g(a_j) (a_j - a_{j-1})$\\
+    $\lim_{\max |\lambda_j - \lambda_{j-1}| \to 0} \sum_{j=1}^{n} e^{i h \lambda_j} Z(\lambda_j) - Z(\lambda_{j-1})$\\
+    
+    $ F(\cdot)$ is called the spectral distribution function of $\{X_t\}$\\
+    $F $ is increasing and caddlag, $F(-\pi) = 0$, $F(\pi) = \gamma(0)$\\
+\end{remark}
+\begin{theorem}[4.3.1 Herglotz Theorem]
+    A complex Values fn $\gamma(\cdot)$ defined on the integers is NND if and only if
+    \begin{align*}
+        \gamma(h) &= \int_{-\pi}^{\pi} e^{i h \nu} dF(\nu) \quad h \in \mathbb{Z}\\
+    \end{align*}
+    Where $F(\cdot)$ is a distribution function supported on $(-\pi, \pi]$ with $F(-\pi) = 0$ and $F(\pi) \leq \infty$\\
+    \textit{Note}: Corresponding Bocher's for the characteristic function of a random variable\\
+    If $F(\cdot)$ is absolutely Continuous w.r.t the Lebesgue measure, (ie they are related but not the same) ie $F(\lambda) = \int_{-\pi}^{\lambda} f(\nu) d\nu$ then $f(\lambda)$ is called the spectral density function of $\{X_t\}$\\
+    \begin{proof}
+        $\impliedby$ 
+        \begin{align*}
+            \sum_{j,k=1}^{n} a_j \gamma(j-k) \overline{a_k} &= \sum_{j,k=1}^{n} a_j \int_{-\pi}^{\pi} e^{i (j-k) \nu} dF(\nu) \overline{a_k}\\
+            &= \int_{-\pi}^{\pi} \sum_{j,k=1}^{n} a_j e^{i (j) \nu} e^{-i k \nu} \overline{a_k} dF(\nu)\\
+            &= \int_{-\pi}^{\pi} \left( \sum_{j=1}^{n} a_j e^{i j \nu} \right) \left( \sum_{k=1}^{n} \overline{a_k e^{i k \nu}} \right) dF(\nu)\\
+            &= \int_{-\pi}^{\pi} \left| \sum_{j=1}^{n} a_j e^{i j \nu} \right|^2 dF(\nu) \geq 0
+        \end{align*}
+    \end{proof}
+\end{theorem}
+\subsection{10/21/2025 Lecture 14}
+\begin{remark}[Spectral Representation of Complex Stationary Process]
+    Every zero-mean stationary process has a representation:
+    $$ X_t = \int_{-\pi}^{\pi} e^{i t \nu} dZ(\nu) $$
+    Correspondingly $\gamma_X(h) = \int_{-\pi}^{\pi} e^{i h \nu} dF(\nu)$
+    F is cadlag, increasing, $F(-\pi) = 0$, $F(\pi) = \gamma(0)$\\
+    where $Z(\nu)$ is a complex-valued process with the following properties:\\
+    If $F(\cdot)$ is absolutely continuous w.r.t the Lebesgue measure, ie $F(\lambda) = \int_{-\pi}^{\lambda} f(\nu) d\nu$ then $\gamma_X(h) = \int_{-\pi}^{\pi} e^{i h \nu} f(\nu) d\nu$ where $f(\nu)$ is called the spectral density function of $\{X_t\}$\\
+    F is the spectral distribution function of $\{X_t\}$
+    f is the spectral density function of $\{X_t\}$
+\end{remark}
+\begin{theorem}[4.3.1 Herglotz]
+    A complex valued fn $\gamma(\cdot)$ defined on $\mathbb{Z}$ is NND if and only if
+    \begin{align*}
+        \gamma(h) &= \int_{-\pi}^{\pi} e^{i h \nu} dF(\nu) \quad h \in \mathbb{Z}
+    \end{align*}
+    Where $F(\cdot)$ is a distribution function supported on $(-\pi, \pi]$ with $F(-\pi) = 0$ and $F(\pi) \leq \infty$\\
+    \begin{proof}
+        $\implies:$ Define $f_n(\nu) = \frac{1}{2\pi N} \sum_{j,k=1}^{N} \gamma(j-k) e^{-ij \nu} e^{i k \nu}$
+        \begin{align*}
+            f_n(\nu) &= \frac{1}{2\pi N} \sum_{j,k=1}^{N} \gamma(j-k) e^{-ij \nu} e^{i k \nu}\\
+            &= \frac{1}{2\pi N} \sum_{m=1-N}^{N-1} (1-\frac{|m|}{N})\gamma(m) e^{i m \nu} 
+        \end{align*}
+        \fbox{Fejer Kernel}
+        Then $f_n(\nu) \geq 0$ and $\int_{-\pi}^{\pi} f_n(\nu) d\nu = \gamma(0)$\\
+        Next Define $F_N(\lambda) =  \int_{-\pi}^{\lambda} f_n(\nu) d\nu$ Then $F_N(\lambda)$ is a distribution function on $(-\pi, \pi]$ with $F_N(-\pi) = 0$ and $F_N(\pi) = \gamma(0)$\\
+        And
+        \begin{align*}
+            \int_{-\pi}^{\pi} e^{i h \nu} dF_N(\nu) &= \int_{-\pi}^{\pi} e^{i h \nu} f_n(\nu) d\nu\\
+            &= \begin{cases}
+                \gamma(h) (1 - \frac{|h|}{N}) & |h| < N\\
+                0 & |h| \geq N
+            \end{cases}
+        \end{align*}
+        By Helly's Theorem: there exists a subsequence $\{N_k\}$ s.t. $F_{N_k}(\cdot) \to F(\cdot)$ and $ \lim_{k \to \infty} \int_{-\pi}^{\pi} e^{i h \nu} dF_{N_k}(\nu) = \int_{-\pi}^{\pi} e^{i h \nu} dF(\nu)$\\
+        \begin{align*}
+            \lim_{k \to \infty} \int_{-\pi}^{\pi} e^{i h \nu} dF_{N_k}(\nu) &= \lim_{k \to \infty} \gamma(h) (1 - \frac{|h|}{N_k}) = \gamma(h)\\
+        \end{align*}
+    \end{proof}
+\end{theorem}
+\begin{remark}
+    F as the limit might have a point mass at $-\pi$ so an additial step transfer it to $\pi$\\
+    It can be proven that $F_N(\cdot) \to F(\dot)$ \\
+    This also ensure the spectral distribution function is unique ie if $\exists$ another distribution function $G(\cdot)$ s.t $\gamma(h) = \int_{-\pi}^{\pi} e^{i h \nu} dG(\nu)$ then $F(\cdot) = G(\cdot)$ at all continuity points of both $F$ and $G$\\
+\end{remark}
+\begin{theorem}[4.3.2]
+    Suppose $K(\cdot)$ is a function defined on $\mathbb{Z}$ s.t. $\sum_{h=-\infty}^{\infty} |K(h)| < \infty$ then \\
+    $$ f(\lambda) := \frac{1}{2\pi} \sum_{h=-\infty}^{\infty} K(h) e^{-i h \lambda} $$
+    is well -defined and $K(n) = \int_{-\pi}^{\pi} e^{i n \lambda} f(\lambda) d\lambda$ for all $n \in \mathbb{Z}$\\
+\end{theorem}
+\begin{corollary}
+    Suppose $\gamma(\cdot)$ is a function defined on $\mathbb{Z}$ and it $ \sum_{h=-\infty}^{\infty} |\gamma(h)| < \infty $ then $\gamma(\cdot)$ is the acf of a stationary process iff $f(\lambda) := \frac{1}{2\pi} \sum_{h=-\infty}^{\infty} \gamma(h) e^{-i h \lambda} \geq 0$ for all $\lambda \in [-\pi, \pi]$\\
+    \begin{proof}
+        $\impliedby$: f is a density, can define $F(\lambda) = \int_{-\pi}^{\lambda} f(\nu) d\nu$ which is a distribution function on $(-\pi, \pi]$\\
+        $\implies$ $f_N(\lambda) = \frac{1}{2\pi} \sum_{m=-1-N}^{N-1} (1 - \frac{|m|}{N}) \gamma(m) e^{-i m \lambda} \geq 0$ for all $\lambda \in [-\pi, \pi]$\\
+    \end{proof}
+\end{corollary}
+\begin{example}[4.3.1]
+    $K(h) = \begin{cases}
+        1 & h = 0\\
+        \rho & h = \pm 1\\
+        0 & \text{otherwise}
+    \end{cases}$ where $|\rho| < \frac{1}{2}$\\
+    We can look at the spectral density function:
+    \begin{align*}
+        f(\lambda) &= \frac{1}{2\pi} \sum_{h=-\infty}^{\infty} K(h) e^{-i h \lambda} \\
+        &= \frac{1}{2\pi} (1 + \rho e^{-i \lambda} + \rho e^{i \lambda})\\
+        &= \frac{1}{2\pi} (1 + 2 \rho \cos(\lambda))
+    \end{align*}
+\end{example}
+\begin{remark}
+    If the acf is real, then the spectral density function is also real-valued.\\
+    $f(\lambda) = \frac{1}{2\pi} \left[ 1 + \sum_{n=1}^{\infty} 2 \gamma(n) \cos(n \lambda) \right]$\\
+    In general the spectral distribution function is stne=netruc in the sense $F_X(\lambda) = F_X(\pi^-) - F_X(-\lambda^-)$\\
+    \fbox{HW}
+\end{remark}
+\subsection{10/23/2025 Lecture 15}
+\begin{remark}
+    If $\gamma(\cdot)$ is a complex balued acg then there exists a unique spectral distribution $F$ s.t. $\gamma(h) = \int_{-\pi}^{\pi} e^{i h \nu} dF(\nu)$\\
+    If $F(\cdot)$ is absolutely continuous w.r.t the Lebesgue measure ie $F(\lambda) = \int_{-\pi}^{\lambda} f(\nu) d\nu$ then $\gamma(h) = \int_{-\pi}^{\pi} e^{i h \nu} f(\nu) d\nu$ where $f(\nu)$ is called the spectral density function of $\{X_t\}$\\
+    If $\sum_{h=-\infty}^{\infty} |\gamma(h)| < \infty$ then he spectral density eists and is given by $f(\lambda) = \frac{1}{2\pi} \sum_{h=-\infty}^{\infty} \gamma(h) e^{-i h \lambda}$\\
+    Consider a $WN(0, \sigma^2)$, the acf is $\gamma(h) = \begin{cases}
+        \sigma^2 & h = 0\\
+        0 & h \neq 0
+    \end{cases}$\\
+    The spectral density function is $f(\lambda) = \frac{1}{2\pi} \sigma^2$ for $\lambda \in [-\pi, \pi]$\\
+\end{remark}
+\begin{theorem}[4.4.1]
+    If $\{Y_t\}$ is zero-mean complex valued stationary process with the spectral denisty $F_Y(\cdot)$ and if $\{X_t\}$ is defined by $X_t = \sum_{j=-\infty}^{\infty} \psi_j Y_{t-j}$ where $\sum_{j=-\infty}^{\infty} |\psi_j| < \infty$ then $\{X_t\}$ is staitionary with acf $\gamma_X(h) = \sum_{j,k = -\infty}^{\infty} \psi_j \overline{\psi_k} \gamma_Y(h - j + k)$ 
+    AAnd the spectral distribution: $F_X(\lambda) = \int_{-\pi}^{\lambda} |\sum_{j=-\infty}^{\infty} \psi_j e^{-i j \nu}|^2 dF_Y(\nu)$\\
+    This a Radon-Nikodym derivative\\
+    \begin{proof}
+        \begin{align*}
+            \gamma_X(h) &= \sum_{j,k = -\infty}^{\infty} \psi_j \overline{\psi_k} \int_{-\pi}^{\pi} e^{i (h - j + k) \nu} dF_Y(\nu)\\
+            &= \int_{-\pi}^{\pi} e^{i h \nu} \left[ \sum_{j,k = -\infty}^{\infty} \psi_j e^{-i j \nu} \overline{\psi_k e^{-i k \nu}} \right] dF_Y(\nu)\\
+            &= \int_{-\pi}^{\pi} e^{i h \nu} |\sum_{j=-\infty}^{\infty} \psi_j e^{-i j \nu}|^2 dF_Y(\nu)\\
+            &= \int_{-\pi}^{\lambda} e^{i h \nu} dF_X(\nu) \quad \text{ where } F_X(\lambda) = \int_{-\pi}^{\lambda} |\sum_{j=-\infty}^{\infty} \psi_j e^{-i j \nu}|^2 dF_Y(\nu)
+        \end{align*}
+    \end{proof}
+\end{theorem}
+\begin{theorem}[~3.1.3]
+    Consider $ARMA(p,q)$ $\phi(B) X_t = \theta(B) Z_t$ If $\phi(z)\neq 0$ for $|z| = 1$ then there is a unique stationary solution given by $X_t = \sum_{j=\infty}^{\infty} \psi_j Z_{t-j}$ where $\psi(z) = \frac{\theta(z)}{\phi(z)} = \sum_{j=-\infty}^{\infty} \psi_j z^j$ for $|z| \leq 1$\\
+    note:\\
+    $\phi(z) = (1-.5 z)(1 - 2 z)$\\
+    $1/ \phi(z) = 1/(1 - .5 z) \cdot 1/(1 - 2 z)$\\
+    $\frac{1}{1-2z} = \frac{1}{z} \cdot \frac{1}{\frac{1}{z}-2}$
+\end{theorem}
+\begin{theorem}[4.4.2]
+    Consider the $ARMA(p,q)$ $\phi(B) X_t = \theta(B) Z_t$ Assume that $\phi, \theta$ have no common zeros and that $\phi(z) \neq 0$ for $|z| = 1$ then $\{X_t\}$ has a spectral density function given by
+    \begin{align*}
+        f_X(\lambda) &= \frac{\sigma^2}{2\pi} \cdot \frac{|\theta(e^{-i \lambda})|^2}{|\phi(e^{-i \lambda})|^2} \quad \lambda \in [-\pi, \pi]
+    \end{align*}
+    since $dF_Z(\lambda) = \frac{\sigma^2}{2\pi} d\nu$ 
+    \begin{proof}
+        Define $U_t = \phi(B) X_t = \theta(B) Z_t$ \\
+        $f_U(\lambda) = |\theta(e^{-i \lambda})|^2 f_Z(\lambda) = \frac{\sigma^2}{2\pi} |\theta(e^{-i \lambda})|^2$\\
+        And thus $\implies: f_X(\lambda) = \frac{\sigma^2}{2\pi} \cdot \frac{|\theta(e^{-i \lambda})|^2}{|\phi(e^{-i \lambda})|^2}$\\
+    \end{proof}
+\end{theorem}
+\begin{example}
+    $AR(1): X_t = \phi X_{t-1} + Z_t$ where $|\phi| \neq 1$\\
+    $f_X(\lambda) = \frac{\sigma^2}{2\pi} \cdot \frac{1}{|1 - \phi e^{-i \lambda}|^2} = \frac{\sigma^2}{2\pi} \cdot \frac{1}{1 - 2 \phi \cos(\lambda) + \phi^2}$\\
+    Suppose $|\phi| > 1$ We want to have $(1-\frac{1}{\phi} B)X_t = Z_t^*$ ?. \\
+    \begin{align*}
+        (1-\frac{1}{\phi}B)(1-\phi B) X_t &= (1 - \frac{1}{\phi} B) Z_t\\
+        (1 - \frac{1}{\phi}B) X_t = \frac{(1 - \frac{1}{\phi}B)}{(1-\phi B)} Z_t &= Z_t^*\\
+    \end{align*}
+    Thus by Theorem $4.4.2$ the spectral density function is $f_{Z^*}(\lambda) = \left|\frac{1-\frac{1}{\phi} e^{-i \lambda}}{1-\phi e^{-i \lambda}} \right| \frac{\sigma^2}{2\pi}$
+    We can verify that this is a constant by 
+    \begin{align*}
+        |e^{i \lambda}e^{-i \lambda} - \frac{1}{\phi} e^{i \lambda}|^2 &= |e^{i \lambda} - \frac{1}{\phi}|^2\\
+        &= \frac{1}{\phi^2} |-\phi e^{-i \lambda} + 1|^2 \quad \text{Which cancels with the denominator}
+    \end{align*}
+    Thus $f_{Z^*}(\lambda) = \frac{\sigma^2}{2\pi \phi^2}$ for $\lambda \in [-\pi, \pi]$\\
+    IE $Z_t^* \sim WN(0, \frac{\sigma^2}{\phi^2})$
+\end{example}
+\begin{example}
+    $MA(1): X_t = Z_t + \theta Z_{t-1}$ where $Z_t \sim WN(0, \sigma^2)$, $|\theta| > 1$\\
+    $X_t = (1 + \theta B) Z_t = (1+\frac{1}{\theta} B) Z_t^*$\\
+    $\implies Z_t^* = \frac{(1+\theta B)}{(1+\frac{1}{\theta} B)} Z_t$\\
+    Thus $Z_t^* \sim WN(0, \sigma^2 \theta^2)$ 
+\end{example}
+\begin{remark}
+    Suppose $\{X_t\}$ iscausal and invertable. LEt $\mathcal{H}_t = \spn\{X_t, X_{t-1}, \ldots\}$. \\
+    \begin{align*}
+        X_t - \mathcal{P}_{\mathcal{H}_{t-1}} X_t = Z_t
+    \end{align*}
+    Since\\
+    Causality implies that $\mathcal{H}_{t-1} \subset \spn\{Z_{t-1}, Z_{t-2}, \ldots\} \implies Z_t \perp \mathcal{H}_{t-1}$\\
+    Invertability implies that $Z_{t-1}, Z_{t-2}, \ldots \in \mathcal{H}_{t-1}$\\
+\end{remark}
+\subsection{10/28/2025 Lecture 16}
+\begin{remark}
+    Suppose $\phi(B)X_t = \theta(B)Z_t$ $\phi, \theta$ have no common zeros and $\phi(z) \neq 0$ for $|z| = 1$\\
+    The spectral of $X_t$ is given by $f_X(\lambda) = \frac{\sigma^2}{2\pi} \cdot \frac{|\theta(e^{-i \lambda})|^2}{|\phi(e^{-i \lambda})|^2}$\\
+\end{remark}
+\begin{example}[AR(1) Spectral density]
+    $X_t = \phi X_{t-1} + Z_t$ where $|\phi| > 1$ then $X_t = \frac{1}{\phi} X_{t-1} + Z_t^*$ where $Z_t^* \sim WN(0, \frac{\sigma^2}{\phi^2})$\\ 
+    And $Z_t^* = \frac{(1 - \frac{1}{\phi} B)}{(1 - \phi B)} Z_t$\\
+\end{example}
+\begin{example}[MA(1) Spectral density]
+    $X_t = Z_t + \theta Z_{t-1}$ where $|\theta| > 1$ then $X_t = (1 + \frac{1}{\theta} B) Z_t^*$ where $Z_t^* \sim WN(0, \sigma^2 \theta^2)$\\
+    And $Z_t^* = \frac{(1 + \theta B)}{(1 + \frac{1}{\theta} B)} Z_t$\\
+\end{example}
+\begin{definition}
+    Suppose $\phi(B)X_t = \theta(B) Z_t$ is causal and invertable $\mathcal{M}_t = \spn\{X_t, X_{t-1}, \ldots\}$\\
+    The BLP $\mathcal{P}_{\mathcal{M}_{t-1}} X_t$ what is $X_t - \mathcal{P}_{\mathcal{M}_{t-1}} X_t$?\\
+    Causal - $Z_t \perp M_{t-1}$\\
+    Invertable - $Z_{t-1}, Z_{t-2}, \ldots \in \mathcal{M}_{t-1}$\\
+    Thus $X_t - \mathcal{P}_{\mathcal{M}_{t-1}} X_t = Z_t$
+    Consequently $||X_t - \mathcal{P}_{\mathcal{M}_{t-1}} X_t||^2 = E[|Z_t|^2] = \sigma^2$\\
+    Thus for AR(1) with $|\phi| > 1$, the BLP error variance is $\sigma^2/\phi^2$\\
+    For MA(1) with $|\theta| > 1$, the BLP error variance is $\sigma^2 \theta^2$\\
+\end{definition}
+\begin{remark}
+    How do you make an ARMA that is not causal or invertable into one that is?\\
+    More generally write $\phi(z) = \prod_{j=1}^{m} (1 - a_j^{-1}z) $ where $|a_j| >1$ for $1 <j < r$ and $|a_j| < 1$ for $r+1 < j < m$\\
+    \begin{align*}
+        (1-a_1^{-1} z)(1- a_2^{-1} z) \ldots (1 - a_r^{-1} z) (1 - a_{r+1}^{-1} z) \ldots (1 - a_m^{-1} z)
+    \end{align*}
+    The left part is the $(1-a_{r+1}z) / (1 - a_{r+1}^{-1})z$\\
+    \begin{align*}
+        \frac{1-\overline{a_{r+1}}B}{1+ a_{r+1}^{-1} B} \phi(B) X_t = \frac{1 - \overline{a_{r+1}} B}{1 - a_{r+1}^{-1} B} \theta(B) Z_t
+    \end{align*}
+    $a_{r+1} = ce^{i \theta}$ for $c < 1$ \\
+    Can verify that $\frac{1-a_{r+1}B}{1-a_{r+1}^{-1} B} Z_t \sim WN(0, |a_{r+1}|^2 \sigma^2)$
+    Then do the same thing for every $r+1 \leq j \leq m$ ie replace $a_{r+1}$ with somehting that makes it causal and invertable\\
+    Thus 
+    \begin{align*}
+        \hat \phi(z) = \frac{j = r+1 }{p} \frac{1-\overline{a_j}B}{1 - a_j^{-1} B} \phi(z)\\
+    \end{align*}
+    Thus 
+    \begin{align*}
+        Z_t^* = \prod_{j=r+1}^{p} \frac{1 - \overline{a_j} B}{1 - a_j^{-1} B} Z_t \sim WN(0, \sigma^2 \prod_{j=r+1}^{p} |a_j|^2)\\
+    \end{align*}
+    Also 
+    \begin{align*}
+        \theta(z) = \prod_{j=1}^{q} (1 - b_j^{-1} z) \text{ where } |b_j| > 1 \text{ for } 1 \leq j \leq s \text{ and } |b_j| < 1 \text{ for } s+1 \leq j \leq q
+    \end{align*}
+    Then 
+    \begin{align*}
+        \hat \theta(z) = \prod_{j=s+1}^{q} \frac{1 - \overline{b_j} B}{1 - b_j^{-1} B} \theta(z)\\
+    \end{align*}
+    More Generally $\phi(B)X_t = \theta(B) Z_t$ When conveted 
+    \begin{align*}
+        \var (Z_t^*) = \sigma^2 \frac{\prod_{j=r+1}^{p} |a_j|^2}{\prod_{j=s+1}^{q} |b_j|^2}
+    \end{align*}
+    This is a theorem in the Book. \\
+    Whenever there is a root that is bad, we can flip it by takeing the conjugate reciprocal and adjusting the variance accordingly.\\
+\end{remark}
+\begin{proposition}[4.4.1]
+    Assume ARMA as usual. and $\theta(z) \neq 0$ for $|z| <1 $ then $Z_t \in \spn\{X_t, X_{t-1}, \ldots\}$\\
+    \begin{proof}
+        First: Factorize $\theta(z) = \theta^+(z) \theta^*(z)$ where $\theta^+(z) = \prod_{j=1}^{s} (1 - b_j^{-1} z)$ with $|b_j| > 1$ and $\theta^*(z) = \prod_{j=s+1}^{q} (1 - b_j^{-1} z)$ with $|b_j| = 1$\\
+        Define $Y_t = \theta^*(B) Z_t$ then $\phi(B) X_t= \theta^+(B) Y_t$\\
+        Using the earlier proof on invertability, $\implies Y_t \in \spn\{X_t, X_{t-1}, \ldots\}$\\
+        So it suffices to show that $Z_t \in \spn\{Y_t, Y_{t-1}, \ldots\}$\\
+        Define $U_t = Y_t - \mathcal{P}_{\spn\{Y_k, k \leq t-1 \}}T_t$\\
+        Then by Prop 3.2.1:
+        \begin{align*}
+            Y_t = U_t + \alpha_1 U_{t-1} + \alpha_2 U_{t-2} + \ldots + \alpha_{q-s} U_{t - (q-s)}\\
+            \implies f_Y(\lambda) = \frac{\sigma^2}{2\pi} |\alpha(e^{-i \lambda})|^2 = \frac{\sigma^2}{2\pi} |\theta^*(e^{-i \lambda})|^2
+        \end{align*}
+        Both $\alpha(z)$ and $\theta^*(z)$ are real polynomials of the same degree $q-s$ \\
+        Factoring $\alpha(z) = \prod_{j=1}^{q-s} (1 - c_j^{-1} z)$ And $\theta^*(z) = \prod_{j=s+1}^{q} (1 - b_j^{-1} z)$\\
+        We see that they must have the same roots ie $\{c_j\} = \{b_j\}$ as multisets\\
+        And they are the same everywhere\\
+        Thus $\alpha(z) = \theta^*(z)$\\
+        Then using this we can show that $Z_t = U_t$ 
+    \end{proof}
+\end{proposition}
+\subsection{10/30/2025 Lecture 17}
+\begin{proposition}[4.4.1 cont] 
+    Consider the ARMA(p,q) $\phi(B) X_t = \theta(B) Z_t$ where $\theta(z) \neq 0$ for $|z| < 1$\\
+    Then $Z_t \in \spn\{X_t, X_{t-1}, \ldots\}$\
+    \begin{proof}
+        WLOG: assume $\theta(z) \neq 0$ for $|z| \neq 1$\\
+        Define $Y_t = \theta(B) Z_t$ then $\phi(B) X_t = Y_t$\\
+        $\implies \spn\{Y_t, k \leq t\} \subset \spn\{X_t, k \leq t\}$\\
+        So it suffices to show that $Z_t \in \spn\{Y_t, Y_{t-1}, \ldots\}$\\
+        Define $U_t = Y_t - \mathcal{P}_{\spn\{Y_k, k \leq t-1\}} Y_t$\\
+        Then by Prop 3.2.1:
+        \begin{align*}
+            Y_t = U_t + \alpha_1 U_{t-1} + \alpha_2 U_{t-2} + \ldots + \alpha_q U_{t-q}\\
+            \implies f_Y(\lambda) = \frac{\sigma^2}{2\pi} |\alpha(e^{-i \lambda})|^2 = \frac{\sigma^2}{2\pi} |\theta(e^{-i \lambda})|^2
+        \end{align*}
+        Both $\alpha(z)$ and $\theta(z)$ are real polynomials of the same degree q \\
+        And they have the same roots ie $\{c_j\} = \{b_j\}$ as multisets\\
+        And they are the same everywhere\\
+        Thus $\alpha(z) = \theta(z)$\\
+        And $\sigma^2 = \sigma_n^2$\\
+        $\implies$ that $(U_t, Y_t, Y_{t-1}, \ldots, Y_{t-q})$ and $(Z_t, Y_t, Y_{t-1}, \ldots, Y_{t-q})$ have the same covarience matrix\\
+        $\implies$ $\mathcal{P}_{\spn\{Y_k, k \leq t-1\}} U_t = \mathcal{P}_{\spn\{Y_k, k \leq t-1\}} Z_t$\\
+        $\implies$ $U_t = \lim_{n \to \infty} \mathcal{P}_{\spn\{Y_t, Y_{t-1}, \ldots, Y_{t-n}\}} U_t = \lim_{n \to \infty} \mathcal{P}_{\spn\{Y_t, Y_{t-1}, \ldots, Y_{t-n}\}} Z_t$\\
+        Bescuase $\sigma_n^2 = \sigma^2$ it holds that $Z_t = U_t$\\
+        If you show that two projections are equal with the same variance then the two random variables are equal.
+    \end{proof}
+\end{proposition}
+\begin{proposition}[4.4.3]
+    Assume the ARMA(p,q) $\phi(B) X_t = \theta(B) Z_t$ where $\phi(z) \neq 0$ for $|z| < 1$\\
+    If $\theta(z) = 0$ for some $|z| \leq 1$ then $Z_t \notin \spn\{X_t, X_{t-1}, \ldots\}$\\
+\end{proposition}
+\begin{definition}[Wold Decomposition]
+    \textbf{Aside}: Crimea-Wold Device to prove the multivariate CLT\\
+    \textbf{Setup}: $X_t, t \in \mathbb{Z}$ is a zero-mean stationary process. \\
+    Define $\mathcal{M}_n = \spn\{X_t, t \leq n\}$, $\mathcal{M} = \overline{\bigcup_{n \in \mathbb{Z}} \mathcal{M}_n} = \spn\{X_t, t \in \mathbb{Z}\}$\\
+    Define $\mathcal{M}_{-\infty} = \bigcap_{n \in \mathbb{Z}} \mathcal{M}_n$\\
+    \fbox{Look into Durret and Billinsley}
+\end{definition}
+\begin{definition}[Mean Squared Error]
+    $\sigma^2 = E[X_{n+1}^2 - \mathcal{P}_{\mathcal{M}_n} X_{n+1}]$ is the mean squared error of the BLP of $X_{n+1}$ based on $\mathcal{M}_n$\\
+    AKA the one step ahead prediction error variance
+\end{definition}
+\begin{definition}[Determinisitic Process]
+    A stationary process $\{X_t\}$ is deterministic if $ \sigma^2 = 0$ ie $X_{n+1} \in \mathcal{M}_n$ for all $n \in \mathbb{Z}$\\
+    ie $X_{n+1}$ can be perfectly predicted based on the infinite past $\{X_n, X_{n-1}, \ldots\}$\\
+    Note that for all Process $\sum_{j=1}^n A_j e^{-i \lambda_j t}$ is deterministic for $A_j$ uncorrelated mean zero random variables\\
+\end{definition}
+\begin{theorem}[3.7.1 Wold Decomposition Theorem]
+    If $\sigma^2 > 0$  then $X_t$ can we expressed as $X_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j} + V_t$ where\\
+    \begin{enumerate}
+        \item $\psi_0 = 1$, $\sum_{j=0}^{\infty} |\psi_j|^2 < \infty$
+        \item $Z_t \sim WN(0, \sigma^2)$ 
+        \item $Z_t \in \mathcal{M}_t, \forall t \in \mathbb{Z}$
+        \item $E[Z_t V_s] = 0, \forall t, s \in \mathbb{Z}$
+        \item $V_t \in \mathcal{M}_{-\infty}, \forall t \in \mathbb{Z}$
+        \item $V_t$ is deterministic stationary process
+    \end{enumerate}
+    \begin{proof}
+        Define $Z_t = X_t - \mathcal{P}_{\mathcal{M}_{t-1}} X_t$ Thus the $Z_t \sim WN(0, \sigma^2)$ and $Z_t \in \mathcal{M}_t$ which gives us number 2 and 3\\
+        Project $X_t$ onto $\spn\{Z_t, Z_{t-1}, \ldots, Z_{t-n}\}$
+        \begin{align*}
+            \mathcal{P}_{\spn\{Z_t, Z_{t-1}, \ldots, Z_{t-n}\}} X_t &=: \sum_{j=0}^{n} \psi_{j} Z_{t-j}
+        \end{align*}
+        Where $\psi_j = \frac{\innerprod{X_t}{Z_{t-j}}}{\innerprod{Z_{t-j}}{Z_{t-j}}}$\\
+        In particular $\psi_0 = 1$ thus We get number 1\\
+        Define $V_{t} = X_t - \lim_{n \to \infty} \mathcal{P}_{\spn\{Z_t, Z_{t-1}, \ldots, Z_{t-n}\}} X_t$, $V_t \in \mathcal{M}_t$\\
+        Then $E[Z_s V_t] = 0$ for all $s, t \in \mathbb{Z}$ which gives us number 4\\
+    \end{proof}
+\end{theorem}
+\subsection{11/04/2025 Lecture 18}
+\begin{remark}[Wold Decomposition]
+    Recall the Linear Past:
+    \begin{align*}
+        \mathcal{M}_n &= \spn\{X_t, t \leq n\} \\
+        \mathcal{M} &= \overline{\bigcup_{n \in \mathbb{Z}} \mathcal{M}_n} = \spn\{X_t, t \in \mathbb{Z}\}\\
+        \mathcal{M}_{-\infty} &= \bigcap_{n \in \mathbb{Z}} \mathcal{M}_n
+    \end{align*}
+    $\sigma^2 = E[X_{n+1} - \mathcal{P}_{\mathcal{M}_n} X_{n+1}]$ is the one step ahead prediction error variance\\
+\end{remark}
+\begin{definition}[Determinisitic]
+    A stationary process $\{X_t\}$ is deterministic if $ \sigma^2 = 0$ 
+\end{definition}
+\begin{theorem}[5.7.1 Wold Decomposition Theorem]
+    If $\sigma^2 > 0$  then $X_t$ can we expressed as $X_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j} + V_t$ where\\
+    \begin{enumerate}
+        \item $\psi_0 = 1$, $\sum_{j=0}^{\infty} |\psi_j|^2 < \infty$
+        \item $Z_t \sim WN(0, \sigma^2)$ 
+        \item $Z_t \in \mathcal{M}_t, \forall t \in \mathbb{Z}$
+        \item $E[Z_t V_s] = 0, \forall t, s \in \mathbb{Z}$
+        \item $V_t \in \mathcal{M}_{-\infty}, \forall t \in \mathbb{Z}$
+        \item $V_t$ is deterministic stationary process
+    \end{enumerate}
+    The sequences $\{\psi_j\}$, $\{Z_t\}$ and $\{V_t\}$ are uniquely determined by the assumptions above.\\
+    \begin{proof}
+        $Z_t = X_t - \mathcal{P}_{\mathcal{M}_{t-1}} X_t$\\
+        $\psi_j = \frac{\innerprod{X_t}{Z_{t-j}}}{\innerprod{Z_{t-j}}{Z_{t-j}}}$
+        $V_t = X_t - \sum_{j=0}^{\infty} \psi_j Z_{t-j}$\\
+        $\mathcal{M}_t = \mathcal{M}_{t-1} \oplus \spn\{Z_t\}, V_t \perp Z_t \implies V_t \in \mathcal{M}_{t-1}$\\
+        $\mathcal{M}_t = \mathcal{M}_{t-2} \oplus \spn\{Z_{t-1}, Z_t\} , V_t \perp Z_{t-1}, Z_t \implies V_t \in \mathcal{M}_{t-2}$\\
+        Continuing this way we get $V_t \in \mathcal{M}_{t-k}$ for all $k \geq 0$ thus $V_t \in \mathcal{M}_{-\infty}$\\
+        This shows properties 5.\\
+        Let $\mathcal{M}_t^{V} = \spn\{V_t, V_{t-1}, \ldots\}$\\
+        Need to show that $V_t \in \mathcal{M}_{t-1}^{V}$ 
+        and thus will show that $V_t \in \mathcal{M}_{-\infty}^{V}$\\
+        it suffices to show that $\mathcal{M}_{-\infty}^{V} = \mathcal{M}_{-\infty}$\\
+        We know $V_T \in \mathcal{M}_t \implies \mathcal{M}_{t}^{V} \subset \mathcal{M}_t \implies \mathcal{M}_{-\infty}^{V} \subset \mathcal{M}_{-\infty}$\\
+        Now we show the reverse inclusion.\\
+        $\mathcal{M}_t = \spn\{Z_k, V_k, k \leq t\} = \spn\{Z_k, k \leq t\} \oplus \mathcal{M}_t^{V}$\\
+        $\mathcal{M}_{t-k} \perp \spn\{Z_{t} \dots Z_{t-k}\}$\\
+        $\implies \mathcal{M}_{-\infty} \perp \spn\{Z_t, Z_{t-1}, \ldots\} \implies \mathcal{M}_{-\infty} \subset \mathcal{M}_{t}^{V}$\\
+        Thus $\mathcal{M}_{-\infty} \subset \mathcal{M}_{-\infty}^{V}$\\
+    \end{proof}
+    \begin{proof}[Proof of Uniqueness]
+        If $X_t = \sum_{j=0}^{\infty} \eta_j W_{t-j} + G_t$ with the same properties as above.\\
+        $(5)$ implies that $E[G_t] \in \mathcal{M}_{-\infty}$\\
+        $(3)$ implies that $W_{t-1}, W_{t-2}, \ldots \in \mathcal{M}_{t-1}$\\
+        \begin{align*}
+            X_t = W_t + \sum_{j=1}^{\infty} \eta_j W_{t-j} + G_t \in \mathcal{M}_{t-1}
+        \end{align*}
+        And $W_t \perp X_{t-k}$ for any $k \geq 1$\\
+        Thus $W_t = X_t - \mathcal{P}_{\mathcal{M}_{t-1}} X_t = Z_t$\\
+    \end{proof}
+\end{theorem}
+\begin{theorem}[Kolmogorov or Doob]
+    Let $\{Y_{1t}\}$ and $\{Y_{2t}\}$ be two zero-mean mutually orthogonal stationary processes and let $X_t = Y_{1t} + Y_{2t}$ Suppose $F_1$ and $F_2$ are the spectral distribution functions of $\{Y_{1t}\}$ and $\{Y_{2t}\}$ respectively. \\
+    Then $\{ Y_{1t}, Y_{2t}, t \in \mathbb{Z}\} \subset \mathcal{M}^X := \spn\{X_k, k\in \mathbb{Z}\}$ \\
+    IFF\\
+    $F_1$ and $F_2$ are mutually singular ie $F_1$ corresponds to a measure that is on the space $m_1$ and $F_2$ corresponds to a measure that is on the space $m_2$. If there exists a measureable set $A \subset (-\pi, \pi]$ such that, $m_1(A^c) = 0$ and $m_2(A) = 0$ then $F_1$ and $F_2$ are mutually singular.\\
+\end{theorem}
+\begin{theorem}[Rudin]
+    IF $\{c_n, n \leq 0\}$ are s.t. $0 < \sum_{n=-\infty}^{0} |c_n|^2 < \infty$ then $ \sum_{n=-\infty}^{0} c_n e^{i n \lambda} \in L^2(-\pi, \pi] : = \{g : (-\pi, \pi] \to \mathbb{C} | \int_{-\pi}^{\pi} |g(\lambda)|^2 d\lambda < \infty\}$\\
+    and $\int_{-\pi}^{\pi} log|c e^{i \theta}|d\theta > -\infty$
+\end{theorem}
+\begin{remark}[Back to Wold]
+    $\sigma^2 > 0$ let $\psi(e^{-i \lambda}) = \sum_{n=0}^{\infty} \psi_j e^{-i n \lambda}$\\
+    By Theorem Rudin $\int_{-\pi}^{\pi} log|\psi(e^{-i \lambda})| d\lambda > -\infty \implies \psi(e^{-i \lambda})$ is non-zero almost everywhere on $(-\pi, \pi]$.
+    Let $U_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j}$ then $U_t$ and $V_t$ (deterministic part) are orthogonal.\\
+    Let $f_U(\lambda)$ and $f_V(\lambda)$ be the spectral density functions of $U_t$ and $V_t$ respectively.\\
+    Then $f_X(\lambda) = f_U(\lambda) + f_V(\lambda)$ and $f_U(\lambda)$ and $f_V(\lambda)$ are mutually singular.\\
+    Can show that $\frac{\sigma^2}{2\pi}|\psi(e^{-i \lambda})|^2 $ is the spectral density function of $U_t$\\
+    $\implies F_u$ is absolutely continuous almost everywhere with non-zero, non-negative density function.\\
+    $F_v$ is singular with respect to $F_u$ and singular to the Lebesgue measure.\\
+    IE $\exists$ a set $A$ with Lebesgue measure $0$ such that $F_v(A^c) = 0$\\
+\end{remark}
+\subsection{11/06/2025 Lecture 19}
+\begin{theorem}[5.6.1 Wold Decomposition]
+    If $\sigma^2 > 0$  then $X_t$ can we expressed as $X_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j} + V_t$ where\\
+    \begin{enumerate}
+        \item $\psi_0 = 1$, $\sum_{j=0}^{\infty} |\psi_j|^2 < \infty$
+        \item $Z_t \sim WN(0, \sigma^2)$ 
+        \item $Z_t \in \mathcal{M}_t, \forall t \in \mathbb{Z}$
+        \item $E[Z_t V_s] = 0, \forall t, s \in \mathbb{Z}$
+        \item $V_t \in \mathcal{M}_{-\infty}, \forall t \in \mathbb{Z}$
+        \item $V_t$ is deterministic stationary process
+    \end{enumerate}
+    The sequences $\{\psi_j\}$, $\{Z_t\}$ and $\{V_t\}$ are uniquely determined by the assumptions above.\\
+\end{theorem}
+\begin{remark}
+    \begin{enumerate}
+        \item The spectral density function of $U_t = \sum_{j=0}^{\infty} \psi_j Z_{t-j}$ is absolutely continuous wrt the Lebesgue measure ie $F_U(\lambda) = \int_{-\pi}^{\lambda} f_U(\nu) d\nu$ and we know it is given by $f_U(\lambda) = \frac{\sigma^2}{2\pi} |\psi(e^{-i \lambda})|^2$ where $\psi(e^{-i \lambda}) = \sum_{j=0}^{\infty} \psi_j e^{-i j \lambda}$. Furthermore $\psi(e^{-i \lambda}) \neq 0$ almost everywhere on $(-\pi, \pi]$.
+        \item $F_U$ and $F_V$ are mutually singular ie $\exists$ a set $A$ with Lebesgue measure $0$ such that $F_V(A^c) = 0$ and $F_U(A) = 0$
+        \item $F_X = F_U + F_V$ is the Lebesgue decomposition of $F_X$ wrt the Lebesgue measure.
+    \end{enumerate}
+    Let $F_X$ be the spectral distribution function of $X_t$. Let $f_X(\theta)$ be its derivative, then we can write $F_X(\lambda) = \int_{-\pi}^{\lambda} f_X(\theta) d\theta + F_s(\lambda)  F_c(\lambda) + F_s(\lambda)$ where $F_s$ is also a distribution functions
+    \begin{enumerate}
+        \item $f_x(\theta) = 0$ on a set of positive measure
+        \item $f_x(\theta) > 0$ almost everywhere $\int_{-\pi}^{\pi} log f_X(\theta) d\theta = -\infty$
+        \item $f_x(\theta) > 0$ almost everywhere $\int_{-\pi}^{\pi} log f_X(\theta) d\theta > -\infty$
+    \end{enumerate}
+\end{remark}
+\begin{theorem}[Kolmogorov Formula]
+    $\sigma^2 > 0$ iff $\int_{-\pi}^{\pi} log f_X(\lambda) d\lambda > -\infty$\\
+    and $\sigma^2 = 2\pi \exp\left(\frac{1}{2\pi} \int_{-\pi}^{\pi} log f_X(\lambda) d\lambda \right)$
+\end{theorem}
+\begin{example}
+    \begin{align*}
+        (1-0.5B) X_t = (1+0.3B) Z_t \quad Z_t \sim WN(0,1)\\
+    \end{align*}
+    $f_x(\theta) = \frac{\sigma^2}{2\pi} \cdot \frac{|1+0.3 e^{-i \theta}|^2}{|1-0.5 e^{-i \theta}|^2}$
+    \begin{align*}
+        \log(f_x(\theta)) &= \log\left(\frac{\sigma^2}{2\pi}\right) + 2 \log|1+0.3 e^{-i \theta}| - 2 \log|1-0.5 e^{-i \theta}|\\
+        &\implies \int_{-\pi}^{\pi} \log(f_x(\theta)) d\theta = 2\pi \log\left(\frac{\sigma^2}{2\pi}\right) 
+    \end{align*} 
+\end{example}
+\begin{remark}
+    Why? are we doing this.\\
+    $X_t = \sum_{j=1}^n A_j e^{i \lambda_j t}$ where $A_j$ are uncorrelated mean zero random variables.\\
+\end{remark}
+\begin{remark}[Infrence For ARMA Models]
+    Not only we do we have coefficients $\phi$ and $\theta$ to estimate but we also have to determine the order of the model $p$ and $q$.\\
+    Suppose we get data for ARMA(p,q): $\phi(B) (X_t - \mu) = \theta(B) Z_t$ where $Z_t \sim WN(0, \sigma^2)$\\
+    Assume $p, q$ are known.\\
+    We estimate mean $\mu$, by $\hat \mu = \bar X_n = \frac{1}{n} \sum_{t=1}^{n} X_t$\\
+    Suppose $\{X_1 \ldots X_n\}$ is a realization of a sp. \\
+    \begin{align*}
+        \hat{\mu} &= \bar{X}_n = \frac{1}{n} \sum_{t=1}^{n} X_t\\
+        \bar{X}_n &\xrightarrow{a.s.} E[X_0 | \mathcal{M}_{-\infty}] \text{ as } n \to \infty
+    \end{align*}
+    When $\bar{X} \xrightarrow{a.s} \mu$ then we call the process ergodic in the mean.\\
+    \begin{enumerate}
+        \item IID sequence with finite mean is ergodic
+        \item Suppose $Z_t$ iid 
+        \item $X_t := g(Z_t, Z_{t-1}, \ldots)$ and $g$ is measurable and $E[|X_t|] < \infty$ then $X_t$ is ergodic.
+    \end{enumerate}
+\end{remark}
 
 
 \end{document}

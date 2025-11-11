@@ -1,0 +1,295 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:198:336 - Databases}
+\newcommand{\assignment}{Exam 1 Notes}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{L1}
+\textbf{Database Management System}: Collection of interrelated data and a set of programs to access that data. \\
+\textbf{Online Transaction Processing: OTLP} Large number of users often accessing the same data at the same time. Each user retrieves or updates small amounts of data. \\
+\textbf{Online Analytics Processing: OLAP} Large amounts of data are analyzed for trends. Read heavy with low write.
+\textbf{Why not a file System:} File systems are not designed to handle the complexity and volume of data that databases do. Struggle with data redundancy, inconsistency, and difficulty in data retrieval. \\
+\textbf{Data Abstraction:} Abstraction is the process of hiding the details and showing only the essential features of the data. The levels of data abstraction are: Physical Level, Logical Level, View Level. \\
+\textbf{Database Architecture:} Naive users, data analytics applicaiton programmers, database administrators conncet with sql to the DBMS which connects to the database. \\
+\textbf{DataBase Admin:} Central controller of the database. creates intial schema, how it is stored and accessed, and maintains the database. \\
+\section{L2}
+\textbf{Relational Data Model} Proposed by E.F. Codd in 1970. Data is represented in the form of tuples (rows), relations (tables), and attributes (columns). Rows are distinct and unordered. Columns ordered and named. \\
+\textbf{Relation Schema:} A logical structure of the database. It defines the tables, fields, and relationships between them. \\
+\textbf{Relation Instance:} A specific set of data that conforms to the structure defined by the relation schema at a particular point in time. \\
+\textbf{Keys:} Let $K \subset R$ where $R$ is a relation (table).
+\begin{itemize}
+    \item \textbf{Superkey:} $K$ are sufficent to identify a unique tuple of each possible relation instance of $R$.
+    \item \textbf{Candidate Key:} A minimal superkey. No proper subset of $K$ is a superkey.
+    \item \textbf{Primary Key:} A chosen candidate key to identify tuples uniquely in a relation.
+    \item \textbf{Foreign Key:} An attribute or set of attributes in one relation that refers to the primary key in another relation.
+\end{itemize}
+\textbf{Foreign key Constraint:} A forien key constratin from attributes $A$ of a relation $r_1$ to the primary key $B$ of relation $r_2$ states that on any instance of the database, the value of $A$ in $r_1$ must either be null or must match the value of $B$ in some tuple of $r_2$. Atribute $A$ is called a forien key from $r_1$ to $r_2$. $r_1$ is called the referencing relation and $r_2$ the referenced relation. \\
+\textbf{Relational Algebra:} A procedural query language that takes relations as input and produces relations as output. \\
+\textbf{Basic Operations:}
+\begin{itemize}
+    \item \textbf{Selection ($\sigma$):} Selects rows from a relation that satisfy a given predicate.
+    \item \textbf{Projection ($\pi$):} Selects specific columns from a relation, eliminating duplicates.
+    \item \textbf{Cartesian Product ($\times$):} Combines two relations to form a new relation with all possible pairs of tuples. We use Join in practice to ensure we get the tuples which follow a certain condition. we can write as $r \bowtie_{condition} s = \sigma_{condition} (r \times s)$.
+    \item \textbf{Union ($\cup$):} Combines tuples from two relations, eliminating duplicates. They need to have the same arity (number of attributes) and corresponding attributes must have the same domain.
+    \item \textbf{Set Intersection ($\cap$):} Returns tuples that are present in both relations. Same conditions as union.
+    \item \textbf{Set Difference ($-$):} Returns tuples that are in the first relation but not in the second. Same conditions as union.
+    \item \textbf{Assignment ($\leftarrow$):} Assigns the result of a relational algebra expression to a new relation. This is useful for breaking down complex queries into simpler steps.
+    \item \textbf{Renaming ($\rho$):} Changes the name of a relation or its attributes. This is useful for clarity and to avoid naming conflicts in complex queries.
+\end{itemize}
+\section{L3}
+\textbf{SQL:} Structured Query Language. A standard language for managing and manipulating relational databases. \\
+\textbf{Data Definition Language (DDL):} Used to define and manage database structures. Commands include CREATE, ALTER, DROP. \\
+\textbf{Data Manipulation Language (DML):} Used for querying and modifying data. Commands include SELECT, INSERT, UPDATE, DELETE. \\
+\textbf{Transaction Control:} Includes commands for specifying beginning and end of transactions. Commands include COMMIT, ROLLBACK. \\
+\textbf{Embedded and Dynamic SQL:} SQL statements are embedded within a host programming language like C, Java, or Python. \\
+\textbf{Basic Types:} char(n) - fixed length string, varchar(n) - variable length string, int - integer, smallint - small integer, numeric(p,s) - fixed precision and scale numbers, real/double precision - floating point numbers, float - approximate floating point numbers, date - date values, time - time values, timestamp - date and time values. \\
+\textbf{Create Table:} Used to create a new table in the database. Syntax: CREATE TABLE table\_name (column1 datatype, column2 datatype, ..., <Integrity-Constraints>); \\
+\textbf{Integrity Constraints:} primary key - PRIMARY KEY (column1, column2, ...), foreign key - FOREIGN KEY (column1, column2, ...) REFERENCES other\_table (other\_column1, other\_column2, ...), unique - UNIQUE (column1, column2, ...), not null - column\_name datatype NOT NULL. \\
+\textbf{Drop Table:} Used to delete a table and all its data from the database. Syntax: DROP TABLE table\_name; \\
+\textbf{Alter Table:} Used to modify the structure of an existing table. Syntax: ALTER TABLE table\_name ADD column\_name datatype; ALTER TABLE table\_name DROP COLUMN column\_name; ALTER TABLE table\_name MODIFY COLUMN column\_name datatype; \\
+\textbf{Basic Query Structure:} SELECT column1, column2, ... FROM table\_name WHERE condition; \\
+\textbf{Select Clause:} Specifies the columns to be retrieved. Use * to select all columns. Corresponds to the projection operation in relational algebra. Can use distinct to eliminate duplicates. all is there by default which means duplicates are not removed. Can use as to rename columns in the result set. \\
+\textbf{From Clause:} Specifies the table(s) from which to retrieve data. Can include multiple tables for joins. Corresponds to the Cartesian product and join operations in relational algebra. can use as to rename tables in the query: example: FROM table\_name AS t1. \\
+\textbf{Where Clause:} Specifies the conditions that must be met for a row to be included in the result set. Corresponds to the selection operation in relational algebra. \\
+\textbf{Rename Operator:} Used to rename the output columns of a query. Syntax: SELECT column1 AS new\_name1, column2 AS new\_name2, ... FROM table\_name as t WHERE condition; Example: SELECT DISTINCT T.name FROM instructor AS T, instructor AS S WHERE T.salary > S.salary and S.dept\_name = 'Physics'; Find names of all instructors who earn more than some instructor in the Physics department. \\
+\textbf{Self Join:} A self join is a regular join, but the table is joined with itself. Example: SELECT A.name, B.name FROM instructor AS A, instructor AS B WHERE A.dept\_name = B.dept\_name AND A.salary > B.salary; Find names of all instructors who earn more than some other instructor in the same department. \\
+\textbf{String Operations:} The operator LIKE uses patterns that are desribed using two special wildcard characters: \% and \_. The \% character matches any sequence of zero or more characters. The \_ character matches any single character. Example: SELECT name FROM instructor WHERE name LIKE 'A\%'; Find names of all instructors whose names start with 'A'. \\
+\section{L4}
+\textbf{Ordering Results:} The ORDER BY clause is used to sort the result set by one or more columns. Syntax: SELECT column1, column2, ... FROM table\_name ORDER BY column1 [ASC|DESC], column2 [ASC|DESC], ...; Default is ascending order (ASC). Use DESC for descending order. \\
+\textbf{Where Clause Predicates:} Comparison Operators: =, !=, <, >, <=, >=; Logical Operators: AND, OR, NOT; BETWEEN: Checks if a value is within a range; IN: Checks if a value is in a list of values; IS NULL: Checks for null values. \\
+\textbf{Set Operations} Union (UNION), Intersection (INTERSECT), Set Difference (EXCEPT). ALL keyword can be used to include duplicates. \\
+\textbf{Null Values:} Represents missing or unknown data. SQL treats as unknown in comparisons. Use IS NULL and IS NOT NULL to check for null values. 
+\textbf{Aggregate Functions}: Average (AVG), Count (COUNT), Maximum (MAX), Minimum (MIN), Sum (SUM). Used to perform calculations on a set of values and return a single value. \\
+\textbf{Aggregate Functions - Group By}: The GROUP BY clause is used to group rows that have the same values in specified columns into summary rows. Syntax: SELECT column1, aggregate\_function(column2) FROM table\_name GROUP BY column1; \\
+\textbf{Aggregate Functions - Having}: The HAVING clause is used to filter groups based on a specified condition. Predicates in the having clause are applied after the formation of groups. Syntax: SELECT column1, aggregate\_function(column2) FROM table\_name GROUP BY column1 HAVING condition; \\
+\textbf{Aggregate Functions - Evaluation Order}: FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY. \\
+\textbf{Nested Subqueries}: Is a SELECT FROM WHERE query that is embedded within another SQL query. The subquery is executed first, and its result is used by the outer query. Example: SELECT name FROM instructor WHERE dept\_name IN (SELECT dept\_name FROM department WHERE building = 'Science Hall'); Find names of all instructors who work in departments located in the 'Science Hall' building. \\
+\textbf{Set Membership}:  The IN operator is used to check if a value exists in a list of values or the result set of a subquery. Example: SELECT name FROM instructor WHERE dept\_name IN ('Computer Science', 'Mathematics'); Find names of all instructors who work in the Computer Science or Mathematics departments. \\
+\textbf{Set Comparison - Some} The SOME operator is used to compare a value to each value in a list or subquery result set. It returns true if the comparison is true for at least one value. Example: SELECT name FROM instructor WHERE salary > SOME (SELECT salary FROM instructor WHERE dept\_name = 'Physics'); Find names of all instructors whose salary is greater than at least one instructor in the Physics department. \\ 
+\textbf{Set Comparison - All} The ALL operator is used to compare a value to all values in a list or subquery result set. It returns true if the comparison is true for all values. Example: SELECT name FROM instructor WHERE salary > ALL (SELECT salary FROM instructor WHERE dept\_name = 'Mathematics'); Find names of all instructors whose salary is greater than all instructors in the Mathematics department. \\
+\textbf{Exists Clause}: The EXISTS operator is used to check if a subquery returns any rows. It returns true if the subquery returns at least one row. Example: SELECT name FROM department WHERE EXISTS (SELECT * FROM instructor WHERE instructor.dept\_name = department.dept\_name); Find names of all departments that have at least one instructor. \\
+\textbf{Test for Absence of Duplicate Tuple}: To test for the absence of a duplicate tuple in a relation, we can use a nested subquery with the where unique construct. Example: SELECT T.course\_id FROM as T WHERE UNIQUE (SELECT R.course\_id FROM section AS R WHERE T.course\_id = R.course\_id AND R.year = 2017); Find course IDs of all courses that were offered only once in the year 2017. \\
+\textbf{Subqueries in the From Clause}: SQL allows a subqueries to appear in the FROM clause. EX: SELECT dept\_name, avg\_salary FROM (SELECT dept\_name, AVG(salary) AS avg\_salary FROM instructor GROUP BY dept\_name) WHERE avg\_salary > 80000; Find names of all departments whose average instructor salary is greater than 80000. \\
+\textbf{With Clause}: The WITH clause is used to define a temporary relation whose defintion is available only to the query in which the with clause occurs. Example: WITH HighSalaryInstructors AS (SELECT name, salary FROM instructor WHERE salary > 90000) SELECT name FROM HighSalaryInstructors; Find names of all instructors with a salary greater than 90000 using a temporary relation. \\
+\textbf{Scalar Subquery} A Scalar Subquery is one which is used where a single value is expected. Runtime error if subquery returns more than one result tuple\\
+\section{L5}
+\textbf{DB Modifications} Deletions, Insertion, Updating  \\
+\textbf{Deletion} Delete all instructors: DELETE FROM instructor \\
+\textbf{Insertion} Insert a new instructor: INSERT INTO instructor (ID, name, dept\_name, salary) VALUES (12345, 'John Doe', 'Computer Science', 75000); \\
+\textbf{Updating} Update an instructor's salary: UPDATE instructor SET salary = 80000 WHERE ID = 12345; \\
+\textbf{Case Statement for Conditional Updates}:Use Case statements to perform conditional updates. Example: UPDATE instructor SET salary = CASE WHEN dept\_name = 'Computer Science' THEN salary * 1.1 WHEN dept\_name = 'Mathematics' THEN salary * 1.05 ELSE salary END; \\
+\textbf{Joined Relations} Natural Join, Inner Join, Outer Join. Takes two relations as input and combines them based on a specified condition. \\
+\textbf{Natural Join}: Combines two relations based on all common attributes. Returns only one copy of the common attributes in the result. Example: SELECT * FROM instructor NATURAL JOIN department; \\
+\textbf{Dangers of Natural Join}: Unrelated attributes with the same name can lead to unintended results. Use the USING clause or explicit join conditions to avoid ambiguity. \\
+\textbf{Join Condition:} ON condition allows specifying the join condition explicitly. Example: SELECT * FROM instructor JOIN department ON instructor.dept\_name = department.dept\_name; \\
+\section{L6}
+\textbf{Outer Join:} Computes the join then adds tuples from one relation that does not match tuples in the other relation to the result of the join, filling in nulls for missing attributes. \\
+\textbf{Left Outer Join:} Returns all tuples from the left relation and matching tuples from the right relation. Non-matching tuples from the right relation are filled with nulls. \\
+\textbf{Right Outer Join:} Returns all tuples from the right relation and matching tuples from the left relation. Non-matching tuples from the left relation are filled with nulls. \\
+\textbf{Full Outer Join:} Returns all tuples from both relations. Non-matching tuples from either relation are filled with nulls. \\
+\textbf{Joined Types and conditions}: Join Operations takes two relations and return a result as another relation
+\textbf{Inner Join}: Returns only the tuples that have matching values in both relations. \\
+\textbf{View Definition}: A view is a virtual table whose contents are defined by a query. Views are used to simplify complex queries, provide security, and encapsulate data. Example: CREATE VIEW HighSalaryInstructors AS SELECT name, salary FROM instructor WHERE salary > 90000; Find names of all instructors with a salary greater than 90000 using a view. \\
+\textbf{Views Defined by other views} A View relation $v_1$ can be defined using another view relation $v_2$. Depend directy: if $v_1$ uses $v_2$ in its definition. Depend indirectly: if $v_1$ uses a view $v_3$ that depends on $v_2$. \\
+\textbf{Materialized View}: Certain DBMS support materialized views, which store the result of the view query physically. This can improve performance for complex queries but requires maintenance to keep the view updated with changes in the underlying data. \\
+\textbf{View Updates}: Most SQL implimentations allow updates on simple views. \\
+\textbf{Transactions}: A transaction is a sequence of one or more SQL operations treated as a single logical unit of work. Transactions ensure data integrity and consistency in the database. Have Commits and Rollbacks. Have integitry constraints. \\
+\textbf{Check Constraint}: A check constraint is used to limit the values that can be placed in a column. It ensures that the data meets specific criteria before being inserted or updated. Example: CREATE TABLE employee (ID INT PRIMARY KEY, name VARCHAR(100), salary INT CHECK (salary > 0)); Ensures that the salary is always greater than 0. \\
+\textbf{Referential Integrity}: Ensures that foreign key values in a child table correspond to primary key values in a parent table. Prevents orphaned records and maintains consistency between related tables. \\
+\textbf{Cascading Actions}: Define actions to be taken when a referenced row is updated or deleted. Options include CASCADE, SET NULL, SET DEFAULT, and NO ACTION. Example: FOREIGN KEY (dept\_name) REFERENCES department(dept\_name) ON DELETE CASCADE; \\
+\textbf{Assertions}: An assertion is a constraint that applies to the entire database. It is used to enforce complex integrity rules that involve multiple tables. Example: CREATE ASSERTION PositiveSalary CHECK (NOT EXISTS (SELECT * FROM employee WHERE salary < 0)); Ensures that no employee has a negative salary. \\
+\textbf{Large Object Types:} SQL supports large object types such as BLOB (Binary Large Object) and CLOB (Character Large Object) for storing large amounts of binary or text data, respectively. These types are used for storing images, documents, multimedia files, etc. \\
+\textbf{User-Defined Types:} SQL allows the creation of user-defined types (UDTs) to encapsulate complex data structures. UDTs can be used to define custom data types that suit specific application needs. Example: CREATE TYPE Address AS OBJECT (street VARCHAR(100), city VARCHAR(50), zip\_code VARCHAR(10)); \\
+\textbf{Indexing}: An index is a database object that improves the speed of data retrieval operations on a table. Indexes are created on one or more columns of a table and allow for faster searching, sorting, and filtering of data. Example: CREATE INDEX idx\_dept\_name ON instructor(dept\_name); \\
+\textbf{Authorization and Security}: SQL provides mechanisms for controlling access to database objects through user roles and permissions. Common commands include GRANT and REVOKE to manage user privileges. Example: GRANT SELECT, INSERT ON instructor TO user\_name; \\
+\textbf{Role} A role is a named group of related privileges that can be granted to users or other roles. Roles simplify the management of user permissions by allowing administrators to assign a set of privileges to multiple users at once. Example: CREATE ROLE read\_only; GRANT SELECT ON instructor TO read\_only; \\
+\section{L7-8}
+\textbf{Transaction Concept:} A unit of program exceuption that accesses and possibly modifies the contents of a database. \\
+\textbf{ACID Properties:} Atomicity, Consistency, Isolation, Durability\\
+\textbf{Atomicity}: The system should ensure that updates of a partially completed transaction are not reflected in the database. Either all operations of the transaction are reflected in the database or none are. \\
+\textbf{Consistency}: A transaction should take the database from one consistent state to another consistent state. \\
+\textbf{Isolation}: The operations of a transaction should be isolated from those of other transactions. The intermediate state of a transaction should not be visible to other transactions. This can be ensured by running transactions serially. \\
+\textbf{Durability}: Once a transaction has been committed, its effects should persist in the database even in the event of a system failure. \\
+\textbf{Transaction States}: Active, Partially Committed, Committed, Failed, Aborted. \\
+\textbf{Concurrent Executions}: When multiple transactions are executed concurrently, the benefits are Increased processor and disk utilization, Reduced waiting time, Increased throughput. \\
+\textbf{Schedules}: A schedule is a sequence of instructions that specify the chronological order in which the operations of concurrent transactions are executed. \\
+\textbf{Serializability}: Each transaction is executed completely before the next transaction begins. thus this maintains the consistency of the database. \\
+\textbf{Conflicting Instructions:} Two instructions are said to be conflicting if they belong to different transactions, they access the same data item, and at least one of the instructions is a write operation. \\
+\textbf{Read-Write }: A read-write conflict occurs when one transaction reads a data item and another transaction writes to the same data item. \\
+\textbf{Write-Read }: A write-read conflict occurs when one transaction writes to a data item and another transaction reads from the same data item. \\
+\textbf{Write-Write }: A write-write conflict occurs when two transactions write to the same data item. \\
+\textbf{Conflict Serializability}: A schedule is said to be conflict serializable if it can be transformed into a serial schedule by swapping non-conflicting instructions. \\
+\textbf{Transaction} A transaction is the execution of a sequence of one or more operations on a shared database to preform some higher level function. \\
+\textbf{Precedence Graph} A directed graph that helps determine whether a schedule is conflict serializable. The graph has a node for each transaction and a directed edge from transaction Ti to Tj if an operation of Ti precedes and conflicts with an operation of Tj. If the precedence graph has no cycles, the schedule is conflict serializable. \\
+\textbf{Recoverable Schedules:} A schedule is recoverable if, for any pair of transactions Ti and Tj, if Tj reads a data item previously written by Ti, then the commit operation of Ti appears before the commit operation of Tj in the schedule. In other words, a transaction should not commit until all transactions from which it has read data have committed. \\
+\textbf{Cascading Rollbacks:} A cascading rollback is a single transaction failure which leads to the failure of other transactions. \\
+\textbf{Cascadeless Schedules:} A schedule is cascadeless if, for any pair of transactions Ti and Tj, if Tj reads a data item previously written by Ti, then the commit operation of Ti appears before the read operation of Tj in the schedule. In other words, a transaction should only read data that has been committed by other transactions. This also means that cascadeless schedules are recoverable and do not suffer from cascading rollbacks. \\
+\section{L9}
+\textbf{Concurrency Control}: Mechanism that will ensure that all possible schedules are conflict serializable. \\
+\textbf{Transactions in SQL:} BEGIN; {TRANSACTION} COMMIT: - makes all changes made in the transaction permanent. ABORT or ROLLBACK: - undoes all changes made in the transaction. AUTOCOMMIT mode: each individual SQL statement is treated as a transaction and is automatically committed right after it is executed. \\
+\textbf{Mechanisms for Isolation}: Concurrency control protocol is how the DBMS decides the proper interleaving of operations from multiple transactions. \\
+\textbf{Isolation Anomalies:} Ditry Read - A transaction reads data written by a uncommitted transaction. Unrepeatable Read - A transaction reads the same data item twice and gets different values each time because another transaction has modified the data item in between the two reads. Phantom Read - A transaction re-executes a query that retrieves a set of rows that satisfy a certain condition and finds that the set of rows has changed because another transaction has inserted or deleted rows that satisfy the condition. \\
+\textbf{Implimentation of Isolation Levels}: Lock-Based Protocols, Timestamp-Based Protocols, Validation-Based Protocols. Two major categories of concurrency control protocols are pessimistic and optimistic. \\
+\textbf{Basic Lock Types:} Shared Lock (S-Lock) - shared lock for reads, Exclusive Lock (X-Lock) - exclusive lock for writes \\
+\textbf{Executing With Locks} Transaction must request locks, Lock manager grants or blocks requests, Transaction releases locks. \\
+\textbf{2Phase Locking (2PL)}: A concurrency control protocol that ensures serializability by requiring that all locking operations precede the first unlock operation in a transaction. Sufficient to guarantee conflict serializability. Subject to cascading aborts and unrecoverable schedules. \\
+\textbf{2 Phases:} Growing Phase - A transaction may obtain locks but may not release any locks. Shrinking Phase - A transaction may release locks but may not obtain any new locks. \\
+\textbf{Lock Conversions} Growing Phase: Any acquiring of a lock must be done before any releasing of a lock, and upgrading a lock from S to X is allowed. Shrinking Phase: Downgrading a lock from X to S is allowed, but no new locks can be acquired. \\
+\textbf{Strict 2PL}: A special case of 2PL where a transaction holds all its exclusive locks until it commits or aborts. Ensures cascadeless schedules and recoverability. \\
+\textbf{Rigorous 2PL}: A special case of 2PL where a transaction holds all its locks (both shared and exclusive) until it commits or aborts. Ensures serializability, cascadeless schedules, and recoverability. \\
+\textbf{Deadlocks}: A situation where two or more transactions are waiting indefinitely for each other to release locks. \\
+\textbf{Deadlock Detection}: DBMS makes a waits-for graph to keep track of transactions waiting for locks. If a cycle is detected in the graph, a deadlock exists. \\
+\textbf{Deadlock Handling}: DBMS will select a victim transaction to abort and release its locks, allowing other transactions to proceed. The victim is typically chosen based on factors such as the amount of work done, the number of resources held, or priority levels. \\
+\textbf{Victim Selection}: DMBS chooses by age, prohress, number of tiems locked, number of transaction needed to rollback. For rollback length 2 approaces for completely rollback or minimal rollback. \\
+\textbf{DeadLock Prevention}: When a transaction requests a lock that cannot be granted immediately, the DBMS can choose to abort the transaction instead of making it wait. This approach prevents deadlocks by ensuring that transactions do not hold locks while waiting for other locks. Assign priority based on timestamps. Wait-Die: Older transaction waits for younger one, Younger transaction aborts if it requests a lock held by an older one. Wound-Wait: Older transaction aborts younger one if it requests a lock held by the older one, Younger transaction waits for older one. \\
+\section{L10}
+\textbf{Storage Hierarchy}: Registers, Cache, Main Memory, Secondary Storage, Tertiary Storage. Primary storage - Fast, volatile, expensive. Secondary storage - Slow, non-volatile, cheap, Tertiary storage - very slow, non-volatile, very cheap. \\
+\textbf{Magnetic Tapes}: Very slow, 300mb/sec. Cheap, long term storage. Sequential access. \\
+\textbf{Magnetic Disks}: Faster than tapes, Still slow, 10000-150000 IOPS. Random access. \\
+\textbf{RAID}: Redundant Array of Independent Disks. Improves performance and provides fault tolerance by distributing data across multiple disks. \\
+\textbf{SSD}: Solid State Drive. Faster than magnetic disks, 100000-500000 IOPS. More expensive per GB. No moving parts. \\
+\textbf{Main Memory}: RAM. Fast access, volatile storage. Used for temporary data storage during processing. \\
+\textbf{Cache} : Small, fast memory located close to the CPU. Stores frequently accessed data to reduce latency. \\
+\textbf{Storage Manager}: The storage manager is a component of the DBMS that is responsible for managing the storage of data on disk. It handles tasks such as data organization, indexing, and retrieval. \\
+\textbf{Database Pages}: Page is a fixed size block of data that is the basic unit of data transfer between disk and main memory. Typical page sizes are 4KB, 8KB, or 16KB. \\
+\textbf{Fixed Length Records}: Records with a fixed size. Easier to manage and access, but can lead to wasted space if records are smaller than the allocated size. \\
+\textbf{Variable Length Records}: Records with a variable size. More flexible and efficient in terms of space utilization, but can be more complex to manage and access. \\
+\textbf{Slotted Page Structure}: A page structure that uses a slot directory to manage variable-length records. The slot directory contains pointers to the actual records on the page, allowing for efficient access and management of variable-length records. \\
+\textbf{Large Objects}: BLOBs (Binary Large Objects) and CLOBs (Character Large Objects) or stoed as files in file system or files managed by the DBMS. \\
+\textbf{Organization of Pages} Heap file is an unordered collection of pages where recorded that are inserted in any order. \\
+\textbf{Linked List Heap File}: Each page contains a pointer to the next page in the file. New pages are added at the end of the list. \\
+\textbf{Page Directory Heap File}: A directory page is used to keep track of all the pages in the heap file. Each entry in the directory contains a pointer to a data page and information about the amount of free space on that page. \\
+\textbf{OLTP and OLAP}: OLTP systems are optimized for transaction processing, while OLAP systems are optimized for data analysis and reporting. OLTP systems typically use normalized database schemas to minimize data redundancy and ensure data integrity, while OLAP systems often use denormalized schemas (such as star or snowflake schemas) to improve query performance. \\
+\textbf{Row Store vs Column Store}: Row Store databases store data in rows, making them well-suited for OLTP workloads where transactions involve multiple columns of a single row. Column Store databases store data in columns, making them ideal for OLAP workloads where queries often involve aggregating data across many rows but only a few columns. \\
+\section{L11}
+\textbf{Buffer Manager}: Manage memory and move data between disk and main memory. \\
+\textbf{Buffer Pool}: Large range of memory allocted on Boot as an arry of fized size pages. \\
+\textbf{Dirty and Pinned Frames}: Dirty - modified pages in buffer pool that have not been written to disk. Pinned - pages that are currently being used by a transaction and cannot be replaced. \\
+\textbf{Buffer Replacemnt Policies}: Goals - Correctness, Accuracy, Speed, Meta-data Overhead. 
+\textbf{LRU}: Least Recently Used. Replaces the page that has not been used for the longest time. \\
+\textbf{Clock Replacement}: approximately LRU. Each page has a reference bit. When a page is accessed, its reference bit is set to 1. When a page needs to be replaced, the clock hand scans the pages. If the reference bit is 0, the page is replaced. If the reference bit is 1, it is set to 0 and the clock hand moves to the next page. \\
+\textbf{Issues with LRU/Clock}: Susceptible to sequential flooding. A large sequential scan can evict all pages from the buffer pool, leading to poor performance for other transactions. \\
+\textbf{LRU-K}: Tracks the K-th most recent access time for each page. When a page needs to be replaced, the page with the oldest K-th access time is selected for replacement. This approach helps to mitigate the effects of sequential flooding by considering multiple recent accesses rather than just the most recent one. \\
+\textbf{Most Recently Used (MRU)}: Replaces the page that was most recently used. This policy is based on the observation that in some workloads, recently used pages are less likely to be used again soon. \\
+\textbf{LFU}: Least Frequently Used. Replaces the page that has been used the least number of times. This policy is based on the idea that pages that are accessed frequently are more likely to be needed again in the future. \\
+\newpage
+\section{Practice Midterm:}
+\subsection{Buffer Pool Replacement:}
+3 Frames, Reference String: 1,2,3,1,4,2,5,1,2,3,4,2
+\begin{itemize}
+    \item LRU:
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Current & Hits & Miss & Content \\
+            \hline
+            1 & 0 & 1 & (1,-,-) \\
+            2 & 0 & 1 & (1,2,-) \\
+            3 & 0 & 1 & (1,2,3) \\
+            1 & 1 & 0 & (1,2,3) \\
+            4 & 0 & 1 & (1,4,3) \\
+            2 & 0 & 1 & (1,4,2) \\
+            5 & 0 & 1 & (5,4,2) \\
+            1 & 0 & 1 & (5,1,2) \\
+            2 & 1 & 0 & (5,1,2) \\
+            3 & 0 & 1 & (3,1,2) \\
+            4 & 0 & 1 & (3,4,2) \\
+            2 & 1 & 0 & (3,4,2) \\
+            \hline
+            total & 3 & 9 & (3,4,2) \\
+            \hline
+        \end{tabular}
+        \caption{LRU Replacement}
+    \end{table}
+    \item MRU:
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Current & Hits & Miss & Content \\
+            \hline
+            1 & 0 & 1 & (1,-,-) \\
+            2 & 0 & 1 & (1,2,-) \\
+            3 & 0 & 1 & (1,2,3) \\
+            1 & 1 & 0 & (1,2,3) \\
+            4 & 0 & 1 & (4,2,3) \\
+            2 & 1 & 0 & (4,2,3) \\
+            5 & 0 & 1 & (4,5,3) \\
+            1 & 0 & 1 & (4,1,3) \\
+            2 & 0 & 1 & (4,2,3) \\
+            3 & 1 & 0 & (4,2,3) \\
+            4 & 1 & 0 & (4,2,3) \\
+            2 & 1 & 0 & (4,2,3) \\
+            \hline
+            total & 5 & 7 & (4,2,3) \\
+            \hline
+        \end{tabular}
+        \caption{MRU Replacement}
+    \end{table}
+    \item LFU (with ties broken by LRU):
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Current & Hits & Miss & Content \\
+            \hline
+            1 & 0 & 1 & (1,-,-) \\
+            2 & 0 & 1 & (1,2,-) \\
+            3 & 0 & 1 & (1,2,3) \\
+            1 & 1 & 0 & (1,2,3) \\
+            4 & 0 & 1 & (1,4,3) \\
+            2 & 0 & 1 & (1,4,2) \\
+            5 & 0 & 1 & (1,5,2) \\
+            1 & 1 & 0 & (1,5,2) \\
+            2 & 1 & 0 & (1,5,2) \\
+            3 & 0 & 1 & (1,3,2) \\
+            4 & 0 & 1 & (1,4,2) \\
+            2 & 1 & 0 & (1,4,2) \\
+            \hline
+            total & 4 & 8 & (1,4,2) \\
+            \hline
+        \end{tabular}
+        \caption{LFU Replacement}
+    \end{table}
+    \item Clock 
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            Current & Hits & Miss & Content & Ref Bits \\
+            \hline
+            1 & 0 & 1 & (1,-,-) & (1,0,0) \\
+            2 & 0 & 1 & (1,2,-) & (1,1,0) \\
+            3 & 0 & 1 & (1,2,3) & (1,1,1) \\
+            1 & 1 & 0 & (1,2,3) & (1,1,1) \\
+            4 & 0 & 1 & (4,2,3) & (1,0,0) \\
+            2 & 1 & 0 & (4,2,3) & (1,1,0) \\
+            5 & 0 & 1 & (4,2,5) & (1,0,1) \\
+            1 & 0 & 1 & (4,1,5) & (0,1,1) \\
+            2 & 0 & 1 & (2,1,5) & (1,1,0) \\
+            3 & 0 & 1 & (2,1,3) & (1,0,1) \\
+            4 & 0 & 1 & (2,4,3) & (0,1,1) \\
+            2 & 1 & 0 & (2,4,3) & (1,1,1) \\
+            \hline
+            total & 3 & 9 & (2,4,3) & (1,1,1) \\
+            \hline
+        \end{tabular}
+        \caption{Clock Replacement}
+    \end{table}
+\end{itemize}
+
+\section{Things to Review}
+\textbf{Conflict Serialiability and Safety Properties}
+
+\end{document}
