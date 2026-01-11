@@ -1,0 +1,268 @@
+\documentclass[10pt,landscape]{article}
+\usepackage[margin=0.5cm]{geometry}
+\usepackage{multicol}
+\setlength{\columnsep}{0.45cm}
+\renewcommand{\familydefault}{\sfdefault}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+\footnotesize
+\begin{center}
+    \textbf{CS 439 Exam 2 Cheat Sheet --- Machine Learning Fundamentals}
+\end{center}
+\vspace{-2mm}
+\begin{multicols}{3}
+
+%------------------ Linear Algebra, SVD, PCA -----------------
+\section*{Linear Algebra \& SVD/PCA}
+\textbf{Vectors \& Matrices}: \\
+- Vector: $\vec{v} = (v_1, v_2, ..., v_n)$ \\
+- Matrix: $A_{m\times n}$ \\
+- Transpose: $A^\top$ \\
+- Dot product: $\vec{a}\cdot\vec{b} = \sum_i a_i b_i$ \\
+
+\textbf{Eigenvalues/Eigenvectors}: \\
+- $A\vec{x} = \lambda \vec{x}$ \\
+- Principal directions (PCA): Variance maximization. \\
+- SVD: $A = U\Sigma V^\top$ \\
+  $U, V$: orthogonal; $\Sigma$: singular values. Reduces dimensionality.
+
+\textbf{PCA Steps}:\\
+1. Standardize data. 2. Compute covariance. 3. Eigendecomposition. 4. Select top-$k$ directions.
+
+%-------------------- Probability & Bayes ---------------------
+\section*{Probability \& Bayes}
+\textbf{Basic Rules}:\\
+- $P(A \cap B) = P(A)P(B|A) = P(B)P(A|B)$ \\
+- $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ \\
+- $P(A|\text{evidence}) = \frac{P(\text{evidence}|A)P(A)}{P(\text{evidence})}$ \\
+- Independent: $P(A\cap B) = P(A)P(B)$ \\
+
+\textbf{Random Variables}: Discrete or continuous.\\
+\textbf{Expectation}: $E[X]=\sum xP(x)$ or $\int xp(x)dx$\\
+
+\textbf{Bayes’ Theorem Example}:\\
+If $P(G)=0.5$, $P(B)=0.5$, $P(C|G)=0.6$, $P(C|B)=0.1$, then\\
+$P(G|C) = \frac{P(C|G)P(G)}{P(C|G)P(G)+P(C|B)P(B)}$\\
+
+%--------------------- Naive Bayes -----------------------
+\section*{Naive Bayes Classification}
+\textbf{Assumes}: features independent conditioned on class.\\
+Classify $x$: Compute $P(C_k|x) \propto \prod_j P(x_j|C_k)P(C_k)$\\
+Pick class $k$ maximizing $P(C_k|x)$.\\
+
+\textbf{Example}: Classify email as spam/not spam:\\
+$P(\text{spam}|x) \propto P(w_1|\text{spam})...P(w_n|\text{spam})P(\text{spam})$
+
+%--------------------- Linear Regression --------------------
+\section*{Linear Regression}
+\textbf{Model}: $h_\theta(x) = \theta_0 + \theta_1 x_1 + ... + \theta_n x_n$\\
+\textbf{Loss}: $L(\theta) = \frac{1}{n}\sum (h_\theta(x^{(i)}) - y^{(i)})^2$\\
+\textbf{Normal Equation}: $\theta = (X^\top X)^{-1}X^\top y$\\
+\textbf{Assumptions}: Linearity, constant variance, independence.\\
+
+\textbf{Overfitting}: Model fits training noise.\\
+\textbf{Underfitting}: Model can't capture patterns.
+
+%------------------ Gradient Descent --------------------
+\section*{Gradient Descent}
+Iteratively minimize loss $L(\theta)$.\\
+Update: $\theta_j \leftarrow \theta_j - \alpha \frac{\partial L}{\partial \theta_j}$\\
+\textbf{Stochastic}: Uses single data point per step.\\
+\textbf{Batch}: Uses all data per step.\\
+\textbf{Convergence}: Choose $\alpha$ (step size) carefully.
+
+%------------------- Model Complexity ---------------------
+\section*{Model Complexity \& Regularization}
+\textbf{Bias}: Error from overly simplistic assumptions.\\
+\textbf{Variance}: Error from model sensitivity to fluctuations.\\
+\textbf{Tradeoff}: High bias $\to$ underfit; high variance $\to$ overfit.
+
+\textbf{Regularization}: Penalizes large $\theta$ values.\\
+- Ridge (L2): $L(\theta)+\lambda\sum_{j=1}^{n}\theta_j^2$\\
+- Lasso (L1): $L(\theta)+\lambda\sum_{j=1}^{n}|\theta_j|$\\
+
+\textbf{Choose $\lambda$ by cross-validation.}\\
+Do not regularize $\theta_0$!\\
+
+\textbf{Cross-validation}: Split training data into $k$ folds; ensures better generalization.
+
+%---------------- Logistic Regression ----------------------
+\section*{Logistic Regression}
+\textbf{Classifies}: $y\in \{0,1\}$\\
+Sigmoid activation: $g(z)=\frac{1}{1+e^{-z}}$\\
+\textbf{Hypothesis}: $h_\theta(x)=g(\theta^\top x)$\\
+\textbf{Probability Interpretation}: $h_\theta(x)=P(y=1|x,\theta)$\\
+
+\textbf{Decision boundary}: $\theta^\top x=0$\\
+\textbf{Loss}: $L(\theta) = -\frac{1}{n}\sum[y^{(i)}\log h_\theta(x^{(i)}) + (1-y^{(i)})\log(1-h_\theta(x^{(i)}))]$
+
+%------------------ Classification Metrics ------------------
+\section*{Classification Metrics}
+\textbf{Confusion Matrix}: TP, FP, TN, FN.\\
+\textbf{Precision}: $\frac{TP}{TP+FP}$\\
+\textbf{Recall}: $\frac{TP}{TP+FN}$\\
+\textbf{Accuracy}: $\frac{TP+TN}{TP+TN+FP+FN}$\\
+\textbf{F1 Score}: $2\frac{\text{Precision}\cdot\text{Recall}}{\text{Precision}+\text{Recall}}$\\
+Tune threshold for precision/recall tradeoff.
+
+%--------------- Multiclass Classification ------------------
+\section*{Multiclass Classification}
+\textbf{OvA}: Train $k$ binary classifiers for $k$ classes.\\
+Classifier $i$: $h_\theta^{(i)}(x)=P(y=i|x)$\\
+Predict: $\arg\max_i h_\theta^{(i)}(x)$\\
+
+%--------------------- K-means Clustering -------------------
+\section*{K-means Clustering}
+\textbf{Unsupervised learning}: No labels.\\
+Input: $x_1,...,x_m\in\mathbb{R}^n$, $k$ clusters.\\
+1. Randomly initialize centers $\mu_1,...,\mu_k$\\
+2. Assign each point to closest center.\\
+3. Update centers to cluster means.\\
+4. Repeat until convergence.
+
+\textbf{Objective}: Minimize $J=\sum_{i=1}^{m} ||x^{(i)}-\mu_{c^{(i)}}||^2$\\
+\textbf{K-means++}: Smarter initialization picks distant points as centers.\\
+\textbf{Elbow method}: Plot loss vs $k$; choose at "elbow".
+
+%---------------- Hierarchical Clustering -------------------
+\section*{Hierarchical Clustering}
+Agglomerative: Start with each point in its own cluster; iteratively merge closest clusters.\\
+Linkage methods:
+\begin{itemize}
+\item \textbf{Single}: Closest pair.
+\item \textbf{Complete}: Furthest pair.
+\item \textbf{Average}: Mean of all pairs.
+\end{itemize}
+Produces dendrogram showing cluster hierarchy.
+
+Cut tree at desired depth to select $k$ clusters.
+
+%---------------- Feature Engineering -------------------
+\section*{Feature Engineering}
+- \textbf{Selection}: Remove irrelevant/redundant features.
+- \textbf{Extraction}: Build new features (e.g. PCA).
+- \textbf{Scaling}: Standardize (zero mean, unit variance).
+- \textbf{Encoding}: Convert categoricals (one-hot, ordinal).
+- \textbf{Handling missing values}: Impute or drop.
+
+%---------------- Miscellaneous Tips ------------------
+\section*{Exam Tips \& Common Pitfalls}
+- Always split data into train/test sets (never look at test until the end!).
+- Use cross-validation for hyperparameter tuning.
+- Regularization cures overfitting, not underfitting.
+- Don't regularize intercept term.
+- When multiclass, use one-vs-all for logistic regression.
+- For K-means, rerun multiple times to avoid poor local minima.
+
+%-------------------- End Column 1 ---------------------
+
+
+%----------------- Advanced Topics --------------------
+\textbf{Maximum Likelihood Estimation (MLE):}\\
+Choose parameters maximizing probability of observed data:\\
+$\theta_{MLE} = \arg\max_\theta P(\mathbf{y}|\mathbf{X},\theta)$
+
+\textbf{Covariance Matrix (PCA):}
+$C = \frac{1}{n}\sum_{i=1}^{n}(x^{(i)}-\mu)(x^{(i)}-\mu)^\top$\\
+
+\textbf{Softmax for Multiclass Logistic:}\\
+$\text{softmax}(z_k) = \frac{\exp(z_k)}{\sum_{j}\exp(z_j)}$\\
+Predict class with highest probability.
+
+\textbf{Regularization in Gradient Descent:}\\
+Update: $\theta_j\gets\theta_j-\alpha\left[\frac{\partial L}{\partial\theta_j}+\lambda\cdot\theta_j\right]$\\
+Penalizes large parameter values.
+
+\textbf{Loss Functions:}\\
+- Linear regression: MSE.\\
+- Logistic regression: Cross-entropy.\\
+- K-means: Sum of squared errors.
+
+\textbf{Hyperparameters:}\\
+- Set before training ($\lambda$, learning rate, $k$, degree, epochs).
+- Use grid search, cross-validation to choose.
+
+\textbf{Overfitting symptoms:} Training error $\ll$ test error.\\
+\textbf{Underfitting:} High error everywhere.
+
+\textbf{Dimensionality Reduction:}
+Reduce features, mitigate curse of dimensionality.
+
+\textbf{Gradient Check:}
+Numerically approximate derivative to check implementation.
+
+%----------------- Important Formulas -------------------
+\section*{Quick Formula Reference}
+\textbf{Gradient:} $\nabla_\theta L(\theta)$\\
+\textbf{Sigmoid:} $g(z)=\frac{1}{1+e^{-z}}$\\
+\textbf{Softmax:} $\text{softmax}(z_k)=\frac{e^{z_k}}{\sum_j e^{z_j}}$\\
+\textbf{Covariance:} $\operatorname{Cov}(X,Y)=E[(X-E[X])(Y-E[Y])]$\\
+\textbf{Standardization:} $x_{std}^{(i)}=\frac{x^{(i)}-\mu}{\sigma}$\\
+\textbf{Loss:} $L(\theta)$\\
+
+%------------------- End Column 2 ---------------------
+
+%---------------- Worked Examples/Tips -----------------
+\section*{Worked Example: Ridge Regression}
+Minimize $L(\theta) = \frac{1}{n}\sum(x_i-4\theta)^2 + \lambda(\theta-3)^2$\\
+Solution: $\theta = \frac{4\bar{x}+3\lambda n}{16+\lambda n}$\\
+As $\lambda \to 0$: normal equation.\\
+As $\lambda \to \infty$: $\theta \to 3$.
+
+\section*{Worked Example: Logistic Regression}
+Given features $x = [1, 0.7, 0.5]$, $\theta$,\\
+$h_\theta(x)=g(\theta^\top x)$.\\
+If $h_\theta(x)=0.8$, $P(y=1|x)=0.8$
+
+\section*{Worked Example: K-means}
+Points: (0,0),(0,1),(1,0),(2,2),(3,3); $k=2$;\\
+1. Random centers.\\
+2. Assign clusters.\\
+3. Update means.\\
+4. Repeat until cluster assignments don't change.
+
+\section*{Worked Example: Hierarchical (Single Linkage)}
+Points: A(0,0), B(1,0), C(0,1), D(4,4), E(5,4)\\
+1. Compute pairwise distances.\\
+2. Merge closest points.\\
+3. Repeat until single cluster.
+4. Visualize with dendrogram.
+
+\section*{Precision-Recall Example}
+Actual positives: 10. Actual negatives: 10.\\
+Predicted TP=8, FP=3, TN=7, FN=2.\\
+Precision=$8/11 \approx 0.73$\\
+Recall=$8/10=0.8$\\
+Accuracy=$15/20=0.75$\\
+
+%------------------ Advanced Tricks ----------------------
+\section*{Clustering Tips}
+- K-means works best for spherical clusters.
+- Hierarchical: Use average linkage for balanced clusters.
+- Outliers: K-means++ avoids picking them as centers.
+
+\section*{Feature Engineering Tricks}
+- Use PCA after scaling.
+- One-hot encoding for categoricals.
+- Standardize features for regularized models.
+
+\section*{General ML Strategy}
+1. Choose model.
+2. Split train/test.
+3. Feature engineer.
+4. Hyperparameter tune (CV).
+5. Train/finalize.
+6. Evaluate only once on test.
+
+\section*{Common Pitfalls}
+- Using test data during training
+- Not scaling before regularization (L1/L2)
+- Ignoring precision vs. recall when classes imbalanced
+- Only checking accuracy (use confusion matrix, F1, etc.)
+
+\end{multicols}
+
+\end{document}

@@ -1,0 +1,54 @@
+\documentclass[answers,10pt,addpoints]{exam} 
+\usepackage{import} 
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex} 
+% Margins
+\usepackage[margin=.25in]{geometry}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\begin{document}
+\title{\course \\ \assignment}
+\maketitle
+\newpage
+\begin{center}
+    Linear Algebra
+\end{center}
+\textbf{VS Properties} 1. Close + 2. Close * 3. Associative + 4. Commutative + 5. Identity + 6. Identity * 7. Inverse +\\
+\textbf{Dot Prod} $a \cdot b = a_1b_1 + a_2b_2 + ... + a_nb_n$ Describes similarity of direction. If 0, orthogonal. $\cos(\theta) = \frac{a \cdot b}{||a|| ||b||}$ \\
+\textbf{Proj.} $\text{proj}_a b = \frac{a \cdot b}{a \cdot a} a$ This is the projection of b onto a. \\
+\textbf{Lin Indept} $c_1v_1 + c_2v_2 + ... + c_nv_n = 0$ IFF $c_i = 0,  \forall i$ \\
+\textbf{Rank} Number of lin indept rows/cols in a matrix. \\
+\textbf{Data Redundancy}: Duplicate Rows, Pairwise similarity, Hash based uniqueness, Entropy measure $H = -\sum p(x) \log_2 p(x)$ \\
+\textbf{EVal, EVec} $Av = \lambda v$ Evecs are like directions, Evals are line importance on those directions. \\
+\textbf{Dimensionality Reduction} Remove redundant features, keep important ones Ie most variance. \\
+\textbf{SVD} $X_{n \times m} = U_{n \times n} \Sigma_{n \times m} V^T_{m \times m}$ where $U$ and $V$ are orthogonal; $\Sigma$ diagonal with singular values (square roots of eigenvalues of $X^TX$). \\
+\textbf{Rank-k Approximation} Use first $k$ singular values: $X_k = \sum_{i=1}^{k} \sigma_i u_i v_i^T$ \\
+\textbf{PCA} Center data, compute covariance matrix $C = \frac{1}{n} X^TX$, compute eigendecomposition of C, project data onto top k eigenvectors. The top k eigenvectors correspond to the directions of maximum variance. \\
+\textbf{PCA,SVD connection} The eigenvectors of $X^TX$ are the right singular vectors V of X. The eigenvalues of $X^TX$ are the squares of the singular values in $\Sigma$. 
+\begin{center}
+    Probability
+\end{center}
+\textbf{Correlation} $\text{corr}(X,Y) = \frac{\text{cov}(X,Y)}{\sigma_X \sigma_Y}$ where $\text{cov}(X,Y) = E[(X - \mu_X)(Y - \mu_Y)]$ \\
+\textbf{$R^2$} $R^2 = 1 - \frac{SS_{res}}{SS_{tot}}$ essentially explained variance/total variance. \\
+\textbf{(Marginal) Independence} $P(A \cap B) = P(A)P(B)$ \\
+\textbf{Conditional Probability} $P(A|B) = \frac{P(A \cap B)}{P(B)}$ \\
+\textbf{Bayes Theorem} $P(A|B) = \frac{P(B|A)P(A)}{P(B)}$ where $P(B) = P(B|A)P(A) + P(B|\neg A)P(\neg A)$ (law of total probability) \\
+
+
+
+\begin{center}
+    Notes During Practice exam
+\end{center}
+Bias and Variance meaning\\
+Linear reg shortcut formula\\
+Logistic loss function\\
+Precision, recall, F1 score formulas\\
+Hierarchical Clustering\\
+Look into Unsupervised learning\\
+
+
+
+\end{document}

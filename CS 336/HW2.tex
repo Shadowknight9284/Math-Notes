@@ -1,0 +1,199 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+
+\title{Homework 2 Solutions \\ \large CS 336}
+\author{Pranav Tikkawar}
+\date{November 23, 2025}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 1: Linear Hashing}
+
+\textbf{Problem Statement:} \\
+Consider a hash table that operates under linear hashing. When it started, the initial hashing function was $h_0(k) = k \bmod 4$; the hash table had 4 buckets (0,1,2,3), and the split pointer was $s=0$.
+
+\subsection*{(a) Table with 6 Buckets (0-5)}
+
+\begin{enumerate}
+    \item \textbf{Where is the split pointer?}
+
+    - Start: 4 buckets (0-3), using $h_0$\\
+    - Split 0 $\rightarrow$ add bucket 4, $s=1$\\
+    - Split 1 $\rightarrow$ add bucket 5, $s=2$\\
+    The split pointer is now at bucket \textbf{2}.
+
+    \item \textbf{How many hash functions are active?}
+
+    - Buckets 0 and 1 have split using $h_1$.
+    - Buckets 2 and 3 not yet split, still using $h_0$.
+    - Buckets 4 and 5 resulted from the splits (also $h_1$).
+
+    Thus, \textbf{2 hash functions} are active.
+
+    \item \textbf{Which hash functions? Which buckets use which?}
+
+    \begin{center}
+    \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Bucket(s)} & \textbf{Hash Function} \\
+    \hline
+    2, 3 & $h_0(k) = k \bmod 4$ \\
+    0, 1, 4, 5 & $h_1(k) = k \bmod 8$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+
+    So buckets 2 and 3 use $h_0$, while 0, 1, 4, 5 use $h_1$.
+\end{enumerate}
+
+\vspace{1.5em}
+
+\subsection*{(b) Table with 32 Buckets (0-31)}
+
+\begin{enumerate}
+    \item \textbf{Where is the split pointer?}
+
+
+    - 32 buckets $=$ $2^5$\\
+    - Starting with 4 buckets: $4 \to 8 \to 16 \to 32$\\
+    - Each time a full round of splits is complete, the pointer resets to 0.\\
+    So after reaching 32, the split pointer is at \textbf{0}.
+
+    \item \textbf{How many hash functions are active?}
+
+    - After a full round of splits, all buckets use the next hash function.
+    - So, only \textbf{1 hash function} is active.
+
+    \item \textbf{Which hash function is active?}
+
+    - $32=2^5$, so $h_3(k) = k \bmod 32$
+
+    So, the active function is \textbf{$h_3(k) = k \bmod 32$}.
+\end{enumerate}
+
+\vspace{2em}
+
+\section*{Problem 2: LRU Buffer Pool Management}
+
+\textbf{Problem Statement:} \\
+A buffer pool holds 4 pages at a time. When a new page is requested and the pool is full, the Least Recently Used (LRU) policy evicts the page that hasn't been used for the longest time. Record changes after each operation.
+
+\subsection*{Initial Buffer State}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Frame} & \textbf{Page ID} & \textbf{Last Used} \\
+\hline
+1 & 12 & 2 \\
+2 & 5 & 4 \\
+3 & 7 & 3 \\
+4 & 3 & 1 \\
+\hline
+\end{tabular}
+\end{center}
+Start at time $=5$ (most recent access was at 4).
+
+\vspace{1em}
+
+\subsection*{Step-by-Step Operations}
+
+\begin{enumerate}
+    \item \textbf{Access Page 6 (time = 5)}
+    \begin{itemize}
+        \item Page 6 not in buffer.
+        \item LRU: Page 3 (Last Used = 1, Frame 4).
+        \item Evict Page 3, bring in 6 (Last Used = 5).
+    \end{itemize}
+
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Frame & Page ID & Last Used \\
+    \hline
+    1 & 12 & 2 \\
+    2 & 5 & 4 \\
+    3 & 7 & 3 \\
+    4 & 6 & 5 \\
+    \hline
+    \end{tabular}
+
+    \item \textbf{Access Page 3 (time = 6)}
+    \begin{itemize}
+        \item Page 3 not in buffer.
+        \item LRU: Page 12 (Last Used = 2, Frame 1).
+        \item Evict Page 12, bring in 3 (Last Used = 6).
+    \end{itemize}
+
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Frame & Page ID & Last Used \\
+    \hline
+    1 & 3 & 6 \\
+    2 & 5 & 4 \\
+    3 & 7 & 3 \\
+    4 & 6 & 5 \\
+    \hline
+    \end{tabular}
+
+    \item \textbf{Access Page 5 (time = 7)}
+    \begin{itemize}
+        \item Page 5 is in buffer (Frame 2).
+        \item Just update Last Used to 7.
+    \end{itemize}
+
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Frame & Page ID & Last Used \\
+    \hline
+    1 & 3 & 6 \\
+    2 & 5 & 7 \\
+    3 & 7 & 3 \\
+    4 & 6 & 5 \\
+    \hline
+    \end{tabular}
+
+    \item \textbf{Access Page 8 (time = 8)}
+    \begin{itemize}
+        \item Page 8 not in buffer.
+        \item LRU: Page 7 (Last Used = 3, Frame 3).
+        \item Evict Page 7, bring in 8 (Last Used = 8).
+    \end{itemize}
+
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Frame & Page ID & Last Used \\
+    \hline
+    1 & 3 & 6 \\
+    2 & 5 & 7 \\
+    3 & 8 & 8 \\
+    4 & 6 & 5 \\
+    \hline
+    \end{tabular}
+
+    \item \textbf{Access Page 5 (time = 9)}
+    \begin{itemize}
+        \item Page 5 is in buffer (Frame 2).
+        \item Just update Last Used to 9.
+    \end{itemize}
+
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Frame & Page ID & Last Used \\
+    \hline
+    1 & 3 & 6 \\
+    2 & 5 & 9 \\
+    3 & 8 & 8 \\
+    4 & 6 & 5 \\
+    \hline
+    \end{tabular}
+\end{enumerate}
+
+\end{document}

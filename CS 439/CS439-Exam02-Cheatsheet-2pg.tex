@@ -1,0 +1,204 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+
+% Margins (match original cheatsheet)
+\geometry{top=0.5cm,left=0.5cm,right=0.5cm,bottom=0.5cm}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space (match original)
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\begin{document}
+\raggedright
+\scriptsize
+\begin{multicols}{3}
+
+% multicol parameters (match original)
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{CS 439 Exam 02 Cheat Sheet}} \\
+\end{center}
+
+%--------------------------------------------
+\section{Linear Algebra \& SVD/PCA}
+\subsection{Vectors \& Spaces}
+$\mathbf{v} \cdot \mathbf{w} = \sum v_iw_i$\quad $\|\mathbf{v}\| = \sqrt{\sum v_i^2}$
+Linear independence: No vector is a linear combo of others.
+\subsection{Eigenvalues}
+$A\mathbf{v}=\lambda\mathbf{v}$\quad $\lambda$ is eigenvalue, $\mathbf{v}$ eigenvector.\newline
+\subsection{SVD}
+$X = U\Sigma V^T$, $\Sigma$ = diag(singular values). Rank-$k$\,: $X_k=\sum_i^k\sigma_iu_iv_i^T$
+\subsection{PCA}
+Project data onto eigenvectors of covariance matrix. Sort by eigenvalues, pick top-$k$.
+
+%--------------------------------------------
+\section{Probability \& Bayes}
+\subsection{Conditional Probability}
+$P(A|B) = \frac{P(A,B)}{P(B)}$
+Independence: $P(A,B) = P(A)P(B)$
+\subsection{Bayes Theorem}
+$P(A|B)=\frac{P(B|A)P(A)}{P(B)}$; $P(B)$ by law of total probability.
+\subsection{Marginal}
+$P(A)=\sum_i P(A,B_i)$
+
+%--------------------------------------------
+\section{Naive Bayes Classification}
+\subsection{Assumptions}
+Features $X_1,...,X_n$ conditionally independent given $Y$.
+\subsection{Classification Rule}
+$\hat{y}=\arg\max_y~P(Y)\prod_i P(X_i|Y)$
+\subsection{Steps}
+Get prior, likelihood, multiply-score, pick largest.\newline
+\textit{Laplace smoothing:} $+1$ to all counts for zero probabilities.
+
+%--------------------------------------------
+\section{Linear Regression}
+\subsection{Hypothesis}
+$h_\theta(\mathbf{x})=\theta_0+\theta_1x_1+...+\theta_nx_n=\theta^T\mathbf{x}$
+\subsection{MSE}
+$\frac{1}{n}\sum (h_\theta(\mathbf{x})-y)^2$\quad Normal Equation: $\theta=(X^TX)^{-1}X^Ty$
+\subsection{Losses}
+L2: Squared error, L1: Absolute error, Huber (mix).
+\subsection{Gradient}
+$\theta_j\gets\theta_j-\alpha(\partial L/\partial \theta_j)$
+
+%--------------------------------------------
+\section{Model Complexity \& Regularization}
+\subsection{Bias vs. Variance}
+Bias (underfit): High train/test error. Variance (overfit): Low train, high test error.
+\subsection{Regularization}
+Loss: $\mathrm{MSE}+\lambda\sum_j\theta_j^2$ (L2, Ridge). Large $\lambda$ = more shrinkage.
+L1 (Lasso): $\lambda\sum_j|\theta_j|$, can zero coefficients.
+\subsection{Choosing $\lambda$}
+Use cross-validation (K-fold, hold out sets).
+Never penalize intercept $\theta_0.$
+
+%--------------------------------------------
+\section{Logistic Regression}
+\subsection{Sigmoid}
+$g(z)=\frac{1}{1+e^{-z}}$
+Binary output as probability of class 1.
+\subsection{Hypothesis}
+$h_\theta(x)=g(\theta^Tx)$; $P(y=1|x,\theta)$
+\subsection{Boundary}
+$h_\theta(x)\geq 0.5\iff\theta^Tx\geq 0$.\newline Boundary: $\theta_0 + \theta_1x_1 + ... + \theta_nx_n = 0$.
+\subsection{Loss}
+Cross-entropy (binary): $L=-y\log(h)-(1-y)\log(1-h)$
+For all data: $-\frac{1}{n}\sum_i[y^{(i)}\log(h(x^{(i)}))+(1-y^{(i)})\log(1-h(x^{(i)}))]$
+\subsection{Gradient Desc.}
+$\theta_j\gets\theta_j-\alpha\frac{1}{n}\sum(h_\theta(x)-y)x_j$
+
+%--------------------------------------------
+\section{Multiclass Classification}
+\subsection{OvA}
+One-vs-All: Train $k$ binary classifiers, $h_\theta^{(i)}(x)$. Predict class with highest $h_\theta^{(i)}(x)$.
+\subsection{Softmax}
+$P(y=k|x)=\frac{e^{\theta_k^Tx}}{\sum_{j=1}^K e^{\theta_j^Tx}}$
+\subsection{MLE}
+Maximize likelihood over all classes.
+
+%--------------------------------------------
+\section{Evaluation Metrics}
+\subsection{Confusion Matrix}
+TP = True Pos, FP = False Pos, TN = True Neg, FN = False Neg.
+\subsection{Metrics}
+Precision: $\frac{TP}{TP + FP}$
+Recall: $\frac{TP}{TP + FN}$\newline
+Accuracy: $\frac{TP + TN}{TP+TN+FP+FN}$
+F1: $2\frac{Precision\cdot Recall}{Precision+Recall}$
+Specificity: $\frac{TN}{TN+FP}$
+\subsection{Tradeoff}
+High precision $\rightarrow$ less false positives.
+High recall $\rightarrow$ less false negatives.
+
+%--------------------------------------------
+\section{K-means Clustering}
+\subsection{Algorithm}
+Initialize $k$ centers. Assign: $c^{(i)}=\arg\min_j||x^{(i)}-\mu_j||$. Update $\mu_j=\frac{1}{|C_j|}\sum_{i\in C_j}x^{(i)}$. Repeat until stable.
+\subsection{Loss}
+$J=\sum_i||x^{(i)}-\mu_{c(i)}||^2$ (distance to center). Loss always decreases or stays same.
+\subsection{Choosing k}
+Elbow method: plot loss vs $k$, look for sharp bend.
+\subsection{K-means++}
+Pick first center randomly, next picks weighted by distance squared.
+\subsection{Complexity}
+$O(Imnk)$ where $I$=iterations, $m$=points, $n$=features, $k$=clusters.
+
+%--------------------------------------------
+\section{Hierarchical Clustering}
+\subsection{Agglom/Divisive}
+Agglomerative: Start with $m$ clusters, merge closest pairs. Divisive: Start with 1, split.
+\subsection{Linkage}
+Single: min distance; Complete: max; Average: mean of all pairs.
+\subsection{Dendrogram}
+Tree shows merge history. Cut at height for $k$ clusters.
+\subsection{Complexity}
+$O(m^3)$ naive, $O(m^2\log m)$ with priority queue.
+
+%--------------------------------------------
+\section{Feature Engineering}
+Select relevant features (filter, wrapper, embedded). Extract: polynomial, interactions, domain ideas. Normalize: $z=\frac{x-\mu}{\sigma}$. One-hot encoding for categoricals.
+
+%--------------------------------------------
+\section{Advanced Topics}
+\subsection{Cross-Validation}
+K-fold: Rotate which subset is validation.\newline
+\subsection{Over/Underfitting}
+High variance (overfit): fits noise; fix with regularization, more data, simpler model. High bias (underfit): misses pattern; fix by adding features, more complex model.
+\subsection{Gradient Tricks}
+Batch: all data. Stochastic: one at a time. Minibatch: subset.
+\subsection{Parametric vs Non-Parametric}
+Parametric: fixed parameters; Non-parametric: grow with data.
+\subsection{PCA}
+Standardize $X$, covariance $C=\frac{1}{n}X^TX$, decompose, project onto top eigenvectors.
+\subsection{MLE}
+Choose parameters maximizing probability of observed data.
+
+%--------------------------------------------
+\section{Common Mistakes}
+Don't penalize intercept in regularization. Check train/test errors for over/underfitting. Never use test set for training or tuning.
+
+%--------------------------------------------
+\section{Quick Reference}
+Bayes: $P(A|B)=\frac{P(B|A)P(A)}{P(B)}$
+Linear: $h=\theta^Tx$, $\mathrm{MSE}=\frac{1}{n}\sum(h-y)^2$
+Gradient: $\theta\gets\theta-\alpha\nabla L$
+Regularized: $\mathrm{MSE}+\lambda\sum\theta^2$
+Sigmoid: $g(z)=\frac{1}{1+e^{-z}}$
+Logistic: $h=g(\theta^Tx)$, Loss $=-y\log(h)-(1-y)\log(1-h)$
+Precision: $\frac{TP}{TP+FP}$, Recall: $\frac{TP}{TP+FN}$
+K-means: $J=\sum||x-\mu_c||^2$
+
+\end{multicols}
+\end{document}

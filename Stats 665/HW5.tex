@@ -1,0 +1,406 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Time Series Analysis}
+\newcommand{\assignment}{Homework 5}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{exercise}[24]
+  Use the W\"olfer sunspot number introduced in Problem~21.
+  \begin{enumerate}
+  \item Calculate the sample autocovariances up to lag 3. Also plot
+    the sample ACF using the {\tt R} function {\tt acf()}.
+    \begin{solution}
+        The sample autocovariances up to lag 3 are as follows:
+        \begin{align*}
+            \hat \gamma(0) & = 1552.81307 \\
+            \hat \gamma(1) & = 1264.19939 \\
+            \hat \gamma(2) & = 693.89068 \\
+            \hat \gamma(3) & = 66.49035
+        \end{align*}
+        The sample ACF plot up to 30 lags is shown below:
+        \begin{center}
+            \includegraphics[width=0.5\textwidth]{img/A5Q24.png}
+        \end{center}
+    \end{solution}
+  \item Calculate the Yule-Walker estimators of
+    $\phi_1,\phi_2,\sigma^2$ in the AR(2) model
+    \begin{equation*}
+      Y_t=\phi_1Y_{t-1}+\phi_2Y_{t-2}+Z_t,\quad \{Z_t\}\sim \hbox{IID}(0,\sigma^2),
+    \end{equation*}
+    for the mean corrected series $Y_t=X_t-49.13$.
+    \begin{solution}
+        To calculate the Yule-Walker estimators for the AR(2) model, we use the sample autocovariances calculated in part (a). The Yule-Walker equations for an AR(2) model are given by:
+        \begin{align*}
+            \hat \gamma(1) & = \phi_1 \hat \gamma(0) + \phi_2 \hat \gamma(1) \\
+            \hat \gamma(2) & = \phi_1 \hat \gamma(1) + \phi_2 \hat \gamma(0)
+        \end{align*}
+        Plugging in the values from part (a):
+        \begin{align*}
+            \phi_1 = 1.33556, \quad \phi_2 = -0.64047
+        \end{align*}
+        The estimator for $\sigma^2$ is given by:
+        \begin{align*}
+            \hat \sigma^2 & = \hat \gamma(0) - \phi_1 \hat \gamma(1) - \phi_2 \hat \gamma(2) \\
+            & = 1552.81307 - 1.33556 \times 1264.19939 - (-0.64047) \times 693.89068 \\
+            & = 308.81509
+        \end{align*}
+        Thus, the Yule-Walker estimators are:
+        \begin{align*}
+            \hat \phi_1 & = 1.33556 \\
+            \hat \phi_2 & = -0.64047 \\
+            \hat \sigma^2 & = 308.81509
+        \end{align*}
+    \end{solution}
+  \item Calculate the sample PACF up to lag 3. Also plot the sample PACF using the {\tt R} function {\tt pacf()}.
+    \begin{solution}
+        The way to calculate the sample PACF up to lag 3 is as follows:
+        PACF at lag 1:
+        \begin{align*}
+            \hat \phi_{1,1} & = \frac{\hat \gamma(1)}{\hat \gamma(0)} = \frac{1264.19939}{1552.81307} = 0.8141
+        \end{align*}
+        PACF at lag 2:
+        \begin{align*}
+          \Gamma_2 & = \begin{pmatrix}
+            \hat \gamma(0) & \hat \gamma(1) \\
+            \hat \gamma(1) & \hat \gamma(0)
+          \end{pmatrix} = \begin{pmatrix}
+            1552.81307 & 1264.19939 \\
+            1264.19939 & 1552.81307
+          \end{pmatrix} \\
+          \gamma_2 & = \begin{pmatrix}
+            \hat \gamma(1) \\
+            \hat \gamma(2)
+          \end{pmatrix} = \begin{pmatrix}
+            1264.19939 \\
+            693.89068
+          \end{pmatrix} \\
+          & \begin{bmatrix}
+            \hat \phi_{2,1} \\
+            \hat \phi_{2,2}
+          \end{bmatrix} = \Gamma_2^{-1} \gamma_2 \\
+          & \hat \phi_{2,1} = 1.33556, \hat \phi_{2,2} = -0.6405
+        \end{align*}
+        PACF at lag 3: (ommitting detailed calculations for brevity)
+        \begin{align*}
+          \hat \phi_{3,1} &= 1.2307\\
+          \hat \phi_{3,2} &= -0.4217784 
+          \hat \phi_{3,3} &= -0.1637426
+        \end{align*}
+        Thus the sample PACF values up to lag 3 are:
+        \begin{align*}
+            \hat \phi_{1,1} & = 0.8141 \\
+            \hat \phi_{2,2} & = -0.6405 \\
+            \hat \phi_{3,3} & = -0.1637
+        \end{align*}
+        The sample PACF plot up to 30 lags is shown below:
+        \begin{center}
+            \includegraphics[width=0.5\textwidth]{img/A5Q24c.png}
+        \end{center}
+    \end{solution}
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[25]
+  Let $\gamma(\cdot)$ be an autocovariance function such that the
+  autocovariance matrix $\Gamma_k$ is non-singular for every
+  $k\geq 1$. Define
+  ${\phi}_k=(\phi_{k1},\phi_{k2},\ldots,\phi_{kk})':=\Gamma_k^{-1}{\gamma}_k$.
+  \begin{enumerate}
+  \item Show that
+    $\phi_k(z):=1-\phi_{k1}z-\phi_{k2}z^2-\cdots-\phi_{kk}z^k\neq 0$
+    for $|z|\leq 1$.
+    \begin{solution}
+      These coefficients \(\phi_{kj}\) are given by the Yule-Walker equations for the best linear predictor of \(X_t\) based on its past \(k\) values.
+
+      Note that \(\Gamma_k\) is positive definite since it is non-singular and symmetric.
+
+      Let us consider the Durbin–Levinson algorithm, which provides a recursive method to compute the coefficients \(\phi_{kj}\). Let \(\kappa_k = \phi_{kk}\):
+
+      \begin{align*}
+      \phi_{j+1,i} &= \phi_{j,i} - \kappa_{j+1} \phi_{j,j+1-i}, \quad i = 1, 2, \ldots, j \\
+      \phi_{j+1,j+1} &= \kappa_{j+1}
+      \end{align*}
+
+      Note that, when \(\Gamma_k\) is positive definite, \(\kappa_k\) satisfies \(|\kappa_k| < 1\) for all \(k\), since \(\sigma_k^2 = \sigma_{k-1}^2(1 - \kappa_k^2)\) and \(\sigma_k^2 > 0\).
+
+      Let \(A_j(z) = 1 - \sum_{i=1}^{j} \phi_{ji} z^i\) and the reversed polynomial \(A_j^*(z) = z^j A_j(1/z) = z^j - \sum_{i=1}^{j} \phi_{ji} z^{j-i}\).
+
+      Using the Durbin–Levinson recursions, we can derive the relation:
+      \begin{align*}
+      A_{j+1}(z) = A_j(z) - \kappa_{j+1} z A_j^*(z)
+      \end{align*}
+
+      \textbf{Lemma.} If all zeros of $A_j(z)$ lie outside the unit circle, then
+      \[
+      |A_j(z)| \ge |A_j^*(z)| \quad \text{for } |z| \le 1,
+      \]
+      with strict inequality for $|z|<1$.
+
+      \textbf{Proof of Lemma.}
+      Let the zeros of $A_j(z)$ be $z_1,\dots,z_j$ with $|z_i|>1$ for all $i$.
+      Then
+      \[
+      A_j(z) = \prod_{i=1}^j \bigl(1 - z/z_i\bigr), \qquad
+      A_j^*(z) = z^j A_j(1/z) = \prod_{i=1}^j (z - 1/z_i).
+      \]
+      Hence
+      \[
+      \frac{|A_j(z)|}{|A_j^*(z)|}
+      = \prod_{i=1}^j \frac{|1 - z/z_i|}{|z - 1/z_i|}
+      = \prod_{i=1}^j \frac{|z_i - z|}{|z_i z - 1|}.
+      \]
+
+      Fix $i$ and set $w = z_i$. For each factor we have
+      \[
+      |w - z|^2 - |w z - 1|^2
+      = (|w|^2 - 1)(1 - |z|^2).
+      \]
+      This identity is obtained by expanding both sides:
+      \begin{align*}
+      |w - z|^2 &= |w|^2 - w\bar z - \bar w z + |z|^2,\\
+      |w z - 1|^2 &= |w|^2 |z|^2 - w z - \bar w \bar z + 1,
+      \end{align*}
+      and subtracting.
+      Since $|w|>1$ and $|z|\le1$, we have $(|w|^2-1)\ge0$ and $(1 - |z|^2)\ge0$, so
+      \[
+      |w - z|^2 \ge |w z - 1|^2 \quad\Rightarrow\quad |w - z| \ge |w z - 1|.
+      \]
+      If $|z|<1$, then $(|w|^2-1)(1 - |z|^2)>0$, so the inequality is strict:
+      $|w - z| > |w z - 1|$.
+
+      Applying this to each $w = z_i$ gives, for $|z|\le1$,
+      \[
+      \frac{|A_j(z)|}{|A_j^*(z)|}
+      = \prod_{i=1}^j \frac{|z_i - z|}{|z_i z - 1|}
+      \ge 1,
+      \]
+      and for $|z|<1$ each factor is $>1$, so the product is $>1$.
+      Thus $|A_j(z)| \ge |A_j^*(z)|$ for $|z|\le1$, with strict inequality when $|z|<1$. 
+
+
+
+      Now we can induct on the degree \(j\) to show that \(A_j(z) \neq 0\) for \(|z| \leq 1\).
+
+      \textbf{Base Case}(\(j=1\)): \(A_1(z) = 1 - \phi_{11} z\). Since \(|\phi_{11}| < 1\), the zero of \(A_1(z)\) is at \(z = 1/\phi_{11}\) with \(|1/\phi_{11}| > 1\). Thus \(A_1(z) \neq 0\) for \(|z| \leq 1\).
+
+      \textbf{Inductive step:} Assume \(A_j(z) \neq 0\) for \(|z| \leq 1\). By the Key Lemma, \(|A_j(z)| \geq |A_j^*(z)|\) for \(|z| \leq 1\).
+
+      For \(A_{j+1}(z) = A_j(z) - \kappa_{j+1} z A_j^*(z)\), we compute:
+      \begin{align*}
+      |A_{j+1}(z)| &= |A_j(z) - \kappa_{j+1} z A_j^*(z)| \\
+      &\geq |A_j(z)| - |\kappa_{j+1}||z||A_j^*(z)|.
+      \end{align*}
+
+      For \(|z| = 1\): Since \(|A_j(z)| = |A_j^*(z)|\) and \(|\kappa_{j+1}| < 1\),
+      \begin{align*}
+      |A_{j+1}(z)| \geq |A_j(z)|(1 - |\kappa_{j+1}|) > 0.
+      \end{align*}
+
+      For \(|z| < 1\): Since \(|A_j(z)| > |A_j^*(z)|\) and \(|z| < 1\),
+      \begin{align*}
+      |A_{j+1}(z)| \geq |A_j(z)| - |\kappa_{j+1}||z||A_j^*(z)| > |A_j(z)| - |A_j^*(z)| \geq 0.
+      \end{align*}
+
+      More rigorously: \(|A_{j+1}(z)| > 0\) follows because if \(|A_{j+1}(z_0)| = 0\) for some \(|z_0| < 1\), then
+      \begin{align*}
+      |A_j(z_0)| = |\kappa_{j+1} z_0 A_j^*(z_0)|,
+      \end{align*}
+      which contradicts \(|A_j(z_0)| > |A_j^*(z_0)|\) and \(|\kappa_{j+1}||z_0| < 1\).
+
+      Thus \(A_{j+1}(z) \neq 0\) for \(|z| \leq 1\).
+
+      By induction, \(A_k(z) \neq 0\) for \(|z| \leq 1\), which implies that \(\phi_k(z) \neq 0\) for \(|z| \leq 1\).
+
+    \end{solution}
+  \item Conclude that if $\hat\gamma(0)>0$, then the AR($p$) model
+    given by Yule-Walker estimators must be causal.
+    \begin{solution}
+        Note that an AR($p$) model is causal if the roots of the characteristic polynomial lie outside the unit circle. 
+
+        Consider the Yule-Walker Estimatiors for the AR($p$) model:
+        \begin{align*}
+            \hat \phi_p = \hat \Gamma_p^{-1} \hat \gamma_p
+        \end{align*}
+        where \(\hat \Gamma_p\) is the sample autocovariance matrix and \(\hat \gamma_p\) is the vector of sample autocovariances.
+        $\hat \Gamma_p$ is non-negative definite by construction
+        If \(\hat \gamma(0) > 0\), then $\hat \Gamma_p$ is strictly positive definite since the variance is positive and data is not constant.\\
+
+        Since $\hat \gamma(0) > 0$, by part (a), the polynomial
+        \begin{align*}
+            \hat \phi_p(z) = 1 - \hat \phi_{p1} z - \hat \phi_{p2} z^2 - \cdots - \hat \phi_{pp} z^p
+        \end{align*}
+        has no zeros inside or on the unit circle. Therefore, all roots of the characteristic polynomial lie outside the unit circle, which implies that the AR($p$) model is causal.
+    \end{solution}
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[26]
+  For an causal AR($p$) process, show that
+  $\det \Gamma_m = (\det \Gamma_p)\sigma^{2(m-p)}$ for all
+  $m>p$. Conclude that the $(m,m)$-th entry of $\Gamma_m^{-1}$ is
+  $\sigma^{-2}$.
+  \begin{solution}
+    Let $\{X_t\}$ be a causal AR($p$) process defined by:
+    \begin{align*}
+        X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + \cdots + \phi_p X_{t-p} + Z_t,
+        \qquad \{Z_t\} \sim \text{IID}(0,\sigma^2).
+    \end{align*}
+    Let $\Gamma_m$ be the $m\times m$ autocovariance matrix with
+    $(i,j)$-entry $\gamma(i-j)$. We want to show
+    $\det(\Gamma_m) = (\det \Gamma_p)\sigma^{2(m-p)}$ for all $m>p$,
+    and that $(\Gamma_m^{-1})_{mm} = \sigma^{-2}$.
+
+    \medskip
+    \noindent\textbf{Step 1: One-step prediction error and Schur complement.}
+
+    For $n\ge1$, let $\hat X_n^{\,n+1}$ be the best linear predictor of $X_{n+1}$
+    based on $(X_1,\ldots,X_n)$ and define the one-step prediction error variance
+    \begin{align*}
+        P_n^{\,n+1} := \mathbb{E}\bigl[(X_{n+1} - \hat X_n^{\,n+1})^2\bigr].
+    \end{align*}
+    Let
+    \begin{align*}
+        \Gamma_n &=
+        \begin{pmatrix}
+            \gamma(0)   & \gamma(1)   & \cdots & \gamma(n-1)\\
+            \gamma(1)   & \gamma(0)   & \cdots & \gamma(n-2)\\
+            \vdots      & \vdots      &        & \vdots\\
+            \gamma(n-1) & \gamma(n-2) & \cdots & \gamma(0)
+        \end{pmatrix}, &
+        \gamma_n &=
+        \begin{pmatrix}
+            \gamma(1)\\ \vdots\\ \gamma(n)
+        \end{pmatrix}.
+    \end{align*}
+    The Yule--Walker equations for the optimal linear predictor give
+    $\Gamma_n \phi_n = \gamma_n$, and the orthogonality principle yields
+    \begin{align*}
+        P_n^{\,n+1}
+        = \gamma(0) - \gamma_n' \Gamma_n^{-1}\gamma_n.
+    \end{align*}
+
+    Now write $\Gamma_{n+1}$ in block form:
+    \begin{align*}
+        \Gamma_{n+1}
+        = \begin{pmatrix}
+            \Gamma_n & \gamma_n\\
+            \gamma_n' & \gamma(0)
+          \end{pmatrix}.
+    \end{align*}
+    The Schur complement of $\Gamma_n$ in $\Gamma_{n+1}$ is
+    \begin{align*}
+        S_{n+1}
+        = \gamma(0) - \gamma_n' \Gamma_n^{-1} \gamma_n
+        = P_n^{\,n+1}.
+    \end{align*}
+    Hence, by the block determinant formula,
+    \begin{align*}
+        \det(\Gamma_{n+1})
+        = \det(\Gamma_n)\,\det(S_{n+1})
+        = \det(\Gamma_n)\,P_n^{\,n+1}.
+    \end{align*}
+
+    \medskip
+    \noindent\textbf{Step 2: For a causal AR($p$), $P_n^{\,n+1} = \sigma^2$ for $n\ge p$.}
+
+    Since $\{X_t\}$ is a causal AR($p$) process,
+    \begin{align*}
+        X_{t} = \phi_1 X_{t-1} + \cdots + \phi_p X_{t-p} + Z_t.
+    \end{align*}
+    For any $n\ge p$, the best linear predictor of $X_{n+1}$ based on
+    $(X_1,\ldots,X_n)$ is exactly
+    \begin{align*}
+        \hat X_n^{\,n+1}
+        = \phi_1 X_n + \phi_2 X_{n-1} + \cdots + \phi_p X_{n+1-p},
+    \end{align*}
+    since these $p$ past values appear in the defining equation and are all observed.
+
+    The prediction error is therefore
+    \begin{align*}
+        X_{n+1} - \hat X_n^{\,n+1}
+        &= \bigl(\phi_1 X_n + \cdots + \phi_p X_{n+1-p} + Z_{n+1}\bigr)
+           - \bigl(\phi_1 X_n + \cdots + \phi_p X_{n+1-p}\bigr)\\
+        &= Z_{n+1}.
+    \end{align*}
+    Hence
+    \begin{align*}
+        P_n^{\,n+1}
+        = \mathbb{E}[Z_{n+1}^2]
+        = \sigma^2,
+        \qquad \text{for all } n\ge p.
+    \end{align*}
+
+    \medskip
+    \noindent\textbf{Step 3: Determinant formula.}
+
+    Apply the recursion
+    $\det(\Gamma_{n+1}) = \det(\Gamma_n) P_n^{\,n+1}$
+    from $n=p$ up to $n=m-1$:
+    \begin{align*}
+        \det(\Gamma_{p+1}) &= \det(\Gamma_p)\,P_p^{\,p+1},\\
+        \det(\Gamma_{p+2}) &= \det(\Gamma_{p+1})\,P_{p+1}^{\,p+2},\\
+                           &\ \ \vdots\\
+        \det(\Gamma_m)     &= \det(\Gamma_{m-1})\,P_{m-1}^{\,m}.
+    \end{align*}
+    Multiplying these equalities gives
+    \begin{align*}
+        \det(\Gamma_m)
+        &= \det(\Gamma_p)\,\prod_{n=p}^{m-1} P_n^{\,n+1}.
+    \end{align*}
+    Since $P_n^{\,n+1} = \sigma^2$ for all $n\ge p$, we obtain
+    \begin{align*}
+        \det(\Gamma_m)
+        &= \det(\Gamma_p)\,\prod_{n=p}^{m-1} \sigma^2
+         = \det(\Gamma_p)\,\sigma^{2(m-p)}.
+    \end{align*}
+
+    \medskip
+    \noindent\textbf{Step 4: The $(m,m)$-th entry of $\Gamma_m^{-1}$.}
+
+    Finally, write $\Gamma_m$ in the $2\times2$ block form
+    \begin{align*}
+        \Gamma_m
+        = \begin{pmatrix}
+            \Gamma_{m-1} & \gamma_{m-1}\\
+            \gamma_{m-1}' & \gamma(0)
+          \end{pmatrix},
+    \end{align*}
+    where $\gamma_{m-1} = (\gamma(1),\ldots,\gamma(m-1))'$.
+    The Schur complement of $\Gamma_{m-1}$ is
+    \begin{align*}
+        S_m
+        = \gamma(0) - \gamma_{m-1}'\Gamma_{m-1}^{-1}\gamma_{m-1}
+        = P_{m-1}^{\,m}.
+    \end{align*}
+    The block inverse formula yields
+    \begin{align*}
+        \Gamma_m^{-1}
+        = \begin{pmatrix}
+            * & *\\
+            * & S_m^{-1}
+          \end{pmatrix},
+    \end{align*}
+    so the $(m,m)$-th entry of $\Gamma_m^{-1}$ is $S_m^{-1}$:
+    \begin{align*}
+        (\Gamma_m^{-1})_{mm} = S_m^{-1} = \frac{1}{P_{m-1}^{\,m}}.
+    \end{align*}
+    For $m>p$ we have $m-1\ge p$ and hence $P_{m-1}^{\,m}=\sigma^2$, so
+    \begin{align*}
+        (\Gamma_m^{-1})_{mm} = \frac{1}{\sigma^2} = \sigma^{-2}.
+    \end{align*}
+    This proves both claims.
+\end{solution}
+
+\end{exercise}
+
+
+\end{document}

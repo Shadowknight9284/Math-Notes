@@ -1,0 +1,340 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{16:960:665 - Time Series Analysis}
+\newcommand{\assignment}{Homework 4}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\begin{exercise}[18]
+  Show that if $\phi(\cdot)$ and $\theta(\cdot)$ have no common zeros,
+  and if $\phi(z)=0$ for some $|z|=1$, then the ARMA equations
+  \begin{equation*}
+    \phi(B)X_t=\theta(B)Z_t,\quad\{Z_t\}\sim\hbox{WN}(0,\sigma^2)
+  \end{equation*}
+  have no stationary solution. [Hint. Assume there is one, then use
+  the relationship between the spectral distributions of $\{X_t\}$ and
+  $\{Z_t\}$ to derive a contradiction. Also think how you would do it
+  without using spectral distributions.]
+  \begin{solution}
+    Note that the spectral density of $\{Z_t\}$ is given by
+    \begin{align*}
+        f_Z(\lambda)&=\frac{\sigma^2}{2\pi},\quad -\pi\leq\lambda\leq\pi.
+    \end{align*}
+    If we assume that there exists a stationary solution $\{X_t\}$ to the ARMA equations, then the spectral density of $\{X_t\}$ is given by
+    \begin{align*}
+        f_X(\lambda)&=\left|\frac{\theta(e^{-i\lambda})}{\phi(e^{-i\lambda})}\right|^2f_Z(\lambda)\\
+        &=\frac{\sigma^2}{2\pi}\left|\frac{\theta(e^{-i\lambda})}{\phi(e^{-i\lambda})}\right|^2,\quad -\pi\leq\lambda\leq\pi.
+    \end{align*}
+    However, since $\phi(z)=0$ for some $|z|=1$, we have that $\phi(e^{-i\lambda_0})=0$ for some $\lambda_0\in[-\pi,\pi]$. Now if we consider the autocovariance function of $\{X_t\}$, we have
+    \begin{align*}
+        \gamma_X(h)&=\int_{-\pi}^{\pi}e^{i\lambda h}f_X(\lambda)d\lambda\\
+        &=\int_{-\pi}^{\pi}e^{i\lambda h}\frac{\sigma^2}{2\pi}\left|\frac{\theta(e^{-i\lambda})}{\phi(e^{-i\lambda})}\right|^2d\lambda.\\
+        & \text{ diverges since } \phi(e^{-i\lambda_0})=0 \text{ at } \lambda_0.
+    \end{align*}
+    This is a contradiction since the autocovariance function of a stationary process must be finite for all lags $h$. Therefore, our assumption that there exists a stationary solution $\{X_t\}$ to the ARMA equations is false.
+  \end{solution}
+\end{exercise}
+
+
+\begin{exercise}[19]
+  Let $\{X_t\}$ and $\{Y_t\}$ be two stationary mean zero processes
+  with spectral densities $f_X(\cdot)$ and $f_Y(\cdot)$. If
+  $f_X(\cdot)\leq f_Y(\cdot)$ for all $\lambda\in[-\pi,\pi]$, show
+  that $\Gamma_{n,Y}-\Gamma_{n,X}$ is a non-negative definite matrix,
+  where $\Gamma_{n,X}$ and $\Gamma_{n,Y}$ are the covariance matrices
+  of $(X_1,\ldots,X_n)'$ and $(Y_1,\ldots,Y_n)'$ respectively.
+  \begin{solution}
+    Remember that the covariance matrix $\Gamma_{n,X}$ of the vector $(X_1,\ldots,X_n)'$ is given by
+    \begin{align*}
+        \Gamma_{n,X} &= \begin{pmatrix}
+        \gamma_X(0) & \gamma_X(1) & \cdots & \gamma_X(n-1) \\
+        \gamma_X(1) & \gamma_X(0) & \cdots & \gamma_X(n-2) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        \gamma_X(n-1) & \gamma_X(n-2) & \cdots & \gamma_X(0)
+        \end{pmatrix},
+    \end{align*}
+    for each $n\geq 1$, where $\gamma_X(h)$ is the autocovariance function of $\{X_t\}$. We can express the autocovariance function in terms of the spectral density as follows:
+    \begin{align*}
+        \gamma_X(h) &= \int_{-\pi}^{\pi} e^{i\lambda h} f_X(\lambda) d\lambda.
+    \end{align*}
+    Therefore, the covariance matrix $\Gamma_{n,X}$ can be expressed as
+    \begin{align*}
+        \Gamma_{n,X} &= \int_{-\pi}^{\pi} \begin{pmatrix}
+        1 & e^{i\lambda} & \cdots & e^{i\lambda(n-1)} \\
+        e^{i\lambda} & 1 & \cdots & e^{i\lambda(n-2)} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        e^{i\lambda(n-1)} & e^{i\lambda(n-2)} & \cdots & 1
+        \end{pmatrix} f_X(\lambda) d\lambda.
+    \end{align*}
+    Similarly, we can express the covariance matrix $\Gamma_{n,Y}$ of the vector $(Y_1,\ldots,Y_n)'$ as
+    \begin{align*}
+        \Gamma_{n,Y} &= \int_{-\pi}^{\pi} \begin{pmatrix}
+        1 & e^{i\lambda} & \cdots & e^{i\lambda(n-1)} \\
+        e^{i\lambda} & 1 & \cdots & e^{i\lambda(n-2)} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        e^{i\lambda(n-1)} & e^{i\lambda(n-2)} & \cdots & 1
+        \end{pmatrix} f_Y(\lambda) d\lambda.
+    \end{align*}
+    Now, we can compute the difference $\Gamma_{n,Y} - \Gamma_{n,X}$ as follows:
+    \begin{align*}
+        \Gamma_{n,Y} - \Gamma_{n,X} &= \int_{-\pi}^{\pi} \begin{pmatrix}
+        1 & e^{i\lambda} & \cdots & e^{i\lambda(n-1)} \\
+        e^{i\lambda} & 1 & \cdots & e^{i\lambda(n-2)} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        e^{i\lambda(n-1)} & e^{i\lambda(n-2)} & \cdots & 1
+        \end{pmatrix} (f_Y(\lambda) - f_X(\lambda)) d\lambda.
+    \end{align*}
+    \end{solution}
+    \begin{solution}(Continued from priot part)
+    Since we are given that $f_X(\lambda) \leq f_Y(\lambda)$ for all $\lambda \in [-\pi, \pi]$, it follows that $f_Y(\lambda) - f_X(\lambda) \geq 0$ for all $\lambda$.\\
+    To show that $\Gamma_{n,Y} - \Gamma_{n,X}$ is a non-negative definite matrix, we need to show that for any non-zero vector $c \in \mathbb{R}^n$, the following holds:
+    \begin{align*}
+        a* (\Gamma_{n,Y} - \Gamma_{n,X}) a &\geq 0.
+    \end{align*}
+    We can compute this as follows: with $a \in \mathbb{R}^n$, and $v(\lambda) = (1, e^{i\lambda}, \ldots, e^{i\lambda(n-1)})'$, 
+    \begin{align*}
+        a* (\Gamma_{n,Y} - \Gamma_{n,X}) a &= a* \left( \int_{-\pi}^{\pi} v(t) v(t)^* (f_Y(t) - f_X(t)) dt \right) a \\
+        &= \int_{-\pi}^{\pi} a* v(t) v(t)^* a (f_Y(t) - f_X(t)) dt \\
+        &= \int_{-\pi}^{\pi} |a* v(t)|^2 (f_Y(t) - f_X(t)) dt \\
+        &\geq 0,
+    \end{align*}
+    since $|a* v(t)|^2 \geq 0$ and $f_Y(t) - f_X(t) \geq 0$ for all $t \in [-\pi, \pi]$.\\
+    Therefore, we have shown that $\Gamma_{n,Y} - \Gamma_{n,X}$ is a non-negative definite matrix.
+  \end{solution}
+\end{exercise}
+
+
+\begin{exercise}[20]
+  Assume $\{X_t\}$ is a mean zero stationary process with the spectral
+  distribution function
+  \begin{equation*}
+    F_X(\lambda)=\left\{
+      \begin{array}{ll}
+        \pi+\lambda, & -\pi\leq\lambda<-\pi/6,\\
+        3\pi+\lambda,&-\pi/6\leq\lambda<\pi/6,\\
+        5\pi+\lambda,&\pi/6\leq\lambda\leq\pi.
+      \end{array}
+    \right.
+  \end{equation*}
+  For which value $d$ does the differenced process
+  $\Delta_dX_t:=X_t-X_{t-d}$ have a spectral density?
+  \begin{solution}
+    Note that at the points $\lambda=-\pi/6$ and $\lambda=\pi/6$, the spectral distribution function $F_X(\lambda)$ has jumps of size 2$\pi$. \\
+    Note that the spectral density exists if the spectral distribution function is absolutely continuous. The differenced process $\Delta_dX_t$ has a spectral density if the differencing removes the jumps in the spectral distribution function. \\
+    The differenced process $\Delta_dX_t$ has a spectral distribution function given by
+    \begin{align*}
+        d F_{\Delta_dX}(\lambda) &=  |1 - e^{-i\lambda d}|^2 d F_X(\lambda) \\
+        &= 4 \sin^2\left(\frac{\lambda d}{2}\right) d F_X(\lambda).
+    \end{align*}
+    To remove the jumps at $\lambda=-\pi/6$ and $\lambda=\pi/6$, we need to choose $d$ such that $4 \sin^2\left(\frac{\lambda d}{2}\right)$ is zero at these points. This occurs when $\frac{\pi d}{12} = k \pi$ for some integer $k$. Thus, we have
+    \begin{align*}
+        d = 12k, \quad k \in \mathbb{Z}.
+    \end{align*}
+    Therefore, the differenced process $\Delta_dX_t$ has a spectral density for $d = 12k$, where $k$ is any integer.
+    Thus the smallest positive integer value for $d$ is $d=12$.
+  \end{solution}
+\end{exercise}
+
+
+\begin{exercise}[21]
+  Please install the {\tt R} package {\tt datasets}, and use {\tt
+    data(sunspot.year)} to load the W\"olfer sunspot numbers from
+  1700 to 1988. Let $\{X_t\}$ denote the original data, and $\{Y_t\}$
+  denote the mean-corrected series, $Y_t=X_t-49.13$. The following
+  AR(2) model for $\{Y_t\}$ is obtained
+  \begin{equation*}
+    Y_t=1.389Y_{t-1}-.691Y_{t-2}+Z_t,\quad\{Z_t\}\sim\hbox{WN}(0,273.6).
+  \end{equation*}
+  Determine and plot the spectral density of the fitted model and find
+  the frequency at which it achieves its maximum value. What is the
+  corresponding period?
+  \begin{solution}
+    We know that the spectral density of an AR($p$) process is given by
+    \begin{align*}
+        f_Y(\lambda) &= \frac{\sigma^2}{2\pi} \left| \frac{1}{\phi(e^{-i\lambda})} \right|^2,
+    \end{align*}
+    Thus for our AR(2) model, we have
+    \begin{align*}
+        \phi(B) &= 1 - 1.389 B + 0.691 B^2,
+    \end{align*}
+    and the spectral density is given by
+    \begin{align*}
+        f_Y(\lambda) &= \frac{273.6}{2\pi} \left| \frac{1}{1 - 1.389 e^{-i\lambda} + 0.691 e^{-2i\lambda}} \right|^2.
+    \end{align*}
+    The plot of the spectral density is shown below:
+    \begin{center}
+        \includegraphics[width=0.7\textwidth]{img/HW4Plot.png}
+    \end{center}
+    And we find that the frequency at which it achieves its maximum value is approximately $\lambda \approx .557$. \\
+    And thus the corresponding period is 11.28 years.
+  \end{solution}
+\end{exercise}
+
+
+\begin{exercise}[22]
+Suppose $X_t=\phi_1X_{t-1}+\cdots+\phi_pX_{t-p}+Z_t$ is a causal AR($p$) process, where $\{Z_t\}\sim\hbox{WN}(0,\sigma^2)$, and let $\{\psi_n,\,n\geq 0\}$ be its memory function. Show that
+\begin{equation*}
+    \left\|X_{n+h}- \mathcal P_{\overline{\mathrm{sp}}\{X_1,\ldots,X_n\}}X_{n+h}\right\|^2 = \sigma^2\sum_{j=0}^{h-1}\psi_j^2, \quad \hbox{when } n\geq p.
+\end{equation*}
+\begin{solution}
+    We know that for a causal AR($p$) there exists a WN process $\{Z_t\}$ such that
+    \begin{align*}
+        X_t &= \sum_{j=0}^{\infty} \psi_j Z_{t-j}, \quad t \in \mathbb{Z},
+    \end{align*}
+    In other words, we can express the AR($p$) process $\{X_t\}$ as an infinite MA process with coefficients given by the memory function $\{\psi_j\}$. \\
+    We can represent $X_{n+h}$ as
+    \begin{align*}
+        X_{n+h} &= \sum_{j=0}^{\infty} \psi_j Z_{n+h-j} \\
+        &= \sum_{j=0}^{h-1} \psi_j Z_{n+h-j} + \sum_{j=h}^{\infty} \psi_j Z_{n+h-j}.
+    \end{align*}
+    Note that the first sum $\sum_{j=0}^{h-1} \psi_j Z_{n+h-j}$ involves only the white noise terms $Z_{n+1}, Z_{n+2}, \ldots, Z_{n+h}$, which are not in the span of $\{X_1, \ldots, X_n\}$ since $n \geq p$. Therefore, this part of $X_{n+h}$ is orthogonal to the space spanned by $\{X_1, \ldots, X_n\}$. \\
+    The second sum $\sum_{j=h}^{\infty} \psi_j Z_{n+h-j}$ can be expressed in terms of $\{X_1, \ldots, X_n\}$ since it involves only the white noise terms $Z_t$ for $t \leq n$. Thus, this part lies in the span of $\{X_1, \ldots, X_n\}$. \\
+    Therefore, the projection of $X_{n+h}$ onto the space spanned by $\{X_1, \ldots, X_n\}$ is given by
+    \begin{align*}
+        \mathcal P_{\overline{\mathrm{sp}}\{X_1,\ldots,X_n\}}X_{n+h} &= \sum_{j=h}^{\infty} \psi_j Z_{n+h-j}.
+    \end{align*}
+    The prediction error is then
+    \begin{align*}
+        X_{n+h} - \mathcal P_{\overline{\mathrm{sp}}\{X_1,\ldots,X_n\}}X_{n+h} &= \sum_{j=0}^{h-1} \psi_j Z_{n+h-j}.
+    \end{align*}
+    Taking the norm squared of the prediction error, we have
+    \begin{align*}
+        \left\|X_{n+h} - \mathcal P_{\overline{\mathrm{sp}}\{X_1,\ldots,X_n\}}X_{n+h}\right\|^2 &= E\left[\left(\sum_{j=0}^{h-1} \psi_j Z_{n+h-j}\right)^2\right] \\
+        &= \sum_{j=0}^{h-1} \psi_j^2 E[Z_{n+h-j}^2] \quad \text{(since } Z_t \text{ are uncorrelated)} \\
+        &= \sigma^2 \sum_{j=0}^{h-1} \psi_j^2.
+    \end{align*}
+    Thus we have shown that
+    \begin{align*}
+        \left\|X_{n+h} - \mathcal P_{\overline{\mathrm{sp}}\{X_1,\ldots,X_n\}}X_{n+h}\right\|^2 &= \sigma^2 \sum_{j=0}^{h-1} \psi_j^2, \quad \text{when } n \geq p.
+    \end{align*}
+\end{solution}
+\end{exercise}
+
+
+\begin{exercise}[23]
+Suppose that 
+\begin{equation*}
+    X_t = A\cos(\pi t/3) + B\sin(\pi t/3) + Z_t + .5 Z_{t-1},\qquad t\in\mathbb Z,
+\end{equation*}
+where $\{Z_t\}\sim\hbox{WN}(0,1)$, $A$ and $B$ are uncorrelated random variables with mean 0 and variance 4, and $E(AZ_t)=E(BZ_t)=0$ for all $t\in\mathbb Z$. 
+\begin{enumerate}
+    \item Find the best linear predictor of $X_{t+1}$ based on $X_t$ and $X_{t-1}$.
+    \begin{solution}
+        The goal is to find the best linear predictor of $X_{t+1}$ based on $X_t$ and $X_{t-1}$. We can express the predictor as
+        \begin{align*}
+            \hat{X}_{t+1} = \phi_1 X_t + \phi_2 X_{t-1},
+        \end{align*}
+        where $\phi_1$ and $\phi_2$ are coefficients to be determined. \\
+        We can also define the autocovariance function $\gamma_X(h) = E[X_t X_{t+h}]$.
+        \begin{align*}
+            \gamma_X(h) &= \gamma_S(h) + \gamma_M(h),
+        \end{align*}
+        Where $\gamma_S(h)$ is the autocovariance function of the Periodic part and $\gamma_M(h)$ is the autocovariance function of the MA(1) part. \\
+        First, we compute $\gamma_S(h)$:
+        \begin{align*}
+            \gamma_S(h) &= E[(A\cos(\pi t/3) + B\sin(\pi t/3))(A\cos(\pi (t+h)/3) + B\sin(\pi (t+h)/3))] \\
+            &= E[A^2]\cos(\pi t/3)\cos(\pi (t+h)/3) + E[B^2]\sin(\pi t/3)\sin(\pi (t+h)/3) \\
+            &= 4\cos(\pi t/3)\cos(\pi (t+h)/3) + 4\sin(\pi t/3)\sin(\pi (t+h)/3) \\
+            &= 4\cos(\pi h/3).
+        \end{align*}
+        Next, we compute $\gamma_M(h)$:
+        \begin{align*}
+            \gamma_M(0) &= E[(Z_t + 0.5 Z_{t-1})^2] = E[Z_t^2] + 0.25 E[Z_{t-1}^2] = 1 + 0.25 = 1.25, \\
+            \gamma_M(1) &= E[(Z_t + 0.5 Z_{t-1})(Z_{t+1} + 0.5 Z_t)] = 0.5 E[Z_t^2] = 0.5, \\
+            \gamma_M(h) &= 0, \quad |h| > 1.
+        \end{align*}
+        Therefore, the total autocovariance function is
+        \begin{align*}
+            \gamma_X(0) &= 4 + 1.25 = 5.25, \\
+            \gamma_X(1) &= 2 + 0.5 = 2.5, \\
+            \gamma_X(2) &= -2 + 0 = -2, \\
+            \gamma_X(h) &= 4\cos(\pi h/3), \quad |h| > 2.
+        \end{align*}
+        Now, we can set up the Yule-Walker equations to solve for $\phi_1$ and $\phi_2$:
+        \begin{align*}
+            \begin{pmatrix}
+            \gamma_X(0) & \gamma_X(1) \\
+            \gamma_X(1) & \gamma_X(0)
+            \end{pmatrix}
+            \begin{pmatrix}
+            \phi_1 \\
+            \phi_2
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+            \gamma_X(1) \\
+            \gamma_X(2)
+            \end{pmatrix}.
+        \end{align*}
+        Substituting the values, we have
+        \begin{align*}
+            \begin{pmatrix}
+            5.25 & 2.5 \\
+            2.5 & 5.25
+            \end{pmatrix}
+            \begin{pmatrix}
+            \phi_1 \\
+            \phi_2
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+            2.5 \\
+            -2
+            \end{pmatrix}.
+        \end{align*}
+        Solving this system of equations, we find
+        \begin{align*}
+            \phi_1 &= \frac{290}{341} \approx 0.8504, \\
+            \phi_2 &= -\frac{268}{341} \approx -0.7859.
+        \end{align*}
+        Therefore, the best linear predictor of $X_{t+1}$ based on $X_t$ and $X_{t-1}$ is
+        \begin{align*}
+            \hat{X}_{t+1} = \frac{290}{341} X_t - \frac{268}{341} X_{t-1}.
+        \end{align*}
+    \end{solution}
+    \item What is the mean squared error of the best linear predictor of $X_{t+1}$ based on $\{X_j,\,j\leq t\}$?
+    \begin{solution}
+        Note that when we are predicting $X_{t+1}$ based on the entire past $\{X_j, j \leq t\}$, we can see that the periodic part of the process can be perfectly predicted since it is deterministic. \\
+        And for the MA(1) part, the best linear predictor of $Y_{t} = Z_t + 0.5 Z_{t-1}$ based on $\{Y_j, j \leq t\}$ is given by $Y_{t+1|t} = 0.5 Z_t$. \\
+        Therefore, the prediction error for the MA(1) part is
+        \begin{align*}
+            Y_{t+1} - Y_{t+1|\infty} &= (Z_{t+1} + 0.5 Z_t) - 0.5 Z_t = Z_{t+1}.
+        \end{align*}
+        And thus the prediction error for the entire process is
+        \begin{align*}
+            X_{t+1} - \hat{X}_{t+1|\infty} &= Z_{t+1}.
+        \end{align*}
+        The mean squared error (MSE) of the best linear predictor is then
+        \begin{align*}
+            E[(X_{t+1} - \hat{X}_{t+1|\infty})^2] = E[Z_{t+1}^2] = 1.
+        \end{align*}
+    \end{solution}
+    \item Show how $A$ and $B$ can be predicted by $\{X_j,\,j\leq n\}$.
+    \begin{solution}
+        We can use the orthogonalily of trigonometric functions to predict $A$ and $B$. Note that the periodic part of the process has period 6. \\
+        Note that the average of $\cos^2(\pi t/3)$  over one period is given by $\frac{1}{6}\sum_{t=1}^{6}\cos^2(\pi t/3) = \frac{1}{2}$. Similarly, the average of $\sin^2(\pi t/3)$ over one period is also $\frac{1}{2}$. and the average of $\cos(\pi t/3)\sin(\pi t/3)$ over one period is 0. \\
+        Then we can define the sample projections:
+        \begin{align*}
+            C_n = \frac{2}{n} \sum_{t=1}^{n} X_t \cos(\pi t/3), \\
+            S_n = \frac{2}{n} \sum_{t=1}^{n} X_t \sin(\pi t/3).
+        \end{align*}
+        As $n \to \infty$, by the law of large numbers, we have
+        \begin{align*}
+            C_n &\to A, \\
+            S_n &\to B.
+        \end{align*}
+        Since $Z_t$ and $cos(\pi t/3)$, $sin(\pi t/3)$ are orthogonal, the contributions from the noise terms vanish in the limit. \\
+        Therefore, we can predict $A$ and $B$ using the observations $\{X_j, j \leq n\}$ as $n$ becomes large.
+
+    \end{solution}
+\end{enumerate}
+\end{exercise}
+
+\end{document}

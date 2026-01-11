@@ -13,8 +13,6 @@
 \begin{document}
 \maketitle
 
-\newpage
-
 \begin{exercise}[13]
   Assume that $K(\cdot)$ is a complex-valued function defined on $\Z$,
   and that $K(\cdot)$ is non-negative definite.
@@ -70,38 +68,28 @@
     definite. [Hint. Here you need to use the non-negative
     definiteness of $K(\cdot)$.]
     \begin{solution}
-      Let us write $K(\cdot) = K_1(\cdot) + iK_2(\cdot)$ as given and let $x = u + iv$ where $u,v\in\R^n$. \\
-      Then let
+      Define the vector $z = u + i v$, where $u,v \in \mathbb{R}^n$. \\
+      Note that matrix $K_1^{(n)}$ is symmetric since $K_1(h)$ is even, and matrix $K_2^{(n)}$ is skew-symmetric since $K_2(h)$ is odd. \\
+      Thus, the matrix $L^{(n)}$ is symmetric:
       \begin{align*}
-        Q = \sum_{j=1}^n \sum_{k=1}^n x_j \overline{x_k} K(j-k) 
+        (L^{(n)})^T &= \frac{1}{2} \begin{pmatrix}
+          (K_1^{(n)})^T & (K_2^{(n)})^T \\
+          -(K_2^{(n)})^T & (K_1^{(n)})^T
+        \end{pmatrix} \\
+        &= \frac{1}{2} \begin{pmatrix}
+          K_1^{(n)} & -K_2^{(n)} \\
+          K_2^{(n)} & K_1^{(n)}
+        \end{pmatrix} = L^{(n)}.
       \end{align*}
-      Expanding $x_j \overline{x_k} = (u_j + iv_j)(u_k - iv_k)$ as $u_ju_k + v_jv_k + i(v_ju_k - u_jv_k)$, we have
+      Now we need to show that $L^{(n)}$ is non-negative definite. \\
+      For any vector $x = [u^T, v^T]^T \in \mathbb{R}^{2n}$, define $z = u + i v \in \mathbb{C}^n$. \\
+      Then we have
       \begin{align*}
-        Q= Q_1 + iQ_2
+        x' L^{(n)} x &= \frac{1}{2} \sum_{jk} z_j \overline{z_k} [K_1(j-k) + i K_2(j-k)] \\
+        &= \frac{1}{2} \sum_{jk} z_j \overline{z_k} K(j-k) \geq 0,
       \end{align*}
-      where
-      \begin{align*}
-        Q_1 &= \sum_{j=1}^n \sum_{k=1}^n (u_ju_k + v_jv_k) K_1(j-k) + (v_ju_k - u_jv_k) K_2(j-k) \\
-        Q_2 &= \sum_{j=1}^n \sum_{k=1}^n (v_ju_k - u_jv_k) K_1(j-k) + (u_ju_k + v_jv_k) K_2(j-k)
-      \end{align*}
-      This is the same quadratic form as
-      \begin{align*}
-        Q = 
-        \begin{pmatrix}
-          u' & v'
-        \end{pmatrix}
-        L^{(n)}
-        \begin{pmatrix}
-          u \\
-          v
-        \end{pmatrix}
-      \end{align*}
-      We can see that $Q \geq 0$ since $K(\cdot)$ is non-negative definite, thus $L^{(n)}$ is also non-negative definite. \\
-      Also, since $K_1(\cdot)$ is even and $K_2(\cdot)$ is odd, we have
-      \begin{align*}
-        L^{(n)} = (L^{(n)})'
-      \end{align*}
-      Thus $L^{(n)}$ is symmetric and non-negative definite as desired.
+      Since we know that $K(\cdot)$ is non-negative definite, the sum is non-negative for any choice of $z$. \\
+      Thus $L^{(n)}$ is non-negative definite as desired.
     \end{solution}
   \item Let $(Y_1,\ldots,Y_n,Z_1,\ldots,Z_n)'$ be a random vector
     which has a multivariate normal distribution with mean zero and
@@ -109,7 +97,47 @@
     $1\leq t\leq n$. Show that the covariance matrix of
     $(W_1,\ldots,W_n)'$ is given by $K^{(n)}:=[K(j-k)]_{j,k=1}^n$.
     \begin{solution}
-      
+
+    Let $(Y_1, \ldots, Y_n, Z_1, \ldots, Z_n)'$ be a mean-zero multivariate normal vector with covariance matrix $L^{(n)}$. Define for each $1 \leq t \leq n$,
+    \[
+        W_t = Y_t + i Z_t.
+    \]
+    The mean of $W_t$ is zero:
+    \[
+        \mathbb{E}[W_t] = \mathbb{E}[Y_t] + i\mathbb{E}[Z_t] = 0.
+    \]
+    Consider the covariance between $W_j$ and $W_k$:
+    \[
+        \mathrm{Cov}(W_j, W_k) = \mathbb{E}[W_j \overline{W_k}].
+    \]
+    Expanding $W_j$ and $\overline{W_k}$ gives
+    \[
+      W_j = Y_j + i Z_j, \quad \overline{W_k} = Y_k - i Z_k.
+    \]
+    Multiplying and taking expectation:
+    \begin{align*}
+        \mathbb{E}[W_j\overline{W_k}] &= \mathbb{E}[(Y_j + i Z_j)(Y_k - i Z_k)] \\
+        &= \mathbb{E}[Y_j Y_k] + \mathbb{E}[Z_j Z_k]
+          + i \big( \mathbb{E}[Z_j Y_k] - \mathbb{E}[Y_j Z_k] \big ).
+    \end{align*}
+    Define
+    \[
+      K_1(j-k) = \mathbb{E}[Y_j Y_k] + \mathbb{E}[Z_j Z_k], \qquad K_2(j-k) = \mathbb{E}[Z_j Y_k] - \mathbb{E}[Y_j Z_k].
+    \]
+    Therefore,
+    \[
+        \mathrm{Cov}(W_j, W_k) = K(j-k) := K_1(j-k) + i K_2(j-k).
+    \]
+    The covariance matrix $K^{(n)}$ of $(W_1, \ldots, W_n)'$ is the Hermitian matrix
+    \[
+        K^{(n)} = \begin{bmatrix}
+          K(1-1) & K(1-2) & \cdots & K(1-n) \\
+          K(2-1) & K(2-2) & \cdots & K(2-n) \\
+          \vdots & \vdots & \ddots & \vdots \\
+          K(n-1) & K(n-2) & \cdots & K(n-n)
+      \end{bmatrix}
+    \]
+    where $K(j-k)$ is as computed above. $K^{(n)}$ is Hermitian since $K(k-j) = \overline{K(j-k)}$.
     \end{solution}
   \item Apply the Kolmogorov's Existence Theorem to deduce that there
     exist a bivariate mean zero Gaussian process $(Y_t,Z_t)'$ such
@@ -118,8 +146,32 @@
       \E(Y_{t+h}Y_t)&=\E(Z_{t+h}Z_t)=\tfrac{1}{2}K_1(h) \\
       \E(Z_{t+h}Y_t)&=-\E(Y_{t+h}Z_t)=\tfrac{1}{2}K_2(h).
     \end{align*}
+    \begin{solution}
+      By the construction in part (c), for every $n$ the joint distribution of $(Y_1,\ldots,Y_n,Z_1,\ldots,Z_n)'$ is multivariate normal with mean zero and covariance matrix $L^{(n)}$. \\
+      For any finite collection of time points $t_1, t_2, \ldots, t_m$, the finite-dimensional distributions of $(Y_{t_1}, \ldots, Y_{t_m}, Z_{t_1}, \ldots, Z_{t_m})'$ are multivariate normal with mean zero and covariance matrix constructed similarly to $L^{(n)}$. \\
+      These finite-dimensional distributions are consistent, so by the Kolmogorov Existence Theorem, there exists a bivariate mean zero Gaussian process $(Y_t,Z_t)'$ with the specified covariance structure. 
+    \end{solution}
   \item Show that $\{X_t=Y_t+iZ_t,\,t\in\Z\}$ is a complex-valued
     process with autocovariance function $K(\cdot)$.
+    \begin{solution}
+      We define the complex-valued process
+      \[
+          X_t = Y_t + i Z_t.
+      \]
+      The mean of $X_t$ is zero:
+      \[
+          \mathbb{E}[X_t] = \mathbb{E}[Y_t] + i\mathbb{E}[Z_t] = 0.
+      \]
+      The autocovariance function of $X_t$ is given by
+      \begin{align*}
+        \gamma_X(h) = \cov(X_{t+h}, X_t) &= \mathbb{E}[X_{t+h} \overline{X_t}] \\
+        &= \mathbb{E}[(Y_{t+h} + i Z_{t+h})(Y_t - i Z_t)] \\
+        &= \mathbb{E}[Y_{t+h} Y_t] + \mathbb{E}[Z_{t+h} Z_t] + i \big( \mathbb{E}[Z_{t+h} Y_t] - \mathbb{E}[Y_{t+h} Z_t] \big) \\
+        &= K_1(h) + i K_2(h) \\
+        &= K(h).
+      \end{align*}
+      Thus, the process $\{X_t, t \in \Z\}$ has autocovariance function $K(\cdot)$ as desired.
+    \end{solution}
   \end{enumerate}
 \end{exercise}
 
@@ -133,11 +185,79 @@
       \sum_{j=1}^n a_je^{it\lambda_j}=0\quad\hbox{for all }t\in\Z
     \end{equation*}
     then it must hold that $a_1=a_2=\cdots=a_n=0$.
+    \begin{solution}
+      Assume that
+      \begin{align*}
+        \sum_{j=1}^n a_j e^{it\lambda_j} = 0 \quad \text{for all } t \in \Z.
+      \end{align*}
+      Now consider the function evaluated at $t=0,1,\ldots,n-1$:
+      \begin{align*}
+        \sum_{j=1}^n a_j &= 0 \\
+        \sum_{j=1}^n a_j e^{i1\lambda_j} &= 0 \\
+        \sum_{j=1}^n a_j e^{i2\lambda_j} &= 0 \\
+        &\vdots \\
+        \sum_{j=1}^n a_j e^{i(n-1)\lambda_j} &= 0
+      \end{align*}
+      Converting this to a matrix equation, we have
+      \begin{align*}
+        \begin{bmatrix}
+          1 & 1 & \cdots & 1 \\
+          e^{i\lambda_1} & e^{i\lambda_2} & \cdots & e^{i\lambda_n} \\
+          e^{i2\lambda_1} & e^{i2\lambda_2} & \cdots & e^{i2\lambda_n} \\
+          \vdots & \vdots & \ddots & \vdots \\
+          e^{i(n-1)\lambda_1} & e^{i(n-1)\lambda_2} & \cdots & e^{i(n-1)\lambda_n}
+        \end{bmatrix}\begin{bmatrix}
+          a_1 \\
+          a_2 \\
+          \vdots \\
+          a_n
+        \end{bmatrix} = 
+        \begin{bmatrix}
+          0 \\
+          0 \\
+          \vdots \\
+          0
+        \end{bmatrix}
+      \end{align*}
+      This is the form of a Vandermonde matrix multiplied by the vector of coefficients $a_j$. \\
+      It is known that the Vandermonde matrix is invertible if and only if the $\lambda_j$ are distinct. \\
+      Since the $\lambda_j$ are given to be distinct, the only solution to this equation is the trivial solution: $a_1 = a_2 = \cdots = a_n = 0$.
+    \end{solution}
   \item Let $A_1,A_2,\ldots A_n$ be complex random variables, and
     define $X_t=\sum_{j=1}^nA_je^{it\lambda_j}$. Show that the process
     $\{X_t,\,t\in\Z\}$ is real-valued if and only if
     $\lambda_j=-\lambda_{n-j}$ and $A_j=\bar A_{n-j}$ for $1\leq j<n$,
     and $A_n$ is real.
+    \begin{solution}
+      \begin{proof}
+        $\implies$ Assume that the process $\{X_t, t \in \Z\}$ is real-valued. Then for each $t$.\\
+        Thus we know that $X_t = \overline{X_t}$. 
+        \begin{align*}
+          X_t &= \sum_{j=1}^n A_j e^{it\lambda_j} \\
+          \overline{X_t} &= \sum_{j=1}^n \overline{A_j} e^{-it\lambda_j} \\
+          \sum_{j=1}^n A_j e^{it\lambda_j} - \sum_{j=1}^n \overline{A_j} e^{-it\lambda_j} &= 0 
+        \end{align*}
+        Since $\lambda_n = \pi$, we have $e^{it\lambda_n} = e^{it\pi} = e^{-it\pi} = e^{-it\lambda_n}$. \\
+        Thus we can rewrite the above equation as
+        \begin{align*}
+          \sum_{j=1}^{n-1} A_j e^{it\lambda_j} - \sum_{j=1}^{n-1} \overline{A_j} e^{-it\lambda_j} + (A_n - \overline{A_n}) e^{it\pi} &= 0
+        \end{align*}
+        Since this holds for all $t$, we must have $A_n = \overline{A_n}$, i.e., $A_n$ is real, and for $1 \le j < n$, $A_j = \overline{A_{n-j}}$ and $\lambda_j = -\lambda_{n-j}$. \\\\
+        $\impliedby$ Assume that $\lambda_j = -\lambda_{n-j}$ and $A_j = \overline{A_{n-j}}$ for $1 \leq j < n$, and $A_n$ is real. \\
+        Then we can write
+        \begin{align*}
+          X_t &= \sum_{j=1}^{n} A_j e^{it\lambda_j} \\
+          \overline{X_t} &= \sum_{j=1}^{n} \overline{A_j} e^{-it\lambda_j} 
+        \end{align*}
+        Since $\lambda_j = -\lambda_{n-j}$ and $A_j = \overline{A_{n-j}}$ for $1 \leq j < n$, and $A_n$ is real, we have
+        \begin{align*}
+          \overline{X_t} &= \sum_{j=1}^{n-1} A_{n-j} e^{it\lambda_{n-j}} + A_n e^{-it\lambda_n} \\
+          &= \sum_{j=1}^{n-1} A_j e^{it\lambda_j} + A_n e^{it\lambda_n} \quad \text{By Reindexing } k = n - j \\
+          &= X_t
+        \end{align*}
+        Since $X_t = \overline{X_t}$ for all $t$, the process $\{X_t, t \in \Z\}$ is real-valued. \\
+      \end{proof}
+    \end{solution}
   \end{enumerate}
 \end{exercise}
 
@@ -148,6 +268,15 @@
   \begin{equation*}
     F(\lambda)=F(\pi^-)-F(-\lambda^{-}),\quad -\pi<\lambda<\pi.
   \end{equation*}
+  \begin{solution}
+    Note that $\gamma(h) = \int_{-\pi}^{\pi} e^{ih\lambda} dF(\lambda)$.  
+    Since $\gamma(h)$ is real, we have $\gamma(h) = \overline{\gamma(h)} = \int_{-\pi}^{\pi} e^{-ih\lambda} dF(\lambda)$.  
+    By changing the variable $\lambda \to -\lambda$, we get $\gamma(h) = \int_{-\pi}^{\pi} e^{ih\lambda} dF(-\lambda)$.  
+    Comparing the two expressions, we obtain $dF(\lambda) = dF(-\lambda)$, which implies that $F(\lambda)$ is symmetric in the sense that
+    \begin{equation*}
+      F(\lambda)=F(\pi^-)-F(-\lambda^{-}),\quad -\pi<\lambda<\pi.
+    \end{equation*}
+  \end{solution}
 \end{exercise}
 
 \begin{exercise}[16]
@@ -155,13 +284,131 @@
   the following processes. [Try to plot many more for fun!]
   \begin{enumerate}
   \item MA(1). $X_t=Z_t\pm 0.9Z_{t-1}$, where $\{Z_t\}\sim \hbox{WN}(0,2)$.
+  \begin{solution}
+    For a MA(1) process defined as $X_t = Z_t + \theta Z_{t-1}$, where $\{Z_t\} \sim \text{WN}(0, \sigma^2)$, the spectral density function is given by
+    \begin{align*}
+      f(\lambda) = \frac{\sigma^2}{2\pi} \left| 1 + \theta e^{-i\lambda} \right|^2 = \frac{\sigma^2}{2\pi} \left( 1 + \theta^2 + 2\theta \cos(\lambda) \right).
+    \end{align*}
+    When $\theta = 0.9$ and $\sigma^2 = 2$, we have
+    \begin{align*}
+      f(\lambda) = \frac{2}{2\pi} \left( 1 + 0.9^2 + 2 \cdot 0.9 \cos(\lambda) \right) = \frac{1}{\pi} \left( 1.81 + 1.8 \cos(\lambda) \right).
+    \end{align*}
+    % Plotting the spectral density function:
+    % Image
+    \begin{center}
+      \includegraphics[width=0.6\textwidth]{img/ma1_theta_pos09.png}
+    \end{center}
+
+    When $\theta = -0.9$ and $\sigma^2 = 2$, we have
+    \begin{align*}
+      f(\lambda) = \frac{2}{2\pi} \left( 1 + (-0.9)^2 + 2 \cdot (-0.9) \cos(\lambda) \right) = \frac{1}{\pi} \left( 1.81 - 1.8 \cos(\lambda) \right).
+    \end{align*}
+    % Plotting the spectral density function:
+    \begin{center}
+      \includegraphics[width=0.6\textwidth]{img/ma1_theta_neg09.png}
+    \end{center}
+
+  \end{solution}
   \item AR(1). $X_t=\pm0.9X_{t-1}+Z_t$, where $\{Z_t\}\sim \hbox{WN}(0,3)$.
-  \item Each of the processes in Problem~7.
+  \begin{solution}
+    For an AR(1) process defined as $X_t = \phi X_{t-1} + Z_t$, where $\{Z_t\} \sim \text{WN}(0, \sigma^2)$, the spectral density function is given by
+    \begin{align*}
+      f(\lambda) = \frac{\sigma^2}{2\pi} \frac{1}{|1 - \phi e^{-i\lambda}|^2} = \frac{\sigma^2}{2\pi} \frac{1}{1 + \phi^2 - 2\phi \cos(\lambda)}.
+    \end{align*}
+    When $\phi = 0.9$ and $\sigma^2 = 3$, we have
+    \begin{align*}
+      f(\lambda) = \frac{3}{2\pi} \frac{1}{1 + 0.9^2 - 2 \cdot 0.9 \cos(\lambda)} = \frac{3}{2\pi} \frac{1}{1.81 - 1.8 \cos(\lambda)}.
+    \end{align*}
+    % Plotting the spectral density function:
+  \begin{center}
+      \includegraphics[width=0.6\textwidth]{img/ar1_phi_pos09.png}
+    \end{center}
+
+    When $\phi = -0.9$ and $\sigma^2 = 3$, we have
+    \begin{align*}
+      f(\lambda) = \frac{3}{2\pi} \frac{1}{1 + (-0.9)^2 - 2 \cdot (-0.9) \cos(\lambda)} = \frac{3}{2\pi} \frac{1}{1.81 + 1.8 \cos(\lambda)}.
+    \end{align*}
+    \begin{center}
+      \includegraphics[width=0.6\textwidth]{img/ar1_phi_neg09.png}
+    \end{center}
+    % Plotting the spectral density function:
+
+  \end{solution}
+  \item Each of the processes in Problem~7:
+  \begin{enumerate}
+  \item[(i)] AR(3): $r_t=0.3+0.8r_{t-1}-.5r_{t-2}-.2r_{t-3}+a_t$.
+  \item[(ii)] MA(3): $r_t=0.3+a_t+0.8a_{t-1}-.5a_{t-2}-.2a_{t-3}$.
+  \item [(iii)] ARMA(3,2): $r_t=0.3+0.8r_{t-1}-.5r_{t-2}-.2r_{t-3}+a_t+0.5a_{t-1}+0.3a_{t-2}$.
   \end{enumerate}
+  with $a_t \sim N(0,4)$
+  \begin{solution}
+    \begin{enumerate}
+      \item [(i)] For the AR(3) process defined as $r_t = \phi_0 + \phi_1 r_{t-1} + \phi_2 r_{t-2} + \phi_3 r_{t-3} + a_t$, where $\{a_t\} \sim \text{WN}(0, \sigma^2)$, the spectral density function is given by
+      \begin{align*}
+        f(\lambda) = \frac{\sigma^2}{2\pi} \frac{1}{|1 - \phi_1 e^{-i\lambda} - \phi_2 e^{-2i\lambda} - \phi_3 e^{-3i\lambda}|^2}.
+      \end{align*}
+      Substituting $\phi_1 = 0.8$, $\phi_2 = -0.5$, $\phi_3 = -0.2$, and assuming $\sigma^2 = 4$, we have
+      \begin{align*}
+        f(\lambda) = \frac{4}{2\pi} \frac{1}{|1 - 0.8 e^{-i\lambda} + 0.5 e^{-2i\lambda} + 0.2 e^{-3i\lambda}|^2}.
+      \end{align*}
+      % Plotting the spectral density function:
+      \begin{center}
+        \includegraphics[width=0.6\textwidth]{img/ar3_problem7.png}
+      \end{center}
+      \item [(ii)] For the MA(3) process defined as $r_t = \mu + a_t + \theta_1 a_{t-1} + \theta_2 a_{t-2} + \theta_3 a_{t-3}$, where $\{a_t\} \sim \text{WN}(0, \sigma^2)$, the spectral density function is given by
+      \begin{align*}
+        f(\lambda) = \frac{\sigma^2}{2\pi} |1 + \theta_1 e^{-i\lambda} + \theta_2 e^{-2i\lambda} + \theta_3 e^{-3i\lambda}|^2.
+      \end{align*}
+      Substituting $\theta_1 = 0.8$, $\theta_2 = -0.5$, $\theta_3 = -0.2$, and assuming $\sigma^2 = 4$, we have
+      \begin{align*}
+        f(\lambda) = \frac{4}{2\pi} |1 + 0.8 e^{-i\lambda} - 0.5 e^{-2i\lambda} - 0.2 e^{-3i\lambda}|^2.
+      \end{align*}
+      % Plotting the spectral density function:
+      \begin{center}
+        \includegraphics[width=0.6\textwidth]{img/ma3_problem7.png}
+      \end{center}
+      \item [(iii)] For the ARMA(3,2) process defined as $r_t = \phi_0 + \phi_1 r_{t-1} + \phi_2 r_{t-2} + \phi_3 r_{t-3} + a_t + \theta_1 a_{t-1} + \theta_2 a_{t-2}$, where $\{a_t\} \sim \text{WN}(0, \sigma^2)$, the spectral density function is given by
+      \begin{align*}
+        f(\lambda) = \frac{\sigma^2}{2\pi} \frac{|1 + \theta_1 e^{-i\lambda} + \theta_2 e^{-2i\lambda}|^2}{|1 - \phi_1 e^{-i\lambda} - \phi_2 e^{-2i\lambda} - \phi_3 e^{-3i\lambda}|^2}.
+      \end{align*}
+      Substituting $\phi_1 = 0.8$, $\phi_2 = -0.5$, $\phi_3 = -0.2$, $\theta_1 = 0.5$, $\theta_2 = 0.3$, and assuming $\sigma^2 = 4$, we have
+      \begin{align*}
+        f(\lambda) = \frac{4}{2\pi} \frac{|1 + 0.5 e^{-i\lambda} + 0.3 e^{-2i\lambda}|^2}{|1 - 0.8 e^{-i\lambda} + 0.5 e^{-2i\lambda} + 0.2 e^{-3i\lambda}|^2}.
+      \end{align*}
+      % Plotting the spectral density function:
+      \begin{center}
+        \includegraphics[width=0.6\textwidth]{img/arma32_problem7.png}
+      \end{center}
+
+
+    \end{enumerate}
+  \end{solution}
+  \end{enumerate}
+
 \end{exercise}
 
 \begin{exercise}[17]
 Suppose $\gamma(\cdot)$ is a real-valued autocovariance function such that $\gamma(0)>0$, and the covariance matrix $\Gamma_n$ is singular for some $n>1$. Find out the spectral distribution of $\gamma(\cdot)$.
+\begin{solution}
+Since $\Gamma_n$ is singular, there exists a non-zero vector $a = (a_1, a_2, \ldots, a_n)'$ such that $\Gamma_n a = 0$. Consider the quadratic form
+\begin{align*}
+a' \Gamma_n a = \sum_{j=1}^n \sum_{k=1}^n a_j a_k \gamma(j-k) = 0.
+\end{align*}
+  Since $\gamma(\cdot)$ is an autocovariance function, it is non-negative definite. By the spectral representation theorem, we have
+  \begin{align*}
+    \gamma(h) = \int_{-\pi}^{\pi} e^{ih\lambda} dF(\lambda)
+  \end{align*}
+for some spectral distribution function $F(\cdot)$. Substituting this into the quadratic form, we get
+\begin{align*}
+0 &= \sum_{j=1}^n \sum_{k=1}^n a_j a_k \int_{-\pi}^{\pi} e^{i(j-k)\lambda} dF(\lambda) \\
+&= \int_{-\pi}^{\pi} \left| \sum_{j=1}^n a_j e^{ij\lambda} \right|^2 dF(\lambda).
+\end{align*}
+Now consider 
+\begin{align*}
+  P(z) = \sum_{j=1}^n a_j z^j.
+\end{align*}
+Since $|P(z)|^2 \geq 0$ and $dF(\lambda) \geq 0$, for the integral to be zero, $P(e^{i\lambda})$ must be zero for all $\lambda$ in the support of $F$. Since $P(z)$ is a polynomial of degree at most $n$, it can have at most $n$ distinct roots. Thus the support of $F$ must be contained in the finite set of roots of $P(e^{i\lambda})$. Therefore, the spectral distribution $F(\cdot)$ is discrete and concentrated on the finite set of points corresponding to the roots of $P(e^{i\lambda})$.
+\end{solution}
 \end{exercise}
 
 

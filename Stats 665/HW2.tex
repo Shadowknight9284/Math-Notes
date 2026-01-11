@@ -125,19 +125,28 @@
             \psi_0 &= \theta_0 = 1 \\
             \psi_1 &= \theta_1 + \phi_1\psi_0 = 0.5 + 0.8*1 = 1.3 \\
             \psi_2 &= \theta_2 + \phi_1\psi_1 + \phi_2\psi_0 = \theta_2 + \phi_2 + \theta_1\phi_1 + \phi_1^2 = .3 + .5 + .4 + .64 = 1.84 \\
-            \psi_n &= ***
+            \psi_3 &= \theta_3 + \phi_1\psi_2 + \phi_2\psi_1 + \phi_3\psi_0 = 0.622\\
+            \psi_4 &= \phi_1\psi_3 + \phi_2\psi_2 + \phi_3\psi_1 = -0.682\\
+            \psi_n &= \phi_1\psi_{n-1} + \phi_2\psi_{n-2} + \phi_3\psi_{n-3} \quad \text{for } n > 4
           \end{align*}
-
+          I have omitted the full calculations for brevity, but following this method we can compute the ACF values up to lag 12.\\
+          Similarly, to calculate $\rho(h)$ we can divide $\gamma(h)$ by $\gamma(0)$.\\
+          I will be omitting the full calculations for brevity as well.
         \end{itemize}
     \end{solution}
   \item [(b)] Simulate a series of length $T=250$, give the time series plot.
     \begin{solution}
-        
+        \begin{center}
+          \includegraphics[width=0.8\textwidth]{img/7b_img.png}
+        \end{center}
     \end{solution}
   \item [(c)] Compare the true ACF plot (plot what you obtained in Part (a))
     with the sample ACF plot (use the {\tt R} function {\tt acf()}).
     \begin{solution}
-        
+        \begin{center}
+          \includegraphics[width=0.8\textwidth]{img/7c_img.png}
+        \end{center}
+        The graph differences between the true and observed realization of the plots are quite significant. The main note is that the sample ACF has much more variability due to the finite sample size of 250. The true ACF is smooth and follows the theoretical values closely, while the sample ACF shows fluctuations around the true values. This is expected as the sample ACF is an estimate based on a finite number of observations, leading to sampling variability.
     \end{solution}
   \end{enumerate}
 \end{exercise}
@@ -217,16 +226,19 @@
     $\{W_t\}$ has an autocovariance function which is zero for lags
     $|h|>q$.
     \begin{solution}
-        Note $W_t$ is a linear combination of $X_t$'s. Since $\{X_t\}$ is stationary, $W_t$ is also stationary. The autocovariance function of $W_t$ is given by:
-        \begin{align*}
-          \gamma_W(h) &= \cov(W_t, W_{t+h}) \\
-          &= \cov\left(X_t - \sum_{i=1}^p \phi_i X_{t-i}, X_{t+h} - \sum_{j=1}^p \phi_j X_{t+h-j}\right) \\
-          \text{If } |h| > p, \text{WLOG } h= p+1  &= \cov\left(X_t - \sum_{i=1}^p \phi_i X_{t-i}, X_{t+p+1} - \sum_{j=1}^p \phi_j X_{t+p+1-j}\right) 
-        \end{align*}
-        Note that There are no overlapping terms between $X_t - \sum_{i=1}^p \phi_i X_{t-i}$ and $X_{t+p+1} - \sum_{j=1}^p \phi_j X_{t+p+1-j}$ since the maximum lag in the first term is $p$ and the minimum lag in the second term is $p+1$. And for any other choice of $h$ the difference in lags will also be bigger. Therefore, all covariance terms will be zero. Thus, we have:
-        \begin{equation*}
-          \gamma_W(h) = 0 \quad \text{for } |h| > p
-        \end{equation*}
+      Since $\{Y_t\}$ and $\{X_t\}$ have the same autocovariance function $\gamma(h)$, we can express the autocovariance function of $\{W_t\}$ as follows:
+      \begin{align*}
+        \gamma_W(h) &= \cov(\phi(B)X_t, \phi(B)X_{t+h}) \\
+        &= \sum_{i,j=0}^{p} \phi_i \phi_j\gamma(h+j-i)
+      \end{align*}
+      Now since $\{Y_t\}$ is an ARMA($p,q$) process, we have $\phi(B)Y_t = \theta(B)Z_t$ where $\theta(B)$ is a polynomial of degree $q$.\\
+      Thus define
+      \begin{align*}
+        \gamma_{W'}(h) &:= \cov(\phi(B)Y_t, \phi(B)Y_{t+h}) \\
+        &= \cov(\theta(B)Z_t, \theta(B)Z_{t+h}) \\
+        &= 0 \quad \text{for } |h| > q
+      \end{align*}
+      Since $\{X_t\}$ and $\{Y_t\}$ have the same autocovariance function, we have $\gamma_W(h) = \gamma_{W'}(h)$. Therefore, we conclude that $\gamma_W(h) = 0$ for $|h| > q$.
     \end{solution}
   \item Apply Proposition~3.2.1 to $\{W_t\}$ to conclude that
     $\{X_t\}$ is also an ARMA($p,q$) process.

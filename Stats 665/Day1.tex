@@ -22,12 +22,6 @@ Martingale Limit Theory\\
 
 Durret - Probability Theory and Examples\\
 
-\section*{Questions}
-Ask what I need to get and review before classes start\\
-Measure Theory: not hardcore\\ 
-look into textbooks and ergodic theory\\
-Ask the professors of the classes to audit \\
-What is the $X.(\omega)$ noations
 
 \section*{Acronyms}
 R.V. - Random Variable\\
@@ -1615,6 +1609,577 @@ Then take $\hat{\alpha}(k) = \hat{\phi}_{k}$
         \item $X_t := g(Z_t, Z_{t-1}, \ldots)$ and $g$ is measurable and $E[|X_t|] < \infty$ then $X_t$ is ergodic.
     \end{enumerate}
 \end{remark}
+\subsection{11/11/2025 Lecture 20}
+\begin{remark}[Infrence for ARMA models]
+    We need to look at Strictly stationary processes\\
+    Suppose $\{X_t\}$ is strictly stationary process with mean $\mu$ and autocovariance function $\gamma_X(h)$\\
+    If $\{X_t\}$ is ergoic then $\bar{X}_n : = \frac{1}{n} \sum_{t=1}^{n} X_t \xrightarrow{a.s.} \mu$ as $n \to \infty$\\
+    This can be thought of as the time average converging to the space average.\\
+    IF $\{Z_t\}$ is IID then it is ergodic.\\
+    If $X_t = g(Z_t, Z_{t-1}, \ldots)$ then $X_t$ is ergodic and strictly stationary.\\
+    For the causal and invertable ARMA(p,q) $\phi(B)(X_t - \mu) = \theta(B) Z_t$ where $Z_t \sim WN(0, \sigma^2)$\\
+    Then $X_t = \mu + \sum_{j=0}^{\infty} \psi_j Z_{t-j}$, so it is strictly stationary and ergodic.\\
+    In particular $\bar{X}_n \xrightarrow{a.s.} \mu$ as $n \to \infty$\\
+    Sample Autocovariance Function:
+    \begin{align*}
+        \hat{\gamma}(h) &= \frac{1}{n} \sum_{t=h+1}^{n} (X_t - \bar{X}_n)(X_{t-h} - \bar{X}_n) \quad h \geq 0\\
+        &= \frac{1}{n} \sum_{t=h+1}^{n} X_t X_{t-h} - \frac{n-h}{n} \bar{X}_n^2 - \bar{X}_n \cdot \frac{1}{n} \sum_{t=h+1}^{n} (X_t + X_{t-h})\\
+        &= \frac{1}{n} \sum_{t=h+1}^{n} X_t X_{t-h} - \mu^2 - 2 \mu^2 \quad \text{Note that } X_t X_{t-h} \text{ is ergodic}
+    \end{align*}
+    Therefore $\frac{1}{n} \sum_{t=h+1}^{n} X_t X_{t-h} \xrightarrow{a.s.} E[X_t X_{t-h}] = \gamma(h) + \mu^2$\\
+    Thus $\hat{\gamma}(h) \xrightarrow{a.s.} \gamma(h)$ as $n \to \infty$
+    \begin{align*}
+        X_n = \frac{1}{n}(X_1 + X_2 + \ldots + X_n) \\
+        \text{If IID} \quad \sqrt{n}(\bar{X}_n - \mu) \xrightarrow{d} N(0, \gamma_X(0))\\
+        \var(\bar{X}_n) = \frac{1}{n}\gamma_X(0) 
+        \var(n \bar{X}_n) = n \gamma_X(0) + 2 \sum_{h=1}^{n-1} \left(1 - \frac{h}{n}\right) \gamma_X(h)\\
+        \var(\sqrt{n} (\bar{X}_n - \mu )) = \sum_{-\infty}^{\infty} \gamma_X(h) \text{ if converges}\\
+    \end{align*}
+    CLT for $\bar{X}_n$: 
+    \begin{align*}
+        \sqrt{n} (\bar{X}_n - \mu) \xrightarrow{d} N\left(0, \tau^2 := \sum_{h=-\infty}^{\infty} \gamma_X(h)\right)
+    \end{align*}
+    IF $X_t = \mu + \sum_{j=0}^{\infty} \psi_j Z_{t-j}$ where $Z_t \sim IID(0, \sigma^2)$ and $\sum_{j=0}^{\infty} |\psi_j| < \infty$ then the CLT holds and the spectral density function is of the form:\\
+    \begin{align*}
+        f_X(\lambda) &= \frac{\sigma^2}{2\pi} \sum_{h=-\infty}^{\infty} \gamma_X(h) e^{-i h \lambda} \\
+        f_X(0) &= \frac{\sigma^2}{2\pi} \left(\sum_{j=0}^{\infty} \psi_j\right)^2 = \frac{1}{2\pi} \sum_{h=-\infty}^{\infty} \gamma_X(h)\\
+        \tau^2 &:= \sum_{h=-\infty}^{\infty} \gamma_X(h) = 2\pi f_X(0)
+    \end{align*}
+    For $\hat \gamma_X(h)$ we need to have $E[X_t^4] < \infty$. and for $\hat \rho_X(h)$ we need $E[X_t^{2}] < \infty$\\
+    Book has information of these CLTs\\
+    In particular of $\{X_t\}$ is IID then
+    \begin{align*}
+        \sqrt{n} \begin{bmatrix}
+            \hat \rho(1)\\
+            \hat \rho(2)\\
+            \vdots \\
+            \hat \rho(m)
+        \end{bmatrix} \xrightarrow{d} N\left(0, I_m\right)
+    \end{align*}
+\end{remark}
+\begin{remark}
+    $X_t = \phi_0 + \phi_1 X_{t-1} + \ldots + \phi_p X_{t-p} + Z_t + \theta_1 Z_{t-1} + \ldots + \theta_q Z_{t-q}$\\
+    where $Z_t \sim IID(0, \sigma^2)$\\
+    $\phi_p \neq 0, \theta_q \neq 0$\\
+    $\phi(z) \theta(z) \neq 0$ for $|z| = 1$\\
+    \begin{align*}
+        \mu &= \frac{\phi_0}{1 - \phi_1 - \ldots - \phi_p}
+    \end{align*}
+    Center the data: $X_t = X_t - \bar X_t$ and fit the model $\phi(B) X_t = \theta(B) Z_t$\\
+    Parameter Space: Let $\beta = (\phi_1, \ldots, \phi_p, \theta_1, \ldots, \theta_q) \in \mathbb{R}^{p+q}$ \\
+    $\mathbb{C} = \{\beta \in \mathbb{R}^{p+q} | \phi(z) \neq 0, \theta(z) \neq 0 \text{ for } |z| \leq 1\}$\\
+    Consider AR(p): $X_t = \phi_1 X_{t-1} + \ldots + \phi_p X_{t-p} + Z_t$\\
+    \begin{align*}
+        X_{p+1} &= \phi_1 X_{p} + \ldots + \phi_p X_{1} + Z_{p+1}\\
+        X_{p+2} &= \phi_1 X_{p+1} + \ldots + \phi_p X_{2} + Z_{p+2}\\
+        &\vdots \\
+        X_{n} &= \phi_1 X_{n-1} + \ldots + \phi_p X_{n-p} + Z_{n}
+    \end{align*}
+    Now we can do least squares to estimate $\phi_1, \ldots, \phi_p$\\
+    \begin{align*}
+        \begin{bmatrix}
+            X_{p+1} \\
+            X_{p+2} \\
+            \vdots \\
+            X_{n}
+        \end{bmatrix} &=
+        \begin{bmatrix}
+            X_{p} & X_{p-1} & \ldots & X_{1} \\
+            X_{p+1} & X_{p} & \ldots & X_{2} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            X_{n-1} & X_{n-2} & \ldots & X_{n-p}
+        \end{bmatrix}
+        \begin{bmatrix}
+            \phi_1 \\
+            \phi_2 \\
+            \vdots \\
+            \phi_p
+        \end{bmatrix} +
+        \begin{bmatrix}
+            Z_{p+1} \\
+            Z_{p+2} \\
+            \vdots \\
+            Z_{n}
+        \end{bmatrix}\\
+    \end{align*}
+    LSE of $\phi = (\phi_1, \ldots, \phi_p)$ is given by:
+    \begin{align*}
+        \hat \phi_{LSE} = (X^T X)^{-1} X^T Y
+    \end{align*}
+    Where $X$ is the design matrix and $Y$ is the response vector.\\
+\end{remark}
+\begin{remark}[Yule Walker Estimator]
+    Also consider the Yule-Walker Estimator for AR(p)\\
+    \begin{align*}
+        \gamma(1) &= \phi_1 \gamma(0) + \phi_2 \gamma(-1) + \ldots + \phi_p \gamma((p-1))\\
+        \gamma(2) &= \phi_1 \gamma(1) + \phi_2 \gamma(0) + \ldots + \phi_p \gamma((p-2))\\
+        &\vdots \\
+        \gamma(p) &= \phi_1 \gamma(p-1) + \phi_2 \gamma(p-2) + \ldots + \phi_p \gamma(0)
+    \end{align*}
+    \begin{align*}
+        \hat \Gamma_p \phi = \hat \gamma_p\\
+        \hat \phi_{YW} = \hat \Gamma_p^{-1} \hat \gamma_p
+    \end{align*}
+\end{remark}
+\subsection{11/13/2025 Lecture 21}
+\begin{remark}
+    $\phi(B)X_t = \theta(B) Z_t$ where $Z_t \sim IID(0, \sigma^2)$\\
+    $\beta = (\phi_1, \ldots, \phi_p, \theta_1, \ldots, \theta_q) \in \mathbb{R}^{p+q}$ \\
+    $\mathbb{C} = \{\beta \in \mathbb{R}^{p+q} | \phi(z) \neq 0, \theta(z) \neq 0 \text{ for } |z| \leq 1\}$\\
+    Consider AR(p): $X_t = \phi_1 X_{t-1} + \ldots + \phi_p X_{t-p} + Z_t$\\
+    Yule Walker Estimator:
+    \begin{align*}
+        \hat \phi_{YW} = \hat \Gamma_p^{-1} \hat \gamma_p
+    \end{align*}
+    Where $\hat \Gamma_p = [\hat \gamma(i-j)]_{i,j=1}^{p}$ and $\hat \gamma_p = [\hat \gamma(1), \ldots, \hat \gamma(p)]^T$\\
+    LSE Estimator:
+    \begin{align*}
+        \hat \phi_{LSE} = (X^T X)^{-1} X^T Y
+    \end{align*}
+    Where $X$ is the design matrix and $Y$ is the response vector.\\
+    Define $Y = [X_{p+1}, X_{p+2}, \ldots, X_n]^T$ and $X$ is the matrix with rows $[X_{t-1}, X_{t-2}, \ldots, X_{t-p}]$ for $t = p+1, \ldots, n$\\
+    Let $Y^*$ and $X^*$ be the time starting at 0 values.\\
+    $\phi^* = (X^{*T} X^*)^{-1} X^{*T} Y^*$\\
+    Then $\hat \phi_{LSE} - \phi = \phi^* - \phi + o_p(1/\sqrt{n})$\\
+    Note: $\frac{1}{n} X^{*T} X^* \xrightarrow{a.s.} \Gamma_p$ as $n \to \infty$ \\
+    $\implies (\frac{1}{n} X^{*T} X^*)^{-1} \xrightarrow{a.s.} \Gamma_p^{-1}$ as $n \to \infty$\\
+\end{remark}
+\begin{proposition}
+    IF $\{X_t\}$ is a causal AR(p) with $Z_T \sim IID(0, \sigma^2)$ then \begin{align*}
+        \sqrt{n}(\phi^* - \phi) \xrightarrow{d} N(0, \sigma^2 \Gamma_p^{-1}) \text{ as } n \to \infty
+    \end{align*}
+    This also does not depend on $\sigma^2$ 
+    \begin{proof}
+        \begin{align*}
+            \phi^* &= (X^{*T} X^*)^{-1} X^{*T} Y^* \\
+            &= (X^{*T} X^*)^{-1} (X^{*T} X^* \phi + X^{*T} Z) \\
+            &= \phi + (X^{*T} X^*)^{-1} X^{*T} Z \\
+            \implies \phi^* - \phi &= (\frac{1}{n} X^{*T} X^*)^{-1} \cdot \frac{1}{\sqrt{n}} X^{*T} Z \cdot \frac{1}{\sqrt{n}}\\
+            \sqrt{n}(\phi^* - \phi) &= (\frac{1}{n} X^{*T} X^*)^{-1} \cdot \frac{1}{\sqrt{n}} X^{*T} Z
+        \end{align*}
+        Will do CLT on $\frac{1}{\sqrt{n}} X^{*T} Z$\\
+        Will apply Slutsky's Theorem\\
+        $X^{*T} Z = \sum_{t=1}^{n} Z_t \begin{bmatrix}
+            X_{t-1} \\
+            X_{t-2} \\
+            \vdots \\
+            X_{t-p}
+        \end{bmatrix}$\\
+        Let $\mathcal{F}_t = \sigma(X_{1-p}, \ldots, X_t)$\\
+        Then $\mathcal{F}_t \subset \mathcal{F}_{t+1}$\\ 
+        And $S_t := \sum_{k=1}^{t} Z_k \begin{bmatrix}
+            X_{k-1} \\
+            X_{k-2} \\
+            \vdots \\
+            X_{k-p}
+            \end{bmatrix} \in \mathcal{F}_t$\\
+        Note that 
+        \begin{align*}
+            E[S_{t} | \mathcal{F}_{t-1}] &= E[S_{t-1} + Z_t X_t | X_{1-p}, \ldots, X_{t-1}]\\
+            &= S_{t-1} 
+        \end{align*}
+        by the previous staements, this shows that $\{S_t, \mathcal{F}_t\}$ is a martingale.\\
+        IE increasing sequence of sigma algebras and $E[|S_t|] < \infty$ and $E[S_t | \mathcal{F}_{t-1}] = S_{t-1}$\\
+        Apply Martingale CLT:
+        \begin{align*}
+            \frac{1}{n} \sum_{t=1}^{n} E\left[ Z_t X_{t-i} X_{t-j} | \mathcal{F}_{t-1}\right] &= \frac{1}{n} \sum_{t=1}^{n} X_{t-i} X_{t-j} E[Z_t^2 | \mathcal{F}_{t-1}]\\
+            &= \sigma^2 \cdot \frac{1}{n} \sum_{t=1}^{n} X_{t-i} X_{t-j} \xrightarrow{a.s. / p} \sigma^2 \gamma_X(i-j) \text{ as } n \to \infty
+        \end{align*}
+        Additionally, the Lindeburg condition holds since 
+        \begin{align*}
+            \frac{1}{n} \sum_{t=1}^{n} E\left[ Z_t^2 ||X_t||^2 \cdot I\left(||X_t||^2|Z_t|^2 > \epsilon n \right) | \mathcal{F}_{t-1}\right] &\xrightarrow{a.s.} 0 \text{ as } n \to \infty
+        \end{align*}
+        By the MCLT we have $\frac{1}{\sqrt{n}} S_n \xrightarrow{d} N(0, \sigma^2 \Gamma_p)$ as $n \to \infty$\\
+        By Slutsky's Theorem we have:
+        \begin{align*}
+            \sqrt{n}(\phi^* - \phi) &= (\frac{1}{n} X^{*T} X^*)^{-1} \cdot \frac{1}{\sqrt{n}} X^{*T} Z \xrightarrow{d} N(0, \sigma^2 \Gamma_p^{-1}) \text{ as } n \to \infty
+        \end{align*}
+    \end{proof}
+\end{proposition}
+\begin{remark}
+    The LSE and Yule-Walker estimators are asymptotically equivalent ie
+    \begin{align*}
+        \sqrt{n}(\hat \phi_{LSE} - \hat \phi_{YW}) \xrightarrow{p} 0 \text{ as } n \to \infty
+    \end{align*}
+    
+\end{remark}
+\subsection{11/18/2025 Lecture 22}
+\begin{remark}
+    AR(p) $\phi(B) X_t = Z_t$ where $Z_t \sim IID(0, \sigma^2)$\\
+    Let $\hat \phi$ be either the LSE or Yule-Walker estimator.\\
+    Then $\sqrt{n}(\hat \phi - \phi) \xrightarrow{d} N(0, \sigma^2 \Gamma_p^{-1})$ as $n \to \infty$\\
+    Remark: sure fits an $AR(m)$ with $m > p$ and get the estimator $\hat \phi_m$\\
+    Then we can say that $\hat \phi_m \xrightarrow{p} \phi_m$ as $n \to \infty$.\\
+    And $\sqrt{n}(\hat \phi_m - \phi_m) \xrightarrow{d} N(0, \sigma^2 \Gamma_m^{-1})$ as $n \to \infty$\\
+    If $m>p$ then the $(m,m)$ entry of $\Gamma_m^{-1}$ is 1\\
+\end{remark}
+\begin{remark}[PACF]
+    For any statuionary process $\{X_t\}$ solve 
+    \begin{align*}
+        \min_{c_1, \ldots, c_p} E\left[\left(X_{t} - \sum_{j=1}^{p} c_j X_{t-j}\right)^2\right]
+    \end{align*}
+    then $\hat C_p$ is the lag-p partial autocorrelation coefficient ie the coefficient of $X_{t-p}$ in the above minimization problem.\\
+    \begin{align*}
+        c^* = \Gamma_p^{-1} \gamma_p
+    \end{align*}
+    Estimator $\hat \phi_{p,p}$ is the last element of $\hat \Gamma_p^{-1} \hat \gamma_p$\\
+    Now back to the AR(p) model if we fit AR(m) to the data then $\hat \phi_{m,m} $ satisfy: $\sqrt{n} \hat \phi_{m,m} \xrightarrow{d} N(0, 1)$ as $n \to \infty$\\
+    I applied timer seireis: plot data, plot acf, plot pacf
+\end{remark}
+\begin{remark}
+    ARMA(p,q): $\phi(B) X_t = \theta(B) Z_t$ where $Z_t \sim IID(0, \sigma^2)$\\
+    \begin{align*}
+        \mathbb{C} = \{ \beta = (\phi_1, \ldots, \phi_p, \theta_1, \ldots, \theta_q):\\ \phi(z) \theta(z) \neq 0 \text{ for } |z| \leq 1; \\
+        \phi(z) \theta(z) \neq 0 \text{ for } |z| \leq 1; \\
+        \phi_p \theta_q \neq 0;\\
+        \phi(z) \text{ and } \theta(z) \text{ have no common zeros} \}
+    \end{align*}
+    We cannot use LSE or Yule-Walker to estimate parameters.\\
+    Instead we use Maximum Likelihood Estimation (MLE) with the prior that $Z_t \sim N(0, \sigma^2)$\\
+    Then $X_t$ is a Gaussian process.\\
+    We can also consider the Quasi-Maximum Likelihood Estimation (QMLE) where we still use the Gaussian likelihood even if $Z_t$ is not Gaussian.\\
+\end{remark}
+\begin{definition}[Gaussian likelihood]
+    Let $\Gamma_n(\beta)$ be the $n \times n$ autocovariance matrix of $\mathbf{X}_n = (X_1, \ldots, X_n)^T$ where $X_t$ is the ARMA(p,q) process with parameter $\beta \in \mathbb{C}$.\\
+    Then the Gaussian likelihood function is given by:
+    \begin{align*}
+        L(\mathbf{X}, \mathbf{\beta}) := (2 \pi)^{-\frac{n}{2}} |\Gamma_n(\beta)|^{-\frac{1}{2}} \exp\left(-\frac{1}{2} \mathbf{X}_n^T \Gamma_n(\beta)^{-1} \mathbf{X}_n\right)
+    \end{align*}
+    The QMLE finds the $\hat \beta$ and $\hat \sigma^2$ that maximize the Gaussian likelihood function.\\
+    Can write $\Gamma_n(\beta, \sigma^2) = \sigma^2 \cdot G_n(\beta)$ where $G_n(\beta)$ is the correlation matrix of $\mathbf{X}_n$.\\
+    then 
+    \begin{align*}
+        L(\mathbf{X}_n, \beta, \sigma^2) := (2 \pi \sigma^2)^{-\frac{n}{2}} |G_n(\beta)|^{-\frac{1}{2}} \exp\left(-\frac{1}{2 \sigma^2} \mathbf{X}_n^T G_n(\beta)^{-1} \mathbf{X}_n\right)
+    \end{align*}
+    We can maximize wrt $\sigma^2$ first to get $\hat \sigma^2(\beta) = \frac{1}{n} \mathbf{X}_n^T G_n(\beta)^{-1} \mathbf{X}_n$\\
+    Then we can maximize the profile likelihood:
+    \begin{align*}
+        l(\mathbf{X}_n, \beta) = -\frac{n}{2} \log\left[ \frac{1}{n} \mathbf{X}_n^T G_n(\beta)^{-1} \mathbf{X}_n\right] - \frac{1}{2} \log |G_n(\beta)|
+    \end{align*}
+\end{definition}
+\begin{remark}[How to find QMLE]
+    minimize
+    \begin{align*}
+            \min_{\beta \in \mathbb{C}} \frac{1}{n}\log \left| G_n(\beta) \right| + \log \left[ \frac{1}{n} \mathbf{X}_n^T G_n(\beta)^{-1} \mathbf{X}_n \right]
+    \end{align*} 
+    And also take $\hat \sigma^2 = \frac{1}{n} \mathbf{X}_n^T G_n(\hat \beta)^{-1} \mathbf{X}_n$\\
+    \textbf{Method 1}:\\
+    Predict $X_1$ using no data, predict $X_2$ using $X_1$, predict $X_3$ using $X_1, X_2$ and so on.\\
+    let $v_{n-1}$ be the predictor of the next step using $n-1$ observations, i.e., $v_{n-1} = E[X_n \mid X_1, \ldots, X_{n-1}] / \sigma^2$.
+    \begin{align*}
+        \begin{bmatrix}
+            X_1 - \hat X_1 \\
+            X_2 - \hat X_2 \\
+            \vdots \\
+            X_n - \hat X_n
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            1 & 0 & 0 & \ldots & 0 \\
+            -\phi_{11} & 1 & 0 & \ldots & 0 \\
+            -\phi_{21} & -\phi_{22} & 1 & \ldots & 0 \\
+            \vdots & \vdots & \vdots & \ddots & \vdots \\
+            -\phi_{n-1,1} & -\phi_{n-1,2} & -\phi_{n-1,3} & \ldots & 1
+        \end{bmatrix}
+        \begin{bmatrix}
+            X_1 \\
+            X_2 \\
+            \vdots \\
+            X_n
+        \end{bmatrix}
+    \end{align*}
+    $\hat X_{j+1} = \hat \phi_j \begin{bmatrix}
+        X_j \\
+        X_{j-1} \\
+        \vdots \\
+        X_{1}
+    \end{bmatrix}$
+\end{remark}
+\subsection{11/20/2025 Lecture 23}
+\begin{remark}
+    ARMA(p,q): $\phi(B) X_t = \theta(B) Z_t$ where $Z_t \sim IID(0, \sigma^2)$\\
+    Find the BLP of $X_{n+1}$ using $X_1, \ldots, X_n$\\
+    Ler $v_n = E[X_{n+1} - \hat X_{n+1}]^2$ be the mean squared error of the predictor and $r_j = \frac{v_j}{\sigma^2}$ \\
+    \begin{itemize}
+        \item $X_{j+1} - \hat X_{j+1}$ is independent across j\\
+        \item The joint densities of $\mathbf{X}_n$ and $[X_{n+1} - \hat X_{n+1}]$ are the same 
+    \end{itemize}
+    $L(X_n, \beta, \sigma^2) = \prod_{j=1}^{n} \frac{1}{2 \pi \sqrt{\sigma^2 r_{j-1}} } \exp\left(-\frac{(X_j - \hat X_j)^2}{2 \sigma^2 r_{j-1}}\right)$\\
+    $L(X_n, \beta, \sigma^2) = (2 \pi \sigma^2)^{-\frac{n}{2}} \left(\prod_{j=0}^{n-1} r_j\right)^{-\frac{1}{2}} \exp\left(-\frac{1}{2 \sigma^2} \sum_{j=1}^{n} \frac{(X_j - \hat X_j)^2}{r_{j-1}}\right)$\\
+    Maximize wrt $\sigma^2$ first to get $\hat \sigma^2(\beta) = \frac{1}{n} \sum_{j=1}^{n} \frac{(X_j - \hat X_j)^2}{r_{j-1}}$\\
+    Then we can maximize the log likelihood: (Let $S_n(\beta) = \sum_{j=1}^{n} \frac{(X_j - \hat X_j)^2}{r_{j-1}}$)
+    \begin{align*}
+        l(X_n, \beta) = -\frac{n}{2} \log\left[ \frac{1}{n} S_n(\beta) \right] - \frac{1}{2} \sum_{j=0}^{n-1} \log r_j
+    \end{align*}
+    To find MLE we minimize:
+    \begin{align*}
+        \min_{\beta \in \mathbb{C}} \frac{1}{n} \sum_{j=1}^{n} \frac{(X_j - \hat X_j)^2}{r_{j-1}} + \frac{1}{n} \sum_{j=0}^{n-1} \log r_j
+    \end{align*}
+    And we can instead take the minimization problem:
+    \begin{align*}
+        \min_{\beta \in \mathbb{C}} S_n(\beta) = \sum_{j=1}^{n} \frac{(X_j - \hat X_j)^2}{r_{j-1}}
+    \end{align*}
+\end{remark} 
+\begin{remark}
+    \textbf{Method 2} Periodogram Method\\
+    Suppose we have data $X_1, \ldots, X_n$ from a mean zero stationary process.
+\end{remark}
+\begin{definition}[10.1.2]
+    The periodogram function is defined as:
+    \begin{align*}
+        \omega_j &= \frac{2\pi j}{n}\\
+        I(\omega_j) &= \frac{1}{n} \left| \sum_{t=1}^{n} X_t e^{-i \omega_j t} \right|^2 \quad -\pi < \omega_j \leq \pi, j = 1, 2, \ldots, n
+    \end{align*}
+    The set $F_n := \{j \in \mathbb{Z}: -\pi < \omega_j \leq \pi, j = 1, 2, \ldots, n\}$ are called the Fourier frequencies. $|F_n| = n$\\
+\end{definition}
+\begin{proposition}[10.1.2]
+    For each $j \in F_n$ 
+    \begin{align*}
+        I(\omega_j) &= \sum_{k=-(n-1)}^{n-1} \hat \gamma(k) e^{-i k \omega_j} 
+    \end{align*}
+    where $\hat \gamma(k)$ is the sample autocovariance function.
+    We can see that the periodogram is a good estimator for the spectral density function since:
+    \begin{align*}
+        f(\lambda) &= \frac{1}{2 \pi} \sum_{k=-\infty}^{\infty} \gamma(k) e^{-i k \lambda} \\
+        I(\omega_j) &= \sum_{k=-(n-1)}^{n-1} \hat \gamma(k) e^{-i k \omega_j}
+    \end{align*}
+    $I(\omega_j)$ corresponds to an estimation of the Spectral Density Function at the Fourier frequencies.\\
+    $E[I(\omega_j)] = 2\pi f(\omega_j) $ as $n \to \infty$\\
+    Let $\alpha(\omega_j) = \frac{1}{\sqrt{n}} \sum_{t=1}^{n} X_t \cos(\omega_j t)$ and $\beta(\omega_j) = \frac{1}{\sqrt{n}} \sum_{t=1}^{n} X_t \sin(\omega_j t)$\\
+    Then $I(\omega_j) = \alpha(\omega_j)^2 + \beta(\omega_j)^2$\\
+    Note that $\alpha(\omega_j)$ and $\beta(\omega_j)$ are asymptotically independent \\
+    Let $G(\lambda, \beta) = \frac{1}{2\pi} \left| \frac{\theta(e^{-i\lambda})}{\phi(e^{-i\lambda})} \right|^2 = \frac{1}{\sigma^2} f(\lambda, \beta)$\\
+    Then $\alpha(\omega_j) \approx N(0, \frac{\sigma^2}{2} g(\omega_j, \beta)$
+    We then reach to the whittle likelihood function:
+    \begin{align*}
+        \min_{\beta \in \mathbb{C}} \sum_{j \in F_n} \left[ \frac{I(\omega_j)}{2\pi g(\omega_j, \beta)} + \log g(\omega_j, \beta) \right]
+    \end{align*}
+
+\end{proposition}
+\subsection{11/25/2025 Lecture 24}
+\begin{theorem}
+    Let $\{X_1, \dots, X_n\}$ be a relization of a ttritly stationary ARMA(p,q) model with $Z_t \sim IID(0, \sigma^2)$ and $\beta \in \mathbb{C}$ be the parameters of the model.\\
+    Then let $\hat \beta$ be the MLE, LSE, or Whittle Estimator then 
+    \begin{align*}
+        \sqrt{n}(\hat \beta - \beta) \xrightarrow{d} N(0, V(\beta)) \text{ as } n \to \infty
+    \end{align*}
+    Where $V(\beta) = \sigma^2  \begin{bmatrix}
+        E[U_t U_t^T] & E[U_t V_t^T] \\
+        E[V_t U_t^T] & E[V_t V_t^T]^{-1}
+    \end{bmatrix}$
+    With $U_t = (U_{t-1}, \ldots, U_{t-p})^T$ and $V_t = (V_{t-1}, \ldots, V_{t-q})^T$ and $\phi(\beta)U_t =Z_t$ and $\theta(\beta)V_t = Z_t$ with the same $Z_t$ for both equations.\\
+    Equivalently 
+    \begin{align*}
+        \sqrt{n}(\hat \beta - \beta) \xrightarrow{d} N(0, W^{-1}(\beta))\\
+        W(\beta) = \frac{1}{4\pi} \int_{-\pi}^{\pi} \left[ \nabla \log g(\lambda, \beta) \right] \left[ \nabla \log g(\lambda, \beta) \right]^T d\lambda\\
+        g(\lambda, \beta) = \frac{\sigma^2}{2\pi} \left| \frac{\theta(e^{-i\lambda}, \beta)}{\phi(e^{-i\lambda}, \beta)} \right|^2
+    \end{align*}
+\end{theorem}
+\begin{remark}
+    Suppose $\{X_t\}$ is a SS process with mean $\mu$ 
+    \begin{align*}
+        \sqrt{n}(\bar X_n - \mu) \xrightarrow{d} N(0, \tau^2) \text{ as } n \to \infty\\
+    \end{align*}
+    Where $\tau^2 = \sum_{h=-\infty}^{\infty} \gamma_X(h)$\\
+    $\hat \tau^ = \sum_{k=-h_n}^{h_n} \hat \gamma_X(k)$ where $h_n \to \infty$ and $\frac{h_n}{n} \to 0$ as $n \to \infty$\\
+    Then
+\end{remark}
+\begin{remark}[batch estimator]
+    Suppose $n = bm$ choose $m_n \to \infty$ and $\frac{m_n}{n} \to 0$ as $n \to \infty$\\
+    let 
+    \begin{align*}
+        X_1 , \ldots, X_m\\
+        X_{m+1}, \ldots, X_{2m}\\
+        \vdots \\
+        X_{(b-1)m + 1}, \ldots, X_{bm}
+    \end{align*}
+    Let $\bar X_{k} = \frac{1}{m} \sum_{t=(k-1)m + 1}^{km} X_t$ for $k = 1, 2, \ldots, b$\\
+    Then 
+    \begin{align*}
+        \sqrt{m} (\bar X_k - \bar X) \xrightarrow{d} N(0, \tau^2) \text{ as } m \to \infty\\
+        \hat \tau^2 = \frac{1}{b} \sum_{k=1}^{b} m (\bar X_k - \bar X)^2
+    \end{align*}
+\end{remark}
+\begin{remark}[Spectral Approach]
+    \begin{align*}
+        \tau^2 &= \sum_{h=-\infty}^{\infty} \gamma_X(h) = 2\pi f_X(0)\\
+        f_X(\lambda) &= \frac{1}{2\pi} \sum_{h=-\infty}^{\infty} \gamma_X(h) e^{-i h \lambda}\\
+    \end{align*}
+    The periodogram:
+    \begin{align*}
+        I(\omega_j) &= \frac{1}{n} \left| \sum_{t=1}^{n} X_t e^{-i \omega_j t} \right|^2 \quad \text{where } \omega_j = \frac{2\pi j}{n}, j = 1, 2, \ldots, n \quad -\pi < \omega_j \leq \pi
+    \end{align*}
+    $E[I(\omega_j)] \approx 2\pi f_X(\omega_j)$ as $n \to \infty$\\
+    $\frac{1}{2\pi 2 B_n +1} \sum_{j: |\omega_j| \leq B_n} I(\omega_j) \approx \hat \tau_3^2$ smoothing the periodogram 
+\end{remark}
+\begin{remark}[multivariate Time Series]
+    $\{\underline{X_t}: t \in \mathbb{Z}\}$ where $\underline{X_t} = (X_{t,1}, X_{t,2}, \ldots, X_{t,m})^T$ is an $m$-dimensional vector.\\
+    \begin{align*}
+        E[\underline{X_t}^2] \leq \infty \text{ for all } t \in \mathbb{Z}\\
+        \mu_{ti} = E[X_{t,i}] \quad i = 1, 2, \ldots, m\\
+        \gamma_{ij}(t+h, t) = Cov(X_{t+h, i}, X_{t,j}) = E[(X_{t+h,i} - \mu_{t+h,i})(X_{t,j} - \mu_{t,j})]\\
+        \Gamma(t+h, t) = [\gamma_{ij}(t+h, t)]_{i,j=1}^{m} \text{ is the autocovariance/crosscovariance matrix}\\
+    \end{align*}
+\end{remark}
+\begin{definition}
+    The time series $\{\underline{X_t}\}$ is said to be staitionary if 
+    \begin{itemize}
+        \item $E[\underline{X_t}] = \underline{\mu_0}$ for all $t \in \mathbb{Z}$ Time Invariant Mean
+        \item $\Gamma(t+h, t) = \Gamma(h,0) = \Gamma(h)$ for all $t, h \in \mathbb{Z}$ Time Invariant Covariance
+    \end{itemize}
+    Also consider $R(h) = [\rho_{ij}(h)]_{i,j=1}^{m}$ where $\rho_{ij}(h) = \frac{\gamma_{ij}(h)}{\sqrt{\gamma_{ii}(0) \gamma_{jj}(0)}}$ is the autocorrelation/crosscorrelation matrix.\\
+    \begin{itemize}
+        \item $\gamma_{ii}(0)$ is the autocovariance fn of the univariate sereis $\{X_{t,i}\}$
+        \item $|\gamma_{ij}(h)| \leq \sqrt{\gamma_{ii}(0) \gamma_{jj}(0)}$ by Cauchy-Schwarz Inequality
+        \item $\Gamma(h) = [\Gamma(-h)]^{T}$ for all $h \in \mathbb{Z}$
+        \item $sum_{j,k = 1}^{n} a_j^T \Gamma(j-k) a_k \geq 0$ for all $n \in \mathbb{N}$ and $a_1, \ldots, a_n \in \mathbb{R}^m$ (non-negative definite)
+        \item Strict Staitionarity is defined the same
+    \end{itemize}
+\end{definition}
+\subsection{12/02/2025 Lecture 25}
+\begin{definition}[11.3.1 Multivariate ARMA(p,q) Models]
+    $\{\underline{X_t}, t \in \mathbb{Z}\}$ is an $m$-variate ARMA(p,q) process if\\
+    $\{\underline{X_t}\}$ is the stationary solution of the difference equations:
+    \begin{align*}
+        X_t - \Phi_1 X_{t-1} - \ldots - \Phi_p X_{t-p} = Z_t + \Theta_1 Z_{t-1} + \ldots + \Theta_q Z_{t-q}\\
+        \Phi(B) \underline{X_t} = \Theta(B) \underline{Z_t}
+    \end{align*}
+    Where $\Phi_i$ and $\Theta_j$ are $m \times m$ coefficient matrices for $i = 1, \ldots, p$ and $j = 1, \ldots, q$\\ 
+    And $\{\underline{Z_t}\} \sim WN(0, \Sigma_Z)$ is a multivariate white noise process with $E[Z_t] = 0$ and $Cov(Z_t, Z_s) \Sigma_Z$ for all $t \in \mathbb{Z}$\\
+    $\Phi(z) = I_m - \Phi_1 z - \ldots - \Phi_p z^p$ and $\Theta(z) = I_m + \Theta_1 z + \ldots + \Theta_q z^q$\\
+    Consider the example: for an m = 2 variate ARMA(2,2) process:
+    \begin{align*}
+        \underline{X_t} = \begin{bmatrix}
+            0.3 & 0.1 \\
+            0.1 & 0.5
+        \end{bmatrix} \underline{X_{t-1}} + \begin{bmatrix}
+            0.1 & 0.05 \\
+            0.03 & 0.1
+        \end{bmatrix} \underline{X_{t-2}} + \underline{Z_t} + \begin{bmatrix}
+            0.5 & 0.1 \\
+            0.1 & 0.6
+        \end{bmatrix} + \underline{Z_{t-1}} + \begin{bmatrix}
+            0.2 & 0.1 \\
+            0.1 & 0.3
+        \end{bmatrix} \underline{Z_{t-2}} 
+    \end{align*}
+    This is a system of question with the cross terms.\\
+\end{definition}
+\begin{example}[MV AR(1)]
+    $X_t = \Phi X_{t-1} + Z_t$ where $Z_t \sim WN(0, \Sigma_Z)$\\
+    $\Phi = UDV'$
+    $P(\Phi) = \max(|\lambda_i|: |\lambda I - \Phi| = 0)$\\
+    $\Phi^k \to 0$ as $k \to \infty$ iff $P(\Phi) < 1$\\
+    Equivalently $|\Phi(z)| = |I - \Phi z|$ for $|z| \leq 1$\\
+\end{example}
+\begin{theorem}[11.3.1]
+    If $\det \Phi(z) \neq 0$ for $|z| \leq 1$ then $\{\underline{X_t}\}$ has the unique stationary solution of the form 
+    \begin{align*}
+        X_t = \sum_{j=0}^{\infty} \Psi_j Z_{t-j}
+    \end{align*}
+    where $\Psi(z) = \sum_{j=0}^{\infty} \Psi_j z^j = \Phi^{-1}(z) \Theta(z)$ for $|z| \leq 1$\\
+    We can do a fast inversion of $\Phi(z)$ by taking a ton of determinants\\
+    Similarly we can see for invertability if $\det \Theta(z) \neq 0$ for $|z| \leq 1$ then $X_t$ is invertible in the sense that $Z_t = \sum_{j=0}^{\infty} \Pi_j X_{t-j}$ where $\sum_{j=0}^{\infty} ||\Pi_j|| < \infty$ and $\Pi(z) = \sum_{j=0}^{\infty} \Pi_j z^j = \Theta^{-1}(z) \Phi(z)$ for $|z| \leq 1$\\
+\end{theorem}
+\begin{example}
+    If $Z_t \sim IID N(0, \Sigma_Z)$ then $\{X_t\}$ is a Gaussian process.\\
+    If $\{X_t\}$ is gaussian with autocovariance function $\Gamma_X(h)$ and $Y_t$ is another gaussian process with autocovariance function $\Gamma_Y(h)$ and $\Gamma_X(h) = \Gamma_Y(h)$ for all $h \in \mathbb{Z}$ then $\{X_t\}$ and $\{Y_t\}$ have the same distribution and same coeeficients\\
+    Note we cannot have the same "no same roots" condition as the univariate case since the determinant of a matrix polynomial can have multiple roots even if the matrix polynomial does not.\\
+\end{example}
+\begin{remark}[Estimation]
+    Mean: $\underline{\mu} = E[\underline{X_t}]$ can be estimated by $\bar X_n = \frac{1}{n} \sum_{t=1}^{n} X_t$\\
+    Autocovariance: $\Gamma(h) = Cov(X_{t+h}, X_t)$ can be estimated by
+    \begin{align*}
+        \hat \Gamma(h) = \frac{1}{n} \sum_{t=1}^{n - |h|} (X_{t+|h|} - \bar X_n)(X_t - \bar X_n)^T
+    \end{align*}
+    For $VAR(p)$ model: $X_t = \Phi_1 X_{t-1} + \ldots + \Phi_p X_{t-p} + Z_t$ where $Z_t \sim WN(0, \Sigma_Z)$\\
+    We can use LSE or Yule-Walker to estimate the parameters.\\
+    For VARMA(p,q) model we can use MLE or QMLE to estimate the parameters.\\
+\end{remark}
+\subsection{12/04/2025 Lecture 26}
+\begin{definition}[Factor Models]
+    $X_i = A F_i + e_i$ where
+    \begin{itemize}
+        \item $X_i$ is the observed $p$-variate time series
+        \item $F_i$ is the unobserved $r$-variate factor time series with $r < p$
+        \item $A$ is the $p \times r$ loading matrix
+        \item $e_i$ is the $p$-variate noise vector 
+    \end{itemize}
+    $X_{ij} = \sum_{k=1}^{r} a_{jk} f_{ik} + e_{ij}$ for $j = 1, 2, \ldots, p$\\
+\end{definition}
+\begin{example}[Model 1]
+    Assume $f_t$ are iid normal with mean 0 and covariance $I_r$\\
+    Assume $e_t$ are iid normal with mean 0 and covariance $\Sigma_e$ where $\Sigma_e$ is diagonal.\\
+    $F_t$ and $e_t$ are independent for all $t$\\
+    Assume $A' \sigma A$ is a diagonal matrix with distinct eigenvalues.\\
+    Then
+    \begin{align*}
+        \cov(X_t) &= A \cov(F_t) A^T + \cov(e_t)\\
+        &= A A^T + \Sigma_e
+    \end{align*}
+    Thus $X_T = A Q Q' f_t + e_t$ for any orthogonal matrix $Q$ since $Q Q' = I_r$\\
+    $Q' A' \Sigma_e A Q$ is also diagonal with distinct eigenvalues.\\
+    Also $m$ is fixed\\
+    This is the classical factor model\\
+\end{example}
+\begin{example}[Model 2: High Dimensional Factor Model]
+    M is large, $m \to \infty$ as $n \to \infty$\\
+    r is fixed\\
+    Assume $f_t$ are iid normal with mean 0 and covariance $I_r$\\
+    Assume $e_t$ are iid normal with mean 0 and covariance $\Sigma_e$ for a general covariance matrix $\Sigma_e$\\
+    $A = UDV'$ 
+\end{example}
+\subsection{12/09/2025 Lecture 27}
+\begin{remark}
+    consider $X_i = U \Lambda f_i + Z_i$ with r factors where
+    \begin{itemize}
+        \item $X_i$ is the observed $p$-variate time series
+        \item $f_i$ is the unobserved $r$-variate factor time series with $r < p$
+        \item $U$ is the $p \times r$ loading matrix with orthonormal columns
+        \item $\Lambda$ is a $r \times r$ diagonal matrix with positive diagonal entries
+        \item $Z_i$ is the $p$-variate noise vector with covariance $\sigma^2 I_p$
+    \end{itemize}
+    Metric between teo suubspaces. \\
+    The let $U$ and $\hat U$ be two $p \times r$ orthonormal matrices.\\
+    Then the distance between the column spaces of $U$ and $\hat U$ is defined as:
+    \begin{align*}
+        d(U, \hat U) = ||UU' - \hat U \hat U'||_2
+    \end{align*}
+
+\end{remark}
+\begin{theorem}[Wedins theorem ]
+    Suppose $X = UDV' + Z$ and $\hat X = \hat U \hat D \hat V' + \hat Z$ where
+    \begin{itemize}
+        \item $U$ and $\hat U$ are $p \times r$ orthonormal matrices
+        \item $V$ and $\hat V$ are $n \times r$ orthonormal matrices
+        \item $D$ and $\hat D$ are $r \times r$ diagonal matrices with positive diagonal entries
+        \item $Z$ and $\hat Z$ are noise matrices
+    \end{itemize}
+    Then 
+    \begin{align*}
+        ||U_{\perp}' \hat U||_2 \leq \frac{Z ||Z||}{\sigma_r}
+    \end{align*}
+\end{theorem}
+\begin{remark}[Operator Norm: of Gaussian RM ]
+    Sudokov-Fermque Inequality:\\
+    Let $\{X\}$ and $\{Y\}$ be mean zero Gaussian random vectors. \\
+    Assume $E(X_t-X_s)^2 \leq E(Y_t - Y_s)^2$ for all $s, t$ in the index set T.\\
+    Then
+    \begin{align*}
+        E\left[\sup_{t \in T} X_t \right] \leq E\left[\sup_{t \in T} Y_t \right]
+    \end{align*}
+\end{remark}
+\begin{theorem}[7.3.1]
+    Let $A$ be $d_1 \times d_2$ matrix with entries $A_{ij} \sim N(0, \sigma^2)$ iid.\\
+    such that $E[\alpha' vec(A)] \leq ||\alpha||$ for all $\alpha \in \mathbb{R}^{d_1 d_2}$\\
+    Then
+    \begin{align*}
+        E[||A||] \leq (\sqrt{d_1} + \sqrt{d_2})
+    \end{align*}
+    \begin{proof}
+        
+    \end{proof}
+\end{theorem}
 
 
 \end{document}
