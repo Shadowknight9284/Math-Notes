@@ -43,6 +43,7 @@ build/
 
 # Virtual environments created by common tools
 .venv/
+myenv/
 env.bak/
 
 # ---- OS files ----
