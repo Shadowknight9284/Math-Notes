@@ -1,0 +1,37 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Stats}
+\newcommand{\assignment}{Homework 6.2}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\begin{questions}
+\question Why do we have the nugget as a point mass as opposed to an indicator for some epsilon neighborhood around 0, since it naturally corresponds to literal nugget jumps with some "width".
+
+I am assuming it is due to a struggle with parameter estimation and our $\epsilon$ being another potentially useless parameter which messes with the RMSE of our other estimates. As well as it might not have a useful impact in most model, but I don't see why it should not be a relevant adjustment of this model. 
+
+\question I find the nugget and its relation the smoothness of the model pretty interesting. Since the nuggets simply just adds a constant to the eigenvalues of the model, we can "subtract" up to the smallest eigenvalue and add any amount (since we sill retain PSD). This messes with the smoothness parameter. And I find it most interesting that this can actually be used to some advantage as we might find a better fit to data.
+
+Also I am slow to understanding the exact reason why the nugget makes discerning between 10-11 derivatives, compared to 0-1 derivatives as I was under the impression the resolution understanding derivatives degrades with smaller data size. I am pretty sure it is due to something with the the way the linearly adjusting eigenvalues, does not linearly affect the interpretation of smoothness. But that is more of a hunch. I will be reading more.
+
+\question Can we combine a GP model with a correlated isotropic Poisson process starting at some origin we define to make an analogy to the the nugget effect. We are doing effective the same result of having passion distributed "nuggets". I might find it difficult to define the isotropic Possion process, but I am certain it is worth looking into. 
+
+I spent some time later to look into these and it seems like there a few analogies. I was describing something similar to a Levy jump process but in space. Which is similar to what is described in the following paper: doi: 10.1070/RM2004v059n01ABEH000701. $X(r) = Y(r) + J(r)$ where $Y \sim GP$ and $J$ is the Levy process. Frankly, I need to parse this paper more, but this was the thing that I found that was most similar.
+
+\question I was looking more into why that $P_0$ and $P_1$ must be either be orthogonal or equivalent since I feel like I dont understand what the premise of the statement truely entails and I came across the following paper: https://arxiv.org/pdf/2101.07860 "Equivalence of measures and asymptotically optimal linear prediction for Gaussian random fields with fractional-order covariance operators". It explains more indepth the proof of the prior statement. It took a long time to parse it but, I feel like I understand better. Essentially this means that for any one model, we cannot rule it in favor of another model with probability one since we cannot construct a measure that perfectly distinguishes between them. I feel like I would appreciate this more with more measure theory background.
+
+\question Singularity of Measures are an interesting topic that also came up in the Time Series Class (665) but I didnt really appreciate what it entails until now and how especially in cases where we cannot generate a large amount of data. It would be useful to understand the class of models and measures that can reasonable come about from the data observed. 
+
+
+\end{questions}
+
+\end{document}

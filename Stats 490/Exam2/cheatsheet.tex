@@ -1,0 +1,690 @@
+\documentclass[7pt,letterpaper,landscape]{extarticle}
+\usepackage[landscape,margin=0.2in]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+\usepackage{mathtools}
+\usepackage{parskip}
+% ---------- Layout knobs ----------
+\setlength{\columnsep}{6pt}
+\setlength{\columnseprule}{0.3pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3pt}
+\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{1pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+\setlist{nosep,leftmargin=*,labelsep=3pt}
+\renewcommand{\arraystretch}{0.92}
+\pagestyle{empty}
+% ---------- Section styling ----------
+\newcommand{\secbar}[1]{%
+  \vspace{2pt}%
+  {\colorbox{black!80}{\parbox{\dimexpr\linewidth-2\fboxsep}{\color{white}\small\bfseries #1}}}\par%
+  \vspace{1pt}%
+}
+\newcommand{\subsec}[1]{\vspace{1pt}\textbf{\small #1}\par}
+% ---------- Math shortcuts ----------
+\newcommand{\MSE}{\mathrm{MS}_E}
+\newcommand{\MST}{\mathrm{MS}_{\text{Treat}}}
+\newcommand{\SSE}{\mathrm{SS}_E}
+\newcommand{\SST}{\mathrm{SS}_T}
+\newcommand{\SSB}{\mathrm{SS}_{\text{Blk}}}
+\newcommand{\SSA}{\mathrm{SS}_A}
+\newcommand{\SSAB}{\mathrm{SS}_{AB}}
+\newcommand{\ybar}{\bar{y}}
+\begin{document}
+\begin{multicols*}{4}
+
+\begin{center}
+\textbf{\normalsize DOE Mid-Term 2 Reference Sheet}\\[-1pt]
+{\footnotesize Blocking $\bullet$ Factorials $\bullet$ $2^K$ Designs}
+\end{center}
+
+% ------------------------------------------------------------------
+\secbar{1. RCBD — Randomized Complete Block}
+\textbf{When:} 1 known, controllable nuisance. ``Block what you can, randomize what you cannot.''
+
+\textbf{Model} ($a$ trts, $b$ blocks, $N=ab$):
+\[y_{ij}=\mu+\tau_i+\beta_j+\varepsilon_{ij},\ \varepsilon\sim NID(0,\sigma^2)\]
+$\sum\tau_i{=}0,\ \sum\beta_j{=}0$. Randomize \emph{within} each block. Extension of paired $t$-test.
+
+\textbf{SS:} $\SST{=}\mathrm{SS}_{\text{Tr}}{+}\SSB{+}\SSE$
+
+\textbf{DF:} $N{-}1{=}(a{-}1){+}(b{-}1){+}(a{-}1)(b{-}1)$
+
+\textbf{Fitted:} $\hat y_{ij}=\ybar_{i\cdot}+\ybar_{\cdot j}-\ybar_{\cdot\cdot}$
+
+{\scriptsize
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Source & SS & df & $F_0$\\
+\midrule
+Treat & SS$_{\text{Tr}}$ & $a{-}1$ & $\MST/\MSE$\\
+Blocks & $\SSB$ & $b{-}1$ & --\\
+Error & $\SSE$ & $(a{-}1)(b{-}1)$ & \\
+Total & $\SST$ & $N{-}1$ & \\
+\bottomrule
+\end{tabular}\par}
+
+\textbf{Test:} $F{=}\MST/\MSE\sim F(a{-}1,(a{-}1)(b{-}1))$
+
+\textbf{Blocking benefit:} $\sqrt{\MSE}$ smaller with blocks than without (e.g., 185.6 vs 230.1 in apple orchard example). If block variance is negligible, you lose df with no benefit.
+
+\subsec{Multiple Comparisons (RCBD)}
+Replace $n\to b$, $(N{-}a)\to(a{-}1)(b{-}1)$:
+\[\text{LSD}{=}t_{\alpha/2,(a-1)(b-1)}\sqrt{\tfrac{2\MSE}{b}}\]
+\[\text{HSD}{=}q_\alpha(a,(a{-}1)(b{-}1))\sqrt{\tfrac{\MSE}{b}}\]
+
+\subsec{Random Block (Mixed)}
+$\beta_j\sim N(0,\sigma_\beta^2)$. ANOVA \& $F$-test \emph{same}. Only $E(\mathrm{MS}_{\text{Blk}}){=}\sigma^2{+}a\sigma_\beta^2$.
+\[\hat\sigma_\beta^2{=}\tfrac{\mathrm{MS}_{\text{Blk}}-\MSE}{a}\]
+$\mathrm{Cov}(y_{ij},y_{i'j}){=}\sigma_\beta^2$ (same block).
+Use \texttt{lmer(Y $\sim$ factor(Trt) + (1|Block))}.
+
+Ignoring trt$\times$blk interaction $\Rightarrow$ pushed into $\MSE$ $\Rightarrow$ overestimated $\Rightarrow$ $\uparrow$Type II.
+
+\subsec{Relative Efficiency (RCBD vs CRD)}
+\[\text{RE}{=}\tfrac{\MSE^{\text{CRD}}}{\MSE^{\text{RCBD}}}\]
+Estimate $\MSE^{\text{CRD}}$:
+\[\MSE^{\text{CRD}}{\approx}\tfrac{(b{-}1)\mathrm{MS}_{\text{Blk}}{+}b(a{-}1)\MSE^{\text{RCBD}}}{ab{-}1}\]
+RE${>}1$: blocking helped.
+
+% ------------------------------------------------------------------
+\secbar{2. Latin Square}
+\textbf{When:} 2 nuisance (rows, cols) + 1 trt; \emph{no interactions}. Min $p{\ge}3$.
+
+$p\times p$ array: each symbol exactly once per row, once per column. Randomize among valid LS's.
+
+\textbf{Model:} $y_{ijk}{=}\mu{+}\alpha_i{+}\tau_j{+}\beta_k{+}\varepsilon_{ijk}$ (row, treatment, column)
+
+\textbf{DF:} $p^2{-}1{=}3(p{-}1){+}(p{-}2)(p{-}1)$
+
+{\scriptsize
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Source & SS & df\\
+\midrule
+Treat & SS$_{\text{Tr}}$ & $p{-}1$\\
+Rows & SS$_R$ & $p{-}1$\\
+Cols & SS$_C$ & $p{-}1$\\
+Error & $\SSE$ & $(p{-}2)(p{-}1)$\\
+Total & $\SST$ & $p^2{-}1$\\
+\bottomrule
+\end{tabular}\par}
+
+$F{=}\MST/\MSE$, df${=}(p{-}1,(p{-}2)(p{-}1))$.
+
+\textbf{Err df}: 3$\times$3$\to$2; 4$\times$4$\to$6. Interactions not estimable (confounded w/ err).
+
+\textbf{Standard form:} first row \& col in alphabetical order. Permute rows/cols/trts to get other valid designs.
+
+\textbf{In R:} \texttt{aov(Y $\sim$ rows + cols + trt)}\\ 
+Use \texttt{Error(rows+cols)} to suppress nuisance $p$-values.
+
+\textbf{Scheffe contrast} in LS: $\hat L = \sum c_j \bar y_j$; reject $H_0{:}L{=}0$ if $|\hat C|\ge SE(\hat C)\sqrt{(a{-}1)F_{\alpha,a-1,(p-2)(p-1)}}$.
+
+\textbf{Supermarket 4$\times$4 example:} Items and Supermarkets significant ($p$=2e-10, 0.0018); Brands not. Scheffé showed D significantly higher-priced than A, B, C.
+
+\textbf{To estimate interaction:} replicate $n$ times per cell.
+
+\subsec{LS replicated $n$ times}
+Total df $=np^2{-}1$. Old err SS $\to$ interaction SS (df $(p{-}2)(p{-}1)$). New err df $=p^2(n{-}1)$.
+
+Issues: few err df; balanced only. Fixes: replicate, Youden square, factorial.
+
+% ------------------------------------------------------------------
+\secbar{3. BIBD — Balanced Incomplete Block}
+\textbf{When:} physical limits force $k{<}a$ trts/block (e.g., 2 eyes, 3 eyedrop brands).
+
+\textbf{Params:} $a$=\#trts, $b$=\#blocks, $k$=trts/block, $r$=reps/trt, $\lambda$=\#pairs together.
+
+\textbf{Relations:}
+\[a r{=}b k,\quad \lambda\binom{a}{2}{=}b\binom{k}{2}\]
+\[\boxed{\lambda{=}\tfrac{r(k{-}1)}{a{-}1}}\]
+
+\textbf{$\lambda\in\mathbb Z$ = necessary, not sufficient.}
+
+\textbf{Balanced:} every pair of trts estimated with equal precision. Var(direct, same block)$=2\sigma^2$; Var(indirect)$=4\sigma^2$.
+
+\textbf{Connected:} all $\tau_i{-}\tau_j$ estimable via chains through shared blocks.\\
+\textbf{Disconnected:} trts split into groups never sharing a block $\Rightarrow$ some $\tau_i{-}\tau_j$ not estimable.
+
+Unreduced BIBD $=$ all $\binom{a}{k}$ combos (always exists, too many blocks).
+
+In R: \texttt{find.BIB(a,b,k)} in \texttt{crossdes}; test with \texttt{isGYD()}.
+
+\textbf{ANOVA}: same model as RCBD but SS$_{\text{Trt}}$ \emph{adjusted} for incompleteness. Specify block FIRST in \texttt{aov()}.
+
+\subsec{BIBD Existence check}
+Given $(a,r,k,b)$: (1) verify $ar{=}bk$; (2) compute $\lambda{=}r(k{-}1)/(a{-}1)$; (3) $\lambda{\notin}\mathbb Z\Rightarrow$ no BIBD.
+
+\textit{Ex 4.54:} $a{=}8,r{=}8,k{=}4,b{=}16$. $ar{=}64{=}bk$\checkmark. $\lambda{=}24/7{\approx}3.43{\notin}\mathbb Z\Rightarrow$ \emph{no BIBD}.
+
+\textit{Ex 4.50:} 4 trts, 6 blocks of 2. $r{=}3,\lambda{=}1$. Build: \{1,2\},\{1,3\},\{1,4\},\{2,3\},\{2,4\},\{3,4\}.
+
+% ------------------------------------------------------------------
+\secbar{4. Design Comparison}
+{\scriptsize
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Design & Controls / Assumes\\
+\midrule
+CRD & none; homogeneous units\\
+RCBD & 1 nuisance; no trt$\times$blk; complete blocks\\
+Latin Sq & 2 nuisance; no interactions; $p\times p$ balanced\\
+BIBD & 1 nuisance, $k{<}a$; $\lambda\in\mathbb Z$; all pairs balanced\\
+Factorial & all factors + interactions\\
+\bottomrule
+\end{tabularx}\par}
+
+{\scriptsize Known+controllable $\to$ Block; Known+uncontrollable $\to$ ANCOVA; Unknown $\to$ Randomize.}
+
+% ------------------------------------------------------------------
+\secbar{5. Two-Factor Factorial ANOVA}
+\textbf{Key:} treatments = ALL combinations of factor levels. Reveals interactions.
+
+\textbf{Model} ($N{=}abn$):
+\[y_{ijk}{=}\mu{+}\tau_i{+}\beta_j{+}(\tau\beta)_{ij}{+}\varepsilon_{ijk}\]
+$\sum\tau_i{=}\sum\beta_j{=}\sum_i(\tau\beta){=}\sum_j(\tau\beta){=}0$.
+
+\textbf{SS:} $\SST{=}\SSA{+}\mathrm{SS}_B{+}\SSAB{+}\SSE$
+
+\textbf{DF:} $abn{-}1=(a{-}1){+}(b{-}1){+}$ $(a{-}1)(b{-}1){+}ab(n{-}1)$
+
+\textbf{If $n{=}1$: interaction df = error df $\Rightarrow$ no pure error estimate.}
+
+{\scriptsize
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Src & df & MS & $F$\\
+\midrule
+A & $a{-}1$ & SS$_A/$df & MS$_A/\MSE$\\
+B & $b{-}1$ & SS$_B/$df & MS$_B/\MSE$\\
+AB & $(a{-}1)(b{-}1)$ & SS$_{AB}/$df & MS$_{AB}/\MSE$\\
+Err & $ab(n{-}1)$ & $\MSE$ & \\
+Tot & $abn{-}1$ & & \\
+\bottomrule
+\end{tabular}\par}
+
+\textbf{E(MS) — Fixed Effects:}
+$E(\text{MS}_A){=}\sigma^2{+}\tfrac{bn\sum\tau_i^2}{a-1}$;
+$E(\text{MS}_B){=}\sigma^2{+}\tfrac{an\sum\beta_j^2}{b-1}$;
+$E(\text{MS}_{AB}){=}\sigma^2{+}$ $\tfrac{n\sum\sum(\tau\beta)^2}{(a-1)(b-1)}$
+
+Check interaction FIRST: can mask main effects. Parallel lines $\Rightarrow$ no interaction.
+
+\textbf{Main effect}: avg change in response when factor level changes, \emph{averaged over all levels of other factors}.
+
+\textbf{Interaction}: effect of A depends on level of B (non-parallel interaction plot lines).
+
+\textbf{Factorial vs RCBD}: in RCBD randomization is within a block; in factorial all $ab$ combos randomized across experiment.
+
+\subsec{Marginality / Hierarchy Principle}
+Keep an insignificant main effect if its interaction is significant. Dropping main while keeping interaction yields uninterpretable model. Drop only if BOTH main effect AND all its interactions are insignificant.
+
+\subsec{Ways to estimate error in factorial}
+\begin{enumerate}[leftmargin=10pt]
+\item Replicate ($n{>}1$) — pure error from $ab(n{-}1)$ df.
+\item Pool insig.\ interactions into error (hidden replication).
+\item Tukey 1-df non-additivity test.
+\item Normal/half-normal plot of effects (unreplicated).
+\item Center points (pure error across center reps).
+\end{enumerate}
+
+\subsec{Tukey HSD (2-Factor)}
+Level of A (over all B): $n_{\text{eff}}{=}bn$. Cell combo: $n_{\text{eff}}{=}n$.
+\[\bar y_i{-}\bar y_j\pm q_\alpha(a,\text{df}_E)\sqrt{\tfrac{\MSE}{n_{\text{eff}}}}\]
+
+\subsec{Simultaneous CIs (Bonferroni)}
+$m$ planned comparisons at family $1{-}\alpha$: use $t_{\alpha/(2m),\text{df}_E}$.
+
+\subsec{Tukey 1-df Test ($n{=}1$)}
+Assumes $(\tau\beta)_{ij}{=}\gamma\tau_i\beta_j$. Costs 1 df. df$_E{=}(a{-}1)(b{-}1){-}1{=}ab{-}a{-}b$.
+\[SS_N{=}\tfrac{[\sum_{ij}y_{ij}\bar y_{i\cdot}\bar y_{\cdot j}-\bar y_{\cdot\cdot}(\SSA{+}\mathrm{SS}_B{+}ab\bar y_{\cdot\cdot}^2)]^2}{ab\cdot\SSA\cdot\mathrm{SS}_B}\]
+$F{=}SS_N/(\SSE{-}SS_N)/(ab{-}a{-}b)$. Large $p\Rightarrow$ no interaction evidence. Only detects $\tau_i\beta_j$ form.
+
+\textbf{Battery Life (Table 5.1):} $3\times3$, $n=4$. A ($p$=0.002), Temperature ($p$=1.9e-7), A$\times$T ($p$=0.019), MSE=675. Material 1 worst at high temp; Material 3 best overall.
+
+\subsec{Sample Size (Factorial)}
+\texttt{WebPower::wp.kanova(ndf=(a-1)(b-1), f=0.1/0.25/0.4, ng=ab, alpha, power)}. Large effect $f{=}0.4$.
+
+% ------------------------------------------------------------------
+\secbar{6. Three-Factor ANOVA}
+\[Y_{ijkl}{=}\mu{+}\tau_i{+}\beta_j{+}\gamma_k{+}(\tau\beta){+}(\tau\gamma){+}(\beta\gamma){+}(\tau\beta\gamma){+}\varepsilon\]
+$N{=}abcn$, $n{\ge}2$. df: $abcn{-}1=(a{-}1){+}(b{-}1){+}(c{-}1){+}(a{-}1)(b{-}1){+}(a{-}1)(c{-}1){+}(b{-}1)(c{-}1){+}(a{-}1)(b{-}1)(c{-}1){+}abc(n{-}1)$.
+
+\textbf{Bottling (Ex 5.3):} $3\times2\times2$, $n=2$. A: carbonation, B: pressure, C: speed. All main effects significant; no interaction ($p>0.05$). Use \texttt{aov(Y$\sim$A*B*C)}.
+
+\subsec{Factorial + Blocking (random)}
+\[Y_{ijk}{=}\mu{+}\tau_i{+}\beta_j{+}(\tau\beta){+}\delta_k{+}\varepsilon\]
+$\delta_k\sim N(0,\sigma_\delta^2)$; no blk$\times$trt. $\hat\sigma_\delta^2{=}(\mathrm{MS}_{\text{Blk}}{-}\MSE)/(ab)$.\\
+df: $abn{-}1=(a{-}1){+}(b{-}1){+}(a{-}1)(b{-}1){+}(n{-}1){+}(ab{-}1)(n{-}1)$.
+
+\subsec{LS w/ 2 Factors of Interest}
+$Y_{ijkl}{=}\mu{+}\alpha_i{+}\tau_j{+}\beta_k{+}(\tau\beta)_{jk}{+}\theta_l{+}\varepsilon$ (row, A, B, col). Err df${=}(ab{-}1)(ab{-}2)$.
+
+% ------------------------------------------------------------------
+\secbar{7. Contrasts \& Scheffé}
+$C{=}\sum c_i\mu_i$, $\hat C{=}\sum c_i\bar y_i$, $\sum c_i{=}0$:
+\[\mathrm{Var}(\hat C){=}\tfrac{\sigma^2}{n}\sum c_i^2;\quad T{=}\tfrac{\hat C}{\sqrt{\MSE/n\cdot\sum c_i^2}}\sim t_{N{-}a}\]
+\[\hat C\pm t_{\alpha/2,N{-}a}\sqrt{\tfrac{\MSE}{n}\sum c_i^2};\quad SS_C{=}\tfrac{(\sum c_i\bar y_i)^2}{\sum c_i^2/n}\ (1\,\text{df})\]
+
+\textbf{Scheffé}: reject $H_0{:}L{=}0$ if $|\hat C|{\ge}SE(\hat C)\sqrt{(a{-}1)F_{\alpha,a-1,N-a}}$. Controls Type I for \emph{all} possible contrasts simultaneously.
+
+\subsec{Response Curves}
+Std quantitative factor: $T^*{=}(T-\bar T)/\text{half-range}\in[-1,1]$. Fit polynomial in $T^*$; interact with qualitative factor for family of curves (e.g., Battery Life vs Temperature by Material Type).
+
+% ------------------------------------------------------------------
+\secbar{8. $2^K$ Factorial — Core}
+\textbf{Why:} $K$ factors each at 2 levels (hi/lo) $\to2^K$ runs. Screening. $4^4{=}256$ vs $2^4{=}16$. Building block for fractional factorials, CCD, RSM.
+
+\textbf{Notation:} (1)=all low; $a$=A high, others low; $ab$=A,B high; etc. Presence of letter = factor HIGH.
+
+\textbf{df for $2^4$:} 4 main + 6 two-way + 4 three-way + 1 four-way = 15 total.
+
+\textbf{General $2^K$ shorthand contrasts:}
+$C_A{=}(a{-}1)(b{+}1)(c{+}1)\cdots$; factor in effect $\to(j{-}1)$, factor not in effect $\to(j{+}1)$.
+
+For $n$ reps, $N{=}n\cdot 2^K$:
+\[\boxed{\text{Eff}{=}\tfrac{\text{Contrast}}{n\cdot 2^{K-1}}}\]
+\[\boxed{SS_{\text{eff}}{=}\tfrac{(\text{Contrast})^2}{n\cdot 2^K}}\]
+\[\mathrm{Var}(\text{Contrast}){=}n\cdot 2^K\sigma^2\]
+\[\mathrm{Var}(\text{Eff}){=}\tfrac{4\sigma^2}{N},\quad SE{=}\tfrac{2\sigma}{\sqrt N}\]
+
+Regression (coded $x\in\{-1,+1\}$): $Y{=}\beta_0{+}\sum\beta_ix_i{+}\cdots$
+\[\boxed{\hat\beta_j{=}\tfrac12\cdot\text{Eff}_j}\]
+(coded step $=2$, effect step $=1$; classic off-by-2 error!)
+
+Coded transform: $x{=}\tfrac{A-(L+H)/2}{(H-L)/2}$.
+
+CI for coeff: $\hat\beta{\pm}t_{\alpha/2,N-p}\sqrt{\MSE/(n\cdot2^K)}$ where $p{=}2^K$.
+
+\textbf{Orthogonality:} all contrast columns have $\sum c_i c_j{=}0$; $X'X{=}n2^K I$; estimates are uncorrelated; SS decompose additively.
+
+% ------------------------------------------------------------------
+\secbar{9. $2^2$ Design}
+\textbf{Contrasts:} $C_A{=}(a{-}1)(b{+}1){=}a{+}ab{-}b{-}(1)$; $C_B{=}(a{+}1)(b{-}1)$; $C_{AB}{=}(a{-}1)(b{-}1){=}ab{-}a{-}b{+}(1)$.
+
+\textbf{Effects (single rep):}
+\[A{=}\tfrac{ab+a-b-(1)}{2},\quad B{=}\tfrac{ab+b-a-(1)}{2}\]
+\[AB{=}\tfrac{ab-a-b+(1)}{2}\]
+
+{\scriptsize
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Trt & A & B & AB & Obs\\
+\midrule
+(1) & $-$ & $-$ & $+$ & $(1)$\\
+$a$ & $+$ & $-$ & $-$ & $a$\\
+$b$ & $-$ & $+$ & $-$ & $b$\\
+$ab$ & $+$ & $+$ & $+$ & $ab$\\
+\bottomrule
+\end{tabular}\par}
+
+AB col = product of A and B cols. All 3 contrasts mutually orthogonal (cross-products=0).
+
+\textbf{Regression ($2^2$):}
+\[\hat\beta_0{=}\tfrac{(1)+a+b+ab}{4},\quad \hat\beta_1{=}\tfrac{a-(1)+ab-b}{4}\]
+\[\hat\beta_2{=}\tfrac{b+ab-a-(1)}{4},\quad \hat\beta_{12}{=}\tfrac{(1)-a-b+ab}{4}\]
+
+\textbf{Single obs example (15,10,25,22):}
+$\hat A{=}11$, $\hat B{=}{-4}$, $\widehat{AB}{=}1$; $SS_A{=}121$, $SS_B{=}16$, $SS_{AB}{=}1$; Total=138; no error.
+
+\textbf{2-rep example (cells: 15/12, 10/10, 25/23, 22/25):}
+$\hat A{=}11.5$, $\hat B{=}{-1.5}$; $SS_A{=}264.5$, $SS_B{=}4.5$, $SS_{AB}{=}2$, SSE=13, MSE=3.25; $F_A{=}81.4$.
+
+\textbf{Ex 6.2 (chemical yield, $n{=}3$):} $\hat A{=}8.34$, $\hat B{=}{-5.01}$, $\widehat{AB}{=}0.56$; $SS_A{=}208.3$, $SS_B{=}75$; regression: $Y{=}27.5{+}4.167A{-}2.5B$.
+
+% ------------------------------------------------------------------
+\secbar{10. $2^3$ Design}
+7 effects; 8 vertices.
+
+{\scriptsize
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+Trt & A & B & AB & C & AC & BC & ABC\\
+\midrule
+(1) & $-$ & $-$ & $+$ & $-$ & $+$ & $+$ & $-$\\
+$a$   & $+$ & $-$ & $-$ & $-$ & $-$ & $+$ & $+$\\
+$b$   & $-$ & $+$ & $-$ & $-$ & $+$ & $-$ & $+$\\
+$ab$  & $+$ & $+$ & $+$ & $-$ & $-$ & $-$ & $-$\\
+$c$   & $-$ & $-$ & $+$ & $+$ & $-$ & $-$ & $+$\\
+$ac$  & $+$ & $-$ & $-$ & $+$ & $+$ & $-$ & $-$\\
+$bc$  & $-$ & $+$ & $-$ & $+$ & $-$ & $+$ & $-$\\
+$abc$ & $+$ & $+$ & $+$ & $+$ & $+$ & $+$ & $+$\\
+\bottomrule
+\end{tabular}\par}
+
+$SS_{\text{eff}}{=}(\text{Contrast})^2/(8n)$; shorthand: $C_A{=}(a{-}1)(b{+}1)(c{+}1)$; $C_{AB}{=}(a{-}1)(b{-}1)(c{+}1)$; $C_{ABC}{=}(a{-}1)(b{-}1)(c{-}1)$.
+
+\textbf{Effect of A in $2^3$:} $[(ab{-}b{+}a{-}(1)){+}(abc{-}bc{+}ac{-}c)]/4$.
+
+% ------------------------------------------------------------------
+\secbar{11. Unreplicated $2^K$ — 4 Strategies}
+Large $K\Rightarrow$ no error df. Main + low-order interactions dominate (sparsity principle).
+\begin{enumerate}[leftmargin=10pt]
+\item \textbf{Pool} $>\!2$nd-order interactions as error.
+\item \textbf{Hidden replication:} drop insig.\ factors; their SS $\to$ error.
+\item \textbf{Normal/Half-normal plot} (Daniel): under $H_0$, effects $\sim iid\,N(0,\sigma^2)$; outliers are active. \texttt{DanielPlot(model,half=FALSE)} or \texttt{qqnorm(effects)}.
+\item \textbf{Lenth's method} (see \S12).
+\end{enumerate}
+
+\textbf{$2^4$ example effects (A,B,C,D):} A=21.6, B=3.1, C=9.9, D=14.6, AB=0.1, AC=$-$18.1, AD=16.6 most significant per normal plot and Lenth.
+
+\textbf{Hidden replication:} drop B, pool B+AB+BC+BD+CD+3-way+4-way (10 df) as error. Keep A,C,D,AC,AD. Reduced model: MSE=19.5 (10 df).
+
+% ------------------------------------------------------------------
+\secbar{12. Lenth's Method}
+$X\sim N(0,\sigma^2)\Rightarrow\mathrm{med}(|X|)\approx 0.6745\sigma$; so $1.5\mathrm{med}(|X|)\approx\sigma$.
+
+$m{=}2^K{-}1$ effect estimates $c_1,\ldots,c_m$:
+\[s_0{=}1.5\cdot\mathrm{med}(|c_j|)\]
+\[\boxed{\mathrm{PSE}{=}1.5\cdot\mathrm{med}(|c_j|:|c_j|{<}2.5s_0)}\]
+\[\mathrm{ME}{=}t_{0.025,m/3}\cdot\mathrm{PSE}\ \text{(individual)}\]
+\[\mathrm{SME}{=}t_{\gamma,m/3}\cdot\mathrm{PSE},\ \gamma{=}1{-}\tfrac{1+0.95^{1/m}}{2}\ \text{(simultaneous)}\]
+$|c_j|{>}\mathrm{ME}\Rightarrow$ significant individually; $|c_j|{>}\mathrm{SME}\Rightarrow$ significant jointly.
+
+\textbf{$2^4$ worked example:}
+$s_0{=}1.5\times2.625{=}3.9375$; trim to $|c_j|{<}9.84$: PSE$=1.5\times1.75{=}2.625$.\\
+ME $= t_{0.975,5}\times2.625{=}2.571\times2.625{=}6.748$.\\
+Significant: A=21.6, C=9.9, D=14.6, AC=$-$18.1, AD=16.6.\\
+Compare: PSE=2.625 vs $\sqrt{MSE}{=}4.41$ from reduced model ($\approx$ close).
+
+\textbf{Conditional Inference Chart:} plot effects vs $\pm4\sigma/\sqrt{N}$ for a range of plausible $\sigma$ values. Effects outside band for all $\sigma$ are active regardless of error assumption. For $2^4$, $N=16$: band is $(\pm\sigma)$.
+
+In R: \texttt{LenthPlot(effects, alpha=0.05)} via \texttt{BsMD} package; or \texttt{halfnormal()} in \texttt{DoE.base}.
+
+% ------------------------------------------------------------------
+\secbar{13. Center Points}
+Add $n_C$ runs at $x_i{=}0\ \forall i$. Orthogonal to main effects/interactions $\Rightarrow$ does NOT change effect/SS estimates. Provides: (1) curvature test, (2) pure-error estimate.
+
+\textbf{Test curvature} ($H_0{:}\sum\beta_{ii}{=}0$, 1 df):
+\[SS_{\text{PQ}}{=}\tfrac{n_F n_C(\bar y_F{-}\bar y_C)^2}{n_F+n_C}\]
+$F{=}SS_{\text{PQ}}/\MSE$, df$(1,n_C-1)$ or use $\MSE$ from model.
+
+\textbf{Pure-error from center pts:}
+\[\MSE{=}s_C^2{=}\tfrac{\sum(y_{Ci}-\bar y_C)^2}{n_C-1}\]
+
+\textbf{$2^4$ example} ($n_C{=}4$: 73,75,66,69):
+$\bar y_C{=}70.75$; $s_C^2{=}16.25$; curvature $F{=}0.093$, $p{=}0.78$ (no curvature). Main-effect estimates unchanged.
+
+If curvature real $\Rightarrow$ augment with axial runs $\Rightarrow$ \textbf{Central Composite Design} (CCD) for RSM.
+
+% ------------------------------------------------------------------
+\secbar{14. Dispersion Effects}
+\textbf{Location:} mean of response. \textbf{Dispersion:} variance of response. A factor can have negligible location effect but large dispersion effect (e.g., Mixing Speed increases drug concentration uniformity without changing mean).
+
+\textbf{Procedure:}
+\begin{enumerate}[leftmargin=10pt]
+\item Fit location model with significant factors.
+\item Compute residuals from location model.
+\item For each effect column $j$: split residuals by sign; compute $s^2(j^+)$ and $s^2(j^-)$.
+\item $F_j^*{=}2\ln[s(j^+)/s(j^-)]{=}\ln[s^2(j^+)/s^2(j^-)]$.
+\item Half-normal plot of $F_j^*$; outliers = dispersion effects.
+\end{enumerate}
+
+\textbf{$2^4$ dispersion example:} Location model: A, C significant. Residuals computed. $F_B^*{=}2.386$ (highest); B has significant dispersion effect even though $B$ insignificant for location.
+
+In R: \texttt{disp\_effect <- apply(X, 2, function(y)\{2*log(sd(resid[y==1])/sd(resid[y==-1]))\})}; then \texttt{halfnormal(disp\_effect)}.
+
+% ------------------------------------------------------------------
+\secbar{15. Optimal Designs}
+$\hat\beta{=}(X'X)^{-1}X'y$; $\mathrm{Cov}(\hat\beta){=}\sigma^2(X'X)^{-1}$; $\mathrm{Var}(\hat y_x){=}\sigma^2 x'(X'X)^{-1}x$.
+
+\textbf{D-opt:} max $|X'X|\Leftrightarrow$ min gen.\ var$(\hat\beta)$. Choose subset of runs that minimizes variance of all $\hat\beta$ simultaneously.\\
+\textbf{G-opt:} min $\max_x\mathrm{Var}(\hat y_x)$ (min worst-case prediction variance).\\
+\textbf{I-opt:} min avg $\mathrm{Var}(\hat y_x)$ over design space.
+
+$2^K$ coded: $X'X{=}n2^K I\Rightarrow\mathrm{Var}(\hat\beta_j){=}\sigma^2/(n2^K)$ (same for all); determinant maximized $\Rightarrow$ $2^K$ is \emph{D- and G-optimal} on the hypercube.
+
+$2^2$ prediction: $\mathrm{Var}[\hat y]{=}\tfrac{\sigma^2}{4}(1{+}x_1^2{+}x_2^2{+}x_1^2x_2^2)$; max at corners $=\sigma^2$.
+
+% ------------------------------------------------------------------
+\secbar{16. Master Formula Table}
+{\scriptsize
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Quantity & Formula\\
+\midrule
+Effect ($2^K$) & $\text{Contrast}/(n\cdot 2^{K-1})$\\
+SS eff ($2^K$) & $(\text{Contrast})^2/(n\cdot 2^K)$\\
+Var(Eff) & $4\sigma^2/N$, $N{=}n\cdot 2^K$\\
+SE(Eff) & $2\sigma/\sqrt N$\\
+$\hat\beta_j$ (coded) & $\tfrac12\cdot\text{Eff}_j$\\
+Lenth $s_0$ & $1.5\,\mathrm{med}(|c_j|)$\\
+Lenth PSE & $1.5\,\mathrm{med}(|c_j|{:}|c_j|{<}2.5s_0)$\\
+Lenth ME & $t_{0.025,m/3}\cdot\text{PSE}$, $m{=}2^K-1$\\
+$SS_{\text{PQ}}$ & $n_Fn_C(\bar y_F{-}\bar y_C)^2/(n_F{+}n_C)$\\
+Cond.\ Inf.\ band & $\pm4\sigma/\sqrt{N}$ per $\sigma$ value\\
+RCBD df total & $(a{-}1){+}(b{-}1){+}(a{-}1)(b{-}1)$\\
+LS df total & $3(p{-}1){+}(p{-}2)(p{-}1)$\\
+BIBD $\lambda$ & $r(k{-}1)/(a{-}1)$\\
+BIBD relation & $ar{=}bk$\\
+Rand.\ blk var & $(\mathrm{MS}_{\text{Blk}}{-}\MSE)/a$\\
+Fact.\ blk var & $(\mathrm{MS}_{\text{Blk}}{-}\MSE)/(ab)$\\
+Disp.\ stat & $2\ln[s(j^+)/s(j^-)]$\\
+Contrast CI & $\hat C\pm t_{\alpha/2}\sqrt{\tfrac{\MSE}{n}\sum c_i^2}$\\
+Scheffé limit & $\sqrt{(a{-}1)F_{\alpha,a-1,N-a}}\cdot SE(\hat C)$\\
+Rel.\ Eff. & $(b{-}1)\mathrm{MS}_{\text{Blk}}/(ab{-}1)\MSE^{\text{RCBD}}$\\
+\bottomrule
+\end{tabularx}\par}
+
+% ------------------------------------------------------------------
+\secbar{17. PROC: Fill-in ANOVA Table}
+\textit{(1) Identify design from source names. (2) Apply df identities. (3) $\SSE{=}\SST{-}\sum$(other SS). (4) MS=SS/df. (5) $F$=MS/$\MSE$.}
+
+\textbf{CRD 1-fact:} $df_T{=}N{-}1$; $df_A{=}a{-}1$; $df_E{=}N{-}a$.\\
+\textbf{CRD 2-fact:} $df_T{=}abn{-}1$; $df_A{=}a{-}1$; $df_B{=}b{-}1$; $df_{AB}{=}(a{-}1)(b{-}1)$; $df_E{=}ab(n{-}1)$.\\
+\textbf{RCBD fact:} add $df_{\text{Blk}}{=}n{-}1$; $df_E{=}(ab{-}1)(n{-}1)$.
+
+\subsec{WKD: 4.58 (CRD 1-factor)}
+MS$_A{=}14.18$, SS$_E{=}37.75$, $df_T{=}23$, SS$_T{=}108.63$.
+SS$_A{=}70.88$; $df_A{=}70.88/14.18{=}5\Rightarrow a{=}6$; $df_E{=}18$; $\MSE{=}2.10$; $F{=}6.76$; reps/trt$=4$.
+
+\subsec{WKD: 5.46 (Eye lens, 2-fact CRD)}
+MS$_A{=}0.0833$, $F_A{=}0.05$; MS$_B{=}96.333$, $F_B{=}57.8$; $df_{AB}{=}2$, MS$_{AB}{=}6.083$; $df_E{=}6$, SS$_E{=}10$; $df_T{=}11$.
+$\MSE{=}1.667$; $a{=}3$, $b{=}2$, $n{=}2$; SS$_A{=}0.167$, SS$_B{=}96.33$, SS$_{AB}{=}12.17$; $p_{AB}{\approx}0.09$.
+
+% ------------------------------------------------------------------
+\secbar{18. PROC: CRD $\to$ RCBD Reconstruct}
+SS$_A$, SS$_B$, SS$_{AB}$ \emph{unchanged}. Only Error and Block change.
+\begin{enumerate}[leftmargin=10pt]
+\item SS$_E^{\text{new}}{=}$SS$_E^{\text{CRD}}{-}\SSB$.
+\item $df_E^{\text{new}}{=}df_E^{\text{CRD}}{-}df_{\text{Blk}}$; $df_{\text{Blk}}{=}n{-}1$.
+\item Refill MS, $F$ with new $\MSE$.
+\item MS$_{\text{Blk}}{=}\SSB/(n{-}1)$; $F_{\text{Blk}}{=}$MS$_{\text{Blk}}/\MSE^{\text{new}}$.
+\end{enumerate}
+
+\subsec{WKD: 5.48 (CRD) $\to$ 5.49 (RCBD)}
+CRD: SS$_A{=}350$ ($df{=}2$), SS$_B{=}300$, SS$_{AB}{=}200$, SS$_E{=}150$ ($df{=}18$), SS$_T{=}1000$. Back out: $a{=}3$, $b{=}3$, $n{=}3$. MS$_A{=}175$, MS$_B{=}150$, MS$_{AB}{=}50$, $\MSE{=}8.33$.
+
+RCBD ($\SSB{=}60$): $df_{\text{Blk}}{=}2$; SS$_E^{\text{new}}{=}90$, $df_E^{\text{new}}{=}16$, $\MSE^{\text{new}}{=}5.625$.
+
+\textbf{Book answer uses original df$_E{=}18$, $\MSE{=}8.333$, $s{=}2.886$. Match exam phrasing.}
+
+% ------------------------------------------------------------------
+\secbar{19. PROC: 5.51 — Reps as Blocks}
+\[SS_{\text{Blk}}{=}\dfrac{\sum_k T_k^2}{ab}-\dfrac{T_{\cdot\cdot}^2}{N}\]
+($ab$=obs/rep; $T_k$=rep total.)
+
+\subsec{WKD: 5.51}
+SS$_A{=}50$ ($a{=}2$), SS$_B{=}80$ ($b{=}3$), SS$_{AB}{=}30$, $df_E{=}12$, SS$_T{=}172$, $n{=}3$; rep totals 10,12,14.\\
+\textit{(a)} $s{=}1$ (SS$_E{=}12$, $\MSE{=}1$). \textit{(b)} $df_{\text{Blk}}{=}2$. \textit{(c)} $\SSB{=}(100{+}144{+}196)/6{-}36^2/18{=}73.33{-}72{=}1.33$. \textit{(d)} SS$_E^{\text{new}}{=}10.67$, $\MSE{=}1.067$, $s{=}1.03$. $F_A{=}46.9$, $F_B{=}37.5$, $F_{AB}{=}14.1$.
+
+% ------------------------------------------------------------------
+\secbar{20. PROC: $2^K$ Effect \& SS from Sign Table}
+\textit{(1)} Read $\pm$ sign from column. \textit{(2)} Contrast$=\sum(\text{sign}\cdot y)$. \textit{(3)} Eff=Contrast$/$(n$\cdot2^{K-1})$. \textit{(4)} SS=Contrast$^2/(n\cdot2^K)$. \textit{(5)} Interaction col = product of main cols.
+
+\subsec{WKD: Slide $2^2$, $n{=}1$, obs=(64,75,87,95) at (ab,b,a,(1))}
+$C_A{=}(+64){+}(-75){+}(+87){+}(-95){=}-19$; Eff$(A){=}-9.5$; $SS_A{=}361/4{=}90.25$.\\
+$C_B{=}64{+}75{-}87{-}95{=}-43$; Eff$(B){=}-21.5$; $SS_B{=}462.25$.\\
+$C_{AB}{=}64{-}75{-}87{+}95{=}-3$; Eff$(AB){=}-1.5$; $SS_{AB}{=}2.25$.\\
+$SS_T{=}554.75$. No error df ($n{=}1$).
+
+% ------------------------------------------------------------------
+\secbar{21. PROC: CI Length $\to$ \# Replicates}
+$L{=}2\cdot t_{\alpha/2,2^K(n-1)}\cdot SE(\text{Eff})$; $SE(\text{Eff}){=}2\sigma/\sqrt{N}$; $N{=}n\cdot2^K$.
+\[L{=}\tfrac{4\sigma\cdot t_{\alpha/2,2^K(n-1)}}{\sqrt{n\cdot 2^K}}\le L_0\]
+\textbf{Algorithm:} approx $t\approx z$; solve $n\ge\tfrac{16\sigma^2 z^2}{2^K\cdot L_0^2}$; round up; verify w/ exact $t$.
+
+\subsec{WKD: 6.49 ($2^3$, $\sigma^2{=}5$, 99\% CI, $L{\le}1.5$)}
+$z_{0.005}{=}2.576$; $2^K{=}8$.
+\[\sqrt n\ge\tfrac{4\sqrt5\cdot 2.576}{\sqrt 8\cdot 1.5}{=}\tfrac{23.04}{4.243}{=}5.43\Rightarrow\] \[n{\ge}29.5\Rightarrow\boxed{n{=}30}\]
+Verify: df$=8\times29{=}232$; $t_{0.005,232}{\approx}2.596\approx z$. \checkmark
+
+% ------------------------------------------------------------------
+\secbar{22. Key ``Gotchas''}
+\begin{itemize}[leftmargin=10pt]
+\item Numeric categorical vars $\to$ wrap in \texttt{factor()} in R.
+\item BIBD: block factor FIRST in \texttt{aov()} for Type-I SS.
+\item \texttt{lm()} default uses treatment contrasts; for $2^K$ effect output use \texttt{options(contrasts=c("contr.sum","contr.poly"))}, then $\times2$.
+\item $n{=}1$ factorial: no pure err $\Rightarrow$ pool or Tukey 1-df or plots.
+\item Interaction present $\Rightarrow$ interpret main effects conditionally.
+\item Latin Sq: trt$\times$nuisance interaction suspected $\Rightarrow$ redesign as factorial.
+\item $\hat\beta{=}\tfrac12$Eff coded $\pm1$; off-by-2 is classic error.
+\item Center points test \emph{curvature}, not general lack-of-fit.
+\item BIBD $\lambda{\notin}\mathbb Z\Rightarrow$ design cannot exist.
+\item $N{=}ab$ (RCBD unrep.) vs $N{=}abn$ (factorial w/ reps).
+\item CRD$\to$RCBD: SS$_A$, SS$_B$, SS$_{AB}$ unchanged; only Error \& Block redistribute.
+\item Tukey 1-df: only detects $\tau_i\beta_j$ interaction form.
+\item Fixed vs Random RCBD: same $F$-test; only $E$(MS$_{\text{Blk}}$) differs.
+\item Half-normal plot: plots $|$effect$|$ vs half-normal quantiles; easier to read than full normal.
+\item Dispersion stat: $F^*{=}2\ln[s(j^+)/s(j^-)]$ (slides use this $\times2$ form).
+\end{itemize}
+
+% ------------------------------------------------------------------
+\secbar{23. Essay Answer Templates}
+{\scriptsize
+\textbf{``RCBD vs BIBD vs Latin Square (3 sentences)''}\\
+RCBD has 1 blocking factor with complete blocks (every block sees every treatment). BIBD also has 1 blocking factor but each block sees only $k<a$ treatments, with balance ensured by every pair appearing $\lambda$ times together. Latin Square has 2 blocking factors (rows and columns) with each treatment appearing exactly once per row and column, assuming no interactions.
+
+\textbf{``Purpose of center points?''}\\
+Detect curvature (quadratic effects) without disrupting orthogonality of main-effect estimates. Also provide pure-error df in unreplicated $2^K$ designs.
+
+\textbf{``Why $2^K$?''}\\
+Screening: identify which of $K$ factors matter. $2$ levels/factor drastically reduces runs (e.g., $2^4{=}16$ vs $4^4{=}256$). Orthogonal, efficient, D- and G-optimal on hypercube. Building block for fractional factorials and RSM.
+
+\textbf{``What does Interaction mean?''}\\
+Effect of A \emph{depends on} level of B. Non-parallel lines on interaction plot. When AB significant, cannot interpret A main effect alone.
+
+\textbf{``Unreplicated $2^K$ — methods?''}\\
+(1) Pool high-order interactions as error. (2) Normal/half-normal plot (Daniel): negligible effects lie along line, active effects deviate. (3) Lenth's PSE-based ME/SME tests. (4) Conditional inference chart vs $\pm4\sigma/\sqrt{N}$ band. (5) Center points for pure error.
+
+\textbf{``What is Dispersion Effect?''}\\
+A factor that shifts the variance (not necessarily the mean) of the response. Detected by comparing residual SDs at factor$+$ vs factor$-$ levels; $F^*{=}2\ln[s^+/s^-]$; significant if half-normal plot shows outlier.
+
+\textbf{``Block what you can; randomize what you cannot''}\\
+Controllable nuisance $\to$ block (RCBD/LS/BIBD); measurable but uncontrollable $\to$ ANCOVA; unknown $\to$ randomization.
+\par}
+
+% ------------------------------------------------------------------
+\secbar{24. True/False Trap Patterns}
+{\scriptsize
+\begin{itemize}[leftmargin=10pt]
+\item ``LS has no error df'' — \textbf{FALSE} ($(p{-}2)(p{-}1)$).
+\item ``$\lambda$ integer $\Rightarrow$ BIBD exists'' — \textbf{FALSE} (necessary, not sufficient).
+\item ``Insig main effect can always be dropped'' — \textbf{FALSE} (marginality).
+\item ``All cols of $2^K$ sign table are mutually orthogonal'' — \textbf{TRUE}.
+\item ``Effect $=$ coefficient of regression'' — \textbf{FALSE} ($\hat\beta{=}\tfrac12$Eff).
+\item ``Center points affect main-effect estimates'' — \textbf{FALSE} (orthogonal).
+\item ``Blocking always reduces $\MSE$'' — \textbf{FALSE} (only if block variance is real).
+\item ``LS needs $\ge$ 3 levels'' — \textbf{TRUE}.
+\item ``Disconnected design estimates all $\tau_i{-}\tau_j$'' — \textbf{FALSE}.
+\item ``Lenth's PSE designed for replicated $2^K$'' — \textbf{FALSE} (unreplicated).
+\item ``Tukey 1-df detects any interaction'' — \textbf{FALSE} ($\tau_i\beta_j$ form only).
+\item ``Factorial always needs $n{>}1$'' — \textbf{FALSE} (unreplicated OK w/ workarounds).
+\item ``Fixed vs random block: $F$-stat changes'' — \textbf{FALSE in RCBD} (same $F$).
+\item ``Contrast SS has $>1$ df'' — \textbf{FALSE} (always 1 df).
+\item ``$2^K$ is only D-optimal, not G-optimal'' — \textbf{FALSE} (both D and G).
+\item ``AB effect col must be computed manually'' — \textbf{FALSE} (product of A and B cols).
+\end{itemize}
+\par}
+
+% ------------------------------------------------------------------
+\secbar{25. Contents \& Quick Guide}
+{\scriptsize
+\textbf{1. RCBD — Randomized Complete Block}\\
+When you have ONE major nuisance factor you can block (e.g., fields, days, batches). Model, SS/df breakdown, fitted values, and F-test for treatments. Includes random-block (mixed) version, covariance of observations within blocks, relative efficiency vs CRD, and how blocking can help or hurt depending on true block variance. Also gives LSD/HSD formulas adapted to RCBD and when to use multiple comparisons.
+
+\textbf{2. Latin Square}\\
+When you have TWO nuisance factors (rows, columns) and ONE treatment factor, with no interactions. Layout rules (each treatment once per row/column), full df structure, and ANOVA table. Notes on how many error df you get for $p\times p$ designs, why LS assumes no interactions, and what happens when you replicate an LS (old error $\to$ interaction, new pure error). Practical issues: few error df, only works for perfectly balanced grids.
+
+\textbf{3. BIBD — Balanced Incomplete Block}\\
+When you can block but each block cannot contain all treatments ($k<a$). Defines $(a,b,k,r,\lambda)$, gives key relations $ar=bk$ and $\lambda = r(k-1)/(a-1)$, and explains “connected” vs “disconnected” designs. Explains that integer $\lambda$ is necessary but not sufficient for existence. Highlights why balanced incomplete blocks give equal precision for all pairwise treatment differences, and contrasts balanced vs unbalanced incomplete block designs.
+
+\textbf{4. Design Overview}\\
+High-level comparison table: CRD vs RCBD vs Latin Square vs BIBD vs factorials. Summarizes what kind of nuisance each design handles, what assumptions you make (e.g., “no trt×block interaction” for RCBD), and when you should abandon a blocking design and instead run a factorial. Good for “which design would you use and why?” essay questions.
+
+\textbf{5. Two-Factor Factorial ANOVA}\\
+Full $a\times b$ factorial model with interaction, SS and df formulas, and expected mean squares. Explains main effects vs interaction, why you must check interaction FIRST, and how interaction plots (parallel vs non-parallel lines) guide interpretation. Covers marginality/hierarchy (don’t drop a main effect if its interaction is significant), and lists practical options for estimating error: replication, pooling, Tukey 1-df test, normal/half-normal plots, and center points.
+
+\textbf{6. Three-Factor ANOVA \& Factorial+Blocking}\\
+Extends two-factor ideas to three factors, with full df decomposition (main effects, two-way interactions, three-way interaction, and error). Includes example where three processing factors are studied simultaneously. Also covers factorial experiments run with random blocks (e.g., batches as random) and a Latin-square style setup where two factors of interest are crossed inside row/column blocks. Good reference when you see three-factor ANOVA tables on exams.
+
+\textbf{7. Contrasts \& Scheffé}\\
+Definition of linear contrasts $C=\sum c_i\mu_i$, how to estimate them from treatment means, and formulas for variance, SE, t-tests, and 1-df SS for a contrast. Summarizes how Scheffé bounds work to give familywise control over \emph{all} possible contrasts at once, and when Scheffé is more appropriate than Tukey (arbitrary, data-driven contrasts instead of all pairwise means).
+
+\textbf{8. $2^K$ Factorial — Core}\\
+Motivation for $2^K$ designs as screening tools with many factors at two levels. Defines $(1),a,b,ab,\dots$ notation, sign table orthogonality, and the general formulas for effects and sums of squares in a $2^K$ design. Connects factorial effects to regression coefficients in coded variables ($\hat\beta_j = \tfrac12\text{Effect}_j$) and shows the coding transform from natural units to $x\in\{-1,+1\}$. This is the backbone for all higher-level $2^K$ topics.
+
+\textbf{9. $2^2$ Designs}\\
+Specialization of $2^K$ formulas to two factors: closed-form effect formulas for A, B, and AB using treatment means, and matching SS expressions. Includes small numerical examples with single and multiple replications, plus the explicit regression form with intercept and three coefficients. Good spot to check signs, constants (1/2 vs 1/4), and avoid off-by-2 mistakes between effects and regression coefficients.
+
+\textbf{10. $2^3$ Designs}\\
+Sign table for three factors (A,B,C) and all interactions (AB, AC, BC, ABC). Shows shorthand contrast formulas (e.g., $(a-1)(b+1)(c+1)$) and geometric interpretation of interactions as differences of “diagonal planes” in the cube. Gives the general SS formula for $2^3$ effects and reminds you that every column is orthogonal to every other, so SS add cleanly.
+
+\textbf{11. Unreplicated $2^K$ Designs}\\
+Strategy section for large $K$ with $n=1$ per treatment and no direct error df. Describes sparsity-of-effects (only a few low-order effects matter) and four main tools: (1) ignoring high-order interactions, (2) hidden replication via dropping small effects, (3) normal and half-normal plots to visually pick out outlying effects, and (4) Lenth’s method. Includes a worked $2^4$ example with a set of effect estimates and how you decide which are “active”.
+
+\textbf{12. Lenth’s Method}\\
+Detailed algorithm for constructing a pseudo standard error (PSE) from all effects in an unreplicated $2^K$. Defines $s_0$, the trimmed set of effects used to compute PSE, the individual margin of error (ME), and the simultaneous margin of error (SME). Includes a numeric $2^4$ example with actual PSE and ME values and notes that the resulting PSE is close to $\sqrt{\text{MSE}}$ from a reduced model that keeps only the active effects.
+
+\textbf{13. Center Points}\\
+Shows why adding center points (all factors at 0 in coded units) lets you test curvature and estimate pure error without changing estimates of main effects or interactions. Gives the formula for curvature SS $SS_{\text{PQ}}$ based on the difference between factorial mean and center mean, plus how to compute pure-error variance from repeated center runs. Includes a worked example with center responses and how to interpret a non-significant curvature test.
+
+\textbf{14. Dispersion Effects}\\
+Explains the difference between location effects (mean response) and dispersion effects (variance of response). Step-by-step procedure for checking, using residuals from the location model: split residuals according to factor high/low, compute residual variances, and form a log-ratio statistic (or its scaled version) for each effect. Then use a half-normal plot of these statistics to identify factors that affect variability even if their location effect is small.
+
+\textbf{15. Optimal Designs}\\
+Summarizes the linear-model perspective with $X'X$, $\text{Cov}(\hat\beta)$, and $\text{Var}(\hat y_x)$. Defines D-optimality (maximizing $|X'X|$), G-optimality (minimizing worst-case prediction variance), and I-optimality (minimizing average prediction variance). Explains why the full coded $2^K$ design has $X'X = n2^K I$ and is both D- and G-optimal on the hypercube, and includes a simple expression for prediction variance in a $2^2$ to illustrate where variance is largest.
+
+\textbf{16. Master Formula Table}\\
+One-line formulas for almost everything: $2^K$ effects and SS, variance/SE of effects, regression coefficients from effects, Lenth’s $s_0$, PSE, ME, curvature SS $SS_{\text{PQ}}$, df identities for RCBD/Latin/BIBD, BIBD relations $ar=bk$, $\lambda = r(k-1)/(a-1)$, random-block variance components, dispersion statistic in terms of residual SDs, and contrast CI formulas. This is the formula bank you consult when you forget a constant.
+
+\textbf{17. Worked Procedures (PROCs)}\\
+Step-by-step “recipes” for common exam tasks: filling in missing cells of ANOVA tables; reconstructing an RCBD table from a CRD plus block SS; computing block SS from replicate totals; computing $2^K$ contrasts, effects, and SS from a sign table; and solving for the number of replicates given a target CI length. Very useful when you get partial ANOVA tables or design summaries and have to back out $a$, $b$, $n$, and missing SS/df.
+
+\textbf{18. Conceptual Notes \& Essay Templates}\\
+Short, ready-to-use paragraphs that answer “What problem does LS/BIBD/factorials solve?”, “What is interaction?”, “Why use a $2^K$ design?”, “What is a response surface?”, “Purpose of center points?”, and the slogan “Block what you can; randomize what you cannot.” These are intended to plug directly into short-answer and conceptual exam questions without re-deriving anything under time pressure.
+
+\textbf{19. True/False Trap Patterns}\\
+List of frequently-misunderstood statements with correct truth values and one-line reasons. Examples: LS does \emph{have} error df; integer $\lambda$ does not guarantee BIBD existence; you can’t always drop an insignificant main effect if its interaction is significant; center points do NOT change main-effect estimates; $\hat\beta$ is half the effect for coded $\pm1$ designs; and full $2^K$ is both D- and G-optimal. Great for last-minute review of conceptual pitfalls.
+
+\vspace{2pt}
+\textbf{Mini Index (keywords)}\\
+RCBD: \S1, \S16, \S17, \S24\quad
+Latin Square: \S2, \S16, \S19\\
+BIBD: \S3, \S16, \S19\quad
+Factorials (2-factor, 3-factor): \S5, \S6, \S7\\
+$2^K$ basics: \S8–\S10\quad
+Unreplicated, Lenth: \S11–\S12\\
+Center points: \S13\quad
+Dispersion effects: \S14\\
+Optimal designs: \S15\quad
+Formulas: \S16\\
+Procedures: \S17\quad
+Essays/T\&F: \S18–\S19\\
+Note that $MS_A = SS_A / df_A$
+\par}
+
+
+
+
+\end{multicols*}
+\end{document}

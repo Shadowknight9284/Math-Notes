@@ -5,8 +5,8 @@
 
 % Header
 \newcommand{\name}{Pranav Tikkawar}
-\newcommand{\course}{01:XXX:XXX}
-\newcommand{\assignment}{Homework n}
+\newcommand{\course}{16:640:654}
+\newcommand{\assignment}{Stochastic Processes}
 \author{\name}
 \title{\course \ - \assignment}
 
@@ -14,13 +14,306 @@
 \maketitle
 
 \newpage
+\tableofcontents
+\newpage
+\section{1/21}
+\begin{definition}[Stochastic Process]
+    A collection of random variables $\{X_t\}_{t \in T}$ defined on a common probability space $(\Omega, \mathcal{F}, P)$, where $T$ is an index set (often representing time). Each random variable $X_t$ maps outcomes in $\Omega$ to a state space $S$.
+\end{definition}
+\begin{definition}[Random Walk]
+    Let $\{X_i\}_{i=1}^{\infty}$ be a sequence of i.i.d. random variables. DEfine the random walk $\{S_n\}_{n=0}^{\infty}$ by
+    \[
+        S_n = \sum_{i=1}^{n} X_i, \quad S_0 = 0.
+    \]
+    Then $\{S_n\}$ is called a random walk.
+
+    Can do random walks on $\mathbb{Z}, \mathbb{R}, \mathbb{R}^d$, as well as graphs. In particular, if $G = \mathbb{Z}^d$ random walk is a d-dim random walk.
+
+    $P(X_i = 1) = p$, $P(X_i = -1) = q = 1-p$ is called a simple random walk on $\mathbb{Z}$ and if $p = q = \frac{1}{2}$, it is called a symmetric random walk.
+\end{definition}
+\begin{example}[Simple Random Walk on $\mathbb{Z}^d$]
+    A simple random walk on $\mathbb{Z}^d$ starts at $vec(0)$ and each step given the current state $vec{x} \in \mathbb{Z}^d$, moves to one of the $d$ neighboring states $vec{x} + vec{e_i}$ or $vec{x} - vec{e_i}$ with probability $\frac{1}{2}$. 
+
+    If we define $\tau(0) = \inf\{t \geq 1: S_n = 0\}$, we say that the random walk is recurrent if $P(\tau(0) < \infty) = 1$ and transient if $P(\tau(0) < \infty) < 1$.
+\end{example}
+\begin{theorem}[Polya's Recurrence Theorem]
+    A simple random walk on $\mathbb{Z}^d$ is recurrent for $d = 1, 2$ and transient for $d \geq 3$.
+\end{theorem}
+\begin{note}[Stiens Phenomenon]
+    Given data $x_1, x_2, \ldots, x_n \in \mathbb{R}^d$, iid $\sim N(\theta, I)$ when $d > 3$, the Mean estimator $\hat{\theta} = \bar{x}$ is inadmissible under squared error loss. IE there is a strictly better estimator. This is called Steins Phenomenon.
+\end{note}
+\begin{definition}[Martingale]
+    Example (Betting Game): Suppose each round you have win prob $p$ so $\{ \psi_1, \psi_2, \ldots \}$ are iid bernoulli($p$) random variables. Assuming betting $1$  each round then $X_i = 2\psi_i - 1$ is the gamblers gain in round $i$. Then the net gain after $n$ rounds is a random walk $S_n = \sum_{i=1}^{n} X_i$. When $p = \frac{1}{2}$, the game is fair and $E[X_i] = 0$. the game is fair and $S_n$ is 1-d symmetric random walk. This is the simplest example of a martingale.
+    
+    If $p < \frac{1}{2}$, the game is unfavorable and called a submartingale. If $p > \frac{1}{2}$, the game is favorable and called a supermartingale.
+
+    If stop betting when you reach a certain amount of money, winner or loser, then we can ask what the expected stopping time, what is its distribution, etc.
+
+    Also we can ask about what would be our betting strategy to maximize our expected gain.
+\end{definition}
 \begin{questions}
-\question Question 1.
-\begin{solution}
-This is my solution
-\end{solution}
-Testing
-\question Insert Question
+    \question Suppose we toss a fair coin, what is the expected time until we see $HTT$?
+    \begin{solution}
+        We can model this as a Markov Chain with states:
+        \begin{itemize}
+            \item $S_0$: No matches
+            \item $S_1$: Matched H
+            \item $S_2$: Matched HT
+            \item $S_3$: Matched HTT (absorbing state)
+        \end{itemize}
+        Then the probability transition matrix is
+        \begin{align*}
+            \begin{bmatrix}
+                0.5 & 0.5 & 0 & 0 \\
+                0 & 0.5 & 0.5 & 0 \\
+                0.5 & 0 & 0 & 0.5 \\
+                0 & 0 & 0 & 1
+            \end{bmatrix}
+        \end{align*}
+        Let $E_i$ be the expected time to reach $S_3$ from state $S_i$. Then we have the following equations:
+        \begin{align*}
+            E_0 &= 1 + 0.5E_0 + 0.5E_1 \\
+            E_1 &= 1 + 0.5E_2 + 0.5E_0 \\
+            E_2 &= 1 + 0.5E_3 + 0.5E_0 \\
+            E_3 &= 0
+        \end{align*}
+        Solving these equations, we find:
+        \begin{align*}
+            E_0 &= 8 \\
+            E_1 &= 6 \\
+            E_2 &= 4
+        \end{align*}
+        Therefore, the expected time until we see the sequence $HTT$ is $E_0 = 8$.
+    \end{solution}
+    \question A monkey is randomly typing on a typewriter with 26 letters. What is the expected time until the monkey types "ABRACADABRA"?
 \end{questions}
+\begin{definition}[Markov Chain]
+    Example (Random walk on finite graph): Let $G = (V, E)$ be a finite, undirected graph. If we define $deg(v)$ as the number of neighbors of vertex $v \in V$. A random walk on $G$ can be described with the following transition matrix:
+    \begin{align*}
+        \mathbb{P}(u,v) = \begin{cases}
+            0 & \text{if } (u,v) \notin E \\
+            \frac{1}{deg(u)} & \text{if } (u,v) \in E
+        \end{cases}
+    \end{align*}
+    Then define $\pi(u) = \frac{deg(u)}{2|E|}$ where $|E|$ is the number of edges in the graph. Then $\pi$ is a stationary distribution for the random walk on $G$.
+    ie if $X_0 \sim \pi$, then $X_n \sim \pi$ for all $n \geq 0$.
+    \begin{proof}
+        We first check $\pi(u)P(u,v) = \pi(v)P(v,u)$ for all $u, v \in V$.This is called the detailed balance condition.
+        \begin{itemize}
+            \item If $(u,v) \notin E$, then both sides are $0$.
+            \item If $(u,v) \in E$, then
+            \begin{align*}
+                \pi(u)P(u,v) &= \frac{deg(u)}{2|E|} \cdot \frac{1}{deg(u)} = \frac{1}{2|E|} \\
+                \pi(v)P(v,u) &= \frac{deg(v)}{2|E|} \cdot \frac{1}{deg(v)} = \frac{1}{2|E|}
+            \end{align*}
+        \end{itemize}
+        Thus the detailed balance condition holds. 
+
+        Now we check that $\mathbb{P}(X_1 = u) = \sum_{v \in V} \mathbb{P}(X_1 = u | X_0 = v) \mathbb{P}(X_0 = v) = \sum_{v \in V} P(v,u) \pi(v) = \sum_{v \in V} P(u,v) \pi(u) = \pi(u) \sum_{v \in V} P(u,v) = \pi(u) \cdot 1 = \pi(u)$.
+
+        Thus we need to ensure that $\sum_{v \in V} P(u,v) = 1$, which is true since $P$ is a transition matrix.
+    \end{proof}
+\end{definition}
+\section{1/26}
+\begin{definition}[Martingale]
+    Is used to model a fair fame. In which you know the history, but the expected future value is equal to the present value.
+
+    $E[Z_n] < \infty$ for all $n$.$E[Z_{n+1} | Z_1, Z_2, \ldots, Z_n] = Z_n$.
+\end{definition}
+\begin{remark}
+    IF we interprt Z as a gamblers fortune after the nth bet the expected fortune is equal to the current fortune.
+\end{remark}
+\begin{definition}[Formal def. Martingale]
+    ${Z_n}$ is a martingale wrt to a filtration ${\mathcal{F}_n}$ if
+    \begin{itemize}
+        \item $Z_n$ is $\mathcal{F}_n$ measurable
+        \item $E[|Z_n|] < \infty$
+        \item $E[Z_{n+1} | \mathcal{F}_n] = Z_n$
+    \end{itemize}
+\end{definition}
+\begin{example}[Martingale Example]
+    Let $S_n = \sum_n psi_i$ for i.i.d. random variables 
+\end{example}
+\begin{example}[Quadratic Martingale]
+    
+\end{example}
+\begin{example}[Exponential Martingale]
+    
+\end{example}
+\begin{example}
+    Doob's Martingale
+\end{example}
+
+\section{1/28}
+\begin{remark}
+    The central definitin of a martingale is $E[X_{n+1} | \text{past}] = X_n$.
+
+    Recall a probability space: $(\Omega, \mathcal{F}, \mathbb{P})$ 
+    
+    $\Omega$ is the sample space, $\mathcal{F}$ is a sigma algebra on $\Omega$, and $\mathbb{P}$ is a probability measure on $(\Omega, \mathcal{F})$.
+\end{remark}
+
+\begin{definition}[$\sigma$-algebra]
+    A collection $\mathcal{F}$ of subsets of $\Omega$ is called a sigma-algebra if:
+    \begin{itemize}
+        \item $\Omega \in \mathcal{F}$
+        \item If $A \in \mathcal{F}$, then $A^c \in \mathcal{F}$
+        \item If $A_1, A_2, \ldots \in \mathcal{F}$, then $\bigcup_{i=1}^{\infty} A_i \in \mathcal{F}$
+    \end{itemize}
+    
+\end{definition}
+\begin{definition}[Conditional Expectaion]
+    Let $(\Omega, \mathcal{F}, \mathbb{P})$ be a probability space, and let $\mathcal{G} \subseteq \mathcal{F}$ be a sub-sigma-algebra. For a random variable $X$ with $E[|X|] < \infty$, the conditional expectation of $X$ given $\mathcal{G}$, denoted by $E[X | \mathcal{G}]$, is a $\mathcal{G}$-measurable random variable satisfying:
+    \[
+        E[X \cdot 1_A] = E[E[X | \mathcal{G}] \cdot 1_A] \quad \text{for all } A \in \mathcal{G}.
+    \]
+    
+\end{definition}
+
+\section{2/4}
+
+\begin{definition}[Filtration]
+    A filtration on a probability space is an incresing sequence of $\sigma$-algebras $\{\mathcal{F}_n\}_{n \geq 0}$ such that $\mathcal{F}_n \subseteq \mathcal{F}_{n+1} \subseteq \mathcal{F}$ for all $n \geq 0$.
+
+    This is typically used to describe the information that is available up to time $n$.
+\end{definition}
+
+\begin{definition}[Adapted r.v]
+    Given a filtration $\{\mathcal{F}_n\}$, and a stochastic process $\{Z_n\}$, we say that $\{Z_n\}$ is adapted to the filtration if for each $n$, the random variable $Z_n$ is $\mathcal{F}_n$-measurable.
+\end{definition}
+
+\begin{definition}[Martingale]
+    Given a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ with a filtration $\{\mathcal{F}_n\}$, a stochastic process $\{Z_n\}$ is called a martingale with respect to the filtration if:
+    \begin{itemize}
+        \item $E|Z_n| < \infty$ for all $n$.
+        \item $Z_n$ is adapted to the filtration $\{\mathcal{F}_n\}$.
+        \item $E[Z_{n+1} | \mathcal{F}_n] = Z_n$ for all $n$.
+    \end{itemize}
+    Moreover under 1,2 but not 3 it is called a submartingale if $E[Z_{n+1} | \mathcal{F}_n] \geq Z_n$ and supermartingale if $E[Z_{n+1} | \mathcal{F}_n] \leq Z_n$.
+\end{definition}
+
+\begin{definition}[Stopping Time]
+    Given a filtration $\{\mathcal{F}_n\}$, a random variable $\tau: \Omega \to \{0, 1, 2, \ldots, \infty\}$ is called a stopping time w.r.t $\{\mathcal{F}_n\}$ if
+    $$
+        \{\omega : \tau(\omega) = n\} \in \mathcal{F}_n \quad \text{for all } n \geq 0.
+    $$
+    This means that the event that the stopping time equals $n$ is determined by the information available up to time $n$.
+\end{definition}
+
+\begin{lemma}
+    Let $T$ be a stopping time with respect to the filtration $\{\mathcal{F}_n\}$. then 
+    \begin{itemize}
+        \item $\{T \leq n\} \in \mathcal{F}_n$ for all $n$.
+        \item $\{T \geq n\} \in \mathcal{F}_{n-1}$ for all $n \geq 1$.
+        \item $S = T \wedge m = \min(T, m)$ is a stopping time for any fixed $m$.
+    \end{itemize}
+\end{lemma}
+
+\begin{lemma}[Walds Lemma]
+    Let $\{F_n\}$ be a filtration and $\{Z_n\}$ be a martingale with respect to $\{F_n\}$. And $T$ is a stopping time with respect to $\{F_n\}$ Suppose $T \leq N$ for some constant $N$ almost surely. Then
+    $$
+        E[Z_T] = E[Z_0].
+    $$
+    
+\end{lemma}
+
+
+\section{2/9}
+\begin{remark}[Convergence Theorem]
+    Different types of convergence for random variables:
+    \begin{itemize}
+        \item Convergence in Probability: $X_n \xrightarrow{P} X$ if for all $\epsilon > 0$, $P(|X_n - X| > \epsilon) \to 0$ as $n \to \infty$.
+        \item Convergence in Distribution: $X_n \xrightarrow{d} X$ if the distribution functions of $X_n$ converge to the distribution function of $X$ at all continuity points of the distribution function of $X$.
+        \item Almost Sure Convergence: $X_n \xrightarrow{a.s.} X$ if $P(\lim_{n \to \infty} X_n = X) = 1$.
+    \end{itemize}
+\end{remark}
+\begin{definition}[Almost Sure Convergence]
+    For a sequence of r.vs $\{X_n\}$ we say that $X_n \to X$ almost surely if $P(\{\omega : \lim_{n \to \infty} X_n(\omega) = X(\omega)\}) = 1$.
+
+    We want to know if $X_n \to X$ a.s when will $E[X_n] \to E[X]$? 
+
+    \begin{example}
+        $\Omega = [0,1]$ $P$ is uniform distribution. Define $X_n(\omega) = n!_{[0,1/n]}$ We know that $X_n \to 0$ a.s, but $E[X_n] = 1$ for all $n$ so $E[X_n] \not\to E[X]$.
+    \end{example}
+\end{definition}
+\begin{definition}[Monotone Convergence Theorem]
+    If $X_1 \leq X_2 \leq \ldots$ and $X_n \to X$ a.s, then $\lim_{n \to \infty} E[X_n] = E[ \lim_{n \to \infty} X_n]$.
+
+    Ie we can exchange limit and expectation if the sequence is dominated by an integrable random variable.
+    
+\end{definition}
+\begin{definition}[Dominated Convergence Theorem]
+    If $X_n \to X$ a.s and $X_n \leq X_{n+1}$ for all $n$, then $E[X_n] \to E[X]$.
+        
+\end{definition}
+\begin{remark}
+        Walds equation I says if $\{X_n\}$ is martingale $T$ stopping time, $T \leq N$ for constant $N$ then $E[X_T] = E[X_1]$.
+
+        To apply Walds equation I, we often define, define $T = T \wedge N$ so we have $E[X_{T_n}] = E[X_1]$ then argue that $E[X_{T_n}] \to E[X_T]$ as use DCT to argue that $E[X_{T_n}] \to E[X_T]$ as $n \to \infty$.
+\end{remark}
+\begin{example}[Simple Random Walk]
+    $\{S_n\}$ is a 1D Simple random walk, fix $a,b >0$ and define $T_{a,b} = \inf\{t : S_t = -a \text{ or } S_t = b\}$. 
+
+    Then $\mathbb{P}(T_{a,b} = -a) = \frac{b}{a+b}$ and $\mathbb{P}(T_{a,b} = b) = \frac{a}{a+b}$ and $E[T_{a,b}] = ab$.
+
+    proof of $E[T_{a,b}] = ab$: Recall $S_n^2 - n$ is a martingale 
+    \begin{align*}
+        E[S_{n+1}^2 - (n+1) | X_1, \ldots, X_n] &= E[(S_n + X_{n+1})^2| X_1, \ldots, X_n] - (n+1) \\
+        &= E[S_n^2 + 2S_nX_{n+1} + X_{n+1}^2 | X_1, \ldots, X_n] - (n+1) \\
+        &= S_n^2 + 1 + 0 - (n+1) \\
+        &= S_n^2 - n
+    \end{align*}
+    he stopping time for $\{S_n^2 - n\}$ is $S_{T_{a,b}}^2 - T_{a,b}$. Then $E[T_{a,b}] = E[S_{T_{a,b}}^2] = a^2 \cdot \frac{b}{a+b} + b^2 \cdot \frac{a}{a+b} = ab$.
+
+    We define $T_n = T_{a,b} \wedge n$ for each fixed $n$ Apply Wald 1 on $\{S_n^2 - n\}$ at $T_n$ we have 
+    \begin{align*}
+        E[S_{T_n}^2 - T_n] &= E[S_1^2 - 1] = 0 \\
+        E[T_n] &= E[S_{T_n}^2]
+    \end{align*}
+    For RHS $T_n = T_{a,b} \wedge n$ By MCT we have $\lim_{n \to \infty} E[T_n] = E[T]$ For the LHS $S_{T_n}^2 \to S_{T_{a,b}}^2$ a.s and $S_{T_n}^2 \leq \max(a^2, b^2)$ so by DCT we have $\lim_{n \to \infty} E[S_{T_n}^2] = E[S_{T_{a,b}}^2]$. Thus $E[T_{a,b}] = E[S_{T_{a,b}}^2]$.
+
+    When $n \to \infty$, $\lim_{n \to \infty}$
+    \begin{align*}
+        E[S_{T_{n}}^2] = E[S_{T_{a,b}}^2] &= E[T_{a,b}] \\
+        &= a^2 \cdot \frac{b}{a+b} + b^2 \cdot \frac{a}{a+b} \\
+        &= ab
+    \end{align*}
+\end{example}
+\begin{definition}[Walds Equation II for Random walks]
+    If $\{X_n\}$ iid with mean $\mu$ $F_n = \sigma(X_1, \ldots, X_n)$ and $T$ is a stopping time wrt $\{F_n\}$ and $E[T] < \infty$
+
+    Then $E[S_T] = \mu E[T]$. where $S_n = \sum_{i=1}^{n} X_i$.
+    \begin{proof}
+        Recall $S_n - n\mu$ is a martingale wrt $\{F_n\}$.
+        \begin{align*}
+            E[S_{n+1} - (n+1)\mu | F_n] &= E[S_n + X_{n+1} | F_n] - (n+1)\mu \\
+            &= S_n + E[X_{n+1} | F_n] - (n+1)\mu \\
+            &= S_n + \mu - (n+1)\mu \\
+            &= S_n - n\mu
+        \end{align*}
+        If $E[S_T - T\mu] = 0$ then $E[S_T] = \mu E[T]$.
+        Define $T_n = T \wedge n$ then by Walds I we have
+        \begin{align*}
+            E[S_{T_n} - T_n \mu] &= E[S_1 - \mu] = 0 \\
+            E[S_{T_n}] &= \mu E[T_n]
+        \end{align*}
+        As $n \to \infty$, by MCT $E[T_n] \to E[T]$. For the LHS $S_{T_n} \to S_T$ a.s and $|S_{T_n}| \leq \sum_{i=1}^{T} |X_i|$.
+        Since $E[T] < \infty$ and $E[|X_1|] < \infty$ we have $E[\sum_{i=1}^{T} |X_i|] = E[E[\sum_{i=1}^{T} |X_i| | T]] = E[T E[|X_1|]] = E[T] E[|X_1|] < \infty$. Thus by DCT we have $\lim_{n \to \infty} E[S_{T_n}] = E[S_T]$. Therefore $E[S_T] = \mu E[T]$.
+    \end{proof}
+\end{definition}
+\begin{example}[HTTH coin flip]
+    Flip a fair coin and stop until seeing the pattern $HTTH$. What is the expected stopping time? 
+
+    Solution consider the following games:
+    At every time $k$, a new gambler $G_k$ enters the game with 1 dollar. 
+    They weill bet 1 on $X_s= H$ if correct, bet 2 on T, 4 on T, 8 on H. 
+    $G_k$ will stop either losing a round or winning all 4 bets.
+
+    Let $Y_n^{(k)}$ we the gross game of $G_k$ ar time $n$ then let $M_n = \sum_{k=1}^{n} Y_n^{(k) -1} = \sum_{k=1}^n Y_n^{(k)} - n$ be the total profic of all the gablers at time $n$. Then $M_n$ is a martingale with respect to the filtration $\mathcal{F}_n = \sigma(X_1, \ldots, X_n)$.
+    Apply Wald on $M_n$ at time $T$ 
+
+\end{example}
+
+
 
 \end{document}

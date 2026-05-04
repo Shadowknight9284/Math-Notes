@@ -1,0 +1,418 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% Define blue text for problematic areas - FIXED for multi-paragraph content
+\newcommand{\issue}[1]{{\color{blue}#1}}
+\newcommand{\warning}[1]{{\color{red}\textbf{WARNING:} #1}}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics}
+\newcommand{\assignment}{Research}
+\author{\name}
+\title{\course \\ - \assignment}
+
+\begin{document}
+\maketitle
+
+\section{A General Periodic Fourier--State-Space Spatio--Temporal Model}
+
+\subsection{Model setup}
+
+We consider a real-valued Gaussian spatio--temporal process
+\[
+  \{X_t(x) : x \in [0,2\pi],\; t \in \mathbb{Z}\},
+\]
+defined on a one-dimensional spatial domain with periodic boundary conditions (a circle) and discrete time. For each time $t$, the spatial field $X_t(\cdot)$ is represented by a truncated Fourier series
+\begin{equation}
+  X_t(x)
+  \;=\;
+  a_0(t)
+  \;+\;
+  \sum_{j=1}^{J}
+    \Bigl[
+      a_j(t)\cos(jx) + b_j(t)\sin(jx)
+    \Bigr],
+  \qquad x \in [0,2\pi],
+  \label{eq:Xt-fourier}
+\end{equation}
+where $J$ is a truncation level and
+\[
+  a_j(t),\, b_j(t), \quad j=0,\dots,J,\; t\in\mathbb{Z},
+\]
+are jointly Gaussian random coefficients.
+
+For $j \ge 1$, the pair $(a_j(t), b_j(t))$ corresponds to the $j$th spatial frequency (wavenumber). Low $j$ terms encode large-scale, slowly varying spatial structure, while high $j$ terms encode fine-scale spatial detail.
+
+\subsection{Spatial margin: Matérn-like variances}
+
+The spatial covariance at each fixed time is controlled by a Matérn-like spectral density in the Fourier domain. For $j = 0,\dots,J$ we specify
+\begin{equation}
+  \sigma_j^2
+  \;\propto\;
+  \bigl(\kappa^2 + j^2\bigr)^{-(\nu + 1/2)},
+  \quad
+  \kappa = \frac{\sqrt{2\nu}}{\ell},
+  \label{eq:matern-spectrum}
+\end{equation}
+where
+\begin{itemize}
+  \item $\nu > 0$ is the Matérn smoothness parameter,
+  \item $\ell > 0$ is a spatial range parameter,
+  \item $\kappa = \sqrt{2\nu}/\ell$ is an inverse scale parameter.
+\end{itemize}
+
+{\color{blue}
+NOTE: This spectral form is appropriate for a \emph{non-periodic} domain $\mathbb{R}$. On a periodic domain $[0,2\pi]$, the correspondence between this discrete spectrum and the continuous Matérn model requires careful treatment. 
+
+\textbf{Question:} Should we (a) sample the continuous Matérn spectrum at integer frequencies $j$, or (b) explicitly periodize the Matérn covariance function and compute its Fourier coefficients?
+}
+
+For simulation we normalize these variances so that the total marginal variance of $X_t(x)$ is $\sigma^2_{\text{tot}}$. Defining
+\[
+  \tilde{\sigma}_j^2
+  \;=\;
+  \bigl(\kappa^2 + j^2\bigr)^{-(\nu + 1/2)},
+\]
+we set
+\begin{equation}
+  \sigma_j^2
+  \;=\;
+  \sigma^2_{\text{tot}}
+  \cdot
+  \frac{\tilde{\sigma}_j^2}{\sum_{k=0}^{J} \tilde{\sigma}_k^2},
+  \qquad j = 0,\dots,J.
+  \label{eq:sigma-normalization}
+\end{equation}
+
+\subsection{Temporal dynamics: block-diagonal AR(1) with rotation and correlated innovations}
+
+We collect the Fourier coefficients into a state vector
+\begin{equation}
+  \mathbf{Z}_t
+  \;=\;
+  \bigl(a_0(t), a_1(t),\dots,a_J(t), b_1(t),\dots,b_J(t)\bigr)^\top
+  \;\in\; \mathbb{R}^{2J+1}.
+  \label{eq:state-vector}
+\end{equation}
+
+The temporal evolution is governed by a \emph{block-diagonal} linear Gaussian state-space model. For the constant mode $j=0$, we have a scalar AR(1):
+\begin{equation}
+  a_0(t+1) = \rho_0\, a_0(t) + \eta_{0,t},
+  \qquad \eta_{0,t} \sim \mathcal{N}\bigl(0, \sigma_0^2(1 - \rho_0^2)\bigr),
+  \label{eq:ar1-j0}
+\end{equation}
+with $|\rho_0| < 1$ ensuring stationarity.
+
+For each mode $j \ge 1$, the cosine and sine coefficients evolve jointly according to a $2 \times 2$ block AR(1):
+\begin{equation}
+  \begin{pmatrix} a_j(t+1) \\ b_j(t+1) \end{pmatrix}
+  =
+  M_j
+  \begin{pmatrix} a_j(t) \\ b_j(t) \end{pmatrix}
+  +
+  \begin{pmatrix} \eta_{a,j,t} \\ \eta_{b,j,t} \end{pmatrix},
+  \label{eq:ar1-block}
+\end{equation}
+where the $2 \times 2$ transition matrix is
+\begin{equation}
+  M_j
+  =
+  \rho_j
+  \begin{pmatrix}
+    \cos\theta_j & -\sin\theta_j \\
+    \sin\theta_j & \cos\theta_j
+  \end{pmatrix},
+  \label{eq:Mj-rotation}
+\end{equation}
+with $\rho_j \in (0,1)$ (amplitude persistence) and $\theta_j \in \mathbb{R}$ (rotation angle).
+
+The $2 \times 2$ innovation covariance for mode $j$ is
+\begin{equation}
+  \begin{pmatrix} \eta_{a,j,t} \\ \eta_{b,j,t} \end{pmatrix}
+  \sim
+  \mathcal{N}\Bigl(\mathbf{0},\; \Sigma_{\varepsilon,j}\Bigr),
+  \qquad
+  {\color{blue}\Sigma_{\varepsilon,j}
+  =
+  \sigma_j^2(1 - \rho_j^2)
+  \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}},
+  \label{eq:innovation-cov}
+\end{equation}
+where $\phi_j \in (-1,1)$ is the \emph{within-frequency correlation parameter} between the cosine and sine innovations.
+
+{\color{red}
+\textbf{WARNING — EMPIRICAL VALIDATION ISSUE:} The Lyapunov equation $\Sigma_j = M_j \Sigma_j M_j^\top + \Sigma_{\varepsilon,j}$ with target stationary covariance $\Sigma_j = \sigma_j^2 \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}$ does yield \eqref{eq:innovation-cov} as shown in Section \ref{sec:lyapunov-fix}. However, empirical validation showed:
+\begin{itemize}
+  \item Empirical $\operatorname{Cor}(a_1, b_1) = 0.208$, theoretical $\phi_1 = 0.696$ (70\% error)
+  \item Phase drift empirically $\approx 0$ even when $\theta_j \neq 0$ was set
+  \item ACF of amplitude decays faster than $\rho_j^k$ (up to 57\% error for high $j$)
+\end{itemize}
+This suggests either (a) an implementation error in the R code, or (b) a misunderstanding of what quantity should match theory when rotation is present.
+}
+
+The innovations are independent across different frequencies $j$ and across time $t$.
+
+\subsubsection*{Physical interpretation}
+
+\paragraph{Rotation parameter $\theta_j$:}
+When $\theta_j = 0$, the transition matrix $M_j = \rho_j I_2$, so cosine and sine evolve independently. When $\theta_j \neq 0$, we have temporal mixing:
+\[
+  a_j(t+1) = \rho_j[\cos\theta_j \cdot a_j(t) - \sin\theta_j \cdot b_j(t)] + \eta_{a,j,t},
+\]
+inducing \emph{phase rotation}: spatial patterns propagate around the circle over time. The eigenvalues of $M_j$ are $\rho_j e^{\pm i\theta_j}$, so stationarity holds for $|\rho_j| < 1$ regardless of $\theta_j$.
+
+{\color{blue}
+\textbf{Question:} Does phase rotation $\theta_j$ have a physical interpretation in terms of wave propagation speed on the circle? If $\theta_j = c \cdot j$ for constant $c$, does this correspond to a traveling wave with speed $c$?
+}
+
+\paragraph{Innovation correlation parameter $\phi_j$:}
+When $\phi_j = 0$, the innovations $\eta_{a,j,t}$ and $\eta_{b,j,t}$ are independent. When $\phi_j \neq 0$, the innovations are correlated: $\operatorname{Cov}(\eta_{a,j,t}, \eta_{b,j,t}) = \sigma_j^2(1-\rho_j^2)\phi_j$. {\color{blue}At stationarity, this targets $\operatorname{Cov}(a_j(t), b_j(t)) = \sigma_j^2 \phi_j$ via the Lyapunov equation (Section \ref{sec:lyapunov-fix}).}
+
+Typical parameterization: $\phi_j = \phi_0 / (1 + j)$ or $\phi_j = \phi_0 e^{-\gamma j}$.
+
+\paragraph{Combined effect:}
+$\theta_j \neq 0$ creates \emph{temporal cross-dependence}; $\phi_j \neq 0$ creates \emph{contemporaneous correlation}. Together they allow rich within-frequency dynamics while maintaining the block-diagonal structure.
+
+{\color{blue}
+\textbf{Key empirical finding:} Simulated $\operatorname{Cor}(a_j, b_j)$ showed 70\% error for $j=1$ and wild scatter for other modes, suggesting either incorrect initial condition draws or a numerical issue in the multivariate normal generation.
+}
+
+\subsection{Stationary covariance of $(a_j(t), b_j(t))$ via Lyapunov equation}
+\label{sec:lyapunov-fix}
+
+At stationarity, the $2\times2$ covariance matrix
+\[
+  \Sigma_{j}
+  =
+  \operatorname{Cov}\begin{pmatrix}a_j(t)\\b_j(t)\end{pmatrix}
+\]
+satisfies the discrete-time Lyapunov equation
+\begin{equation}
+  \Sigma_j = M_j \Sigma_j M_j^\top + \Sigma_{\varepsilon,j}.
+  \label{eq:lyapunov-2x2}
+\end{equation}
+
+{\color{blue}
+\textbf{Corrected derivation:} For the rotation-scaling matrix \eqref{eq:Mj-rotation}, we have
+\[
+  M_j M_j^\top = \rho_j^2 I_2,
+\]
+so \eqref{eq:lyapunov-2x2} becomes
+\[
+  \Sigma_j = \rho_j^2 \Sigma_j + \Sigma_{\varepsilon,j}
+  \quad \Longrightarrow \quad
+  \Sigma_{\varepsilon,j} = (1 - \rho_j^2) \Sigma_j.
+\]
+If we target the stationary covariance
+\[
+  \Sigma_j = \sigma_j^2 \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix},
+\]
+then the innovation covariance must be
+\[
+  \Sigma_{\varepsilon,j} = \sigma_j^2(1 - \rho_j^2) \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}.
+\]
+This formula is \emph{independent of} $\theta_j$ because $M_j M_j^\top = \rho_j^2 I_2$ for any rotation angle. Therefore equation \eqref{eq:innovation-cov} is theoretically correct, and the empirical mismatch must arise from implementation or interpretation errors.
+}
+
+{\color{blue}
+\textbf{Advisor questions:}
+\begin{enumerate}
+  \item The empirical ACF of amplitude $R_j(t) = \sqrt{a_j(t)^2 + b_j(t)^2}$ decays much faster than $\rho_j^k$ (up to 57\% error for high $j$). Should the theoretical ACF be computed for the \emph{amplitude} instead of the coefficients?
+  
+  \item The empirical correlation $\operatorname{Cor}(a_j(t), b_j(t))$ showed wild scatter instead of matching $\phi_j \approx 0.65$--0.70. Is this a finite-sample effect, or is there a bias in how the stationary initial condition is drawn?
+  
+  \item The spatial covariance at large lags showed an ``upturn'' (U-shape) instead of monotonic decay. Is this the ``ridge'' artifact from nonseparable models warned about in Stein (2005)? Does this indicate we need different temporal structure?
+\end{enumerate}
+}
+
+Therefore, at stationarity:
+\begin{align}
+  \operatorname{Var}(a_j(t)) &= \sigma_j^2, \\
+  \operatorname{Var}(b_j(t)) &= \sigma_j^2, \\
+  \operatorname{Cov}(a_j(t), b_j(t)) &= \sigma_j^2 \phi_j.
+\end{align}
+
+The stationary covariance depends on $\phi_j$ but \emph{not} on $\theta_j$. The rotation angle affects temporal evolution but not marginal variances or contemporaneous correlation.
+
+\subsection{Nonseparability via frequency-dependent persistence}
+
+The key nonseparable feature arises from allowing $\rho_j$ to depend on spatial frequency $j$. We propose an \emph{algebraic (power-law) decay} parameterization
+\begin{equation}
+  \rho_j
+  =
+  \frac{1}{(1 + \lambda j^\alpha)^\beta},
+  \qquad j = 1,\dots,J,
+  \label{eq:rhoj-algebraic}
+\end{equation}
+with $\rho_0 \in (0,1)$ set separately, and parameters $\lambda > 0$, $\alpha > 0$, $\beta > 0$.
+
+
+Under this structure, low-frequency modes have $\rho_j \approx 1$ (slow temporal decay), while high-frequency modes have smaller $\rho_j$ (fast decay). The effective spatial correlation structure changes with time lag: at short lags both low and high frequencies contribute, but at long lags only low frequencies remain. This space--time covariance cannot be written as $C_{\text{space}}(h) C_{\text{time}}(k)$ and is therefore nonseparable.
+
+\subsection{Space--time covariance}
+
+Under the block-diagonal structure, the space--time covariance
+\[
+  C(h,k) = \mathbb{E}\bigl[ X_t(x) X_{t+k}(x+h) \bigr]
+\]
+can be computed when different modes are uncorrelated across frequencies. For $\theta_j = 0$ (no rotation), we have
+\[
+  \mathbb{E}[a_j(t)a_j(t+k)] = \mathbb{E}[b_j(t)b_j(t+k)] = \sigma_j^2 \rho_j^{|k|},
+\]
+yielding
+\begin{equation}
+  C(h,k)
+  =
+  \sum_{j=0}^{J}
+  \sigma_j^2 \rho_j^{|k|} \cos(jh).
+  \label{eq:cov-fourier-ar1}
+\end{equation}
+
+{\color{blue}
+\textbf{Derivation assumes $\theta_j = 0$:} When $M_j$ includes rotation, the lag-$k$ covariance involves $M_j^k$:
+\[
+  M_j^k = \rho_j^k \begin{pmatrix} \cos(k\theta_j) & -\sin(k\theta_j) \\ \sin(k\theta_j) & \cos(k\theta_j) \end{pmatrix},
+\]
+so
+\[
+  \mathbb{E}[a_j(t) a_j(t+k)] = \sigma_j^2 \rho_j^k \cos(k\theta_j) + \text{cross-terms involving } \phi_j.
+\]
+The spatial covariance \eqref{eq:cov-fourier-ar1} is therefore correct \emph{only when} $\theta_j = 0$ or when cross-terms cancel in the Fourier reconstruction. \textbf{please verify when rotation is present.}
+}
+
+\subsection{Parameter overview}
+
+The full model is specified by the following parameters, organized by their role in the model structure.
+
+\subsubsection*{Fourier truncation}
+
+\begin{itemize}
+  \item $J \in \mathbb{Z}_+$: highest Fourier mode (truncation level). Controls the finest spatial scale represented. Larger $J$ allows finer spatial detail; in practice $J$ is chosen so that the total variance in modes $j > J$ is negligible.
+\end{itemize}
+
+\subsubsection*{Spatial margin parameters (Matérn-like spectrum)}
+
+\begin{itemize}
+  \item $\nu > 0$: Matérn smoothness parameter. Larger $\nu$ gives smoother spatial fields. Sample paths are $\lceil \nu \rceil - 1$ times mean-square differentiable.
+  \item $\ell > 0$: spatial range parameter. Larger $\ell$ increases the spatial correlation length by shifting spectral mass to lower frequencies.
+  \item $\sigma^2_{\text{tot}} > 0$: total marginal variance of the field $X_t(x)$. Overall scale parameter.
+  \item $\kappa = \sqrt{2\nu}/\ell$: (derived) inverse range parameter used in the spectral density \eqref{eq:matern-spectrum}.
+\end{itemize}
+
+The mode variances $\sigma_j^2$ for $j=0,\dots,J$ are derived from $(\nu, \ell, \sigma^2_{\text{tot}})$ via \eqref{eq:matern-spectrum} and \eqref{eq:sigma-normalization}.
+
+\subsubsection*{Temporal persistence parameters}
+
+\begin{itemize}
+  \item $\rho_0 \in (0,1)$: AR(1) persistence for the constant mode $a_0(t)$. Set separately to avoid nonstationarity (the formula \eqref{eq:rhoj-algebraic} would give $\rho_0 = 1$ for $j=0$).
+  \item $\lambda > 0$: controls overall temporal decay strength across frequencies in \eqref{eq:rhoj-algebraic}.
+  \item $\alpha > 0$: controls how strongly persistence changes with frequency $j$ in \eqref{eq:rhoj-algebraic}.
+  \item $\beta > 0$: decay exponent in \eqref{eq:rhoj-algebraic}. Smaller $\beta$ gives slower (longer-memory) decay.
+\end{itemize}
+
+The mode-specific persistence parameters $\rho_j$ for $j=1,\dots,J$ are derived from $(\lambda, \alpha, \beta)$ via \eqref{eq:rhoj-algebraic}.
+
+\subsubsection*{Phase rotation parameters}
+
+\begin{itemize}
+  \item $\theta_j \in \mathbb{R}$ for $j=1,\dots,J$: rotation angle for mode $j$ in the $2\times2$ transition matrix $M_j$ (equation \eqref{eq:Mj-rotation}).
+  \item When $\theta_j = 0$ for all $j$, the model reduces to independent cosine/sine evolution (no temporal mixing).
+  \item Typical parameterization: $\theta_j = \theta_0 / j$ or $\theta_j = \theta_0 / (1 + j)$ for a scalar hyperparameter $\theta_0 \in \mathbb{R}$, so that lower frequencies rotate more than higher frequencies.
+\end{itemize}
+
+{\color{blue}
+\textbf{Empirical finding:} Phase drift validation showed mean $\Delta \text{phase} \approx 0$ even when $\theta_j$ was set to nonzero values. This suggests either (a) rotation is not being applied correctly in simulation, or (b) the phase of amplitude $R_j(t) = \sqrt{a_j^2 + b_j^2}$ does not drift at rate $\theta_j$ as expected. \textbf{What is the theoretical expected phase drift rate when rotation is present?}
+}
+
+\subsubsection*{Innovation correlation parameters}
+
+\begin{itemize}
+  \item $\phi_j \in (-1,1)$ for $j=1,\dots,J$: within-frequency correlation between innovations $\eta_{a,j,t}$ and $\eta_{b,j,t}$ (equation \eqref{eq:innovation-cov}).
+  \item When $\phi_j = 0$ for all $j$, the innovations are independent (cosine and sine uncorrelated at the same time).
+  \item When $\phi_j \neq 0$, the model induces contemporaneous correlation $\operatorname{Cov}(a_j(t), b_j(t)) = \sigma_j^2 \phi_j$ at stationarity.
+  \item Typical parameterization: $\phi_j = \phi_0 / (1 + j)$ or constant $\phi_j = \phi_0$ for all $j$, where $\phi_0 \in (-1,1)$ is a scalar hyperparameter.
+\end{itemize}
+
+{\color{blue}
+\textbf{Empirical finding:} Simulated $\operatorname{Cor}(a_j, b_j)$ showed 70\% error for $j=1$ (empirical 0.208 vs. theoretical 0.696) and high scatter for other modes. This suggests either (a) the stationary initial condition is drawn incorrectly, or (b) there is a numerical issue in the multivariate normal generation. The Lyapunov theory is correct (Section \ref{sec:lyapunov-fix}), so the issue is implementation-related.
+}
+
+\subsubsection*{Time horizon}
+
+\begin{itemize}
+  \item $T \in \mathbb{Z}_+$: number of time points to simulate or observe. Not a model parameter but a data specification.
+\end{itemize}
+
+\subsubsection*{Parameter count summary}
+
+For a model with Fourier truncation $J$ and the simplest scalar hyperparameter choices, the total number of free parameters is:
+
+\begin{itemize}
+  \item \textbf{Minimal model} (independent modes, no rotation, no innovation correlation): $J=50$ modes
+    \[
+      \text{Parameters: } \nu, \ell, \sigma^2_{\text{tot}}, \rho_0, \lambda, \alpha, \beta
+      \quad \Rightarrow \quad 7 \text{ parameters total.}
+    \]
+  
+  \item \textbf{With rotation} (add $\theta_0$ for $\theta_j = \theta_0/j$):
+    \[
+      \text{Parameters: } 7 + 1 = 8.
+    \]
+  
+  \item \textbf{With rotation and innovation correlation} (add $\theta_0$ and $\phi_0$ for $\phi_j = \phi_0/(1+j)$):
+    \[
+      \text{Parameters: } 7 + 1 + 1 = 9.
+    \]
+  
+  \item \textbf{Fully flexible} (separate $\theta_j$ and $\phi_j$ for each mode $j=1,\dots,J$):
+    \[
+      \text{Parameters: } 7 + J + J = 7 + 2J.
+    \]
+    For $J=50$, this is 107 parameters—likely overparameterized for most applications.
+\end{itemize}
+
+{\color{blue}
+\textbf{Question:} For inference (e.g., Whittle likelihood in Fourier space), which parameterization strikes the best balance between flexibility and identifiability? Should we use mode-specific $\{\rho_j, \theta_j, \phi_j\}$ as free parameters, or constrain them via smooth functions of $j$ with scalar hyperparameters?
+}
+
+By setting $\theta_j = 0$ and $\phi_j = 0$ for all $j$, the model reduces to the simple independent-mode AR(1) with uncorrelated cosine and sine components (7 parameters). Nonzero $\theta_j$ and $\phi_j$ introduce richer within-frequency dynamics: temporal mixing and phase rotation ($\theta_j$), and instantaneous correlation ($\phi_j$).
+
+\section*{Open Questions}
+
+\begin{enumerate}
+  \item \textbf{Periodic Matérn spectrum:} Should we sample the continuous Matérn spectral density at integer frequencies $j$, or explicitly periodize the Matérn covariance and compute its Fourier series?
+  
+  \item \textbf{Rotation and ACF:} When $M_j$ includes rotation ($\theta_j \neq 0$), what is the theoretical ACF of amplitude $R_j(t) = \sqrt{a_j^2 + b_j^2}$? Does it match $\rho_j^k$, or does rotation change the decay rate?
+  
+  \item \textbf{Innovation correlation identifiability:} The empirical $\operatorname{Cor}(a_j, b_j)$ showed high variance. Is $\phi_j$ identifiable from data, or does it trade off with $\theta_j$?
+  
+  \item \textbf{Phase drift interpretation:} If $\theta_j = c \cdot j$, does this correspond to a traveling wave with speed $c$? Physical meaning of frequency-dependent rotation?
+  
+  \item \textbf{Cross-frequency dependence:} Current model has block-diagonal dynamics. Should we add off-block-diagonal elements in $M$ or $\Sigma_\varepsilon$ for cross-frequency coupling? What structure preserves computational efficiency?
+  
+  \item \textbf{Parameter parsimony for inference:} For Whittle likelihood estimation, should we use mode-specific $\{\rho_j, \theta_j, \phi_j\}$ as free parameters, or constrain via smooth functions with scalar hyperparameters (e.g., $\theta_j = \theta_0/j$)? What is the trade-off between flexibility and identifiability?
+\end{enumerate}
+
+\section{Next steps}
+Write the Covariance in closed form as then it nice to simulate with fft due to circulant structure. 
+
+If we truncate to $J$ it depends on how dense the items are
+
+Want $Z(x) = \sum a_j(t) \cos(jx) + b_j(t) \sin(jx)$ to be a Gaussian process with covariance $C(h,k)$.
+
+Consider Aliasing 
+$Z(k/n) = \sum a_j(t) \cos(2\pi jk/n) + b_j(t) \sin(2\pi jk/n)$
+
+Now simulat $A_j' = \sum_p A_{a_j+pn}$ and $B_j' = \sum_p B_{b_j+pn}$
+
+and $\text{Var}(Z(k/n)) = \sum_{p = -\infty}^{\infty} \sigma^2_{j+pn} = \sum_{p=-q}^{q} \text{exact} + \sum_{p=q+1}^{\infty} + \sum_{p=-\infty} \text{tail by approximation}$
+
+
+\textbf{Ask} about the proof for the other of psd is $\int_d$
+
+\end{document}

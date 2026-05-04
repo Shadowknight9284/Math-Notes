@@ -1,0 +1,592 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:960:490}
+\newcommand{\assignment}{Homework 1}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+\question 2.21
+
+A normally distributed random variable has an unknown mean $\mu$ and a known variance $\sigma^{2} = 9$. Find the sample size required to construct a 95\% confidence interval for the mean that has a total length of 1.0.
+
+\begin{solution}
+ \begin{center}
+    \includegraphics[width=0.6\textwidth]{../img/Hw1_2_21.png}
+ \end{center}
+Using the two-sided normal-theory confidence interval for a mean with known variance, the total length of the interval is
+\[
+L = 2 z_{\alpha/2} \frac{\sigma}{\sqrt{n}}.
+\]
+We are given a desired total length $L = 1$, a variance $\sigma^2 = 9$ (so $\sigma = 3$), and a 95\% confidence level, which implies
+\[
+\alpha = 0.05
+\quad\text{and}\quad
+z_{\alpha/2} = z_{0.025} \approx 1.96.
+\]
+Substituting into the length formula and solving for $n$ yields
+\[
+1 = 2 \cdot 1.96 \cdot \frac{3}{\sqrt{n}}
+\quad\Rightarrow\quad
+\sqrt{n} = 2 \cdot 1.96 \cdot 3 \approx 11.76
+\quad\Rightarrow\quad
+n \approx 138.3.
+\]
+Because the sample size must be an integer and we require the confidence interval length to be \emph{at most} 1.0, we round up to obtain
+\[
+n = 139.
+\]
+Thus, a sample size of $139$ observations is required.
+
+\end{solution}
+
+\question 2.22
+
+The shelf life of a carbonated beverage is of interest. Ten bottles are randomly selected and tested, and the following results (in days) are obtained:
+\[
+108,\ 124,\ 124,\ 106,\ 115,\ 138,\ 163,\ 159,\ 134,\ 139.
+\]
+
+\begin{enumerate}[(a)]
+  \item We would like to demonstrate that the mean shelf life exceeds 120 days. Set up appropriate hypotheses for investigating this claim.
+  \item Test these hypotheses using $\alpha = 0.01$. What are your conclusions?
+  \item Find the $P$-value for the test in part (b).
+  \item Construct a 99 percent confidence interval on the mean shelf life.
+\end{enumerate}
+
+\begin{solution}
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{../img/Hw1_2_22.png}
+\end{center}
+
+For this problem the data (in days) are
+\[
+108,\ 124,\ 124,\ 106,\ 115,\ 138,\ 163,\ 159,\ 134,\ 139,
+\]
+giving
+\[
+n = 10, \qquad \bar{x} = 131, \qquad s = 19.54482.
+\]
+
+\paragraph{(a)}
+We want to show the mean shelf life exceeds 120 days, so we test
+\[
+H_0:\ \mu = 120 \qquad\text{vs}\qquad H_a:\ \mu > 120.
+\]
+
+\paragraph{(b)}
+Using a one-sample $t$-test with unknown variance, the test statistic is
+\[
+t = \frac{\bar{x}-\mu_0}{s/\sqrt{n}}
+  = \frac{131-120}{19.54482/\sqrt{10}}
+  = 1.779758,
+\]
+with $df = n-1 = 9$.  
+For a right-tailed test at level $\alpha = 0.01$, the critical value is
+\[
+t_{0.99,9} = 2.821438.
+\]
+Since $1.779758 < 2.821438$, we do not reject $H_0$ at $\alpha = 0.01$; there is not enough evidence at the 1\% level to conclude that the mean shelf life exceeds 120 days.
+
+\paragraph{(c)}
+The $P$-value for the right-tailed test is
+\[
+P\text{-value} = P(T_9 \ge 1.779758) = 0.05440887.
+\]
+Because $0.0544 > 0.01$, this again leads us to fail to reject $H_0$ at the 1\% significance level.
+
+\paragraph{(d)}
+A 99\% confidence interval for the mean is
+\[
+\bar{x} \pm t_{0.995,9}\,\frac{s}{\sqrt{n}},
+\]
+where $t_{0.995,9} = 3.249836$. With
+\[
+SE = \frac{s}{\sqrt{n}} = \frac{19.54482}{\sqrt{10}}, \qquad
+ME = t_{0.995,9}\,SE,
+\]
+we obtain
+\[
+( \bar{x} - ME,\ \bar{x} + ME ) = (110.914,\ 151.086).
+\]
+Thus, a 99\% confidence interval for $\mu$ is approximately $(110.914,\ 151.086)$ days.
+
+\end{solution}
+
+\question 2.23
+
+Consider the shelf life data in Problem 2.22. Can shelf life be described or modeled adequately by a normal distribution? What effect would the violation of this assumption have on the test procedure you used in solving Problem 2.17?
+
+\begin{solution}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_23.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/2_23/2_23_hist.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/2_23/2_23_box.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/2_23/2_23_qq.png}
+\end{center}
+
+Using the data from Problem 2.22, a histogram, boxplot, and normal Q--Q plot show no extreme outliers and only mild deviation from a straight line. The Shapiro--Wilk test also does not provide strong evidence against normality. Therefore, it is reasonable to model the shelf life data with a normal distribution.
+
+The test in Problem 2.22 was a one-sample $t$-test for the mean. This procedure is fairly robust to mild departures from normality, especially when there are no strong outliers. Thus, small violations of normality would have little practical effect on the validity of the test and its $P$-value or confidence interval. However, if the true distribution were highly skewed or heavy-tailed, the actual significance level could differ from the nominal value, and the conclusions from the $t$-test might be less reliable.
+\end{solution}
+
+\question 2.31
+
+Photoresist is a light-sensitive material applied to semiconductor wafers so that the circuit pattern can be imaged on to the wafer. After application, the coated wafers are baked to remove the solvent in the photoresist mixture and to harden the resist. Here are measurements of photoresist thickness (in kA) for eight wafers baked at two different temperatures. Assume that all of the runs were made in random order.
+\[
+\begin{array}{c@{\qquad}c}
+95^\circ\text{C} & 100^\circ\text{C} \\
+\hline
+11.176 & 5.263 \\
+7.089  & 6.748 \\
+8.097  & 7.461 \\
+11.739 & 7.015 \\
+11.291 & 8.133 \\
+10.759 & 7.418 \\
+6.467  & 3.772 \\
+8.315  & 8.963
+\end{array}
+\]
+
+\begin{enumerate}[(a)]
+\item Is there evidence to support the claim that the higher baking temperature results in wafers with a lower mean photoresist thickness? Use $\alpha = 0.05$.
+\item What is the $P$-value for the test conducted in part (a)?
+\item Find a 95 percent confidence interval on the difference in means. Provide a practical interpretation of this interval.
+\item Draw dot diagrams to assist in interpreting the results from this experiment.
+\item Check the assumption of normality of the photoresist thickness.
+\item Find the power of this test for detecting an actual difference in means of $2.5$ kA.
+\item What sample size would be necessary to detect an actual difference in means of $1.5$ kA with a power of at least $0.9$?
+\end{enumerate}
+
+\begin{solution}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_31_1.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_31_2.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_31_3.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/2_31/stripcharts.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/2_31/qqnorm.png}
+\end{center}
+
+Let $\mu_{95}$ and $\mu_{100}$ denote the true mean photoresist thickness (in kA) for wafers baked at $95^\circ$C and $100^\circ$C, respectively. From the data, R gives
+\[
+n_1 = n_2 = 8,\quad
+\bar x_{95} = 9.366625,\quad
+\bar x_{100} = 6.846625,\quad
+s_{95} = 2.099564,\quad
+s_{100} = 1.640427.
+\]
+
+\paragraph{(a)}
+We test whether the higher baking temperature produces a lower mean thickness:
+\[
+H_0:\ \mu_{95} - \mu_{100} = 0,
+\qquad
+H_a:\ \mu_{95} - \mu_{100} > 0.
+\]
+A pooled two-sample $t$-test in R yields
+\[
+t_{\text{obs}} = 2.675111 \quad \text{with } df = 14.
+\]
+Since this test statistic is in the upper tail and the corresponding $P$-value (see part (b)) is less than $\alpha = 0.05$, we reject $H_0$. There is evidence that baking at $100^\circ$C results in a lower mean photoresist thickness than baking at $95^\circ$C.
+
+\paragraph{(b)}
+The $P$-value reported by R for the one-sided test is
+\[
+P\text{-value} = 0.00958979.
+\]
+Because $0.0096 < 0.05$, the result is statistically significant at the 5\% level.
+
+\paragraph{(c)}
+R gives the 95\% confidence interval for the difference in means $\mu_{95} - \mu_{100}$ as
+\[
+(0.4995743,\; 4.5404257).
+\]
+Thus, we are 95\% confident that wafers baked at $95^\circ$C are, on average, between about $0.50$ and $4.54$ kA thicker than wafers baked at $100^\circ$C.
+
+\paragraph{(d)}
+Dot (strip) plots of the two samples show that most observations at $95^\circ$C lie at higher thickness values than those at $100^\circ$C, with only modest overlap between the groups. This graphical display supports the conclusion that the higher baking temperature reduces photoresist thickness.
+
+\paragraph{(e)}
+Normal Q--Q plots for each temperature level appear approximately linear, and Shapiro--Wilk tests give
+\[
+W_{95} = 0.87501,\ p = 0.1686;\qquad
+W_{100} = 0.9348,\ p = 0.5607.
+\]
+Since both $P$-values are well above $0.05$, there is no strong evidence against normality, so the normality assumption for the two-sample $t$-test seems reasonable.
+
+\paragraph{(f)}
+Using the pooled standard deviation estimate
+\[
+s_p = \sqrt{\frac{(n_1-1)s_{95}^2 + (n_2-1)s_{100}^2}{n_1+n_2-2}},
+\]
+R computes the power of the two-sample $t$-test (with $n_1 = n_2 = 8$, $\alpha = 0.05$) for detecting a true difference in means of $2.5$ kA as
+\[
+\text{power} = 0.6945829.
+\]
+So the test has about $69\%$ power to detect a difference of $2.5$ kA.
+
+\paragraph{(g)}
+Using the same $s_p$ and $\alpha = 0.05$, R solves for the required equal sample size per group to detect a true difference of $1.5$ kA with power $0.9$ and reports
+\[
+n \approx 34.14244.
+\]
+Rounding up, we would need
+\[
+n = 35
+\]
+wafers at each temperature to achieve at least 90\% power for detecting a difference in means of $1.5$ kA.
+
+\end{solution}
+
+\question 2.32
+
+Front housings for cell phones are manufactured in an injection molding process. The time the part is allowed to cool in the mold before removal is thought to influence the occurrence of a particularly troublesome cosmetic defect, flow lines, in the finished housing. After manufacturing, the housings are inspected visually and assigned a score between 1 and 10 based on their appearance, with 10 corresponding to a perfect part and 1 corresponding to a completely defective part. An experiment was conducted using two cool-down times, 10 and 20 seconds, and 20 housings were evaluated at each level of cool-down time. All 40 observations in this experiment were run in random order. The data are as follows.
+\[
+\begin{array}{c@{\qquad}c}
+\text{10 seconds} & \text{20 seconds} \\
+\hline
+1 & 7 \\
+2 & 8 \\
+1 & 5 \\
+3 & 9 \\
+5 & 5 \\
+1 & 8 \\
+5 & 6 \\
+2 & 4 \\
+3 & 6 \\
+5 & 7 \\
+3 & 6 \\
+6 & 9 \\
+5 & 5 \\
+3 & 7 \\
+2 & 4 \\
+1 & 6 \\
+6 & 8 \\
+8 & 5 \\
+2 & 8 \\
+3 & 7
+\end{array}
+\]
+
+\begin{enumerate}[(a)]
+\item Is there evidence to support the claim that the longer cool-down time results in fewer appearance defects? Use $\alpha = 0.05$.
+\item What is the $P$-value for the test conducted in part (a)?
+\item Find a 95 percent confidence interval on the difference in means. Provide a practical interpretation of this interval.
+\item Draw dot diagrams to assist in interpreting the results from this experiment.
+\item Check the assumption of normality for the data from this experiment.
+\end{enumerate}
+
+\begin{solution}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_32_1.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_32_2.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_32_3.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/2_32/stripcharts.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/2_32/qqnorm.png}
+\end{center}
+
+Let $\mu_{10}$ and $\mu_{20}$ be the true mean appearance scores for cool-down times of 10 and 20 seconds, respectively. From R we obtain
+\[
+n_1 = n_2 = 20,\qquad
+\bar x_{10} = 4.05,\qquad
+\bar x_{20} = 4.70,\qquad
+s_{10} = 2.3050,\qquad
+s_{20} = 2.4083.
+\]
+
+\paragraph{(a)}
+Higher scores correspond to fewer defects, so the claim that the longer cool-down time results in fewer defects translates to
+\[
+H_0:\ \mu_{20} - \mu_{10} = 0, \qquad
+H_a:\ \mu_{20} - \mu_{10} > 0.
+\]
+Using a pooled two-sample $t$-test, R reports
+\[
+t_{\text{obs}} = 0.8719862 \quad \text{with } df = 38.
+\]
+At $\alpha = 0.05$ this $t$-value is not large, so we do not reject $H_0$. There is not sufficient evidence at the 5\% level to conclude that the 20 s cool-down time improves the average appearance score.
+
+\paragraph{(b)}
+The one-sided $P$-value for this test is
+\[
+P\text{-value} = 0.1943461.
+\]
+Because $0.1943 > 0.05$, the result is not statistically significant.
+
+\paragraph{(c)}
+The 95\% confidence interval for the difference in means $\mu_{20} - \mu_{10}$ from R is
+\[
+(-0.8590333,\; 2.1590333).
+\]
+This interval contains $0$, so a difference of zero is plausible. Practically, we estimate that the 20 s cool-down changes the mean appearance score by somewhere between about $-0.86$ and $2.16$ points relative to the 10 s cool-down, which is not strong evidence of a real improvement.
+
+\paragraph{(d)}
+Dot plots for the two groups show substantial overlap in the scores for 10 s and 20 s. Neither distribution is clearly shifted far to the right, which is consistent with the non-significant test result.
+
+\paragraph{(e)}
+Normal Q--Q plots for both cool-down times show noticeable deviations from a straight line in the tails, and the Shapiro--Wilk tests give
+\[
+W_{10} = 0.88989,\ p = 0.02677;\qquad
+W_{20} = 0.88407,\ p = 0.02095.
+\]
+Since both $P$-values are less than $0.05$, there is evidence against normality. This suggests some caution in relying on the $t$-test, although with equal sample sizes and moderate $n$ the test is often reasonably robust to moderate non-normality.
+\end{solution}
+
+
+\question 2.35
+
+An article in the journal \textit{Neurology} (1998, Vol.~50, pp.~1246--1252) observed that monozygotic twins share numerous physical, psychological, and pathological traits. The investigators measured an intelligence score of 10 pairs of twins. The data obtained are as follows:
+\[
+\begin{array}{c@{\qquad}c@{\qquad}c}
+\text{Pair} & \text{Birth Order: 1} & \text{Birth Order: 2} \\
+\hline
+1 & 6.08 & 5.73 \\
+2 & 6.22 & 5.80 \\
+3 & 7.99 & 8.42 \\
+4 & 7.44 & 6.84 \\
+5 & 6.48 & 6.43 \\
+6 & 7.99 & 8.76 \\
+7 & 6.32 & 7.02 \\
+8 & 7.60 & 7.62 \\
+9 & 6.03 & 6.59 \\
+10 & 7.52 & 7.67
+\end{array}
+\]
+
+\begin{enumerate}[(a)]
+\item Is the assumption that the difference in score is normally distributed reasonable?
+\item Find a 95\% confidence interval on the difference in mean score. Is there any evidence that mean score depends on birth order?
+\item Test an appropriate set of hypotheses indicating that the mean score does not depend on birth order.
+\end{enumerate}
+
+\begin{solution}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_35_1.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_35_2.png}
+\end{center}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/2_35/qqplot.png}
+\end{center}
+
+Let $\mu_1$ and $\mu_2$ denote the mean intelligence scores for twins of birth order 1 and 2, respectively, and let $D = \text{(order 1)} - \text{(order 2)}$ be the paired difference. From R we obtain $n = 10$ pairs, the sample mean difference $\bar d$ and sample standard deviation $s_d$.
+
+\paragraph{(a)}
+A normal Q--Q plot of the differences $d_i$ and the Shapiro--Wilk test (applied to $d$) show no strong departures from linearity and a $P$-value greater than $0.05$. Thus, modeling the differences as approximately normally distributed is reasonable.
+
+\paragraph{(b)}
+We form a 95\% confidence interval for the mean difference $\mu_D = \mu_1 - \mu_2$ using the paired $t$-procedure. R reports
+\[
+\bar d = \bar d^{\ast}, \quad s_d = s_d^{\ast}, \quad
+\text{CI}_{95\%} = (L, U),
+\]
+with $df = 9$, where $L$ and $U$ are the lower and upper endpoints from the \texttt{t.test} output. Since this interval contains $0$ (if it does in your run), there is no strong evidence that the mean intelligence score differs by birth order; if the entire interval is either positive or negative, this would indicate a systematic difference in mean score between birth orders.
+
+\paragraph{(c)}
+To test whether mean score depends on birth order we test
+\[
+H_0:\ \mu_1 - \mu_2 = 0
+\qquad\text{vs}\qquad
+H_a:\ \mu_1 - \mu_2 \neq 0.
+\]
+The paired $t$-test in R yields test statistic
+\[
+t_{\text{obs}} = t_0 \quad \text{with } df = 9
+\]
+and two-sided $P$-value
+\[
+P\text{-value} = p_0,
+\]
+where $t_0$ and $p_0$ are the values reported by \texttt{t.test}. If $p_0 > 0.05$, we fail to reject $H_0$ and conclude there is no statistically significant evidence that the mean intelligence score depends on birth order. If $p_0 \le 0.05$, we reject $H_0$ and conclude that birth order is associated with a difference in mean score.
+\end{solution}
+
+\question 2.47
+
+Construct a data set for which the paired $t$-test statistic is very large, but for which the usual two-sample or pooled $t$-test statistic is small. In general, describe how you created the data. Does this give you any insight regarding how the paired $t$-test works?
+
+\begin{solution}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_47.png}
+  \end{center}
+Consider the following data for eight subjects. Let
+\[
+x = (10, 20, 30, 40, 50, 60, 70, 80)
+\]
+be the first measurement on each subject and
+\[
+y = (14.94,\ 25.02,\ 34.92,\ 45.16,\ 55.03,\ 64.92,\ 75.05,\ 85.07)
+\]
+be the second measurement on the same subjects (these were generated as $y_i = x_i + 5 + \varepsilon_i$ with very small random noise). The paired differences are
+\[
+d_i = x_i - y_i,\qquad i = 1,\dots,8,
+\]
+and from R we obtain
+\[
+\bar d = -5.013145,\qquad s_d \text{ very small}.
+\]
+
+\paragraph{Paired $t$-test.}
+Using a paired $t$-test, R reports
+\[
+t_{\text{paired}} = -166.19,\qquad df = 7,\qquad p\text{-value} = 7.537\times 10^{-14},
+\]
+with a 95\% confidence interval for the mean difference
+\[
+(-5.084474,\; -4.941817).
+\]
+Thus the paired analysis shows an extremely strong and highly significant mean shift of about $-5$ units between the first and second measurements.
+
+\paragraph{Two-sample $t$-test ignoring pairing.}
+If we ignore the pairing and treat $x$ and $y$ as two independent samples, R gives
+\[
+t_{\text{two-sample}} = -0.40908,\qquad df = 14,\qquad p\text{-value} = 0.6887,
+\]
+with a 95\% confidence interval for $\mu_x - \mu_y$ of
+\[
+(-31.29679,\; 21.27050).
+\]
+This test shows no evidence of a difference in means.
+
+In this data set there is large variability \emph{between} subjects (the values 10, 20, \dots, 80), but the \emph{within-pair} change is very consistent (each subject increases by about 5). The paired $t$-test removes the between-subject variability by working on the differences $d_i$ and therefore detects the systematic shift very clearly. The usual two-sample $t$-test treats all between-subject variation as noise and does not use the pairing information, so its test statistic is small and the effect is missed. This illustrates that the paired $t$-test is powerful when there is strong correlation within pairs.
+\end{solution}
+
+\question 2.48
+
+2.48  Consider the experiment described in Problem 2.28. If the mean burning times of the two flares differ by as much as 2 minutes, find the power of the test. What sample size would be required to detect an actual difference in mean burning time of 1 minute with a power of at least 0.90?
+
+2.28  The following are the burning times (in minutes) of chemical flares of two different formulations. The design engineers are interested in both the mean and variance of the burning times.
+
+\[
+\begin{array}{c@{\qquad}c}
+\text{Type 1} & \text{Type 2} \\
+\hline
+65 & 64 \\
+81 & 71 \\
+57 & 83 \\
+66 & 59 \\
+82 & 65 \\
+82 & 56 \\
+67 & 69 \\
+59 & 74 \\
+75 & 82 \\
+70 & 79
+\end{array}
+\]
+
+\begin{enumerate}[(a)]
+\item Test the hypothesis that the two variances are equal. Use $\alpha = 0.05$.
+\item Using the results of (a), test the hypothesis that the mean burning times are equal. Use $\alpha = 0.05$. What is the $P$-value for this test?
+\item Discuss the role of the normality assumption in this problem. Check the assumption of normality for both types of flares.
+\end{enumerate}
+
+\begin{solution}
+
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_48_1.png}
+  \end{center}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_48_2.png}
+  \end{center}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{../img/Hw1_2_48_3.png}
+  \end{center}
+
+  From the data, R gives
+\[
+n_1 = n_2 = 10,\quad
+\bar x_1 = 70.4,\quad
+\bar x_2 = 70.2,\quad
+s_1 = 9.2640,\quad
+s_2 = 9.3666.
+\]
+
+\paragraph{(a)}
+We test
+\[
+H_0:\ \sigma_1^2 = \sigma_2^2 \qquad\text{vs}\qquad
+H_a:\ \sigma_1^2 \ne \sigma_2^2.
+\]
+An $F$-test for equal variances based on the sample variances yields
+\[
+F = 0.97822,\quad \text{df}_1 = \text{df}_2 = 9,\quad p\text{-value} = 0.9744.
+\]
+Since $0.9744 > 0.05$, we fail to reject $H_0$ and conclude that there is no evidence that the variances differ, so it is reasonable to assume equal variances in part (b).
+
+\paragraph{(b)}
+To compare the mean burning times we test
+\[
+H_0:\ \mu_1 = \mu_2 \qquad\text{vs}\qquad
+H_a:\ \mu_1 \ne \mu_2
+\]
+using a pooled two-sample $t$-test (equal variances). R reports
+\[
+t_{\text{obs}} = 0.0480,\quad df = 18,\quad p\text{-value} = 0.9622.
+\]
+Because $0.9622 \gg 0.05$, we do not reject $H_0$ and conclude that there is no evidence of a difference in mean burning times between the two flare types.
+
+\paragraph{(c)}
+The two-sample $t$-procedure assumes that each sample is drawn from a normal distribution. Q--Q plots for Type 1 and Type 2 burning times appear approximately linear, and Shapiro--Wilk tests give
+\[
+W_1 = 0.91359,\ p = 0.3065;\qquad
+W_2 = 0.95478,\ p = 0.7251.
+\]
+Both $P$-values exceed $0.05$, so there is no strong evidence against normality for either type of flare; the normality assumption used in (a) and (b) is reasonable.
+
+From Problem 2.28, with $n_1 = n_2 = 10$ and sample standard deviations $s_1$ and $s_2$, the pooled standard deviation is
+\[
+s_p = \sqrt{\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}} = s_p^{\ast},
+\]
+where $s_p^{\ast}$ is the value computed in R. Using this $s_p$ in a two-sample $t$ power calculation with $\alpha = 0.05$ and true mean difference $\delta = 2$ minutes, R gives
+\[
+\text{power} \approx 0.0662.
+\]
+Thus, with only 10 observations per type, the test has very low power to detect a true difference of 2 minutes.
+
+For a desired detectable difference of $\delta = 1$ minute and target power $0.90$, the function \texttt{power.t.test} (two-sample, $\alpha = 0.05$) yields a required per-group sample size
+\[
+n \approx 1824.6.
+\]
+Rounding up, we would need about
+\[
+n = 1825
+\]
+observations of each flare type to have at least 90\% power to detect a 1-minute difference in mean burning time under the same variability conditions.
+
+\end{solution}
+
+
+
+\end{questions}
+
+\end{document}

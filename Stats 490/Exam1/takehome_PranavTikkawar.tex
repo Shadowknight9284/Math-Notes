@@ -1,0 +1,713 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Experimental Design}
+\newcommand{\assignment}{Exam 1 (Take-home)}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\textbf{Problem 1}
+
+In a study of starting salaries for assistant professors, five male
+assistant professors at each of three types of institutions were randomly
+polled and their starting salaries (in \$1000) were recorded. The summary
+statistics are:
+
+\[
+\begin{array}{lccc}
+\hline
+& \text{Public} & \text{Private} & \text{Church-affiliated} \\
+\hline
+\text{Mean} & 53.4 & 70.8 & 56.1 \\
+\text{Variance} & 72.8 & 48.2 & 60.3 \\
+\hline
+\end{array}
+\]
+
+There are $n_i = 5$ observations per group ($a=3$, $N=15$).
+
+\medskip
+\textbf{(a) Type of experimental design and model}
+
+This is a single-factor completely randomized design (CRD) with one factor
+``institution type'' at three levels. A fixed-effects one-way ANOVA model is
+\[
+Y_{ij} = \mu + \tau_i + \varepsilon_{ij},\quad i=1,2,3,\; j=1,\dots,5,
+\]
+where $\mu$ is the overall mean, $\tau_i$ is the effect of institution type $i$
+with the usual constraint $\sum_{i=1}^3 \tau_i = 0$, and
+$\varepsilon_{ij} \sim \mathrm{NID}(0,\sigma^2)$.
+Strictly speaking this is an \emph{observational} study (professors were
+polled rather than randomly assigned to institution types), but we analyze it
+using the single-factor ANOVA framework as for a completely randomized design.
+
+\medskip
+\textbf{(b) Test for differences in average starting salaries}
+
+We test
+\[
+H_0:\,\mu_1 = \mu_2 = \mu_3
+\quad\text{vs}\quad
+H_a:\,\text{at least one }\mu_i\text{ differs}.
+\]
+
+The grand mean is
+\[
+\bar{y}_{..} = \frac{53.4 + 70.8 + 56.1}{3} = 60.1.
+\]
+
+The treatment sum of squares is
+\[
+SS_{\text{Trt}}
+= n\sum_{i=1}^3(\bar{y}_i - \bar{y}_{..})^2
+= 5\bigl[(53.4-60.1)^2 + (70.8-60.1)^2 + (56.1-60.1)^2\bigr]
+= 876.9.
+\]
+
+The error sum of squares is
+\[
+SS_E = \sum_{i=1}^3 (n_i - 1)s_i^2
+= 4(72.8 + 48.2 + 60.3) = 725.2,
+\]
+so the total sum of squares is
+\[
+SS_T = SS_{\text{Trt}} + SS_E = 876.9 + 725.2 = 1602.1.
+\]
+
+Degrees of freedom and mean squares:
+\[
+df_{\text{Trt}} = a-1 = 2,\quad
+df_E = N-a = 12,\quad
+df_T = N-1 = 14,
+\]
+\[
+MS_{\text{Trt}} = \frac{SS_{\text{Trt}}}{2} = 438.45,\qquad
+MS_E = \frac{SS_E}{12} = 60.4333.
+\]
+
+The corresponding ANOVA table is
+\[
+\begin{array}{lrrrr}
+\hline
+\text{Source} & \text{df} & \text{SS} & \text{MS} & F \\
+\hline
+\text{Treatment} & 2  & 876.9 & 438.45 & 7.26 \\
+\text{Error}     & 12 & 725.2 & 60.43  &      \\
+\text{Total}     & 14 & 1602.1&        &      \\
+\hline
+\end{array}
+\]
+
+The ANOVA $F$-statistic is
+\[
+F = \frac{MS_{\text{Trt}}}{MS_E}
+= \frac{438.45}{60.4333} \approx 7.26,
+\]
+which is compared to an $F$ distribution with $(2,12)$ degrees of freedom.
+The corresponding $p$-value from R is
+\[
+p = 0.0086.
+\]
+Since $p < 0.05$, we reject $H_0$ and conclude that there are significant
+differences in average starting salaries among the three institution types.
+
+\medskip
+\textbf{(c) Estimate of the standard deviation of the error}
+
+The error mean square $MS_E$ is the usual unbiased estimator of $\sigma^2$.
+Hence
+\[
+\hat{\sigma}^2 = MS_E = 60.4333,
+\qquad
+\hat{\sigma} = \sqrt{MS_E} \approx 7.77,
+\]
+so the estimated error standard deviation is about \$7{,}770.
+
+\medskip
+\textbf{(d) Pairwise comparisons using Tukey HSD and Scheff\'e}
+
+With a balanced design and common replication $n=5$, the standard error for
+pairwise differences of treatment means is
+\[
+SE(\bar{y}_i - \bar{y}_j) =
+\sqrt{\frac{2 MS_E}{n}}
+= \sqrt{\frac{2 \times 60.4333}{5}}
+= \sqrt{24.1733} \approx 4.92.
+\]
+
+The pairwise sample mean differences (treatment $j$ minus treatment $i$) are
+\[
+\bar{y}_{\text{Priv}} - \bar{y}_{\text{Pub}} = 17.4,\quad
+\bar{y}_{\text{Ch}}   - \bar{y}_{\text{Pub}} = 2.7,\quad
+\bar{y}_{\text{Ch}}   - \bar{y}_{\text{Priv}} = -14.7.
+\]
+
+\emph{Tukey HSD.}
+For $\alpha = 0.05$, $a = 3$, and $df_E = 12$, the studentized range critical
+value from R is
+\[
+q_{0.05,3,12} = 3.7729,
+\]
+so
+\[
+HSD = q_{0.05,3,12}\sqrt{\frac{MS_E}{n}}
+= 3.7729 \sqrt{\frac{60.4333}{5}}
+\approx 3.7729 \times 3.48 \approx 13.1.
+\]
+A pair $(i,j)$ is significantly different if $|\bar{y}_i - \bar{y}_j| > HSD$.
+
+\begin{itemize}
+\item Private vs.\ Public:
+$|\bar{y}_{\text{Priv}} - \bar{y}_{\text{Pub}}|
+= 17.4 > 13.1$ $\Rightarrow$ significant.
+\item Church vs.\ Public:
+$|\bar{y}_{\text{Ch}} - \bar{y}_{\text{Pub}}|
+= 2.7 < 13.1$ $\Rightarrow$ not significant.
+\item Church vs.\ Private:
+$|\bar{y}_{\text{Ch}} - \bar{y}_{\text{Priv}}|
+= 14.7 > 13.1$ $\Rightarrow$ significant.
+\end{itemize}
+
+Thus, under Tukey's method, Private institutions have significantly higher
+starting salaries than both Public and Church-affiliated institutions, while
+Public and Church-affiliated institutions do not differ significantly.
+
+\emph{Scheff\'e method.}
+For a one-way ANOVA with $a=3$ groups, Scheff\'e's critical factor at
+$\alpha = 0.05$ is
+\[
+k_S = (a-1)F_{0.05,\,a-1,\,df_E}
+= 2 F_{0.05,2,12}.
+\]
+From R,
+\[
+F_{0.05,2,12} = 3.8853,\quad
+k_S = 2 \times 3.8853 \approx 7.77.
+\]
+
+For a pairwise contrast $C = \mu_i - \mu_j$, the estimated contrast is
+$\hat{C} = \bar{y}_i - \bar{y}_j$ with
+\[
+SE(\hat{C}) = SE(\bar{y}_i - \bar{y}_j) \approx 4.92,
+\]
+and Scheff\'e's test rejects $H_0: C=0$ if
+\[
+\frac{\hat{C}^2}{SE(\hat{C})^2} > k_S.
+\]
+
+Using the R output,
+\[
+\begin{aligned}
+T^2_{\text{Priv-Pub}} &= 12.52,\\
+T^2_{\text{Ch-Pub}}   &= 0.30,\\
+T^2_{\text{Ch-Priv}}  &= 8.94,
+\end{aligned}
+\]
+so
+\[
+T^2_{\text{Priv-Pub}} > 7.77,\quad
+T^2_{\text{Ch-Priv}}  > 7.77,\quad
+T^2_{\text{Ch-Pub}}   < 7.77.
+\]
+Therefore, Scheff\'e's method also finds that Private vs.\ Public and
+Private vs.\ Church-affiliated are significantly different, while Public vs.\
+Church-affiliated is not. In this example, Tukey and Scheff\'e give the same
+pairwise conclusions.
+
+\medskip
+\textbf{(e) Kruskal--Wallis test}
+
+A Kruskal--Wallis test with $a=3$ groups has $df = a-1 = 2$ and, under $H_0$,
+the test statistic is approximately $\chi^2_2$-distributed. We are told that
+the Kruskal--Wallis test statistic is $H = 8.09$. The 5\% upper critical value
+for $\chi^2_2$ is about $5.99$, and since $H = 8.09 > 5.99$ the Kruskal--Wallis
+test rejects $H_0$ at the 5\% level. The corresponding p–value
+\[
+p = P(\chi^2_2 \ge 8.09) \approx 0.017
+\]
+is also below 0.05. Because Kruskal--Wallis does not require normality and
+uses only the ranks of the data, this provides a robust, nonparametric check
+that still indicates differences in the distributions of salaries among the
+three institution types. Thus our conclusion in part (b) does not change.
+
+\medskip
+\textbf{(f) Possible improved model}
+
+The current model treats only institution type as a factor and ignores other
+important sources of variability. An improved model might:
+
+\begin{itemize}
+\item include additional factors or covariates such as academic discipline,
+geographic region, or research vs.\ teaching focus, which are known to affect
+starting salaries;
+\item use blocking on departments, regions, or year of hire to control for
+nuisance variation via a randomized complete block design;
+\item consider transformations (e.g., modeling log-salary) if residual plots
+indicate skewness or nonconstant variance across institution types.
+\end{itemize}
+
+Such extensions would likely reduce unexplained variability and provide a more
+realistic assessment of the effect of institution type on starting salaries.
+In particular, the sample variances (72.8, 48.2, 60.3) already suggest some
+heterogeneity in variability across institution types, and the small per–group
+sample size ($n=5$) limits power. Adding important predictors (discipline,
+region, year of hire) and possibly modeling log–salaries would address these
+issues directly.
+
+\textbf{Problem 2}
+
+Three groups ($\#1,\#2,\#3$) of students were subjected to different teaching
+techniques and tested at the end of the course. There are $n_i = 6$ students in
+each group, and the average scores are
+\[
+\bar{y}_1 = 72.3,\quad \bar{y}_2 = 79.5,\quad \bar{y}_3 = 65.8.
+\]
+The overall variance of all 18 scores is 84.03, and we are told that the error
+variance estimate from the ANOVA model is
+\[
+MS_E = 57.84.
+\]
+
+\medskip
+\textbf{(a) Complete ANOVA table}
+
+The grand mean is
+\[
+\bar{y}_{..} = \frac{72.3 + 79.5 + 65.8}{3} = 72.5333.
+\]
+
+The treatment sum of squares is
+\[
+SS_{\text{Trt}}
+= n\sum_{i=1}^3(\bar{y}_i - \bar{y}_{..})^2
+= 6\bigl[(72.3-72.5333)^2 + (79.5-72.5333)^2 + (65.8-72.5333)^2\bigr]
+= 563.56.
+\]
+
+We are given $MS_E = 57.84$. The error degrees of freedom are
+\[
+df_E = N-a = 18-3 = 15,
+\]
+so
+\[
+SS_E = MS_E \times df_E = 57.84 \times 15 = 867.6.
+\]
+Thus the total sum of squares is
+\[
+SS_T = SS_{\text{Trt}} + SS_E = 563.56 + 867.6 = 1431.16.
+\]
+If we compute $SS_T$ directly from the reported overall variance via
+$SS_T = (N-1)\times 84.03$, we obtain 1428.51, which differs slightly from
+1431.16 due to rounding in the reported group means. In what follows we treat
+the given $MS_E = 57.84$ and the corresponding $SS_E$ as authoritative.
+
+Degrees of freedom and mean squares:
+\[
+df_{\text{Trt}} = a-1 = 2,\quad df_E = 15,\quad df_T = N-1 = 17,
+\]
+\[
+MS_{\text{Trt}} = \frac{SS_{\text{Trt}}}{2} = 281.78,\qquad
+MS_E = 57.84.
+\]
+
+The ANOVA $F$-statistic is
+\[
+F = \frac{MS_{\text{Trt}}}{MS_E}
+= \frac{281.78}{57.84} \approx 4.87.
+\]
+
+The ANOVA table is therefore
+
+\[
+\begin{array}{lrrrr}
+\hline
+\text{Source} & \text{df} & \text{SS} & \text{MS} & F \\
+\hline
+\text{Treatment} & 2  & 563.56 & 281.78 & 4.87 \\
+\text{Error}     & 15 & 867.60 & 57.84  &      \\
+\text{Total}     & 17 & 1431.16&        &      \\
+\hline
+\end{array}
+\]
+
+\medskip
+\textbf{(b) Conclusion about differences in teaching techniques}
+
+We test
+\[
+H_0:\,\mu_1 = \mu_2 = \mu_3
+\quad\text{vs}\quad
+H_a:\,\text{at least one }\mu_i\text{ differs}.
+\]
+
+From the ANOVA table,
+\[
+F = 4.8717,\quad df_1 = 2,\quad df_2 = 15.
+\]
+The corresponding $p$-value from R is
+\[
+p = 0.0234.
+\]
+Since $p < 0.05$, we reject $H_0$ at the 5\% level and conclude that there are
+significant differences in mean test scores among the three teaching
+techniques.
+
+\medskip
+\textbf{(c) Comparison of treatments to the control (group 2)}
+
+Suppose group 2 is the control and groups 1 and 3 are treatments (the problem
+statement appears to say ``\#1 and \#2 are treatments,'' but since group 2 is
+designated as the control, we interpret this as a typo and treat \#1 and \#3 as
+the treatment groups). The differences in sample means relative to the control
+are
+\[
+\bar{y}_1 - \bar{y}_2 = 72.3 - 79.5 = -7.2,\qquad
+\bar{y}_3 - \bar{y}_2 = 65.8 - 79.5 = -13.7.
+\]
+
+The standard error for the difference between a treatment mean and the control
+mean (with equal group sizes $n=6$) is
+\[
+SE_{\text{diff}} = \sqrt{\frac{2 MS_E}{n}}
+= \sqrt{\frac{2 \times 57.84}{6}} = 4.3909.
+\]
+
+Thus the $t$-statistics (with $df = 15$) are
+\[
+t_{1-2} = \frac{-7.2}{4.3909} = -1.64,\qquad
+t_{3-2} = \frac{-13.7}{4.3909} = -3.12.
+\]
+
+The corresponding two–sided p–values (with 15 degrees of freedom) are approximately
+\[
+p_{1-2} \approx 0.12,\qquad p_{3-2} \approx 0.007.
+\]
+Thus, at $\alpha = 0.05$, only group 3 differs significantly from the control; group 1 is not significantly different from group 2.
+
+Because the primary interest is in comparing each treatment to a single control, Dunnett's multiple-comparison procedure is appropriate. For $a=3$ groups (two treatments and one control), $df_E = 15$, and familywise $\alpha = 0.05$, the Dunnett critical value is approximately
+\[
+t_D \approx 2.40.
+\]
+Using the same standard error $SE_{\text{diff}} = 4.3909$, the standardized differences are
+\[
+t_{1-2} = -1.64,\qquad t_{3-2} = -3.12.
+\]
+Since $|t_{3-2}| = 3.12 > 2.40$ while $|t_{1-2}| = 1.64 < 2.40$, Dunnett's test again concludes that group 3 has a significantly lower mean score than the control, whereas group 1 does not differ significantly from the control.
+
+
+
+\medskip
+\textbf{(d) Average treatment effect vs control with Bonferroni correction}
+
+We now test whether the \emph{average} of the two treatment groups differs from
+the control. Consider the contrast
+\[
+C = \tfrac{1}{2}\mu_1 + \tfrac{1}{2}\mu_3 - \mu_2.
+\]
+Its estimate is
+\[
+\hat{C} = \tfrac{1}{2}(72.3 + 65.8) - 79.5
+= \tfrac{1}{2}(138.1) - 79.5 = 69.05 - 79.5 = -10.45.
+\]
+
+For equal group sizes $n=6$, the variance of $\hat{C}$ is
+\[
+\operatorname{Var}(\hat{C}) =
+MS_E\left(\frac{0.5^2}{n} + \frac{0.5^2}{n} + \frac{1^2}{n}\right)
+= MS_E\cdot\frac{1.5}{n},
+\]
+so
+\[
+SE_C = \sqrt{\frac{1.5\,MS_E}{n}}
+= \sqrt{\frac{1.5 \times 57.84}{6}} = 3.8026.
+\]
+
+The corresponding $t$-statistic (with $df = 15$) is
+\[
+t = \frac{\hat{C}}{SE_C} = \frac{-10.45}{3.8026} = -2.75.
+\]
+
+We are asked to test this contrast using a Bonferroni correction assuming a
+total of $K = 10$ post-hoc tests. With overall $\alpha = 0.05$, the
+Bonferroni-adjusted per-test level is
+\[
+\alpha^* = \frac{\alpha}{K} = \frac{0.05}{10} = 0.005.
+\]
+For a two-sided test, we use $\alpha^*/2 = 0.0025$ in each tail. The critical
+$t$ value from R is
+\[
+t_{1-\alpha^*/2,15} = t_{0.9975,15} = 3.286.
+\]
+
+Since
+\[
+|t| = 2.75 < 3.286,
+\]
+we fail to reject $H_0 : C = 0$ at the Bonferroni-adjusted level. Thus, when
+controlling for a family of 10 post-hoc tests, the average of the two
+treatment groups is not significantly different from the control group, even
+though the unadjusted $t$-statistic suggests a noticeable decrease in score.
+Practically, the estimated average treatment effect of $-10.45$ points is
+fairly large, but the very conservative Bonferroni adjustment inflates the
+critical value, so this contrast does not reach statistical significance at the
+familywise 5\% level.
+
+\textbf{Problem 3 \,(DAE 4.17)}
+
+The response is gene expression measured for three leukemia treatments:
+MP only, MP + HDMTX, and MP + LDMTX, with $n=10$ observations per
+treatment ($N=30$). The data are in \texttt{Mid1Prob3.csv}.
+
+\medskip
+\textbf{(a) Test whether treatment means differ (raw data)}
+
+A one-way fixed-effects ANOVA model is
+\[
+Y_{ij} = \mu + \tau_i + \varepsilon_{ij},\quad
+i=1,2,3,\; j=1,\dots,10,\qquad
+\varepsilon_{ij} \sim \mathrm{NID}(0,\sigma^2),
+\]
+where $i$ indexes treatment.
+
+Sample means and standard deviations by treatment are
+\[
+\begin{array}{lccc}
+\hline
+\text{Treatment} & n & \text{Mean} & \text{SD} \\
+\hline
+\text{MP + HDMTX} & 10 & 479.3 & 371.0 \\
+\text{MP + LDMTX} & 10 & 165.0 & 126.0 \\
+\text{MP Only}    & 10 & 238.0 & 308.0 \\
+\hline
+\end{array}
+\]
+
+From the ANOVA on the raw responses (R command
+\texttt{aov(Gene.Expression $\sim$ Treatment)}),
+\[
+\begin{array}{lrrrr}
+\hline
+\text{Source} & \text{Df} & \text{SS} & \text{MS} & F \\
+\hline
+\text{Treatment} & 2 & 538{,}442 & 269{,}221 & 3.25 \\
+\text{Error}     & 27 & 2{,}236{,}974 & 82{,}851 & \\
+\hline
+\end{array}
+\]
+with $p$–value $p = 0.0544$.
+
+At $\alpha = 0.05$, $p$ is slightly larger than 0.05, so we \emph{do not}
+reject $H_0$ at the 5\% level based strictly on this ANOVA. The evidence
+for a difference in mean gene expression across treatments is marginal
+but not conventionally significant.
+
+\medskip
+\textbf{(b) Normality check for raw data}
+
+The residuals from the raw-data ANOVA show substantial deviation from
+normality. The Shapiro–Wilk test applied to the raw residuals gives
+\[
+W = 0.9165,\quad p = 0.0218,
+\]
+which is below 0.05, indicating a statistically significant departure
+from normality. The residual histogram and QQ plot 
+exhibit pronounced right skew and a few large positive residuals,
+consistent with the presence of outliers or heavy right tails. Thus the
+normality assumption is questionable on the original scale.
+
+\begin{center}
+\includegraphics[width=0.45\textwidth]{img/3b.png}
+\end{center}
+
+\medskip
+\textbf{(c) Log transform and ANOVA on transformed data}
+
+Because the raw data are positive and strongly right-skewed, a log
+transform is natural. Let
+\[
+Z_{ij} = \log(Y_{ij}),
+\]
+and fit the one-way ANOVA model
+\[
+Z_{ij} = \mu^\ast + \tau_i^\ast + \varepsilon_{ij}^\ast.
+\]
+
+On the log scale, the sample means and standard deviations are
+\[
+\begin{array}{lccc}
+\hline
+\text{Treatment} & n & \text{Mean} & \text{SD} \\
+\hline
+\text{MP + HDMTX} & 10 & 5.73 & 1.13 \\
+\text{MP + LDMTX} & 10 & 4.74 & 1.00 \\
+\text{MP Only}    & 10 & 4.79 & 1.18 \\
+\hline
+\end{array}
+\]
+
+The ANOVA on the log-transformed responses (R command
+\texttt{aov(logGE $\sim$ Treatment)}) yields
+\[
+\begin{array}{lrrrr}
+\hline
+\text{Source} & \text{Df} & \text{SS} & \text{MS} & F \\
+\hline
+\text{Treatment} & 2 & 6.297 & 3.1485 & 2.57 \\
+\text{Error}     & 27 & 33.069 & 1.2248 & \\
+\hline
+\end{array}
+\]
+with $p = 0.0951$.
+
+Thus, on the log scale the evidence for treatment differences is weaker:
+at $\alpha = 0.05$ we again fail to reject $H_0$; the $p$–value is
+between 0.05 and 0.10, so one might describe this as only marginal
+evidence of differences in mean log gene expression.
+
+\medskip
+\textbf{(d) Residual analysis for the transformed model}
+
+For the log-scale ANOVA, we examine the residuals. The residuals vs
+fitted plot for the log model shows a fairly symmetric cloud of points
+with no strong funnel shape; the variability appears roughly constant
+across fitted values. The QQ plot of the log-model residuals lies much
+closer to a straight line than for the raw data.
+
+The Shapiro–Wilk test on the log-model residuals gives
+\[
+W = 0.9565,\quad p = 0.2511,
+\]
+which is not significant; we do not reject normality at the 5\% level.
+This suggests that the log transform greatly improves the normality of
+the errors and makes the ANOVA assumptions more plausible.
+
+In summary, the log transformation yields a model with much better
+residual behavior (approximately normal and homoscedastic), but even on
+this scale the treatment effect is not statistically significant at the
+$\alpha = 0.05$ level.
+
+\begin{center}
+\includegraphics[width=0.45\textwidth]{img/3d.png}
+\end{center}
+
+\newpage
+\textbf{R Code}
+\begin{verbatim}
+# Problem 1
+means  <- c(Public = 53.4, Private = 70.8, Church = 56.1)
+vars   <- c(Public = 72.8, Private = 48.2, Church = 60.3)
+n      <- 5
+grand_mean <- mean(means)
+SS_trt <- n * sum((means - grand_mean)^2)
+SS_E   <- sum((n - 1) * vars)
+df_trt <- 2; df_E <- 12
+MS_trt <- SS_trt / df_trt; MS_E <- SS_E / df_E
+F_stat <- MS_trt / MS_E
+p_val  <- 1 - pf(F_stat, df_trt, df_E)
+sigma_hat <- sqrt(MS_E)
+SE_diff <- sqrt(2 * MS_E / n)
+diffs <- c(
+  Priv_Pub = means["Private"] - means["Public"],
+  Ch_Pub   = means["Church"]  - means["Public"],
+  Ch_Priv  = means["Church"]  - means["Private"]
+)
+qcrit <- qtukey(0.95, nmeans = 3, df = df_E)
+HSD   <- qcrit * sqrt(MS_E / n)
+Fcrit <- qf(0.95, df1 = df_trt, df2 = df_E)
+k_S   <- (3 - 1) * Fcrit
+T2    <- (diffs^2) / (SE_diff^2)
+
+# Problem 2
+means_P2 <- c(G1 = 72.3, G2 = 79.5, G3 = 65.8)
+n_P2     <- 6
+a_P2     <- 3
+N_P2     <- a_P2 * n_P2
+overall_var <- 84.03
+MS_E_P2     <- 57.84
+grand_mean_P2 <- mean(means_P2)
+SS_T_P2 <- overall_var * (N_P2 - 1)
+SS_trt_P2 <- n_P2 * sum((means_P2 - grand_mean_P2)^2)
+df_trt_P2 <- a_P2 - 1
+df_E_P2   <- N_P2 - a_P2
+SS_E_P2   <- MS_E_P2 * df_E_P2
+SS_T_P2_consistent <- SS_trt_P2 + SS_E_P2
+MS_trt_P2 <- SS_trt_P2 / df_trt_P2
+F_stat_P2 <- MS_trt_P2 / MS_E_P2
+p_val_P2  <- 1 - pf(F_stat_P2, df_trt_P2, df_E_P2)
+
+SE_diff_P2 <- sqrt(2 * MS_E_P2 / n_P2)
+diffs_vs_control <- c(
+  G1_minus_G2 = means_P2["G1"] - means_P2["G2"],
+  G3_minus_G2 = means_P2["G3"] - means_P2["G2"]
+)
+t_stats_vs_control <- diffs_vs_control / SE_diff_P2
+
+C_hat <- 0.5 * means_P2["G1"] + 0.5 * means_P2["G3"] - means_P2["G2"]
+SE_C  <- sqrt(MS_E_P2 * 1.5 / n_P2)
+t_C   <- C_hat / SE_C
+alpha      <- 0.05
+K          <- 10
+alpha_star <- alpha / K
+t_crit_Bonf <- qt(1 - alpha_star / 2, df = df_E_P2)
+
+# Problem 3
+dat <- read.csv("Stats 490/Exam1/Mid1Prob3.csv")
+dat$Treatment <- factor(dat$Treatment)
+
+library(dplyr)
+group_stats <- dat %>%
+  group_by(Treatment) %>%
+  summarise(
+    n    = n(),
+    mean = mean(Gene.Expression),
+    sd   = sd(Gene.Expression)
+  )
+
+fit_raw <- aov(Gene.Expression ~ Treatment, data = dat)
+anova_raw <- summary(fit_raw)[[1]]
+res_raw <- residuals(fit_raw)
+
+par(mfrow = c(1, 2))
+qqnorm(res_raw, main = "QQ Plot - Raw Data Residuals")
+qqline(res_raw)
+hist(res_raw, main = "Histogram - Raw Data Residuals",
+     xlab = "Residuals")
+par(mfrow = c(1, 1))
+
+shapiro_raw <- shapiro.test(res_raw)
+
+dat$logGE <- log(dat$Gene.Expression)
+
+group_stats_log <- dat %>%
+  group_by(Treatment) %>%
+  summarise(
+    n    = n(),
+    mean = mean(logGE),
+    sd   = sd(logGE)
+  )
+
+fit_log  <- aov(logGE ~ Treatment, data = dat)
+anova_log <- summary(fit_log)[[1]]
+res_log    <- residuals(fit_log)
+fitted_log <- fitted(fit_log)
+
+par(mfrow = c(1, 2))
+plot(fitted_log, res_log,
+     main = "Residuals vs Fitted (log model)",
+     xlab = "Fitted values", ylab = "Residuals")
+abline(h = 0, col = "red")
+qqnorm(res_log, main = "QQ Plot - log model residuals")
+qqline(res_log, col = "red")
+par(mfrow = c(1, 1))
+
+shapiro_log <- shapiro.test(res_log)
+\end{verbatim}
+
+\end{document}

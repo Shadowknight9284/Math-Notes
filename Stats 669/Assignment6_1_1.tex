@@ -1,0 +1,31 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Stats}
+\newcommand{\assignment}{Homework 6.1.1}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\begin{questions}
+\question I see an new benefit of reparametrization to ensure that our bayesian priors are orthogonal. In an arbitrary function with 3 or more parameters does these exist a mutually orthogonal set. I feel like this would be true, and it would require $n$ invertable functions for $n$ variates ${f_i}_{i=1^n}$ such that $\phi_i = f_i(\Theta)$ and $\cov(\phi_i, \phi_j) = 0$ and we can generate them by some PCA method or a "stochastic" gram-schmidt orthogonalization. 
+
+\question the notion of a process "rougher" than brownian motion is brought up, and I wanted to just confirm that this is in the path sense (how differentiable), not quadratic variation sense. I remember earlier in the year (on the snow day) the notion was brought up. 
+
+Honestly the reason why I am getting confused is due to the fact that i know that for a R.V with finite second moment, the Q.V should be 0, but if we have a GP which is rougher (and by my assumption larger QV) than Brownian motion, it should have infinite second moment, but being a GP that is a contradiction.
+
+\question The RMSE for $\hat \phi_2$ does not change much at all between models which was interesting. I feel like the reason might have to due with the magnitude of the $\eta$ and $\beta$ parameters as with smaller parameters for the eccentricity the less we need to adjust the estimates from a fixed model.
+
+
+
+
+\end{questions}
+
+\end{document}

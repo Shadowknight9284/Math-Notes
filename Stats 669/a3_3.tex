@@ -1,0 +1,50 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics - Stats 669}
+\newcommand{\assignment}{Homework 3.3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\section{$\hat{\kappa}$ from north-south and east-west pairs}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/fig3_17_kappa_easting_northing.png}
+\end{center}
+
+Both of the east-west and north-south transects show similar patterns in $\hat{\kappa}$. The north-south transects have a range of 1.45 to 1.65, while the east-west transects are slightly higher, with a range of 1.5 to 1.7. There is a suddent drop in $\hat{\kappa}$ around 20 km Northing (east-west transects) which is most likely due to the presence of a canyon wall or somthing similar. 
+
+*** Note that I got help from Luke to make the plot.
+
+
+\section{Mean squared second differences}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/fig3_18_ms2_easting_northing.png}
+\end{center}
+
+The mean squared second differences for the north-south transects are generally higher than those for the east-west transects, with a large spike at 3.5 to 5 km Northing.There is a similar spike in the east-west transects at 8 - 11 km Easting, but it is not as pronounced as the one in the north-south transects. This suggests that there may be more variability in the north-south direction than in the east-west direction, which could be due to the presence of more complex geological features in the north-south direction ie an anisotropy.
+
+\section{Bubble plot of mean squared second differences}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/fig4_4_bubble_ms2.png}
+\end{center}
+
+This plot is slightly more difficult to interpret than the previous two, but it appears that there are some areas with higher mean squared second differences, particularly in the bottom right corner of the plot and near the center. These areas correspond to the areas with more variability in a square grid, which could be due to the presence of more complex geological features in those areas, most likely canyons and cliffs. There is also an interesting pattern of low mean squared second differences in the top right corner of the plot going through the center to the bottom middle of the plot.
+
+\section{Slope vs Elevation scatter plot}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/slope_vs_elevation_scatter_lines.png}
+\end{center}
+I made a scattershot of elevation (m) vs slope (degrees) to see if there was any relationship between the two variables. I also plotted a lowess curve to see if there was any non-linear relationship between the two variables. From the scatterplot, it appears that there is a positive relationship between elevation and slope during low elevations (0-1250m), but this relationship seems to weaken as elevation increases. 
+
+
+
+\end{document}

@@ -1,0 +1,49 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+Base model structure:
+
+1-D Spatial, Periodic Boundary on interval $[0,L]$\\
+Matern Spatial Covariance\\
+Can be written as $X_t(s) = \sum_{j=1}^\infty A_j(t) \cos\left(\frac{2\pi j s}{L}\right) + B_j(t) \sin\left(\frac{2\pi j s}{L}\right)$\\
+Temporally Markov: $Z_{t+1} = M Z_t + \epsilon_t$\\
+where $\epsilon_t \sim \mathcal{N}(0, \Sigma_\epsilon)$ and $Z_t = (A_1(t), B_1(t), A_2(t), B_2(t), \ldots)^T$\\
+$\Sigma_\epsilon$ is correlated across the different frequencies, but not across time.
+We want time covariance to be like $\Cov(A_{j,t}, A_{j,t+k}) = \sigma_j^2 \rho_j^k$ and $\Cov(B_{j,t}, B_{j,t+k}) = \sigma_j^2 \rho_j^k$ where $\rho_j$ is a non-constant function of $j$ that decays faster for higher $j$ to control the smoothness of the process in space. Probably want $\rho_j = \exp(-\lambda j)$ for some $\lambda > 0$.
+
+
+\begin{questions}
+\question How does the matern covariance function look like on a perodic domain: Do I just sum over the period and get a new covariance function?
+
+\question Are there some restrictions of the parameters of the matern covariance function to ensure has nice form on the periodic domain?
+
+\question Does this model keep the same smoothness properties as the original matern covariance function, probably not, but how does it change the smoothness properties?
+
+\question What do I expect to see in the high and low frequency components of the covariance function? 
+I am assuming that the high frequency components will decay faster than the low frequency components. 
+\end{questions}
+
+
+We will need to observe it everywhere, so then it would make sense to be markov. 
+
+Think about how I would simulate this model. Literally just simulate fourier coefficients. 
+
+Choice of $\Sigma_i^2$ for some algebracitc proety and smoothnes
+
+Also think about hwo to get, some form of drift, and look at cross correlaiton. Thnk of a bivariate AR(1) process for the fourier coefficients, and then see how that translates to the spatio-temporal process. Also see how this translates to phase and amplitude of the fourier coefficients.
+
+\end{document}

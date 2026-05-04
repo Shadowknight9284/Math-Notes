@@ -1,0 +1,297 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{L1}
+
+\section{L2}
+
+\section{L3}
+
+\section{L4}
+
+\begin{definition}[Conditional Expectation]
+Let $(\Omega,\mathcal{F},\mathbb{P})$ be a probability space, $X$ an integrable random variable with $\mathbb{E}|X|<\infty$, and $\mathcal{G}\subseteq\mathcal{F}$ a sub-$\sigma$-algebra. A random variable $Y$ is called the \emph{conditional expectation} of $X$ given $\mathcal{G}$, written
+\[
+Y = \mathbb{E}[X \mid \mathcal{G}],
+\]
+if
+\begin{enumerate}
+  \item $Y$ is $\mathcal{G}$-measurable, and
+  \item for every $A\in\mathcal{G}$, $\displaystyle \int_A Y\,d\mathbb{P} = \int_A X\,d\mathbb{P}$.
+\end{enumerate}
+When $Z$ is a random variable, we write $\mathbb{E}[X\mid Z] := \mathbb{E}[X\mid \sigma(Z)]$.
+\end{definition}
+
+\section{L5}
+
+\begin{definition}[Filtration]
+A \emph{filtration} on a probability space $(\Omega,\mathcal{F},\mathbb{P})$ is an increasing sequence of sub-$\sigma$-algebras
+\[
+\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \mathcal{F}_2 \subseteq \cdots \subseteq \mathcal{F}.
+\]
+We interpret $\mathcal{F}_n$ as the information available up to time $n$.
+\end{definition}
+
+\begin{definition}[Martingale]
+Let $(\mathcal{F}_n)_{n\ge 0}$ be a filtration. A stochastic process $(Z_n)_{n\ge 0}$ is a \emph{martingale} with respect to $(\mathcal{F}_n)$ if:
+\begin{enumerate}
+  \item $Z_n$ is $\mathcal{F}_n$-measurable for each $n$ (adapted),
+  \item $\mathbb{E}|Z_n|<\infty$ for each $n$, and
+  \item $\mathbb{E}[Z_{n+1}\mid \mathcal{F}_n] = Z_n$ almost surely for all $n\ge 0$.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Martingale, Submartingale, Supermartingale]
+With the same setup:
+\begin{itemize}
+  \item $(Z_n)$ is a \emph{submartingale} if $\mathbb{E}[Z_{n+1}\mid \mathcal{F}_n] \ge Z_n$ a.s.\ for all $n$.
+  \item $(Z_n)$ is a \emph{supermartingale} if $\mathbb{E}[Z_{n+1}\mid \mathcal{F}_n] \le Z_n$ a.s.\ for all $n$.
+\end{itemize}
+If $(Z_n)$ is a martingale, then $\mathbb{E}Z_n = \mathbb{E}Z_0$ for all $n$.
+\end{remark}
+
+\begin{definition}[Stopping Time]
+Given a filtration $(\mathcal{F}_n)_{n\ge 0}$, a random variable $T:\Omega\to \{0,1,2,\dots\}\cup\{\infty\}$ is a \emph{stopping time} if
+\[
+\{T = n\} \in \mathcal{F}_n \quad \text{for every } n.
+\]
+Equivalently, $\{T\le n\}\in\mathcal{F}_n$ for each $n$.
+\end{definition}
+
+\begin{theorem}[Wald's Lemma I / Optional Stopping, Bounded Case]
+Let $(\mathcal{F}_n)_{n\ge 0}$ be a filtration and $(Z_n)_{n\ge 0}$ a martingale with respect to $(\mathcal{F}_n)$. Let $T$ be a stopping time such that $T\le N$ almost surely for some deterministic $N$. Then
+\[
+\mathbb{E}[Z_T] = \mathbb{E}[Z_0].
+\]
+\end{theorem}
+
+\section{L6}
+
+\begin{definition}[Almost Sure Convergence]
+We say $X_n \to X$ \emph{almost surely} (a.s.) if
+\[
+\mathbb{P}\big(\{\omega\in\Omega : X_n(\omega)\to X(\omega)\}\big) = 1.
+\]
+\end{definition}
+
+\begin{definition}[Convergence in Expectation]
+We say $X_n \to X$ \emph{in expectation} if $\mathbb{E}|X_n - X|\to 0$. (Often called convergence in $L^1$.)
+\end{definition}
+
+\begin{definition}[Monotone Convergence Theorem (MCT)]
+Let $(X_n)_{n\ge 1}$ be nonnegative random variables with $0\le X_1 \le X_2 \le \cdots$ and $X_n \to X$ a.s. Then
+\[
+\lim_{n\to\infty}\mathbb{E}[X_n] = \mathbb{E}[X].
+\]
+\end{definition}
+
+\begin{definition}[Dominated Convergence Theorem (DCT)]
+Suppose $X_n \to X$ almost surely, and there exists an integrable random variable $Y$ such that $|X_n|\le Y$ a.s.\ for all $n$ and $\mathbb{E}|Y|<\infty$. Then
+\[
+\lim_{n\to\infty}\mathbb{E}[X_n] = \mathbb{E}[X].
+\]
+\end{definition}
+
+\section{L7}
+
+\begin{lemma}[Convex Transform of a Submartingale]
+Let $(Z_n)$ be a submartingale with respect to $(\mathcal{F}_n)$ and let $\varphi:\mathbb{R}\to\mathbb{R}$ be convex and nondecreasing. Assume $\mathbb{E}|\varphi(Z_n)|<\infty$ for every $n$. Then $(\varphi(Z_n))$ is a submartingale.
+\end{lemma}
+
+\begin{theorem}[Not-To-Gamble Theorem]
+Let $(X_n)_{n\ge 0}$ be a supermartingale with respect to $(\mathcal{F}_n)$, and let $(H_n)_{n\ge 1}$ be a predictable sequence (i.e.\ $H_n$ is $\mathcal{F}_{n-1}$-measurable) with $H_n\ge 0$ a.s. Define
+\[
+(H\cdot X)_n := \sum_{i=1}^n H_i (X_i - X_{i-1}), \quad (H\cdot X)_0 := 0.
+\]
+Then $((H\cdot X)_n)$ is a supermartingale. In particular, no nonnegative predictable betting strategy can turn a losing game (supermartingale) into a winning game in expectation.
+\end{theorem}
+
+\begin{theorem}[Optional Stopping, Bounded Case for Sub/Supermartingales]
+Let $(X_n)_{n\ge 0}$ be adapted to $(\mathcal{F}_n)$ and let $T$ be a stopping time with $T\le N$ a.s. If $(X_n)$ is a submartingale, then
+\[
+\mathbb{E}[X_N] \ge \mathbb{E}[X_T] \ge \mathbb{E}[X_0].
+\]
+If $(X_n)$ is a supermartingale, then
+\[
+\mathbb{E}[X_N] \le \mathbb{E}[X_T] \le \mathbb{E}[X_0].
+\]
+\end{theorem}
+
+\section{L8}
+
+\begin{theorem}[Submartingale and Supermartingale Convergence]
+Let $(X_n)_{n\ge 0}$ be a submartingale. If
+\[
+\sup_{n\ge 0} \mathbb{E}[X_n^{+}] < \infty,
+\]
+then $X_n$ converges almost surely to some integrable random variable $X_\infty$ and $\mathbb{E}|X_\infty|<\infty$.
+
+Let $(Z_n)_{n\ge 0}$ be a supermartingale. If there exists $c\in\mathbb{R}$ such that $Z_n \ge c$ a.s.\ for all $n$, then $Z_n$ converges almost surely to some integrable random variable $Z$ and $\mathbb{E}[Z]\le \mathbb{E}[Z_0]$.
+\end{theorem}
+
+
+\section{L9}
+
+\section{L10}
+
+\begin{theorem}[Markov Inequality]
+Let $X$ be a nonnegative random variable and $c>0$. Then
+\[
+\mathbb{P}(X \ge c) \le \frac{\mathbb{E}[X]}{c}.
+\]
+\end{theorem}
+
+\begin{theorem}[Chebyshev Inequality]
+Let $X$ be a random variable with $\mathbb{E}X<\infty$ and $\mathrm{Var}(X)<\infty$. Then for any $c>0$,
+\[
+\mathbb{P}\big(|X-\mathbb{E}X|\ge c\big) \le \frac{\mathrm{Var}(X)}{c^2}.
+\]
+\end{theorem}
+
+\begin{theorem}[Kolmogorov Maximal Inequality]
+Let $X_1,\dots,X_n$ be independent random variables with $\mathbb{E}X_i=0$ and $\mathrm{Var}(X_i)<\infty$. Define partial sums $S_k:=\sum_{i=1}^k X_i$ for $k=1,\dots,n$, and $S_0=0$. Then for any $\lambda>0$,
+\[
+\mathbb{P}\Big(\max_{1\le k\le n} |S_k|\ge \lambda\Big) \le \frac{\mathrm{Var}(S_n)}{\lambda^2}
+= \frac{\sum_{i=1}^n \mathrm{Var}(X_i)}{\lambda^2}.
+\]
+\end{theorem}
+
+\begin{theorem}[Doob's Maximal Inequality]
+Let $(M_k)_{0\le k\le n}$ be a submartingale. Then for any $\lambda>0$,
+\[
+\mathbb{P}\Big(\max_{0\le k\le n} M_k \ge \lambda\Big) \le \frac{\mathbb{E}[M_n^{+}]}{\lambda},
+\]
+where $M_n^{+} = \max\{M_n,0\}$.
+\end{theorem}
+
+\begin{theorem}[Ville's Inequality]
+Let $(L_k)_{k\ge 0}$ be a nonnegative supermartingale with respect to $(\mathcal{F}_k)$. Then for any $x>0$,
+\[
+\mathbb{P}\Big(\sup_{k\ge 0} L_k \ge x\Big) \le \frac{\mathbb{E}[L_0]}{x}.
+\]
+\end{theorem}
+
+\begin{theorem}[Fatou's Lemma]
+Let $(X_n)_{n\ge 1}$ be nonnegative random variables. Then
+\[
+\mathbb{E}\Big[\liminf_{n\to\infty} X_n\Big] \le \liminf_{n\to\infty} \mathbb{E}[X_n].
+\]
+\end{theorem}
+
+\section{L11}
+
+\begin{definition}[$\sigma^2$-Subgaussian Random Variable]
+A random variable $X$ is called \emph{$\sigma^2$-subgaussian} if $\mathbb{E}X=0$ and
+\[
+\mathbb{E}[e^{sX}] \le \exp\left(\frac{\sigma^2 s^2}{2}\right)\quad \text{for all } s\in\mathbb{R}.
+\]
+\end{definition}
+
+\begin{lemma}[Hoeffding's Lemma and Hoeffding's Inequality]
+If $X$ satisfies $a\le X\le b$ a.s.\ and $\mathbb{E}X=0$, then for all $s\in\mathbb{R}$,
+\[
+\mathbb{E}[e^{sX}] \le \exp\left(\frac{s^2(b-a)^2}{8}\right),
+\]
+so $X$ is $(b-a)^2/4$-subgaussian.
+
+If $X_1,\dots,X_n$ are independent random variables with $a_i \le X_i \le b_i$ a.s., and $\bar X_n := \frac{1}{n}\sum_{i=1}^n X_i$, then for any $t>0$,
+\[
+\mathbb{P}\big(\bar X_n - \mathbb{E}\bar X_n \ge t\big) \le \exp\left(-\frac{2n^2 t^2}{\sum_{i=1}^n (b_i - a_i)^2}\right),
+\]
+and similarly for the two-sided deviation.
+\end{lemma}
+
+\begin{theorem}[Azuma--Hoeffding Inequality for Martingales]
+Let $(Z_n)_{n\ge 0}$ be an integrable martingale with respect to $(\mathcal{F}_n)$, and assume there exist constants $\alpha_i,\beta_i\ge 0$ such that
+\[
+-\alpha_i \le Z_i - Z_{i-1} \le \beta_i \quad \text{a.s. for all } i\ge 1.
+\]
+Then for any $n\ge 1$ and $t>0$,
+\[
+\mathbb{P}(Z_n - \mathbb{E}Z_n \ge t) \le \exp\left(-\frac{2t^2}{\sum_{i=1}^n (\alpha_i + \beta_i)^2}\right),
+\]
+and the same bound holds for $\mathbb{P}(|Z_n - \mathbb{E}Z_n|\ge t)$ up to a factor 2.
+\end{theorem}
+
+\begin{theorem}[McDiarmid's Inequality]
+Let $Z = h(X_1,\dots,X_n)$ where $X_1,\dots,X_n$ are independent, and suppose $h$ satisfies the bounded difference condition: whenever $x$ and $\tilde x$ differ only in coordinate $i$, we have
+\[
+|h(x) - h(\tilde x)| \le s.
+\]
+Then for any $t>0$,
+\[
+\mathbb{P}(Z - \mathbb{E}Z \ge t) \le \exp\left(-\frac{2t^2}{s^2 n}\right),
+\]
+and similarly for the two-sided deviation with an extra factor 2.
+\end{theorem}
+
+\section{L12}
+
+\begin{definition}[Transition Probability Matrix]
+For a time-homogeneous Markov chain $(X_n)$ on a finite state space $S=\{x_1,\dots,x_m\}$, the \emph{transition matrix} $P\in\mathbb{R}^{m\times m}$ is defined by
+\[
+P(i,j) := \mathbb{P}(X_{n+1} = x_j \mid X_n = x_i),
+\]
+which is independent of $n$. Each row of $P$ is a probability vector.
+\end{definition}
+
+\begin{theorem}[Chapman--Kolmogorov Equation (Finite Case)]
+For a time-homogeneous Markov chain with transition matrix $P$, we have
+\[
+\mathbb{P}(X_{n+k} = x_j \mid X_n = x_i) = (P^k)(i,j)
+\]
+for all $n,k\ge 0$ and all states $x_i,x_j\in S$.
+\end{theorem}
+
+\begin{definition}[Stationary Distribution]
+A probability vector $\pi$ on $S$ is called a \emph{stationary distribution} for a Markov chain with transition matrix $P$ if
+\[
+\pi = \pi P.
+\]
+Equivalently, if $X_0\sim\pi$, then $X_n\sim\pi$ for all $n\ge 0$.
+\end{definition}
+
+\begin{definition}[Detailed Balance and Reversible Chains]
+A distribution $\pi$ on $S$ satisfies the \emph{detailed balance} equations with respect to $P$ if
+\[
+\pi(i)P(i,j) = \pi(j)P(j,i)\quad \text{for all } i,j.
+\]
+In this case the chain is called \emph{reversible} with respect to $\pi$, and $\pi$ is automatically stationary.
+\end{definition}
+
+\section{L14}
+
+\begin{remark}[Extended Stationary Distribution Properties]
+For a finite-state Markov chain with transition matrix $P$:
+\begin{itemize}
+  \item A stationary distribution always exists.
+  \item If the chain is irreducible, the stationary distribution is unique.
+  \item If the chain is irreducible and aperiodic, the distribution of $X_n$ converges to the stationary distribution as $n\to\infty$ (you can cite this without proof).
+\end{itemize}
+Irreducible means every state can reach every other in finitely many steps. Aperiodicity rules out deterministic cycles such as a two-state alternation.
+\end{remark}
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

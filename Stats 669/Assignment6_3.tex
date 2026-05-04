@@ -1,0 +1,270 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Stats}
+\newcommand{\assignment}{Homework 6.3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+\question 7.5
+
+
+\begin{solution}
+For the power law model with generalized autocovariance
+$K_\phi(r) = \phi_1 \Gamma(-\phi_2) r^{2\phi_2}$ on the $5\times 5$
+grid, with 24 linearly independent contrasts as differences
+between the center observation at $(0.5,0.5)$ and each of the other
+24 locations.  Let $D$ denote the $25\times 24$ matrix whose columns
+are these contrast vectors, and let $C(\phi_2)$ be the $25\times 25$
+generalized covariance matrix with entries
+$C_{ij}(\phi_2) = K_\phi(\lVert s_i-s_j\rVert)$.  The covariance matrix
+of the contrasts is then
+\[
+\Sigma(\phi_2) = D^\top C(\phi_2) D,
+\]
+which is positive definite of dimension $24\times 24$.
+
+I computed the eigenvalues of $\Sigma(\phi_2)$ numerically for
+$\phi_2 = 1 - 0.1^k$ with $k=2,3,4,5$, i.e.\ for
+$\phi_2 \in \{0.99, 0.999, 0.9999, 0.99999\}$.  The largest five
+eigenvalues are reported in Table~\ref{tab:eigs_top5}.
+\end{solution}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{cccccc}
+\hline
+$\phi_2$ & $\lambda_{1}$ & $\lambda_{2}$ & $\lambda_{3}$ & $\lambda_{4}$ & $\lambda_{5}$ \\
+\hline
+0.99    & 625.296408   & 625.296408   & 12.171594 & 2.560734 & 1.355417 \\
+0.999   & 6250.232117  & 6250.232117  & 12.069184 & 2.556182 & 1.348082 \\
+0.9999  & 62500.225674 & 62500.225674 & 12.059151 & 2.555755 & 1.347365 \\
+0.99999 & 625000.200000& 625000.200000& 12.058150 & 2.555712 & 1.347294 \\
+\hline
+\end{tabular}
+\caption{Largest eigenvalues $\lambda_1,\dots,\lambda_5$ of the
+$24\times24$ contrast covariance matrix $\Sigma(\phi_2)$ for selected
+values of $\phi_2$.}
+\label{tab:eigs_top5}
+\end{table}
+
+\begin{solution}
+In all cases the largest two eigenvalues are equal, and they increase
+by approximately a factor of ten each time $\phi_2$ moves closer to 1.
+Specifically, for $\phi_2 = 0.99$ I obtained
+$\lambda_1 = \lambda_2 \approx 6.25\times 10^2$, while for
+$\phi_2 = 0.99999$ these grow to
+$\lambda_1 = \lambda_2 \approx 6.25\times 10^5$, with the remaining
+22 eigenvalues staying of order one.  Thus, as $\phi_2 \to 1$ the
+eigenstructure becomes increasingly dominated by a two-dimensional
+leading eigenspace: almost all of the variance of the 24 contrasts is
+concentrated in two directions, while variation in the other 22
+directions is comparatively negligible.
+
+To interpret these dominant directions, I mapped the associated
+eigenvectors back onto the $5\times5$ grid (inserting a zero at the
+center location) and plotted them as images.  For each $\phi_2$ the
+first eigenvector shows a smooth gradient across the grid, increasing
+from one corner to the opposite corner, whereas the second eigenvector
+shows a similar gradient along the orthogonal diagonal.  These
+patterns are essentially unchanged as $\phi_2$ varies from $0.99$ to
+$0.99999$, indicating that the \emph{shape} of the leading spatial
+modes is stable; only their eigenvalues change.  Together with
+Table~\ref{tab:eigs_top5}, this shows that near the boundary
+$\phi_2 \approx 1$ the power law model allocates almost all of the
+variance of the intrinsic contrasts to two large-scale gradient
+patterns over the grid, while higher-frequency or more localized
+contrast patterns (associated with the smaller eigenvalues) contribute
+relatively little.  This behaviour reflects the strong long-range
+dependence of the power law covariance as $\phi_2$ approaches~1.
+
+\begin{center}
+    \includegraphics[scale = .3]{img/2eigvec.png}
+\end{center}
+\end{solution}
+
+\begin{remark}
+    \textbf{Excerise 4}
+
+\begin{solution}
+For a Gaussian process with power law generalized
+autocovariance and true value of $\phi_2$ substantially less than $1$,
+the profile restricted log-likelihood difference
+$pr\ell(0.99999)-pr\ell(0.9999)$ will tend to change very slowly as the
+number of observations $n$ increases.  A heuristic explanation can be
+given by examining how the covariance matrix depends on $\phi_2$ near
+the boundary point $\phi_2 = 1$.
+
+The generalized autocovariance has the form
+$K_\phi(r) = \phi_1 \Gamma(-\phi_2) r^{2\phi_2}$, so for any fixed
+distance $r>0$ we have
+\[
+K_\phi(r; \phi_2+\delta)
+  = K_\phi(r; \phi_2)\,\exp\!\bigl(2\delta \log r + o(\delta)\bigr)
+\]
+as $\delta \to 0$.  When $\phi_2$ is already extremely close to $1$,
+moving from $\phi_2 = 0.9999$ to $\phi_2 = 0.99999$ corresponds to a
+tiny increment $\delta = 9\times 10^{-5}$, so each individual
+covariance entry changes only by a relative amount of order
+$\delta \log r$, which is very small for the fixed interpoint distances
+in a typical spatial sampling design.  In matrix terms, the covariance
+matrices $C(0.9999)$ and $C(0.99999)$ differ by a small perturbation in
+operator norm.
+
+For Gaussian data, the (restricted) log-likelihood can be written as
+\[
+pr\ell(\phi_2)
+= -\tfrac{1}{2}\Bigl\{\log\det C(\phi_2)
+   + Z^\top C(\phi_2)^{-1} Z\Bigr\} + \text{const},
+\]
+after profiling out the mean and scale parameters.  Since both
+$\log\det C(\phi_2)$ and $C(\phi_2)^{-1}$ are smooth functions of
+$C(\phi_2)$, a small perturbation of size $\delta$ in $C$ produces a
+change in $pr\ell(\phi_2)$ of order $\delta^2$ in a neighbourhood where
+the likelihood surface is reasonably flat.  Thus the difference
+$pr\ell(0.99999) - pr\ell(0.9999)$ is itself of very small order in
+$\delta$.
+
+When the true value of $\phi_2$ is substantially less than $1$, both
+$0.9999$ and $0.99999$ lie far out in the tail of the likelihood, in a
+region where the data provide little information to distinguish between
+them.  Increasing the sample size $n$ refines the estimate of $\phi_2$
+in the interior of the parameter space but does not appreciably change
+the relative support for these two extreme boundary values, since they
+induce almost indistinguishable covariance structures.  Consequently
+the vertical gap $pr\ell(0.99999)-pr\ell(0.9999)$ changes only very
+slowly as $n$ grows. 
+\end{solution}
+
+
+\end{remark}
+
+
+
+
+\question 7.6
+
+\begin{solution}
+I compared the expected Fisher
+information for REML estimation under a two-parameter power law
+generalized covariance and a two-parameter exponential covariance,
+each with an unknown constant mean.  For each model I fixed a
+parameter value and computed the $2\times2$ expected Fisher
+information matrix $I(\theta)$ for four different designs of $n=25$
+observation locations in the unit square:
+\begin{itemize}
+\item a regular $5\times5$ grid (\texttt{grid});
+\item a slightly jittered version of the grid (\texttt{jitter});
+\item 25 points sampled independently from $\operatorname{Unif}([0,1]^2)$
+(\texttt{uniform});
+\item a central cluster with points sampled from a bivariate normal
+centered at $(0.5,0.5)$ and truncated to $[0,1]^2$ (\texttt{center}).
+\end{itemize}
+For the power law model I used $\phi_1=1$, $\phi_2=0.7$, and for the
+exponential model I used $\sigma^2=1$, $\rho=0.3$.
+
+For each design and model I formed the covariance matrix
+$\Sigma(\theta)$ and its partial derivatives with respect to the two
+covariance parameters.  With design matrix $X=\mathbf{1}_n$, the
+expected REML Fisher information for parameters $\theta_a,\theta_b$ is
+\[
+I_{ab}
+= \tfrac{1}{2} \operatorname{tr}\!\left\{
+P\,\Sigma_{,a}\,P\,\Sigma_{,b}\right\},\qquad
+P = \Sigma^{-1} - \Sigma^{-1} X
+       (X^\top \Sigma^{-1} X)^{-1} X^\top \Sigma^{-1},
+\]
+which I evaluated numerically for each design.
+To summarize the information matrices I recorded, for each
+$2\times2$ matrix $I(\theta)$, the trace
+$\operatorname{tr}(I)$, determinant $\det(I)$, and condition number
+$\kappa(I)$ (ratio of largest to smallest eigenvalue).  The results
+are shown in Table~\ref{tab:fisher_power} for the power law model and
+Table~\ref{tab:fisher_exp} for the exponential model.
+\end{solution}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lccc}
+\hline
+Design & $\operatorname{tr}(I)$ & $\det(I)$ &
+$\kappa(I)$ \\
+\hline
+grid    & 484.0 & $1.46\times 10^{4}$ & 13.99 \\
+jitter  & 502.8 & $1.54\times 10^{4}$ & 14.36 \\
+uniform & 627.2 & $2.51\times 10^{4}$ & 13.63 \\
+center  & 524.5 & $1.69\times 10^{4}$ & 14.23 \\
+\hline
+\end{tabular}
+\caption{Trace, determinant, and condition number of the Fisher
+information matrix for the power law covariance model under four
+sampling designs.}
+\label{tab:fisher_power}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lccc}
+\hline
+Design & $\operatorname{tr}(I)$ & $\det(I)$ &
+$\kappa(I)$ \\
+\hline
+grid    & 80.1  & $3.25\times 10^{2}$ & 17.69 \\
+jitter  & 80.7  & $3.34\times 10^{2}$ & 17.48 \\
+uniform & 98.3  & $3.28\times 10^{2}$ & 27.43 \\
+center  & 130.8 & $1.79\times 10^{2}$ & 93.31 \\
+\hline
+\end{tabular}
+\caption{Trace, determinant, and condition number of the Fisher
+information matrix for the exponential covariance model under the same
+four sampling designs.}
+\label{tab:fisher_exp}
+\end{table}
+
+\begin{solution}
+    
+
+For the power law model, both the trace and determinant of $I(\theta)$
+vary substantially across designs.  The trace increases from about
+$4.84\times10^{2}$ for the regular grid to $6.27\times10^{2}$ for the
+uniform design, while the determinant increases from about
+$1.46\times10^{4}$ to $2.51\times10^{4}$, indicating a marked gain in
+both marginal and joint precision of $(\phi_1,\phi_2)$ when the design
+is changed.The central cluster design also differs
+appreciably from the grid, with intermediate trace and determinant
+values.  In contrast, the condition numbers remain in a relatively
+narrow range (about 13.6--14.4), so the correlation structure between
+the two parameters does not change dramatically with design; the main
+effect is a sizeable change in the overall amount of information.
+
+For the exponential model the picture is noticeably different.  The
+trace increases from about $8.0\times10^{1}$ for the grid and jittered
+designs to $9.8\times10^{1}$ for the uniform design and
+$1.31\times10^{2}$ for the center design, a smaller relative change
+than in the power law case, the determinant
+stays close to $3.3\times10^{2}$ for the grid, jittered, and uniform
+designs, and only drops substantially for the highly clustered center
+design, indicating that the joint precision of $(\sigma^2,\rho)$ is
+comparatively stable across most designs. While the
+condition number does become large for the center design, reflecting
+stronger correlation between the exponential parameters, the overall
+variation in $\operatorname{tr}(I)$ and $\det(I)$ across designs is
+smaller than for the power law model.
+
+Taken together, these numerical experiments support the claim: the statistical properties of REML estimates (as reflected in
+the Fisher information) are much more sensitive to the choice of
+observation locations for the two-parameter power law covariance model
+than for the corresponding two-parameter exponential model.
+\end{solution}
+
+\end{questions}
+
+\end{document}

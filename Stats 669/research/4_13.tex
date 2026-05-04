@@ -1,0 +1,459 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics}
+\newcommand{\assignment}{Research}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\section{A General Periodic Fourier--State-Space Spatio--Temporal Model}
+
+\subsection{Model setup}
+
+We consider a real-valued Gaussian spatio--temporal process
+\[
+  \{X_t(x) : x \in [0,2\pi],\; t \in \mathbb{Z}\},
+\]
+defined on a one-dimensional spatial domain with periodic boundary conditions (a circle) and discrete time. For each time $t$, the spatial field $X_t(\cdot)$ is represented by a truncated Fourier series
+\begin{equation}
+  X_t(x)
+  \;=\;
+  a_0(t)
+  \;+\;
+  \sum_{j=1}^{J}
+    \Bigl[
+      a_j(t)\cos(jx) + b_j(t)\sin(jx)
+    \Bigr],
+  \qquad x \in [0,2\pi],
+  \label{eq:Xt-fourier}
+\end{equation}
+where $J$ is a truncation level and
+\[
+  a_j(t),\, b_j(t), \quad j=0,\dots,J,\; t\in\mathbb{Z},
+\]
+are jointly Gaussian random coefficients. The representation \eqref{eq:Xt-fourier} is exact in the limit $J\to\infty$ and is a finite-dimensional approximation in practice.
+
+For $j \ge 1$, the pair $(a_j(t), b_j(t))$ corresponds to the $j$th spatial frequency (wavenumber). Low $j$ terms encode large-scale, slowly varying spatial structure, while high $j$ terms encode fine-scale spatial detail.
+
+\subsection{Spatial margin: Matérn-like variances}
+
+The spatial covariance at each fixed time is controlled by a Matérn-like spectral density in the Fourier domain. For $j = 0,\dots,J$ we specify
+\begin{equation}
+  \sigma_j^2
+  \;\propto\;
+  \bigl(\kappa^2 + j^2\bigr)^{-(\nu + 1/2)},
+  \quad
+  \kappa = \frac{\sqrt{2\nu}}{\ell},
+  \label{eq:matern-spectrum}
+\end{equation}
+where
+\begin{itemize}
+  \item $\nu > 0$ is the Matérn smoothness parameter,
+  \item $\ell > 0$ is a spatial range parameter,
+  \item $\kappa = \sqrt{2\nu}/\ell$ is an inverse scale parameter.
+\end{itemize}
+
+On $\mathbb{R}$, the Matérn covariance with parameters $(\nu,\ell)$ has spectral density proportional to $(\kappa^2 + \omega^2)^{-(\nu + 1/2)}$ in one spatial dimension, and sample paths that are $\lceil \nu \rceil - 1$ times mean-square differentiable. The discrete Fourier variances $\sigma_j^2$ in \eqref{eq:matern-spectrum} therefore give a Matérn-like spatial margin on the periodic domain.
+
+For simulation it is convenient to normalize these variances so that the total marginal variance of $X_t(x)$ is a chosen constant $\sigma^2_{\text{tot}}$. Defining
+\[
+  \tilde{\sigma}_j^2
+  \;=\;
+  \bigl(\kappa^2 + j^2\bigr)^{-(\nu + 1/2)},
+\]
+we set
+\begin{equation}
+  \sigma_j^2
+  \;=\;
+  \sigma^2_{\text{tot}}
+  \cdot
+  \frac{\tilde{\sigma}_j^2}{\sum_{k=0}^{J} \tilde{\sigma}_k^2},
+  \qquad j = 0,\dots,J.
+  \label{eq:sigma-normalization}
+\end{equation}
+
+\subsection{Temporal dynamics: block-diagonal AR(1) with rotation and correlated innovations}
+
+We collect the Fourier coefficients into a state vector
+\begin{equation}
+  \mathbf{Z}_t
+  \;=\;
+  \bigl(a_0(t), a_1(t),\dots,a_J(t), b_1(t),\dots,b_J(t)\bigr)^\top
+  \;\in\; \mathbb{R}^{2J+1}.
+  \label{eq:state-vector}
+\end{equation}
+
+The temporal evolution is governed by a \emph{block-diagonal} linear Gaussian state-space model. For the constant mode $j=0$, we have a scalar AR(1):
+\begin{equation}
+  a_0(t+1) = \rho_0\, a_0(t) + \eta_{0,t},
+  \qquad \eta_{0,t} \sim \mathcal{N}\bigl(0, \sigma_0^2(1 - \rho_0^2)\bigr),
+  \label{eq:ar1-j0}
+\end{equation}
+with $|\rho_0| < 1$ ensuring stationarity.
+
+For each mode $j \ge 1$, the cosine and sine coefficients evolve jointly according to a $2 \times 2$ block AR(1):
+\begin{equation}
+  \begin{pmatrix} a_j(t+1) \\ b_j(t+1) \end{pmatrix}
+  =
+  M_j
+  \begin{pmatrix} a_j(t) \\ b_j(t) \end{pmatrix}
+  +
+  \begin{pmatrix} \eta_{a,j,t} \\ \eta_{b,j,t} \end{pmatrix},
+  \label{eq:ar1-block}
+\end{equation}
+where the $2 \times 2$ transition matrix is
+\begin{equation}
+  M_j
+  =
+  \rho_j
+  \begin{pmatrix}
+    \cos\theta_j & -\sin\theta_j \\
+    \sin\theta_j & \cos\theta_j
+  \end{pmatrix},
+  \label{eq:Mj-rotation}
+\end{equation}
+with
+\begin{itemize}
+  \item $\rho_j \in (0,1)$: amplitude persistence (decay rate),
+  \item $\theta_j \in \mathbb{R}$: rotation angle (controls temporal mixing of $a_j$ and $b_j$).
+\end{itemize}
+
+The $2 \times 2$ innovation covariance for mode $j$ is
+\begin{equation}
+  \begin{pmatrix} \eta_{a,j,t} \\ \eta_{b,j,t} \end{pmatrix}
+  \sim
+  \mathcal{N}\Bigl(\mathbf{0},\; \Sigma_{\varepsilon,j}\Bigr),
+  \qquad
+  \Sigma_{\varepsilon,j}
+  =
+  \sigma_j^2(1 - \rho_j^2)
+  \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix},
+  \label{eq:innovation-cov}
+\end{equation}
+where $\phi_j \in (-1,1)$ is the \emph{within-frequency correlation parameter} between the cosine and sine innovations. For $\Sigma_{\varepsilon,j}$ to be positive definite, we require $|\phi_j| < 1$.
+
+The innovations are independent across different frequencies $j$ and across time $t$.
+
+\subsubsection*{Physical interpretation}
+
+\paragraph{Rotation parameter $\theta_j$:}
+\begin{itemize}
+  \item When $\theta_j = 0$, the transition matrix $M_j = \rho_j I_2$, so $a_j(t+1)$ depends only on $a_j(t)$ and $b_j(t+1)$ depends only on $b_j(t)$ (no temporal mixing).
+  \item When $\theta_j \neq 0$, we have
+    \[
+      a_j(t+1) = \rho_j[\cos\theta_j \cdot a_j(t) - \sin\theta_j \cdot b_j(t)] + \eta_{a,j,t},
+    \]
+    \[
+      b_j(t+1) = \rho_j[\sin\theta_j \cdot a_j(t) + \cos\theta_j \cdot b_j(t)] + \eta_{b,j,t},
+    \]
+    so $a_j(t+1)$ depends on \emph{both} $a_j(t)$ and $b_j(t)$. This induces \emph{phase rotation}: spatial patterns propagate or rotate around the circle over time.
+  \item The eigenvalues of $M_j$ are $\rho_j e^{\pm i\theta_j}$, so the spectral radius is $|\rho_j| < 1$ regardless of $\theta_j$, ensuring stationarity.
+\end{itemize}
+
+\paragraph{Innovation correlation parameter $\phi_j$:}
+\begin{itemize}
+  \item When $\phi_j = 0$, the innovations $\eta_{a,j,t}$ and $\eta_{b,j,t}$ are independent, so $a_j(t)$ and $b_j(t)$ are uncorrelated at the same time $t$ (at stationarity).
+  \item When $\phi_j \neq 0$, the innovations are correlated: $\operatorname{Cov}(\eta_{a,j,t}, \eta_{b,j,t}) = \sigma_j^2(1-\rho_j^2)\phi_j$. At stationarity, this induces
+    \[
+      \operatorname{Cov}(a_j(t), b_j(t)) \neq 0.
+    \]
+    This creates \emph{instantaneous correlation} between the cosine and sine components at the same time.
+  \item Typical choice: $\phi_j = \phi_0 / (1 + j)$ or $\phi_j = \phi_0 e^{-\gamma j}$, so that lower frequencies have stronger instantaneous correlation than higher frequencies.
+\end{itemize}
+
+\paragraph{Combined effect:}
+\begin{itemize}
+  \item $\theta_j \neq 0$ creates \emph{temporal cross-dependence}: $a_j(t)$ depends on $b_j(t-1)$ and vice versa.
+  \item $\phi_j \neq 0$ creates \emph{contemporaneous correlation}: $a_j(t)$ and $b_j(t)$ are correlated at the same time.
+  \item Together, they allow rich within-frequency dynamics while maintaining the block-diagonal structure (frequencies still evolve independently of each other).
+\end{itemize}
+
+\subsection{Stationary covariance of $(a_j(t), b_j(t))$ via Lyapunov equation}
+
+At stationarity, the $2\times2$ covariance matrix
+\[
+  \Sigma_{j}
+  =
+  \operatorname{Cov}\begin{pmatrix}a_j(t)\\b_j(t)\end{pmatrix}
+\]
+satisfies the discrete-time Lyapunov equation
+\begin{equation}
+  \Sigma_j = M_j \Sigma_j M_j^\top + \Sigma_{\varepsilon,j}.
+  \label{eq:lyapunov-2x2}
+\end{equation}
+
+For the specific structure \eqref{eq:Mj-rotation}--\eqref{eq:innovation-cov}, the solution is
+\begin{equation}
+  \Sigma_j
+  =
+  \sigma_j^2
+  \begin{pmatrix}
+    1 & \phi_j \\ \phi_j & 1
+  \end{pmatrix}.
+  \label{eq:stationary-cov-block}
+\end{equation}
+
+This can be verified by direct substitution: since $M_j$ is a rotation-scaling matrix with $M_j M_j^\top = \rho_j^2 I_2$, we have
+\[
+  M_j \Sigma_j M_j^\top
+  =
+  \rho_j^2 \sigma_j^2
+  \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix},
+\]
+and thus
+\[
+  M_j \Sigma_j M_j^\top + \Sigma_{\varepsilon,j}
+  =
+  \rho_j^2 \sigma_j^2
+  \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}
+  +
+  \sigma_j^2(1-\rho_j^2)
+  \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}
+  =
+  \sigma_j^2
+  \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}
+  =
+  \Sigma_j,
+\]
+confirming \eqref{eq:stationary-cov-block}.
+
+Therefore, at stationarity:
+\begin{align}
+  \operatorname{Var}(a_j(t)) &= \sigma_j^2, \label{eq:var-aj}\\
+  \operatorname{Var}(b_j(t)) &= \sigma_j^2, \label{eq:var-bj}\\
+  \operatorname{Cov}(a_j(t), b_j(t)) &= \sigma_j^2 \phi_j. \label{eq:cov-aj-bj}
+\end{align}
+
+Note that the stationary covariance \eqref{eq:stationary-cov-block} depends on $\phi_j$ but \emph{not} on $\theta_j$. The rotation angle $\theta_j$ affects the temporal evolution and cross-lag covariances, but not the marginal variances or contemporaneous correlation at a fixed time $t$.
+
+\subsection{Nonseparability via frequency-dependent persistence}
+
+The key nonseparable feature arises from allowing the AR(1) persistence parameter $\rho_j$ to depend on the spatial frequency $j$. We propose an \emph{algebraic (power-law) decay} parameterization
+\begin{equation}
+  \rho_j
+  =
+  \frac{1}{(1 + \lambda j^\alpha)^\beta},
+  \qquad j = 1,\dots,J,
+  \label{eq:rhoj-algebraic}
+\end{equation}
+with $\rho_0 \in (0,1)$ set separately, and parameters
+\begin{itemize}
+  \item $\lambda > 0$: controls the overall decay strength across frequencies,
+  \item $\alpha > 0$: controls the frequency dependence of the power,
+  \item $\beta > 0$: controls the decay exponent.
+\end{itemize}
+
+For large $j$, this decays as $\rho_j \sim j^{-\alpha\beta}$, which is an \emph{algebraic tail} in contrast to the exponential tail of the form $\exp(-\lambda j^\alpha)$. Algebraic decay is slower than exponential decay and is common in systems with long-range temporal dependence (e.g.\ turbulence, climate, neural signals). The parameter $\beta$ provides fine control over the decay rate: smaller $\beta$ gives slower decay and longer temporal memory even at high frequencies.
+
+Under this structure, low-frequency modes (small $j$) have $\rho_j \approx 1$ and decorrelate slowly in time, while high-frequency modes have smaller $\rho_j$ and decorrelate more rapidly. Consequently, the effective spatial correlation structure changes with time lag: at short time lags, both low and high spatial frequencies contribute, whereas at long time lags, only low-frequency components remain. This space--time covariance cannot be written as a product $C_{\text{space}}(h) C_{\text{time}}(k)$ and is therefore nonseparable.
+
+\subsection{Space--time covariance}
+
+Under the block-diagonal structure with rotation and correlated innovations, the space--time covariance
+\[
+  C(h,k) = \mathbb{E}\bigl[ X_t(x) X_{t+k}(x+h) \bigr]
+\]
+can be computed when the different modes are uncorrelated across frequencies. For a zero-mean process with the dynamics \eqref{eq:ar1-j0}--\eqref{eq:ar1-block}, and using the fact that
+\[
+  \mathbb{E}[a_j(t)a_j(t+k)] = \mathbb{E}[b_j(t)b_j(t+k)] = \sigma_j^2 \rho_j^{|k|},
+\]
+we obtain
+\begin{equation}
+  C(h,k)
+  =
+  \sum_{j=0}^{J}
+  \sigma_j^2 \rho_j^{|k|} \cos(jh),
+  \label{eq:cov-fourier-ar1}
+\end{equation}
+where $\cos(0\cdot h)=1$ for the $j=0$ term.
+
+\textbf{Derivation sketch:} Substituting \eqref{eq:Xt-fourier} and using linearity of expectation, cross terms between different modes vanish. For a fixed mode $j$, the contribution is
+\[
+  \mathbb{E}[a_j(t)a_j(t+k)]\cos(jx)\cos(j(x+h))
+  +
+  \mathbb{E}[b_j(t)b_j(t+k)]\sin(jx)\sin(j(x+h)).
+\]
+Using the trigonometric identity $\cos A\cos B + \sin A\sin B = \cos(A-B)$ with $A=jx$, $B=j(x+h)$, this simplifies to
+\[
+  \mathbb{E}[a_j(t)a_j(t+k)]\cos(jh).
+\]
+For a stationary AR(1) with persistence $\rho_j$ and marginal variance $\sigma_j^2$, we have $\mathbb{E}[a_j(t)a_j(t+k)] = \sigma_j^2\rho_j^{|k|}$, yielding \eqref{eq:cov-fourier-ar1}.
+
+\textbf{Note:} The contemporaneous correlation $\operatorname{Cov}(a_j(t), b_j(t)) = \sigma_j^2\phi_j$ does not appear in \eqref{eq:cov-fourier-ar1} because the cross terms $\mathbb{E}[a_j(t)b_j(t+k)]\cos(jx)\sin(j(x+h))$ integrate to zero over the periodic domain when computing the covariance as a function of $(h,k)$ alone. The parameter $\phi_j$ affects the joint distribution of $(a_j(t), b_j(t))$ and the temporal cross-covariances $\mathbb{E}[a_j(t)b_j(t+k)]$ for $k\neq0$, but does not change the space--time covariance formula at integer lags.
+
+Similarly, the rotation parameter $\theta_j$ creates phase drift and affects the realizations, but does not change the stationary marginal variances or the form of \eqref{eq:cov-fourier-ar1}.
+
+\subsection{Parameter overview}
+
+The full model includes the following parameters:
+
+\begin{itemize}
+  \item \textbf{Fourier truncation:} $J$ (integer, $J\ge 0$). Controls the finest spatial scale represented. Larger $J$ allows finer spatial detail; in practice $J$ is chosen so that the total variance in modes $j > J$ is negligible.
+
+  \item \textbf{Matérn spatial parameters:}
+    \begin{itemize}
+      \item $\nu > 0$ (smoothness): larger $\nu$ gives smoother spatial fields. Sample paths are $\lceil \nu \rceil - 1$ times mean-square differentiable.
+      \item $\ell > 0$ (range): larger $\ell$ increases the spatial correlation length by shifting spectral mass to lower frequencies.
+      \item $\sigma^2_{\text{tot}} > 0$ (total marginal variance): overall scale of the field.
+      \item $\kappa = \sqrt{2\nu}/\ell$ (inverse range): internal scale parameter used in the spectral envelope \eqref{eq:matern-spectrum}.
+    \end{itemize}
+
+  \item \textbf{Temporal persistence parameters:}
+    \begin{itemize}
+      \item $\rho_0 \in (0,1)$: AR(1) persistence for the mean mode $a_0(t)$, set separately to avoid nonstationarity.
+      \item $\rho_j \in (0,1)$, $j=1,\dots,J$, given by \eqref{eq:rhoj-algebraic} with
+        \begin{itemize}
+          \item $\lambda > 0$: controls overall decay speed across frequencies,
+          \item $\alpha > 0$: controls how strongly persistence changes with $j$,
+          \item $\beta > 0$: decay exponent; smaller $\beta$ gives slower (longer-memory) decay.
+        \end{itemize}
+    \end{itemize}
+
+  \item \textbf{Phase rotation parameters:}
+    \begin{itemize}
+      \item $\theta_j \in \mathbb{R}$, $j=1,\dots,J$: rotation angle for mode $j$ in the $2\times2$ block $M_j$ (equation \eqref{eq:Mj-rotation}).
+      \item $\theta_j = 0$ recovers the no-rotation model (cosine and sine evolve independently over time).
+      \item Typical parameterization: $\theta_j = \theta_0 / j$ or $\theta_j = \theta_0 / (1 + j)$, so that lower frequencies rotate more than higher frequencies.
+    \end{itemize}
+
+  \item \textbf{Innovation correlation parameters:}
+    \begin{itemize}
+      \item $\phi_j \in (-1,1)$, $j=1,\dots,J$: within-frequency correlation between $\eta_{a,j,t}$ and $\eta_{b,j,t}$ (equation \eqref{eq:innovation-cov}).
+      \item $\phi_j = 0$ gives independent innovations (cosine and sine uncorrelated at the same time).
+      \item $\phi_j \neq 0$ induces $\operatorname{Cov}(a_j(t), b_j(t)) = \sigma_j^2\phi_j$ at stationarity.
+      \item Typical parameterization: $\phi_j = \phi_0 / (1+j)$ or constant $\phi_j = \phi_0$ for all $j$.
+    \end{itemize}
+
+  \item \textbf{Time horizon:} $T$ (integer, $T\ge 1$). Number of time points simulated or observed.
+
+\end{itemize}
+
+By setting $\theta_j = 0$ and $\phi_j = 0$ for all $j$, the model reduces to the simple independent-mode AR(1) with uncorrelated cosine and sine components. Nonzero $\theta_j$ and $\phi_j$ introduce richer within-frequency dynamics: temporal mixing and phase rotation ($\theta_j$), and instantaneous correlation ($\phi_j$).
+
+\subsection{Simulation algorithm}
+
+We now describe the simulation algorithm step by step.
+
+\subsubsection*{Step 1: choose parameters}
+
+Select values for
+\[
+  (J,\; T,\; \nu,\; \ell,\; \sigma^2_{\text{tot}},\; \lambda,\; \alpha,\; \beta,\; \rho_0,\; \{\theta_j\}_{j=1}^J,\; \{\phi_j\}_{j=1}^J).
+\]
+
+\subsubsection*{Step 2: construct the Matérn-like spectrum}
+
+Compute the unnormalized spectral weights
+\[
+  \tilde{\sigma}_j^2
+  = \bigl(\kappa^2 + j^2\bigr)^{-(\nu + 1/2)},
+  \qquad j = 0,\dots,J,
+\]
+with $\kappa = \sqrt{2\nu}/\ell$, then normalize as in \eqref{eq:sigma-normalization} to obtain $\sigma_j^2$ such that $\sum_{j=0}^{J} \sigma_j^2 = \sigma^2_{\text{tot}}$.
+
+\subsubsection*{Step 3: compute mode-specific AR(1) coefficients}
+
+Compute the AR(1) persistence parameters $\rho_j$ for $j=1,\dots,J$ using \eqref{eq:rhoj-algebraic}, and set $\rho_0$ by hand.
+
+\subsubsection*{Step 4: build the $2\times2$ transition matrices}
+
+For each $j=1,\dots,J$, construct
+\[
+  M_j
+  =
+  \rho_j
+  \begin{pmatrix}
+    \cos\theta_j & -\sin\theta_j \\
+    \sin\theta_j & \cos\theta_j
+  \end{pmatrix}.
+\]
+
+\subsubsection*{Step 5: build the $2\times2$ innovation covariances}
+
+For mode $j=0$:
+\[
+  \operatorname{Var}(\eta_{0,t}) = \sigma_0^2 (1 - \rho_0^2).
+\]
+For each mode $j \ge 1$, construct
+\[
+  \Sigma_{\varepsilon,j}
+  =
+  \sigma_j^2(1 - \rho_j^2)
+  \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}.
+\]
+
+Verify that $|\phi_j| < 1$ to ensure $\Sigma_{\varepsilon,j}$ is positive definite.
+
+\subsubsection*{Step 6: initialize the Fourier coefficients}
+
+Initialize the process at $t = 1$ from the stationary distribution:
+\[
+  a_0(1) \sim \mathcal{N}(0, \sigma_0^2),
+\]
+and for $j = 1,\dots,J$
+\[
+  \begin{pmatrix} a_j(1) \\ b_j(1) \end{pmatrix}
+  \sim
+  \mathcal{N}\Bigl(\mathbf{0},\; \sigma_j^2 
+  \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}\Bigr),
+\]
+independently across $j$.
+
+\subsubsection*{Step 7: simulate the AR(1) dynamics}
+
+For time $t = 1,\dots,T-1$:
+
+\begin{enumerate}
+  \item Update the constant mode using \eqref{eq:ar1-j0}:
+    \[
+      a_0(t+1) = \rho_0\, a_0(t) + \eta_{0,t},
+      \qquad \eta_{0,t} \sim \mathcal{N}\bigl(0, \sigma_0^2 (1 - \rho_0^2)\bigr).
+    \]
+
+  \item For each $j = 1,\dots,J$, update using \eqref{eq:ar1-block}:
+    \[
+      \begin{pmatrix} a_j(t+1) \\ b_j(t+1) \end{pmatrix}
+      =
+      M_j
+      \begin{pmatrix} a_j(t) \\ b_j(t) \end{pmatrix}
+      +
+      \begin{pmatrix} \eta_{a,j,t} \\ \eta_{b,j,t} \end{pmatrix},
+    \]
+    where
+    \[
+      \begin{pmatrix} \eta_{a,j,t} \\ \eta_{b,j,t} \end{pmatrix}
+      \sim
+      \mathcal{N}\Bigl(\mathbf{0},\; \Sigma_{\varepsilon,j}\Bigr),
+    \]
+    independent across $j$ and across $t$.
+\end{enumerate}
+
+This yields arrays
+\[
+  \{a_j(t)\}_{t=1,\dots,T}^{j=0,\dots,J}
+  \quad\text{and}\quad
+  \{b_j(t)\}_{t=1,\dots,T}^{j=1,\dots,J}.
+\]
+
+\subsubsection*{Step 8: reconstruct the spatial field on a grid}
+
+To visualize or analyze the field, choose a spatial grid
+\[
+  x_1,\dots,x_N \in [0,2\pi],
+\]
+for example $x_n = 2\pi (n-1)/(N-1)$, and compute
+\[
+  X_t(x_n)
+  \;=\;
+  a_0(t) + \sum_{j=1}^{J} \bigl[ a_j(t)\cos(j x_n) + b_j(t)\sin(j x_n) \bigr],
+\]
+for all $t=1,\dots,T$ and $n=1,\dots,N$. This produces a $T \times N$ matrix $X$ that can be plotted as time series, spatial snapshots, or as an image.
+
+\end{document}

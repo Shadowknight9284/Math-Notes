@@ -1,0 +1,30 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Stats}
+\newcommand{\assignment}{Assignment 7.2}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\begin{questions}
+\question The idea that orthogonality encoding optimality makes a lot of sense. It relates to conditional expectation and I found it interesting that for GPs the OLP is just done via the familiar Linear algebra of LSE.
+
+I was curious as to if there was to bound other processes through a GP with some manageable error. And if thee is a good class of processes that do this. I am thinking of a process that is essentially not symmetric. (I did some thinking but I realized higher order odd moments will be 0 but still I am curious if there are other method)
+
+\question It is very odd that the sum of ths simple kriging weights is not one. I am very lost as to why this is the case or there is a pattern to this. I mean I understand that this is due to the fact that is is not possible to estimate the constant mean GP with Fixed Domain Asymptotic consistently. 
+
+\question It is reassuring that even with slight model parameter adjustment there is a similarity in the kriging weights. But does this mean that if we get kriging weights for one model and observe other models that have equivalent probability laws we can find other potential candidates for reasonable models. 
+
+\question I have a Grad Stochastic Processes exam tomorrow, but after that I intend on running a small simulation for kriging using some package I find online. I want to see visually how smooth the interpolation is for some toy data because I am having difficulty visualizing it. I also dont have much to say beyond the basic observation in the text. Hopefully I get deeper insight in class!
+
+\end{questions}
+
+\end{document}

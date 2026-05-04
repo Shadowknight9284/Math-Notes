@@ -1,0 +1,302 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\section*{Problem 1}
+Prove:
+\begin{enumerate}
+    \item $\mathbb{R} \times \mathbb{R} \sim \mathbb{R}$.
+    \item $\mathbb{R} \setminus \mathbb{N} \sim \mathbb{R}$.
+    \item $\mathbb{R} \setminus \mathbb{Q} \sim \mathbb{R}$.
+\end{enumerate}
+
+\begin{proof}
+We use that $\mathbb{R} \sim \{0,1\}^{\mathbb{N}}$.
+
+\smallskip
+
+(1) Since $\mathbb{R} \sim \{0,1\}^{\mathbb{N}}$, we have
+\[
+\mathbb{R} \times \mathbb{R}
+\sim \{0,1\}^{\mathbb{N}} \times \{0,1\}^{\mathbb{N}}.
+\]
+Define a map
+\[
+\Phi : \{0,1\}^{\mathbb{N}} \times \{0,1\}^{\mathbb{N}} \to \{0,1\}^{\mathbb{N}}
+\]
+by interleaving: for sequences $(a_n)_{n \in \mathbb{N}}$ and $(b_n)_{n \in \mathbb{N}}$, set
+\[
+c_{2n} = a_n, \quad c_{2n+1} = b_n \quad\text{for all } n \in \mathbb{N},
+\]
+and define $\Phi((a_n),(b_n)) = (c_k)_{k \in \mathbb{N}}$.
+
+This map is a bijection: given $(c_k)$, we recover $(a_n)$ and $(b_n)$ by
+$a_n = c_{2n}$ and $b_n = c_{2n+1}$. Hence
+\[
+\{0,1\}^{\mathbb{N}} \times \{0,1\}^{\mathbb{N}} \sim \{0,1\}^{\mathbb{N}} \sim \mathbb{R},
+\]
+so $\mathbb{R} \times \mathbb{R} \sim \mathbb{R}$.
+
+\smallskip
+
+(2) Since $\mathbb{N}$ is countable and $\mathbb{R}$ is uncountable, we clearly have
+\[
+\mathbb{R} \setminus \mathbb{N} \preceq \mathbb{R}
+\]
+via the inclusion map. For the other direction, enumerate $\mathbb{N}$ as
+$\{n_0,n_1,n_2,\dots\}$ and define a map $f : \mathbb{R} \to \mathbb{R} \setminus \mathbb{N}$ by
+\[
+f(x) =
+\begin{cases}
+x, & \text{if } x \notin \mathbb{N},\\[4pt]
+k, & \text{if } x = n_k \text{ (so $k \in \mathbb{N}$)}.
+\end{cases}
+\]
+This is well-defined and injective: distinct reals either coincide as non-naturals
+where $f$ is the identity, or they are distinct naturals $n_j \neq n_k$ and then
+$f(n_j) = j \neq k = f(n_k)$.
+
+Thus we have injections
+\[
+\mathbb{R} \setminus \mathbb{N} \preceq \mathbb{R}
+\quad\text{and}\quad
+\mathbb{R} \preceq \mathbb{R} \setminus \mathbb{N},
+\]
+so by the Cantor--Bernstein--Schröder theorem,
+\[
+\mathbb{R} \setminus \mathbb{N} \sim \mathbb{R}.
+\]
+
+\smallskip
+
+(3) The set $\mathbb{Q}$ is countable, so the same argument applies with
+$\mathbb{Q}$ in place of $\mathbb{N}$. Therefore removing a countable subset
+from $\mathbb{R}$ does not change its cardinality, and
+\[
+\mathbb{R} \setminus \mathbb{Q} \sim \mathbb{R}.
+\]
+\end{proof}
+
+\section*{Problem 2}
+Let $A$ be the set of all bijections $f : \mathbb{N} \to \mathbb{N}$. Show that
+$A \sim \{0,1\}^{\mathbb{N}}$.
+
+\begin{proof}
+We construct injections both ways and apply the Cantor--Bernstein--Schröder theorem.
+
+\smallskip
+
+\emph{Injection $\{0,1\}^{\mathbb{N}} \to A$.}
+Given $x = (x_n)_{n\in\mathbb{N}} \in \{0,1\}^{\mathbb{N}}$, define $f_x : \mathbb{N} \to \mathbb{N}$ as follows.
+For each $n \in \mathbb{N}$, consider the pair $\{2n, 2n+1\}$:
+\begin{itemize}
+    \item If $x_n = 0$, let $f_x(2n) = 2n$ and $f_x(2n+1) = 2n+1$.
+    \item If $x_n = 1$, let $f_x(2n) = 2n+1$ and $f_x(2n+1) = 2n$.
+\end{itemize}
+This defines a permutation of $\mathbb{N}$, hence a bijection, so $f_x \in A$.
+If $x \neq y$, there is some $n$ with $x_n \neq y_n$, and on the pair
+$\{2n,2n+1\}$ the maps $f_x$ and $f_y$ act differently. Thus $f_x \neq f_y$.
+Therefore
+\[
+\Phi : \{0,1\}^{\mathbb{N}} \to A,\quad \Phi(x) = f_x
+\]
+is injective.
+
+\smallskip
+
+\emph{Injection $A \to \{0,1\}^{\mathbb{N}}$.}
+We know from class that $\mathbb{N}^{\mathbb{N}} \sim \{0,1\}^{\mathbb{N}}$.
+Since $A \subseteq \mathbb{N}^{\mathbb{N}}$, the inclusion map
+\[
+\iota : A \hookrightarrow \mathbb{N}^{\mathbb{N}}
+\]
+is injective. Composing $\iota$ with a fixed bijection
+$\psi : \mathbb{N}^{\mathbb{N}} \to \{0,1\}^{\mathbb{N}}$ gives an injection
+\[
+\psi \circ \iota : A \to \{0,1\}^{\mathbb{N}}.
+\]
+
+We now have
+\[
+\{0,1\}^{\mathbb{N}} \preceq A
+\quad\text{and}\quad
+A \preceq \{0,1\}^{\mathbb{N}},
+\]
+so by Cantor--Bernstein--Schröder,
+\[
+A \sim \{0,1\}^{\mathbb{N}}.
+\]
+\end{proof}
+
+\section*{Problem 3}
+For sets $A,B$ let $A \Delta B = (A \setminus B) \cup (B \setminus A)$.
+\begin{enumerate}
+    \item[(i)] Show $A = B$ iff $A \Delta B = \varnothing$.
+    \item[(ii)] Show $(A \Delta B) \cup (B \Delta C) \subseteq A \Delta C$.
+    \item[(iii)] Let
+    \[
+    R = \{\langle A,B\rangle \in \mathcal{P}(\mathbb{N})^2 : 2026 \notin A \Delta B\}.
+    \]
+    Show $R$ is an equivalence relation on $\mathcal{P}(\mathbb{N})$.
+    \item[(iv)] Compute $[\varnothing]_R$, $[\mathbb{N}]_R$ and the number of
+    equivalence classes.
+\end{enumerate}
+
+\begin{proof}
+(i) Suppose $A = B$. Then $A \setminus B = \varnothing$ and $B \setminus A = \varnothing$,
+so $A \Delta B = \varnothing \cup \varnothing = \varnothing$.
+
+Conversely, if $A \Delta B = \varnothing$, then no element lies in exactly one of $A,B$.
+Hence every element of $A$ lies in $B$ and every element of $B$ lies in $A$, so $A=B$.
+
+\smallskip
+
+(ii) For any set $X$ and element $x$, let $1_X(x)$ be $1$ if $x \in X$ and $0$ otherwise.
+Then $x \in A \Delta B$ iff $1_A(x) \oplus 1_B(x) = 1$, where $\oplus$ is addition modulo $2$.
+Similarly, $x \in B \Delta C$ iff $1_B(x) \oplus 1_C(x) = 1$, and
+$x \in A \Delta C$ iff $1_A(x) \oplus 1_C(x) = 1$.
+
+Suppose $x \in (A \Delta B) \cup (B \Delta C)$. Then at least one of
+$1_A(x) \oplus 1_B(x)$ and $1_B(x) \oplus 1_C(x)$ equals $1$.
+But in $\{0,1\}$ we have
+\[
+(1_A(x) \oplus 1_B(x)) \oplus (1_B(x) \oplus 1_C(x))
+= 1_A(x) \oplus 1_C(x).
+\]
+If at least one of the two terms on the left is $1$, then the right-hand side is $1$,
+so $1_A(x) \oplus 1_C(x) = 1$. Hence $x \in A \Delta C$.
+Therefore $(A \Delta B) \cup (B \Delta C) \subseteq A \Delta C$.
+
+\smallskip
+
+(iii) We verify that $R$ is an equivalence relation on $\mathcal{P}(\mathbb{N})$.
+
+\emph{Reflexive:} For every $A \subseteq \mathbb{N}$ we have $A \Delta A = \varnothing$,
+so in particular $2026 \notin A \Delta A$. Hence $\langle A,A\rangle \in R$.
+
+\emph{Symmetric:} If $\langle A,B\rangle \in R$, then $2026 \notin A \Delta B$.
+But $A \Delta B = B \Delta A$, so $2026 \notin B \Delta A$, and thus $\langle B,A\rangle \in R$.
+
+\emph{Transitive:} Suppose $\langle A,B\rangle \in R$ and $\langle B,C\rangle \in R$.
+Then $2026 \notin A \Delta B$ and $2026 \notin B \Delta C$, which means
+$2026$ is in both $A$ and $B$ or in neither, and also in both $B$ and $C$ or in neither.
+Hence $2026$ is in $A$ and $C$ together or in neither, so $2026 \notin A \Delta C$,
+and $\langle A,C\rangle \in R$.
+
+Thus $R$ is an equivalence relation.
+
+\smallskip
+
+(iv) By definition, $A$ and $B$ are $R$-equivalent iff $2026$ is either in both
+$A,B$ or in neither. Therefore
+\[
+[\varnothing]_R = \{A \subseteq \mathbb{N} : 2026 \notin A\},
+\]
+and
+\[
+[\mathbb{N}]_R = \{A \subseteq \mathbb{N} : 2026 \in A\}.
+\]
+There are exactly two equivalence classes: all subsets of $\mathbb{N}$ that do not contain
+$2026$, and all subsets that do contain $2026$.
+\end{proof}
+
+\section*{Problem 4 (Optional)}
+On $\{0,1\}^{\mathbb{N}}$, define $f \sim g$ iff $f(0) = g(0)$, $f(1) = g(1)$, and $f(2) = g(2)$.
+How many different equivalence classes are there?
+
+\begin{proof}
+Two functions $f,g \in \{0,1\}^{\mathbb{N}}$ are equivalent iff they agree on the first
+three coordinates. Thus each equivalence class is determined by the triple
+\[
+(f(0), f(1), f(2)) \in \{0,1\}^3.
+\]
+There are $2^3 = 8$ possible such triples, hence there are $8$ equivalence classes.
+\end{proof}
+
+\section*{Problem 5}
+Let $f : A \to B$ and $g : B \to A$ be injections, and let $h = g \circ f : A \to A$.
+We construct a bijection $k : A \to \operatorname{rng}(g)$ and then $g^{-1} \circ k : A \to B$,
+obtaining the Cantor--Bernstein--Schröder theorem. As an application, we get a bijection
+between $[0,1)$ and $[0,1]$.
+
+\begin{proof}
+(I) Since $f$ and $g$ are injections, their composition $h = g \circ f$ is also injective.
+
+(II) The map $g : B \to \operatorname{rng}(g)$ is a bijection by definition of the range,
+hence it has an inverse $g^{-1} : \operatorname{rng}(g) \to B$. Thus, if we construct
+a bijection $k : A \to \operatorname{rng}(g)$, then
+\[
+g^{-1} \circ k : A \to B
+\]
+is a bijection as the composition of bijections.
+
+(III) Define subsets $A_0, A_1, \dots$ of $A$ recursively by
+\[
+A_0 = A \setminus \operatorname{rng}(g), \qquad A_{n+1} = h[A_n] \quad\text{for all } n \in \mathbb{N}.
+\]
+Since $h$ is injective, the restriction $h \upharpoonright A_n : A_n \to A_{n+1}$ is a bijection
+from $A_n$ onto $A_{n+1}$ for each $n$. The sets $A_n$ are pairwise disjoint by construction.
+
+(IV) Define $k : A \to \operatorname{rng}(g)$ by
+\[
+k(a) =
+\begin{cases}
+h(a), & \text{if } a \in A_n \text{ for some } n,\\[4pt]
+a,    & \text{if } a \notin \bigcup_{n \in \mathbb{N}} A_n.
+\end{cases}
+\]
+If $a \in A_n$, then $h(a) \in A_{n+1} \subseteq A \subseteq \operatorname{rng}(g) \cup A_0$,
+and by construction $A_0 \subseteq A \setminus \operatorname{rng}(g)$, so in fact $h(a) \in \operatorname{rng}(g)$.
+If $a \notin \bigcup_n A_n$, then by definition $a \in \operatorname{rng}(g)$. Thus
+$k(a) \in \operatorname{rng}(g)$ in either case, so $k$ is well-defined with codomain $\operatorname{rng}(g)$.
+
+(V) To see that $k$ is injective, note first that
+\begin{quote}
+for any $a \in A$, $k(a) \in A_{n+1}$ for some $n$ iff $a \in A_n$ for some $n$.
+\end{quote}
+This uses that $h[A_n] = A_{n+1}$ and that the $A_n$ are pairwise disjoint. Now suppose
+$k(a) = k(a') = b$. If $b \in A_{m+1}$ for some $m$, then by the claim both $a,a'$ lie in $A_m$,
+and on $A_m$ the map $k$ coincides with $h$, which is injective, so $a=a'$.
+If $b \notin A_n$ for any $n$, then $b$ is fixed by $k$, so $a = b = a'$.
+Thus $k$ is injective.
+
+(VI) To see that $k$ is surjective onto $\operatorname{rng}(g)$, let $y \in \operatorname{rng}(g)$.
+If $y \notin A_{n+1}$ for any $n$, then by definition $k(y) = y$, so $y$ is in the range of $k$.
+If $y \in A_{n+1}$ for some $n$, then there is a unique $x \in A_n$ with $h(x) = y$,
+because $h \upharpoonright A_n$ is a bijection onto $A_{n+1}$. For this $x$ we have
+$k(x) = h(x) = y$, so again $y$ is in the range of $k$. Therefore $k : A \to \operatorname{rng}(g)$
+is a bijection, and thus $g^{-1} \circ k : A \to B$ is a bijection.
+
+This proves the Cantor--Bernstein--Schröder theorem.
+
+\medskip
+
+\noindent\textbf{Application: a bijection $[0,1) \to [0,1]$.}
+
+Define injections
+\[
+f_0 : [0,1) \to [0,1], \quad f_0(x) = x,
+\]
+and
+\[
+g_0 : [0,1] \to [0,1), \quad g_0(x) = \frac{x}{2}.
+\]
+Both $f_0$ and $g_0$ are injective. By the Cantor--Bernstein--Schröder theorem,
+there exists a bijection between $[0,1)$ and $[0,1]$.
+\end{proof}
+
+
+\end{document}

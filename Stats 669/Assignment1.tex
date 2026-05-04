@@ -1,0 +1,48 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics}
+\newcommand{\assignment}{Assignment 1.1}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+\question Is the stationary distribution of any stochastic process unique? Is there a critera that can admit a collection of stationary distributions that can model a collection of data and we can choose from them for different applications?
+
+\question Is it possible to have different local stationary distributions for different segments of data in a single stochastic process? If so, how can we identify the local stationary distributions and their respective segments in the data? If not, why?
+
+\question Why does a symmetric gaussian process have zero odd moments? 
+
+\question Similar to local spatial stationary, is there a notion of local temporal stationary? Essentially where a staitionary process can have different stationary distributions at different time intervals. If so, how can we identify the local temporal stationary distributions and their respective time intervals in the data? If not, why?
+
+\question While continuity and differentiability are nice to have, what are the issues with letting the space of functions that we can use to model our stochastic processes be any $L_2$ function? We can naturally have a spectral decomposition of such functions. Integration of these functions may be hard, but using Riemann-Stieltjes integration almost all such functions can be integrated. 
+
+\question Similar to the Wold Decomposition theorem for time series, is there a similar decomposition for spatial data? Even without a time component, can we decompose a spatial stochastic process into deterministic and stochastic components? If so, how? If not, why?
+
+\question Equation 3.14 is extremely interesting since it seems like how we can write a gaussian process as the infinite sum of sinusoids with random coefficients. However, how can be sure of the closure of such a sum being a gaussian process? 
+I might be missing the "proper" definition of a gaussian process, but naively it seems like we can have a non-gaussian process by taking a infinite sum of sinusoids with random coefficients that are gaussian. 
+
+\question While I understand mean-square continuity, I am struggling to understand the intuition behind mean-square differentiability. I understand the definition: 
+
+A process is said to be mean-square differentiable at $t_0$ iff $\exists X'_{t_0}$ s.t. $$\lim_{t \to t_0} \mathbb{E} \left[\left( X_{t_0}' - \frac{X_t - X_{t_0}}{t - t_0}\right) \right] = 0$$
+
+\question How do we determine how many frequencies we consider in a spectral representation of a stochastic process? And how does this choice affect the accuracy of the representation? IE is there a bounding error we can compute? Im guessing it is $\sum_{j = N}^{\infty} |f_j|$ where $N$ is the number of frequencies we are considering and $f_j$ are the fourier coefficients.
+
+\question If we wanted to introduce jumps in a stochastic process, how would we go about doing that? Can we use some analogy to the merton-jump diffusion model in finance to introduce jumps in spatial statistics?
+
+\question I want to see the proof of why the circulant matrices have eigenvectors as the fourier basis. A basic outline I can think off is to show that multiplying a circulant matrix with a fourier basis vector results in a scaled version of the same fourier basis vector. However, I am struggling to see how to show this exactly.
+
+\question The Matern model is super interesting. Frankly I need more time look at it to understand where it comes from, why it is useful, and how to use it. 
+
+Hello everyone!
+
+\end{questions}
+
+\end{document}

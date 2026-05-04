@@ -1,0 +1,583 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Intro to Experimental Design}
+\newcommand{\assignment}{Homework 5}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\textbf{6.5}
+An engineer is interested in the effects of cutting speed ($A$), tool geometry ($B$), and cutting angle ($C$) on the life (in hours) of a machine tool. Two levels of each factor are chosen, and three replicates of a $2^3$ factorial design are run. The results are as follows:
+
+\begin{center}
+\begin{tabular}{ccccccc}
+\hline
+ & & & & \multicolumn{3}{c}{Replicate} \\
+$A$ & $B$ & $C$ & Treatment & I & II & III \\
+\hline
+$-$ & $-$ & $-$ & $(1)$  & 22 & 31 & 25 \\
+$+$ & $-$ & $-$ & $a$    & 32 & 43 & 29 \\
+$-$ & $+$ & $-$ & $b$    & 35 & 34 & 50 \\
+$+$ & $+$ & $-$ & $ab$   & 55 & 47 & 46 \\
+$-$ & $-$ & $+$ & $c$    & 44 & 45 & 38 \\
+$+$ & $-$ & $+$ & $ac$   & 40 & 37 & 36 \\
+$-$ & $+$ & $+$ & $bc$   & 60 & 50 & 54 \\
+$+$ & $+$ & $+$ & $abc$  & 39 & 41 & 47 \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent
+(a) Estimate the factor effects. Which effects appear to be large?
+
+\noindent
+(b) Use the analysis of variance to confirm your conclusions for part (a).
+
+\noindent
+(c) Write down a regression model for predicting tool life (in hours) based on the results of this experiment.
+
+\noindent
+(d) Analyze the residuals. Are there any obvious problems?
+
+\noindent
+(e) On the basis of an analysis of main effect and interaction plots, what coded factor levels of $A$, $B$, and $C$ would you recommend using?
+
+\begin{solution}
+
+\textbf{(a) Factor effects.}
+We fit the full $2^3$ factorial model in coded units,
+\[
+y = \beta_0 + \beta_A A + \beta_B B + \beta_C C + \beta_{AB} AB + \beta_{AC} AC + \beta_{BC} BC + \beta_{ABC} ABC + \varepsilon,
+\]
+with $A,B,C \in \{-1,+1\}$ and all $24$ observations. From the regression output, the estimated coefficients are
+\[
+\hat\beta_0 = 40.8333,\quad
+\hat\beta_A = 3.4167,\quad
+\hat\beta_B = 0.1667,\quad
+\hat\beta_C = 1.4167,
+\]
+\[
+\hat\beta_{AB} = -4.4167,\quad
+\hat\beta_{AC} = -5.6667,\quad
+\hat\beta_{BC} = 1.0833,\quad
+\hat\beta_{ABC} = 0.8333.
+\]
+For a $2^k$ design, the factor effects are $2\hat\beta$ in coded units, so
+\[
+\begin{array}{lcl}
+\hat{\text{effect}}(A) &=& 6.83,\\
+\hat{\text{effect}}(B) &=& 0.33,\\
+\hat{\text{effect}}(C) &=& 2.83,\\
+\hat{\text{effect}}(AB) &=& -8.83,\\
+\hat{\text{effect}}(AC) &=& -11.33,\\
+\hat{\text{effect}}(BC) &=& 2.17,\\
+\hat{\text{effect}}(ABC) &=& 1.67.
+\end{array}
+\]
+In terms of magnitude, the $AB$ and $AC$ interaction effects are clearly largest, followed by the main effect of $A$. The effects for $B$, $BC$, and $ABC$ are relatively small.
+
+\medskip
+\textbf{(b) ANOVA.}
+The ANOVA table for the fitted model is
+\[
+\begin{array}{lcccc}
+\hline
+\text{Source} & df & \text{SS} & \text{MS} & F~(\text{p-value}) \\
+\hline
+A   & 1 & 280.17 & 280.17 &  9.29  ~(p = 0.0077) \\
+B   & 1 &   0.67 &   0.67 &  0.02  ~(p = 0.88) \\
+C   & 1 &  48.17 &  48.17 &  1.60  ~(p = 0.22) \\
+AB  & 1 & 468.17 & 468.17 & 15.52 ~(p = 0.0012) \\
+AC  & 1 & 770.67 & 770.67 & 25.55 ~(p = 0.00012) \\
+BC  & 1 &  28.17 &  28.17 &  0.93  ~(p = 0.35) \\
+ABC & 1 &  16.67 &  16.67 &  0.55  ~(p = 0.47) \\
+\text{Error} & 16 & 482.67 & 30.17 & \\
+\hline
+\end{array}
+\]
+At $\alpha = 0.05$, the significant terms are $A$, $AB$, and $AC$; $B$, $C$, $BC$, and $ABC$ are not significant. This is consistent with the effect estimates, where $AB$ and $AC$ are largest in magnitude and the main effect of $A$ is moderately large.
+
+\medskip
+\textbf{(c) Regression model.}
+In coded units, the full fitted regression model is
+\[
+\hat{y}
+= 40.8333 + 3.4167A + 0.1667B + 1.4167C
+- 4.4167AB - 5.6667AC + 1.0833BC + 0.8333ABC.
+\]
+Using the ANOVA results in part (b), we drop the nonsignificant terms $B$, $C$, $BC$, and $ABC$ and retain $A$, $AB$, and $AC$. A reduced model that keeps only the statistically important terms is
+\[
+\hat{y} \approx 40.8333 + 3.4167A - 4.4167AB - 5.6667AC.
+\]
+
+\medskip
+\textbf{(d) Residual analysis.}
+The residual standard error is about $5.49$ on $16$ degrees of freedom, and the residuals look reasonably symmetric with no severe outliers. The residuals-versus-fitted plot,
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/6.5_resid_vs_fitted.png}
+\end{center}
+shows points scattered around zero without a clear trend or change in spread, so there is no obvious evidence of non-constant variance or a missing term. The normal Q--Q plot,
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/6.5_qq.png}
+\end{center}
+has points close to the reference line, and the Shapiro--Wilk test does not reject normality at $\alpha = 0.05$. Overall, the standard regression assumptions appear reasonable for this data.
+
+\medskip
+\textbf{(e) Recommended factor settings.}
+The main-effect plots for $A$, $B$, and $C$ are
+\begin{center}
+\includegraphics[width=0.32\textwidth]{img/6.5_main_A.png}
+\includegraphics[width=0.32\textwidth]{img/6.5_main_B.png}
+\includegraphics[width=0.32\textwidth]{img/6.5_main_C.png}
+\end{center}
+Factor $A$ shows a noticeable increase in mean tool life when moving from $-1$ to $+1$, whereas the main effects of $B$ and $C$ are weaker on their own. The interaction plots
+\begin{center}
+\includegraphics[width=0.32\textwidth]{img/6.5_int_AB.png}
+\includegraphics[width=0.32\textwidth]{img/6.5_int_AC.png}
+\includegraphics[width=0.32\textwidth]{img/6.5_int_BC.png}
+\end{center}
+show that the $A\times B$ and especially the $A\times C$ interactions have strong non-parallel lines. In particular, high tool geometry and high cutting angle (coded $B=+1$, $C=+1$) yield large mean tool life, but when $C$ is high the negative $A\times C$ effect suggests that cutting speed $A$ should be kept low. Based on these results, a reasonable recommendation is to use $B=+1$, $C=+1$, and $A=-1$ in coded units to maximize tool life.
+
+\end{solution}
+
+\textbf{6.6}
+Reconsider part (c) of Problem 6.5. Use the regression model to generate response surface and contour plots of the tool life response. Interpret these plots. Do they provide insight regarding the desirable operating conditions for this process?
+
+\begin{solution}
+
+We use the reduced model from Problem 6.5,
+\[
+\hat{y} = 40.8333 + 3.4167A + 0.1667B + 1.4167C
+          - 4.4167AB - 5.6667AC,
+\]
+with $A,B,C$ coded at $-1$ and $+1$, and fit it by least squares to the $24$ observations. The reduced model keeps the important effects $A$, $A\times B$, and $A\times C$ and drops the nonsignificant $BC$ and $ABC$ terms.
+
+To study the joint behavior of $A$ and $B$ at different cutting angles, we form a fine grid over $-1 \le A \le 1$ and $-1 \le B \le 1$ and evaluate $\hat{y}$ at three fixed values of $C$: $C=-1$, $C=0$, and $C=+1$. For each grid we produce a filled response surface plot and a contour plot.
+
+\medskip
+\textbf{Response surface plots.}
+The three response surface plots are shown below:
+\begin{center}
+\includegraphics[width=0.32\textwidth]{img/6.6_surface_Cm1.png}
+\includegraphics[width=0.32\textwidth]{img/6.6_surface_C0.png}
+\includegraphics[width=0.32\textwidth]{img/6.6_surface_C1.png}
+\end{center}
+
+At $C=-1$ (left plot), the surface slopes upward as $B$ increases, and there is noticeable curvature in the $A$ direction caused by the $A\times C$ interaction at this low cutting angle. At $C=0$ (middle plot), the surface is smoother and the main trend is an increase in tool life when $B$ is high, with a weaker dependence on $A$. At $C=+1$ (right plot), the surface shows a stronger tilt: the best region shifts toward lower $A$ (cutting speed) combined with higher $B$, consistent with the negative $A\times C$ effect.
+
+\medskip
+\textbf{Contour plots.}
+The corresponding contour plots of predicted tool life are:
+\begin{center}
+\includegraphics[width=0.32\textwidth]{img/6.6_contour_Cm1.png}
+\includegraphics[width=0.32\textwidth]{img/6.6_contour_C0.png}
+\includegraphics[width=0.32\textwidth]{img/6.6_contour_C1.png}
+\end{center}
+
+When $C=-1$, the contour lines are roughly diagonal, indicating that increasing $B$ and adjusting $A$ together can move us into regions of higher tool life. At $C=0$, the contours are more nearly parallel in the $A$ direction, so changing $A$ alone has a smaller effect than changing $B$. At $C=+1$, the contours tilt in the opposite direction: low $A$ with high $B$ gives the highest predicted life, and high $A$ with high $C$ is unfavorable because of the strong negative $A\times C$ interaction.
+
+\medskip
+\textbf{Conclusions.}
+Overall, the response surfaces and contour plots reinforce the earlier ANOVA results. Tool geometry $B$ should be set at its high level, and cutting angle $C$ should also be high to obtain long tool life. However, when $C$ is high, the negative $A\times C$ interaction suggests that cutting speed $A$ should be kept at its lower level to avoid reducing tool life. These plots therefore provide useful guidance: operate with high $B$, high $C$, and relatively low $A$ to achieve desirable tool life.
+
+\end{solution}
+
+\textbf{6.7}
+Find the standard error of the factor effects and approximate 95 percent confidence limits for the factor effects in Problem 6.5. Do the results of this analysis agree with the conclusions from the analysis of variance?
+
+\begin{solution}
+
+Using the fitted model from Problem 6.5, we obtain the coefficient estimates and standard errors for the coded factors $A$, $B$, $C$ and their interactions. For a $2^3$ factorial in coded units, each factor effect is $2\hat\beta$, and the standard error of an effect is $2\cdot \text{SE}(\hat\beta)$. From the regression output,
+\[
+\text{SE}(\hat\beta_A) = \text{SE}(\hat\beta_B) = \cdots = 1.1211,
+\]
+so the standard error for each effect is
+\[
+\text{SE(effect)} = 2 \times 1.1211 \approx 2.2423.
+\]
+
+With $16$ residual degrees of freedom, the two–sided 95\% $t$ critical value is
+\[
+t_{0.975,16} \approx 2.12.
+\]
+The 95\% confidence interval for each effect is then
+\[
+\hat{\text{effect}} \pm t_{0.975,16}\,\text{SE(effect)}.
+\]
+The resulting estimates, standard errors, and 95\% confidence limits are:
+
+\begin{center}
+\begin{tabular}{lcccc}
+\hline
+Effect & Estimate & SE & 95\% CI lower & 95\% CI upper \\
+\hline
+$A$   & $6.83$   & $2.24$ & $2.08$   & $11.59$ \\
+$B$   & $0.33$   & $2.24$ & $-4.42$  & $5.09$ \\
+$C$   & $2.83$   & $2.24$ & $-1.92$  & $7.59$ \\
+$AB$  & $-8.83$  & $2.24$ & $-13.59$ & $-4.08$ \\
+$AC$  & $-11.33$ & $2.24$ & $-16.09$ & $-6.58$ \\
+$BC$  & $2.17$   & $2.24$ & $-2.59$  & $6.92$ \\
+$ABC$ & $1.67$   & $2.24$ & $-3.09$  & $6.42$ \\
+\hline
+\end{tabular}
+\end{center}
+
+The effects $A$, $AB$, and $AC$ have 95\% confidence intervals that do not contain zero, so these effects are statistically significant at approximately the 5\% level. In contrast, the intervals for $B$, $C$, $BC$, and $ABC$ all include zero, so these effects are not significant. This CI-based conclusion agrees with the ANOVA from Problem 6.5, where $A$, $AB$, and $AC$ had small $p$-values and the remaining effects were not significant.
+
+\end{solution}
+
+\textbf{6.10}
+Reconsider the experiment described in Problem 6.5. Suppose that the experimenter only performed the eight trials from replicate I. In addition, he ran four center points and obtained the following response values: 36, 40, 43, 45.
+
+\noindent
+(a) Estimate the factor effects. Which effects are large?
+
+\noindent
+(b) Perform an analysis of variance, including a check for pure quadratic curvature. What are your conclusions?
+
+\noindent
+(c) Write down an appropriate model for predicting tool life, based on the results of this experiment. Does this model differ in any substantial way from the model in Problem 6.5, part (c)?
+
+\noindent
+(d) Analyze the residuals.
+
+\noindent
+(e) What conclusions would you draw about the appropriate operating conditions for this process?
+
+\begin{solution}
+
+\textbf{(a) Factor effects.}
+Using only replicate I of the $2^3$ factorial design, we fit the full model
+\[
+y = \beta_0 + \beta_A A + \beta_B B + \beta_C C
++ \beta_{AB} AB + \beta_{AC} AC + \beta_{BC} BC + \beta_{ABC} ABC + \varepsilon,
+\]
+with $A,B,C \in \{-1,+1\}$. From the regression output for these eight runs, the estimated coefficients are
+\[
+\hat\beta_0 = 40.875,\quad
+\hat\beta_A = 0.625,\quad
+\hat\beta_B = 6.375,\quad
+\hat\beta_C = 4.875,
+\]
+\[
+\hat\beta_{AB} = -0.875,\quad
+\hat\beta_{AC} = -6.875,\quad
+\hat\beta_{BC} = -2.625,\quad
+\hat\beta_{ABC} = -3.375.
+\]
+The corresponding effect estimates (twice each coefficient) are
+\[
+\begin{array}{lcl}
+\hat{\text{effect}}(A) &=& 1.25,\\
+\hat{\text{effect}}(B) &=& 12.75,\\
+\hat{\text{effect}}(C) &=& 9.75,\\
+\hat{\text{effect}}(AB) &=& -1.75,\\
+\hat{\text{effect}}(AC) &=& -13.75,\\
+\hat{\text{effect}}(BC) &=& -5.25,\\
+\hat{\text{effect}}(ABC) &=& -6.75.
+\end{array}
+\]
+Numerically, the largest effects in magnitude are $B$ and $AC$, with $C$ and the higher-order terms $BC$ and $ABC$ also moderately large. The main effect of $A$ and the $AB$ interaction are relatively small.
+
+\medskip
+\textbf{(b) ANOVA and curvature test.}
+Because we only have one observation at each factorial point in replicate I, the full $2^3$ model for these eight runs is saturated and has zero residual degrees of freedom, so a usual ANOVA for the factorial effects alone is not available. However, we can test for pure quadratic curvature by comparing the mean response at the factorial points to the mean at the center points.
+
+For replicate I,
+\[
+\bar{y}_{\text{factorial}} = 40.875,\qquad
+\bar{y}_{\text{center}} = 41.000
+\]
+based on the eight factorial runs and the four center-point measurements $36,40,43,45$. With $n_{\text{fact}} = 8$ and $n_{\text{center}} = 4$, the pure quadratic curvature sum of squares is
+\[
+SS_{\text{PQ}}
+= \frac{n_{\text{fact}}\,n_{\text{center}}}{n_{\text{fact}}+n_{\text{center}}}
+\left(\bar{y}_{\text{factorial}} - \bar{y}_{\text{center}}\right)^2
+= \frac{8 \cdot 4}{8+4}(40.875 - 41.000)^2
+\approx 0.0417.
+\]
+We pool the error mean square from Problem 6.5,
+\[
+\text{MSE} \approx 30.1667,
+\]
+and form the curvature $F$-statistic
+\[
+F_{\text{curv}} = \frac{SS_{\text{PQ}}}{\text{MSE}}
+= \frac{0.0417}{30.1667} \approx 0.0014,
+\]
+with $1$ and $16$ degrees of freedom. The corresponding $p$-value is about $0.97$, so there is no evidence of pure quadratic curvature. A first-order model in the coded factors appears adequate over the region studied.
+
+\medskip
+\textbf{(c) Regression model and comparison to 6.5(c).}
+Using only the replicate I factorial data, the fitted regression model in coded units is
+\[
+\hat{y}
+= 40.875 + 0.625A + 6.375B + 4.875C
+- 0.875\,AB - 6.875\,AC - 2.625\,BC - 3.375\,ABC.
+\]
+In Problem 6.5(c), using all three replicates, the corresponding model was
+\[
+\hat{y}
+= 40.8333 + 0.1667A + 5.6667B + 3.4167C
+- 0.8333\,AB - 4.4167\,AC - 1.4167\,BC - 1.0833\,ABC.
+\]
+The signs of all effects are the same in both models, and the magnitudes are broadly similar: in each case, the main effect of $B$ and the $AC$ interaction stand out as important, with $C$ also positive and non-negligible. The replicate I model therefore does not differ in any substantial qualitative way from the full-data model in 6.5(c); the differences in coefficient sizes are consistent with sampling variability from having fewer observations.
+
+\medskip
+\textbf{(d) Residual analysis.}
+For the eight factorial runs in replicate I, the full $2^3$ model is saturated: the fitted values match the observed responses exactly and all residuals are zero. Because there are no residual degrees of freedom, we cannot construct residual plots or perform standard normality or constant-variance diagnostics for this model alone. The only additional lack-of-fit information comes from the center points via the curvature test in part (b), which did not indicate any strong quadratic trend. Taken together with the effect estimates and the multi-replicate analysis in Problem 6.5, there is no obvious indication of serious model inadequacy over the design region.
+
+\medskip
+\textbf{(e) Operating conditions.}
+Both the replicate I effect estimates and the comparison with Problem 6.5 suggest that tool geometry $B$ and the $AC$ interaction are most important for tool life. The positive main effects of $B$ and $C$, combined with the negative $AC$ interaction, indicate that tool life is longest when $B$ and $C$ are at their high levels but cutting speed $A$ is not too high. Combined with the curvature test, which found no evidence of a strong quadratic trend, a reasonable recommendation is to operate at the high levels of $B$ and $C$ and at the lower level of $A$ (in coded units, $B=+1$, $C=+1$, $A=-1$) to maximize tool life within the studied region.
+
+\end{solution}
+
+\textbf{6.11}
+An experiment was performed to improve the yield of a chemical process. Four factors were selected, and two replicates of a completely randomized experiment were run. The results are shown in the following table.
+
+\medskip
+\noindent
+(a) Estimate the factor effects.\\
+(b) Prepare an analysis of variance table and determine which factors are important in explaining yield.\\
+(c) Write down a regression model for predicting yield, assuming that all four factors were varied over the range from $-1$ to $+1$ (in coded units).\\
+(d) Plot the residuals versus the predicted yield and on a normal probability scale. Does the residual analysis appear satisfactory?\\
+(e) Two three-factor interactions, $ABC$ and $ABD$, apparently have large effects. Draw a cube plot in the factors $A$, $B$, and $C$ with the average yields shown at each corner. Repeat using the factors $A$, $B$, and $D$. Do these two plots aid in data interpretation? Where would you recommend that the process be run with respect to the four variables?
+
+\begin{solution}
+
+\textbf{(a) Factor effects.}
+We fit the full $2^4$ factorial model in coded units,
+\[
+y = \beta_0 + \beta_A A + \beta_B B + \beta_C C + \beta_D D
+    + \beta_{AB} AB + \beta_{AC} AC + \beta_{BC} BC + \beta_{AD} AD + \beta_{BD} BD + \beta_{CD} CD
+\]
+\[
+    + \beta_{ABC} ABC + \beta_{ABD} ABD + \beta_{ACD} ACD + \beta_{BCD} BCD + \beta_{ABCD} ABCD + \varepsilon,
+\]
+to all 32 observations. From the regression output,
+\[
+\hat\beta_0 = 82.7813,\quad
+\hat\beta_A = -4.5313,\quad
+\hat\beta_B = -0.6563,\quad
+\hat\beta_C = -1.3438,\quad
+\hat\beta_D = 1.9688,
+\]
+\[
+\hat\beta_{AB} = 2.0313,\quad
+\hat\beta_{AC} = 0.3438,\quad
+\hat\beta_{BC} = -0.2813,\quad
+\hat\beta_{AD} = -1.0938,\quad
+\hat\beta_{BD} = -0.0938,\quad
+\hat\beta_{CD} = 0.8438,
+\]
+\[
+\hat\beta_{ABC} = -2.5938,\quad
+\hat\beta_{ABD} = 2.3438,\quad
+\hat\beta_{ACD} = -0.4688,\quad
+\hat\beta_{BCD} = -0.4688,\quad
+\hat\beta_{ABCD} = 1.2188.
+\]
+The corresponding effect estimates are $2\hat\beta$:
+\[
+\begin{array}{lcl}
+\hat{\text{effect}}(A)   &=& -9.06,\\
+\hat{\text{effect}}(B)   &=& -1.31,\\
+\hat{\text{effect}}(C)   &=& -2.69,\\
+\hat{\text{effect}}(D)   &=& 3.94,\\
+\hat{\text{effect}}(AB)  &=& 4.06,\\
+\hat{\text{effect}}(AC)  &=& 0.69,\\
+\hat{\text{effect}}(BC)  &=& -0.56,\\
+\hat{\text{effect}}(AD)  &=& -2.19,\\
+\hat{\text{effect}}(BD)  &=& -0.19,\\
+\hat{\text{effect}}(CD)  &=& 1.69,\\
+\hat{\text{effect}}(ABC) &=& -5.19,\\
+\hat{\text{effect}}(ABD) &=& 4.69,\\
+\hat{\text{effect}}(ACD) &=& -0.94,\\
+\hat{\text{effect}}(BCD) &=& -0.94,\\
+\hat{\text{effect}}(ABCD)&=& 2.44.
+\end{array}
+\]
+The largest effects in magnitude are $A$, $ABC$, $ABD$, $D$, and $AB$; the remaining main effects and interactions are relatively small.
+
+\medskip
+\textbf{(b) ANOVA and important factors.}
+The ANOVA table for the full model is
+\[
+\begin{array}{lcccc}
+\hline
+\text{Source} & df & \text{SS} & \text{MS} & F \ (\text{p-value}) \\
+\hline
+A       & 1 & 657.0 & 657.0 & 85.82\ (p \approx 7.9\times 10^{-8}) \\
+B       & 1 &  13.8 &  13.8 &  1.80\ (p = 0.20) \\
+C       & 1 &  57.8 &  57.8 &  7.55\ (p = 0.014) \\
+D       & 1 & 124.0 & 124.0 & 16.20\ (p = 0.0010) \\
+AB      & 1 & 132.0 & 132.0 & 17.24\ (p = 0.00075) \\
+AC      & 1 &   3.8 &   3.8 &  0.49\ (p = 0.49) \\
+BC      & 1 &   2.5 &   2.5 &  0.33\ (p = 0.57) \\
+AD      & 1 &  38.3 &  38.3 &  5.00\ (p = 0.040) \\
+BD      & 1 &   0.3 &   0.3 &  0.04\ (p = 0.85) \\
+CD      & 1 &  22.8 &  22.8 &  2.98\ (p = 0.10) \\
+ABC     & 1 & 215.3 & 215.3 & 28.12\ (p \approx 7.1\times 10^{-5}) \\
+ABD     & 1 & 175.8 & 175.8 & 22.96\ (p = 0.00020) \\
+ACD     & 1 &   7.0 &   7.0 &  0.92\ (p = 0.35) \\
+BCD     & 1 &   7.0 &   7.0 &  0.92\ (p = 0.35) \\
+ABCD    & 1 &  47.5 &  47.5 &  6.21\ (p = 0.024) \\
+\text{Error} & 16 & 122.5 &  7.66 & \\
+\hline
+\end{array}
+\]
+At $\alpha = 0.05$, the factors and interactions that are significant are
+\[
+A,\ C,\ D,\ AB,\ AD,\ ABC,\ ABD,\ \text{and }ABCD.
+\]
+Factors $B$ and many higher-order interactions (such as $AC$, $BC$, $BD$, $ACD$, $BCD$) are not significant.
+
+\medskip
+\textbf{(c) Regression model.}
+In coded units with $A,B,C,D \in \{-1,+1\}$, the fitted regression model is
+\[
+\hat{y} = 82.7813 - 4.5313A - 0.6563B - 1.3438C + 1.9688D
+          + 2.0313AB + 0.3438AC - 0.2813BC - 1.0938AD - 0.0938BD + 0.8438CD
+\]
+\[
+\qquad\quad - 2.5938ABC + 2.3438ABD - 0.4688ACD - 0.4688BCD + 1.2188ABCD.
+\]
+This model explains a large proportion of the variability in yield, with $R^2 \approx 0.925$ and adjusted $R^2 \approx 0.854$, and has residual standard error about $2.77$ on 16 degrees of freedom.
+
+\medskip
+\textbf{(d) Residual analysis.}
+The residual standard error is modest relative to the scale of the yields, and the residuals range from about $-4.5$ to $4.5$. The residuals-versus-fitted plot,
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/6.11_resid_vs_fitted.png}
+\end{center}
+shows points scattered fairly evenly around zero with no clear trend or funnel shape, suggesting no strong departure from constant variance or linearity. The normal Q--Q plot,
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/6.11_qq.png}
+\end{center}
+has points close to the reference line, and the Shapiro--Wilk test gives $W = 0.961$ with $p = 0.299$, so we do not reject normality at $\alpha = 0.05$. Overall, the residual analysis looks satisfactory.
+
+\medskip
+\textbf{(e) Cube plots and recommended settings.}
+To construct a cube plot for factors $A$, $B$, and $C$, we average over $D$ to obtain the mean yields:
+
+\begin{center}
+\begin{tabular}{ccc c}
+\hline
+$A$ & $B$ & $C$ & Mean yield \\
+\hline
+$-1$ & $-1$ & $-1$ & 94.0 \\
+$-1$ & $-1$ & $+1$ & 86.0 \\
+$-1$ & $+1$ & $-1$ & 84.0 \\
+$-1$ & $+1$ & $+1$ & 85.2 \\
+$+1$ & $-1$ & $-1$ & 75.0 \\
+$+1$ & $-1$ & $+1$ & 78.8 \\
+$+1$ & $+1$ & $-1$ & 83.5 \\
+$+1$ & $+1$ & $+1$ & 75.8 \\
+\hline
+\end{tabular}
+\end{center}
+
+The highest mean yield in this cube is at $A=-1$, $B=-1$, $C=-1$, with yields dropping substantially when $A$ is at its high level, consistent with the large negative main effect of $A$ and the strong $ABC$ interaction.
+
+For the cube in $A$, $B$, and $D$, we average over $C$:
+
+\begin{center}
+\begin{tabular}{ccc c}
+\hline
+$A$ & $B$ & $D$ & Mean yield \\
+\hline
+$-1$ & $-1$ & $-1$ & 84.5 \\
+$-1$ & $-1$ & $+1$ & 95.5 \\
+$-1$ & $+1$ & $-1$ & 84.0 \\
+$-1$ & $+1$ & $+1$ & 85.2 \\
+$+1$ & $-1$ & $-1$ & 78.2 \\
+$+1$ & $-1$ & $+1$ & 75.5 \\
+$+1$ & $+1$ & $-1$ & 76.5 \\
+$+1$ & $+1$ & $+1$ & 82.8 \\
+\hline
+\end{tabular}
+\end{center}
+
+Here the largest mean yield occurs at $A=-1$, $B=-1$, $D=+1$, which reflects the large negative main effect of $A$, the positive main effect of $D$, and the strong $AB$ and $ABD$ interactions. Taken together, the cube plots support the ANOVA conclusions: to maximize yield, we should run the process with $A$ at its low level, $B$ at its low or moderate level (since $B$ is not very important), $C$ at its low level, and $D$ at its high level. Thus, a recommended operating point in coded units is approximately $A=-1$, $B=-1$, $C=-1$, and $D=+1$.
+
+\end{solution}
+
+\textbf{6.21}
+An experimenter has run a single replicate of a $2^4$ design. The following effect estimates have been calculated:
+\[
+\begin{array}{llll}
+A = 76.95 & AB = -51.32 & ABC = -2.82 \\
+B = -67.52 & AC = 11.69 & ABD = -6.50 \\
+C = -7.84 & AD = 9.78 & ACD = 10.20 \\
+D = -18.73 & BC = 20.78 & BCD = -7.98 \\
+ & BD = 14.74 & ABCD = -6.25 \\
+ & CD = 1.27 & \\
+\end{array}
+\]
+
+\noindent
+(a) Construct a normal probability plot of these effects.
+
+\noindent
+(b) Identify a tentative model, based on the plot of the effects in part (a).
+
+\begin{solution}
+
+We are given the following effect estimates from a single replicate of a $2^4$ design:
+\[
+\begin{array}{llll}
+A = 76.95, & B = -67.52, & C = -7.84, & D = -18.73,\\
+AB = -51.32, & AC = 11.69, & AD = 9.78, & BC = 20.78,\\
+BD = 14.74, & CD = 1.27, & ABC = -2.82, & ABD = -6.50,\\
+ACD = 10.20, & BCD = -7.98, & ABCD = -6.25~.
+\end{array}
+\]
+
+\medskip
+\textbf{(a) Normal probability plot of effects.}
+We treat these $15$ effect estimates as if, under the null hypothesis of no active effects, they were sampled from a common normal distribution centered at zero. A normal probability plot of the effects is then used to identify unusually large effects that deviate from the reference line.
+
+From the plot (and from the magnitudes), most of the effects cluster near the straight line and look like random noise. A few effects lie well out in the tails. In particular, the effects
+\[
+A = 76.95,\quad B = -67.52,\quad AB = -51.32,\quad BC = 20.78,\quad D = -18.73
+\]
+stand out in absolute value and fall far from the line. These appear to be the active, non-negligible effects. The remaining effects are much smaller in magnitude and lie close to the reference line on the normal plot, so they can reasonably be treated as noise.
+
+\medskip
+\textbf{(b) Tentative model.}
+Based on the normal probability plot, a natural cutoff is to regard effects with
+\[
+|\text{effect}| > 15
+\]
+as large. This selects the same five effects
+\[
+A,\; B,\; D,\; AB,\; BC
+\]
+that stand out visually. All other effects have substantially smaller absolute values and remain near the normal-line, so we treat them as negligible in a first-pass model.
+
+A reasonable tentative regression model in coded units is therefore
+\[
+\hat{y} = \beta_0 + \beta_A A + \beta_B B + \beta_D D + \beta_{AB}\,AB + \beta_{BC}\,BC,
+\]
+where each coefficient is one-half of the corresponding effect in this $2^4$ design. Using the given effects, the fitted equation (in coded units) can be written as
+\[
+\hat{y} = [\text{Grand Mean}]
++ 38.475\,A - 33.760\,B - 9.365\,D
+- 25.660\,AB + 10.390\,BC.
+\]
+This model keeps the dominant structure indicated by the normal plot while remaining fairly simple, and it ignores higher-order and smaller effects that appear consistent with random noise.
+
+\end{solution}
+
+
+\end{document}

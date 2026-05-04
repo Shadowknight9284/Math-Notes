@@ -1,0 +1,214 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics - STAT 669}
+\newcommand{\assignment}{Homework 7.3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\begin{questions}
+\question 8.17
+
+\begin{solution}
+The two covariance functions are
+\[
+K_0(t)=e^{-|t|},\qquad K_1(t)=(1-|t|)_+,
+\]
+where $(x)_+=\max\{x,0\}$, and $P_j$ denotes the law of a mean-zero
+stationary Gaussian process on $[0,L]$ with covariance $K_j$, for
+$j=0,1$.  Take $L>1$ and $\delta_n=(L-1)/n$, and define
+\[
+S_n=\sum_{j=1}^n
+\bigl\{Z(\delta_n j)-Z(\delta_n(j-1))\bigr\}
+\bigl\{Z(1+\delta_n j)-Z(1+\delta_n(j-1))\bigr\}.
+\]
+
+Set $X_{j,n}=Z(\delta_n j)-Z(\delta_n(j-1))$ and
+$Y_{j,n}=Z(1+\delta_n j)-Z(1+\delta_n(j-1))$, so
+$S_n=\sum_{j=1}^n X_{j,n}Y_{j,n}$.  Since $EZ=0$,
+\[
+E_j S_n = \sum_{k=1}^n \Cov_j(X_{k,n}, Y_{k,n}).
+\]
+By stationarity $\Cov_j(X_{k,n},Y_{k,n})$ is the same for every $k$,
+and expanding it in terms of $K_j$ gives
+\begin{align*}
+\Cov_j(X_{k,n},Y_{k,n})
+&= E_j\bigl[(Z(\delta_n k)-Z(\delta_n(k-1)))
+            (Z(1+\delta_n k)-Z(1+\delta_n(k-1)))\bigr]\\
+&= 2K_j(1)-2K_j(1+\delta_n),
+\end{align*}
+hence $E_j S_n = 2n\{K_j(1)-K_j(1+\delta_n)\}$.
+
+For $K_0(t)=e^{-|t|}$, a direct computation gives
+\[
+K_0(1+\delta)-K_0(1) = e^{-(1+\delta)}-e^{-1}
+= e^{-1}(e^{-\delta}-1)
+= -e^{-1}\delta + O(\delta^2),
+\]
+so $K_0(1)-K_0(1+\delta_n)=e^{-1}\delta_n+O(\delta_n^2)$ and
+\[
+E_0 S_n = 2n\bigl(e^{-1}\delta_n+O(\delta_n^2)\bigr)
+= 2e^{-1}(L-1)+O\!\left(\tfrac{(L-1)^2}{n}\right)
+\;\longrightarrow\; 2e^{-1}(L-1).
+\]
+
+For $K_1(t)=(1-|t|)_+$, since $\delta_n < 1$ we have $K_1(1)=0$ and
+$K_1(1+\delta_n)=0$, so $E_1 S_n = 0$ for all $n$.
+
+Since $2e^{-1}(L-1)>0$, the two sequences have distinct limits.
+It remains to show the variances vanish so that $S_n$ concentrates
+around each limit.
+
+Both covariance functions satisfy $K_j(0)-K_j(\delta)=|\delta|+O(\delta^2)$
+as $\delta\to0$, and since $X_{k,n}$ and $Y_{k,n}$ are both increments
+of the same stationary process over an interval of length $\delta_n$,
+\[
+\sigma_{j,n}^2 := \Var_j(X_{k,n})=\Var_j(Y_{k,n})
+= 2\{K_j(0)-K_j(\delta_n)\} = 2\delta_n+O(\delta_n^2).
+\]
+
+Write
+\[
+\Var_j S_n
+=\sum_{k=1}^n \Var_j(X_{k,n}Y_{k,n})
++\sum_{k\ne\ell}\Cov_j(X_{k,n}Y_{k,n},X_{\ell,n}Y_{\ell,n}).
+\]
+Since $Z$ is Gaussian, Isserlis' theorem expresses every fourth-order
+joint moment as a sum of products of second-order covariances.
+For the diagonal terms: $\Var_j(X_{k,n}Y_{k,n})$ depends only on
+$\Var_j(X_{k,n})$, $\Var_j(Y_{k,n})$, and $\Cov_j(X_{k,n},Y_{k,n})$,
+each of order $\delta_n$, so $\Var_j(X_{k,n}Y_{k,n})=O(\delta_n^2)$.
+For $k\ne\ell$: every term in the Isserlis expansion of
+$\Cov_j(X_{k,n}Y_{k,n},X_{\ell,n}Y_{\ell,n})$ contains at least one
+cross-index covariance, e.g.\ $\Cov_j(X_{k,n},X_{\ell,n})$.
+The lag between $X_{k,n}$ and $X_{\ell,n}$ is $\delta_n|k-\ell|\ge\delta_n>0$;
+explicitly,
+\[
+\Cov_j(X_{k,n},X_{\ell,n})
+= K_j\bigl(\delta_n(k-\ell+1)\bigr) - K_j\bigl(\delta_n(k-\ell)\bigr)
+- K_j\bigl(\delta_n(k-\ell)\bigr) + K_j\bigl(\delta_n(k-\ell-1)\bigr),
+\]
+a second difference of $K_j$ at a nonzero lag, which is $O(\delta_n^2)$.
+Hence each off-diagonal covariance is $O(\delta_n^3)$, giving
+\[
+\Var_j S_n
+= O(n\delta_n^2)+O(n^2\delta_n^3)
+= O\!\left(\frac{(L-1)^2}{n}\right)
+ +O\!\left(\frac{(L-1)^3}{n}\right)
+\;\longrightarrow\; 0.
+\]
+
+By Chebyshev's inequality, $S_n\xrightarrow{P_0}2e^{-1}(L-1)$ and
+$S_n\xrightarrow{P_1}0$ in probability.
+Setting $a=e^{-1}(L-1)$, which lies strictly between $0$ and
+$2e^{-1}(L-1)$, the sets $A_n=\{S_n>a\}$ satisfy
+$P_0(A_n)\to1$ and $P_1(A_n)\to0$, so $P_0\perp P_1$.
+\end{solution}
+
+\question 8.18
+
+\begin{solution}
+The Matérn spectral density in $\mathbb{R}^d$ is
+\[
+f_j(\omega)
+= \frac{\phi_j}{\Bigl(\alpha_j^2
+  + \tfrac{1}{2\kappa_j}\,\omega^T A_j \omega\Bigr)^{\kappa_j + d/2}},
+\]
+with $\phi_j>0$, $\alpha_j>0$, $\kappa_j>0$, and $A_j$ symmetric with
+$\operatorname{tr}(A_j)=0$.  We determine when
+\[
+\int_{|\omega|>R}
+\Bigl(1-\frac{f_1(\omega)}{f_0(\omega)}\Bigr)^2\,d\omega < \infty
+\]
+holds for some $R<\infty$.
+
+As $|\omega|\to\infty$ the $\alpha_j^2$ terms are negligible compared to
+the quadratic form, so
+\[
+f_j(\omega)\sim
+\phi_j\Bigl(\tfrac{1}{2\kappa_j}\omega^T A_j\omega\Bigr)^{-(\kappa_j+d/2)}.
+\]
+
+Suppose first that at least one parameter other than $\alpha$ differs.
+
+If $A_1\ne A_0$, since $A_1$ and $A_0$ are distinct positive-definite
+matrices there exists a direction $\theta_0\in S^{d-1}$ such that
+$\theta_0^T A_1\theta_0\ne\theta_0^T A_0\theta_0$.
+Along the ray $\omega=r\theta_0$,
+\[
+\frac{f_1(\omega)}{f_0(\omega)}
+\sim
+\frac{\phi_1(2\kappa_1)^{\kappa_1+d/2}}{\phi_0(2\kappa_0)^{\kappa_0+d/2}}
+\cdot
+\frac{(\theta_0^T A_0\theta_0)^{\kappa_0+d/2}}
+     {(\theta_0^T A_1\theta_1)^{\kappa_1+d/2}}
+\cdot r^{2(\kappa_0-\kappa_1)},
+\]
+which converges to a limit $C(\theta_0)\ne1$ when $\kappa_0=\kappa_1$,
+or diverges/vanishes otherwise.  In either case $(1-f_1/f_0)^2$
+does not tend to $0$ along $\omega=r\theta_0$, so
+\[
+\int_{|\omega|>R}\Bigl(1-\frac{f_1}{f_0}\Bigr)^2\,d\omega
+\ge \int_R^\infty\!\int_{B(\theta_0,\varepsilon)}\Bigl(1-\frac{f_1}{f_0}\Bigr)^2
+r^{d-1}\,d\sigma(\theta)\,dr = \infty
+\]
+for any small ball $B(\theta_0,\varepsilon)\subset S^{d-1}$.
+
+If $A_1=A_0=A$ but $\kappa_1\ne\kappa_0$, write $Q(\omega)=\omega^TA\omega$
+and $r=|\omega|$.  Then $f_1(\omega)/f_0(\omega)\sim C\,r^{-2(\kappa_1-\kappa_0)}$.
+For $\kappa_1>\kappa_0$ the ratio tends to $0$, so $(1-f_1/f_0)^2\to1$
+and $\int_{|\omega|>R}(\cdots)\,d\omega\ge c\int_R^\infty r^{d-1}dr=\infty$.
+For $\kappa_1<\kappa_0$ the ratio grows like $r^{2(\kappa_0-\kappa_1)}$,
+so $(1-f_1/f_0)^2\sim C^2 r^{4(\kappa_0-\kappa_1)}\to\infty$, and the
+integral diverges even faster.
+
+If $A_1=A_0$, $\kappa_1=\kappa_0=\kappa$, but $\phi_1\ne\phi_0$, then
+$f_1/f_0\to\phi_1/\phi_0\ne1$ uniformly in $\omega$, so
+$(1-f_1/f_0)^2\to(1-\phi_1/\phi_0)^2>0$ and (8.16) fails.
+
+So (8.16) requires all parameters except possibly $\alpha$ to be equal.
+
+Now take $\phi_1=\phi_0=\phi$, $\kappa_1=\kappa_0=\kappa$,
+$A_1=A_0=A$, but $\alpha_1\ne\alpha_0$.  Then
+\[
+1-\frac{f_1(\omega)}{f_0(\omega)}
+=1-\left(\frac{\alpha_0^2+\tfrac{1}{2\kappa}Q(\omega)}
+              {\alpha_1^2+\tfrac{1}{2\kappa}Q(\omega)}\right)^{\kappa+d/2}.
+\]
+Set $u=\tfrac{1}{2\kappa}Q(\omega)$; for large $|\omega|$,
+\[
+\frac{\alpha_0^2+u}{\alpha_1^2+u}
+=1+\frac{\alpha_0^2-\alpha_1^2}{\alpha_1^2+u}
+=1+O(u^{-1}),
+\]
+and $(1+x)^s=1+sx+O(x^2)$ for small $x$ gives
+\[
+1-\frac{f_1(\omega)}{f_0(\omega)}
+= -(\kappa+d/2)\cdot\frac{\alpha_0^2-\alpha_1^2}{\alpha_1^2+u}+O(u^{-2})
+= O(u^{-1})=O\!\bigl(|\omega|^{-2}\bigr).
+\]
+So $(1-f_1/f_0)^2=O(|\omega|^{-4})$, and in polar coordinates
+\[
+\int_{|\omega|>R}\Bigl(1-\frac{f_1}{f_0}\Bigr)^2\,d\omega
+\;\asymp\;\int_R^\infty r^{d-1}\cdot r^{-4}\,dr
+=\int_R^\infty r^{d-5}\,dr,
+\]
+which converges if and only if $d\le3$.
+
+For $d\le3$, (8.16) holds for two Matérn spectral densities if and only
+if all parameters other than $\alpha$ agree.  For $d\ge4$, changing only
+$\alpha$ already makes the integral diverge, so (8.16) holds only when
+all parameters $(\phi,\alpha,\kappa,A)$ are the same.
+\end{solution}
+
+\end{questions}
+
+\end{document}

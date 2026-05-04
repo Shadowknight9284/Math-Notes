@@ -1,0 +1,55 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+
+I have done more literature review and have boiled the model down to three candidates. 
+
+Our requirements are as follows:
+\begin{itemize}
+    \item Spatiotemporal model (in 1D for now)
+    \item Isotropic in Space
+    \item Non-Separable in any dimension
+\end{itemize}
+Ideal Conditions are:
+\begin{itemize}
+    \item Matern in space
+    \item Matern/diffuse in time
+\end{itemize}
+
+The base spatial model is as follows $(\kappa^2 - \Delta)^{\alpha/2} Z(h) = W(h)$ where $\Delta$ is the laplacian, $\kappa$ is the range parameter, $\alpha$ is the smoothness paramter, $h$ is our coordinate (space), $Z$ is our process, and $W$ is a white noise process 
+
+The first candidate for a spatiotemporal model is extending the laplacian to time 
+$$ \Delta = \frac{\partial^2}{\partial t^2} + \sum_{x_i \in x} \frac{\partial^2}{\partial x_i^2} $$
+This does not fit our critera but is good
+
+Next is one where we add a first partial of time in the linear operator, $L = \kappa^2 + \Delta_s + \partial_t$ and then take $L^{\alpha/2}Z(h,u) = W(h,u)$ 
+While I think this is a good start, I am doubtful on the flexibilithy of the model even when a sufficient amount of parameters are added. 
+
+Another Candiadate is the model defined in the Paper https://www.stat.purdue.edu/~tlzhang/maternasym.pdf Where we consider the NFSST Matern Model 
+$$ M_{r, a_1, a_2, \nu_1, \nu_2}(h, u) = E\left[\exp\left( -\frac{1}{2} \left( \frac{a_1^2 ||h||^2 }{V_1} +  \frac{2 a_1 a_2 u r^T h }{ \sqrt{V_1 V_2}} + \frac{a_2^2 u^2 }{V_2}   \right) \right) \right]$$
+Where the $h$ is the spacial coordinate, $u$ is the temporal coordinate.
+
+$M$ is called the NFSST (Not fully symmetric space time) Matern Correlation function. 
+
+I really like this model. Since it fully fits every single requirement and ideal condition. Also I can see a great next step being a SPDE based FEM solver since I am not able to find much done on this specific topic. 
+
+Next steps are as follows 
+\begin{itemize}
+    \item Review the Paper further, especially what the interaction parameter is and how to estimate it. 
+    \item Understand the fourier transform of this model for the frequency behavior and then the PIT of the model both in space and time.
+    \item Develop a linear operator $L$ s.t. it has the same spectral density as the model. 
+    \item Develop a method to solve the SPDE numerically using some FEM method and potentially adapting the R-INLA or RSPDE libraries solver.
+\end{itemize}
+
+
+\end{document}

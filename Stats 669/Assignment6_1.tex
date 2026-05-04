@@ -1,0 +1,32 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics}
+\newcommand{\assignment}{Assignment 6.1}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\begin{questions}
+\question I believe I understand in principle the method of moment based estimation but just to confirm it is the method of calculating the $n$-th moment of the distribution and then setting it equal to the $n$-th moment of the data and solving for the parameter $\theta$? I can see this being useful for models with a low amount of parameters and nice/invertible moments but I can see it being difficult to apply for models with a large amount of parameters and/or complicated moments. Is there a method to overcome this issue or is it a non issue in practice?
+
+\question This method of moment estimators have a known bias and I find it interesting that this is due to the method estimation is connected to differencing. After the talk on Principle Irregular Term and the connection to differencing and analytic functions, I feel like I have a better understanding of why this bias occurs and the other issues that can arise from certain types of model specification. 
+
+\question If we do a blocking method, is there a way to determine the optimal block size? Optimal in the sense of if we know information on the data and a heuristic over the long range dependencies, can we determine the optimal block size to use for the blocking method? Also how does this interact with the computationally optimal block size?
+
+\question I find it so interesting that fischer information is connected here. I realized that it is well connected to the concepts of likelihood but this realization has sparked me to consider the physics approach, specifically lagrangian approach, as to how might this data be generated with the least amount of action. I am not sure if this is a useful line of thought but it is interesting to consider 
+
+\question If it is known that irregularity in sampling helps into inform smoothness, is it possible to use this to our advantage in a case with only evenly spaced data? For example, if we have evenly spaced data, we could bootstrap the data and then add some noise to the bootstrapped data and create multiple irregularly spaced datasets that we can then use to inform the smoothness of the data. 
+
+
+
+\end{questions}
+
+\end{document}

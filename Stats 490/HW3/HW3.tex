@@ -1,0 +1,467 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Experimental Design - Stats 490}
+\newcommand{\assignment}{Homework 3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+\question 4.8 A chemist wishes to test the effect of four chemical agents on the strength of a particular type of cloth. Because there might be variability from one bolt to another, the chemist decides to use a randomized block design, with the bolts of cloth considered as blocks. She selects five bolts and applies all four chemicals in random order to each bolt. The resulting tensile strengths follow:
+
+\begin{center}
+\begin{tabular}{c|ccccc}
+\hline
+Chemical & \multicolumn{5}{c}{Bolt} \\
+        & 1 & 2 & 3 & 4 & 5 \\
+\hline
+1 & 73 & 67 & 72 & 78 & 71 \\
+2 & 68 & 73 & 70 & 73 & 75 \\
+3 & 74 & 67 & 75 & 68 & 75 \\
+4 & 71 & 75 & 68 & 73 & 69 \\
+\hline
+\end{tabular}
+\end{center}
+
+Analyze the data from this experiment using $\alpha = 0.05$ and draw appropriate conclusions.
+
+\begin{solution}
+We treat chemical as the treatment factor with four levels and bolt as a blocking factor with five levels in a randomized complete block design. The usual additive model is
+\[
+Y_{ij} = \mu + \tau_i + \beta_j + \varepsilon_{ij},
+\]
+where $Y_{ij}$ is tensile strength for chemical $i$ on bolt $j$, $\tau_i$ is the chemical effect, $\beta_j$ is the block (bolt) effect, and $\varepsilon_{ij}$ are independent normal errors with mean $0$ and common variance $\sigma^2$. The hypotheses for chemicals are
+\[
+H_0: \tau_1 = \tau_2 = \tau_3 = \tau_4 \quad\text{vs.}\quad H_a:\text{ at least one }\tau_i\text{ differs}.
+\]
+
+The ANOVA table from fitting this model is
+\[
+\begin{array}{lcccc}
+\hline
+\text{Source} & \text{Df} & \text{Sum Sq} & \text{Mean Sq} & F \\
+\hline
+\text{Chemical} & 3 & 2.55 & 0.85 & 0.059 \\
+\text{Bolt} & 4 & 16.00 & 4.00 & 0.277 \\
+\text{Error} & 12 & 173.20 & 14.43 & \\
+\hline
+\end{array}
+\]
+with $p$–values $0.980$ for chemicals and $0.887$ for bolts. At $\alpha = 0.05$ we do not reject $H_0$ for chemicals, and we also see no evidence that bolts differ. There is no statistically significant effect of chemical on tensile strength after accounting for block-to-block variability.
+
+The sample means by chemical are
+\[
+\bar{y}_{1\cdot} = 72.2,\quad
+\bar{y}_{2\cdot} = 71.8,\quad
+\bar{y}_{3\cdot} = 71.8,\quad
+\bar{y}_{4\cdot} = 71.2
+\]
+with sample standard deviations $3.96$, $2.77$, $3.96$, and $2.86$, respectively. Pairwise comparisons using Tukey’s method give very wide intervals that all contain zero; for example, the estimated difference for chemical $2$ minus $1$ is $-0.4$ with a 95\% familywise confidence interval $(-7.53,\,6.73)$ and adjusted $p$–value $0.998$. All other chemical differences have similarly large $p$–values (all above $0.97$), so none of the chemicals differs significantly from the others in mean tensile strength.
+
+The residual plot versus fitted values shows a fairly random scatter around zero with no strong pattern or funnel shape, so the constant variance assumption looks reasonable. The normal Q–Q plot is roughly linear with only mild deviations in the tails, so the normality assumption is acceptable for these data. Boxplots and the mean–with–95\%–CI plot by chemical show very similar centers and overlapping intervals for all four chemicals, which agrees with the nonsignificant ANOVA and multiple comparisons. Based on this analysis, any of the four chemical agents appears to give roughly the same tensile strength for this cloth, and there is no practical evidence to prefer one chemical over the others on the basis of mean strength alone.
+\end{solution}
+
+\question 4.13 A consumer products company relies on direct mail marketing pieces as a major component of its advertising campaigns. The company has three different designs for a new brochure and wants to evaluate their effectiveness, as there are substantial differences in costs between the three designs. The company decides to test the three designs by mailing 5000 samples of each to potential customers in four different regions of the country. Since there are known regional differences in the customer base, regions are considered as blocks. The number of responses to each mailing is as follows.
+
+\begin{center}
+\begin{tabular}{c|cccc}
+\hline
+Design & NE & NW & SE & SW \\
+\hline
+1 & 250 & 350 & 219 & 375 \\
+2 & 400 & 525 & 390 & 580 \\
+3 & 275 & 340 & 200 & 310 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[(a)]
+\item Analyze the data from this experiment.
+\item Use the Fisher LSD method to make comparisons among the three designs to determine specifically which designs differ in the mean response rate.
+\item Analyze the residuals from this experiment.
+\end{enumerate}
+
+\begin{solution}
+We treat brochure design as the treatment factor with three levels and region (NE, NW, SE, SW) as a blocking factor in a randomized complete block design. The additive model is
+\[
+Y_{ij} = \mu + \tau_i + \beta_j + \varepsilon_{ij},
+\]
+where $Y_{ij}$ is the number of responses for design $i$ in region $j$, $\tau_i$ is the design effect, $\beta_j$ is the region effect, and $\varepsilon_{ij}$ are independent normal errors with mean $0$ and variance $\sigma^2$. For designs we test
+\[
+H_0: \tau_1 = \tau_2 = \tau_3 \quad\text{vs.}\quad H_a:\text{ at least one }\tau_i\text{ differs}.
+\]
+
+The ANOVA for this model is
+\[
+\begin{array}{lcccc}
+\hline
+\text{Source} & \text{Df} & \text{Sum Sq} & \text{Mean Sq} & F \\
+\hline
+\text{Design} & 2 & 90755 & 45378 & 50.15 \\
+\text{Region} & 3 & 49036 & 16345 & 18.07 \\
+\text{Error} & 6 & 5429 & 905 & \\
+\hline
+\end{array}
+\]
+with $p$–values $0.00018$ for design and $0.00208$ for region. At $\alpha=0.05$ we strongly reject $H_0$ for designs, so the mean response rates are not all equal. Regions also have a significant effect, which justifies including them as blocks.
+
+The sample means (responses per 5000 mailed pieces) by design are
+\[
+\bar{y}_{1\cdot} = 298.0,\qquad
+\bar{y}_{2\cdot} = 474.25,\qquad
+\bar{y}_{3\cdot} = 281.25,
+\]
+with corresponding sample standard deviations $75.7$, $93.8$, and $60.3$. Mean responses by region are $\bar{y}_{\cdot,\text{NE}} = 308.3$, $\bar{y}_{\cdot,\text{NW}} = 405.0$, $\bar{y}_{\cdot,\text{SE}} = 270.0$, and $\bar{y}_{\cdot,\text{SW}} = 421.7$, again showing noticeable regional differences. Overall, design 2 has the highest mean response, followed by design 1, and design 3 has the lowest mean.
+
+For Fisher’s LSD, we use pairwise $t$–tests with the pooled error variance from ANOVA. The pairwise $p$–values are
+\[
+p_{2,1} = 0.0111,\quad
+p_{3,1} = 0.7610,\quad
+p_{3,2} = 0.0067.
+\]
+At $\alpha = 0.05$ we conclude that design 2 has a significantly higher mean response than both designs 1 and 3, while designs 1 and 3 do not differ significantly from each other. Tukey’s method leads to the same pattern: for example, the estimated difference for design 2 minus 1 is $175.25$ responses with a 95\% Tukey interval $(109.99,\;240.51)$ and adjusted $p$–value $0.00042$, whereas the interval for design 3 minus 1 is $(-82.51,\;48.01)$ with adjusted $p=0.71$.
+
+The residuals versus fitted plot shows points scattered around zero with no obvious trend or funnel shape, so there is no strong evidence of nonconstant variance. The normal Q–Q plot is roughly linear in the middle, although the two most extreme residuals deviate from the line, which is not surprising given the small error degrees of freedom; overall normality looks acceptable. Boxplots and the mean–with–95\%–CI plot by design show design 2 clearly higher than designs 1 and 3, whose intervals overlap. The interaction plot of region by design has nearly parallel lines, suggesting no serious interaction between region and design, so the additive block model appears reasonable.
+
+From a practical standpoint, design 2 generates the largest response rate and is significantly better than designs 1 and 3, while designs 1 and 3 perform similarly. If cost differences are not prohibitive, the company should favor design 2 for future mailings.
+\end{solution}
+
+
+\question 4.19 An aluminum master alloy manufacturer produces grain refiners in ingot form. The company produces the product in four furnaces. Each furnace is known to have its own unique operating characteristics, so any experiment run in the foundry that involves more than one furnace will consider furnaces as a nuisance variable. The process engineers suspect that stirring rate affects the grain size of the product. Each furnace can be run at four different stirring rates. A randomized block design is run for a particular refiner, and the resulting grain size data are as follows.
+
+\begin{center}
+\begin{tabular}{c|cccc}
+\hline
+Stirring rate (rpm) & \multicolumn{4}{c}{Furnace} \\
+ & 1 & 2 & 3 & 4 \\
+\hline
+5  & 8  & 4 & 5 & 6 \\
+10 & 14 & 5 & 6 & 9 \\
+15 & 14  & 6 & 9 & 2 \\
+20 & 17 & 9 & 3 & 6 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[(a)]
+\item Is there any evidence that stirring rate affects grain size?
+\item Graph the residuals from this experiment on a normal probability plot. Interpret this plot.
+\item Plot the residuals versus furnace and stirring rate. Does this plot convey any useful information?
+\item What should the process engineers recommend concerning the choice of stirring rate and furnace for this particular grain refiner if small grain size is desirable?
+\end{enumerate}
+
+\begin{solution}
+We model grain size using a randomized complete block design with stirring rate as the treatment factor and furnace as the block. The additive model is
+\[
+Y_{ij} = \mu + \tau_i + \beta_j + \varepsilon_{ij},
+\]
+where $Y_{ij}$ is the grain size at rate $i$ in furnace $j$, $\tau_i$ is the effect of stirring rate, $\beta_j$ is the furnace effect, and $\varepsilon_{ij}$ are independent normal errors with mean $0$ and variance $\sigma^2$. To test whether rate matters we use
+\[
+H_0:\tau_1=\tau_2=\tau_3=\tau_4 \quad\text{vs.}\quad H_a:\text{at least one }\tau_i\text{ differs}.
+\]
+
+The ANOVA output for the model $\text{grain} \sim \text{stir} + \text{furnace}$ is
+\[
+\begin{array}{lcccc}
+\hline
+\text{Source} & \text{Df} & \text{Sum Sq} & \text{Mean Sq} & F \\
+\hline
+\text{Stirring rate} & 3 & 39.69 & 13.23 & 0.988 \\
+\text{Furnace}        & 3 & 72.69 & 24.23 & 1.809 \\
+\text{Error}          & 9 & 120.56 & 13.40 & \\
+\hline
+\end{array}
+\]
+with $p$–values $0.441$ for stirring rate and $0.216$ for furnace. At $\alpha = 0.05$ we do not reject $H_0$ for either factor, so there is no statistically significant evidence that mean grain size depends on stirring rate, and no strong evidence of systematic differences among furnaces.
+
+The sample means (based on four observations per rate) are
+\[
+\bar{y}_{5} = 5.75,\quad
+\bar{y}_{10} = 8.50,\quad
+\bar{y}_{15} = 5.25,\quad
+\bar{y}_{20} = 8.75,
+\]
+with corresponding sample standard deviations $1.71$, $4.04$, $2.99$, and $6.02$. Furnace means are $10.8$, $6.0$, $5.75$, and $5.75$ for furnaces 1–4, with standard deviations $5.85$, $2.16$, $2.50$, and $2.87$, respectively. These summaries suggest some numerical differences, but the variability within cells (pooled error mean square $13.40$) is large enough that the ANOVA cannot distinguish the rates or furnaces at the 5\% level.
+
+For the residual analysis, the normal Q–Q plot of residuals is roughly linear, with only mild deviations in the extreme tails, so the normality assumption seems reasonable. The residuals–versus–fitted plot shows points scattered around zero without a clear trend, and the spread of residuals is fairly similar across the range of fitted grain sizes, which supports the constant-variance assumption. Boxplots of residuals by furnace and by stirring rate show somewhat larger spread for furnace 1 and for the higher stirring rates, but there are no strong outliers or systematic shifts in center, so there is no obvious violation of the ANOVA assumptions.
+
+For practical recommendations, small grain size is desirable, and the sample means are lowest at 15 rpm (mean 5.25) and 5 rpm (mean 5.75), while 10 and 20 rpm give larger means around 8.5–8.75. However, the ANOVA results show that these differences are not statistically significant at $\alpha = 0.05$, given the limited data. A conservative recommendation is that any of the four stirring rates is acceptable for this refiner, with a slight practical preference for 15 rpm (and possibly 5 rpm) if the engineers want to bias toward the smallest observed mean grain size, recognizing that this preference is not supported by strong statistical evidence. There is no compelling reason from these data to favor any particular furnace.
+\end{solution}
+
+\question 4.28 An industrial engineer is investigating the effect of four assembly methods (A, B, C, D) on the assembly time for a color television component. Four operators are selected for the study. Furthermore, the engineer knows that each assembly method produces such fatigue that the time required for the last assembly may be greater than the time required for the first, regardless of the method. That is, a trend develops in the required assembly time. To account for this source of variability, the engineer uses the Latin square design that follows. Analyze the data from this experiment ($\alpha = 0.05$) and draw appropriate conclusions.
+
+\begin{center}
+\begin{tabular}{c|cccc}
+\hline
+Order of assembly & \multicolumn{4}{c}{Operator} \\
+ & 1 & 2 & 3 & 4 \\
+\hline
+1 & C = 10 & D = 14 & A = 7 & B = 8 \\
+2 & B = 7  & C = 18 & D = 11 & A = 8 \\
+3 & A = 5  & B = 10 & C = 11 & D = 9 \\
+4 & D = 10 & A = 10 & B = 12 & C = 14 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{solution}
+We use a $4\times4$ Latin square design with assembly method as the treatment
+factor and operator and order of assembly as the two blocking factors. The additive
+model is
+\[
+Y_{ijk} = \mu + \tau_i + \alpha_j + \beta_k + \varepsilon_{ijk},
+\]
+where $Y_{ijk}$ is the assembly time observed with method $i$, operator $j$, and
+order $k$, $\tau_i$ is the method effect, $\alpha_j$ is the operator effect,
+$\beta_k$ is the order effect, and $\varepsilon_{ijk}$ are independent normal
+errors with mean $0$ and variance $\sigma^2$. The main hypotheses of interest are
+\[
+H_0:\tau_A = \tau_B = \tau_C = \tau_D
+\quad\text{vs.}\quad
+H_a:\text{at least one }\tau_i\text{ differs}.
+\]
+
+The Latin square ANOVA for the model
+\(\text{time} \sim \text{method} + \text{operator} + \text{order}\) is
+\[
+\begin{array}{lcccc}
+\hline
+\text{Source} & \text{Df} & \text{Sum Sq} & \text{Mean Sq} & F \\
+\hline
+\text{Method}   & 3 & 72.5 & 24.167 & 13.810 \\
+\text{Operator} & 3 & 18.5 &  6.167 &  3.524 \\
+\text{Order}    & 3 & 51.5 & 17.167 &  9.810 \\
+\text{Error}    & 6 & 10.5 &  1.750 &       \\
+\hline
+\end{array}
+\]
+with $p$–values $0.00421$ for method, $0.08852$ for operator, and $0.00993$ for
+order. At $\alpha = 0.05$ we reject $H_0$ for method and conclude that the assembly
+methods have different mean times. The order effect is also significant, providing
+evidence for the fatigue trend across the sequence of assemblies. The operator
+effect is not significant at $0.05$ (though the $p$–value is moderately small),
+so there is only limited evidence of systematic differences between operators in
+this small dataset.
+
+Sample means and standard deviations by method are
+\[
+\bar{y}_A = 7.50\ (sd = 2.08),\quad
+\bar{y}_B = 9.25\ (sd = 2.22),\quad
+\bar{y}_C = 13.25\ (sd = 3.59),\quad
+\bar{y}_D = 11.00\ (sd = 2.16).
+\]
+Thus A is the fastest on average, followed by B and D, and C is clearly the
+slowest. Operator means are $8.0$, $13.0$, $10.25$, and $9.75$ for operators 1–4,
+and order means are $9.75$, $11.0$, $8.75$, and $11.5$ for orders 1–4, the latter
+showing the anticipated increase in time later in the sequence.
+
+To see which methods differ, we used Fisher LSD and Tukey’s method. The pairwise
+$t$–tests (pooled error variance) give
+\[
+p_{A,B}=0.3582,\quad
+p_{A,C}=0.0085,\quad
+p_{A,D}=0.0802,\quad
+p_{B,C}=0.0495,\quad
+p_{B,D}=0.3582,\quad
+p_{C,D}=0.2428.
+\]
+At $\alpha = 0.05$ these results indicate that method C is significantly slower
+than both A and B, while A versus D and B versus D are not significant. Tukey’s
+procedure reaches similar conclusions: for example, the estimated difference
+$C-A$ is $5.75$ units with a 95\% Tukey interval $(2.51, 8.99)$ and adjusted
+$p = 0.00345$, and $D-A$ is $3.50$ with interval $(0.26, 6.74)$ and adjusted
+$p = 0.03635$, whereas the interval for $B-A$ includes zero and has adjusted
+$p = 0.33$. Overall, methods rank from fastest to slowest as A, B, D, and C, with
+C clearly worse than A and B and somewhat worse than D.
+
+Diagnostic plots support the model assumptions. The residuals–versus–fitted plot
+shows residuals scattered without obvious pattern and with roughly constant spread,
+so there is no strong evidence against homoscedasticity. The normal Q–Q plot is
+fairly linear, with only mild deviations in the tails, suggesting that the normality
+assumption is reasonable for these data.
+
+From an engineering standpoint, method A gives the shortest mean assembly time and
+is significantly faster than method C and also faster than D at the 5\% level
+under Tukey’s test. Methods B and D are intermediate and not significantly
+different from each other or from A in Fisher’s unadjusted comparisons, but they
+are both clearly better than C. Given that order has a significant effect, blocking
+on order was important to control the fatigue trend; operator differences are less
+pronounced. The engineer should recommend method A for production if speed is the
+main objective and avoid method C because it leads to substantially longer assembly
+times.
+\end{solution}
+
+\question 4.45 An engineer is studying the mileage performance characteristics of
+five types of gasoline additives. In the road test he wishes to use cars as blocks;
+however, because of a time constraint, he must use an incomplete block design.
+He runs the balanced design with the five blocks that follow.
+
+\begin{center}
+\begin{tabular}{c|ccccc}
+\hline
+Additive & \multicolumn{5}{c}{Car} \\
+ & 1 & 2 & 3 & 4 & 5 \\
+\hline
+1 &     & 17 & 14 & 13 & 12 \\
+2 & 14  & 14 & 13 &    & 10 \\
+3 & 12  &    & 13 & 12 &  9 \\
+4 & 13  & 11 & 11 & 12 &    \\
+5 & 11  & 12 & 10 &    &  8 \\
+\hline
+\end{tabular}
+\end{center}
+
+Analyze the data from this experiment (use $\alpha = 0.05$) and draw conclusions.
+  
+\begin{solution}
+We treat additive as the treatment factor with five levels and car as the blocking
+factor in a balanced incomplete block design. The intrablock additive–car model is
+\[
+Y_{ij} = \mu + \tau_i + \beta_j + \varepsilon_{ij},
+\]
+where $Y_{ij}$ is the observed mileage for additive $i$ in car $j$, $\tau_i$ is the
+additive effect, $\beta_j$ is the car effect, and $\varepsilon_{ij}$ are independent
+normal errors with mean $0$ and variance $\sigma^2$. To test for additive effects we use
+\[
+H_0:\tau_1 = \tau_2 = \tau_3 = \tau_4 = \tau_5
+\quad\text{vs.}\quad
+H_a:\text{at least one }\tau_i\text{ differs}.
+\]
+
+Fitting the intrablock model $\text{mileage} \sim \text{additive} + \text{car}$ gives
+the ANOVA
+\[
+\begin{array}{lcccc}
+\hline
+\text{Source} & \text{Df} & \text{Sum Sq} & \text{Mean Sq} & F \\
+\hline
+\text{Additive} & 4 & 31.70 & 7.925 & 8.761 \\
+\text{Car}      & 4 & 35.30 & 8.825 & 9.755 \\
+\text{Error}    &11 &  9.95 & 0.905 &       \\
+\hline
+\end{array}
+\]
+with $p$–values $0.00197$ for additive and $0.00128$ for car. Since both
+p–values are below $0.05$, we conclude that mean mileage differs among the additives
+and that cars also exhibit systematic differences; blocking on car was therefore
+useful.
+
+The sample means by additive are
+\[
+\bar y_1 = 14.0,\quad
+\bar y_2 = 12.75,\quad
+\bar y_3 = 11.50,\quad
+\bar y_4 = 11.75,\quad
+\bar y_5 = 10.25,
+\]
+with corresponding standard deviations approximately $2.16, 1.89, 1.73, 0.96,$ and
+$1.71$. Thus additive 1 has the largest mean mileage and additive 5 the smallest.
+Car means are about $12.5, 13.5, 12.2, 12.3,$ and $9.75$ for cars 1–5, respectively,
+showing that car 5 tends to give the lowest mileage while car 2 tends to be highest.
+
+To compare additives, we used Fisher’s LSD based on the intrablock error mean
+square. The LSD grouping places additive 1 alone in the highest group ``a''
+(mean $14.0$), additive 2 in group ``ab'' (mean $12.75$), additive 4 in group ``b''
+(mean $11.75$), additive 3 in group ``bc'' (mean $11.50$), and additive 5 in the
+lowest group ``c'' (mean $10.25$). In particular, additive 1 is significantly better
+than additive 5, and there is strong evidence that it outperforms several of the
+intermediate additives as well. Pairwise $t$–tests with pooled variance give, for
+example, $p \approx 0.008$ for the comparison of additive 1 versus 5.
+
+Residual diagnostics support the ANOVA assumptions. The residuals–versus–fitted
+plot shows no strong trend or change in spread, and the normal Q–Q plot is close
+to linear with only mild tail deviations, so the constant–variance and normality
+assumptions appear reasonable.
+
+From a practical standpoint, the data indicate that additive 1 produces the best
+mileage among the five additives, while additive 5 is worst, with additives 2–4
+intermediate. Because car effects are also significant, comparisons among additives
+should always adjust for car. If the engineer must choose a single additive on the
+basis of this experiment, additive 1 is the preferred choice for maximizing mileage.
+\end{solution}
+
+\question 4.47 Seven different hardwood concentrations are being studied to
+determine their effect on the strength of the paper produced. However, the pilot
+plant can only produce three runs each day. As days may differ, the analyst uses
+the BIBD that follows. Analyze the data from this experiment (use $\alpha = 0.05$)
+and draw conclusions.
+
+
+\begin{solution}
+We analyze this as a balanced incomplete block design with hardwood concentration
+as the treatment factor (seven levels: $2,4,6,8,10,12,14\%$) and day as the blocking
+factor (seven days, three runs per day). The intrablock additive model is
+\[
+Y_{ij} = \mu + \tau_i + \beta_j + \varepsilon_{ij},
+\]
+where $Y_{ij}$ is paper strength for concentration $i$ on day $j$, $\tau_i$ is the
+concentration effect, $\beta_j$ is the day effect, and $\varepsilon_{ij}$ are
+independent $N(0,\sigma^2)$ errors. To test for concentration effects we use
+\[
+H_0:\tau_2 = \tau_4 = \tau_6 = \tau_8 = \tau_{10} = \tau_{12} = \tau_{14}
+\quad\text{vs.}\quad
+H_a:\text{at least one }\tau_i\text{ differs}.
+\]
+
+Fitting the intrablock model $\text{strength} \sim \text{conc} + \text{day}$ gives the
+ANOVA
+\[
+\begin{array}{lcccc}
+\hline
+\text{Source}       & \text{Df} & \text{Sum Sq} & \text{Mean Sq} & F \\ \hline
+\text{Concentration} & 6 & 2037.6 & 339.6 & 16.115 \\
+\text{Day}           & 6 &  394.1 &  65.7 &  3.117 \\
+\text{Error}         & 8 &  168.6 &  21.1 &       \\
+\hline
+\end{array}
+\]
+with $p$–values $0.000451$ for concentration and $0.070$ for day. Since
+$0.000451 < 0.05$, we reject $H_0$ and conclude that hardwood concentration has a
+strong effect on mean paper strength at $\alpha = 0.05$. The day effect is not
+significant at the 5\% level, so blocking on day absorbs only a modest amount of
+variability.
+
+The sample means by concentration (in percent hardwood) are
+\[
+\bar y_{2} = 117.0,\quad
+\bar y_{4} = 121.7,\quad
+\bar y_{6} = 129.3,\quad
+\bar y_{8} = 139.7,\quad
+\bar y_{10} = 146.0,\quad
+\bar y_{12} = 120.3,\quad
+\bar y_{14} = 131.0.
+\]
+Thus strength tends to increase as concentration rises from $2\%$ up to about
+$8$–$10\%$, with $10\%$ giving the largest mean strength, while $2\%$ and $12\%$
+have the lowest means.
+
+To compare individual concentrations we used Fisher’s LSD based on the intrablock
+error mean square. The LSD grouping places 10\% and 8\% together in the top group
+``a'', 14\% and 6\% in intermediate groups, and 4\%, 12\%, and 2\% in lower groups.
+In particular, 8–10\% are clearly better than 2\% and 12\% in terms of mean paper
+strength.
+
+Residual diagnostics support the ANOVA assumptions. The residuals–versus–fitted
+plot shows no strong trend or change in spread, and the normal Q–Q plot is close
+to linear with only mild tail deviations, so the constant–variance and normality
+assumptions appear reasonable for these data.
+
+From a practical standpoint, hardwood concentrations around 8–10\% produce the
+highest paper strengths in this experiment, with 10\% slightly best on average,
+whereas very low concentration (2\%) and some higher levels such as 12\% give
+noticeably lower strength. Since day is not significant at $\alpha=0.05$, day–to–
+day variation is relatively small compared with the concentration effect. If the
+goal is to maximize paper strength, the analyst should recommend using a hardwood
+concentration in the 8–10\% range.
+\end{solution}
+
+\end{questions}
+
+\end{document}

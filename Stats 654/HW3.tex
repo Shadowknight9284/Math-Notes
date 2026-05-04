@@ -1,0 +1,584 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Stat 654}
+\newcommand{\assignment}{Homework 3}
+\author{\name}
+\title{\course\ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\begin{questions}
+
+\question Stopping a submartingale or supermartingale
+
+Let \((X_n)_{n \ge 0}\) be an integrable process adapted to a filtration \((\mathcal{F}_n)_{n \ge 0}\), and let \(\tau\) be an \((\mathcal{F}_n)\)-stopping time. Define the stopped process
+\[
+Y_n = X_{\tau \wedge n}, \quad n \ge 0.
+\]
+Assume \((X_n)_{n \ge 0}\) is a sub/supermartingale with respect to \((\mathcal{F}_n)_{n \ge 0}\). Show that \((Y_n)_{n \ge 0}\) is also a submartingale with respect to \((\mathcal{F}_n)_{n \ge 0}\).
+
+\medskip
+
+\textit{Hint:} You may find it helpful to write
+\[
+Y_{n+1} = X_{\tau} \mathbf{1}_{\{\tau \le n\}} + X_{n+1} \mathbf{1}_{\{\tau > n\}}.
+\]
+Also note that \(\{\tau > n\} \in \mathcal{F}_n\) since \(\tau\) is a stopping time. 
+
+\begin{solution}
+Let $(X_n)_{n\ge 0}$ be an integrable process adapted to $(\mathcal{F}_n)_{n\ge 0}$, and let $\tau$ be a stopping time with respect to $(\mathcal{F}_n)$. Define $Y_n = X_{\tau \wedge n}$ for $n \ge 0$. Assume $(X_n)$ is a submartingale with respect to $(\mathcal{F}_n)$. We show that $(Y_n)$ is also a submartingale.
+
+\medskip
+
+\textbf{Step 1: Adaptedness and integrability.}
+For each $n$, the random time $\tau \wedge n$ only takes values in $\{0,1,\dots,n\}$, and $\{\tau \wedge n = k\} \in \mathcal{F}_n$ for all $k \le n$ because $\tau$ is a stopping time. Also $X_k$ is $\mathcal{F}_k$-measurable and hence $\mathcal{F}_n$-measurable for $k \le n$. Thus
+\[
+Y_n 
+= X_{\tau \wedge n}
+= \sum_{k=0}^n X_k \, \mathbf{1}_{\{\tau \wedge n = k\}}
+\]
+is $\mathcal{F}_n$-measurable, so $(Y_n)$ is adapted. Moreover,
+\[
+|Y_n|
+= \bigg|\sum_{k=0}^n X_k \, \mathbf{1}_{\{\tau \wedge n = k\}}\bigg|
+\le \sum_{k=0}^n |X_k| \, \mathbf{1}_{\{\tau \wedge n = k\}},
+\]
+hence by monotonicity of expectation and integrability of each $X_k$,
+\[
+\mathbb{E}|Y_n|
+\le \sum_{k=0}^n \mathbb{E}\big[|X_k| \, \mathbf{1}_{\{\tau \wedge n = k\}}\big]
+\le \sum_{k=0}^n \mathbb{E}|X_k|
+< \infty.
+\]
+Therefore $Y_n$ is integrable for each $n$.
+
+\medskip
+
+\textbf{Step 2: Submartingale property.}
+We need to show
+\[
+\mathbb{E}[Y_{n+1} \mid \mathcal{F}_n] \ge Y_n \quad \text{a.s. for all } n.
+\]
+Using the hint, write
+\[
+Y_{n+1} = X_\tau \mathbf{1}_{\{\tau \le n\}} + X_{n+1} \mathbf{1}_{\{\tau > n\}}.
+\]
+Similarly,
+\[
+Y_n = X_\tau \mathbf{1}_{\{\tau \le n\}} + X_n \mathbf{1}_{\{\tau > n\}}.
+\]
+Since $\{\tau > n\} \in \mathcal{F}_n$ (because $\tau$ is a stopping time), we have
+\[
+\mathbb{E}[Y_{n+1} \mid \mathcal{F}_n]
+= \mathbb{E}\big[X_\tau \mathbf{1}_{\{\tau \le n\}} + X_{n+1} \mathbf{1}_{\{\tau > n\}} \,\big|\, \mathcal{F}_n\big].
+\]
+On $\{\tau \le n\}$, we have $\tau \wedge (n+1) = \tau \wedge n = \tau$, so $Y_{n+1} = Y_n = X_\tau$ there, and thus
+\[
+\mathbb{E}[Y_{n+1} \mid \mathcal{F}_n] = X_\tau = Y_n \quad \text{on } \{\tau \le n\}.
+\]
+
+On $\{\tau > n\}$, we have $\tau \wedge (n+1) = n+1$ and $\tau \wedge n = n$, so $Y_{n+1} = X_{n+1}$ and $Y_n = X_n$ on this event. Using the submartingale property of $(X_n)$,
+\[
+\mathbb{E}[X_{n+1} \mid \mathcal{F}_n] \ge X_n,
+\]
+and since $\mathbf{1}_{\{\tau > n\}}$ is $\mathcal{F}_n$-measurable, we obtain
+\[
+\mathbb{E}[X_{n+1} \mathbf{1}_{\{\tau > n\}} \mid \mathcal{F}_n]
+= \mathbf{1}_{\{\tau > n\}} \mathbb{E}[X_{n+1} \mid \mathcal{F}_n]
+\ge \mathbf{1}_{\{\tau > n\}} X_n.
+\]
+Therefore,
+\[
+\mathbb{E}[Y_{n+1} \mid \mathcal{F}_n]
+= X_\tau \mathbf{1}_{\{\tau \le n\}} + 
+\mathbb{E}[X_{n+1} \mathbf{1}_{\{\tau > n\}} \mid \mathcal{F}_n]
+\ge X_\tau \mathbf{1}_{\{\tau \le n\}} + X_n \mathbf{1}_{\{\tau > n\}}
+= Y_n.
+\]
+
+\medskip
+
+Combining the above, $(Y_n)_{n\ge 0}$ is adapted, integrable, and satisfies
+\(\mathbb{E}[Y_{n+1} \mid \mathcal{F}_n] \ge Y_n\) for all $n$, hence $(Y_n)$ is a submartingale with respect to $(\mathcal{F}_n)$.
+\end{solution}
+
+\newpage
+
+\question Galton--Watson process
+
+Let \(\xi_i^n\) be i.i.d.\ nonnegative integer-valued random variables. Define a sequence \((Z_n)_{n \ge 0}\) by \(Z_0 = 1\) and
+\[
+Z_{n+1} =
+\begin{cases}
+\xi^{n+1}_1 + \xi^{n+1}_2 + \cdots + \xi^{n+1}_{Z_n}, & \text{if } Z_n > 0,\\[0.3em]
+0, & \text{otherwise}.
+\end{cases}
+\]
+The process \((Z_n)_{n \ge 0}\) is called a Galton--Watson process. The idea is that \(Z_n\) is the number of individuals in the \(n\)-th generation, and each member of the \(n\)-th generation gives birth independently to an identically distributed number of children. Let
+\[
+p_k = \mathbb{P}(\xi_i^n = k), \quad k = 0,1,2,\dots,
+\]
+be the offspring distribution.
+
+\begin{parts}
+\part Let \(\mu\) be the mean of the offspring distribution. Prove that \(Z_n / \mu^n\) is a martingale.
+\part Prove \(Z_n / \mu^n\) converges to a limiting random variable \(X_\infty\) almost surely. (Proof should be just one sentence.)
+\part Prove that the extinction probability, that is
+\[
+\mathbb{P}(Z_n = 0 \text{ for some } n),
+\]
+equals \(1\) if \(\mu < 1\).
+\part Prove also that the extinction probability equals \(1\) if \(\mu = 1\) and \(p_1 < 1\). (Hint: Now we know \(Z_n \to X_\infty\) almost surely, meanwhile \(X_\infty\) must be integer-valued as \(Z_n\) are integer-valued. Then try to use \(p_1 < 1\) to argue \(Z_n\) cannot converge to any positive integer value.)
+\end{parts} 
+
+\begin{solution}
+Let $(\xi_i^n)$ be i.i.d.\ nonnegative integer-valued random variables with mean
+\[
+\mu = \sum_{k=0}^\infty k\,p_k, \qquad p_k = \mathbb{P}(\xi_i^n = k),
+\]
+and let $(Z_n)_{n\ge 0}$ be the Galton--Watson process defined by $Z_0 = 1$ and
+\[
+Z_{n+1} =
+\begin{cases}
+\xi^{n+1}_1 + \cdots + \xi^{n+1}_{Z_n}, & Z_n > 0,\\
+0, & Z_n = 0.
+\end{cases}
+\]
+We write $\mathcal{F}_n = \sigma(Z_0,\dots,Z_n)$ for the natural filtration.
+
+\medskip
+
+\textbf{(a) $Z_n/\mu^n$ is a martingale.}
+We first compute the conditional expectation of $Z_{n+1}$ given $\mathcal{F}_n$.
+If $Z_n = k>0$, then
+\[
+Z_{n+1} = \sum_{i=1}^{k} \xi^{n+1}_i,
+\]
+where the $\xi^{n+1}_i$ are i.i.d.\ with mean $\mu$, independent of $\mathcal{F}_n$. Hence
+\[
+\mathbb{E}[Z_{n+1} \mid \mathcal{F}_n]
+= \mathbb{E}[Z_{n+1} \mid Z_n]
+= \mu Z_n.
+\]
+If $Z_n = 0$, then by definition $Z_{n+1} = 0$ and the same identity still holds. Therefore
+\[
+\mathbb{E}\Big[\frac{Z_{n+1}}{\mu^{n+1}} \,\Big|\, \mathcal{F}_n\Big]
+= \frac{1}{\mu^{n+1}}\,\mathbb{E}[Z_{n+1} \mid \mathcal{F}_n]
+= \frac{\mu Z_n}{\mu^{n+1}}
+= \frac{Z_n}{\mu^n}.
+\]
+Since $Z_n$ is integrable for each $n$, it follows that
+\[
+M_n := \frac{Z_n}{\mu^n}, \qquad n\ge 0,
+\]
+is a martingale with respect to $(\mathcal{F}_n)$.
+
+\medskip
+
+\textbf{(b) Almost sure convergence of $Z_n/\mu^n$.}
+The process $(M_n)$ is nonnegative and integrable, so it is a nonnegative martingale.
+By the martingale convergence theorem for nonnegative martingales, there exists
+a finite random variable $X_\infty$ such that
+\[
+M_n = \frac{Z_n}{\mu^n} \;\longrightarrow\; X_\infty
+\quad \text{almost surely as } n\to\infty.
+\]
+
+\medskip
+
+\textbf{(c) Extinction probability is 1 when $\mu<1$.}
+Let
+\[
+\mathcal{E} := \{ Z_n = 0 \text{ for some } n\}
+\]
+denote the extinction event. Since $M_n$ is a nonnegative martingale, the martingale convergence theorem implies that $M_n \to X_\infty$ almost surely for some almost surely finite random variable $X_\infty$.
+
+On $\mathcal{E}$ the process eventually hits $0$ and stays there, so $Z_n=0$ for all large
+$n$, and thus $M_n = Z_n/\mu^n \to 0$. Hence $X_\infty = 0$ on $\mathcal{E}$.
+On $\mathcal{E}^c$, the process never hits $0$, so $Z_n \ge 1$ for all $n$. If $\mu<1$,
+then $\mu^{-n}\to\infty$, and therefore on any path with $Z_n \ge 1$ for all $n$ we have
+\[
+M_n = \frac{Z_n}{\mu^n} \;\ge\; \mu^{-n} \;\longrightarrow\; \infty \quad \text{as } n\to\infty,
+\]
+which contradicts the finiteness of $X_\infty$.
+Therefore $\mathbb{P}(\mathcal{E}^c)=0$, i.e.
+\[
+\mathbb{P}(Z_n = 0 \text{ for some } n) = 1
+\qquad\text{when }\mu < 1.
+\]
+
+\medskip
+
+\textbf{(d) Extinction probability is 1 when $\mu=1$ and $p_1<1$.}
+Now assume $\mu = 1$. Then the martingale in part (a) simplifies to
+\[
+M_n = \frac{Z_n}{\mu^n} = Z_n.
+\]
+By the martingale convergence theorem, $(Z_n)$ converges almost surely to some limit
+$X_\infty$. Since each $Z_n$ is integer-valued and the convergence is almost sure,
+$X_\infty$ must be integer-valued as well.
+
+Let again $\mathcal{E}$ be the extinction event. On $\mathcal{E}$, once $Z_n$ hits $0$
+it stays at $0$, so $Z_n\to 0$ and hence $X_\infty=0$ on $\mathcal{E}$. On the
+complement $\mathcal{E}^c$, the process never hits $0$, so if it converges we must have
+$X_\infty = k$ for some integer $k\ge 1$ on $\mathcal{E}^c$.
+
+Suppose for contradiction that $\mathbb{P}(X_\infty \ge 1) > 0$, so there exists
+$k\ge 1$ with $\mathbb{P}(X_\infty = k)>0$. On the event $\{X_\infty = k\}$, the sequence $(Z_n)$ takes values in $\mathbb{Z}_+$ and converges to $k$, so there is a (random) $N$ such that $Z_n = k$ for all $n\ge N$; that is, from time $N$ onward the population size stays forever equal to $k$.
+
+However, since $p_1<1$, we have $q := \mathbb{P}(\xi \neq 1) > 0$. Conditional on $Z_n = k$, the $k$ offspring variables in generation $n+1$ are i.i.d., so
+\[
+\mathbb{P}(Z_{n+1} = k \mid Z_n = k)
+= \mathbb{P}(\xi_1 + \cdots + \xi_k = k)
+\le \mathbb{P}(\xi_1 = \cdots = \xi_k = 1)
+= (1-q)^k < 1.
+\]
+Hence there exists a constant $c>0$, depending only on $k$, such that
+\[
+\mathbb{P}(Z_{n+1} \neq k \mid Z_n = k) \ge c \quad \text{for all } n.
+\]
+Conditioned on $Z_N = k$, the probability that $Z_n = k$ for all $n \ge N$ is therefore at most
+\[
+\prod_{m=N}^{\infty} (1-c) = 0.
+\]
+Thus the probability of staying forever at $k$ is zero, which contradicts $\mathbb{P}(X_\infty = k)>0$. Consequently $\mathbb{P}(X_\infty \ge 1)=0$, so $X_\infty = 0$ almost surely, and the extinction probability equals $1$ when $\mu = 1$ and $p_1<1$.
+\end{solution}
+
+\newpage
+
+\question Concentration of the number of isolated vertices in \(G(n,p)\)
+
+Let \(G \sim G(n,p)\) be an Erd\H{o}s--R\'enyi random graph on \(n\) vertices (each pair is connected independently with probability \(p\)), and let
+\[
+I(G) = \text{number of isolated vertices in } G.
+\]
+Apply McDiarmid's inequality to prove a concentration inequality for \(I(G)\).
+
+\medskip
+
+\textit{Hint:} Write the edges as \(e_1,\dots,e_m\), where \(m = \binom{n}{2}\). Let
+\[
+X_i = \mathbf{1}_{\{e_i \text{ is present}\}}, \quad i = 1,\dots,m.
+\]
+Then the random variables \(X_1,\dots,X_m\) are independent, and \(I\) is a function of all the \(X_i\), i.e.,
+\[
+I(G) = f(X_1,\dots,X_m).
+\] 
+
+\begin{solution}
+Let $G \sim G(n,p)$ and let $I(G)$ denote the number of isolated vertices in $G$.
+Label the $m = \binom{n}{2}$ possible edges as $e_1,\dots,e_m$, and define
+\[
+X_i = \mathbf{1}\{e_i \text{ is present}\}, \qquad i=1,\dots,m.
+\]
+Then $X_1,\dots,X_m$ are independent Bernoulli$(p)$ random variables, and the graph
+$G$ is a deterministic function of $(X_1,\dots,X_m)$. In particular, we can write
+\[
+I(G) = f(X_1,\dots,X_m)
+\]
+for some function $f:\{0,1\}^m \to \mathbb{R}$.
+
+\medskip
+
+We now verify the bounded-difference condition in McDiarmid's inequality.
+Consider two edge-configurations
+\[
+\mathbf{x} = (x_1,\dots,x_m), \quad \mathbf{x}' = (x_1,\dots,x_{i-1},x_i',x_{i+1},\dots,x_m)
+\]
+that differ only in coordinate $i$, i.e.\ we only change the status of a single edge
+$e_i = \{u,v\}$. All other edges remain the same. The only vertices whose degrees
+can change are $u$ and $v$, so the isolation status of any other vertex is unaffected.
+
+Changing the presence/absence of the single edge $e_i$ can affect the number of
+isolated vertices only through $u$ and $v$. In the worst case, both $u$ and $v$
+switch between isolated and non-isolated, so the total number of isolated vertices
+changes by at most $2$. Therefore, for any such $\mathbf{x},\mathbf{x}'$,
+\[
+\big| f(\mathbf{x}) - f(\mathbf{x}') \big| \le 2.
+\]
+Thus $f$ satisfies the bounded-difference condition with constants $c_i = 2$ for
+all $i = 1,\dots,m$.
+
+\medskip
+
+By McDiarmid's inequality, for any $t>0$,
+\[
+\mathbb{P}\!\left( I(G) - \mathbb{E}I(G) \ge t \right)
+\;\le\;
+\exp\!\left( -\frac{2 t^2}{\sum_{i=1}^m c_i^2} \right)
+=\exp\!\left( -\frac{2 t^2}{\sum_{i=1}^m 4} \right)
+=
+\exp\!\left( -\frac{t^2}{2m} \right),
+\]
+and the two-sided version gives
+\[
+\mathbb{P}\!\left( \big|I(G) - \mathbb{E}I(G)\big| \ge t \right)
+\;\le\;
+2\exp\!\left( -\frac{t^2}{2m} \right),
+\qquad m = \binom{n}{2}.
+\]
+This is the desired concentration inequality for the number of isolated vertices
+in $G(n,p)$ obtained via McDiarmid's inequality.
+\end{solution}
+
+\newpage
+
+\question A short coding assignment
+
+Write code to generate samples from the following Markov chain on \(\mathbb{R}^2\):
+\[
+X_{t+1} = A_{\theta_{t+1}} X_t + b_{\theta_{t+1}},
+\]
+where \((\theta_t)\) are i.i.d.\ with probabilities
+\[
+\mathbb{P}(\theta = 1) = 0.01,\quad
+\mathbb{P}(\theta = 2) = \mathbb{P}(\theta = 3) = 0.07,\quad
+\mathbb{P}(\theta = 4) = 0.85,
+\]
+and
+\[
+A_1 = \begin{pmatrix}0 & 0\\ 0 & 0.16\end{pmatrix},\quad
+A_2 = \begin{pmatrix}0.2 & -0.26\\ 0.23 & 0.22\end{pmatrix},\quad
+A_3 = \begin{pmatrix}-0.15 & 0.28\\ 0.26 & 0.24\end{pmatrix},\quad
+A_4 = \begin{pmatrix}0.85 & 0.04\\ -0.04 & 0.85\end{pmatrix},
+\]
+and
+\[
+b_1 = \begin{pmatrix}0\\ 0\end{pmatrix},\quad
+b_2 = \begin{pmatrix}0\\ 0.16\end{pmatrix},\quad
+b_3 = \begin{pmatrix}0\\ 0.44\end{pmatrix},\quad
+b_4 = \begin{pmatrix}0\\ 1.6\end{pmatrix}.
+\]
+Please attach the code and the scatter plot when the chain starts at the origin. 
+
+\begin{solution}
+We view $(X_t)_{t\ge0}$ as a time-homogeneous Markov chain on $\mathbb{R}^2$ with
+transition rule
+\[
+X_{t+1} = A_{\theta_{t+1}} X_t + b_{\theta_{t+1}},
+\]
+where $(\theta_t)_{t\ge1}$ are i.i.d.\ with
+\[
+\mathbb{P}(\theta_t = 1) = 0.01,\quad
+\mathbb{P}(\theta_t = 2) = \mathbb{P}(\theta_t = 3) = 0.07,\quad
+\mathbb{P}(\theta_t = 4) = 0.85,
+\]
+and
+\[
+A_1 = \begin{pmatrix}0 & 0\\ 0 & 0.16\end{pmatrix},\;
+A_2 = \begin{pmatrix}0.2 & -0.26\\ 0.23 & 0.22\end{pmatrix},\;
+A_3 = \begin{pmatrix}-0.15 & 0.28\\ 0.26 & 0.24\end{pmatrix},\;
+A_4 = \begin{pmatrix}0.85 & 0.04\\ -0.04 & 0.85\end{pmatrix},
+\]
+\[
+b_1 = \begin{pmatrix}0\\ 0\end{pmatrix},\;
+b_2 = \begin{pmatrix}0\\ 0.16\end{pmatrix},\;
+b_3 = \begin{pmatrix}0\\ 0.44\end{pmatrix},\;
+b_4 = \begin{pmatrix}0\\ 1.6\end{pmatrix}.
+\]
+Starting from $X_0 = (0,0)^\top$, a simulation proceeds as follows: for $t=0,1,\dots,T-1$,
+sample $\theta_{t+1}$ from $\{1,2,3,4\}$ with the above probabilities, then set
+$X_{t+1} = A_{\theta_{t+1}} X_t + b_{\theta_{t+1}}$ and store $X_{t+1}$.
+
+\begin{center}
+\includegraphics[scale = .3]{Figure_1.png}
+\end{center}
+
+\end{solution}
+
+\newpage
+
+\question Stationary distribution
+
+Consider a Markov chain on \(n\) states with transition matrix \(P\). We call \(P\) \emph{doubly stochastic} if all the columns of \(P\) sum to \(1\) (we know from the definition of transition matrix that every row of \(P\) sums to \(1\)). Calculate the stationary distribution if the transition matrix is doubly stochastic. 
+
+\begin{solution}
+Let $P$ be the transition matrix of a Markov chain on the finite state space
+$S = \{1,\dots,n\}$. Recall that a stationary distribution is a row vector
+$\pi = (\pi_1,\dots,\pi_n)$ with $\pi_i \ge 0$, $\sum_{i=1}^n \pi_i = 1$, and
+\[
+\pi P = \pi.
+\]
+
+We are told that $P$ is \emph{doubly stochastic}, meaning that in addition to
+each row summing to $1$ (the usual transition-matrix condition), each column
+also satisfies
+\[
+\sum_{i=1}^n P(i,j) = 1 \quad \text{for every } j=1,\dots,n.
+\]
+Consider the uniform distribution
+\[
+\pi_i = \frac{1}{n}, \qquad i=1,\dots,n.
+\]
+Then for each $j$,
+\[
+(\pi P)_j
+= \sum_{i=1}^n \pi_i P(i,j)
+= \frac{1}{n}\sum_{i=1}^n P(i,j)
+= \frac{1}{n}
+= \pi_j,
+\]
+where we used that each column sum equals $1$.
+Thus $\pi P = \pi$, so the uniform distribution is a stationary distribution
+for any doubly stochastic transition matrix $P$.
+\end{solution}
+
+\newpage
+
+\question Metropolis--Hastings for balancing covariates
+
+Assume we have a dataset \(X \in \mathbb{R}^{n \times p}\) consisting of \(2n\) units, each with \(p\) covariates. Our goal is to assign half of the \(2n\) units to the treatment group and the other half to the control group so that the two groups are balanced. In other words, we want to sample a treatment assignment \(W\) from the set
+\[
+\mathcal{W} = \left\{ W \in \{0,1\}^{2n} : \sum_{i=1}^{2n} W_i = n \right\}.
+\]
+Given an assignment \(W\), the Mahalanobis distance is defined as
+\[
+M(W) = (\bar{X}_t - \bar{X}_c)^\top S_{XX}^{-1} (\bar{X}_t - \bar{X}_c),
+\]
+where \(\bar{X}_t = \sum_{i:W_i=1} X_{i,\cdot}/n \in \mathbb{R}^p\) is the average over the treatment group, \(\bar{X}_c = \sum_{i:W_i=0} X_{i,\cdot}/n\), and
+\[
+S_{XX} = \frac{1}{2n-1} \sum_{i=1}^{2n} (X_i - \bar{X})(X_i - \bar{X})^\top
+\]
+is the empirical covariance matrix. To sample an assignment with a small Mahalanobis distance, Morgan and Rubin (``Rerandomization to improve covariate balance in experiments'', Ann.\ Statist., 2012) proposed a rejection sampling approach. Specifically, they fix a threshold \(a\), then repeatedly draw assignments independently and uniformly from $\mathcal{W}$ until obtaining one that satisfies \(M(W) \le a\). While convenient to implement, rejection sampling is known to suffer from the ``curse of dimensionality''. The rejection rate can be prohibitively high when \(n,p\) get large. We will explore an MCMC approach. 
+
+Let the target distribution be \(\pi(W) = \mathbf{1}(M(W) \le a)\), i.e., the uniform distribution on all the assignments satisfying \(M(W) \le a\).
+
+\begin{parts}
+\part Consider the ``swapping proposal'': Given any assignment \(W\), the proposal randomly selects one index from the entries equal to \(1\) and one index from the entries equal to \(0\), and then swaps them.
+\begin{parts}
+\part Write out the one-step transition probability explicitly under the Metropolis--Hastings framework.
+\part Show that although this chain has the target distribution as stationary, it is not always irreducible and thus does not always converge to the stationary distribution. (Hint: Consider a toy dataset \(X = (1,2,3,4)^\top\) and initialization \(W_0 = (1,0,0,1)\); argue that the state \(W_0\) is absorbing.)
+\end{parts}
+\part Design a new proposal distribution that makes the Markov chain irreducible.
+\end{parts} 
+
+\begin{solution}
+We work on the state space
+\[
+\mathcal{W}
+=
+\Big\{W \in \{0,1\}^{2n} : \sum_{i=1}^{2n} W_i = n\Big\},
+\]
+so each $W$ encodes a treatment assignment with exactly $n$ treated and $n$ control units.
+The target distribution is
+\[
+\pi(W) \propto \mathbf{1}\{M(W) \le a\},
+\]
+i.e.\ the uniform distribution over all assignments with Mahalanobis distance at most $a$.
+
+\medskip
+
+\textbf{(1) One-step transition probability under the swapping proposal.}
+For any $W \in \mathcal{W}$, let
+\[
+A(W) := \{i : W_i = 1\}, \qquad B(W) := \{j : W_j = 0\},
+\]
+so $|A(W)| = |B(W)| = n$.
+The \emph{swapping proposal} is:
+given $W$, choose $i \in A(W)$ uniformly and $j \in B(W)$ uniformly, and let $W'$ be the
+assignment obtained by swapping these two entries:
+\[
+W'_i = 0,\quad W'_j = 1,\quad W'_k = W_k \text{ for } k\notin\{i,j\}.
+\]
+Thus, whenever $W'$ differs from $W$ only by swapping a single $1$ and a single $0$,
+the proposal probability is
+\[
+q(W,W') = \frac{1}{n}\cdot\frac{1}{n} = \frac{1}{n^2},
+\]
+and $q(W,W') = 0$ otherwise. Since $A(W') = B(W)$ and $B(W') = A(W)$ for such a pair,
+the reverse move has the same proposal probability, so $q(W,W') = q(W',W)$.
+
+The Metropolis--Hastings acceptance probability is
+\[
+\alpha(W,W') = \min\Big\{1, \frac{\pi(W')q(W',W)}{\pi(W)q(W,W')}\Big\}
+= \min\Big\{1, \frac{\pi(W')}{\pi(W)}\Big\},
+\]
+because $q$ is symmetric.
+Inside the feasible set $\{W : M(W) \le a\}$ the target $\pi$ is uniform, so
+$\pi(W') = \pi(W)$ and $\alpha(W,W') = 1$ whenever both $M(W)\le a$ and $M(W')\le a$.
+If $M(W)\le a$ but $M(W')>a$, then $\pi(W') = 0$ and $\alpha(W,W') = 0$.
+
+Therefore, for distinct $W,W'\in\mathcal{W}$,
+\[
+P(W \to W')
+=
+\begin{cases}
+\displaystyle \frac{1}{n^2}, &\text{if $W'$ is obtained from $W$ by swapping one $1$ and one $0$
+and $M(W')\le a$,}\\[0.5em]
+0, &\text{otherwise,}
+\end{cases}
+\]
+and
+\[
+P(W \to W) = 1 - \sum_{W'\neq W} P(W\to W').
+\]
+Because $q$ is symmetric and $\pi(W)$ is constant over $\{M\le a\}$, the detailed-balance
+identity
+\[
+\pi(W)P(W,W') = \pi(W')P(W',W)
+\]
+holds for all $W,W'$ with $M(W),M(W')\le a$, so $\pi$ is stationary for this chain.
+\end{solution}
+
+\begin{solution}
+
+\textbf{(2) The chain is not always irreducible.}
+We show that for some datasets and thresholds $a$, the swapping chain has an absorbing state.
+Consider the toy example in the hint with $2n=4$, covariates $X = (1,2,3,4)^\top$,
+and initialization
+\[
+W_0 = (1,0,0,1),
+\]
+so units $1$ and $4$ are treated and units $2$ and $3$ are controls.
+From $W_0$, the swapping proposal can only produce assignments obtained by swapping
+one treated index in $\{1,4\}$ with one control index in $\{2,3\}$.
+There are four such proposals, corresponding to the pairs $(1,2)$, $(1,3)$, $(4,2)$, $(4,3)$.
+
+Because there are only finitely many assignments in $\mathcal{W}$, the set of possible Mahalanobis distances $\{M(W): W\in\mathcal{W}\}$ is finite. In particular, we can choose a threshold $a$ such that
+\[
+M(W_0) \le a
+\quad\text{but}\quad
+M(W') > a \quad\text{for every $W'$ reachable from $W_0$ by a single swap}.
+\]
+Then $\pi(W_0) > 0$ but $\pi(W') = 0$ for all such neighbors $W'$.
+By the acceptance rule, every proposed move out of $W_0$ is rejected, so
+\[
+P(W_0 \to W_0) = 1,\qquad P(W_0 \to W') = 0 \ \text{for all } W'\neq W_0.
+\]
+Thus $W_0$ is an absorbing state.
+In particular, the chain is not irreducible on the support of $\pi$, and hence it does
+not necessarily converge to the uniform distribution over $\{W: M(W)\le a\}$.
+
+\medskip
+
+\textbf{(3) A modified proposal that is irreducible.}
+To obtain irreducibility, we must be able to move between any two assignments in $\mathcal{W}$ in finitely many steps while preserving $\sum_i W_i = n$.
+A simple way to guarantee this is to include single-swap moves (which already generate a connected graph on $\mathcal{W}$) and optionally combine them with larger multi-swaps.
+
+One convenient symmetric proposal is:
+
+\begin{itemize}
+\item[(i)] With probability $1/2$, perform a single-swap move: choose one index $i$ with $W_i = 1$ and one index $j$ with $W_j = 0$, each uniformly over their respective sets, and obtain $W'$ by swapping these two entries.
+\item[(ii)] With probability $1/2$, perform a multi-swap move: sample an integer $k \in \{1,\dots,K\}$ for some fixed small $K\ge 2$, then choose $k$ distinct indices from $A(W)$ and $k$ distinct indices from $B(W)$, each choice uniformly over the corresponding set, and swap these $2k$ entries to obtain $W'$.
+\end{itemize}
+
+Every such proposal preserves $\sum_i W_i = n$. Because single-swap moves occur with positive probability, any two assignments in $\mathcal{W}$ can be connected by a finite sequence of single swaps: to transform $W$ into $W^\ast$, repeatedly pick a position where they differ and use a single swap to move the $1$ or $0$ to its desired location. Thus the proposal graph on $\mathcal{W}$ is connected.
+
+If we choose the single- and multi-swap moves in a symmetric fashion (every specific swap pattern has the same probability in both directions), the proposal kernel $q$ is symmetric, and the Metropolis--Hastings acceptance probability remains
+\[
+\alpha(W,W') = \mathbf{1}\{M(W)\le a,\,M(W')\le a\}.
+\]
+Then the resulting MH chain is reversible with respect to $\pi$ and irreducible on the support $\{W:\pi(W)>0\}$, because that support is contained in $\mathcal{W}$ and $\mathcal{W}$ is connected under the allowed swaps.
+\end{solution}
+
+\end{questions}
+
+\end{document}

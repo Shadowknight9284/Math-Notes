@@ -1,0 +1,335 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\title{Spatial HW}
+\author{Class}
+\date{February 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{3.34}
+a) Prove that $\mathbb{E}[\hat{\gamma}(k\delta)] / \gamma(k\delta) \to 1$ as $\delta \downarrow 0$.
+
+By definition,
+$$\hat{\gamma}(k\delta) = \frac{1}{2(m-k)} \sum_{j=1}^{m-k} \{Z((j+k)\delta) - Z(j\delta)\}^2$$ 
+so
+$$\mathbb{E}[\hat{\gamma}(k\delta)] = \frac{1}{2(m-k)} \sum_{j=1}^{m-k} \mathbb{E}\left[ \{Z((j+k)\delta) - Z(j\delta)\}^2 \right].$$ 
+By Definition,
+$$\mathbb{E}[\{Z(t+h) - Z(t)\}^2] = 2\gamma(h)$$ 
+so
+$$\mathbb{E}[\hat{\gamma}(k\delta)] = \frac{1}{2(m-k)} \sum_{j=1}^{m-k} 2\gamma(k\delta)=\gamma(k\delta).$$ 
+Therefore, $$\frac{\mathbb{E}[\hat{\gamma}(k\delta)]}{\gamma(k\delta)} = 1$$.
+\textcolor{red}{QUESTION}: Why it requires small delta?(I guess it should be just$\hat{\gamma}$ instead of $\mathbb E\hat{\gamma}$)?\\
+In that case are the terms independent ?
+\color{blue}\\
+I don't think they're independent since some sum terms shares a common part. Although I don't really know the point of part (a) yet, maybe it's used in part dA Primer on Reproducing Kernel Hilbert Spaces
+
+I am pretty sure that this part is only there to show that the estimator is asymptotically unbiased... if it's not that, then I have no clue
+\color{black}
+\medskip
+
+\noindent
+(b) Find $\text{Var}(\hat{\gamma}(k\delta))$.
+
+$$\text{Var}(\hat{\gamma}(k\delta)) = \frac{1}{4(m-k)^2} \text{Var}\left( \sum_{j=1}^{m-k} \Delta_j^2 \right),$$ where $\Delta_j = Z((j+k)\delta) - Z(j\delta)$.
+By $\text{Cov}(X^2, Y^2) = 2\text{Cov}(X, Y)^2$ we have $$\text{Var}\left( \sum \Delta_j^2 \right) = \sum_{i=1}^{m-k} \sum_{j=1}^{m-k} \text{Cov}(\Delta_i^2, \Delta_j^2) = \frac{1}{4(m-k)^2} \sum_{i=1}^{m-k} \sum_{j=1}^{m-k} 2 [\text{Cov}(\Delta_i, \Delta_j)]^2.$$ 
+Therefore, $$\text{Var}(\hat{\gamma}(k\delta)) = \frac{1}{2(m-k)^2} \sum_{i,j=1}^{m-k}  \left[ \text{Cov}\big(Z((i+k)\delta) - Z(i\delta), \; Z((j+k)\delta) - Z(j\delta)\big) \right]^2.$$
+\medskip
+
+\noindent
+(c) Show that $$\lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta \rfloor - 1} \text{cor}^2 \{Z(\delta) - Z(0), Z((j+1)\delta) - Z(j\delta)\} = 0.$$
+
+Let $\rho_j = \text{cor}\{Z(\delta) - Z(0), Z((j+1)\delta) - Z(j\delta)\}$ and 
+recall that $$\text{cor}\{X,Y\}=\frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}}.$$ Observe that
+\begin{align*}
+\text{Cov}(Z(\delta) - Z(0), Z((j+1)\delta) - Z(j\delta)) &= \text{Cov}(Z(\delta) , Z((j+1)\delta)) - \text{Cov}(Z(\delta) ,  Z(j\delta)) \\
+&\;\;\;\;\;-\text{Cov}(Z(0), Z((j+1)\delta) ) +\text{Cov}(Z(0), Z(j\delta))\\
+&=K(j\delta)-K((j-1)\delta)-K((j+1)\delta)+K(j\delta)\\
+&=K(j\delta)-K(0)+K(0)-K((j-1)\delta)\\
+&\;\;\;\;\;+K(0)-K((j+1)\delta)+K(j\delta)-K(0)\\
+&= -2\gamma(j\delta)+\gamma((j+1)\delta)+\gamma((j-1)\delta).
+\end{align*}
+This looks like second differences. For a Matern process with smoothness $0<\kappa<1$, we have $$\gamma(t) = c_{\kappa} |t|^{2\kappa} +O(t^2)$$ 
+If we multiply and divide by a small enough delta $\delta^2$ we can get \color{blue} someone verify the usage of $\sim$ here? not sure what to use\color{black}
+$$\lim_{\delta\downarrow 0}\delta^2\frac{[\gamma((j+1)\delta) - \gamma(j\delta)] - [\gamma(j\delta) -\gamma((j-1)\delta)]}{\delta^2} \sim\delta^2 \gamma''(j\delta)=  \delta^2 [c_{\kappa}(2\kappa)(2\kappa-1) (j\delta)^{2\kappa-2}+O(1)].$$ 
+Moreover,
+$$\text{Var}(Z(\delta) - Z(0))=2\gamma(\delta)=\text{Var}(Z((j+1)\delta) - Z(j\delta)).$$
+Therefore for small $\delta$, \color{blue} can someone verify that I am using the $\sim$ properly here\color{black}
+$$\rho_j \sim \frac{c_{\kappa} \delta^2 2\kappa(2\kappa-1) (j\delta)^{2\kappa-2}+O(\delta^2)}{2[c_{\kappa} \delta^{2\kappa}+O(\delta^2)]} = \frac{c_{\kappa}  2\kappa(2\kappa-1) (j\delta)^{2\kappa-2}+O(1)}{2[c_{\kappa} \delta^{2\kappa-2}+O(1)]}  = Cj^{4\kappa-4}.$$ 
+So $\rho_j^2$ is asymptotically proportional to $j^{4\kappa-4}$, which means  \color{blue} are the sum limits below fine? i switched the first sum from $T/\delta$ to $\lfloor T/\delta\rfloor -1$ but don't know why there is a -1 in the sum anyway for this problem\color{black}
+$$\lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta-1\rfloor} j^{4\kappa-4} = 0\implies \lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta \rfloor - 1}\rho_{j}^2 = 0$$
+We can then prove the result by splitting $\kappa$ into cases.\\
+For $0<\kappa<3/4$ we get a converging $p$ series for the sum, so for some constant $C_2>0$, $$\lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta-1\rfloor} j^{4\kappa-4} = \lim_{\delta\downarrow 0} \delta\cdot C_2=0.$$
+For $\frac{3}{4}\leq \kappa<1$, this makes $j^{4\kappa-4}$ monotone decreasing so we can bound it with an integral. For any decreasing func, we have
+$$\int_1^{n+1} f(j) dj\leq \sum_{j=1}^n f(j)\leq f(1)+\int_1^n  f(j)dj$$
+so
+\begin{align*}
+    \lim_{\delta\downarrow 0}\left(\delta\int_1^{\lfloor T/\delta\rfloor}j^{4\kappa-4}dj\right)
+    &\leq\lim_{\delta\downarrow 0}\left(\delta\sum_{j=1}^{\lfloor T/\delta\rfloor-1} j^{4\kappa-4}\right)
+    &\leq \lim_{\delta\downarrow 0}\delta\left(1+\int_1^{\lfloor T/\delta \rfloor-1}j^{4\kappa-4}dj\right).
+\end{align*}
+If $\kappa = 3/4$, then the LHS becomes $\delta\ln(\lfloor T/\delta\rfloor)$ and RHS is $\delta\left(1+\ln(\lfloor T/\delta-1\rfloor)\right)$ which are both 0 in the limit.\\
+If $3/4<\kappa<1$, then the LHS is $\delta \left(\frac{\lfloor T/\delta\rfloor^{4\kappa-3}}{4\kappa-3}-\frac{1}{4\kappa-3}\right)$ and the RHS is $\delta \left(1+\frac{(\lfloor T/\delta\rfloor-1)^{4\kappa-3}}{4\kappa-3}-\frac{1}{4\kappa-3}\right)$ which are both 0 in the limit. \\
+Thus, for $0<\kappa<1$, we have $\lim_{\delta\downarrow 0}\sum_{j=1}^{\lfloor T/\delta\rfloor -1}\rho_j^2=0$.\\ 
+
+
+\color{black}
+
+\medskip
+
+\noindent
+(d) Prove $\hat{\gamma}(\delta)/\gamma(\delta) \to 1$ in $L^2$.\\
+Convergence in $L^2$ (mean square) requires $$\mathbb{E}\left[ \left( \frac{\hat{\gamma}(\delta)}{\gamma(\delta)} - 1 \right)^2 \right] \to 0.$$ 
+Expanding this we get $$\frac{1}{\gamma^2(\delta)} \left( \text{Var}(\hat{\gamma}(\delta)) + (\mathbb{E}[\hat{\gamma}(\delta)] - \gamma(\delta))^2 \right).$$
+Based on the outcome of (a), it suffices to show $\frac{\text{Var}(\hat{\gamma}(\delta))}{\gamma^2(\delta)} \to 0$ as $\delta\downarrow 0$. 
+Recall that $$\rho_{j}=\frac{\text{Cov}(Z(\delta) - Z(0), Z((j+1)\delta) - Z(j\delta))}{2\gamma(\delta)}=\frac{K(j\delta)-K((j-1)\delta)-K((j+1)\delta)+K(j\delta)}{2\gamma(\delta)}.$$
+Observe that
+\begin{align*}
+&\text{cor}\{Z((i+1)\delta)-Z(i\delta), Z((j+1)\delta)-Z(j\delta)\}\\
+&=\frac{K(|j-i|\delta)-K(|j-i-1|)\delta)-K(|j-i+1|\delta)+K(|j-i|\delta)}{2\gamma(\delta)}\\
+&=\rho_{|j-i|}.
+\end{align*}
+Therefore by part (b) and part (c), 
+\begin{align*}
+    \frac{\text{Var}(\hat{\gamma})}{\gamma^2} \propto \frac{1}{m^2} \sum_{i,j=1}^{m} \rho_{|i-j|}^2 &= \frac{1}{m^2} [m\rho_{0}+ 2\sum_{l=1}^{m-1} (m-l)\rho_l^2] \\
+    &= \frac{\rho_{0}}{m}+ \frac{2}{m}\sum_{l=1}^{m-1} \frac{(m-l)}{m}\rho_l^2 \\
+    &\leq \frac{\rho_{0}}{m}+ \frac{2}{m}\sum_{l=1}^{m-1} \rho_l^2 \to 0 \\
+    &\text{ as $m \to \infty$. }
+\end{align*}
+Since $\delta \propto \frac{1}{m}$, $\frac{\text{Var}(\hat{\gamma})}{\gamma^2}\to 0$ as $\delta\downarrow 0$ so
+$\hat{\gamma}(\delta)/\gamma(\delta) \to 1$ in $L^2$ so also in probability.
+\medskip
+
+\noindent
+(e) Extend to $\hat{\gamma}(k\delta)/\gamma(k\delta) \to 1$.
+
+Changing the $k$ scales the arguments but does not change the power law exponent $2\kappa$ or the convergence rate of the approximation in Part (c). Thus, for any fixed integer $k$: $$\frac{\hat{\gamma}(k\delta)}{\gamma(k\delta)} \xrightarrow{p} 1$$
+
+\medskip
+
+\noindent
+(f) Prove $\hat{\kappa} \to \kappa$ as $\delta \downarrow 0$. $$\hat{\kappa} = \frac{1}{2} \log_2 \frac{\hat{\gamma}(2\delta)}{\hat{\gamma}(\delta)}$$ \\
+From part (e), we can see the following as $\delta\downarrow 0$: 
+$$\frac{\hat{\gamma}(2\delta)}{\hat{\gamma}(\delta)}=\frac{\gamma(2\delta)\frac{\hat{\gamma}(2\delta)}{\gamma(2\delta)}}{\gamma(\delta)\frac{\hat{\gamma}(\delta)}{\gamma(\delta)}}\xrightarrow{p} \frac{\gamma(2\delta}{\gamma(\delta)}$$
+Since $\gamma(t) = c_{\kappa} |t|^{2\kappa} +O(t^2)$ for $0<\kappa<1$, we get
+$$\frac{\gamma(2\delta)}{\gamma(\delta)}=\frac{c_{\kappa} |2\delta|^{2\kappa} +O(\delta^2)}{c_{\kappa} |\delta|^{2\kappa} +O(\delta^2)}=\frac{2^{2\kappa}\delta^{2\kappa}[1+O(\delta^{2-2\kappa}]}{\delta^{2\kappa}[1+O(\delta^{2-2\kappa}]}\to 2^{2\kappa}$$
+as $\delta\downarrow0$. Apply the continuous function for $x>0$, $g(x) = \frac{1}{2}\log_2(x),$ and this yields
+$$\hat{\kappa} =g\left(\frac{\hat{\gamma}(2\delta)}{\hat{\gamma}(\delta)} \right)\xrightarrow{p} \frac{1}{2} \log_2 (2^{2\kappa})=\frac{1}{2}(2\kappa)=\kappa.$$ 
+
+
+\section*{3.35}
+(a) Find $\kappa \in (0, 1)$ for which $\sum_{j=1}^{\infty} \text{corr}^2\{Z(\delta) - Z(0), Z((j+1)\delta) - Z(j\delta)\}$ is finite.
+
+As discussed in 3.34 (c) to show that $\sum_{j=1}^{\lfloor T/\delta \rfloor - 1}\rho_{j}^2 < \infty$ as $\delta\downarrow 0$ it suffices to show that 
+ $$\lim_{\delta \to 0}  \sum_{j=1}^{\lfloor T/\delta\rfloor-1} j^{4\kappa-4} <\infty.$$
+ This is a $p$-series so the convergence condition is given by 
+ $$4 - 4\kappa > 1 \iff 3 > 4\kappa \iff \kappa < \frac{3}{4}.$$
+\noindent
+Thus the sum is finite for $0 < \kappa < 0.75$.
+\medskip
+
+\noindent
+(b) In the finite case, show $\lim_{\delta \downarrow 0}\text{Var}\left(\frac{\hat{\gamma}(k\delta)}{\gamma(k\delta)}\right) \sim \beta \delta$.
+
+\textcolor{red}{please someone check the constants here. The general proportionality I think is right but constants giving the equalities may be wrong.}
+\textcolor{blue}{Why do we need the $\beta'$ part? Can't we just have $\beta$? also the constants look good}\\
+Recall 
+\begin{align*}
+    \text{Var}\left(\frac{\hat{\gamma}}{\gamma}\right) &= \frac{2}{(m-k)^2} \sum_{i,j=1}^{m-k} \rho_{|i-j|}^2\\&=\frac{2}{(m-k)^2} [(m-k)\rho_{0}+2\sum_{l=1}^{m-k-1} (m-k-l)\rho_{l}^2\\
+    &= \frac{2}{(m-k)} [\rho_{0}+2\sum_{l=1}^{m-k-1} \frac{(m-k-l)}{m-k}\rho_{l}^2].
+\end{align*}
+We know $[\rho_{0}+2\sum_{l=1}^{m-k-1} \frac{(m-k-l)}{m-k}\rho_{l}^2] \leq \rho_{0}+2\sum_{l=1}^{m-k-1} \rho_{l}^2\rightarrow \beta$ for some constant $\beta$ as $m\to\infty$ because we are in the finite case $0<\kappa<0.75$. Therefore for small $k$ relative to $m$,
+$m \text{Var}\left(\frac{\hat{\gamma}}{\gamma}\right)\rightarrow \beta'$ for some constant $\beta'$. Since $\delta \propto \frac{2}{m-k}$, $Var(\frac{\hat{\gamma}}{\gamma})\sim \beta'\delta$.
+\medskip
+
+\noindent
+(c) In the infinite case, show $\lim_{\delta \downarrow 0}\text{Var}\left(\frac{\hat{\gamma}(k\delta)}{\gamma(k\delta)}\right) \to \infty$, and find a relatively simple asymptotic expression.
+
+From (b) we know
+\begin{align*}
+    \text{Var}\left(\frac{\hat{\gamma}}{\gamma}\right) &= \frac{2}{(m-k)} [\rho_{0}+2\sum_{l=1}^{m-k-1} \frac{(m-k-l)}{m-k}\rho_{l}^2] \\
+    &\geq \frac{1}{(m-k)}\sum_{l=1}^{\lfloor\frac{ m-k-1}{2}\rfloor} \frac{(m-k-l)}{m-k}\rho_{l}^2\\
+    &\geq \frac{1}{(m-k)}\sum_{l=1}^{\lfloor\frac{ m-k-1}{2}\rfloor} \frac{(m-k)}{2(m-k)}\rho_{l}^2\\
+    &\geq \frac{1}{2(m-k)}\sum_{l=1}^{\lfloor\frac{ m-k-1}{2}\rfloor} \rho_{l}^2.
+\end{align*}
+If the sum is not finite as $m\rightarrow \infty$ then $\text{Var}\left(\frac{\hat{\gamma}}{\gamma}\right)$ blows up as $\delta\downarrow 0$.
+We can continue the lower bound by treating the sum as an upper bound on an integral. 
+Recall that from 34(c), $\rho_j\sim C j^{2\kappa-2}$ for small $\delta$.\textcolor{red}{someone make precise this approximation step}
+\color{blue}please someone verify this, putting in blue for now: Thus $\lim_{j\to\infty}\frac{\rho_j^2}{j^{4\kappa-4}}=1$, so for all $\epsilon>0,$ there exists $N$ such that for all $j\geq N,$ $\rho_j^2\geq(1-\epsilon)j^{4\kappa-4}$.
+Thus,
+\color{black}
+\begin{align*}
+    \frac{1}{2(m-k)}\sum_{l=1}^{\lfloor\frac{ m-k-1}{2}\rfloor} \rho_{l}^2 &\approx \frac{1}{2(m-k)}\sum_{l=1}^{\lfloor\frac{ m-k-1}{2}\rfloor} l^{4\kappa-4} \\
+    &\geq \frac{1}{2(m-k)}\int_1^{\lfloor \frac{m-k-1}{2}+1\rfloor}j^{4\kappa-4}dj
+\end{align*}
+
+If $\kappa = 3/4$ then this lower bound is proportional to $\delta\ln(\frac{1}{\delta})$. If $3/4<\kappa<1$, then this lower bound is proportional to $\delta^{4-4\kappa}$. We can also derive upper bounds.
+\begin{align*}
+    \text{Var}\left(\frac{\hat{\gamma}}{\gamma}\right) &= \frac{2}{(m-k)} [\rho_{0}+2\sum_{l=1}^{m-k-1} \frac{(m-k-l)}{m-k}\rho_{l}^2] 
+\\
+&\leq \frac{2}{(m-k)} [\rho_{0}+2\sum_{l=1}^{m-k-1} \rho_{l}^2]
+\\
+&\leq \frac{2}{(m-k)} [\rho_{0}+2(1+\int_{1}^{\lfloor m-k-1\rfloor-1} \rho_{l}^2)]\\
+&\approx \frac{2}{(m-k)} [\rho_{0}+2(1+\int_{1}^{\lfloor m-k-1\rfloor-1} l^{4\kappa-4})].
+\end{align*}
+If $\kappa = 3/4$ then this upper bound is proportional to 
+$\delta\ln(\frac{1}{\delta})$.
+If $3/4<\kappa<1$ then this upper bound is proportional to $\delta^{4-4\kappa}$. 
+\textcolor{red}{I am a little skeptical that the both the upper bound and lower bound have been precisely characterized because it is generally more difficult to establish both. If someone can check carefully and look for a mistake that would be great...}\textcolor{blue}{I'm not sure you can replace the sum with the integral in this upperbound, since $\rho_l^2$ is not necessarily monotone?}
+Therefore the variance asymptotically decays at a rate $\delta\ln(\frac{1}{\delta})$ for $\kappa = 0.75$ and at a rate $\delta^{4-4\kappa}$ for $1>\kappa > 0.75$.
+\medskip
+
+\noindent
+(d)
+
+
+\section*{3.36}
+
+
+\color{red} Suggested indirectly to add more terms to the Taylor series approx. to think about it 
+
+Look into approx $f_n \sim C * g$ where g is a simple funtion like $n^\alpha$
+
+$\text{Var}(\frac{\hat \gamma(k \delta)}{\gamma (k \delta)}) \sim \frac{c}{m}$ look for a formal for this that doesnt depend on m
+
+Look into a some sort of integral for an approx.
+
+question: Why underestimation
+Semivariogram of FBM 
+Its is likely due to the bias that exists
+if we get stuck act as if $-c_1 |t|^{2\nu}$ is covariance func (generalized cov. fun
+
+\color{black}
+Approach: Look into intervals of $[N,N+1)$ to notice if certain patterns are generalizable. 
+Patterns to look into
+\begin{itemize}
+    \item N-th order differencing
+    \item Variogram estimator
+\end{itemize}
+
+\fbox{Case 1:$1 \leq \kappa \leq 2$}
+We will redefine $\hat \gamma(\cdot)$ to be 
+$$ \hat \gamma_2(k \delta) := \frac{1}{2(m-2k)} \sum_{j=1}^{m-2k} \left\{ Z((j+2k)\delta) - 2Z((j+k)\delta) + Z(j\delta) \right\} $$
+Let $Y_{j,k} := Z((j+2k)\delta) - 2Z((j+k)\delta) + Z(j\delta)$
+
+Then $ \hat \gamma_2(k\delta) = \frac{1}{2M} \sum_{j=1}^{M} (Y_{j,k})^2$ where $M=m-2k \approx T /\delta$
+$$ \gamma_2(k \delta) = \frac{1}{2} \mathbb{E}[Y_{j,k}^2]$$
+\begin{align*}
+    E[Y_{j,k}^2] &= \text{Var}(Y_{j,k}) \\
+    &= \text{Var}(Z((j+2k)\delta) - 2Z((j+k)\delta) + Z(j\delta)) 
+\end{align*}
+By $K(h) = \text{Cov}(Z(0), Z(h))$ we have
+$$ \text{Var}(Y_{j,k}) = 6K(0) - 8K(k\delta) + 2K(2k\delta)$$
+Since $K(h) = K(0) - \gamma(h)$, we have
+$$ \text{Var}(Y_{j,k}) = - 2\gamma(2k\delta) + 8\gamma(k\delta) $$
+
+Then define the second order variogram as
+
+34(b)
+
+$$\text{Var}(\hat \gamma_2(k\delta)) = \frac{1}{4M^2} \sum_{i=1}^{M} \sum_{j=1}^{M} \text{Cov}(Y_{i,k}^2, Y_{j,k}^2) = \frac{1}{2M^2} \sum_{i=1}^{M} \sum_{j=1}^{M} \text{Cov}(Y_{i,k}, Y_{j,k})^2$$
+Let $\rho^{(2)}(i-j) = \text{cor}(Y_{i,k}, Y_{j,k})$. Then
+$$ \text{Var}(\hat \gamma_2(k\delta)) = \frac{1}{2M^2} \sum_{i=1}^{M} \sum_{j=1}^{M} 2 \gamma_2(k\delta)^2 \rho^{(2)}(i-j)^2 = \frac{\gamma_2(k\delta)^2}{M^2} \sum_{i=1}^{M} \sum_{j=1}^{M} \rho^{(2)}(i-j)^2$$
+
+34(c)
+Show that 
+$$ \lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta \rfloor - 1} \text{cor}^2(Y_{0,k}, Y_{j,k}) = 0$$
+Note that this is equivalent to showing that $\lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta \rfloor - 1} \rho^{(2)}(j)^2 = 0$.
+
+Note that 
+\begin{align*}
+    \text{Cov}(Y_{0,k}, Y_{j,k}) = &\text{Cov}(Z(2k\delta) - 2Z(k\delta) + Z(0), Z((j+2k)\delta) - 2Z((j+k)\delta) + Z(j\delta)) \\
+    =& K((j+2k)\delta) - 4K((j+k)\delta) + 6K(j\delta) - 4K((j-k)\delta) + K((j-2k)\delta) + 4K(k\delta) - 2K(0)
+\end{align*}
+
+Since $K(h) = K(0) - \gamma(h)$, we have
+\begin{align*}
+    \text{Cov}(Y_{0,k}, Y_{j,k}) =& -\gamma((j+2k)\delta) + 4\gamma((j+k)\delta) - 6\gamma(j\delta) + 4\gamma((j-k)\delta) - \gamma((j-2k)\delta) \\
+    =& -\gamma((j+2k)\delta) + 4\gamma((j+k)\delta) - 6\gamma(j\delta) + 4\gamma((j-k)\delta) - \gamma((j-2k)\delta)
+\end{align*}
+This looks like a fourth order difference. For a Matern process with smoothness $1<\kappa<2$, 
+$$ \text{Cov}(Y_{0,k}, Y_{j,k}) \sim \delta^4 K^{(4)}(j\delta) = \delta^4 c_{\kappa} (j\delta)^{2\kappa-4}$$
+Therefore, $\rho^{(2)}(j) \sim C\frac{\delta^4 (j\delta)^{2\kappa -4}}{\delta^{2\kappa}} \propto j^{2\kappa -4}$ for some constant $C$ 
+
+Now we can reframe the problem as showing that $\lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta \rfloor - 1} j^{4\kappa -8} = 0$. This is a $p$-series so the convergence condition.
+
+We can see that for $1<\kappa<7/4$, $4\kappa - 8 < -1$ so the sum term converges to a constant as $\delta\downarrow 0$ and thus the limit is 0. For $7/4 \leq \kappa < 2$, a similar argument as in 3.34(c) can be used to show that the limit is also 0. Therefore, for $1<\kappa<2$, $\lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta \rfloor - 1} \text{cor}^2(Y_{0,k}, Y_{j,k}) = 0$.
+
+34(d)
+Similar argument to prior as
+\begin{align*}
+    \hat \gamma_2(2k\delta) &= \gamma_2(2k\delta)(1 + o_p(1)) \\
+    \hat \gamma_2(k\delta) &= \gamma_2(k\delta)(1 + o_p(1))
+\end{align*}
+For small $\delta$, using the approximation $\gamma(t) = c_{\kappa} |t|^{2\kappa} $ 
+\begin{align*}
+    \frac{\hat \gamma_2(2k\delta)}{\hat \gamma_2(k\delta)} &\approx \frac{c (2\delta)^{2\kappa}}{c (\delta)^{2\kappa}} \\
+    &\approx 2^{2\kappa}
+\end{align*}
+Therefore, $\hat \kappa = \frac{1}{2} \log_2 \frac{\hat \gamma_2(2k\delta)}{\hat \gamma_2(k\delta)} \xrightarrow{p} \kappa$.
+
+
+\fbox{Case 2: $N < \kappa < N+1$ for some integer $N \geq 2$}
+
+We can define the $N$-th order difference as
+$$ Y_{j,k}^{(N)} := \sum_{l=0}^{N} (-1)^l \binom{N}{l} Z((j+lk)\delta) $$
+Then we can define the $N$-th order variogram as $$\gamma_N(k\delta) = \frac{1}{2} \mathbb{E}[(Y_{j,k}^{(N)})^2]$$
+
+Define $M_N = m - Nk$.
+
+Then we can define the estimator for the $N$-th order variogram as
+$$ \hat \gamma_N(k\delta) := \frac{1}{2M_N} \sum_{j=1}^{M_N} (Y_{j,k}^{(N)})^2 $$
+
+
+34(a)
+$$\mathbb{E}[\hat \gamma_N (k \delta)] = \frac{1}{2M_N}\sum_{j=1}^{M_N} \mathbb{E}[Y_{j,k}^M] = \frac{1}{2} \text{Var}Y_{j,k}^M $$
+Define the $N$-th order variogram as 
+$$\gamma_N(k\delta) = \frac{1}{2} \text{Var}Y_{j,k}^M$$
+Then we can show that $\mathbb{E}[\hat \gamma_N(k\delta)] = \gamma_N(k\delta)$ so $\hat \gamma_N(k\delta)$ is an unbiased estimator for $\gamma_N(k\delta)$.
+
+34(b)
+$$ \text{Var}(\hat \gamma_N(k\delta)) = \frac{1}{4M_N^2} \sum_{i=1}^{M_N} \sum_{j=1}^{M_N} \text{Cov}((Y_{i,k}^{(N)})^2, (Y_{j,k}^{(N)})^2) = \frac{1}{2M_N^2} \sum_{i=1}^{M_N} \sum_{j=1}^{M_N} \text{Cov}(Y_{i,k}^{(N)}, Y_{j,k}^{(N)})^2 $$
+Define $\rho^{(N)}(i-j) = \text{cor}(Y_{i,k}^{(N)}, Y_{j,k}^{(N)})$. Then
+$$ \text{Var}(\hat \gamma_N(k\delta)) = \frac{\gamma_N(k\delta)^2}{M_N^2} \sum_{i=1}^{M_N} \sum_{j=1}^{M_N} \rho^{(N)}(i-j)^2 $$
+
+34(c)
+We notice that
+$$ \lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta \rfloor - 1} \text{cor}^2(Y_{0,k}^{(N)}, Y_{j,k}^{(N)}) = \sum_{a=0}^{N} \sum_{b=0}^{N} (-1)^{M-a+N-b} \binom{N}{a} \binom{N}{b} K((l+b-a)k\delta)$$
+This would be a $2N$-th order difference. 
+
+For a taylor expansion of $K(h)$ around $h=0$, the first non-zero term would be the $2N$-th order term because the first $2N-1$ order terms would be 0 due to the definition of the $N$-th order difference. Therefore, we can approximate this as
+$$ \lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta \rfloor - 1} \text{cor}^2(Y_{0,k}^{(N)}, Y_{j,k}^{(N)}) \sim \delta \sum_{j=1}^{\lfloor T/\delta \rfloor - 1} C j^{4\kappa - 4N}$$
+This is a $p$-series so the convergence condition is given by
+$$4N - 4\kappa > 1 \iff N - \frac{1}{4} > \kappa$$
+Thus, the sum is finite for $N < \kappa < N + 1$ where $N - \frac{1}{4} > \kappa$.
+And for $N < \kappa < N + 1$ where $N - \frac{1}{4} \leq \kappa$, the sum is infinite and we can use a similar argument as in 34(c) to show that $\lim_{\delta \downarrow 0} \delta \sum_{j=1}^{\lfloor T/\delta \rfloor - 1} \text{cor}^2(Y_{0,k}^{(N)}, Y_{j,k}^{(N)}) = 0$.
+
+34(d)
+
+We can use a similar argument as in 34(d) to show that $\hat \gamma_N(2k\delta)/\hat \gamma_N(k\delta) \xrightarrow{p} 2^{2\kappa}$ and thus $\hat \kappa = \frac{1}{2} \log_2 \frac{\hat \gamma_N(2k\delta)}{\hat \gamma_N(k\delta)} \xrightarrow{p} \kappa$.
+
+
+
+34(e)
+
+For any $k \geq 1$, we can use a similar argument as in 34(d) to show that $\hat \gamma_N(2k\delta)/\hat \gamma_N(k\delta) \xrightarrow{p} 2^{2\kappa}$ and thus $\hat \kappa = \frac{1}{2} \log_2 \frac{\hat \gamma_N(2k\delta)}{\hat \gamma_N(k\delta)} \xrightarrow{p} \kappa$.
+
+34(f)
+
+Define $\hat \kappa_N := \frac{1}{2} \log_2 \frac{\hat \gamma_N(2k\delta)}{\hat \gamma_N(k\delta)}$. 
+
+Since $\hat \gamma_N(2k\delta) \approx C_M (2\delta)^{2\kappa}$ and $\hat \gamma_N(k\delta) \approx C_M (\delta)^{2\kappa}$, we can see that
+$$ \frac{\hat \gamma_N(2k\delta)}{\hat \gamma_N(k\delta)} \approx 2^{2\kappa}$$
+Therefore, $\hat \kappa_N = \frac{1}{2} \log_2 \frac{\hat \gamma_N(2k\delta)}{\hat \gamma_N(k\delta)} \xrightarrow{p} \kappa$.
+
+35(a)
+Note that for any interval $[N, N+1)$ where $N$ is an integer, the "critical threshold" for $\kappa$ is given by $N - \frac{1}{4}$. 
+
+For any $k \geq 1$, we can use a similar argument as in 34(d) to show that $\hat \gamma_N(2k\delta)/\hat \gamma_N(k\delta) \xrightarrow{p} 2^{2\kappa}$ and thus $\hat \kappa = \frac{1}{2} \log_2 \frac{\hat \gamma_N(2k\delta)}{\hat \gamma_N(k\delta)} \xrightarrow{p} \kappa$.
+
+
+\end{document}

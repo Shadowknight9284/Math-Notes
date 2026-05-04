@@ -1,0 +1,42 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\begin{questions}
+\question Would the model be one in which we redefine the the laplacian to encode  
+
+the original model Lindgren (2011):
+$$ (\kappa^2 - \Delta)^{\alpha/2} Z(x,t) = W(x,t)$$
+With $\Delta = \frac{\partial^2}{\partial t^2} + \sum_{i = 1}^d \frac{\partial^2}{\partial x_i^2}$
+
+Note that I am not certain if this is how most spatio-temporal Matern models are characterized, im simply assuming since the time dimension is treated the same as a spatial one.
+
+Into 
+$$ (\kappa^2 - D)^{\alpha/2} Z(x,t) = W(x,t)$$
+With $D = \frac{\partial}{\partial t} + \sum_{i = 1}^d \frac{\partial^2}{\partial x_i^2}$ 
+
+Or would it be more fitting to have another model in which we have the linear operator
+$$ L_x(\kappa, \alpha) = (\kappa^2 - \Delta_x)^
+{\alpha/2} \quad \Delta_x = \sum_{x_i \in x} \frac{\partial^2}{\partial x_i^2}$$
+and then have the separable model 
+$$ L_t(\kappa_t, \alpha_t) L_x(\kappa_x, \alpha_x)Z(x,t) = W(x,t)$$
+
+I think the first characterization is better simply on the pretense we should avoid seperable models, but I am not sure if that intuition holds since I would expect sufficently different behavior looking acros space $\times$ time, as apposed space $\times$ space
+
+\question I am frankly more inexperienced in simulations methods and numerical methods, so other than finite element are there other interesting Numerical Methods that are both computational fast, but have different approaches, I have seen in PDEs the Finite Volume Method, as well the Euler-Maruyama Method for stochastic processes and obviously some beizer curve fitting model. But in your experience what methods are most reliable and used in practice, (if there exists some beyond FEM). Also knowing what is not used may be interesting from a research perspective to see if there exist some methods that yield useful results when applied (or if if it is just a dead end). I have yet to deeply parse the INLA Documentation, so I am certain I will also find some light as I look through there.
+
+\end{questions}
+
+\end{document}

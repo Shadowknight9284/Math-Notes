@@ -1,0 +1,35 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Stats}
+\newcommand{\assignment}{Homework 5.1 }
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+\question When the mean is unknown, the usual likelihood can give a misleading picture of the range parameter, while the restricted likelihood behaves more sensibly near very large ranges (very strong correlation).
+
+\question Estimating the mean together with the covariance tends to make the maximum likelihood estimate of the inverse range too large, which means it often underestimates the true strength of spatial correlation.
+
+\question How would the contours and profile likelihoods change if we used a different covariance family (e.g., Matern with varying smoothness) instead of the simple exponential form? I expect that it will similarly underestimate the spatial corelation due to the property of the residuals being the opposite sign.
+
+\question Could we have a better two step procedure to estimate the mean and covariance to achieve similar benefits to the REML method? Also is there a notion of regularization on the mean, to ensure it keeps the residuals on more positive or negative based on the assumptions we have on the data. 
+
+\question Is there a metric to show when we should switch from ML, to REML, or some other method that might exist?
+
+\question I found the method of inverting the tests interesting and frankly intuitive. Is it a coincidence that the $\chi^2$ approximation has that form or is there some underlying structure to justly that form. 
+
+\question Because the deviance distribution under the null does not depend on $\mu$ or $\phi_1$, is it realistic in practice to pre-compute critical values for a given set of locations and reuse them across datasets
+
+\question These two chapters made sense to me on a high level but I will be rereading it again and read more of chapter 5 to understand REML more 
+
+\end{questions}
+
+\end{document} 

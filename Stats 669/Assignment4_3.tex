@@ -1,0 +1,68 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics}
+\newcommand{\assignment}{Homework 4.3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\begin{questions}
+\question 5.7
+
+Derive 5.18: 
+$$ \frac{\partial}{\partial \theta_j} \log | \Sigma (\theta) | = \trace\{ \Sigma^{-1} \Sigma_j(\theta) \} $$
+\begin{solution}
+    Consider an $m$ dimensional Gaussian random vector $Y \sim N(\mu(\beta), \Sigma(\theta))$.
+    
+    Using the Jacobi identity $\partial (\det A) = \det A \cdot \trace (A^{-1} \partial A)$, we have
+    \begin{align*}
+        \frac{\partial}{\partial \theta_j} \log | \Sigma (\theta) | &= \frac{1}{|\Sigma(\theta)|} \cdot \frac{\partial}{\partial \theta_j} |\Sigma(\theta)| \\
+        &= \frac{1}{|\Sigma(\theta)|} \cdot |\Sigma(\theta)| \cdot \trace\{ \Sigma^{-1} \Sigma_j(\theta) \} \\
+        &= \trace\{ \Sigma^{-1} \Sigma_j(\theta) \}
+    \end{align*}
+
+    
+\end{solution}
+
+\question 6.5 a
+
+\begin{solution}
+    For a log-log plot, the slope of the line is given by the exponent of the power law. For all $m =100,200,400$ we see that the slope is approximately $.5$ and when regraphing on a regular plot, we see that the line is approximately $y = \sqrt{x}$, which confirms our observation from the log-log plot.
+\end{solution}
+
+\question 6.5 b
+
+\begin{solution}
+    Let us consider the Taylor expansion of the function $K_\theta(x) = \theta_1 e^{-r / \theta_2}(1+r/\theta_2)$ around $r=0$:
+\begin{align*}
+    K_\theta(x) &= \theta_1 e^{-r / \theta_2}(1+r/\theta_2) \\
+    &= \theta_1 (1 - r/\theta_2 + (r/\theta_2)^2/2 - o((r/\theta_2)^2))(1 + r/\theta_2) \\
+    &= \theta_1 (1 + r/\theta_2 - r/\theta_2 + (r/\theta_2)^2/2 - o((r/\theta_2)^2)) \\
+    &= \theta_1 (1 + (r/\theta_2)^2/2 - o((r/\theta_2)^2))
+\end{align*}
+Notice that our principle irregular term is of order $r^2$, with the coefficient $\theta_1 / (2 \theta_2^2)$. 
+
+Going back to the plot of $\theta_1$ vs $\theta_2$, we see that the line of best fit on the log log scale has a slope of approximately $\frac{1}{2}$ and that meand the model that is fit is 
+\begin{align*}
+    \log \theta_2 &= \frac{1}{2} \log \theta_1 + b \\
+    \theta_2 &= B \cdot \theta_1^{1/2} \\
+    \frac{\theta_2}{\theta_1^{1/2}} &= B
+\end{align*}
+This finding is consistent with the fact that the coefficient of the principle irregular term is $\theta_1 / (2 \theta_2^2)$, which is constant when $\theta_2 / \theta_1^{1/2}$ is constant.
+
+Thus our reparameterization is given by $\phi_1 = \theta_2 / \theta_1^{1/2}$ and $\phi_2 = \theta_2 \theta_1^{1/2}$.
+
+Note that we could have easiley also chosen $\phi_1 = \theta_1 / \theta_2^2$ and $\phi_2 = \theta_1 \theta_2^2$, which would have also worked.
+\end{solution}
+
+\end{questions}
+
+\end{document}

@@ -1,0 +1,271 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\section{A General Periodic Fourier--State-Space Spatio--Temporal Model}
+
+\subsection{Model setup}
+
+We consider a real-valued Gaussian spatio--temporal process
+\[
+  \{X_t(x) : x \in [0,2\pi],\; t \in \mathbb{Z}\},
+\]
+defined on a one-dimensional spatial domain with periodic boundary conditions (a circle) and discrete time. For each time $t$, the spatial field $X_t(\cdot)$ is represented by a truncated Fourier series
+\begin{equation}
+  X_t(x)
+  \;=\;
+  a_0(t)
+  \;+\;
+  \sum_{j=1}^{J}
+    \Bigl[
+      a_j(t)\cos(jx) + b_j(t)\sin(jx)
+    \Bigr],
+  \qquad x \in [0,2\pi],
+  \label{eq:Xt-fourier}
+\end{equation}
+where $J$ is a truncation level and
+\[
+  a_j(t),\, b_j(t), \quad j=0,\dots,J,\; t\in\mathbb{Z},
+\]
+are jointly Gaussian random coefficients. The representation \eqref{eq:Xt-fourier} is exact in the limit $J\to\infty$ and is a finite-dimensional approximation in practice.
+
+We collect the coefficients into a state vector
+\begin{equation}
+  \mathbf{Z}_t
+  \;=\;
+  \bigl(a_0(t), a_1(t),\dots,a_J(t), b_1(t),\dots,b_J(t)\bigr)^\top
+  \;\in\; \mathbb{R}^{2J+1}.
+  \label{eq:state-vector}
+\end{equation}
+
+\subsection{General linear Gaussian dynamics in Fourier space}
+
+The temporal evolution of the Fourier coefficients is specified by a linear Gaussian state-space model
+\begin{equation}
+  \mathbf{Z}_{t+1}
+  =
+  \boldsymbol{\mu}
+  +
+  M\,(\mathbf{Z}_t - \boldsymbol{\mu})
+  +
+  \boldsymbol{\varepsilon}_t,
+  \qquad
+  \boldsymbol{\varepsilon}_t \sim \mathcal{N}(\mathbf{0}, \Sigma_\varepsilon),
+  \label{eq:Zt-state-space}
+\end{equation}
+where
+\begin{itemize}
+  \item $\boldsymbol{\mu} \in \mathbb{R}^{2J+1}$ is the (possibly nonzero) mean state;
+  \item $M \in \mathbb{R}^{(2J+1)\times(2J+1)}$ is the transition matrix;
+  \item $\Sigma_\varepsilon \in \mathbb{R}^{(2J+1)\times(2J+1)}$ is the innovation covariance matrix;
+  \item $\{\boldsymbol{\varepsilon}_t\}$ are i.i.d.\ Gaussian, independent of $\mathbf{Z}_0$.
+\end{itemize}
+
+Equation \eqref{eq:Zt-state-space} implies the process $\mathbf{Z}_t$ is first-order Markov in time. The conditions for stationarity of $\{\mathbf{Z}_t\}$ are standard: if the spectral radius of $M$ is strictly less than $1$, i.e.
+\[
+  \rho(M) < 1,
+\]
+then there exists a unique stationary distribution $\mathcal{N}(\boldsymbol{\mu}, \Sigma_0)$ for $\mathbf{Z}_t$, where $\Sigma_0$ solves the discrete-time Lyapunov equation
+\begin{equation}
+  \Sigma_0
+  =
+  M\Sigma_0 M^\top + \Sigma_\varepsilon.
+  \label{eq:lyapunov}
+\end{equation}
+Given $\boldsymbol{\mu}$, $M$, and $\Sigma_\varepsilon$, the stationary covariance $\Sigma_0$ is determined by \eqref{eq:lyapunov}. Conversely, one can specify a desired stationary covariance $\Sigma_0$ and transition $M$, and then define
+\begin{equation}
+  \Sigma_\varepsilon
+  =
+  \Sigma_0 - M\Sigma_0 M^\top,
+  \label{eq:Sigma-eps-from-Sigma0}
+\end{equation}
+provided the right-hand side is positive semidefinite.
+
+\subsection{Matérn-like spatial margin on the circle}
+
+We seek to construct $\Sigma_0$ such that the induced spatial margin of $X_t(\cdot)$ at each time $t$ is approximately that of a Matérn field on the circle.
+
+In one spatial dimension on $\mathbb{R}$, the Matérn covariance with variance $\sigma^2$, smoothness $\nu > 0$, and range parameter $\ell>0$ can be written as
+\[
+  C_\nu(h)
+  =
+  \sigma^2 \frac{2^{1-\nu}}{\Gamma(\nu)}
+  \left(
+    \sqrt{2\nu}\,\frac{|h|}{\ell}
+  \right)^\nu
+  K_\nu\!\left(
+    \sqrt{2\nu}\,\frac{|h|}{\ell}
+  \right),
+\]
+whose spectral density is proportional to
+\[
+  S(\omega)
+  \;\propto\;
+  \bigl(\kappa^2 + \omega^2\bigr)^{-(\nu + 1/2)},
+  \qquad
+  \kappa = \frac{\sqrt{2\nu}}{\ell}.
+\]
+
+On the periodic domain, we approximate this by imposing that the Fourier coefficients at a fixed time have variances
+\begin{equation}
+  \sigma_j^2
+  \;\propto\;
+  \bigl(\kappa^2 + j^2\bigr)^{-(\nu + 1/2)},
+  \qquad j = 0,\dots,J,
+  \label{eq:matern-spectrum-general}
+\end{equation}
+with $\kappa = \sqrt{2\nu}/\ell$. For simulation, it is convenient to normalize these so that
+\begin{equation}
+  \sum_{j=0}^{J} \sigma_j^2 = \sigma^2_{\text{tot}},
+  \label{eq:sigma-normalization}
+\end{equation}
+for a chosen total marginal variance $\sigma^2_{\text{tot}}$. The choice of $\nu$ and $\ell$ controls, respectively, the spatial smoothness and range of $X_t(\cdot)$.
+
+A minimal assumption consistent with \eqref{eq:matern-spectrum-general} is that, at stationarity,
+\begin{equation}
+  \operatorname{Var}(a_j(t)) = \operatorname{Var}(b_j(t)) = \sigma_j^2,
+  \qquad j=1,\dots,J,
+  \label{eq:marginal-modes}
+\end{equation}
+and $\operatorname{Var}(a_0(t)) = \sigma_0^2$, with all these variances appearing along the diagonal of $\Sigma_0$ in \eqref{eq:lyapunov}. Cross-frequency and cosine/sine correlations can be incorporated in $\Sigma_0$ without changing the overall shape of the marginal spectral envelope given by \eqref{eq:matern-spectrum-general}.
+
+\subsection{Mode-specific temporal behaviour}
+
+The most general linear Gaussian model allows $\mathbf{Z}_t$ to evolve with a fully populated transition matrix $M$ and arbitrary innovation covariance $\Sigma_\varepsilon$. For purposes of interpretation, it is useful to describe a structured, but still flexible, parameterization.
+
+\paragraph{Frequency-dependent AR(1) persistence.}  
+For each frequency $j$, the coefficients may be assigned an effective persistence parameter $\rho_j \in (-1,1)$ that governs their typical temporal autocorrelation length. In the simplest block-diagonal model (no cross-frequency coupling in $M$), one can set
+\begin{equation}
+  a_j(t+1) = \rho_j a_j(t) + \eta_{a,j,t}, \quad
+  b_j(t+1) = \rho_j b_j(t) + \eta_{b,j,t},
+  \qquad j=1,\dots,J,
+  \label{eq:simple-ar1-modes}
+\end{equation}
+and
+\begin{equation}
+  a_0(t+1) = \rho_0 a_0(t) + \eta_{0,t},
+  \label{eq:simple-ar1-mean}
+\end{equation}
+with Gaussian innovations
+\[
+  \eta_{0,t} \sim \mathcal{N}\bigl(0, \sigma_0^2 (1 - \rho_0^2)\bigr),
+  \quad
+  \eta_{a,j,t},\eta_{b,j,t} \sim \mathcal{N}\bigl(0, \sigma_j^2 (1 - \rho_j^2)\bigr),
+\]
+independent across $j$, between $a$ and $b$, and across $t$. Then $\{a_j(t)\}$ and $\{b_j(t)\}$ are stationary AR(1) processes with variance $\sigma_j^2$ and autocorrelation $\rho_j^{|k|}$.
+
+A key nonseparable feature arises from allowing the persistence to depend on frequency, e.g.
+\begin{equation}
+  \rho_j
+  =
+  \exp\bigl(-\lambda j^\alpha\bigr),
+  \qquad j=1,\dots,J,
+  \label{eq:rho-freq-dependence}
+\end{equation}
+with $\rho_0$ set separately in $(-1,1)$, and parameters $\lambda > 0$ and $\alpha > 0$. In this case, low-frequency modes (small $j$) decorrelate slowly in time, while high-frequency modes decorrelate rapidly, so the effective spatial correlation structure changes with the time lag. This yields a space--time covariance that is stationary but generally nonseparable in space and time.
+
+\paragraph{Cross-frequency and cosine/sine coupling.}  
+Beyond \eqref{eq:simple-ar1-modes}--\eqref{eq:simple-ar1-mean}, one can introduce rich dependency structures in either
+\begin{itemize}
+  \item the transition matrix $M$, allowing the value of mode $j$ at time $t+1$ to depend on multiple modes at time $t$ (e.g.\ banded or low-rank modifications of a block-diagonal structure), or
+  \item the innovation covariance $\Sigma_\varepsilon$, allowing simultaneous shocks to be correlated across frequencies and between cosine/sine components.
+\end{itemize}
+For example, a block-structured $M$ might have $2\times 2$ blocks $M_j$ acting on $(a_j,b_j)$ for each $j$, with
+\[
+  M_j
+  =
+  \rho_j
+  \begin{pmatrix}
+    \cos\theta_j & -\sin\theta_j \\
+    \sin\theta_j & \cos\theta_j
+  \end{pmatrix},
+\]
+which induces a rotation (phase drift) and persistence at each frequency. Similarly, $\Sigma_\varepsilon$ could be parameterized as
+\[
+  \Sigma_\varepsilon = \Lambda \Lambda^\top + D,
+\]
+with a low-rank factor $\Lambda$ representing a few latent shocks that affect many modes simultaneously, and $D$ diagonal.
+
+\subsection{Space--time covariance}
+
+Under the simple independent-mode AR(1) structure \eqref{eq:simple-ar1-modes}--\eqref{eq:simple-ar1-mean} with zero mean, the space--time covariance
+\[
+  C(h,k) = \mathbb{E}\bigl[ X_t(x) X_{t+k}(x+h) \bigr]
+\]
+admits a closed form:
+\begin{equation}
+  C(h,k)
+  =
+  \sum_{j=0}^{J}
+  \sigma_j^2 \rho_j^{|k|} \cos(jh),
+  \label{eq:cov-fourier-ar1-general}
+\end{equation}
+where $\cos(0\cdot h)=1$ for the $j=0$ term. This follows by substituting \eqref{eq:Xt-fourier}, using the uncorrelatedness of different modes and cosine/sine components, and applying the identity
+\[
+  \cos A\cos B + \sin A\sin B = \cos(A-B).
+\]
+Formula \eqref{eq:cov-fourier-ar1-general} makes explicit that the process is stationary in both space and time and that, unless all $\rho_j$ are equal, $C(h,k)$ cannot be written as a separable product $C_{\text{space}}(h) C_{\text{time}}(k)$.
+
+When $M$ and $\Sigma_\varepsilon$ are fully general, the covariance structure can still be characterized via the stationary covariance $\Sigma_0$ from \eqref{eq:lyapunov}, but the expression for $C(h,k)$ in physical space involves both frequency--lag-dependent auto- and cross-covariances among the Fourier coefficients and generally cannot be reduced to \eqref{eq:cov-fourier-ar1-general}.
+
+\subsection{Parameter overview}
+
+The full model includes the following parameters, with varying levels of restriction depending on the chosen structure:
+
+\begin{itemize}
+  \item \textbf{Fourier truncation:} $J$ (integer, $J\ge 0$). Controls the finest spatial scale represented.
+
+  \item \textbf{Matérn spatial parameters:}
+    \begin{itemize}
+      \item $\nu > 0$ (smoothness): larger $\nu$ gives smoother spatial fields.
+      \item $\ell > 0$ (range): larger $\ell$ increases the spatial correlation length.
+      \item $\sigma^2_{\text{tot}} > 0$ (total marginal variance): overall scale.
+      \item $\kappa = \sqrt{2\nu}/\ell$ (inverse range): internal scale parameter used in the spectral envelope \eqref{eq:matern-spectrum-general}.
+    \end{itemize}
+
+  \item \textbf{Temporal persistence parameters:}
+    \begin{itemize}
+      \item $\rho_0 \in (-1,1)$: AR(1) persistence for the mean mode $a_0(t)$.
+      \item $\rho_j \in (-1,1)$, $j=1,\dots,J$, e.g.\ via \eqref{eq:rho-freq-dependence} with
+        \begin{itemize}
+          \item $\lambda > 0$: controls overall decay speed across frequencies,
+          \item $\alpha > 0$: controls how strongly persistence changes with $j$.
+        \end{itemize}
+    \end{itemize}
+
+  \item \textbf{State-space parameters:}
+    \begin{itemize}
+      \item $\boldsymbol{\mu} \in \mathbb{R}^{2J+1}$: mean state (for zero-mean processes, $\boldsymbol{\mu} = 0$).
+      \item $M \in \mathbb{R}^{(2J+1)\times(2J+1)}$: transition matrix. Possible structures:
+        \begin{itemize}
+          \item block-diagonal in frequencies (independent modes),
+          \item block-diagonal with $2\times 2$ rotations per mode,
+          \item banded, low-rank, or fully general.
+        \end{itemize}
+      \item $\Sigma_\varepsilon \in \mathbb{R}^{(2J+1)\times(2J+1)}$: innovation covariance. Possible structures:
+        \begin{itemize}
+          \item diagonal (independent innovations),
+          \item diagonal plus low-rank (factor structure),
+          \item banded or fully general symmetric positive semidefinite.
+        \end{itemize}
+    \end{itemize}
+
+  \item \textbf{Time horizon:} $T$ (integer, $T\ge 1$). Number of time points simulated or observed.
+
+\end{itemize}
+
+By choosing simple structures (e.g.\ block-diagonal $M$ with $\rho_j$ given by \eqref{eq:rho-freq-dependence}, diagonal $\Sigma_\varepsilon$ determined by \eqref{eq:Sigma-eps-from-Sigma0}, and $\boldsymbol{\mu}=0$) one obtains a tractable, interpretable nonseparable model. More complex structures in $M$ and $\Sigma_\varepsilon$ can then be introduced gradually to capture richer cross-frequency interactions while preserving the Matérn-like spatial margin and Markovian temporal dynamics.
+
+\end{document}

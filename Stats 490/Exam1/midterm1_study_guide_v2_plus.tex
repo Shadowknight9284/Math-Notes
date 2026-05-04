@@ -1,0 +1,608 @@
+\documentclass[9pt,letterpaper]{article}
+\usepackage[margin=0.2in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{tcolorbox}
+\usepackage{array}
+
+\titlespacing*{\section}{0pt}{4pt}{1pt}
+\titlespacing*{\subsection}{0pt}{3pt}{1pt}
+\titleformat{\section}{\normalsize\bfseries}{}{0em}{}
+\titleformat{\subsection}{\small\bfseries}{}{0em}{}
+
+\setlist[itemize]{noitemsep, topsep=1pt, leftmargin=*, parsep=0pt}
+\setlist[enumerate]{noitemsep, topsep=1pt, leftmargin=*, parsep=0pt}
+
+\newtcolorbox{calcbox}{colback=gray!8, colframe=gray!50, boxrule=0.3pt, left=2pt, right=2pt, top=1pt, bottom=1pt, before skip=2pt, after skip=2pt, fontupper=\small}
+\newtcolorbox{keybox}{colback=blue!5, colframe=blue!40, boxrule=0.3pt, left=2pt, right=2pt, top=1pt, bottom=1pt, before skip=2pt, after skip=2pt, fontupper=\small}
+
+\pagestyle{plain}
+\setlength{\parindent}{0pt}
+\small
+
+\begin{document}
+
+\begin{center}
+{\Large \textbf{Midterm 1 Comprehensive Study Guide --- Stat 490}}\\[2pt]
+{\small Design of Experiments $\cdot$ Spring 2026}
+\end{center}
+\vspace{-4pt}\hrule\vspace{4pt}
+
+%% ============================================================
+\section{1. Foundations: Hypothesis Testing \& Two-Sample Inference}
+%% ============================================================
+
+\subsection{1.1 Core Definitions}
+\begin{itemize}
+    \item \textbf{Population}: Full set of units. \textbf{Sample}: Subset used for inference. \textbf{SRS}: Every unit has equal chance.
+    \item \textbf{$H_0$} (null): No effect/difference. \textbf{$H_a$} (alternative): What we seek evidence for.
+    \item \textbf{Type I Error} ($\alpha$): Reject $H_0$ when true (false positive). \textbf{Type II} ($\beta$): Fail to reject $H_0$ when $H_a$ true (false negative).
+    \item \textbf{p-value}: $P(\text{test stat as extreme or more} \mid H_0 \text{ true})$. Reject $H_0$ if p-value $< \alpha$.
+    \item \textbf{Power} $= 1 - \beta = P(\text{Reject } H_0 \mid H_a \text{ true})$. Increases with $\uparrow n$, $\uparrow$ effect size, $\uparrow \alpha$, $\downarrow \sigma$.
+\end{itemize}
+
+\subsection{1.2 $t$-Tests}
+\textbf{Assumptions}: (1) Random sampling, (2) Approx.\ normality (critical for small $n$), (3) Independence between groups.
+
+\begin{center}\small
+\begin{tabular}{@{}llc@{}}
+\toprule
+\textbf{Scenario} & \textbf{Test Statistic} & \textbf{df} \\
+\midrule
+One-sample & $t = (\bar{x} - \mu_0)/(s/\sqrt{n})$ & $n-1$ \\
+Pooled two-sample & $t = (\bar{x}_1 - \bar{x}_2)/(s_p\sqrt{1/n_1 + 1/n_2})$ & $n_1+n_2-2$ \\
+Welch (non-pooled) & $t = (\bar{x}_1 - \bar{x}_2)/\sqrt{s_1^2/n_1 + s_2^2/n_2}$ & Satterthwaite \\
+Paired & $t = \bar{d}/(s_d/\sqrt{n_d})$ & $n_d - 1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Pooled vs.\ Welch}: Pool when SD ratio in $[1/2, 2]$; else use Welch/Satterthwaite. \textbf{Paired}: Natural pairs (same subject, before/after). Reduces variability---extension of blocking.
+
+\begin{calcbox}
+\textbf{TI-84}: \texttt{STAT} $\to$ \texttt{TESTS} $\to$ \texttt{2:T-Test} (one-sample), \texttt{4:2-SampTTest} (two-sample). For pooled: set \texttt{Pooled:Yes}. Enter $\bar{x}$, $s$, $n$ directly via ``Stats'' input.
+\end{calcbox}
+
+\subsection{1.3 CIs and Assumption Checks}
+
+CI for $\mu_i$: $\bar{x} \pm t_{\alpha/2,\,df}\cdot s/\sqrt{n}$. CI for $\mu_1 - \mu_2$: $(\bar{x}_1 - \bar{x}_2) \pm t_{\alpha/2,\,df}\cdot SE$. If CI excludes 0 $\Rightarrow$ reject $H_0$.
+
+\begin{itemize}
+    \item \textbf{Normality}: QQ-plot (straight line = normal), Shapiro--Wilk test (highest power for small $n$).
+    \item \textbf{Equal variance ($k$ groups)}: \textbf{Bartlett's}---powerful if normal, sensitive to non-normality. \textbf{Levene's}---robust (uses median absolute deviations). Rule: max SD $> 2\times$ min SD $\Rightarrow$ suspect.
+\end{itemize}
+
+%% ============================================================
+\section{2. One-Way ANOVA (Fixed Effects, CRD)}
+%% ============================================================
+
+\subsection{2.1 The Model}
+\[
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}, \quad i=1,\ldots,a,\; j=1,\ldots,n, \quad \varepsilon_{ij}\sim \text{NID}(0,\sigma^2)
+\]
+$\mu$: grand mean. $\tau_i$: treatment effect, $\sum\tau_i=0$. Treatment mean $\mu_i=\mu+\tau_i$. $N=an$ (balanced).
+
+\textbf{Three assumptions}: (1) Independence of errors (via randomization). (2) Normality of errors. (3) Constant variance $\sigma^2$ across all groups (homoscedasticity).
+
+\subsection{2.2 ANOVA Decomposition and Table}
+
+\textbf{Key identity}: $SS_T = SS_{\text{Treat}} + SS_E$. Total variability = between-group + within-group.
+\[
+SS_T = \sum_{i,j}(y_{ij}-\bar{y}_{..})^2, \quad SS_{\text{Treat}} = \sum_i n(\bar{y}_{i.}-\bar{y}_{..})^2, \quad SS_E = \sum_{i,j}(y_{ij}-\bar{y}_{i.})^2
+\]
+
+\begin{center}\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Source & df & SS & MS & $F$ \\
+\midrule
+Treatment & $a-1$ & $SS_{\text{Trt}}$ & $MS_{\text{Trt}} = SS_{\text{Trt}}/(a-1)$ & $MS_{\text{Trt}}/MS_E$ \\
+Error & $N-a$ & $SS_E$ & $MS_E = SS_E/(N-a)$ & \\
+Total & $N-1$ & $SS_T$ & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Why it works}: Under $H_0$, both $MS_{\text{Trt}}$ and $MS_E$ estimate $\sigma^2$, so $F \approx 1$. Under $H_a$, $E[MS_{\text{Trt}}] = \sigma^2 + n\sum\tau_i^2/(a-1) > \sigma^2 = E[MS_E]$, so $F$ is large. $MS_E$ is always an unbiased estimator of $\sigma^2$.
+
+\textbf{Estimates}: $\hat\mu=\bar{y}_{..}$, $\hat\tau_i=\bar{y}_{i.}-\bar{y}_{..}$, $\hat\mu_i=\bar{y}_{i.}$. Residual: $e_{ij}=y_{ij}-\bar{y}_{i.}$.
+
+$R^2 = SS_{\text{Trt}}/SS_T$ = proportion of variability explained by treatment.
+
+\subsection{2.3 Regression Equivalence}
+ANOVA with $a$ levels $\equiv$ regression with $a-1$ dummy variables. Same $F$, $MS_E$, p-value. Regression $\hat\beta_j$ = difference from base level; ANOVA $\hat\tau_i$ = deviation from grand mean.
+
+\subsection{2.4 CIs from ANOVA}
+\begin{itemize}
+    \item For $\mu_i$: $\;\bar{y}_{i.} \pm t_{\alpha/2,\,N-a}\sqrt{MS_E/n}$
+    \item For $\mu_i - \mu_j$: $\;(\bar{y}_{i.}-\bar{y}_{j.}) \pm t_{\alpha/2,\,N-a}\sqrt{2\,MS_E/n}$
+\end{itemize}
+
+\subsection{2.5 Worked Example: Dog Food Shelf Height (CRD)}
+
+3 shelf heights (Knee, Eye, Waist), $n=8$ per group, $N=24$.
+
+\begin{center}\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & Knee & Eye & Waist \\
+\midrule
+$\bar{y}_{i.}$ & 81.0 & 84.625 & 90.875 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Grand mean $\bar{y}_{..} = 85.5$. From ANOVA: $SS_{\text{Trt}}=399.2$, $SS_E=288.7$, $MS_E=13.75$.
+
+$F = 199.62/13.75 = 14.52$ with df $(2, 21)$. p-value $= 0.00011 \Rightarrow$ reject $H_0$ at $\alpha=0.05$.
+
+95\% CI for $\mu_{\text{Knee}}$: $81 \pm 2.08\sqrt{13.75/8} = 81 \pm 2.73 = (78.27,\; 83.73)$.
+
+\begin{calcbox}
+\textbf{TI-84 for F p-value}: \texttt{2nd} $\to$ \texttt{DISTR} $\to$ \texttt{Fcdf(14.52, 1E99, 2, 21)} returns $\approx 0.00011$.\\
+\textbf{TI-84 for $t$ critical value}: \texttt{2nd} $\to$ \texttt{DISTR} $\to$ \texttt{invT(0.025, 21)} returns $-2.080$.\\
+\textbf{SS by hand}: Enter group data in \texttt{L1,L2,L3}; use \texttt{1-Var Stats L1} to get $\bar{x}, \sum x^2, n$ per group.
+\end{calcbox}
+
+%% ============================================================
+\section{3. Multiple Comparisons}
+%% ============================================================
+
+\subsection{3.1 The Familywise Error Problem}
+With $\binom{a}{2}$ pairwise tests at $\alpha$: FW error $= 1-(1-\alpha)^{\binom{a}{2}}$. For $a=4$: $K=6$ tests, FW error $\approx 0.26$ at $\alpha=0.05$. Each additional test inflates the chance of a false positive.
+
+\subsection{3.2 Named Procedures}
+
+\begin{center}\small
+\begin{tabular}{@{}p{1.6cm}p{4.8cm}p{3.8cm}c@{}}
+\toprule
+\textbf{Method} & \textbf{Formula / Key Idea} & \textbf{When to Use} & \textbf{FW?} \\
+\midrule
+\textbf{Fisher LSD} & $\text{LSD}=t_{\alpha/2,N-a}\sqrt{2 MS_E/n}$. Declare sig.\ if $|\bar{y}_{i.}-\bar{y}_{j.}|>\text{LSD}$. & After sig.\ $F$; few groups. Most liberal. & No \\[4pt]
+\textbf{Bonferroni} & Replace $\alpha$ with $\alpha/K$ in each CI/test. & Small $K$; any comparisons. Conservative. & Yes \\[4pt]
+\textbf{Tukey HSD} & $\text{HSD}=q_{\alpha,a,N-a}\sqrt{MS_E/n}$. Uses Studentized Range. & All pairwise. Less conservative than Bonferroni. & Yes \\[4pt]
+\textbf{Dunnett} & Compare each trt to one control only ($a-1$ tests). Uses special table. & Placebo/control design. Narrower CIs than Tukey. & Yes \\[4pt]
+\textbf{Scheff\'e} & Reject if $|\hat\Gamma|/SE(\hat\Gamma) > \sqrt{(a-1)F_{\alpha,a-1,N-a}}$. & Any contrast, post-hoc. Protects against data snooping. & Yes \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Power ranking (pairwise)}: Fisher LSD $>$ Tukey $>$ Bonferroni $>$ Scheff\'e.\\
+\textbf{For complex contrasts}: Scheff\'e $>$ Tukey. \quad \textbf{For control comparisons only}: Dunnett $>$ all others.
+
+\textbf{Optimal control allocation}: With $a$ treatments + 1 control, allocate $n_0 = n\sqrt{a}$ to control.
+
+\subsection{3.3 Worked Example: Dog Food Pairwise Comparisons}
+
+From \S2.5: $a=3$, $N=24$, $MS_E=13.75$, $n=8$, error df $=21$.
+
+$SE = \sqrt{2(13.75)/8} = 1.854$
+
+\begin{center}\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Pair & $|\bar{y}_{i.}-\bar{y}_{j.}|$ & LSD = 3.86 & Tukey HSD = 4.67 & Bonf.\ ($\alpha^*\!=\!0.0167$) \\
+\midrule
+W--K & 9.875 & Sig & Sig & Sig \\
+W--E & 6.250 & Sig & Sig & Sig \\
+K--E & 3.625 & Not sig & Not sig & Not sig \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+LSD: $t_{0.025,21}\cdot 1.854 = 2.08\cdot 1.854 = 3.86$. \quad Tukey: $q_{0.05,3,21}\cdot\sqrt{13.75/8} = 3.56\cdot 1.31 = 4.67$.\\
+Bonferroni: $t_{0.0083,21}\cdot 1.854 = 2.62\cdot 1.854 = 4.86$ (wider than Tukey---more conservative).
+
+All three methods agree here, but for borderline cases the order matters.
+
+\begin{calcbox}
+\textbf{TI-84}: To get $t_{0.0083,21}$: \texttt{invT(0.0083, 21)} $\approx -2.62$. For $F$ critical value: \texttt{invF(area, df1, df2)} is not built-in; instead compute p-value with \texttt{Fcdf}.
+\end{calcbox}
+
+\subsection{3.4 Contrasts and Orthogonal Contrasts}
+
+A \textbf{contrast}: $\Gamma = \sum c_i \mu_i$ where $\sum c_i = 0$. Pairwise diff is simplest contrast.
+
+\textbf{Examples}: Placebo(1) vs avg of Trts 2,3: $C=(-2,1,1)$. Effect of protein P1 vs P2 in $2\times 2$ factorial: $C=(0.5, 0.5, -0.5, -0.5)$.
+
+Two contrasts $C,D$ are \textbf{orthogonal} if $\sum c_i d_i = 0$. There are exactly $a-1$ mutually orthogonal contrasts. They are independent and partition $SS_{\text{Trt}}$ into single-df components.
+
+\textbf{Example (3 treatments)}: $C_1=(-2,1,1)$ and $C_2=(0,-1,1)$ are orthogonal: $(-2)(0)+(1)(-1)+(1)(1)=0$. Note: $(1,-1,0)$ and $(0,1,-1)$ are NOT orthogonal.
+
+$SS_{\text{contrast}} = \frac{n(\sum c_i \bar{y}_{i.})^2}{\sum c_i^2}$ with 1 df. Test: $F = SS_{\text{contrast}}/MS_E$.
+
+\subsection{3.5 Data Snooping and Scheff\'e}
+
+\textbf{Data snooping}: Picking contrasts AFTER seeing data inflates Type I error (you implicitly tested many). \textbf{Scheff\'e protects}: guarantees FW error $\le \alpha$ for \emph{all possible} contrasts, even those chosen post-hoc. More conservative than Tukey for pairwise, but necessary for arbitrary contrasts.
+
+%% ============================================================
+\section{4. Model Adequacy \& Transformations}
+%% ============================================================
+
+\subsection{4.1 Residual Diagnostics}
+\textbf{Residual} $e_{ij}=y_{ij}-\bar{y}_{i.}$. Checks:
+\begin{itemize}
+    \item \textbf{Normality}: QQ-plot of residuals (straight line = good). Shapiro--Wilk test.
+    \item \textbf{Constant variance}: Residuals vs.\ fitted. Funnel/fan $\Rightarrow$ heteroscedasticity. Bartlett/Levene test.
+    \item \textbf{Outliers}: Studentized residual $|e^*_{ij}| > 3$ $\Rightarrow$ suspect outlier.
+    \item \textbf{Independence}: Ensured by randomization. Plot residuals vs.\ run order for time effects.
+\end{itemize}
+
+\subsection{4.2 Variance-Stabilizing Transformations}
+
+\textbf{Theory (delta method)}: If $\text{Var}(Y) = g(\mu)$, find $h(y)$ such that $h'(y) \propto 1/\text{SD}(Y)$; then $\text{Var}(h(Y)) \approx \text{const}$.
+
+\begin{center}\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Distribution & $\text{Var}(Y) \propto$ & Transform & Example \\
+\midrule
+Poisson (counts) & $\mu$ & $\sqrt{Y}$ & Flaw counts by coating \\
+Binomial (proportions) & $\mu(1-\mu)$ & $\sin^{-1}(\sqrt{Y})$ & Proportion of defectives \\
+Lognormal/Multiplicative & $\mu^2$ & $\ln(Y)$ & Prices, concentrations \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Worked example}: Copper wire flaws (3 coatings, $n=10$ each). Before transform: funnel-shaped residual plot, $MS_E = 8.97$. After $\sqrt{Y}$ transform: residuals uniform, $MS_E = 0.232$. Both reject $H_0$, but transformed model satisfies assumptions.
+
+\begin{calcbox}
+\textbf{TI-84}: To transform data: store in \texttt{L1}, then \texttt{L2 = $\sqrt{}$(L1)}. Re-run \texttt{1-Var Stats} on \texttt{L2}.
+\end{calcbox}
+
+%% ============================================================
+\section{5. Random Effects Model}
+%% ============================================================
+
+\subsection{5.1 Fixed vs.\ Random: When to Use}
+
+\begin{keybox}
+\textbf{Fixed}: The $a$ levels are the \emph{specific} ones of interest. Inference is about those levels only.\\
+\textbf{Random}: The $a$ levels are a \emph{random sample} from a larger population. Inference is about the population.
+\end{keybox}
+
+\textbf{Examples}: 3 specific labs $\Rightarrow$ fixed. 3 labs sampled from all labs $\Rightarrow$ random. 5 specific therapists $\Rightarrow$ fixed. 5 therapists randomly chosen $\Rightarrow$ random.
+
+\subsection{5.2 The Model and Expected Mean Squares}
+\[
+y_{ij} = \mu + \tau_i + \varepsilon_{ij}, \quad \tau_i \sim N(0, \sigma_\tau^2), \quad \varepsilon_{ij} \sim N(0, \sigma^2), \quad \text{independent}
+\]
+
+Total variance: $\text{Var}(Y_{ij}) = \sigma_\tau^2 + \sigma^2$. Within-treatment correlation: $\text{Cov}(Y_{ij}, Y_{ij'}) = \sigma_\tau^2$.
+
+\textbf{Expected mean squares}---the central result:
+\[
+E[MS_{\text{Trt}}] = \sigma^2 + n\sigma_\tau^2, \qquad E[MS_E] = \sigma^2
+\]
+Under $H_0: \sigma_\tau^2 = 0$, both estimate $\sigma^2$, so $F = MS_{\text{Trt}}/MS_E \approx 1$. Same $F$-test as fixed effects.
+
+\subsection{5.3 Key Differences from Fixed Effects}
+
+\begin{center}\small
+\begin{tabular}{@{}p{3cm}ll@{}}
+\toprule
+\textbf{Aspect} & \textbf{Fixed} & \textbf{Random} \\
+\midrule
+Hypothesis & $H_0:\tau_1=\cdots=\tau_a=0$ & $H_0:\sigma_\tau^2=0$ \\
+$E[MS_{\text{Trt}}]$ & $\sigma^2+\frac{n\sum\tau_i^2}{a-1}$ & $\sigma^2+n\sigma_\tau^2$ \\
+Within-trt correlation & 0 & $\sigma_\tau^2 > 0$ \\
+CI for $\mu$ uses & $MS_E/N$ & $MS_{\text{Trt}}/N$ (wider!) \\
+Inference scope & Specific levels & Population of levels \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Why is random-effects CI wider?} Because the treatment effect itself is a source of randomness. Fixed model treats treatments as deterministic.
+
+\subsection{5.4 Variance Components and ICC}
+
+\textbf{Estimators}: $\hat\sigma^2 = MS_E$. \quad $\hat\sigma_\tau^2 = (MS_{\text{Trt}} - MS_E)/n$.
+
+\textbf{Negative $\hat\sigma_\tau^2$}: Can happen if true $\sigma_\tau^2$ is small, $n$ is small, or there's negative within-group correlation the model doesn't capture. Interpret as $\sigma_\tau^2 \approx 0$.
+
+\textbf{Intraclass Correlation (ICC)}:
+\[
+\rho = \frac{\sigma_\tau^2}{\sigma_\tau^2 + \sigma^2} = \text{Corr}(Y_{ij}, Y_{ij'})
+\]
+Proportion of total variance due to between-group differences. $\rho=0$: no group structure. $\rho \to 1$: within-group nearly identical. Exact CI via $F$-distribution.
+
+\subsection{5.5 Worked Example: Sire--Calf Inheritance}
+
+5 sires (random sample from population), 8 calves each, $N=40$.
+
+From ANOVA: $MS_{\text{Trt}}=1397.8$, $MS_E=463.8$, $F=3.014$, p $=0.031$.
+
+$\hat\sigma^2 = 463.8$. \quad $\hat\sigma_\tau^2 = (1397.8-463.8)/8 = 116.75$.
+
+$\text{ICC} = 116.75/(116.75+463.8) = 0.201$.
+
+\textbf{Interpretation}: About 20\% of the total variability in calf weight is due to differences between sires. Most variability is within-sire.
+
+CI for $\mu$ (random): $82.55 \pm t_{0.025,4}\sqrt{MS_{\text{Trt}}/N} = 82.55 \pm 2.04\sqrt{1397.8/40} = (70.5, 94.6)$.
+
+CI for $\mu$ (fixed): $82.55 \pm t_{0.025,35}\sqrt{MS_E/N} = (75.6, 89.5)$.  Random CI is wider.
+
+\begin{calcbox}
+\textbf{TI-84}: $F$ p-value: \texttt{Fcdf(3.014, 1E99, 4, 35)} $\approx 0.031$. For $\chi^2$ CI on $\sigma^2$: \texttt{$\chi^2$cdf} is available.
+\end{calcbox}
+
+%% ============================================================
+\section{6. RCBD (Blocking)}
+%% ============================================================
+
+\subsection{6.1 Motivation and Additive Model}
+
+\textbf{Blocking}: Group units into homogeneous blocks to reduce error. ``Block what you can, randomize what you cannot.'' RCBD = every treatment appears once in every block. Extension of paired $t$-test to $a > 2$.
+
+\[
+y_{ij} = \mu + \tau_i + \beta_j + \varepsilon_{ij}, \quad i=1,\ldots,a,\; j=1,\ldots,b, \quad \sum\tau_i=0,\; \sum\beta_j=0
+\]
+
+\textbf{Additive assumption}: No treatment$\times$block interaction. The difference between any two treatment effects is the same in every block. If violated, interaction gets absorbed into $SS_E$, inflating $MS_E$ and increasing Type II error.
+
+\textbf{How to detect interaction}: Residuals vs.\ blocks plot shows patterns. But with one obs per cell, you \emph{cannot} formally test for interaction.
+
+\subsection{6.2 RCBD ANOVA Table}
+
+\begin{center}\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Source & df & SS & $F$ \\
+\midrule
+Treatment & $a-1$ & $SS_{\text{Trt}}$ & $MS_{\text{Trt}}/MS_E$ \\
+Block & $b-1$ & $SS_{\text{Block}}$ & $MS_{\text{Block}}/MS_E$ \\
+Error & $(a-1)(b-1)$ & $SS_E$ & \\
+Total & $N-1$ & $SS_T$ & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+$N=ab$. \textbf{Key}: Error df $= (a-1)(b-1)$, not $N-a$!
+
+\subsection{6.3 Degrees of Freedom: CRD vs.\ RCBD}
+
+\begin{center}\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & \textbf{CRD} & \textbf{RCBD} \\
+\midrule
+Error df & $N - a = a(n-1)$ & $(a-1)(b-1)$ \\
+Example: $a=4$, $b=3$ blocks & $12 - 4 = 8$ (if $n=3$) & $(3)(2) = 6$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+RCBD has fewer error df, but typically $MS_E$ is much smaller because block variability is removed. Net effect: usually more power.
+
+\subsection{6.4 Why Blocking Helps (Numerical)}
+
+Apple orchard: 5 treatments, 6 locations (blocks).
+
+\begin{center}\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & With blocking (RCBD) & Without blocking (CRD) \\
+\midrule
+$MS_E$ & 34,455 ($\sqrt{}\approx 186$) & 52,938 ($\sqrt{}\approx 230$) \\
+Treatment p-value & 0.682 & 0.823 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Blocking reduced $MS_E$ by 35\%. Same conclusion here (not significant), but in cases where treatment effects are moderate, this reduction would flip the result.
+
+\subsection{6.5 Multiple Comparisons in RCBD}
+
+Same methods (Tukey, Bonferroni, LSD, etc.) with modifications:
+\begin{itemize}
+    \item Replace $n$ (reps per treatment) with $b$ (number of blocks).
+    \item Error df $= (a-1)(b-1)$.
+    \item $SE = \sqrt{2\,MS_E/b}$.
+\end{itemize}
+
+Tukey HSD for apple data: $SE = \sqrt{34455/6} = 75.78$. $q_{0.05,5,20} = 4.23$. $\text{HSD} = 4.23 \times 75.78 = 320.6$.
+
+\subsection{6.6 Mixed Model: Fixed Treatments, Random Blocks}
+
+When blocks are a random sample (e.g., operators, days, subjects):
+\begin{itemize}
+    \item ANOVA table, df, and $F$-test for treatments \textbf{unchanged}.
+    \item Block variance: $\hat\sigma_\beta^2 = (MS_{\text{Block}} - MS_E)/a$.
+    \item Focus of inference: \textbf{treatments} (fixed). Blocks just model extra variability.
+\end{itemize}
+
+Assembly time example: 4 machines (fixed), 6 operators (random). $MS_{\text{Machine}}=5.308$, $MS_E=1.590$. $F=3.34$, p$=0.048$. Machines are significantly different. $\hat\sigma^2_{\text{Operator}} = (8.417 - 1.590)/4 = 1.707$.
+
+%% ============================================================
+\section{7. Power \& Sample Size}
+%% ============================================================
+
+\subsection{7.1 Conceptual Framework}
+
+Power = $P(\text{Reject } H_0 \mid H_a \text{ true})$. Steps: (1) Find rejection region under $H_0$. (2) Compute probability of landing there under specific $H_a$.
+
+\begin{keybox}
+\textbf{What increases required $n$?} Higher desired power, smaller effect size, smaller $\alpha$, larger $\sigma^2$.\\
+\textbf{What decreases required $n$?} Larger effect size, larger $\alpha$, smaller $\sigma^2$.
+\end{keybox}
+
+\subsection{7.2 Power for $Z$ and $t$ Tests}
+
+\textbf{One-sample example}: $H_0:\mu=368$ vs $H_a:\mu>368$. $n=50$, $s=15$, $\bar{x}=372.5$.
+
+Rejection region at $\alpha=0.05$: reject if $\bar{X} > 368 + 1.645\cdot(15/\sqrt{50}) = 371.5$.
+
+Power at $\mu=375$: $P(\bar{X}>371.5 \mid \mu=375) = P\!\left(Z > \frac{371.5-375}{15/\sqrt{50}}\right) = P(Z > -1.65) = 0.95$.
+
+\textbf{Interpretation}: 95\% chance of correctly detecting the difference if true mean is 375.
+
+\subsection{7.3 Effect Size for ANOVA (Cohen's $f$)}
+
+\[
+f = \frac{\sigma_{\text{between}}}{\sigma_{\text{within}}} = \sqrt{\frac{\frac{1}{a}\sum(\mu_i - \bar\mu)^2}{\sigma^2}}
+\]
+
+Benchmarks: $f=0.10$ (small), $f=0.25$ (medium), $f=0.40$ (large).
+
+\subsection{7.4 Worked Example: 4-Group Power}
+
+$H_a: \mu_1=50, \mu_2=60, \mu_3=50, \mu_4=60$. $\sigma^2=25$.
+
+$\bar\mu = 55$. Between-group var $= \frac{1}{4}[(50-55)^2+(60-55)^2+(50-55)^2+(60-55)^2] = 25$.
+
+$f = \sqrt{25/25} = 1.0$ (very large). For power $\ge 0.90$ at $\alpha=0.05$: $n \approx 3$ per group.
+
+If $\sigma$ increases to 6: $f = \sqrt{25/36} = 0.833$, need larger $n$. If $\sigma=7$: $f=0.714$, even larger $n$.
+
+\textbf{Key insight}: Doubling $\sigma$ roughly quadruples the required $n$ (since $n \propto 1/f^2 \propto \sigma^2$).
+
+\begin{calcbox}
+\textbf{TI-84}: For the power curve, compute the rejection threshold under $H_0$ using \texttt{invNorm} or \texttt{invT}, then find the probability under $H_a$ using \texttt{normalcdf} or \texttt{tcdf} with the shifted mean.
+\end{calcbox}
+
+\subsection{7.5 CI-Based Sample Size}
+
+To estimate $\mu_i-\mu_j$ within margin $ME$ at $100(1-\alpha)\%$: solve $ME = t_{\alpha/2,N-a}\sqrt{2\,MS_E/n}$ iteratively (since $N=na$ depends on $n$). Start with a guess, compute, refine.
+
+%% ============================================================
+\section{8. Non-Parametric Alternatives}
+%% ============================================================
+
+\subsection{8.1 When to Use}
+When normality fails and no transformation works. Trade-off: fewer assumptions but lower power under normality. Generally based on ranks rather than raw values.
+
+\begin{center}\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Parametric & Non-Parametric & Assumption & Tests \\
+\midrule
+Paired $t$ & Sign test & None & Median diff $\ne 0$ \\
+Paired $t$ & Wilcoxon signed-rank & Symmetric dist & Median/location shift \\
+Two-sample $t$ & Mann--Whitney (rank-sum) & Similar shapes & Location shift \\
+ANOVA $F$ & Kruskal--Wallis $H$ & Continuous data & Equal distributions \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{8.2 Wilcoxon Signed-Rank Test}
+
+\textbf{For testing median}: $H_0: \tilde\mu = m_0$.
+
+\textbf{Procedure}: (1) Compute $d_i = x_i - m_0$. Drop zeros. (2) Rank $|d_i|$ from smallest to largest. (3) Attach signs. (4) $W^+ = $ sum of positive ranks.
+
+Under $H_0$: $E(W^+) = \frac{n(n+1)}{4}$, \quad $\text{Var}(W^+) = \frac{n(n+1)(2n+1)}{24}$.
+
+For moderate $n$: $Z = (W^+ - E(W^+))/\sqrt{\text{Var}(W^+)}$ is approx.\ $N(0,1)$.
+
+\textbf{Mini-example}: Weekly food costs, $n=10$, $H_0:\tilde\mu=157$, $H_a:\tilde\mu<157$.
+
+$W^+ = 9$. $E(W^+) = 10(11)/4 = 27.5$. $SD = \sqrt{10(11)(21)/24} = 9.81$.
+
+$Z = (9-27.5)/9.81 = -1.89$. p-value $\approx 0.03$. Reject $H_0$---evidence median $< 157$.
+
+\subsection{8.3 Mann--Whitney (Rank-Sum) Test}
+
+Two independent groups ($m$ and $n$ observations). (1) Pool and rank all $m+n$ values. (2) $W_1 = $ sum of ranks in group 1. (3) $U_1 = W_1 - m(m+1)/2$.
+
+$E(U_1) = mn/2$, \quad $\text{Var}(U_1) = mn(m+n+1)/12$.
+
+\textbf{Mini-example}: Learning time with/without experience. $m=7$ (no exp), $n=8$ (exp).
+
+$W_1 = 74$ (no-exp ranks). $U_1 = 74 - 7(8)/2 = 46$. $E=28$, $SD=8.64$.
+
+$Z = (46-28)/8.64 = 2.08$. p $\approx 0.02$. Inexperienced workers take longer.
+
+\subsection{8.4 Kruskal--Wallis $H$ Test}
+
+Non-parametric one-way ANOVA. (1) Rank all $N$ observations jointly. (2) $T_i = $ rank sum for group $i$.
+\[
+H = \frac{12}{N(N+1)}\sum_{i=1}^{a}\frac{T_i^2}{n_i} - 3(N+1)
+\]
+Under $H_0$: $H \sim \chi^2_{a-1}$ approximately. Large $H$ $\Rightarrow$ reject.
+
+\textbf{Power comparison}: Under normality, ANOVA $F$ is more powerful than K-W. Under heavy non-normality or outliers, K-W can be preferable.
+
+\begin{calcbox}
+\textbf{TI-84}: For $\chi^2$ p-value: \texttt{$\chi^2$cdf(H, 1E99, a-1)}. For normal approx in signed-rank/Mann-Whitney: use \texttt{normalcdf}.
+\end{calcbox}
+
+%% ============================================================
+\section{9. Experimental Design Principles}
+%% ============================================================
+
+\subsection{9.1 Three Principles}
+\begin{itemize}
+    \item \textbf{Randomization}: Randomly assign treatments to units $\Rightarrow$ eliminates systematic bias, ensures independence. Without it, you can only show association, not causation.
+    \item \textbf{Replication}: Multiple observations per treatment $\Rightarrow$ estimate error variance, improve precision. $\neq$ repeated measures on the same unit (that's pseudo-replication).
+    \item \textbf{Blocking}: Group homogeneous units $\Rightarrow$ reduce $MS_E$, increase power. Block on known nuisance factors.
+\end{itemize}
+
+\textbf{Example}: Testing 3 fertilizers on crop yield. \emph{Randomization}: randomly assign fertilizers to plots. \emph{Replication}: use 10 plots per fertilizer. \emph{Blocking}: if field has north/south moisture gradient, block by location.
+
+\subsection{9.2 Design Comparison}
+
+\begin{center}\small
+\begin{tabular}{@{}p{1.6cm}p{2.2cm}p{2.8cm}p{2.5cm}@{}}
+\toprule
+\textbf{Design} & \textbf{Nuisance} & \textbf{Model} & \textbf{Error df} \\
+\midrule
+CRD & None & $y_{ij}=\mu+\tau_i+\varepsilon_{ij}$ & $N-a$ \\
+RCBD & 1 block factor & $y_{ij}=\mu+\tau_i+\beta_j+\varepsilon_{ij}$ & $(a-1)(b-1)$ \\
+Latin Sq & 2 block factors & $y_{ijk}=\mu+\tau_j+\rho_i+\gamma_k+\varepsilon$ & $(p-2)(p-1)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{9.3 Quick Concept Checks}
+
+\begin{itemize}
+    \item ANOVA treats quantitative and qualitative factors the same for SS computation. (\textbf{True}---interpretation differs, formulas don't.)
+    \item Fisher's LSD is extremely conservative. (\textbf{False}---it's the most liberal.)
+    \item Tukey's method compares all treatments to a control. (\textbf{False}---that's Dunnett's.)
+    \item $MS_E$ estimates $\sigma^2$ (the error variance). (\textbf{True}.)
+    \item In mixed RCBD (random blocks), primary inference is on treatments. (\textbf{True}---blocks just capture nuisance variability.)
+    \item Blocking always reduces error df. (\textbf{True}---but typically reduces $MS_E$ more, giving net power gain.)
+    \item Kruskal-Wallis is always more powerful than ANOVA $F$. (\textbf{False}---less powerful under normality.)
+\end{itemize}
+
+%% ============================================================
+\section{10. Common Distributions Reference}
+%% ============================================================
+
+\begin{center}\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Distribution & Mean & Variance & Use / Context \\
+\midrule
+$N(\mu, \sigma^2)$ & $\mu$ & $\sigma^2$ & Error terms, CLT \\
+$t_\nu$ & 0 & $\nu/(\nu-2)$ & Small-sample means \\
+$F_{d_1, d_2}$ & $d_2/(d_2-2)$ & complex & ANOVA, variance ratios \\
+$\chi^2_\nu$ & $\nu$ & $2\nu$ & Variance CIs, K-W test \\
+Poisson($\lambda$) & $\lambda$ & $\lambda$ & Counts; $\sqrt{Y}$ transform \\
+Binomial($n,p$) & $np$ & $np(1-p)$ & Proportions; $\sin^{-1}\!\sqrt{Y}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{calcbox}
+\textbf{TI-84 Distribution Functions} (all under \texttt{2nd} $\to$ \texttt{DISTR}):\\
+\texttt{normalcdf(lo, hi, $\mu$, $\sigma$)} --- normal prob. \quad \texttt{invNorm(area, $\mu$, $\sigma$)} --- normal quantile.\\
+\texttt{tcdf(lo, hi, df)} --- $t$ prob. \quad \texttt{invT(area, df)} --- $t$ quantile.\\
+\texttt{Fcdf(lo, hi, df1, df2)} --- $F$ prob. \quad \texttt{$\chi^2$cdf(lo, hi, df)} --- $\chi^2$ prob.\\
+\textbf{Tip}: For upper-tail p-value of $F=14.52$ with $(2,21)$: \texttt{Fcdf(14.52, 1E99, 2, 21)}.\\
+\textbf{Tip}: For 1-Var Stats on lists: \texttt{STAT} $\to$ \texttt{CALC} $\to$ \texttt{1-Var Stats L1}. Gives $\bar{x}, \sum x, \sum x^2, s, n$.
+\end{calcbox}
+
+\vspace{4pt}
+\hrule
+\vspace{2pt}
+\begin{center}
+\small\textit{Leave space below for your own textbook examples and additional notes.}
+\end{center}
+\vfill
+
+\end{document}

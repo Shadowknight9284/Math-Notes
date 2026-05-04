@@ -1,0 +1,32 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics}
+\newcommand{\assignment}{Homework 2.1}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question I have been looking more into the Matern covariance and I was wondering what was the origin/history of this function. I was curious to know if it was created/chosen for a specific application or if it was just found to be a useful class of covariance functions after the fact. Honestly, i feel like it has a super convoluted form and thus should probably be originated for a specific reason either mathematically or application wise.
+
+    \question I find the semivariogram to be an interesting extension of the covariance function for spatial data. I realized that the notation of having evenly spaced data points is not always realistic in spatial statistics. I was curious to know if there are any methods of transforming irregularly spaced data into evenly spaced data via some "changing of basis" with a jacobian that is commonly used in spatial statistics.
+
+    \question The notion of Fixed-domain asymptotic is interesting to me. I was hoping you could elaborate more on this. While the definition and apparent application is obvious, I was curious to know if there are a similar class of asymptotic theorems for these fixed-domain scenarios (with the exception of Stationarity). Especially since many of the classical asymptotic results in statistics rely on iid assumptions which are clearly violated in spatial statistics. 
+
+    \question This method of making a predictor using the graph is actually a better start than I thought. When I was working on my research, I was hell bent on trying to model the best predictor for some really convoluted model, but by graphing behavior across a large number of simulations, I should get a better idea of what the predictor should look like.
+
+    \question I think the part of pg 34 which highlights the strict requirements for a staitionary, gaussian process when dealing with spacial data clears up some of my confusion around what type of functions can be used to model spatial data, but not all. While I still want to explore more general $L_2$ processes more thoroughly, I see how the gaussian process is sufficient and simple to model complex spatial data. (all spatial data is complex)
+
+    \question Is there analog to the Nyquist-Shannon sampling theorem for spatial data? Honestly, I think it might just be the same thing, but I was curious if there was a different name for it in spatial statistics.
+
+    \question This was a significantly more confusing chapter for me. I will spend more time going over it. I was hoping to get a better understanding of periodograms and semivariograms. While I understand the definitions and how to compute them, I was hoping to get a better understanding of how they are used in practice other than as exploratory data analysis tools. 
+    \end{questions}
+
+\end{document}

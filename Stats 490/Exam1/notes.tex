@@ -1,0 +1,363 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:960:490 - Experimental Design }
+\newcommand{\assignment}{Exam 1 Notes}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{PDF 1 - Basic Stats Review}
+List of topics covered in PDF 1:
+\begin{itemize}
+    \item Normal Distribution
+    \item Sampling Dist and Central Limit Theorem
+    \item 1 and 2 Sample CI
+    \item 1 and 2 Sample Hypothesis Testing
+    \item Small sample consideration (t-dist)
+    \item p val
+    \item Population variance not equal
+    \item detecting and Testing for normality
+    \item testing for equality of pop variances
+    \item example with R
+\end{itemize}
+\begin{definition}[Z-Score]
+    $Z = \frac{X - \mu}{\sigma}$
+    Standardizses a value from a normal distribution to a standard normal distribution.
+
+    The number of standard deviations a value is from the mean.
+\end{definition}
+
+\begin{definition}[Normal Distribution]
+    The normal distribution is a continuous probability distribution that is symmetric about the mean, with its shape determined by the mean and standard deviation. It is often used to model real-world phenomena and is characterized by the bell-shaped curve.
+
+    $X \sim N(\mu, \sigma^2) \implies Z = \frac{X - \mu}{\sigma} \sim N(0, 1)$
+\end{definition}
+
+\begin{definition}[Correlation]
+    The correlation coefficient measures the strength and direction of the linear relationship between two variables. It ranges from -1 to 1, where -1 indicates a perfect negative linear relationship, 0 indicates no linear relationship, and 1 indicates a perfect positive linear relationship.
+\end{definition}
+
+\begin{remark}
+    [Sample Correlation Coefficient]
+
+    The sample correlation coefficient, denoted as $r$, is calculated using the formula:
+    \begin{align*}
+    r &= \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n} (x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}} \\
+    &= \frac{s_{xy}}{\sqrt{s_{xx} s_{yy}}} \\
+    s_{xy} &= \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y}) = \sum_{i=1}^{n} x_i y_i - n \bar{x} \bar{y} \\
+    s_{xx} &= {\sum_{i=1}^{n} (x_i - \bar{x})^2} = \sum_{i=1}^{n} x_i^2 - n \bar{x}^2 \\ 
+    s_{yy} &= {\sum_{i=1}^{n} (y_i - \bar{y})^2} = \sum_{i=1}^{n} y_i^2 - n \bar{y}^2
+    \end{align*}
+\end{remark}
+
+\begin{definition}[Sampling Distribution]
+    The sampling distribution of a statistic is the probability distribution of that statistic calculated from a random sample of a population. It describes how the statistic would vary if we were to take many samples from the same population.
+
+    \begin{align*}
+        \mu \to \bar{X} \to \mu_{\bar{X}} = \mu \\
+        \sigma^2 \to S^2 \to \sigma^2_{\bar{X}} = \frac{\sigma^2}{n}
+    \end{align*}
+    
+\end{definition}
+
+\begin{definition}[Central Limit Theorem]
+    The Central Limit Theorem states that the sampling distribution of the sample mean will approach a normal distribution as the sample size increases, regardless of the shape of the population distribution, provided that the samples are independent and identically distributed.
+
+    Formally, if $X_1, X_2, \ldots, X_n$ are i.i.d. random variables with mean $\mu$ and variance $\sigma^2$, then as $n \to \infty$:
+    \[
+    \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \xrightarrow{d} N(0, 1)
+    \]
+    
+\end{definition}
+
+\begin{remark}[Margin of Error]
+    The margin of error (MOE) is the maximum expected difference between the true population parameter and a sample estimate of that parameter. It is often used in confidence intervals to indicate the range within which the true parameter is likely to fall.
+
+    For a confidence level of $1 - \alpha$, the margin of error can be calculated as:
+    \[
+    MOE = z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}
+    \]
+    where $z_{\alpha/2}$ is the critical value from the standard normal distribution corresponding to the desired confidence level, $\sigma$ is the population standard deviation, and $n$ is the sample size.
+\end{remark}
+
+\begin{remark}[Small and Large Sample CI for Pop Mean]
+    \[
+    \bar{x} \pm z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}} \quad \text{(Large Sample)}
+    \]
+    \[
+    \bar{x} \pm t_{\alpha/2, n-1} \cdot \frac{s}{\sqrt{n}} \quad \text{(Small Sample)}
+    \]
+\end{remark}
+
+\begin{definition}[Hypothesis Testing]
+    Hypothesis testing is a statistical method used to make decisions about a population parameter based on sample data. It involves formulating two competing hypotheses: the null hypothesis ($H_0$) and the alternative hypothesis ($H_a$). The null hypothesis typically represents a statement of no effect or no difference, while the alternative hypothesis represents a statement of an effect or difference.
+
+    The process of hypothesis testing includes:
+    \begin{itemize}
+        \item Formulating $H_0$ and $H_a$
+        \item Choosing a significance level ($\alpha$)
+        \item Collecting sample data and calculating a test statistic
+        \item Determining the p-value or critical value
+        \item Making a decision to reject or fail to reject $H_0$
+    \end{itemize}
+    
+\end{definition}
+
+\begin{definition}[P-value]
+    The p-value is the probability of obtaining a test statistic at least as extreme as the one observed, assuming that the null hypothesis is true. It is used to determine the statistical significance of the results. A smaller p-value indicates stronger evidence against the null hypothesis.
+
+    If $p \leq \alpha$, we reject the null hypothesis; otherwise, we fail to reject it.
+    
+\end{definition}
+
+\begin{remark}[Small sample Test of hypotehtis about $\mu$]
+    Test Stat:
+    \[
+    t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}
+    \]
+\end{remark}
+
+\begin{definition}[2 sample test of hypothesis about $\mu$]
+    Test Stat when var known:
+    \[
+    z = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}}
+    \]
+    Test Stat when var unknown but population var equal: Pooled var:
+    \[
+    t = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}
+    \]
+    where $s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}$
+\end{definition}
+
+\begin{remark}[Pooled T-Test]
+    Simple random IID sample, with normal pop or lage same and equal pop var. Test stat:
+\[
+t = \frac{(\bar{x}_1 - \bar{x}_2) }{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}
+\]
+where $s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}$
+Then compare to $t_{n_1 + n_2 - 2, \alpha/2}$ for two sided test.
+
+The CI is given by 
+\[
+    (\bar{x}_1 - \bar{x}_2) \pm t_{n_1 + n_2 - 2, \alpha/2} \cdot s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}
+\]
+\end{remark}
+
+\begin{remark}[When pop variance is not the same]
+    Do a nonpoooled t test. Test stat:
+\[
+t = \frac{(\bar{x}_1 - \bar{x}_2) }{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}
+\]
+The degrees of freedom can be calculated using the Welch-Satterthwaite equation:
+\[
+df = \frac{\left( \frac{s_1^2}{n_1} + \frac{s_2^2}{n_2} \right)^2}{\frac{\left( \frac{s_1^2}{n_1} \right)^2}{n_1 - 1} + \frac{\left( \frac{s_2^2}{n_2} \right)^2}{n_2 - 1}}
+\]
+Then compare to $t_{df, \alpha/2}$ for two sided test.
+The CI is given by
+\[
+    (\bar{x}_1 - \bar{x}_2) \pm t_{df, \alpha/2} \cdot \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
+\]
+\end{remark}
+
+\begin{remark}
+    [Choosing between Pooled and Nonpooled T-Test]
+If you are reasonable sure that both the pipulations have nearly equal standard deviations, then you can use the pooled t-test. If not, then use the nonpooled t-test.
+\end{remark}
+
+\begin{remark}[Considetion required for valiud smal sample infrence on difference of means]
+    Indpedndernt sampling, distribitons are approximatley norma;l, pop var equal then use pooled t test, if pop var not equal then use nonpooled t test.
+\end{remark}
+
+\begin{definition}[QQ plot]
+    A QQ plot (Quantile-Quantile plot) is a graphical tool used to assess whether a dataset follows a particular distribution, typically the normal distribution. It compares the quantiles of the sample data to the quantiles of a theoretical distribution. If the points in the QQ plot approximately lie on a straight line, it suggests that the data follows the specified distribution. Deviations from the straight line indicate departures from the distribution, such as skewness or heavy tails.
+\end{definition}
+
+\begin{remark}
+    [Other Normality Tests]
+
+    Shapiro-Wilk test: Most used
+    Ryan-Joiner test: Similar to Shapiro-Wilk
+    Anderson-Darling test: More sensitive to tails than Shapiro-Wilk
+    Kolmogorov-Smirnov test: Compares the empirical distribution function of the sample with the cumulative distribution function of the reference distribution.
+\end{remark}
+
+\begin{definition}
+    [F-test for Equality of Variances]
+
+    The F-test is used to compare the variances of two populations. The test statistic is calculated as the ratio of the two sample variances:
+    \[
+    F = \frac{s_1^2}{s_2^2}
+    \]
+    where $s_1^2$ and $s_2^2$ are the sample variances of the two groups. The degrees of freedom for the numerator and denominator are $n_1 - 1$ and $n_2 - 1$, respectively. The calculated F-value is then compared to the critical value from the F-distribution to determine whether to reject the null hypothesis of equal variances.
+
+    The $F$ distribution is right-skewed and is defined by two parameters: the degrees of freedom for the numerator ($df_1$) and the degrees of freedom for the denominator ($df_2$). The critical value can be found using F-distribution tables or statistical software, based on the chosen significance level ($\alpha$) and the degrees of freedom.
+\end{definition}
+
+\begin{remark}
+    [Other Tests for Equality of Variances]
+    Levene's Test: A more robust test that is less sensitive to departures from normality than the F-test. It tests the null hypothesis that the variances are equal across groups.
+    Bartlett's Test: A test that is sensitive to departures from normality. It tests the null hypothesis that the variances are equal across groups, but it assumes that the data are normally distributed.
+\end{remark}
+
+\begin{definition}
+    [Paired Difference test of Hypothesis about $\mu_d = \mu_1 - \mu_2$]
+
+    Hypothesis:
+\begin{align*}
+    H_0: \mu_d = \mu_{d0} \\
+    H_a: \mu_d \neq \mu_{d0}
+\end{align*}
+    Test Stat:
+    \[
+    z = \frac{\bar{d} - \mu_{d0}}{s_d / \sqrt{n}}
+    \]
+
+    Small Sample test stat:
+    \[
+    t = \frac{\bar{d} - \mu_{d0}}{s_d / \sqrt{n}}
+    \]
+
+    CI:
+    \[
+    \bar{d} \pm z_{\alpha/2} \cdot \frac{s_d}{\sqrt{n}}
+    \]
+
+    CI for small sample:
+    \[
+    \bar{d} \pm t_{n-1, \alpha/2} \cdot \frac{s_d}{\sqrt{n}}
+    \]
+\end{definition}
+
+\section{Intro to Experimental Design}
+
+\begin{remark}[Observational Study vs Statistical Experiment]
+    Observational Study: The researcher observes and measures variables of interest without manipulating any factors. The goal is to identify associations or correlations between variables, but causality cannot be established due to potential confounding factors.
+
+    Statistical Experiment: The researcher actively manipulates one or more independent variables (factors) to observe their effect on a dependent variable (response). This allows for the establishment of causal relationships, as the researcher can control for confounding variables through randomization and experimental design.
+\end{remark}
+
+\begin{definition}
+    [Completely Randomized Experimental Design]
+    Assignment of experimental units to treatment groups is done completely at random. Each unit has an equal chance of being assigned to any treatment group, and the assignment is independent of other units. This design is simple and effective for controlling confounding variables, as randomization helps to balance out any potential differences between groups.
+\end{definition}
+
+\begin{definition}
+    [Randomized Block Design]
+    In a randomized block design, experimental units are first grouped into blocks based on a certain characteristic (e.g., age, gender, etc.) that is expected to affect the response variable. Within each block, units are randomly assigned to treatment groups. This design helps to control for variability within blocks and allows for more accurate estimation of treatment effects by reducing the influence of confounding variables.
+\end{definition}
+
+\begin{definition}
+    [Matched Pairs Design]
+    In a matched pairs design, each experimental unit is paired with another unit based on a certain characteristic (e.g., age, gender, etc.) that is expected to affect the response variable. The units in each pair are then randomly assigned to different treatment groups. This design helps to control for variability within pairs and allows for more accurate estimation of treatment effects by reducing the influence of confounding variables.
+\end{definition}
+
+\begin{remark}
+    [Randomization in Experimental Design]
+    Randomization is a fundamental principle in experimental design that helps to eliminate bias and control for confounding variables. By randomly assigning experimental units to different treatment groups, researchers can ensure that any differences observed between groups are due to the treatment effects rather than systematic differences in the units themselves. Randomization also allows for the use of probability theory to make inferences about the population based on the sample data, as it helps to ensure that the sample is representative of the population.
+\end{remark}
+
+\begin{remark}
+    [Replication in Experimental Design]
+    Replication refers to the repetition of an experiment on multiple experimental units. It allows researchers to estimate the variability of the response variable and to increase the precision of their estimates of treatment effects. Replication also helps to ensure that the results of an experiment are not due to random chance, as it provides a larger sample size for analysis and increases the power of statistical tests.
+\end{remark}
+
+\begin{remark}
+    [Blocking in Experimental Design]
+    Blocking is a technique used in experimental design to control for variability that is not of primary interest. By grouping experimental units into blocks based on a certain characteristic (e.g., age, gender, etc.), researchers can reduce the impact of confounding variables on the treatment effects. This allows for more accurate estimation of the treatment effects by minimizing the variability within each block. Blocking is particularly useful when there is a known source of variability that can be controlled for, as it helps to increase the precision of the estimates and the power of statistical tests.
+\end{remark}
+
+
+\section{Calculating Type II error / Power}
+
+\begin{definition}
+    [Type II Error and Power]
+    Type II error ($\beta$) is the probability of failing to reject the null hypothesis when it is false. Power (1 - $\beta$) is the probability of correctly rejecting the null hypothesis when it is false.
+\end{definition}
+
+\begin{example}
+    [Calculating Type II Error and Power]
+    Suppose we are testing the null hypothesis $H_0: \mu = \mu_0$ against the alternative hypothesis $H_1: \mu = \mu_1$, where $\mu_1 > \mu_0$. If the true mean is $\mu_1$, the probability of correctly rejecting the null hypothesis is the power of the test. The probability of failing to reject the null hypothesis when it is false is the Type II error. To calculate these probabilities, we need to determine the critical value for the test and the distribution of the test statistic under both the null and alternative hypotheses. The power can be calculated using the cumulative distribution function (CDF) of the test statistic under the alternative hypothesis, while the Type II error can be calculated using the CDF of the test statistic under the null hypothesis.
+\end{example}
+
+\section{ANOVA}
+
+\begin{remark}
+    [Anova Hypoethesis]
+    Compare means of 3 or more groups. Hypothesis:
+\begin{align*}
+    H_0: \mu_1 = \mu_2 = \ldots = \mu_k \\
+    H_a: \text{At least one } \mu_i \text{ is different}
+\end{align*}
+\end{remark}
+
+\begin{definition}
+    [ANOVA meaning]
+    ANOVA (Analysis of Variance) is a statistical method used to compare the means of three or more groups to determine if there are statistically significant differences among them. It works by analyzing the variance within each group and the variance between groups to assess whether the observed differences in means are likely due to random chance or if they reflect true differences in the population. The ANOVA test produces an F-statistic, which is used to determine the p-value and make a decision about the null hypothesis.
+
+    Total Variance = Variance Between Groups + Variance Within Groups
+    \begin{align*}
+    SST = SSB + SSW \\
+    \text{where } SST = \sum_{i=1}^{k} \sum_{j=1}^{n_i} (x_{ij} - \bar{x})^2 \\
+    SSB = \sum_{i=1}^{k} n_i (\bar{x}_i - \bar{x})^2 \\
+    SSW = \sum_{i=1}^{k} \sum_{j=1}^{n_i} (x_{ij} - \bar{x}_i)^2
+    \end{align*}
+    SST: Total Sum of Squares, SSB: Sum of Squares Between Groups, SSW: Sum of Squares Within Groups
+\end{definition}
+
+\begin{remark}
+    [ANOVA Table]
+    The ANOVA table summarizes the results of the analysis of variance, displaying the sources of variation, degrees of freedom, sum of squares, mean squares, and the F-statistic.\\
+    \small
+\begin{tabular}{lcccc}
+Source of Variation & Degrees of Freedom & Sum of Squares & Mean Square & F-statistic \\
+Between Groups & $k - 1$ & SSB & MSB = SSB / (k - 1) & F = MSB / MSW \\
+Within Groups & $N - k$ & SSW & MSW = SSW / (N - k) & \\
+Total & $N - 1$ & SST & & \\
+\end{tabular}
+\normalsize
+\end{remark}
+
+\begin{remark}
+    [F-Statistic]
+    The F-statistic is used in ANOVA to test the null hypothesis that all group means are equal. It is calculated as the ratio of the mean square between groups (MSB) to the mean square within groups (MSW). A large F-statistic indicates a significant difference between the group means.
+
+    The F-statistic is compared to a critical value from the F-distribution with degrees of freedom corresponding to the between-group and within-group variations. If the calculated F-statistic exceeds the critical value, we reject the null hypothesis, suggesting that at least one group mean is different from the others.
+
+    The F-distribution is right-skewed and is defined by two parameters: the degrees of freedom for the numerator (between groups) and the degrees of freedom for the denominator (within groups). The critical value can be found using F-distribution tables or statistical software, based on the chosen significance level ($\alpha$) and the degrees of freedom.
+
+    $$ F_{df_1, df_2} \sim \frac{\chi^2_{df_1}}{df_1} \Big/ \frac{\chi^2_{df_2}}{df_2} $$
+\end{remark}
+
+\begin{remark}
+    [Anova Assumptions]
+    The assumptions for ANOVA are:
+    \begin{enumerate}
+        \item Independence: The observations within each group are independent of each other.
+        \item Normality: The data within each group are normally distributed.
+        \item Homogeneity of Variance: The variances of the populations from which the samples are drawn are equal. rule of thumb: largest sample variance should not be more than 4 times the smallest sample variance.
+    \end{enumerate}
+\end{remark}
+
+\section{Single Factor Experimental Design}
+
+\begin{remark}
+    [Single Factor Experimental Design]
+    In a single factor experimental design, there is only one independent variable (factor) that is manipulated to observe its effect on a dependent variable (response). The levels of the factor represent different conditions or treatments that are applied to the experimental units. The goal of this design is to determine whether there are significant differences in the response variable across the different levels of the factor.
+
+    For example, if we are testing the effect of different fertilizers on plant growth, the factor would be the type of fertilizer, and the levels could be Fertilizer A, Fertilizer B, and Fertilizer C. The response variable could be the height of the plants after a certain period of time. By analyzing the data collected from this experiment, we can determine if there are significant differences in plant growth among the different fertilizer treatments.
+\end{remark}
+
+
+\begin{questions}
+    \question Contrasts
+\end{questions}
+
+\end{document}

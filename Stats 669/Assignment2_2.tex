@@ -1,0 +1,44 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics}
+\newcommand{\assignment}{Homework 2.2}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+
+\begin{questions}
+\question The Equation 3.55, 3.56, 3.57, and 3.58 are all related to content I remember about ARMA model in time series analysis. This makes a lot of sense for a general linear combination of values, not just backshifted elements of a time series.
+
+\question Parsevel's Theorem Coming up again is very interesting. I remember learning about it in my Partial Differential Equations class in the conceit of solving for Greens functions. Seeing it here in the context of statistics and time series analysis is very interesting.
+    
+\question Since We can use the Differential operators and linear combination of stationary Gaussian processes to create new stationary Gaussian processes, can we use any linear operators in this space to make new stationary processes? Or are there certain restrictions on the type of linear operators we can use?
+
+\question While Linear Transformations behave nicely, what about Non-Linear Transformations. Like a similar model to the geometric Brownian motion where we have an exponential Gaussian process. While I know that this may not be the best example I still feel like scenarios like this are super useful for modeling
+
+\question The move into Higher Dimensions is always interesting. I know that when moving up dimensions we have to be careful about certain assumptions we make in lower dimensions that may not hold up in higher dimensions. As well as how many estimation techniques become more complex in higher dimensions. These are all true for regular statistics and in Time Series. I am curious to see what happens in Spatial Statistics when we move to even higher dimensions.
+
+\question I am assuming we are looking mainly at $\mathbb{R}^d$ and I was wondering if there are any interesting applications to other spaces, like manifolds or other more abstract spaces? Also for manifolds, since locally they behave like Euclidean spaces, can we use similar techniques as we do in Euclidean spaces for manifolds and then "stitch" the local results together to get global results?
+
+\question I would love for you to elaborate more on potential research topics relating to expanding the "subclasses" of covariance functions in higher dimensions. I think this is super interesting and would love to learn more about it. Frankly, I want to do my phd soon so being exposed to potential research topics now would be super helpful.
+
+\question Now that we have gone into the realm of higher dimensions we also need to worry about ensuring that our choice of coordinate system does not affect our analysis. Though I do not do physics, I am aware of the importance of choosing the right coordinate system and ensuring that your results are invariant to the choice of coordinate system. I am curious to see how this plays a role in Spatial Statistics and what techniques we can use to ensure this invariance beyond just choosing the right covariance functions.
+sis. Though I do not do physics, I am aware of the importance of choosing the right coordinate system and ensuring that your results are invariant to the choice of coordinate system. I am curious to see how this plays a role in Spatial Statistics and what techniques we can use to ensure this invariance beyond just choosing the right covariance functions.
+
+\question Is there also another way to characterize valid covariance functions in higher dimensions? I remember something vaguely about how for a correlation matrix to be valid it needs to be positive semi-definite, and can be characterized through some quadratic form. Frankly, I am losing the specifics but hopefully you get the idea of what I am asking. If not I will formalize it better in class.
+
+\question  Where can we use infinite dimensional Gaussian processes in the context of Spatial Statistics? Also is the a way to then "discretize" these infinite dimensional Gaussian processes to make them more manageable when it comes to computation?
+
+\question While it is clear that separable autocovariance functions are not fit for spatial data, are there any scenarios where we can "separate" out certain aspects of the autocovariance function to make our computations easier while still capturing the essence of the spatial data? This goes back to the idea of discretizing infinite dimensional Gaussian processes as well.
+
+
+\end{questions}
+
+\end{document}

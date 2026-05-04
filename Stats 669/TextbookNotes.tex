@@ -1,0 +1,46 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Section 1 Notes}
+
+\section{Section 2 Notes}
+
+Is stationary distribution unique? Does it exist for all SP?
+
+Can we have it be a local property rather than a global one?
+
+Can we have a blend of stationarity across subsets of states? IE set A,B,C have their own stationary distributions but not across sets. If so can we blend the sets?
+\section{Section 3 Notes}
+Why are gaussian not good at modeling real world data? As long as we have a sufficient transformationation from realworld data to white noise we can use gaussians to model anything?
+
+I dont know if I understand figure 3.1 fully.
+
+Proof of odd central moment of a symmetric gaussian being 0?
+
+I find it interesting that we are looking for the behavior of two seperate covariance functions. I understand that they help in model selections but is there another reason?
+
+What are some other conditions we can put on stationarity like forcing spatial location (and then to temporal locality) that are useful for modeling?
+
+The spectral density looks like the fourier transform of the covariance function. What do the peaks represent? Are they similar to fourier transform peaks?
+
+Eq. 3.14 is very interesting. 
+\fbox{
+Stochasitic integration is interesting for writing L2. IE Take any function in L2 and write it as a stochasitic integral of white noise.}
+
+\textbf{Final Project notes}
+Did these fits by moment based estimates. For every block it would be trivial to do moment, but takes long to do REML estimates due to Cholesky decompositions. Try to do all of them. We dont need to do a good estimation o the $\phi$ Suppose we only care about $\hat \phi_2$ to 2 decimal places. Look into doing a smart search or a course grid search to find the optimal $\phi$ values. Test out faster version of this. Smoothness sems to go fown
+
+\end{document}

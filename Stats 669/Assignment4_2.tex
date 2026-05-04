@@ -1,0 +1,37 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics}
+\newcommand{\assignment}{Homework 4.2}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+\question When covariance models are misspecified, it often seems tied to the sampling resolution, since coarse data make it hard to distinguish different levels of smoothness. Are there principled methods that introduce a prior on process roughness or smoothness to stabilize inference under such uncertainty?
+
+\question In these fixed-domain examples, smoothness is effectively
+non-identifiable when the model family is wrong. To what extent can we reliably learn the smoothness parameter for a model from a single realization, and when is it better to fix or regularize
+smoothness rather than estimate it freely?
+
+\question Since the MLE in the misspecified models usually sacrifices low-frequency behavior for better high-frequency behavior, is there a regularization method to reweigh the likelihood to focus on a frequency scale that is important to model
+
+\question I am familiar with the KL Divergence, but I was unaware of the connection it has to MLE. I knew it obviously had a connection, due to the fact that it measures differences in the structure of distributions, but the connection is more direct than expected.
+
+\question In a setting where we value predictions are valued more than the exact covariance parameters, can some predictions be asymptotically optimal even if the covariance parameters are badly biased.
+
+\question For the example where it showed the $K_1$ with good local behavior and $K_2$ With good global accuracy, Are there metrics to explicitly separate the local and global adequacy? Also to what "magnitude" are the models better on certain scales. 
+
+\question  Is there a notion of “robust” covariance families whose predictive performance degrades gracefully when the true process lies outside the model class? Also would these families be useful in modeling.
+
+
+
+\end{questions}
+
+\end{document}

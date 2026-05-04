@@ -1,0 +1,609 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:960:490}
+\newcommand{\assignment}{Homework 2}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\begin{questions}
+\question 3.11:
+The tensile strength of Portland cement is being studied. Four different mixing
+techniques can be used economically. A completely randomized experiment was
+conducted and the following data were collected:
+
+\[
+\begin{array}{c|cccc}
+\text{Mixing technique} & \multicolumn{4}{c}{\text{Tensile strength (lb/in$^2$)}}\\
+\hline
+1 & 3129 & 3000 & 2865 & 2890\\
+2 & 3200 & 3300 & 2975 & 3150\\
+3 & 2800 & 2900 & 2985 & 3050\\
+4 & 2600 & 2700 & 2600 & 2765
+\end{array}
+\]
+
+\begin{enumerate}[(a)]
+\item Test the hypothesis that mixing techniques affect the strength of the cement. Use $\alpha = 0.05$.
+\item Construct a graphical display as described in Section~3.5.3 to compare the mean tensile strengths for the four mixing techniques. What are your conclusions?
+\item Use the Fisher least significant difference (LSD) method with $\alpha = 0.05$ to make comparisons between pairs of means.
+\item Construct a normal probability plot of the residuals. What conclusion would you draw about the validity of the normality assumption?
+\item Plot the residuals versus the predicted tensile strength. Comment on the plot.
+\item Prepare a scatter plot of the results to aid the interpretation of the results of this experiment.
+\end{enumerate}
+
+\begin{solution}
+We use a one-way ANOVA with factor “mixing technique”:
+\[
+Y_{ij} = \mu + \tau_i + \varepsilon_{ij},\quad i=1,\dots,4,\ j=1,\dots,4,
+\]
+with independent $N(0,\sigma^2)$ errors.
+
+\begin{enumerate}[(a)]
+\item Hypotheses:
+\[
+H_0:\mu_1=\mu_2=\mu_3=\mu_4
+\quad\text{vs}\quad
+H_a:\text{not all }\mu_i\text{ are equal}.
+\]
+From \verb|aov(strength ~ mixing)| we get
+\[
+\begin{array}{l|rrrr}
+\text{Source} & \text{Df} & \text{SS} & \text{MS} & F \\
+\hline
+\text{Mixing} & 3 & 489{,}740 & 163{,}247 & 12.73 \\
+\text{Error}  & 12 & 153{,}908 & 12{,}826 &
+\end{array}
+\]
+with $p = 0.000489 < 0.05$. So we reject $H_0$: mixing technique affects mean tensile strength.
+
+\item The sample means (lb/in$^2$) are
+\[
+\bar y_1=2971,\quad \bar y_2=3156.25,\quad \bar y_3=2933.75,\quad \bar y_4=2666.25.
+\]
+The mean–CI plot below shows techniques 1 and 2 clearly above 4, with 3 in between.
+Techniques 1 and 2 are the high-strength group, 3 is moderate, and 4 is lowest.
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_11_mean_CI_plot.png}
+\end{center}
+
+\item Using $MSE = 12{,}826$ and $df_E=12$, Fisher’s LSD via \verb|pairwise.t.test| gives
+\[
+\begin{array}{c|ccc}
+ & 1 & 2 & 3 \\
+\hline
+2 & 0.0392 &       &       \\
+3 & 0.6501 & 0.0167&       \\
+4 & 0.0025 & 0.000052 & 0.0059
+\end{array}
+\]
+At $\alpha=0.05$, 1 and 2 differ (0.0392), 1 and 3 do not (0.6501).
+Technique 4 differs from 1, 2, and 3; 2 also differs from 3.
+So 2 tends to be highest, 4 clearly lowest, with 1 and 3 in the middle.
+
+\item The normal Q–Q plot is roughly linear with only slight tail deviation, so the normality assumption looks fine.
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_11_residuals_qqplot.png}
+\end{center}
+
+\item Residuals vs fitted values are spread roughly evenly around zero with no pattern or change in spread, so constant-variance and model form look reasonable.
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_11_residuals_vs_fitted.png}
+\end{center}
+
+\item The raw-data plot shows four clusters by technique: 2 has the largest values, 4 the smallest, and 1–3 in between. There are no obvious outliers, and the plot agrees with the ANOVA and pairwise results.
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_11_scatter_rawdata.png}
+\end{center}
+\end{enumerate}
+\end{solution}
+
+
+\question 3.12:
+\begin{enumerate}[(a)]
+\item Rework part (c) of Problem 3.11 using Tukey's test with $\alpha = 0.05$. Do you get the same conclusions from Tukey's test that you did from the graphical procedure and/or the Fisher LSD method?
+\item Explain the difference between the Tukey and Fisher procedures.
+\end{enumerate}
+
+\begin{solution}
+\begin{enumerate}[(a)]
+\item Applying Tukey’s HSD to the 3.11 fit with 
+
+\verb|TukeyHSD(fit311, "mixing", conf.level = 0.95)| gives
+\[
+\begin{array}{c|rrrr}
+\text{Comparison} & \text{diff} & \text{lwr} & \text{upr} & p_{\text{adj}} \\
+\hline
+2-1 & 185.25  & -52.50  & 423.00  & 0.1494  \\
+3-1 & -37.25  & -275.00 & 200.50  & 0.9653  \\
+4-1 & -304.75 & -542.50 & -67.00  & 0.0116  \\
+3-2 & -222.50 & -460.25 & 15.25   & 0.0693  \\
+4-2 & -490.00 & -727.75 & -252.25 & 0.0003  \\
+4-3 & -267.50 & -505.25 & -29.75  & 0.0262
+\end{array}
+\]
+At $\alpha=0.05$, the only significant differences are those involving technique 4 (4 vs 1, 4 vs 2, 4 vs 3). Techniques 1, 2, and 3 are not significantly different from each other. This matches the idea from the mean–CI plot that 4 is clearly worse; Fisher’s LSD in 3.11 flagged more pairs because it is less conservative.
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_12_TukeyHSD_plot.png}
+\end{center}
+
+\item Fisher’s LSD uses the ANOVA $MSE$ and then runs ordinary pairwise $t$–tests at level $\alpha$, without adjusting for the number of comparisons, so the familywise type I error can be much larger than $\alpha$ when there are many pairs. Tukey’s HSD uses the studentized range distribution to give simultaneous confidence intervals for all pairwise differences that control the familywise error at $\alpha$, so it is more conservative and usually declares fewer differences significant.
+\end{enumerate}
+\end{solution}
+
+\question 3.14 
+A product developer is investigating the tensile strength of a new synthetic fiber that will be used to make cloth for men's shirts. Strength is usually affected by the percentage of cotton used in the blend of materials for the fiber. The engineer conducts a completely randomized experiment with five levels of cotton content and replicates the experiment five times. The data are shown in the following table:
+
+\[
+\begin{array}{c|ccccc}
+\text{Cotton weight percent} & \multicolumn{5}{c}{\text{Observations}}\\
+\hline
+15 & 7 & 7 & 15 & 11 & 9\\
+20 & 12 & 17 & 12 & 18 & 18\\
+25 & 14 & 19 & 19 & 18 & 18\\
+30 & 19 & 25 & 22 & 19 & 23\\
+35 & 7 & 10 & 11 & 15 & 11
+\end{array}
+\]
+
+\begin{enumerate}[(a)]
+\item Is there evidence to support the claim that cotton content affects the mean tensile strength? Use $\alpha = 0.05$.
+\item Use the Fisher LSD method to make comparisons between the pairs of means. What conclusions can you draw?
+\item Analyze the residuals from this experiment and comment on model adequacy.
+\end{enumerate}
+
+\begin{solution}
+We fit a one-way ANOVA with factor “cotton percent”:
+\[
+Y_{ij} = \mu + \tau_i + \varepsilon_{ij},\quad i \in \{15,20,25,30,35\},\ j=1,\dots,5.
+\]
+
+\begin{enumerate}[(a)]
+\item Hypotheses:
+\[
+H_0:\mu_{15}=\mu_{20}=\mu_{25}=\mu_{30}=\mu_{35}
+\quad\text{vs}\quad
+H_a:\text{at least one mean differs}.
+\]
+From \verb|aov(strength ~ cotton)| we get
+\[
+\begin{array}{l|rrrr}
+\text{Source} & \text{Df} & \text{SS} & \text{MS} & F \\
+\hline
+\text{Cotton} & 4 & 475.8 & 118.94 & 14.76 \\
+\text{Error}  & 20& 161.2 & 8.06   &
+\end{array}
+\]
+with $p = 9.13\times 10^{-6} < 0.05$. So cotton content affects mean tensile strength.
+
+\item The sample means are
+\[
+\bar y_{15}=9.8,\quad
+\bar y_{20}=15.4,\quad
+\bar y_{25}=17.6,\quad
+\bar y_{30}=21.6,\quad
+\bar y_{35}=10.8.
+\]
+Using $MSE=8.06$ and $df_E=20$, Fisher’s LSD pairwise tests (pooled $t$–tests, no adjustment) together with the mean–CI plot show the following pattern.
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_15_mean_CI_plot.png}
+\end{center}
+At $\alpha=0.05$, 30\% is significantly higher than 15\%, 20\%, and 35\%; 20\% is higher than 15\% and 35\%; 20\% and 25\% do not differ significantly, and 15\% and 35\% also do not differ. So 30\% is best, 20–25\% are intermediate, and 15\% and 35\% are clearly lower.
+
+\item The normal Q–Q plot of residuals is shown below.
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_14_residuals_qqplot.png}
+\end{center}
+The points stay close to the line with only mild tail deviations, so normality looks reasonable.
+
+The residuals vs fitted plot is:
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_14_residuals_vs_fitted.png}
+\end{center}
+Residuals are roughly symmetric around zero with no clear trend or change in spread, so constant variance and the one-factor model both seem adequate.
+\end{enumerate}
+\end{solution}
+
+
+\question 3.15
+Reconsider the experiment described in Problem 3.14. Suppose that 30 percent cotton content is a control. Use Dunnett's test with $\alpha = 0.05$ to compare all of the other means with the control.
+
+\begin{solution}
+We reuse the one-way ANOVA fit from 3.14 and treat 30\% cotton as the control.
+Let $\mu_{30}$ be the mean at 30\%, and $\mu_i$ the mean at $i\in\{15,20,25,35\}$.
+Dunnett’s procedure tests
+\[
+H_{0i}:\mu_i=\mu_{30}\quad\text{vs}\quad H_{ai}:\mu_i\ne\mu_{30}
+\]
+for each noncontrol level, while controlling the familywise error at $\alpha=0.05$.
+
+From 3.14,
+\[
+MSE = 8.06,\quad df_E=20,
+\]
+and the sample means are
+\[
+\bar y_{15}=9.8,\quad \bar y_{20}=15.4,\quad \bar y_{25}=17.6,\quad
+\bar y_{30}=21.6,\quad \bar y_{35}=10.8,
+\]
+with $n_i=n_c=5$ at all levels. The estimated differences and standard errors for
+$(\mu_i-\mu_{30})$ are
+\[
+\hat\mu_i-\hat\mu_{30} = \bar y_i - \bar y_{30},\qquad
+SE(\hat\mu_i-\hat\mu_{30}) = \sqrt{MSE\left(\frac{1}{n_i}+\frac{1}{n_c}\right)} \approx 1.80.
+\]
+The resulting table (from R) is
+\[
+\begin{array}{c|rrrrrr}
+\text{Cotton \%} & \hat\mu_i - \hat\mu_{30} & SE & t & \text{Lower} & \text{Upper} & \text{Sig?}\\
+\hline
+15 & -11.8 & 1.80 & -6.57 & -16.71 & -6.89 & \text{Yes}\\
+20 & -6.2  & 1.80 & -3.45 & -11.11 & -1.29 & \text{Yes}\\
+25 & -4.0  & 1.80 & -2.23 & -8.91 & 0.91  & \text{No}\\
+35 & -10.8 & 1.80 & -6.01 & -15.71 & -5.89 & \text{Yes}
+\end{array}
+\]
+Here the “Lower” and “Upper” columns are simultaneous 95\% Dunnett-style confidence limits based on a simulated Dunnett critical value $\hat c_D\approx 2.73$ for $a=5$ (one control, four treatments) and $df_E=20$. A comparison is significant at $\alpha=0.05$ if its interval excludes zero.
+
+Thus 15\%, 20\%, and 35\% all have significantly lower mean strength than the 30\% control.
+The 25\% level is somewhat lower but not significantly different from 30\% once the multiple comparisons to the control are accounted for. This supports 30\% as the best choice, with 25\% as the only nearby competitor.
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_15_mean_CI_plot.png}
+\end{center}
+\end{solution}
+
+\question 3.22
+A manufacturer of television sets is interested in the effect on tube conductivity of four different types of coating for color picture tubes. A completely randomized experiment is conducted and the following conductivity data are obtained:
+
+\[
+\begin{array}{c|cccc}
+\text{Coating type} & \multicolumn{4}{c}{\text{Conductivity}}\\
+\hline
+1 & 143 & 141 & 150 & 146\\
+2 & 152 & 149 & 137 & 143\\
+3 & 134 & 136 & 132 & 127\\
+4 & 129 & 127 & 132 & 129
+\end{array}
+\]
+
+\begin{enumerate}[(a)]
+\item Is there a difference in conductivity due to coating type? Use $\alpha = 0.05$.
+\item Estimate the overall mean and the treatment effects.
+\item Compute a 95 percent confidence interval estimate of the mean of coating type 4. Compute a 99 percent confidence interval estimate of the mean difference between coating types 1 and 4.
+\item Test all pairs of means using the Fisher LSD method with $\alpha = 0.05$.
+\item Use the graphical method discussed in Section 3.5.3 to compare the means. Which coating type produces the highest conductivity?
+\item Assuming that coating type 4 is currently in use, what are your recommendations to the manufacturer? We wish to minimize conductivity.
+\end{enumerate}
+
+\begin{solution}
+We fit a one-way fixed-effects ANOVA with factor “coating type”:
+\[
+Y_{ij} = \mu + \tau_i + \varepsilon_{ij},\quad i=1,\dots,4,\ j=1,\dots,4,
+\]
+with independent $N(0,\sigma^2)$ errors.
+
+\begin{enumerate}[(a)]
+\item Hypotheses:
+\[
+H_0:\mu_1=\mu_2=\mu_3=\mu_4
+\quad\text{vs}\quad
+H_a:\text{not all }\mu_i\text{ are equal}.
+\]
+From \verb|aov(conductivity ~ coating)| we obtain
+\[
+\begin{array}{l|rrrr}
+\text{Source} & \text{Df} & \text{SS} & \text{MS} & F \\
+\hline
+\text{Coating} & 3 & 844.7 & 281.56 & 14.3 \\
+\text{Error}   & 12& 236.3 & 19.69 &
+\end{array}
+\]
+with $p = 0.000288 < 0.05$. So coating type affects mean conductivity.
+
+\item The overall mean is
+\[
+\bar y_{..} \approx 137.94.
+\]
+The sample means are
+\[
+\bar y_1=145.00,\quad \bar y_2=145.25,\quad \bar y_3=132.25,\quad \bar y_4=129.25,
+\]
+so the estimated effects $\hat\tau_i = \bar y_i-\bar y_{..}$ are
+\[
+\hat\tau_1=7.0625,\quad \hat\tau_2=7.3125,\quad \hat\tau_3=-5.6875,\quad \hat\tau_4=-8.6875.
+\]
+Coatings 1–2 raise conductivity relative to the overall mean, 3–4 lower it.
+
+\item From the ANOVA, $MSE=19.6875$ and $df_E=12$, with $n_i=4$ for each coating.
+For coating 4, $\bar y_4=129.25$, so a 95\% CI for $\mu_4$ is
+\[
+\bar y_4 \pm t_{0.975,12}\sqrt{\frac{MSE}{n_4}}
+= 129.25 \pm 2.179\sqrt{\frac{19.6875}{4}}
+= (124.42,\ 134.08).
+\]
+For the mean difference $\mu_1-\mu_4$, the estimate is $\bar y_1-\bar y_4=15.75$ with
+\[
+SE(\bar y_1-\bar y_4) = \sqrt{MSE\left(\frac{1}{n_1}+\frac{1}{n_4}\right)}.
+\]
+Using $t_{0.995,12}\approx 3.055$ for a 99\% CI,
+\[
+(\bar y_1-\bar y_4)\pm t_{0.995,12}SE(\bar y_1-\bar y_4)
+= (6.17,\ 25.33).
+\]
+So coating 1 has clearly higher mean conductivity than coating 4.
+
+\item Fisher’s LSD tests (pooled $t$–tests, no adjustment) based on $MSE$ give the following $p$–values:
+\[
+\begin{array}{c|ccc}
+ & 1 & 2 & 3 \\ \hline
+2 & 0.93780 &       &       \\
+3 & 0.00157 & 0.00136 &     \\
+4 & 0.00030 & 0.00026 & 0.35785
+\end{array}
+\]
+At $\alpha=0.05$, coatings 1 vs 3, 1 vs 4, 2 vs 3, and 2 vs 4 are significantly different; 1 vs 2 and 3 vs 4 are not. Coatings 1–2 form a high-conductivity group, coatings 3–4 a low-conductivity group.
+
+\item The mean–CI plot below shows the same pattern: 1 and 2 have the largest means, with intervals well above those of 3 and 4, and 3–4 are similar.
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_22_mean_CI_plot.png}
+\end{center}
+Coating 2 has the highest sample mean, very slightly above 1.
+
+\item The scatter plot and the ANOVA both show that coatings 3 and 4 give lower conductivity than 1 and 2.
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_22_scatter_rawdata.png}
+\end{center}
+Since we want to minimize conductivity and coating 4 is currently used, note that 3 and 4 form the low group and are not significantly different. There is no strong statistical reason to prefer 3 over 4, but if a small additional reduction is considered worthwhile and switching is cheap, coating 3 is a reasonable candidate; otherwise staying with 4 is also defensible.
+\end{enumerate}
+\end{solution}
+
+
+\question 3.23 Reconsider the experiment from Problem 3.22. Analyze the residuals and draw
+conclusions about model adequacy.
+
+\begin{solution}
+We use the one-way ANOVA model from 3.22 and examine residuals
+\[
+\hat\varepsilon_{ij} = Y_{ij}-\hat Y_{ij}
+\]
+to check normality, constant variance, and model form.
+
+The normal Q–Q plot of residuals is:
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_22_residuals_qqplot.png}
+\end{center}
+The points track the reference line closely, with only mild tail deviations, so the normality assumption looks fine.
+
+Residuals vs fitted values:
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_22_residuals_vs_fitted.png}
+\end{center}
+Residuals are scattered around zero with no visible trend or change in spread, suggesting constant variance and no obvious lack of fit.
+
+The raw-data plot by coating type:
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_22_scatter_rawdata.png}
+\end{center}
+shows no extreme outliers within any group and a clear separation between the high-conductivity (1–2) and low-conductivity (3–4) coatings. Overall, the residual analysis does not reveal problems with the one-factor ANOVA model used in 3.22.
+\end{solution}
+
+
+\question 3.26
+The response time in milliseconds was determined for three different types of circuits that could be used in an automatic valve shutoff mechanism. The results from a completely randomized experiment are shown in the following table:
+
+\[
+\begin{array}{c|ccccc}
+\text{Circuit type} & \multicolumn{5}{c}{\text{Response time (ms)}}\\
+\hline
+1 & 9 & 12 & 10 & 8 & 15\\
+2 & 20 & 21 & 23 & 17 & 30\\
+3 & 6 & 5 & 8 & 16 & 7
+\end{array}
+\]
+
+\begin{enumerate}[(a)]
+\item Test the hypothesis that the three circuit types have the same response time. Use $\alpha = 0.01$.
+\item Use Tukey's test to compare pairs of treatment means. Use $\alpha = 0.01$.
+\end{enumerate}
+
+\begin{solution}
+We fit a one-way ANOVA with factor “circuit type”:
+\[
+Y_{ij} = \mu + \tau_i + \varepsilon_{ij},\quad i=1,2,3,\ j=1,\dots,5.
+\]
+
+\begin{enumerate}[(a)]
+\item Hypotheses:
+\[
+H_0:\mu_1=\mu_2=\mu_3
+\quad\text{vs}\quad
+H_a:\text{not all }\mu_i\text{ are equal}.
+\]
+From \verb|aov(time ~ circuit)| we get
+\[
+\begin{array}{l|rrrr}
+\text{Source} & \text{Df} & \text{SS} & \text{MS} & F \\
+\hline
+\text{Circuit} & 2 & 543.6 & 271.8 & 16.08 \\
+\text{Error}   & 12& 202.8 & 16.9  &
+\end{array}
+\]
+with $p = 0.000402 < 0.01$. So circuit type affects mean response time at the 1\% level.
+
+\item Tukey’s HSD at familywise $\alpha=0.01$ (\verb|TukeyHSD(fit326, "circuit", conf.level=0.99)|) gives
+\[
+\begin{array}{c|rrrr}
+\text{Comparison} & \text{diff} & \text{lwr} & \text{upr} & p_{\text{adj}}\\
+\hline
+2-1 & 11.4  & 2.12  & 20.68 & 0.00237\\
+3-1 & -2.4  & -11.68& 6.88  & 0.63670\\
+3-2 & -13.8 & -23.08& -4.52 & 0.00050
+\end{array}
+\]
+At $\alpha=0.01$, circuits 1 and 2 differ, and 2 and 3 differ; 1 and 3 do not. Circuit 2 has much larger mean response time than 1 and 3, which are similar, so if we want to minimize response time we would choose circuit 1 or 3 rather than 2.
+\end{enumerate}
+\end{solution}
+
+
+\question 3.36
+An article in the \emph{Journal of the Electrochemical Society} (Vol.~139, No.~2, 1992, pp.~524--532) describes an experiment to investigate the low-pressure vapor deposition of polysilicon. The experiment was carried out in a large-capacity reactor at Sematech in Austin, Texas. The reactor has several wafer positions, and four of these positions are selected at random. The response variable is film thickness uniformity. Three replicates of the experiment were run, and the data are as follows:
+
+\[
+\begin{array}{c|ccc}
+\text{Wafer position} & \multicolumn{3}{c}{\text{Uniformity}}\\
+\hline
+1 & 2.76 & 5.67 & 4.49\\
+2 & 1.43 & 1.70 & 2.19\\
+3 & 2.34 & 1.97 & 1.47\\
+4 & 0.94 & 1.36 & 1.65
+\end{array}
+\]
+
+\begin{enumerate}[(a)]
+\item Is there a difference in the wafer positions? Use $\alpha = 0.05$.
+\item Estimate the variability due to wafer positions.
+\item Estimate the random error component.
+\item Analyze the residuals from this experiment and comment on model adequacy.
+\end{enumerate}
+
+\begin{solution}
+We use a one-way random-effects ANOVA:
+\[
+Y_{ij} = \mu + \alpha_i + \varepsilon_{ij},\quad i=1,\dots,4,\ j=1,2,3,
+\]
+where $\alpha_i\sim N(0,\sigma_\alpha^2)$ is the random wafer effect and $\varepsilon_{ij}\sim N(0,\sigma^2)$, independent.
+
+\begin{enumerate}[(a)]
+\item To test for position-to-position variability we test
+\[
+H_0:\sigma_\alpha^2=0\quad\text{vs}\quad H_a:\sigma_\alpha^2>0.
+\]
+From \verb|aov(uniformity ~ wafer)| we obtain
+\[
+\begin{array}{l|rrrr}
+\text{Source} & \text{Df} & \text{SS} & \text{MS} & F \\
+\hline
+\text{Wafer} & 3 & 16.220 & 5.4066 & 8.29 \\
+\text{Error} & 8 & 5.217  & 0.6522 &
+\end{array}
+\]
+with $p = 0.00775 < 0.05$. So wafer position does contribute variability in uniformity.
+
+\item In this model,
+\[
+E(MS_{\text{wafer}})=\sigma^2 + r\sigma_\alpha^2,\quad E(MS_E)=\sigma^2,\quad r=3.
+\]
+So
+\[
+\hat\sigma_\alpha^2=\frac{MS_{\text{wafer}}-MS_E}{r}
+=\frac{5.406608-0.6521833}{3}\approx 1.58.
+\]
+This is the estimated variance due to wafer-to-wafer differences.
+
+\item The error variance component is estimated by
+\[
+\hat\sigma^2 = MS_E = 0.6521833,
+\]
+so the within-position variance is about 0.65.
+
+\item The normal Q–Q plot of residuals is
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_36_residuals_qqplot.png}
+\end{center}
+which is reasonably straight with only small tail deviations, so normality looks acceptable.
+
+Residuals vs fitted values:
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_36_residuals_vs_fitted.png}
+\end{center}
+show residuals scattered around zero with roughly constant spread, suggesting the equal-variance assumption is fine.
+
+The raw-data plot by position
+\begin{center}
+\includegraphics[width=0.6\textwidth]{img/3_36_scatter_rawdata.png}
+\end{center}
+shows positions 1 and 3 tending higher and 2 and 4 lower, matching the ANOVA. Overall, the one-way random-effects model seems adequate.
+\end{enumerate}
+\end{solution}
+
+
+\question 3.52
+Suppose that four normal populations have means of $\mu_1 = 50$, $\mu_2 = 60$, $\mu_3 = 50$, and $\mu_4 = 60$. How many observations should be taken from each population so that the probability of rejecting the null hypothesis of equal population means is at least $0.90$? Assume that $\alpha = 0.05$ and that a reasonable estimate of the error variance is $\sigma^2 = 25$.
+
+\begin{solution}
+We have $a=4$ normal populations with means
+\[
+\mu_1=50,\ \mu_2=60,\ \mu_3=50,\ \mu_4=60,
+\]
+common error variance $\sigma^2=25$, and ANOVA level $\alpha=0.05$. Let $n$ be the common sample size per group.
+
+For a one-way ANOVA, the noncentrality parameter under a given alternative is
+\[
+\lambda = \frac{n}{\sigma^2}\sum_{i=1}^a(\mu_i-\mu)^2,
+\]
+where $\mu$ is the grand mean. Here
+\[
+\mu = \frac{50+60+50+60}{4}=55,\quad
+\sum_{i=1}^4(\mu_i-\mu)^2 = 100,
+\]
+so
+\[
+\lambda = \frac{n\cdot 100}{25} = 4n.
+\]
+The $F$–test has $df_1 = a-1 = 3$ and $df_2 = a(n-1) = 4(n-1)$, with critical value
+\[
+F_{\text{crit}} = F_{3,\,4(n-1),\,1-\alpha}.
+\]
+For each $n$ we can compute the power
+\[
+\text{Power}(n) = P\bigl(F_{3,4(n-1)}(\lambda) > F_{\text{crit}}\bigr),
+\]
+where the $F$ has noncentrality $\lambda=4n$. In R:
+
+\begin{verbatim}
+mu <- c(50, 60, 50, 60)
+sigma2 <- 25
+alpha <- 0.05
+a <- length(mu)
+
+compute_power <- function(n) {
+  grand_mean <- mean(mu)
+  lambda <- n * sum((mu - grand_mean)^2) / sigma2
+  df1 <- a - 1
+  df2 <- a * (n - 1)
+  F_crit <- qf(1 - alpha, df1, df2)
+  1 - pf(F_crit, df1, df2, ncp = lambda)
+}
+
+n_values <- 2:50
+powers <- sapply(n_values, compute_power)
+\end{verbatim}
+
+The relevant part of the table is
+
+\[
+\begin{array}{c|c}
+n & \text{Power}(n)\\
+\hline
+2 & 0.2987\\
+3 & 0.6157\\
+4 & 0.8224\\
+5 & 0.9270\\
+6 & 0.9725
+\end{array}
+\]
+The smallest $n$ with power at least $0.90$ is $n=5$ (power $\approx 0.927$). Thus we need 5 observations per population.
+\end{solution}
+
+
+
+\end{questions}
+
+\end{document}

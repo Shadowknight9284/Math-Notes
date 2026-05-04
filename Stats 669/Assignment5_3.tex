@@ -1,0 +1,281 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Spatial Statistics}
+\newcommand{\assignment}{Homework 5.3}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+\question 6.5
+
+\begin{solution}
+    \textbf{(a)}
+    I believe that I am not super amazing at viewing log-log plots, but the slope of the line seems to be $\frac{1}{3}$,
+
+    When plotting it in desmos, I got the following graph:
+    \begin{center}
+        \includegraphics[scale=0.3]{img/desmos.png}
+    \end{center}
+
+    I also tried combinations of log slopes with the points and the values of the slopes fluctuated a lot between .3 and .5, but I think the best fit is $\frac{1}{3}$.
+
+    \textbf{(b)}
+    The paramertization of this model should be given by the first odd power term in the Taylor expansion of the function. The taylor expansion of $\theta_1 e^{-r/ \theta_2} (1+r/\theta_2)$ is given by:
+    \begin{align*}
+        \theta_1 e^{-r/ \theta_2} (1+r/\theta_2) &= \theta_1 \left( 1 - \frac{r}{\theta_2} + \frac{r^2}{2\theta_2^2} - \frac{r^3}{6\theta_2^3} + \frac{r^4}{24\theta_2^4} \cdots \right) \left( 1 + \frac{r}{\theta_2} \right) \\
+        &= \theta_1 \left( 1 - \frac{r^2}{2\theta_2^2} + \frac{r^3}{3\theta_2^3} + \cdots \right) \\
+        &= \theta_1 + \frac{\theta_1 r^2}{2\theta_2^2} - \frac{\theta_1 r^3}{6\theta_2^3} + \cdots
+    \end{align*}
+    Thus the first odd power term is $-\frac{\theta_1 r^3}{3\theta_2^3}$, so the parameterization of this model should be $\phi_1 = \frac{\theta_1}{\theta_2^3}$ and the other $\phi_2 = \frac{1}{\theta_2}$. 
+
+\textbf{(c)}
+Considering the $\theta_1 e^{-r/\theta_2} (1+r/\theta_2)$ model, we
+reparameterize it in terms of $\phi_1$ and $\phi_2$ as follows:
+\[
+\theta_1 e^{-r/\theta_2} (1+r/\theta_2)
+= \frac{\phi_1}{\phi_2^{3}} e^{-r \phi_2} (1+r \phi_2).
+\]
+
+We can also observe the Taylor expansion of this function as follows:
+\begin{align*}
+\frac{\phi_1}{\phi_2^{3}} e^{-r \phi_2} (1+r \phi_2)
+&= \frac{\phi_1}{\phi_2^{3}}
+   \left( 1 - r \phi_2 + \frac{r^2 \phi_2^2}{2}
+          - \frac{r^3 \phi_2^3}{6} + \cdots \right)
+   \left( 1 + r \phi_2 \right) \\
+&= \frac{\phi_1}{\phi_2^{3}}
+   \left( 1 - \frac{r^2 \phi_2^2}{2}
+          + \frac{r^3 \phi_2^3}{3} + \cdots \right) \\
+&= \frac{\phi_1}{\phi_2^{3}} - \frac{\phi_1 r^2}{2\phi_2}
+   + \frac{\phi_1 r^3}{3} + \cdots .
+\end{align*}
+
+For our data $Y \sim N(\beta \mathbf{1}, \Sigma(\phi_1, \phi_2))$,
+where $\beta$ is an unknown mean, we can use contrasts to get the
+REML estimates of $\phi_2$. Define $Z = C^\top Y$ where $C$ is a
+contrast matrix such that $C^\top \mathbf{1} = 0$ and
+$C^\top C = I$. Then we have that
+$Z \sim N(0, C^\top \Sigma(\phi_1, \phi_2) C)$.
+
+For the REML log-likelihood (up to an additive constant) we can use
+the following formula:
+\[
+\ell_{R}(\phi_1, \phi_2)
+= -\frac{1}{2} \log \bigl|C^\top \Sigma(\phi_1, \phi_2) C\bigr|
+  -\frac{1}{2} Z^\top
+     \bigl(C^\top \Sigma(\phi_1, \phi_2) C\bigr)^{-1} Z.
+\]
+
+Next, we observe $C^\top \Sigma(\phi_1, \phi_2) C$ as
+$\phi_2 \to 0$. Let us first define our covariance matrix
+$\Sigma(\phi_1, \phi_2)$ as follows:
+\[
+\Sigma(\phi_1, \phi_2) = \bigl( K(r_{ij}) \bigr)_{i,j}.
+\]
+For convenience we define
+$(R_{\phi_2})_{ij} = e^{-r_{ij} \phi_2} (1+r_{ij} \phi_2)$, then we
+can write $\Sigma(\phi_1, \phi_2) = \dfrac{\phi_1}{\phi_2^3} R_{\phi_2}$.
+Therefore the contrast covariance matrix can be written as
+\[
+C^\top \Sigma(\phi_1, \phi_2) C
+= \frac{\phi_1}{\phi_2^3} C^\top R_{\phi_2} C.
+\]
+
+Now observing $R_{\phi_2}$ as a matrix Taylor expansion, we have that
+\[
+R_{\phi_2}
+= \mathbf{1}\mathbf{1}^\top
+  - \frac{\phi_2^2}{2} R^{(2)}
+  + \frac{\phi_2^3}{3} R^{(3)} + \cdots,
+\]
+where $R^{(2)}$ and $R^{(3)}$ are the matrices of the second and third
+powers of the distances between the points. Thus we have that
+\[
+C^\top R_{\phi_2} C
+= C^\top \mathbf{1}\mathbf{1}^\top C
+  - \frac{\phi_2^2}{2} C^\top R^{(2)} C
+  + \frac{\phi_2^3}{3} C^\top R^{(3)} C + \cdots.
+\]
+Since $C^\top \mathbf{1} = 0$, we lose the first term and we have that
+\[
+C^\top R_{\phi_2} C
+= - \frac{\phi_2^2}{2} C^\top R^{(2)} C
+  + \frac{\phi_2^3}{3} C^\top R^{(3)} C + \cdots.
+\]
+Thus we have that
+\[
+C^\top \Sigma(\phi_1, \phi_2) C
+= - \frac{\phi_1}{2\phi_2} C^\top R^{(2)} C
+  + \frac{\phi_1}{3} C^\top R^{(3)} C + \cdots.
+\]
+
+Next we observe the leading term to understand the behavior of the
+REML estimate as $\phi_2 \to 0$. Let the locations of the points be
+given by the rows of a matrix $X \in \mathbb{R}^{m \times k}$.
+If we consider that $r_{ij} = \| x_i - x_j\|$ then
+$R^{(2)}_{ij} = r_{ij}^2$. By the identity
+$r_{ij}^2 = \|x_i\|^2 + \|x_j\|^2 - 2 x_i^\top x_j$, we can write
+$R^{(2)}$ as follows, with $s$ the $m$–vector of squared norms of the
+rows of $X$:
+\[
+R^{(2)} = \mathbf{1} s^\top + s \mathbf{1}^\top - 2 X X^\top.
+\]
+When we conjugate this with $C$, we have that
+\[
+C^\top R^{(2)} C
+= - 2 C^\top X X^\top C.
+\]
+Let us define $B = X^\top C$, then we have that
+\[
+C^\top R^{(2)} C = - 2 B^\top B.
+\]
+We know that $B^\top B$ is positive semidefinite and has rank at most
+$k$. Thus $C^\top R^{(2)} C$ is negative semidefinite and has rank at
+most $k$. We can further say that $C^\top R^{(2)} C$ has exactly rank
+$k$ since $C$ has full column rank $m-1$ and $X$ has full column rank
+$k$. Thus all $k$ nonzero eigenvalues of $C^\top R^{(2)} C$ are
+negative.
+
+If $\lambda_1, \ldots, \lambda_k$ are the nonzero eigenvalues of
+$C^\top R^{(2)} C$, then for small $\phi_2$
+\[
+C^\top \Sigma(\phi_1, \phi_2) C
+\approx - \frac{\phi_1}{2\phi_2} C^\top R^{(2)} C,
+\]
+so the $k$ nonzero eigenvalues of $C^\top \Sigma(\phi_1, \phi_2) C$
+are approximately given by $\sim c_i \dfrac{\phi_1}{\phi_2}$ where
+$c_i = -\lambda_i/2 > 0$. Hence
+\[
+\log \bigl| C^\top \Sigma(\phi_1, \phi_2) C \bigr|
+= \sum_{i=1}^{m-1} \log \lambda_i(\phi_2)
+\sim k \log\!\left(\frac{\phi_1}{\phi_2}\right) + O(1),
+\]
+and therefore
+\[
+-\frac{1}{2} \log \bigl| C^\top \Sigma(\phi_1, \phi_2) C \bigr|
+\sim -\frac{k}{2} \log\!\left(\frac{\phi_1}{\phi_2}\right) + O(1).
+\]
+
+For the quadratic term in $\ell_R$, diagonalize
+$C^\top \Sigma(\phi_1,\phi_2) C$ and write $Z$ in the corresponding
+eigenbasis. Then
+\[
+-\frac{1}{2} Z^\top
+   \bigl(C^\top \Sigma(\phi_1,\phi_2) C\bigr)^{-1} Z
+= -\frac{1}{2} \sum_{i=1}^{m-1}
+   \frac{\tilde z_i^2}{\lambda_i(\phi_2)}.
+\]
+For the $k$ large eigenvalues we have
+$\lambda_i(\phi_2) \sim c_i \phi_1 \phi_2^{-1}$, so
+$1/\lambda_i(\phi_2) = O(\phi_2) \to 0$ as $\phi_2 \to 0$, and these
+contributions vanish. The remaining $m-k-1$ eigenvalues stay bounded
+away from zero and infinity, so the corresponding terms converge to a
+finite limit. Thus the quadratic term remains finite as
+$\phi_2 \to 0$.
+
+Combining these results, as $\phi_2 \to 0$ the determinant term in
+$\ell_R(\phi_1,\phi_2)$ behaves like
+$-\frac{k}{2} \log(\phi_1/\phi_2) \to -\infty$, while the quadratic
+term stays finite. Hence, for this parametrization and an unknown
+constant mean, the restricted log-likelihood does \emph{not} tend to a
+finite value as the inverse range parameter $\phi_2$ tends to $0$.
+\end{solution}
+
+
+\question 6.13
+
+\begin{solution}
+\[
+K(r) = \frac{\phi_1}{\phi_2}\exp(-\phi_2 r),
+\]
+
+To study how often the REML estimate of $\phi_2$ hits the boundary at
+$0$, I ran the following simulation. I fixed $\phi_1 = 1$ and
+considered sample sizes
+\[
+m \in \{5, 10, 50, 100, 200\}
+\]
+and true inverse ranges
+\[
+\phi_2 \in \{0.2, 0.5, 1, 2, 5\}.
+\]
+For each pair $(m,\phi_2)$ I repeated the steps below $N = 200$ times:
+\begin{enumerate}
+\item Generate $m$ locations independently from $\mathrm{Unif}([0,1]^2)$
+      in the unit square.
+\item Form the $m\times m$ covariance matrix $\Sigma(\phi_1,\phi_2)$
+      with entries
+      $\Sigma_{ij} = K(r_{ij})
+      = (\phi_1/\phi_2)\exp(-\phi_2 r_{ij})$.
+\item Simulate one realization
+      $Y \sim N(\beta\mathbf{1},\Sigma(\phi_1,\phi_2))$ with $\beta=0$.
+\item Fit the same model by restricted maximum likelihood, using
+      \texttt{optimize} to maximize the restricted log-likelihood over
+      $\phi_2 \ge 0$ while profiling out $\phi_1$ and the mean.
+\item Record whether the REML estimate satisfies
+      $\hat\phi_2^{(R)} = 0$. In the code I treat
+      $\hat\phi_2^{(R)} < 10^{-4}$ as $0$.
+\end{enumerate}
+
+For each $(m,\phi_2)$ I then estimated
+$
+\hat p(m,\phi_2)
+= \frac{1}{N} \sum_{r=1}^N
+  \mathbf{1}\{\hat\phi_{2,r}^{(R)} = 0\}.
+$
+The plot below shows $\hat p(m,\phi_2)$ as a function of $m$ (on a log
+scale) for each fixed value of $\phi_2$.
+
+Numerically, for $\phi_2 = 0.2$ I obtained
+\[
+\hat p(5,0.2) = 0.35,\quad
+\hat p(10,0.2) = 0.355,\quad
+\hat p(50,0.2) = 0.295,\quad
+\hat p(100,0.2) = 0.32,\quad
+\hat p(200,0.2) = 0.34,
+\]
+so the probability that the REML estimate hits the boundary stays
+around $0.3$ and does not seem to decrease as $m$ increases. For
+$\phi_2 = 0.5$ the estimated probabilities lie between about $0.24$
+and $0.45$ over this range of $m$, again clearly bounded away from $0$.
+For $\phi_2 = 1$ the probability decreases from about $0.40$ at $m=5$
+to about $0.12$ at $m=200$. For larger inverse ranges,
+$\phi_2 = 2$ and $\phi_2 = 5$, the probability becomes quite small:
+for $\phi_2 = 2$ it drops to roughly $0.02$ by $m=200$, and for
+$\phi_2 = 5$ it is essentially $0$ once $m \ge 50$.
+
+Overall, these simulations suggest that for small inverse ranges
+(i.e., very smooth, strongly correlated fields) the probability that
+$\hat\phi_2^{(R)} = 0$ does not tend to $0$ as $m$ increases. Instead,
+for values like $\phi_2 = 0.2$ and $\phi_2 = 0.5$,
+$\hat p(m,\phi_2)$ appears to stabilize around a positive level. For
+larger inverse ranges, such as $\phi_2 = 2$ or $\phi_2 = 5$, the
+probability does decrease toward $0$ as $m$ grows. This is consistent
+with the discussion in Section 6.3 and the restricted log-likelihood
+plots in Figure 6.11: because the restricted log-likelihood has a
+finite limit as $\phi_2 \downarrow 0$ for this parametrization and an
+unknown constant mean, there can be a non-negligible chance that the
+REML maximizer over $\phi_2 \ge 0$ occurs at the boundary, especially
+when the true process has a very large spatial range.
+
+Note that I got help for the code and simulation approach from George and Luke.
+\end{solution}
+
+\begin{center}
+    \includegraphics[scale=.4]{img/5_3.png}
+\end{center}
+
+
+
+
+\end{questions}
+
+\end{document}

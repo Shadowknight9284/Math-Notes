@@ -5,22 +5,97 @@
 
 % Header
 \newcommand{\name}{Pranav Tikkawar}
-\newcommand{\course}{01:XXX:XXX}
-\newcommand{\assignment}{Homework n}
+\newcommand{\course}{16:640:669}
+\newcommand{\assignment}{Spatial Statistics}
 \author{\name}
 \title{\course \ - \assignment}
 
 \begin{document}
 \maketitle
-
+\tableofcontents
 \newpage
-\begin{questions}
-\question Question 1.
-\begin{solution}
-This is my solution
-\end{solution}
-Testing
-\question Insert Question
-\end{questions}
+\section{1/21}
+\begin{example}[1/3rd arcsecond topolofcial graphic]
+    2000x2000 pixel at 1/3 arcsecond resolution. each pixel is about 10mx10m.\\ 
+\end{example}
+\section{1/26}
+Taking the sum of the frequnces makes the process well defined
+
+\begin{definition}[Circulant Matrix]
+    A circulant matrix is a special kind of Toeplitz matrix where each row vector is rotated one element to the right relative to the preceding row vector. Formally, a circulant matrix \( C \) of size \( n \times n \)
+    can be defined by its first row \( [c_0, c_1, c_2, \ldots, c_{n-1}] \) as follows:
+    \[
+    C = \begin{bmatrix}
+    c_0 & c_1 & c_2 & \cdots & c_{n-1} \\
+    c_{n-1} & c_0 & c_1 & \cdots & c_{n-2} \\
+    c_{n-2} & c_{n-1} & c_0 & \cdots & c_{n-3} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    c_1 & c_2 & c_3 & \cdots & c_0
+    \end{bmatrix}
+    \]
+
+    The eigenvectors of a circulant matrix are given by the discrete Fourier transform (DFT) basis vectors, and the eigenvalues can be computed using the DFT of the first row of the matrix. This property makes circulant matrices particularly useful in various applications, including signal processing and solving certain types of linear systems efficiently.
+
+\end{definition}
+
+\section{1/28}
+\begin{remark}[Stationary process that is m.s. continous but realizations are not continuous]
+    \begin{itemize}
+        \item Number of points of disjoint intervals are independent rvs
+        \item $P(N(t, t+\epsilon) = 1) / \epsilon = \lambda > 0$ as $\epsilon \to 0$
+        \item $P(N(t, t+\epsilon) \geq 2) / \epsilon \to 0$ as $\epsilon \to 0$
+    \end{itemize}
+
+    Let us define $Z(t) = N([t,t+1])$. such that we have our jumps when we move from $t$ to $t+1$. This is m.s. continuous but not continuous in realization.
+
+    This is Mean-Square continuous because
+    \begin{proof}
+        Need: $E[|Z(s) - Z(t)|^2] \to 0$ as $s \to t$.
+        \begin{align*}
+            E[|Z(s) - Z(t)|^2] &= \var(Z(s)) + \var(Z(t)) - 2\cov(Z(s), Z(t)) \\
+            &= \lambda + \lambda - 2 * \cov(N([s,s+1]), N([t,t+1])) \\
+        \end{align*}
+        \begin{align*}
+            \cov(N([s,s+1]), N([t,t+1])) &\suchthat t \geq s , t \geq s + 1 \\
+            &= \cov(N([s,t) + N((t,s+1]), N([t,s+1) + N((s+1,t+1])) \\
+            &= 0 + 0 + \var(N([t,s+1])) + 0 \\
+            &= \lambda (s + 1 - t)
+        \end{align*}
+        Thus,
+        \begin{align*}
+            E[|Z(s) - Z(t)|^2] &= 2\lambda - 2\lambda (s + 1 - t) \\
+            &= 2\lambda (t - s) \to 0 \text{ as } s \to t
+        \end{align*}
+    \end{proof}
+    BLP is not always best
+\end{remark}
+
+\section{2/2}
+\begin{definition}[Prinicple Irregular Term]
+    The principle irregular term (PIT) is a concept used in geostatistics and spatial statistics to describe the primary source of variability or irregularity in a spatial dataset. 
+    
+\end{definition}
+
+\begin{remark}[Note about Hiesenberg Uncertainty Principle]
+    The Heisenberg Uncertainty Principle states that it is impossible to simultaneously know both the exact position and exact momentum of a particle. In the context of spatial statistics, this principle can be metaphorically related to the trade-off between spatial resolution and frequency resolution when analyzing spatial data. High spatial resolution may lead to lower frequency resolution and vice versa, highlighting the inherent limitations in capturing all aspects of spatial variability.
+
+    Not that it is beacuse position and momentum are fourier pairs.
+    
+\end{remark}
+
+\begin{definition}[Matern Model]
+    Simplest Stationary model w/ full flexibility in smoothness of process
+
+
+\end{definition}
+
+\begin{definition}[Micro ergodicity]
+    A stochastic process is said to be micro-ergodic if its statistical properties can be consistently estimated from a single, sufficiently long realization of the process. In other words, as the observation window increases, the sample estimates of the process's parameters converge to their true values almost surely.
+    
+\end{definition}
+
+\section{2/4}
+
+
 
 \end{document}

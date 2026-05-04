@@ -1,0 +1,213 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Intro to Experimental Design}
+\newcommand{\assignment}{Homework 4}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+ 
+ 
+\textbf{5.1} An interaction effect in the model from a factorial experiment involving quantitative factors is a way of incorporating curvature into the response surface model representation of the results.
+
+\begin{solution}
+True. When you add an interaction term like $\beta_{12}x_1x_2$ to a first-order model, the slope in $x_1$ changes depending on $x_2$, which bends what would otherwise be a flat surface. So the interaction is what introduces the curvature.
+\end{solution}
+
+\textbf{5.2} A factorial experiment may be conducted as a RCBD by running each replicate of the experiment in a unique block.
+
+\begin{solution}
+True. If each replicate gets its own block, every treatment combination appears exactly once per block, which is exactly the RCBD setup. The block effect then absorbs any replicate-to-replicate variability that would otherwise inflate the error.
+\end{solution}
+
+\textbf{5.3} If an interaction effect in a factorial experiment is significant, the main effects of the factors involved in that interaction are difficult to interpret individually.
+
+\begin{solution}
+True. A significant $AB$ interaction means the effect of $A$ depends on the level of $B$, so averaging over $B$ to get a single main effect for $A$ can be misleading or contradictory. You'd need to look at the simple effects instead.
+\end{solution}
+
+\textbf{5.7} The following output was obtained from a computer program that
+performed a two-factor ANOVA on a factorial experiment.
+
+\begin{solution}
+
+\textbf{(a)} From the degrees of freedom: total df $= 15$ so $N = 16$, df$_A = 1$ so $a = 2$, and df$_{AB} = 3 = (1)(b-1)$ gives $b = 4$, df$_B = 3$, df$_E = 8$, and $n = 16/8 = 2$ replicates. The remaining entries follow directly:
+\[
+  SS_A = 0.0002 \times 1 = 0.0002, \quad
+  MS_B = 180.378/3 = 60.126, \quad
+  MS_{AB} = 8.479/3 = 2.826, \quad
+  MS_E = 158.797/8 = 19.850
+\]
+\[
+  F_A \approx 0, \quad F_B = 60.126/19.850 = 3.03, \quad F_{AB} = 2.826/19.850 = 0.14.
+\]
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\hline
+Source      & DF &    SS      &    MS     & $F$     & $P$   \\
+\hline
+$A$         &  1 &     0.0002 &    0.0002 & 0.00    & 0.998 \\
+$B$         &  3 &   180.378  &   60.126  & 3.03    & 0.093 \\
+$AB$        &  3 &     8.479  &    2.826  & 0.14    & 0.932 \\
+Error       &  8 &   158.797  &   19.850  &         &       \\
+\hline
+Total       & 15 &   347.654  &           &         &       \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{(b)} From df$_{AB} = (a-1)(b-1) = 3$, since $a=2$ we get $b-1=3$, so $b = 4$ levels.
+
+\textbf{(c)} $n = N/(ab) = 16/8 = 2$ replicates per treatment combination.
+
+\textbf{(d)} None of the effects are significant at $\alpha = 0.05$. The interaction $F = 0.14$ ($p = 0.93$) is essentially zero, so there's no evidence the factors interact. Factor $A$ has no effect at all ($F \approx 0$). Factor $B$ is borderline at $F = 3.03$ ($p = 0.093$) — it doesn't quite reach significance but with only 2 replicates the power is pretty low, so it might be worth a follow-up with more data. Factor $A$ could likely be dropped in future runs.
+
+\end{solution}
+
+\textbf{5.9} An engineer suspects that the surface finish of a metal part
+is influenced by the feed rate and the depth of cut.  He selects three
+feed rates and four depths of cut and conducts a $3\times 4$ factorial
+experiment with $n=3$ replicates per cell ($N=36$).
+
+\begin{solution}
+
+\textbf{(a)} The two-way factorial model is $y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk}$ where $i$ indexes feed rate, $j$ depth of cut, and $k$ replicates.
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\hline
+Source              & DF &   SS   &   MS    & $F$    & $P$          \\
+\hline
+Feed Rate           &  2 & 3425   & 1712.7  & 46.0 & $<0.001$ \\
+Depth of Cut        &  3 & 2213   &  737.6  & 19.8 & $<0.001$ \\
+Feed$\times$Depth   &  6 &  527   &   87.9  &  2.4 & $0.062$            \\
+Error               & 24 &  893   &   37.2  &      &                     \\
+\hline
+Total               & 35 & 7058   &         &        &                     \\
+\hline
+\end{tabular}
+\end{center}
+
+Both feed rate and depth of cut are highly significant (both $p < 0.001$). The interaction is not significant at $\alpha = 0.05$ ($p = 0.062$, though it's marginal), so the main effects can be interpreted on their own.
+
+\textbf{(b)} The residuals vs.\ fitted plot looks reasonable — no real pattern, spread is roughly constant across the fitted range. The Q-Q plot is mostly fine, with a few points (obs.\ 17, 20, 23) pulling slightly at the lower tail, but nothing extreme. The assumptions seem adequately satisfied.
+
+\textbf{(c)}
+\begin{center}
+\begin{tabular}{lrr}
+\hline
+Feed Rate (in/min) & $\hat{\mu}_{i\cdot\cdot}$ & $s_i$ \\
+\hline
+0.20 & 81.6  & 14.3 \\
+0.25 & 100.3 & 9.4  \\
+0.30 & 103.8 & 6.1  \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{(d)} P-values from the ANOVA: feed rate $p < 0.001$, depth of cut $p < 0.001$, interaction $p = 0.062$. Tukey HSD on feed rate shows 0.20 in/min is significantly lower than both 0.25 and 0.30 (both $p < 0.001$), while 0.25 and 0.30 are not significantly different from each other ($p = 0.34$). For depth, 0.15 and 0.18 don't differ much, nor do 0.20 and 0.25, but the higher depths are clearly better than the lower ones. To maximize surface finish, feed rate 0.25 or 0.30 in/min combined with depth 0.25 in would be the recommendation.
+
+\end{solution}
+
+\textbf{5.10} For the data in Problem 5.9, compute a 95\% confidence interval for the mean difference in surface finish between feed rates of 0.20 and 0.25 in/min.
+
+\begin{solution}
+The estimated difference is $\hat{\Delta} = 81.6 - 100.3 = -18.7$. Each feed rate has $n_1 = n_2 = 12$ observations (four depths $\times$ three replicates). Using $MS_E = 37.2$ on 24 degrees of freedom:
+\[
+  SE(\hat{\Delta}) = \sqrt{37.2\left(\frac{1}{12}+\frac{1}{12}\right)} \approx 2.49.
+\]
+The 95\% CI is $-18.7 \pm (2.064)(2.49) \approx (-23.8,\ -13.5)$. Since the interval is entirely negative, feed rate 0.25 in/min produces a significantly higher mean surface finish than 0.20 in/min.
+\end{solution}
+
+\textbf{5.17} Use Tukey's test to determine which levels of the pressure factor are significantly different for the data in Problem 5.8.
+
+\begin{solution}
+The two-way ANOVA for the Problem 5.8 data gives:
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\hline
+Source              & DF &  SS     &  MS     & $F$    & $P$     \\
+\hline
+Temperature         &  2 & 0.3011  & 0.1506  & 8.47   & 0.009   \\
+Pressure            &  2 & 0.7678  & 0.3839  & 21.6   & $<0.001$ \\
+Temp$\times$Press   &  4 & 0.0689  & 0.0172  & 0.97   & 0.470   \\
+Error               &  9 & 0.1600  & 0.0178  &        &         \\
+\hline
+Total               & 17 & 1.3978  &         &        &         \\
+\hline
+\end{tabular}
+\end{center}
+
+Both temperature and pressure are significant; the interaction is not ($p = 0.47$), so main effects are interpreted independently. Tukey HSD on pressure using $MS_E = 0.0178$, $df_E = 9$, $n_j = 6$:
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+Comparison      & Difference & 95\% Tukey CI            & $p_{\text{adj}}$ \\
+\hline
+215 $-$ 200     & $+0.317$   & $(+0.102,\ +0.532)$      & 0.007            \\
+230 $-$ 200     & $-0.183$   & $(-0.398,\ +0.032)$      & 0.095            \\
+230 $-$ 215     & $-0.500$   & $(-0.715,\ -0.285)$      & $<0.001$         \\
+\hline
+\end{tabular}
+\end{center}
+
+215 psig is significantly higher than 200 psig ($p = 0.007$), and 230 psig is significantly lower than 215 psig ($p < 0.001$). The 200 vs.\ 230 comparison is borderline ($p = 0.095$) and not significant. In terms of letter groupings: 215 (a) $>$ 200 (ab) $\gtrsim$ 230 (b). Based on this, 215 psig is the recommended pressure level — it gives the highest mean response and is clearly separated from 230 psig. The residual plots look fine; assumptions are reasonably satisfied.
+
+\end{solution}
+
+\textbf{5.39}  Reconsider Problem~5.9.  The experiment is re-analyzed as
+a factorial in $b=3$ blocks, with each replicate constituting one block.
+
+\begin{solution}
+The model now includes a block term: $y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \delta_k + \varepsilon_{ijk}$, where $\delta_k$ is the block (replicate) effect.
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\hline
+Source              & DF &  SS    &  MS     & $F$    & $P$          \\
+\hline
+Feed Rate           &  2 & 3425   & 1712.7  & 60.1   & $<0.001$ \\
+Depth of Cut        &  3 & 2213   &  737.6  & 25.9   & $<0.001$ \\
+Block               &  2 &  266   &  132.9  &  4.66  & $0.021$     \\
+Feed$\times$Depth   &  6 &  527   &   87.9  &  3.08  & $0.024$     \\
+Error               & 22 &  627   &   28.5  &        &              \\
+\hline
+Total               & 35 & 7058   &         &        &              \\
+\hline
+\end{tabular}
+\end{center}
+
+All four terms are significant at $\alpha = 0.05$. Notably, the Feed$\times$Depth interaction that was borderline in 5.9 ($p = 0.062$) is now significant ($p = 0.024$) — removing the block variance tightened up the error term enough to push it over. The variance component for blocks works out to:
+\[
+  \hat{\sigma}^2_b = \frac{MS_{\text{Block}} - MS_E}{ab} = \frac{132.9 - 28.5}{12} = 8.70,
+\]
+which is positive, confirming there was real replicate-to-replicate variation worth accounting for.
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+Model                  & $MS_E$  & $df_E$ & Block $F$ \\
+\hline
+Without blocks (5.9)   & 37.2    &  24    & ---       \\
+With blocks (5.39)     & 28.5    &  22    & 4.66 ($p=0.021$) \\
+\hline
+\end{tabular}
+\end{center}
+
+Blocking reduced the error variance by about 23\%, which was worth it. The residual plots for the blocked model look clean — no obvious patterns, and the Q-Q plot is fine aside from a slight pull at obs.\ 11. Block 2 does tend to run a bit lower than the other two, which is why including it helped. The same recommendations from 5.9 hold: feed rate 0.25--0.30 in/min and depth 0.25 in for maximum surface finish, though now that the interaction is significant, it would be worth looking at the simple effects more carefully.
+
+\end{solution}
+
+
+\end{document}
