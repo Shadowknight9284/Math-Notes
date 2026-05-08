@@ -1,3 +1,13 @@
+if (!requireNamespace("terra", quietly = TRUE)) {
+  install.packages("terra")
+}
+if (!requireNamespace("doParallel", quietly = TRUE)) {
+  install.packages("doParallel")
+}
+if (!requireNamespace("foreach", quietly = TRUE)) {
+  install.packages("foreach")
+}
+
 library(terra)
 library(doParallel)
 library(foreach)
@@ -8,7 +18,7 @@ setwd("C:/Users/prana/OneDrive/Desktop/MathNotes/Stats 669")
 ourdir <- "hw9/output"
 dir.create(ourdir, showWarnings = FALSE, recursive = TRUE)
 
-tif_file <- "USGS_13_n37w118_20260112.tif"
+tif_file <- "C:\\Users\\prana\\Documents\\GitHub\\Math-Notes\\Stats 669\\data\\USGS_13_n37w118_20260112.tif"
 raster_data <- rast(tif_file)
 
 nr <- nrow(raster_data)
