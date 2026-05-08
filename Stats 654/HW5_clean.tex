@@ -1,0 +1,613 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{fullpage}
+\usepackage{graphicx}
+
+\newtheorem{problem}{Problem}
+\newenvironment{solution}{\par\noindent\textbf{Solution.}\ }{\par}
+
+\begin{document}
+
+\begin{center}
+{\Large Stat 654 -- Homework 5}\\[4pt]
+Pranav Tikkawar\\
+May 6, 2026
+\end{center}
+
+\bigskip
+
+\begin{problem}[Gaussian couplings]
+Recall that a coupling of two random variables with given marginals means a joint
+construction of them on the same probability space. Let $X,Y \sim N(0,1)$ be two
+independent $N(0,1)$ random variables.
+
+\begin{enumerate}
+\item Let $Z := aX + bY$. You may use without proof that $Z$ is also Gaussian.
+Compute the mean and variance of $Z$. For what condition on $a$ and $b$ does $Z$
+have distribution $N(0,1)$?
+
+\begin{solution}
+Let $Z := aX + bY$ with $X,Y \sim N(0,1)$ independent. Then
+\[
+  \mathbb{E}[Z] = a\,\mathbb{E}[X] + b\,\mathbb{E}[Y] = 0.
+\]
+Also,
+\[
+  \operatorname{Var}(Z)
+  = a^2\operatorname{Var}(X) + b^2\operatorname{Var}(Y)
+    + 2ab\,\operatorname{Cov}(X,Y).
+\]
+Since $X$ and $Y$ are independent, $\operatorname{Cov}(X,Y)=0$, and
+$\operatorname{Var}(X)=\operatorname{Var}(Y)=1$, we get
+\[
+  \operatorname{Var}(Z) = a^2 + b^2.
+\]
+Therefore $Z \sim N(0,1)$ if and only if $a^2 + b^2 = 1$.\qedhere
+\end{solution}
+
+\item Show that $(X, \rho X + \sqrt{1-\rho^2}Y)$ is a coupling of two standard
+Gaussian random variables for any $\rho \in [-1,1]$. Draw a scatterplot of the pair
+and plot histograms of both coordinates to numerically verify that each marginal
+distribution is standard Gaussian. This coupling is called the identical coupling
+when $\rho = 1$, the independent coupling when $\rho = 0$, and the antithetic
+coupling when $\rho = -1$.
+
+\begin{solution}
+Define
+\[
+  Z_\rho := \rho X + \sqrt{1-\rho^2}\,Y, \qquad \rho \in [-1,1].
+\]
+Then
+\[
+  \mathbb{E}[Z_\rho]
+  = \rho\,\mathbb{E}[X] + \sqrt{1-\rho^2}\,\mathbb{E}[Y]
+  = 0,
+\]
+and
+\[
+  \operatorname{Var}(Z_\rho)
+  = \rho^2\operatorname{Var}(X) + (1-\rho^2)\operatorname{Var}(Y)
+    + 2\rho\sqrt{1-\rho^2}\,\operatorname{Cov}(X,Y)
+  = \rho^2 + (1-\rho^2) = 1,
+\]
+since $X$ and $Y$ are independent with $\operatorname{Var}(X)=\operatorname{Var}(Y)=1$
+and $\operatorname{Cov}(X,Y)=0$. Hence $Z_\rho \sim N(0,1)$, so $(X,Z_\rho)$ is a
+coupling of two standard Gaussian random variables for every $\rho \in [-1,1]$.
+
+For a numerical check, I simulated $n = 10^5$ i.i.d. pairs $(X_i,Y_i)$ from $N(0,1)$
+and formed
+\[
+  Z_{\rho,i} = \rho X_i + \sqrt{1-\rho^2}\,Y_i, \qquad i = 1,\dots,n,
+\]
+for $\rho \in \{1,0,-1\}$. A short Python script produced scatterplots of
+$(X_i,Z_{\rho,i})$ and overlaid histograms of the marginals $X$ and $Z_\rho$; the
+resulting figures are included below.
+
+In all three cases, the histograms of $X$ and $Z_\rho$ look almost identical and
+match the bell shape of the standard normal density, so both marginals are close
+to $N(0,1)$. The scatterplots have sample correlations close to $\rho$, so we
+see the coupling move from identical ($\rho=1$) to independent ($\rho=0$) to
+antithetic ($\rho=-1$).
+\end{solution}
+
+\item Consider $(X_1,X_2) = (aX + bY,\, cX + dY)$. Find values of $(a,b,c,d)$ such
+that (a) $(X_1,X_2)$ is a coupling of two standard Gaussian random variables, and
+(b) $X_1 + X_2 = X$.
+
+\begin{solution}
+Let
+\[
+  X_1 = aX + bY, \qquad X_2 = cX + dY.
+\]
+Since $X$ and $Y$ are independent standard normals, requiring $X_1$ and $X_2$ to be
+standard Gaussian gives
+\[
+  a^2 + b^2 = 1, \qquad c^2 + d^2 = 1.
+\]
+The condition $X_1 + X_2 = X$ implies
+\[
+  (a+c)X + (b+d)Y = X,
+\]
+so
+\[
+  a + c = 1, \qquad b + d = 0.
+\]
+One convenient family of solutions is obtained as follows: choose any $b \in [-1,1]$
+and set
+\[
+  a = \sqrt{1-b^2}, \qquad c = 1-a, \qquad d = -b.
+\]
+Then
+\[
+  a^2 + b^2 = 1,
+\]
+and also
+\[
+  a + c = a + (1-a) = 1, \qquad b + d = b-b = 0.
+\]
+Finally,
+\[
+  c^2 + d^2 = (1-a)^2 + b^2 = 1-2a + a^2 + b^2 = 1,
+\]
+because $a^2 + b^2 = 1$. Hence this choice gives a valid coupling of two standard
+Gaussian random variables satisfying $X_1 + X_2 = X$.\qedhere
+\end{solution}
+
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem}[Random walk on the complete graph]
+Consider the Markov chain on $\Omega = \{1,2,\dots,n\}$ defined as follows: if the
+chain is currently at state $x$, then it moves uniformly to one of the other $n-1$
+states. In other words,
+\[
+  P(x,z) = \frac{1}{n-1}\,\mathbf{1}\{z \neq x\}.
+\]
+
+\begin{enumerate}
+\item Show that the uniform distribution on $\Omega$ is stationary for this Markov
+chain.
+
+\begin{solution}
+Let $\pi$ be the uniform distribution on $\Omega$, so $\pi(x) = 1/n$ for each
+$x$. For any $z \in \Omega$,
+\[
+  (\pi P)(z)
+  = \sum_{x \in \Omega} \pi(x)P(x,z)
+  = \sum_{x \neq z} \frac{1}{n}\cdot \frac{1}{n-1}
+  = \frac{n-1}{n}\cdot \frac{1}{n-1}
+  = \frac{1}{n}
+  = \pi(z).
+\]
+Therefore the uniform distribution is stationary.\qedhere
+\end{solution}
+
+\item Let $x \neq y$. Compute $\|P(x,\cdot) - P(y,\cdot)\|_{\mathrm{TV}}$.
+
+\begin{solution}
+By definition,
+\[
+  \|P(x,\cdot) - P(y,\cdot)\|_{\mathrm{TV}}
+  = \frac{1}{2} \sum_{z \in \Omega} \bigl|P(x,z) - P(y,z)\bigr|.
+\]
+The two distributions differ only at $z=x$ and $z=y$. Indeed,
+\[
+  |P(x,x) - P(y,x)|
+  = \Bigl|0 - \frac{1}{n-1}\Bigr|
+  = \frac{1}{n-1},
+\]
+and
+\[
+  |P(x,y) - P(y,y)|
+  = \Bigl|\frac{1}{n-1} - 0\Bigr|
+  = \frac{1}{n-1}.
+\]
+For all other $z$ we have $P(x,z) = P(y,z) = 1/(n-1)$, so those terms contribute
+zero. Thus
+\[
+  \|P(x,\cdot) - P(y,\cdot)\|_{\mathrm{TV}}
+  = \frac{1}{2}\left(\frac{1}{n-1} + \frac{1}{n-1}\right)
+  = \frac{1}{n-1}.
+\]
+\qedhere
+\end{solution}
+
+\item Construct a coupling $(X_1,Y_1)$ of $P(x,\cdot)$ and $P(y,\cdot)$ such that
+\[\mathbb{P}(X_1 \neq Y_1) = \|P(x,\cdot) - P(y,\cdot)\|_{\mathrm{TV}}.\]
+
+\begin{solution}
+Define a coupling of $P(x,\cdot)$ and $P(y,\cdot)$ as follows.
+\begin{itemize}
+  \item With probability $\tfrac{1}{n-1}$, set $(X_1,Y_1) = (y,x)$.
+  \item With the remaining probability $1 - \tfrac{1}{n-1}$, choose $Z$ uniformly
+        from $\Omega \setminus \{x,y\}$ and set $(X_1,Y_1) = (Z,Z)$.
+\end{itemize}
+We first check the marginals. For the $X$–coordinate,
+\[
+  \mathbb{P}(X_1 = y) = \frac{1}{n-1}, \qquad
+  \mathbb{P}(X_1 = x) = 0,
+\]
+and for any $z \in \Omega \setminus \{x,y\}$,
+\[
+  \mathbb{P}(X_1 = z)
+  = \left(1 - \frac{1}{n-1}\right) \mathbb{P}(Z = z)
+  = \frac{n-2}{n-1} \cdot \frac{1}{n-2}
+  = \frac{1}{n-1}.
+\]
+So $X_1$ is uniform on $\Omega \setminus \{x\}$, i.e. $X_1 \sim P(x,\cdot)$. The
+same calculation with $x$ and $y$ swapped shows $Y_1 \sim P(y,\cdot)$.
+
+Under this coupling the chains disagree only in the first case, when
+$(X_1,Y_1) = (y,x)$. Hence
+\[
+  \mathbb{P}(X_1 \neq Y_1) = \frac{1}{n-1}.
+\]
+From part (2), $\|P(x,\cdot) - P(y,\cdot)\|_{\mathrm{TV}} = 1/(n-1)$, so this
+coupling achieves the total variation distance.\qedhere
+\end{solution}
+
+\item Now run this coupling at every step. Let
+\[
+  T := \inf\{t \ge 0 : X_t = Y_t\}.
+\]
+Show that if $X_0 \neq Y_0$, then
+\[ \mathbb{P}(T > t) = \left(\frac{1}{n-1}\right)^t . \]
+
+\begin{solution}
+We run at every step the coupling from part (3), and define
+\[
+  T := \inf\{t \ge 0 : X_t = Y_t\}.
+\]
+I claim that for $x \neq y$,
+\[
+  \mathbb{P}(T > t) = \left(\frac{1}{n-1}\right)^t.
+\]
+Whenever $X_t \neq Y_t$, the one–step coupling satisfies
+\[
+  \mathbb{P}(X_{t+1} \neq Y_{t+1} \mid X_t \neq Y_t) = \frac{1}{n-1}.
+\]
+Moreover, once the chains meet, the coupling keeps them together forever: if
+$X_t = Y_t$ then $X_{t'} = Y_{t'}$ for all $t' \ge t$.
+
+For $t=0$ and $x \neq y$ we have $T>0$ almost surely, so
+\[ \mathbb{P}(T>0) = 1 = (1/(n-1))^0. \]
+Now suppose the formula holds for some $t \ge 0$. Using the Markov property of
+the coupled chain and the fact that $T>t$ is equivalent to $X_t \neq Y_t$,
+\[
+  \mathbb{P}(T > t+1)
+  = \mathbb{P}(X_{t+1} \neq Y_{t+1} \mid X_t \neq Y_t)\,\mathbb{P}(T>t)
+  = \frac{1}{n-1}\left(\frac{1}{n-1}\right)^t
+  = \left(\frac{1}{n-1}\right)^{t+1}.
+\]
+This proves the claimed formula.\qedhere
+\end{solution}
+
+\item Use the coupling inequality to conclude that
+\[
+  \max_{x,y} \|P^t(x,\cdot) - P^t(y,\cdot)\|_{\mathrm{TV}}
+  \le \left(\frac{1}{n-1}\right)^t.
+\]
+
+\begin{solution}
+By the coupling inequality,
+\[
+  \|P^t(x,\cdot) - P^t(y,\cdot)\|_{\mathrm{TV}}
+  \le \mathbb{P}(T>t).
+\]
+Using the coupling from the previous parts,
+\[
+  \mathbb{P}(T>t) = \left(\frac{1}{n-1}\right)^t.
+\]
+Hence
+\[
+  \max_{x,y} \|P^t(x,\cdot) - P^t(y,\cdot)\|_{\mathrm{TV}}
+  \le \left(\frac{1}{n-1}\right)^t.
+\]
+\qedhere
+\end{solution}
+
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem}[Random-to-top shuffle]
+Consider a deck of $n$ cards labeled $1,\dots,n$. A shuffling is a permutation of
+$\{1,2,\dots,n\}$. The random-to-top shuffle is the Markov chain on permutations
+where at each step we choose a card label uniformly from $\{1,\dots,n\}$, remove
+that card from its current position, and move it to the top of the deck.
+
+\begin{enumerate}
+\item Show that the uniform distribution on all $n!$ permutations is stationary for
+this Markov chain.
+
+\begin{solution}
+Let $\pi$ be the uniform distribution on $S_n$, so $\pi(\sigma) = 1/n!$ for each
+$\sigma \in S_n$. Fix $\tau \in S_n$. A transition $\sigma \to \tau$ is possible
+exactly when $\sigma$ is obtained by taking $\tau$ and inserting its top card back
+into one of the $n$ positions in the deck. There are $n$ such permutations
+$\sigma_1,\dots,\sigma_n$, and for each
+\[
+  P(\sigma_k,\tau) = \frac{1}{n},
+\]
+since we choose that card label with probability $1/n$.
+Therefore
+\[
+  (\pi P)(\tau)
+  = \sum_{k=1}^n \pi(\sigma_k) P(\sigma_k,\tau)
+  = n \cdot \frac{1}{n!} \cdot \frac{1}{n}
+  = \frac{1}{n!}
+  = \pi(\tau).
+\]
+Thus $\pi$ is stationary for the random-to-top shuffle.\qedhere
+\end{solution}
+
+\item Let $X_t$ and $Y_t$ be two copies of the random-to-top shuffle, started from
+(possibly) different initial decks $X_0$ and $Y_0$. Couple them by choosing the
+same card label at every step and moving that label to the top in both decks.
+
+Let $A_t$ be the set of card labels that have been chosen at least once by time
+$t$. Show that the relative order of the cards in $A_t$ is the same in $X_t$ and
+$Y_t$.
+
+\begin{solution}
+We prove the claim by induction on $t$. For $t=0$, the set $A_0$ is empty, so the
+statement is trivial.
+
+Assume the claim holds at time $t$, and consider time $t+1$. Let $i_{t+1}$ be the
+label chosen at step $t+1$.
+
+\textit{Case 1:} $i_{t+1} \in A_t$. Then in both decks we move the same card
+$i_{t+1}$ to the top. In each deck, the positions of all other labels in $A_t$ do
+not change; only $i_{t+1}$ moves above them. Since the relative order of the
+labels in $A_t$ was the same in $X_t$ and $Y_t$ by the induction hypothesis, and
+we apply the same operation to $i_{t+1}$ in both decks, the relative order of the
+labels in $A_t$ remains the same in $X_{t+1}$ and $Y_{t+1}$. In this case
+$A_{t+1} = A_t$.
+
+\textit{Case 2:} $i_{t+1} \notin A_t$. Then $A_{t+1} = A_t \cup \{i_{t+1}\}$, and
+in both decks the new label $i_{t+1}$ is moved to the top of the deck. In
+particular, $i_{t+1}$ is placed above all labels in $A_t$ in both $X_{t+1}$ and
+$Y_{t+1}$, while the relative order of the labels already in $A_t$ is unchanged.
+Thus the relative order of the labels in $A_{t+1}$ is the same in $X_{t+1}$ and
+$Y_{t+1}$.
+
+In either case, the relative order of the labels in $A_{t+1}$ is the same in the
+two decks. By induction, the claim holds for all $t$.\qedhere
+\end{solution}
+
+\item Show that if $A_t = \{1,\dots,n\}$, then $X_t = Y_t$. Let
+\[
+  T := \inf\{t \ge 0 : X_t = Y_t\}.
+\]
+Deduce that
+\[
+  \mathbb{P}(T>t) \le \mathbb{P}(A_t \neq \{1,\dots,n\}).
+\]
+
+\begin{solution}
+If $A_t = \{1,\dots,n\}$, then every label has been selected at least once. By
+the previous part, the relative order of all labels is the same in $X_t$ and
+$Y_t$, so $X_t = Y_t$.
+
+Therefore, if $T>t$, then necessarily $A_t \neq \{1,\dots,n\}$. Hence
+\[
+  \mathbb{P}(T>t)
+  \le \mathbb{P}(A_t \neq \{1,\dots,n\}).
+\]
+\qedhere
+\end{solution}
+
+\item Use the union bound to prove that
+\[
+  \mathbb{P}(A_t \neq \{1,\dots,n\}) \le n\left(1 - \frac{1}{n}\right)^t
+  \le n e^{-t/n}.
+\]
+
+\begin{solution}
+For each label $i$, let $E_i$ be the event that label $i$ has not been chosen by
+time $t$. Then
+\[
+  \mathbb{P}(E_i) = \left(1 - \frac{1}{n}\right)^t.
+\]
+If $A_t \neq \{1,\dots,n\}$, then at least one $E_i$ occurs. By the union bound,
+\[
+  \mathbb{P}(A_t \neq \{1,\dots,n\})
+  \le \sum_{i=1}^n \mathbb{P}(E_i)
+  = n\left(1 - \frac{1}{n}\right)^t.
+\]
+Using $1 - 1/n \le e^{-1/n}$ gives
+\[
+  \mathbb{P}(A_t \neq \{1,\dots,n\}) \le n e^{-t/n}.
+\]
+\qedhere
+\end{solution}
+
+\item Using the coupling inequality, conclude that
+\[
+  \max_{x,y} \|P^t(x,\cdot) - P^t(y,\cdot)\|_{\mathrm{TV}} \le n e^{-t/n}.
+\]
+In particular, show that the mixing time is at most
+\[
+  t_{\mathrm{mix}}(\varepsilon) \le n\log n + n\log(1/\varepsilon).
+\]
+
+\begin{solution}
+By the coupling inequality and the previous bounds,
+\[
+  \max_{x,y} \|P^t(x,\cdot) - P^t(y,\cdot)\|_{\mathrm{TV}}
+  \le \mathbb{P}(T>t)
+  \le \mathbb{P}(A_t \neq \{1,\dots,n\})
+  \le n e^{-t/n}.
+\]
+To make this at most $\varepsilon$, it suffices that $n e^{-t/n} \le \varepsilon$.
+Taking logarithms yields
+\[
+  t \ge n\log n + n\log(1/\varepsilon).
+\]
+Therefore,
+\[
+  t_{\mathrm{mix}}(\varepsilon) \le n\log n + n\log(1/\varepsilon).
+\]
+\qedhere
+\end{solution}
+
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem}[Conditional Bernoulli distribution]
+Fix integers $0 < I < N$ and parameters $(p_1,\dots,p_N) \in (0,1)^N$. The
+conditional Bernoulli distribution is the distribution on $\{0,1\}^N$ defined by
+\[
+  \mathbb{P}(X_1 = x_1,\dots,X_N = x_N)
+  \propto \prod_{k=1}^N p_k^{x_k}(1-p_k)^{1-x_k}
+  \mathbf{1}\!\left(\sum_{i=1}^N x_i = I\right).
+\]
+Equivalently, $(X_1,\dots,X_N)$ are independent $\mathrm{Ber}(p_k)$ variables
+conditioned on $\sum_{i=1}^N X_i = I$.
+
+We consider the following MCMC algorithm. Given a current state $x^{(t)} \in
+\{0,1\}^N$ with $\sum_i x^{(t)}_i = I$, define
+\[
+  S_0^{(t)} := \{i : x^{(t)}_i = 0\}, \qquad
+  S_1^{(t)} := \{j : x^{(t)}_j = 1\}.
+\]
+At each iteration, choose $i_t \in S_0^{(t)}$ and $j_t \in S_1^{(t)}$
+independently and uniformly at random. The proposal flips $x^{(t)}_{i_t}$ and
+$x^{(t)}_{j_t}$ and is then accepted or rejected according to the Metropolis–
+Hastings rule.
+
+\begin{enumerate}
+\item Calculate the acceptance probability for a proposed flip of coordinates
+$i_t$ and $j_t$.
+
+\begin{solution}
+Let $x \in \mathcal{X}$ be the current state and let $y$ be obtained by changing
+$x_i = 0$ to $y_i = 1$ and $x_j = 1$ to $y_j = 0$, for some
+$i \in S_0(x)$ and $j \in S_1(x)$. Since $|S_0(x)| = N-I$ and
+$|S_1(x)| = I$, the proposal probability is
+\[
+  q(x,y) = \frac{1}{|S_0(x)|}\,\frac{1}{|S_1(x)|}
+         = \frac{1}{(N-I)I}.
+\]
+The reverse move $y \to x$ has the same proposal probability, so
+$q(y,x) = q(x,y)$. The proposal is therefore symmetric, and the MH acceptance
+probability is
+\[
+  \alpha(x,y) = \min\Bigl\{1,\, \frac{\pi(y)}{\pi(x)}\Bigr\}.
+\]
+Since $\pi$ is only defined up to a normalizing constant, we can write
+\[
+  \pi(x) \propto \prod_{k=1}^N p_k^{x_k}(1-p_k)^{1-x_k}
+\]
+on $\mathcal{X}$, and the constant drops out in the ratio. Only coordinates $i$
+and $j$ change, so
+\[
+  \frac{\pi(y)}{\pi(x)}
+  = \frac{p_i^{y_i}(1-p_i)^{1-y_i} p_j^{y_j}(1-p_j)^{1-y_j}}
+         {p_i^{x_i}(1-p_i)^{1-x_i} p_j^{x_j}(1-p_j)^{1-x_j}}
+  = \frac{p_i}{1-p_i} \cdot \frac{1-p_j}{p_j}.
+\]
+Thus
+\[
+  \alpha(x,y) = \min\left\{1,\,
+      \frac{p_i}{1-p_i}\cdot\frac{1-p_j}{p_j}
+    \right\}.
+\]
+\qedhere
+\end{solution}
+
+\item Prove that the Markov chain is irreducible on
+\[
+  \mathcal{X} := \Bigl\{x \in \{0,1\}^N : \sum_{i=1}^N x_i = I\Bigr\}.
+\]
+
+\begin{solution}
+Take any $x,y \in \mathcal{X}$. Let
+\[
+  A = \{k : x_k = 1, y_k = 0\}, \qquad
+  B = \{k : x_k = 0, y_k = 1\}.
+\]
+Since both $x$ and $y$ have exactly $I$ ones, we have $|A| = |B|$. Pair the
+elements of $A$ and $B$ arbitrarily, say $(a_1,b_1),\dots,(a_m,b_m)$ with
+$m = |A|$.
+
+Starting from $x$, for $\ell = 1,\dots,m$ perform the following move: set the
+coordinate at $a_\ell$ from $1$ to $0$ and the coordinate at $b_\ell$ from $0$ to
+$1$. Each such move is exactly of the allowed form in the Markov chain (flipping
+one $0$ to $1$ and one $1$ to $0$), so every intermediate state lies in
+$\mathcal{X}$ and has exactly $I$ ones.
+
+After performing all $m$ moves, we obtain $y$, because all coordinates where $x$
+and $y$ differ have been corrected. Each of these moves has strictly positive
+proposal probability and strictly positive acceptance probability since every
+$p_k \in (0,1)$. Hence there is a positive-probability path from $x$ to $y$, so
+the chain is irreducible on $\mathcal{X}$.\qedhere
+\end{solution}
+
+\item Assume there exist constants $0 < c < C < \infty$ such that
+\[
+  c < \frac{p_k}{1-p_k} < C \qquad \text{for every } k = 1,\dots,N.
+\]
+Prove that the above algorithm has mixing time
+$t_{\mathrm{mix}}(\varepsilon) = O(N\log N)$.
+
+\begin{solution}
+We use path coupling. Define a graph on $\mathcal{X}$ where $x \sim y$ if they
+differ in exactly two coordinates (one $0 \to 1$ and one $1 \to 0$), and let
+\[
+  \ell(x,y) = \frac{1}{2} \sum_{k=1}^N |x_k - y_k|
+\]
+be the Hamming distance. It suffices to consider neighboring states $x,y$ with
+$\ell(x,y) = 1$, i.e. there exist unique indices $u,v$ such that
+\[
+  x_u = 1, \; x_v = 0, \qquad y_u = 0, \; y_v = 1,
+\]
+and $x_k = y_k$ for all $k \neq u,v$.
+
+At each step, draw the same pair $(i_t,j_t)$ with $i_t \in S_0(x)$ and
+$j_t \in S_1(x)$ for the $x$–chain, and couple the $y$–chain so that it uses the
+same pair whenever valid (i.e. when $i_t \in S_0(y)$ and $j_t \in S_1(y)$ as
+well). Since $x$ and $y$ differ only at $u,v$, we have
+\[
+  S_0(x) \triangle S_0(y) = \{u,v\}, \qquad
+  S_1(x) \triangle S_1(y) = \{u,v\}.
+\]
+
+The only proposal that can make the chains coalesce in one step is
+$(i_t,j_t) = (v,u)$. This happens with probability $1/((N-I)I)$. For this move
+the MH ratio is
+\[
+  \frac{\pi(x')}{\pi(x)} = \frac{p_v}{1-p_v}\cdot\frac{1-p_u}{p_u},
+\]
+which is bounded away from $0$ and $\infty$ by the assumption on $p_k/(1-p_k)$.
+In particular there exists $\alpha_0>0$ (depending only on $c$ and $C$) such that
+the move is accepted in both chains with probability at least $\alpha_0$. In that
+event the distance $\ell$ drops from $1$ to $0$.
+
+In contrast, if we propose a pair that does not involve both $u$ and $v$, the
+distance can either stay at $1$ or increase to at most $2$. There are at most a
+constant multiple of $N$ such pairs, each chosen with probability
+$1/((N-I)I)$, so the possible increase in $\ell$ is uniformly bounded by some
+constant $C_1/((N-I)I)$. For $N$ large this is dominated by the negative drift
+coming from the coalescing proposal. Thus we can find $\kappa>0$ (depending only
+on $c$ and $C$) such that
+\[
+  \mathbb{E}[\ell(X_1,Y_1) \mid X_0=x,Y_0=y] \le 1 - \frac{\kappa}{N}
+\]
+whenever $\ell(x,y)=1$.
+
+By the path coupling theorem, for any $x,y \in \mathcal{X}$ and any $t \ge 0$,
+\[
+  \mathbb{E}[\ell(X_t,Y_t)]
+  \le \ell(x,y)\left(1 - \frac{\kappa}{N}\right)^t
+  \le N\left(1 - \frac{\kappa}{N}\right)^t
+  \le N e^{-\kappa t/N}.
+\]
+Since
+\[
+  \|P^t(x,\cdot) - P^t(y,\cdot)\|_{\mathrm{TV}}
+  \le \mathbb{P}(X_t \neq Y_t)
+  \le \mathbb{E}[\ell(X_t,Y_t)],
+\]
+we obtain
+\[
+  \max_{x,y} \|P^t(x,\cdot) - P^t(y,\cdot)\|_{\mathrm{TV}}
+  \le N e^{-\kappa t/N}.
+\]
+Solving $N e^{-\kappa t/N} \le \varepsilon$ for $t$ gives
+\[
+  t \ge \frac{N}{\kappa}\bigl(\log N + \log(1/\varepsilon)\bigr),
+\]
+so the mixing time satisfies $t_{\mathrm{mix}}(\varepsilon) = O(N\log N)$.\qedhere
+\end{solution}
+
+\end{enumerate}
+\end{problem}
+
+\end{document}

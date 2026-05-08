@@ -191,7 +191,7 @@ regions <- expand.grid(
 )
 
 # For now, you can restrict to a subset if desired:
-# regions <- regions[1:100, , drop = FALSE]
+regions <- regions[1:10, , drop = FALSE]
 
 results_list <- vector("list", nrow(regions))
 

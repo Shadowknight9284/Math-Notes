@@ -8,49 +8,48 @@ setwd("C:/Users/prana/OneDrive/Desktop/MathNotes/Stats 669")
 ourdir <- "hw9/output"
 dir.create(ourdir, showWarnings = FALSE, recursive = TRUE)
 
-tif_file <- "USGS_13_n37w118_20260112.tif"
+tif_file <- "data/USGS_13_n37w118_20260112.tif"
 raster_data <- rast(tif_file)
 
+# Approach: aggregate to a coarser grid, then crop by row/col indices
 nr <- nrow(raster_data)
 nc <- ncol(raster_data)
 cat("Full raster size:", nr, "x", nc, "\n")
-
+# 1. Decide how many rows/cols you want; 2000x2000
 target_size <- 2000L
-half <- target_size / 2L  # 1000
+row_factor <- floor(nr / target_size)
+col_factor <- floor(nc / target_size)
+fact <- min(row_factor, col_factor)
 
-# center indices
-center_row <- nr %/% 2
-center_col <- nc %/% 2
+# 2. Aggregate to reduce the raster so that it has at least 2000x2000 but not fewer cells per dimension
+r_agg <- aggregate(raster_data, fact = fact, fun = mean)
 
-# row/col ranges for exactly 2000 rows and 2000 cols
-row_start <- center_row - (half - 1L)   # center - 999
-row_end   <- center_row + half          # center + 1000  ->  row_end - row_start + 1 = 2000
+nr_a <- nrow(r_agg); nc_a <- ncol(r_agg)
+cat("Aggregated raster size:", nr_a, "x", nc_a, "\n")
+
+target_size <- min(2000L, nr_a, nc_a)
+half <- target_size / 2L
+
+center_row <- nr_a %/% 2
+center_col <- nc_a %/% 2
+
+row_start <- center_row - (half - 1L)
+row_end   <- center_row + half
 col_start <- center_col - (half - 1L)
 col_end   <- center_col + half
 
-cat("Row indices:", row_start, "to", row_end,
-    " (", row_end - row_start + 1, "rows)\n")
-cat("Col indices:", col_start, "to", col_end,
-    " (", col_end - col_start + 1, "cols)\n")
-
-# Now convert those indices to an extent
 dem_2k <- crop(
-  raster_data,
+  r_agg,
   ext(
-    xFromCol(raster_data, col_start),
-    xFromCol(raster_data, col_end + 1),
-    yFromRow(raster_data, row_end + 1),
-    yFromRow(raster_data, row_start)
+    xFromCol(r_agg, col_start),
+    xFromCol(r_agg, col_end + 1),
+    yFromRow(r_agg, row_end + 1),
+    yFromRow(r_agg, row_start)
   )
 )
 
 Z <- as.matrix(dem_2k, wide = TRUE)
-cat("Cropped size:", nrow(Z), "x", ncol(Z), "\n")
-
-n_row_blocks <- nrow(Z) / 50  # should be 40
-n_col_blocks <- ncol(Z) / 50  # should be 40
-
-cat("50x50 blocks:", n_row_blocks, "x", n_col_blocks, "\n")
+cat("Final cropped size:", nrow(Z), "x", ncol(Z), "\n")
 
 
 # M matrix for 6.8 with diff ALCs
@@ -113,8 +112,8 @@ M_global <- create_M(global_coords, irf_order = 2) # IRF-2
 cat("Chopping map into blocks...\n")
 
 # Divide by 50 because we extract 50x50 chunks from Z
-n_row_blocks <- n_sub_r / 50
-n_col_blocks <- n_sub_c / 50
+n_row_blocks <- floor(nrow(Z) / 50)
+n_col_blocks <- floor(ncol(Z) / 50)
 
 # === 100 BLOCKS FIX: Hardcoded to a 10x10 grid from the top-left ===
 #blocks_df <- expand.grid(row_blk = 1:10, col_blk = 1:10)
@@ -178,8 +177,6 @@ results_reml <- foreach(
 }
 
 stopCluster(cl)
-
-
 
 
 ###################### HISTOGRAM
