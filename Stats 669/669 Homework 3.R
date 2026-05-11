@@ -4,6 +4,52 @@ library(tidyverse)
 
 
 
+# 1. Read the original DEM
+tif_in  <- "Stats 669/data/USGS_13_n37w118_20260112.tif"
+dem_big <- rast(tif_in)
+
+# Check original size
+nr <- nrow(dem_big)
+nc <- ncol(dem_big)
+cat("Original size:", nr, "x", nc, "\n")
+
+# 2. Compute row/col indices for a 2000 x 2000 central window
+target_size <- 2000
+
+if (nr < target_size || nc < target_size) {
+  stop("Raster is smaller than 2000 x 2000; pick a smaller target_size.")
+}
+
+row_start <- floor((nr - target_size) / 2) + 1
+row_end   <- row_start + target_size - 1
+col_start <- floor((nc - target_size) / 2) + 1
+col_end   <- col_start + target_size - 1
+
+cat("Row indices:", row_start, "to", row_end, "\n")
+cat("Col indices:", col_start, "to", col_end, "\n")
+
+# 3. Turn row/col into an extent and crop the SpatRaster
+#    (this keeps it as a SpatRaster, so writeRaster works)
+e <- ext(dem_big, r1 = row_start, r2 = row_end,
+                  c1 = col_start, c2 = col_end)
+
+dem_small <- crop(dem_big, e)
+
+cat("Cropped size:", nrow(dem_small), "x", ncol(dem_small), "\n")
+
+# 4. Write out the smaller GeoTIFF
+tif_out <- "Stats 669/data/USGS_13_n37w118_small_2000.tif"
+
+writeRaster(
+  dem_small,
+  filename  = tif_out,
+  overwrite = TRUE,
+  filetype  = "GTiff"
+)
+
+cat("Wrote:", tif_out, "\n")
+
+
 pic <- rast("Stats 669/data/USGS_13_n37w118_20260112.tif") 
 
 x0 <- -75.146783

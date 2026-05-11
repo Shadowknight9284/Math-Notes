@@ -1,0 +1,136 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Experimental Design}
+\newcommand{\assignment}{Homework 6}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\textbf{7.5}
+Consider the data from the first replicate of Problem 6.11. Construct a design with two blocks of eight observations each with $ABCD$ confounded. Analyze the data.
+
+\begin{solution}
+Using only replicate I of the $2^4$ design from Problem 6.11 (16 runs), we form two blocks of size 8 by computing
+\[
+ABCD = A B C D
+\]
+and assigning runs with $ABCD=-1$ to block B1 and runs with $ABCD=+1$ to block B2. Thus the block effect is completely aliased with the four‑factor interaction:
+\[
+\text{block} \equiv ABCD.
+\]
+
+We fit the full $2^4$ model with a fixed block effect. With 1 intercept, 1 block effect, and all 15 factorial effects in 16 runs, the model is saturated, so there is no residual error and ANOVA $F$‑tests are not meaningful. From the fitted coefficients, the largest effects (in magnitude) are
+\[
+A \approx -10,\quad D \approx 5,\quad AB \approx 4.5,\quad ABC \approx -6,\quad ABD \approx 4.8,
+\]
+while the remaining main effects and interactions are much smaller.
+
+In summary, blocking on $ABCD$ creates two blocks of eight runs and protects against block‑to‑block variation at the cost of confounding the $ABCD$ interaction. The key conclusions agree with the original unblocked analysis: factor $A$ strongly reduces yield at its high level, $D$ increases yield, and the interactions $AB$, $ABC$, and $ABD$ are also important.
+\end{solution}
+
+\bigskip
+
+\textbf{7.6}
+Repeat Problem 7.5 assuming that four blocks are required. Confound $ABD$ and $ABC$ (and consequently $CD$) with blocks.
+
+\begin{solution}
+Again using replicate I from Problem 6.11, we now create four blocks of size 4 by computing
+\[
+ABD = A B D,\qquad ABC = A B C,\qquad CD = C D,
+\]
+and defining blocks by the signs of $(ABD,ABC)$:
+\[
+\begin{array}{ccl}
+\text{B1:} & ABD=-1,\ ABC=-1, & CD=+1,\\
+\text{B2:} & ABD=-1,\ ABC=+1, & CD=-1,\\
+\text{B3:} & ABD=+1,\ ABC=-1, & CD=-1,\\
+\text{B4:} & ABD=+1,\ ABC=+1, & CD=+1.
+\end{array}
+\]
+Within each block, $ABD$, $ABC$, and $CD$ are constant, so these three effects are fully confounded with blocks and cannot be estimated separately.
+
+We fit a model with block, all main effects, and the two‑factor interactions $AB,AC,BC,AD,BD$. The ANOVA shows that the block effect is not significant ($p \approx 0.14$). Factor $A$ remains highly significant ($F \approx 20.5$, $p \approx 0.02$), while $D$ and $AB$ are moderately important; all other included terms have large $p$‑values. The corresponding estimated effects are approximately
+\[
+A \approx -10,\quad D \approx 5,\quad AB \approx 4.5,
+\]
+with the remaining main effects and interactions within about $\pm 2$.
+
+Residual diagnostics (residuals versus fitted and a normal Q–Q plot) show no serious departures from model assumptions, although only three error degrees of freedom limit the power of these checks. Overall, the four‑block design confirms that $A$ is the dominant factor, with $D$ and $AB$ also influential, while the confounded interactions $ABD$, $ABC$, and $CD$ are absorbed into the block effects.
+\end{solution}
+
+\bigskip
+
+\textbf{7.7}
+Using the data from the $2^5$ design in Problem 6.30, construct and analyze a design in two blocks with $ABCDE$ confounded with blocks.
+
+\begin{solution}
+Problem 6.30 is an unreplicated $2^5$ design in coded factors
+\[
+A,B,C,D,E \in \{-1,+1\},
+\]
+representing aperture setting, exposure time, development time, mask dimension, and etch time. To create two blocks of 16 runs each with $ABCDE$ confounded, we compute
+\[
+ABCDE = A B C D E
+\]
+and assign runs with $ABCDE=-1$ to block B1 and runs with $ABCDE=+1$ to block B2. Thus
+\[
+\text{block} \equiv ABCDE.
+\]
+
+We fit a linear model including block, all main effects, and selected two‑factor interactions ($AB,AC,AD,AE,BC,BD,BE,CD,CE,DE$). The ANOVA shows that block (and thus $ABCDE$) has negligible effect ($p \approx 0.75$). In contrast, factors $A$, $B$, and $C$ and the interaction $AB$ are highly significant (all $p \ll 0.01$); all other terms have small sums of squares and large $p$‑values.
+
+From the fitted coefficients, the main estimated effects (twice each coefficient) are approximately
+\[
+A \approx 11.8,\quad B \approx 33.9,\quad C \approx 9.7,\quad AB \approx 7.9,
+\]
+with all other effects within about $\pm 1.2$. Using only these important terms, a reduced regression model in coded units is
+\[
+\hat{y} = 30.63 + 5.91A + 16.97B + 4.84C + 3.97\,AB,
+\]
+which explains essentially all of the variation in yield ($R^2 \approx 0.997$). Residual plots and a Shapiro–Wilk test ($p \approx 0.42$) indicate an adequate fit.
+
+Thus, confounding $ABCDE$ with blocks does not change the substantive conclusions from the original $2^5$ design: yield increases when $A$ and $C$ are at their high levels and when $B$ is at its high level, with an additional positive $AB$ interaction. Factors $D$ and $E$ have relatively small effects.
+\end{solution}
+
+\bigskip
+
+\textbf{8.4}
+Problem 6.30 describes a process improvement study in the manufacturing process of an integrated circuit. Suppose that only eight runs could be made in this process. Set up an appropriate $2^{5-2}$ design and find the alias structure. Use the appropriate observations from Problem 6.28 as the observations in this design and estimate the factor effects. What conclusions can you draw?
+
+\begin{solution}
+With five two‑level factors and only eight runs, we use a $2^{5-2}=2^3$ fractional factorial design. Take $A,B,C$ as basic factors and define
+\[
+D = AB,\qquad E = AC.
+\]
+Then the defining relation is obtained from
+\[
+I = ABD,\qquad I = ACE,\qquad (ABD)(ACE) = A^2 B C D E = BCDE,
+\]
+so
+\[
+I = ABD = ACE = BCDE.
+\]
+This design is resolution III: each main effect is aliased with certain two‑factor interactions.
+
+The eight‑run $2^3$ design and responses come from Problem 6.28 (Table P6.6), using the run means as the single response for each $(A,B,C)$ combination. Generating $D$ and $E$ via the relations above and fitting a saturated model in the columns $A,B,C,D,E$ yields the following large effect estimates (twice each coefficient):
+\[
+E \approx 5.0,\quad D \approx 3.3,\quad C \approx 3.0,\quad BC \approx 3.5,
+\]
+while $A$ and $B$ have much smaller effects (about $-1.8$ and $0.8$).
+
+Because of aliasing, each of these large effects represents a bundle of effects; for example,
+\[
+E \equiv AC \equiv BCD,\qquad D \equiv AB \equiv BCE.
+\]
+Thus the eight‑run fraction tells us that the alias groups associated with $C$, $D$, and $E$ (and their interactions with $A$ and $B$) are important, whereas $A$ and $B$ appear relatively unimportant. A follow‑up design, such as a fold‑over, would be required to de‑alias these effects and determine which specific main effects and interactions are truly active.
+\end{solution}
+
+
+\end{document}

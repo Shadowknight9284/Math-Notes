@@ -248,6 +248,15 @@ P(i,j) := \mathbb{P}(X_{n+1} = x_j \mid X_n = x_i),
 which is independent of $n$. Each row of $P$ is a probability vector.
 \end{definition}
 
+\begin{example}
+  [Biased Random Walk with absorbing Boundary]
+  $$ h(i) =\begin{cases}
+    \frac{1 - (q/p)^i}{1 - (q/p)^N} & \text{if } p\neq q,\\
+    \frac{i}{N} & \text{if } p=q,
+  \end{cases} $$
+  where $h(i) = \mathbb{P}(\text{hit } N \text{ before } 0 \mid X_0 = i)$.
+\end{example}
+
 \begin{theorem}[Chapman--Kolmogorov Equation (Finite Case)]
 For a time-homogeneous Markov chain with transition matrix $P$, we have
 \[
@@ -272,6 +281,38 @@ A distribution $\pi$ on $S$ satisfies the \emph{detailed balance} equations with
 In this case the chain is called \emph{reversible} with respect to $\pi$, and $\pi$ is automatically stationary.
 \end{definition}
 
+\begin{definition}
+  [Metropolis--Hastings Algorithm]
+  fix a distribution $q(x,\cdot)$ on $S$ for each $x\in S$. Given a target distribution $\pi$ on $S$, we define a Markov chain with transition matrix.
+\[
+P(x,y) = q(x,y) \alpha(x,y) \quad \text{for } y\neq x, \quad P(x,x) = 1 - \sum_{y\neq x} P(x,y),
+\]
+where
+\[
+\alpha(x,y) = \min\left(1, \frac{\pi(y)q(y,x)}{\pi(x)q(x,y)}\right).
+\]
+Set $X_{n+1} = \begin{cases}
+y & \text{with probability } P(X_n,y),\\
+X_n & \text{with probability } P(X_n,X_n).
+\end{cases}$
+Then $\pi$ is a stationary distribution for this chain.
+\end{definition}
+
+
+\begin{definition}
+  [Gibbs Sampler]
+  Let $\pi$ be a distribution on $S = S_1 \times \cdots \times S_d$. For each $i$, define the conditional distribution
+\[
+\pi_i(x_i \mid x_{-i}) := \mathbb{P}_{X\sim\pi}(X_i = x_i \mid X_j = x_j \text{ for } j\neq i).
+\]
+The Gibbs sampler is a Markov chain on $S$ that updates one coordinate at a time
+in a random ordeer. We choose $i$ uniformly at random from $\{1,\dots,d\}$, and then update $X_i$ according to $\pi_i(\cdot \mid X_{-i})$. This chain has $\pi$ as a stationary distribution.   
+\end{definition}
+
+
+
+\section{L13}
+
 \section{L14}
 
 \begin{remark}[Extended Stationary Distribution Properties]
@@ -284,9 +325,48 @@ For a finite-state Markov chain with transition matrix $P$:
 Irreducible means every state can reach every other in finitely many steps. Aperiodicity rules out deterministic cycles such as a two-state alternation.
 \end{remark}
 
+\section{L15}
 
+\begin{definition}
+  [Irreducibility and Aperiodicity]
+A Markov chain with transition matrix $P$ is \emph{irreducible} if for every pair of states $x_i,x_j\in S$, there exists $k\ge 0$ such that $(P^k)(i,j) > 0$. The chain is \emph{aperiodic} if for every state $x_i$, the greatest common divisor of $\{k\ge 1 : (P^k)(i,i) > 0\}$ is 1.
+\end{definition}
 
+\begin{definition}
+  [Period]
+The \emph{period} of a state $x_i$ is the greatest common divisor of $\{k\ge 1 : (P^k)(i,i) > 0\}$. If the period is greater than 1, the chain exhibits deterministic cycles and does not converge to a stationary distribution.
+\end{definition}
 
+\begin{theorem}
+  [Markov Chain Convergence]
+If a Markov chain with transition matrix $P$ is irreducible and aperiodic, then there exists a unique stationary distribution $\pi$, and for any initial distribution $\mu$,
+\[
+\lim_{n\to\infty} \mu P^n = \pi.
+\]
+Furthermore, the convergence is geometric in total variation distance, i.e.\ there exist constants $C>0$ and $\rho\in(0,1)$ such that for all $n$,
+\[
+\|\mu P^n - \pi\|_{\mathrm{TV}} \le C \rho^n.
+\]
+Where $\|\cdot\|_{\mathrm{TV}}$ denotes the total variation distance between probability distributions.
+\[
+\|p-q\|_{\mathrm{TV}} = \frac{1}{2} \sum_{x\in S} |p(x) - q(x)|
+\]
+\end{theorem}
+
+\section{L16}
+
+\begin{definition}
+  [Reversible Markov Chain]
+A Markov chain with transition matrix $P$ is \emph{reversible} with respect to a distribution $\pi$ if $\pi$ satisfies the detailed balance equations
+\[
+\pi(i)P(i,j) = \pi(j)P(j,i)\quad \text{for all } i,j.
+\]
+\end{definition}
+
+\begin{definition}
+  [Spectral Decomposition of Reversible Markov Chains]
+If a Markov chain is reversible with respect to $\pi$, then $P$ is self-adjoint on the Hilbert space $L^2(\pi)$, and admits an orthonormal basis of eigenvectors $\{f_k\}$ with corresponding real eigenvalues $\{\lambda_k\}$. The largest eigenvalue is $\lambda_1 = 1$ with eigenvector $f_1 \equiv 1$, and all other eigenvalues satisfy $|\lambda_k| < 1$.
+\end{definition}
 
 
 

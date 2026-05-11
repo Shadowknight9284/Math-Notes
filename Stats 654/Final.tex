@@ -1,0 +1,1084 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Stochastic Processes - Stats 654}
+\newcommand{\assignment}{Reference Sheet}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\newpage
+
+\section*{Problem-Solving Legend (What Tool Should I Try First?)}
+
+\begin{itemize}
+  \item \textbf{Step 0: Identify the object.}
+  \begin{itemize}
+    \item Is it about sums / random walks / hitting times? $\Rightarrow$ Think \emph{martingales + optional stopping}.
+    \item Is it about long-run behavior / stationary distribution / convergence? $\Rightarrow$ Think \emph{Markov chains + mixing}.
+    \item Is it about bounding $\mathbb{P}(\max \ge a)$ or tails? $\Rightarrow$ Think \emph{Doob / Kolmogorov / Azuma / McDiarmid}.
+  \end{itemize}
+
+  \item \textbf{Martingale tools (RW, hitting probs, expectations).}
+  \begin{itemize}
+    \item Try to build a martingale: $S_n$, $S_n-n\mu$, $S_n^2-n\sigma^2$, $\rho^{S_n}$ or a Doob martingale.
+    \item If there is a natural random time (first hit, ruin, pattern), check if it is a stopping time and apply OST.
+  \end{itemize}
+
+  \item \textbf{Markov chain tools (stationarity, convergence).}
+  \begin{itemize}
+    \item Compute $\pi$ via $\pi P=\pi$ or symmetry/degree rule; check detailed balance for reversibility.
+    \item Check irreducible + aperiodic; then use the convergence theorem or spectral gap/mixing bounds.
+  \end{itemize}
+
+  \item \textbf{Coupling tools (mixing bounds, distances).}
+  \begin{itemize}
+    \item Try a shared-uniform coupling so both chains use the same randomness.
+    \item Bound $\mathbb{P}(\tau>t)$ (meeting time) and then use $\|P^t(x,\cdot)-\pi\|_{\mathrm{TV}}\le \mathbb{P}(\tau>t)$.
+  \end{itemize}
+
+  \item \textbf{Concentration tools (tail bounds).}
+  \begin{itemize}
+    \item Independent bounded variables $\Rightarrow$ Hoeffding / Chernoff.
+    \item Martingale with bounded increments $\Rightarrow$ Azuma.
+    \item Function of independent variables with bounded influence $\Rightarrow$ Doob martingale + McDiarmid.
+  \end{itemize}
+
+  \item \textbf{MCMC tools (MH and Gibbs).}
+  \begin{itemize}
+    \item MH: write proposal $Q$, compute $\alpha(x,y)=\min\big(1,\frac{\pi(y)Q(y,x)}{\pi(x)Q(x,y)}\big)$, then check detailed balance.
+    \item Gibbs: derive full conditionals using the proportional trick, then argue invariance of $\pi$.
+  \end{itemize}
+
+  \item \textbf{Graph / RW tools (recurrence, structure).}
+  \begin{itemize}
+    \item Random walk on graph: treat as Markov chain; stationary $\pi(x)\propto\deg(x)$ for undirected graphs.
+    \item On trees or higher-dimensional lattices, reduce to a (possibly biased) 1D distance process and reuse gambler’s ruin / biased RW results.
+  \end{itemize}
+\end{itemize}
+
+\section{L1–L2: Conditional Expectation and Basic Martingales}
+
+\begin{definition}[Conditional Expectation]
+Let $(\Omega,\mathcal{F},\mathbb{P})$ be a probability space, $X$ an integrable random variable with $\mathbb{E}|X|<\infty$, and $\mathcal{G}\subseteq\mathcal{F}$ a sub-$\sigma$-algebra. A random variable $Y$ is called the \emph{conditional expectation} of $X$ given $\mathcal{G}$ if:
+\begin{enumerate}
+\item $Y$ is $\mathcal{G}$-measurable,
+\item for every $A\in\mathcal{G}$,
+\[
+\int_A Y\,d\mathbb{P} = \int_A X\,d\mathbb{P}.
+\]
+\end{enumerate}
+We write $Y = \mathbb{E}[X\mid \mathcal{G}]$. For a random variable $Z$, $\mathbb{E}[X\mid Z] := \mathbb{E}[X\mid \sigma(Z)]$.
+\end{definition}
+
+\begin{definition}[Filtration]
+A \emph{filtration} on $(\Omega,\mathcal{F},\mathbb{P})$ is an increasing sequence of sub-$\sigma$-algebras
+\[
+\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \mathcal{F}_2 \subseteq \cdots \subseteq \mathcal{F}.
+\]
+We interpret $\mathcal{F}_n$ as the information available up to time $n$.
+\end{definition}
+
+\begin{definition}[Martingale, Submartingale, Supermartingale]
+Let $(\mathcal{F}_n)_{n\ge 0}$ be a filtration. A stochastic process $(M_n)_{n\ge 0}$ is a \emph{martingale} w.r.t.\ $(\mathcal{F}_n)$ if:
+\begin{enumerate}
+\item $M_n$ is $\mathcal{F}_n$-measurable (adapted),
+\item $\mathbb{E}|M_n|<\infty$ for every $n$,
+\item $\mathbb{E}[M_{n+1}\mid \mathcal{F}_n] = M_n$ a.s.\ for all $n$.
+\end{enumerate}
+It is a \emph{submartingale} if $\mathbb{E}[M_{n+1}\mid \mathcal{F}_n]\ge M_n$ a.s., and a \emph{supermartingale} if $\mathbb{E}[M_{n+1}\mid \mathcal{F}_n]\le M_n$ a.s.
+\end{definition}
+
+\begin{example}[Classic Martingales from Random Walks]
+Let $(X_i)_{i\ge 1}$ be i.i.d.\ with $\mathbb{E}X_i = \mu$ and $\mathrm{Var}(X_i)=\sigma^2<\infty$, and define $S_n = \sum_{i=1}^n X_i$ with natural filtration $\mathcal{F}_n = \sigma(X_1,\dots,X_n)$.
+\begin{itemize}
+\item If $\mu=0$, then $(S_n)$ is a martingale.
+\item $(S_n - n\mu)$ is always a martingale.
+\item $(S_n^2 - n\sigma^2)$ is a martingale.
+\item For simple symmetric random walk ($X_i=\pm 1$), $S_n$ is a martingale and $S_n^2-n$ is a martingale.
+\end{itemize}
+\end{example}
+
+\begin{definition}[Stopping Time]
+Given a filtration $(\mathcal{F}_n)_{n\ge 0}$, a random variable $T:\Omega\to\{0,1,2,\dots\}\cup\{\infty\}$ is a \emph{stopping time} if
+\[
+\{T = n\}\in \mathcal{F}_n \quad \text{for all }n
+\]
+equivalently, $\{T\le n\}\in\mathcal{F}_n$ for all $n$. Intuitively, at time $n$ we can decide whether $T$ has occurred using only information up to $n$.
+\end{definition}
+
+\begin{definition}[Stopped Process]
+Given a process $(M_n)$ and stopping time $T$, the \emph{stopped process} is
+\[
+M_{n\wedge T} := M_{\min(n,T)}.
+\]
+If $(M_n)$ is a martingale, then $(M_{n\wedge T})$ is also a martingale.
+\end{definition}
+
+\section{L5–L7: Optional Stopping, Convergence, Transformations}
+
+\begin{theorem}[Optional Stopping Theorem (Bounded Case)]
+Let $(M_n)_{n\ge 0}$ be a martingale w.r.t.\ $(\mathcal{F}_n)$, and let $T$ be a stopping time such that $T\le N$ a.s.\ for some deterministic $N$. Then
+\[
+\mathbb{E}[M_T] = \mathbb{E}[M_0].
+\]
+More generally, OST holds under suitable integrability and bounded-increment conditions.
+\end{theorem}
+
+\begin{theorem}[Wald's Identity (Version I)]
+Let $(X_i)_{i\ge 1}$ be i.i.d.\ with $\mathbb{E}|X_1|<\infty$ and mean $\mu$, and let $T$ be an integrable stopping time such that $\mathbb{E}T<\infty$ and certain regularity conditions hold (e.g.\ $T$ bounded or suitable integrability). With $S_T = \sum_{i=1}^T X_i$, we have
+\[
+\mathbb{E}[S_T] = \mu\, \mathbb{E}[T].
+\]
+This follows by applying OST to the martingale $S_n - n\mu$.
+\end{theorem}
+
+\begin{definition}[Almost Sure and $L^1$ Convergence]
+We say $X_n\to X$ almost surely (a.s.) if
+\[
+\mathbb{P}\big(\{\omega: X_n(\omega)\to X(\omega)\}\big)=1.
+\]
+We say $X_n\to X$ in expectation (or in $L^1$) if $\mathbb{E}|X_n-X|\to 0$.
+\end{definition}
+
+\begin{theorem}[Monotone Convergence Theorem]
+If $(X_n)$ is a nondecreasing sequence of nonnegative random variables ($0\le X_1\le X_2\le\cdots$) with $X_n\to X$ a.s., then
+\[
+\lim_{n\to\infty}\mathbb{E}[X_n]=\mathbb{E}[X].
+\]
+\end{theorem}
+
+\begin{theorem}[Dominated Convergence Theorem]
+If $X_n\to X$ a.s.\ and there exists integrable $Y$ with $|X_n|\le Y$ a.s.\ for all $n$, then
+\[
+\lim_{n\to\infty}\mathbb{E}[X_n]=\mathbb{E}[X].
+\]
+\end{theorem}
+
+\begin{lemma}[Convex Transform of a Submartingale]
+Let $(Z_n)$ be a submartingale w.r.t.\ $(\mathcal{F}_n)$ and $\varphi:\mathbb{R}\to\mathbb{R}$ convex, nondecreasing, with $\mathbb{E}|\varphi(Z_n)|<\infty$ for all $n$. Then $(\varphi(Z_n))$ is a submartingale.
+\end{lemma}
+
+\begin{theorem}[Not-To-Gamble Theorem]
+Let $(X_n)$ be a supermartingale and let $(H_n)$ be a predictable sequence (i.e.\ $H_n$ is $\mathcal{F}_{n-1}$-measurable) with $H_n\ge 0$ a.s. Define the stochastic integral
+\[
+(H\cdot X)_n := \sum_{i=1}^n H_i (X_i - X_{i-1}), \quad (H\cdot X)_0 := 0.
+\]
+Then $((H\cdot X)_n)$ is a supermartingale. Intuitively, no nonnegative predictable betting strategy can turn a losing game into a winning one in expectation.
+\end{theorem}
+
+\begin{theorem}[Optional Stopping for Sub/Supermartingales (Bounded Case)]
+Let $(X_n)$ be adapted and $T$ a stopping time with $T\le N$ a.s.
+\begin{itemize}
+\item If $(X_n)$ is a submartingale, then $\mathbb{E}[X_N]\ge \mathbb{E}[X_T]\ge \mathbb{E}[X_0]$.
+\item If $(X_n)$ is a supermartingale, then $\mathbb{E}[X_N]\le \mathbb{E}[X_T]\le \mathbb{E}[X_0]$.
+\end{itemize}
+\end{theorem}
+
+\section{L8–L11: Martingale Convergence and Inequalities}
+
+\begin{theorem}[Convergence of Nonnegative Supermartingales]
+If $(X_n)$ is a supermartingale that is bounded below (e.g.\ $X_n\ge C$ a.s.), then there exists an integrable random variable $X_\infty$ such that $X_n\to X_\infty$ almost surely and in $L^1$ under mild conditions.
+\end{theorem}
+
+\begin{definition}[Doob's Maximal Inequality]
+Let $(M_n)$ be a nonnegative submartingale and $a>0$. Then for any $n$,
+\[
+\mathbb{P}\Big(\max_{0\le k\le n} M_k \ge a\Big) \le \frac{\mathbb{E}[M_n]}{a}.
+\]
+This gives tail bounds for the running maximum of $(M_n)$.
+\end{definition}
+
+\begin{theorem}[Kolmogorov's Maximal Inequality]
+Let $X_1,\dots,X_n$ be independent mean-zero random variables, and let $S_k = \sum_{i=1}^k X_i$. Then for any $a>0$,
+\[
+\mathbb{P}\Big(\max_{1\le k\le n} |S_k| \ge a\Big) \le \frac{\mathrm{Var}(S_n)}{a^2}.
+\]
+\end{theorem}
+
+\begin{theorem}[Ville's Inequality]
+Let $(M_n)$ be a nonnegative martingale with $\mathbb{E}[M_0]=1$. For any $a>0$,
+\[
+\mathbb{P}\Big(\sup_{n\ge 0} M_n \ge a\Big) \le \frac{1}{a}.
+\]
+This is a uniform-in-time version of Markov's inequality for martingales.
+\end{theorem}
+
+\begin{definition}[Subgaussian Random Variable]
+A mean-zero random variable $X$ is \emph{subgaussian} with parameter $\sigma^2$ if
+\[
+\mathbb{E}[\exp(\lambda X)] \le \exp\left(\frac{\sigma^2\lambda^2}{2}\right) \quad \forall \lambda\in\mathbb{R}.
+\]
+Bounded variables are subgaussian with appropriate $\sigma^2$.
+\end{definition}
+
+\begin{theorem}[Hoeffding's Inequality]
+Let $X_1,\dots,X_n$ be independent with $a_i\le X_i\le b_i$ a.s., and define $S_n = \sum X_i$, $\mu = \mathbb{E}S_n$. Then for all $t>0$,
+\[
+\mathbb{P}(S_n - \mu \ge t) \le \exp\left(-\frac{2t^2}{\sum_{i=1}^n (b_i-a_i)^2}\right),
+\]
+and similarly for the lower tail. This is a concentration inequality for bounded independent sums.
+\end{theorem}
+
+\begin{theorem}[Azuma–Hoeffding Inequality]
+Let $(M_n)$ be a martingale with $M_0=0$, and assume bounded differences:
+\[
+|M_n - M_{n-1}|\le c_n \quad \text{a.s.\ for }n=1,\dots,N.
+\]
+Then for all $t>0$,
+\[
+\mathbb{P}(M_N \ge t) \le \exp\left(-\frac{2t^2}{\sum_{n=1}^N c_n^2}\right),
+\]
+and similarly for $\mathbb{P}(M_N \le -t)$. This is the martingale analogue of Hoeffding.
+\end{theorem}
+
+\begin{theorem}[McDiarmid's Inequality]
+Let $X_1,\dots,X_n$ be independent random variables taking values in some set $\mathcal{X}$, and let $f:\mathcal{X}^n\to\mathbb{R}$ satisfy a bounded differences condition:
+\[
+\sup_{x_1,\dots,x_n,x_i'} |f(x_1,\dots,x_i,\dots,x_n) - f(x_1,\dots,x_i',\dots,x_n)| \le c_i.
+\]
+Let $Z = f(X_1,\dots,X_n)$ and $\mu = \mathbb{E}Z$. Then for all $t>0$,
+\[
+\mathbb{P}(Z-\mu \ge t) \le \exp\left(-\frac{2t^2}{\sum_{i=1}^n c_i^2}\right),
+\]
+and similarly for $\mathbb{P}(Z-\mu \le -t)$.
+\end{theorem}
+
+\section{L12–L15: Markov Chains, Stationarity, Convergence}
+
+\begin{definition}[Discrete-Time Markov Chain]
+A stochastic process $(X_n)_{n\ge 0}$ with state space $S$ is a \emph{Markov chain} with transition matrix $P$ if
+\[
+\mathbb{P}(X_{n+1}=y \mid X_0,\dots,X_n) = \mathbb{P}(X_{n+1}=y\mid X_n) = P(X_n,y)
+\]
+for all $n$ and states $y$. The $n$-step transition probabilities are $P^n(x,y) := \mathbb{P}_x(X_n=y)$.
+\end{definition}
+
+\begin{definition}[Stationary Distribution]
+A probability vector $\pi$ on $S$ is \emph{stationary} for $P$ if
+\[
+\pi P = \pi.
+\]
+Equivalently, if $X_0\sim \pi$, then $X_n\sim \pi$ for all $n$.
+\end{definition}
+
+\begin{definition}[Reversibility and Detailed Balance]
+A Markov chain with transition matrix $P$ and distribution $\pi$ is \emph{reversible} w.r.t.\ $\pi$ if
+\[
+\pi(x) P(x,y) = \pi(y) P(y,x) \quad \forall x,y\in S.
+\]
+If this holds, then $\pi$ is stationary. This is called the detailed balance condition.
+\end{definition}
+
+\begin{definition}[Irreducibility]
+A Markov chain with state space $S$ is \emph{irreducible} if for all $x,y\in S$ there exists $n\ge 1$ such that $P^n(x,y)>0$. Intuitively, every state can reach every other state.
+\end{definition}
+
+\begin{definition}[Period and Aperiodicity]
+The \emph{period} of a state $x$ is
+\[
+d(x) := \gcd\{n\ge 1 : P^n(x,x)>0\}.
+\]
+If $d(x)=1$, then $x$ is aperiodic. In an irreducible chain, all states have the same period $d$. The chain is \emph{aperiodic} if $d=1$.
+\end{definition}
+
+\begin{theorem}[Existence and Uniqueness of Stationary Distribution (Finite Case)]
+Every finite irreducible Markov chain has at least one stationary distribution. In the finite irreducible case this stationary distribution is unique.
+\end{theorem}
+
+\begin{definition}[Total Variation Distance]
+For two probability measures $\mu,\nu$ on a finite set,
+\[
+\|\mu - \nu\|_{\mathrm{TV}} = \frac12 \sum_{x} |\mu(x)-\nu(x)| = \sup_{A} |\mu(A)-\nu(A)|.
+\]
+\end{definition}
+
+\begin{definition}[Mixing Time]
+For a finite Markov chain with stationary distribution $\pi$, define
+\[
+d(t) := \sup_{x} \|P^t(x,\cdot) - \pi\|_{\mathrm{TV}}.
+\]
+Then the \emph{mixing time} is
+\[
+t_{\mathrm{mix}}(\varepsilon) := \min\{t: d(t)\le \varepsilon\}.
+\]
+\end{definition}
+
+\begin{theorem}[Convergence Theorem]
+For a finite, irreducible, aperiodic Markov chain with stationary distribution $\pi$,
+\[
+\lim_{n\to\infty} \|P^n(x,\cdot) - \pi\|_{\mathrm{TV}} = 0 \quad \text{for all }x.
+\]
+Moreover $\pi$ is unique.
+\end{theorem}
+
+\section{L16–L18: Reversible Chains, Spectrum, Spectral Gap}
+
+\begin{definition}[Self-Adjointness and Spectrum for Reversible Chains]
+For a reversible finite-state Markov chain with stationary $\pi$, consider the inner product
+\[
+\langle f,g\rangle_\pi := \sum_{x} f(x) g(x) \pi(x).
+\]
+Then $P$ is self-adjoint in $L^2(\pi)$:
+\[
+\langle Pf,g\rangle_\pi = \langle f,Pg\rangle_\pi.
+\]
+Hence all eigenvalues of $P$ are real and lie in $[-1,1]$, and there exists an orthonormal basis of eigenfunctions.
+\end{definition}
+
+\begin{definition}[Spectral Gap and Relaxation Time]
+Let $1=\lambda_1 > \lambda_2\ge \dots \ge \lambda_n\ge -1$ be eigenvalues of $P$. Define
+\[
+\lambda^* := \max_{j\ge 2} |\lambda_j|, \qquad \gamma^* := 1-\lambda^*, \qquad t_{\mathrm{rel}} := \frac{1}{\gamma^*}.
+\]
+Here $\gamma^*$ is the \emph{absolute spectral gap} and $t_{\mathrm{rel}}$ is the \emph{relaxation time}.
+\end{definition}
+
+\begin{theorem}[Spectral Bound on Mixing Time]
+For a finite, irreducible, reversible Markov chain with stationary distribution $\pi$,
+\[
+t_{\mathrm{mix}}(\varepsilon) \le t_{\mathrm{rel}} \log\left(\frac{1}{\varepsilon \,\pi_{\min}}\right),
+\]
+where $\pi_{\min} := \min_x \pi(x)$.
+\end{theorem}
+
+\begin{example}[Random Walk on an Undirected Graph]
+Let $G=(V,E)$ be a connected undirected graph. Simple random walk from $x$ chooses a neighbor uniformly. Then
+\[
+\pi(x) = \frac{\deg(x)}{2|E|}
+\]
+is stationary and reversible. For regular graphs (e.g.\ cycles, hypercubes), $\pi$ is uniform.
+\end{example}
+
+\section{L19–L20: MCMC, Metropolis–Hastings, Gibbs}
+
+\begin{definition}[Metropolis–Hastings Algorithm]
+Let $\pi$ be a target distribution on finite state space $\Omega$, known up to a normalizing constant. Let $Q(x,y)$ be a proposal transition matrix. The MH chain has transition probabilities
+\[
+P(x,y) = Q(x,y)\alpha(x,y)\quad (y\neq x),
+\]
+where
+\[
+\alpha(x,y) = \min\left(1,\frac{\pi(y)Q(y,x)}{\pi(x)Q(x,y)}\right),
+\]
+and
+\[
+P(x,x) = 1 - \sum_{y\neq x} P(x,y).
+\]
+\end{definition}
+
+\begin{theorem}[Detailed Balance for MH]
+The Metropolis–Hastings chain satisfies
+\[
+\pi(x)P(x,y) = \pi(y)P(y,x)\quad \forall x,y.
+\]
+Hence $\pi$ is stationary, and the chain is reversible w.r.t.\ $\pi$.
+\end{theorem}
+
+\begin{definition}[Full Conditional and Gibbs Sampler]
+Let $\pi$ be a joint distribution on $\Omega = \Omega_1\times\cdots\times\Omega_d$. The full conditional for coordinate $i$ is
+\[
+\pi(x_i \mid x_{-i}) := \mathbb{P}(X_i=x_i \mid X_j = x_j, j\neq i),
+\]
+viewed as a distribution on $\Omega_i$ with other coordinates fixed.
+
+\emph{Random-scan Gibbs sampler}: at each step, choose coordinate $i$ (e.g.\ uniformly) and resample $X_i$ from $\pi(\cdot\mid X_{-i})$.
+\end{definition}
+
+\begin{lemma}[Proportional Trick for Conditionals]
+If $\pi(x)\propto g(x)$ for some nonnegative function $g$, then
+\[
+\pi(x_i \mid x_{-i}) \propto g(x_i,x_{-i}) \quad \text{as a function of }x_i,
+\]
+with normalization over $x_i\in\Omega_i$.
+\end{lemma}
+
+\section{L21–L24: Coupling and Random Walk Recurrence}
+
+\begin{definition}[Coupling of Probability Measures]
+Let $\mu,\nu$ be probability distributions on the same state space $S$. A \emph{coupling} of $(\mu,\nu)$ is a pair of random variables $(X,Y)$ defined on a common probability space such that $X\sim \mu$ and $Y\sim \nu$.
+\end{definition}
+
+\begin{theorem}[Coupling Lemma]
+For any two probability distributions $\mu,\nu$ on a finite set $S$,
+\[
+\|\mu-\nu\|_{\mathrm{TV}} = \inf\{ \mathbb{P}(X\neq Y) : (X,Y) \text{ is a coupling of }(\mu,\nu)\}.
+\]
+\end{theorem}
+
+\begin{definition}[Markovian and Faithful Coupling]
+Given a Markov chain with transition matrix $P$, a process $(X_t,Y_t)$ on $S\times S$ is a \emph{Markovian coupling} if each coordinate marginal evolves according to $P$:
+\[
+\mathbb{P}(X_{t+1}=x'\mid X_t=x,Y_t=y)=P(x,x'),\quad
+\mathbb{P}(Y_{t+1}=y'\mid X_t=x,Y_t=y)=P(y,y').
+\]
+The coupling is \emph{faithful} if $X_t=Y_t$ implies $X_{t+1}=Y_{t+1}$ a.s. for all $t$.
+\end{definition}
+
+\begin{definition}[Coupling Time and Coupling Inequality]
+For a coupling $(X_t,Y_t)$, the \emph{coupling time} is
+\[
+\tau := \inf\{t\ge 0 : X_t = Y_t\}.
+\]
+For any initial states $x,y$,
+\[
+\|P^t(x,\cdot) - P^t(y,\cdot)\|_{\mathrm{TV}} \le \mathbb{P}(X_t\neq Y_t) \le \mathbb{P}(\tau > t).
+\]
+In particular, if $Y_0\sim \pi$, then $\|P^t(x,\cdot)-\pi\|_{\mathrm{TV}} \le \mathbb{P}(\tau>t)$.
+\end{definition}
+
+\begin{definition}[Simple Random Walk on $\mathbb{Z}^d$]
+Let $(X_n)$ be a Markov chain on $\mathbb{Z}^d$ where at each step the chain moves to a uniformly chosen neighbor (change one coordinate by $\pm 1$). This is SRW on $\mathbb{Z}^d$.
+\end{definition}
+
+\begin{theorem}[Recurrence and Transience of SRW]
+Simple random walk on $\mathbb{Z}^d$ is:
+\begin{itemize}
+\item \emph{recurrent} for $d=1,2$ (returns to the origin infinitely often with probability 1),
+\item \emph{transient} for $d\ge 3$ (returns only finitely many times with positive probability).
+\end{itemize}
+\end{theorem}
+
+
+\section*{Canonical Worked Examples}
+
+% =======================
+% 1. Gambler's Ruin (Simple Symmetric RW)
+% =======================
+
+\subsection*{Example 1: Gambler's Ruin – Hitting Probability and Expected Time}
+
+Consider simple symmetric random walk on $\{0,1,\dots,N\}$ with absorbing boundaries at $0$ and $N$ and $S_0=i$.
+
+\paragraph{(a) Probability of hitting $N$ before $0$.}
+Let
+\[
+p_i := \mathbb{P}_i(S_\tau = N),\quad \tau = \inf\{n\ge0: S_n\in\{0,N\}\}.
+\]
+By the Markov property and symmetry,
+\[
+p_i = \tfrac12 p_{i-1} + \tfrac12 p_{i+1},\quad 1\le i\le N-1,
+\]
+with boundary conditions $p_0=0$, $p_N=1$.
+This is a linear second-order difference equation with general solution $p_i = a+bi$. Using $p_0=0$ gives $a=0$, and $p_N=1$ gives $b=1/N$. Thus
+\[
+\boxed{p_i = \frac{i}{N}.}
+\]
+
+\paragraph{(b) Expected time to absorption.}
+Let
+\[
+h_i := \mathbb{E}_i[\tau].
+\]
+Again by conditioning on the first step,
+\[
+h_i = 1 + \tfrac12 h_{i-1} + \tfrac12 h_{i+1},\quad 1\le i\le N-1,
+\]
+with $h_0=h_N=0$. Rearranging:
+\[
+h_{i+1} - 2h_i + h_{i-1} = -2.
+\]
+A quadratic ansatz $h_i = \alpha i^2 + \beta i + \gamma$ yields
+\[
+h_{i+1}-2h_i+h_{i-1} = 2\alpha = -2 \Rightarrow \alpha=-1.
+\]
+Write $h_i = -i^2 + \beta i + \gamma$. Using $h_0=0$ gives $\gamma=0$, and $h_N=0$ gives $-N^2 + \beta N=0 \Rightarrow \beta = N$. Thus
+\[
+\boxed{h_i = i(N-i).}
+\]
+
+% =======================
+% 2. Simple Random Walk as Martingale + Azuma
+% =======================
+
+\subsection*{Example 2: Simple Random Walk Martingale + Azuma}
+
+Let $(X_i)$ be i.i.d.\ with $\mathbb{P}(X_i=1)=\mathbb{P}(X_i=-1)=\tfrac12$ and $S_n=\sum_{i=1}^n X_i$.
+
+\paragraph{Martingale.}
+With $\mathcal{F}_n=\sigma(X_1,\dots,X_n)$,
+\[
+\mathbb{E}[S_{n+1}\mid\mathcal{F}_n] = S_n + \mathbb{E}[X_{n+1}] = S_n,
+\]
+so $(S_n)$ is a martingale.
+
+\paragraph{Azuma bound.}
+Set $M_n = S_n$; then $|M_n - M_{n-1}| = |X_n|\le 1$. Azuma–Hoeffding gives, for all $t>0$,
+\[
+\mathbb{P}(S_n \ge t) \le \exp\!\Big(-\frac{2t^2}{\sum_{k=1}^n 1^2}\Big)
+= \exp\!\Big(-\frac{2t^2}{n}\Big).
+\]
+Similarly for $\mathbb{P}(|S_n|\ge t)$ by a union bound.
+
+% =======================
+% 3. Doob Martingale + McDiarmid
+% =======================
+
+\subsection*{Example 3: Doob Martingale and McDiarmid}
+
+Let $X_1,\dots,X_n$ be independent and $f:\mathcal{X}^n\to\mathbb{R}$ satisfy the bounded differences condition
+\[
+|f(x_1,\dots,x_i,\dots,x_n)-f(x_1,\dots,x_i',\dots,x_n)|\le c_i.
+\]
+Define $Z = f(X_1,\dots,X_n)$ and the Doob martingale
+\[
+M_k := \mathbb{E}[Z \mid X_1,\dots,X_k],\quad k=0,\dots,n.
+\]
+Then $(M_k)$ is a martingale and one can check $|M_k-M_{k-1}|\le c_k$ a.s. Applying Azuma,
+\[
+\mathbb{P}(Z - \mathbb{E}Z \ge t)
+= \mathbb{P}(M_n - M_0 \ge t)
+\le \exp\!\Big(-\frac{2t^2}{\sum_{k=1}^n c_k^2}\Big),
+\]
+which is McDiarmid's inequality.
+
+% =======================
+% 4. Stationary Distribution on an Undirected Graph
+% =======================
+
+\subsection*{Example 4: Random Walk on an Undirected Graph}
+
+Let $G=(V,E)$ be a finite connected undirected graph. Simple random walk: from $x$, move to a uniformly chosen neighbor.
+
+\paragraph{Stationary distribution.}
+Define
+\[
+\pi(x) := \frac{\deg(x)}{2|E|}.
+\]
+Then for any adjacent $x,y$,
+\[
+\pi(x)P(x,y) = \frac{\deg(x)}{2|E|}\cdot \frac{1}{\deg(x)} = \frac{1}{2|E|}
+= \frac{\deg(y)}{2|E|}\cdot \frac{1}{\deg(y)} = \pi(y)P(y,x),
+\]
+and both sides are $0$ if $(x,y)\notin E$. Thus detailed balance holds, so $\pi$ is stationary and the chain is reversible.
+
+% =======================
+% 5. Two-State Chain Coupling
+% =======================
+
+\subsection*{Example 5: Coupling for a Two-State Chain}
+
+Consider $S=\{0,1\}$ and
+\[
+P = \begin{pmatrix}
+3/4 & 1/4\\
+1/2 & 1/2
+\end{pmatrix}.
+\]
+
+\paragraph{Stationary distribution.}
+Solve $\pi=\pi P$ with $\pi_0+\pi_1=1$:
+\[
+\pi_0 = \tfrac34\pi_0 + \tfrac12\pi_1 \Rightarrow \tfrac14\pi_0 = \tfrac12\pi_1 \Rightarrow \pi_1 = \tfrac12\pi_0.
+\]
+Normalization gives $\pi_0 + \tfrac12\pi_0 = 1 \Rightarrow \pi_0=2/3$, $\pi_1=1/3$.
+
+\paragraph{Coupling construction.}
+Define $r(0)=1/4,\ r(1)=1/2$. Let $U_{t+1}\sim\mathrm{Unif}(0,1)$ i.i.d., and set
+\[
+X_{t+1} = \mathbf{1}\{U_{t+1}\le r(X_t)\},\quad
+Y_{t+1} = \mathbf{1}\{U_{t+1}\le r(Y_t)\}.
+\]
+Each marginal has transition $P$, and if $X_t=Y_t$ then $X_{t+1}=Y_{t+1}$ (faithful).
+
+If $X_t\neq Y_t$ then one is $0$ and the other is $1$. Under the Bernoulli coupling, the mismatch probability is
+\[
+\mathbb{P}(X_{t+1}\neq Y_{t+1}\mid X_t\neq Y_t) = |r(1)-r(0)| = \tfrac14.
+\]
+Thus for $\tau=\inf\{t:X_t=Y_t\}$ and $X_0\neq Y_0$,
+\[
+\mathbb{P}(\tau>t)\le \Big(\tfrac14\Big)^t.
+\]
+
+\paragraph{Mixing bound.}
+Start $X_0=x$ and $Y_0\sim\pi$. Then $Y_t\sim\pi$ and
+\[
+\|P^t(x,\cdot)-\pi\|_\mathrm{TV}\le \mathbb{P}(X_t\neq Y_t)\le \mathbb{P}(\tau>t)\le \Big(\tfrac14\Big)^t.
+\]
+
+% =======================
+% 6. Lazy Random Walk on Cycle: Spectral Gap Order
+% =======================
+
+\subsection*{Example 6: Lazy RW on Cycle – Order of Mixing}
+
+Lazy random walk on cycle of length $\ell$: at each step, stay w.p.\ $1/2$, move to each neighbor w.p.\ $1/4$.
+
+\paragraph{Stationary distribution.}
+Underlying graph is regular; transition matrix is symmetric; hence $\pi$ is uniform:
+\[
+\pi(x)=1/\ell.
+\]
+
+\paragraph{Spectral gap and mixing.}
+Non-lazy RW on cycle has eigenvalues $\lambda_k = \cos(2\pi k/\ell)$, so $1-\lambda_2\asymp 1/\ell^2$. Laziness maps eigenvalues to $\lambda_k' = \tfrac12(1+\lambda_k)$, so the absolute spectral gap remains $\gamma^*\asymp 1/\ell^2$, and $t_\mathrm{rel}\asymp \ell^2$.
+
+The spectral mixing bound gives
+\[
+t_\mathrm{mix}(\varepsilon)\ \lesssim\ t_\mathrm{rel}\,\log\!\Big(\frac{1}{\varepsilon\pi_{\min}}\Big)
+\asymp \ell^2\log(\ell/\varepsilon),
+\]
+so for fixed $\varepsilon$, $t_\mathrm{mix}(\varepsilon)=O(\ell^2\log\ell)$.
+
+% =======================
+% 7. Metropolis--Hastings on 4 States
+% =======================
+
+\subsection*{Example 7: MH on $\{0,1,2,3\}$ with Path Proposal}
+
+State space $\{0,1,2,3\}$, target $\pi(i)\propto i+1$ (weights $w(0)=1,w(1)=2,w(2)=3,w(3)=4$). Proposal: random walk on the path
+\begin{itemize}
+\item from $0$ propose $1$;
+\item from $3$ propose $2$;
+\item from $1,2$ propose each neighbor w.p.\ $1/2$.
+\end{itemize}
+
+\paragraph{Proposal kernel.}
+Nonzero $q(i,j)$:
+\[
+q(0,1)=1,\ q(1,0)=q(1,2)=1/2,\ q(2,1)=q(2,3)=1/2,\ q(3,2)=1.
+\]
+
+\paragraph{Acceptance probabilities.}
+For neighbors,
+\[
+\alpha(i,j)=\min\Big(1,\frac{w(j)q(j,i)}{w(i)q(i,j)}\Big).
+\]
+Compute e.g.\ from $1$:
+\[
+\alpha(1,0)=\min\Big(1,\frac{1\cdot 1}{2\cdot(1/2)}\Big)=1,\quad
+\alpha(1,2)=\min\Big(1,\frac{3\cdot(1/2)}{2\cdot(1/2)}\Big)=1.
+\]
+Thus
+\[
+P(1,0)=q(1,0)\alpha(1,0)=\tfrac12,\quad
+P(1,2)=q(1,2)\alpha(1,2)=\tfrac12,\quad P(1,1)=0.
+\]
+Similar calculations give all $P(i,j)$. Detailed balance with $\pi(i)\propto i+1$ holds by MH construction.
+
+% =======================
+% 8. Gibbs Sampler for 2-Spin Ising
+% =======================
+
+\subsection*{Example 8: Gibbs for 2-Node Ising Model}
+
+Two spins $\sigma_1,\sigma_2\in\{-1,+1\}$ with joint distribution
+\[
+\pi(\sigma_1,\sigma_2)\propto \exp(\beta \sigma_1\sigma_2),\ \beta>0.
+\]
+
+\paragraph{Unnormalized weights.}
+\[
+(+1,+1): e^\beta;\quad (+1,-1): e^{-\beta};\quad (-1,+1): e^{-\beta};\quad (-1,-1): e^\beta.
+\]
+
+\paragraph{Full conditional for $\sigma_1$.}
+Using proportional trick,
+\[
+\pi(\sigma_1\mid\sigma_2)\propto \exp(\beta \sigma_1\sigma_2).
+\]
+So if $\sigma_2=+1$,
+\[
+\mathbb{P}(\sigma_1=+1\mid\sigma_2=+1)=\frac{e^\beta}{e^\beta+e^{-\beta}}=\frac{1}{1+e^{-2\beta}},
+\]
+and if $\sigma_2=-1$,
+\[
+\mathbb{P}(\sigma_1=+1\mid\sigma_2=-1)=\frac{e^{-\beta}}{e^\beta+e^{-\beta}}=\frac{1}{1+e^{2\beta}}.
+\]
+
+\paragraph{Random-scan Gibbs step.}
+At time $t$:
+\begin{itemize}
+\item With prob $1/2$, update $\sigma_1$ from $\pi(\cdot\mid \sigma_2)$.
+\item With prob $1/2$, update $\sigma_2$ from $\pi(\cdot\mid \sigma_1)$ (symmetric formula).
+\end{itemize}
+This Gibbs chain is reversible w.r.t.\ $\pi$ and converges to $\pi$.
+
+\section*{STAT 654 Cheatsheet (Key Facts)}
+
+% --- Martingales, Stopping Times, Convergence ---
+
+\textbf{Martingale:}
+$(M_n,\mathcal{F}_n)$ with $\mathbb{E}|M_n|<\infty$ and $\mathbb{E}[M_{n+1}\mid\mathcal{F}_n]=M_n$ a.s.; sub/supermartingale if $\ge / \le$.  
+
+\textbf{Stopping Time:}
+$T$ s.t.\ $\{T\le n\}\in\mathcal{F}_n$ for all $n$; decision to stop uses only past info.  
+
+\textbf{Stopped Process:}
+$M_{n\wedge T}$ is again a martingale if $M_n$ is.  
+
+\textbf{Optional Stopping (simple):}
+If $(M_n)$ martingale and $T$ bounded a.s., then $\mathbb{E}[M_T]=\mathbb{E}[M_0]$.  
+
+\textbf{Wald's Identity:}
+i.i.d.\ $X_i$ with mean $\mu$, suitable stopping time $T$, then $\mathbb{E}\!\left[\sum_{i=1}^T X_i\right]=\mu\,\mathbb{E}[T]$.  
+
+\textbf{Convex Transform:}
+If $(M_n)$ martingale and $\varphi$ convex nondecreasing, then $(\varphi(M_n))$ is submartingale (when integrable).  
+
+\textbf{Not-to-Gamble:}
+If $(X_n)$ supermartingale and $H_n\ge0$ predictable, then $(\sum_{i=1}^n H_i(X_i-X_{i-1}))$ is supermartingale.  
+
+\textbf{Supermartingale Convergence:}
+Lower-bounded supermartingale converges a.s.\ (and in $L^1$ under mild conditions).  
+
+% --- Big 3 Maximal / Tail Inequalities ---
+
+\textbf{Doob Maximal Inequality:}
+Nonnegative submartingale $(M_k)$, $a>0$,
+\[
+\mathbb{P}\!\left(\max_{0\le k\le n}M_k \ge a\right)\le \frac{\mathbb{E}[M_n]}{a}.
+\]
+
+\textbf{Kolmogorov Inequality:}
+Independent mean-zero $X_i$, $S_k=\sum_{i=1}^k X_i$,
+\[
+\mathbb{P}\!\left(\max_{1\le k\le n}|S_k|\ge a\right)\le \frac{\mathrm{Var}(S_n)}{a^2}.
+\]
+
+\textbf{Ville Inequality:}
+Nonnegative martingale $(M_n)$ with $\mathbb{E}[M_0]=1$,
+\[
+\mathbb{P}\!\left(\sup_{n\ge0}M_n\ge a\right)\le \frac{1}{a}.
+\]
+
+% --- Concentration: Hoeffding, Azuma, McDiarmid ---
+
+\textbf{Hoeffding (bounded i.i.d.):}
+$a_i\le X_i\le b_i$, $S_n=\sum X_i$, $\mu=\mathbb{E}S_n$,
+\[
+\mathbb{P}(S_n-\mu\ge t)\le \exp\!\Big(-\frac{2t^2}{\sum (b_i-a_i)^2}\Big).
+\]
+
+\textbf{Azuma–Hoeffding (martingale):}
+$M_0=0$, $|M_n-M_{n-1}|\le c_n$,
+\[
+\mathbb{P}(M_N\ge t)\le \exp\!\Big(-\frac{2t^2}{\sum_{n=1}^N c_n^2}\Big).
+\]
+
+\textbf{McDiarmid (bounded differences):}
+Independent $X_i$, $f$ with change $\le c_i$ per coordinate,
+\[
+\mathbb{P}(f(X)-\mathbb{E}f(X)\ge t)\le \exp\!\Big(-\frac{2t^2}{\sum c_i^2}\Big).
+\]
+
+% --- Gambler's Ruin / Random Walk ---
+
+\textbf{Gambler's Ruin (simple RW on $\{0,\dots,N\}$):}
+Start at $i$, $\tau=\inf\{n:S_n\in\{0,N\}\}$,
+\[
+\mathbb{P}_i(S_\tau=N)=\frac{i}{N},\quad \mathbb{E}_i[\tau]=i(N-i).
+\]
+
+\textbf{SRW Recurrence:}
+SRW on $\mathbb{Z}^d$ recurrent for $d=1,2$, transient for $d\ge3$.  
+
+% --- Markov Chains: Basic Definitions ---
+
+\textbf{Markov Chain:}
+$\mathbb{P}(X_{n+1}=y\mid X_0,\dots,X_n)=P(X_n,y)$; $P^n(x,y)=\mathbb{P}_x(X_n=y)$.  
+
+\textbf{Stationary Distribution:}
+$\pi$ with $\pi P=\pi$; if $X_0\sim\pi$ then $X_n\sim\pi$ for all $n$.  
+
+\textbf{Reversible Chain:}
+$\pi(x)P(x,y)=\pi(y)P(y,x)$ for all $x,y$ (detailed balance), implies $\pi$ stationary.  
+
+\textbf{Irreducible:}
+For all $x,y$, $\exists n: P^n(x,y)>0$.  
+
+\textbf{Period / Aperiodic:}
+$d(x)=\gcd\{n\ge1:P^n(x,x)>0\}$; chain aperiodic if $d(x)=1$ for all $x$ in class.  
+
+\textbf{Convergence (finite, irr., aperiodic):}
+Unique $\pi$, and $\|P^n(x,\cdot)-\pi\|_\mathrm{TV}\to0$ for all $x$.  
+
+% --- Total Variation, Mixing Time, Coupling ---
+
+\textbf{Total Variation:}
+$\|\mu-\nu\|_\mathrm{TV}=\frac12\sum_x|\mu(x)-\nu(x)|=\sup_A|\mu(A)-\nu(A)|$.  
+
+\textbf{Mixing Time:}
+$d(t)=\sup_x\|P^t(x,\cdot)-\pi\|_\mathrm{TV}$,
+\[
+t_\mathrm{mix}(\varepsilon)=\min\{t:d(t)\le\varepsilon\}.
+\]
+
+\textbf{Coupling:}
+$(X,Y)$ with $X\sim\mu$, $Y\sim\nu$; $\|\mu-\nu\|_\mathrm{TV}=\inf \mathbb{P}(X\neq Y)$.  
+
+\textbf{Markovian Coupling:}
+$(X_t,Y_t)$ on $S^2$ where each marginal evolves by $P$; faithful if $X_t=Y_t\Rightarrow X_{t+1}=Y_{t+1}$.  
+
+\textbf{Coupling Time / Inequality:}
+$\tau=\inf\{t:X_t=Y_t\}$,
+\[
+\|P^t(x,\cdot)-P^t(y,\cdot)\|_\mathrm{TV}\le\mathbb{P}(\tau>t).
+\]
+
+% --- Random Walk on Graphs ---
+
+\textbf{Simple RW on Graph:}
+From $x$, move to uniform neighbor; stationary $\pi(x)=\deg(x)/(2|E|)$ on connected undirected graphs.  
+
+\textbf{Lazy RW:}
+Stay w.p.\ $1/2$, otherwise move as original; kills period-2 issues on bipartite graphs.  
+
+% --- Spectrum, Spectral Gap, Mixing Bounds ---
+
+\textbf{Reversible Spectrum:}
+$P$ self-adjoint in $L^2(\pi)$; eigenvalues real in $[-1,1]$.  
+
+\textbf{Spectral Gap:}
+$\lambda^*=\max_{j\ge2}|\lambda_j|$, $\gamma^*=1-\lambda^*$, $t_\mathrm{rel}=1/\gamma^*$.  
+
+\textbf{Spectral Mixing Bound:}
+\[
+t_\mathrm{mix}(\varepsilon)\ \le\ t_\mathrm{rel}\,\log\!\left(\frac{1}{\varepsilon\,\pi_\mathrm{min}}\right),\quad
+\pi_\mathrm{min}=\min_x\pi(x).
+\]
+
+% --- MCMC: Metropolis–Hastings and Gibbs ---
+
+\textbf{Metropolis--Hastings:}
+Proposal $Q(x,y)$, target $\pi$, accept prob
+\[
+\alpha(x,y)=\min\!\left(1,\frac{\pi(y)Q(y,x)}{\pi(x)Q(x,y)}\right).
+\]
+Transition: $P(x,y)=Q(x,y)\alpha(x,y)$ for $y\neq x$, $P(x,x)=1-\sum_{y\neq x}P(x,y)$.  
+
+\textbf{MH Detailed Balance:}
+$\pi(x)P(x,y)=\pi(y)P(y,x)$, so MH chain is reversible w.r.t.\ $\pi$.  
+
+\textbf{Gibbs Sampler:}
+On $\Omega=\Omega_1\times\cdots\times\Omega_d$, update coordinate $i$ by sampling from $\pi(x_i\mid x_{-i})$ (full conditional), leaving others fixed.  
+
+\textbf{Proportional Trick:}
+If $\pi(x)\propto g(x)$ then
+\[
+\pi(x_i\mid x_{-i})\propto g(x_i,x_{-i})
+\]
+as a function of $x_i$ (normalizing over $x_i$ only).  
+
+
+
+\section*{Proof Techniques and Strategies (STAT 654)}
+
+
+
+\subsection*{2. Martingale Techniques}
+
+\textbf{Checking Martingale Property:}
+Given candidate $(M_n)$, compute $\mathbb{E}[M_{n+1}\mid\mathcal{F}_n]$ explicitly.
+Use linearity, independence of increments, and that conditioning removes future randomness.
+Core examples: $S_n$, $S_n-n\mu$, $S_n^2-n\sigma^2$, exponential martingales.
+
+\textbf{Constructing Martingales from Random Walks:}
+Choose $f$ so that $f(S_n)$ has zero conditional drift:
+\begin{itemize}
+\item Linear: $S_n$, $S_n-n\mu$.
+\item Quadratic: $S_n^2-n\sigma^2$.
+\item Exponential: $r^{S_n} = \frac{q}{p}^{S_n  }$ with $r$ tuned to the step distribution (biased RW).
+\end{itemize}
+Then apply OST for hitting probabilities or expected times.
+
+\textbf{Designing Martingales for Hitting Problems:}
+Pick parameters to make boundary values convenient.
+E.g.\ for biased RW on $\{0,\dots,N\}$, choose $M_n = \rho^{S_n}$ so that $\mathbb{E}[M_{n+1}\mid\mathcal{F}_n]=M_n$, and $M_\tau$ has easily computable values at $0$ and $N$.
+
+\textbf{Careful Use of Optional Stopping:}
+When using OST:
+\begin{itemize}
+\item Show $T$ is a stopping time.
+\item Check conditions: $T$ bounded a.s., or integrability + bounded increments, etc.
+\item Write $\mathbb{E}[M_T]=\mathbb{E}[M_0]$ and expand $M_T$ via terminal states (e.g.\ $0$ vs $N$).
+\end{itemize}
+This is the template for gambler’s ruin, biased RW, pattern waiting times.
+
+\textbf{Applying Maximal Inequalities:}
+Identify whether you have:
+\begin{itemize}
+\item Nonnegative submartingale $\Rightarrow$ Doob maximal inequality.
+\item Independent mean-zero sums $\Rightarrow$ Kolmogorov inequality.
+\item Nonnegative martingale with $\mathbb{E}[M_0]=1$ $\Rightarrow$ Ville inequality.
+\end{itemize}
+Verify assumptions, then plug into the inequality.
+
+\textbf{Doob Martingale + Azuma/McDiarmid:}
+Given $Z=f(X_1,\dots,X_n)$ with independent $X_i$:
+\begin{itemize}
+\item Define $M_k=\mathbb{E}[Z\mid X_1,\dots,X_k]$.
+\item Show $|M_k-M_{k-1}|\le c_k$ (bounded differences).
+\item Apply Azuma to $(M_k)$, which yields McDiarmid’s inequality for $f$.
+\end{itemize}
+
+\subsection*{3. Markov Chain and Random Walk Techniques}
+
+\textbf{Solving $\pi P=\pi$:}
+\begin{itemize}
+\item Write linear equations for $\pi$ and use $\sum_x\pi(x)=1$.
+\item Exploit symmetry (e.g.\ regular graphs, symmetric transitions).
+\item Use degree rule: for simple RW on undirected graph, $\pi(x)\propto \deg(x)$.
+\end{itemize}
+
+\textbf{Checking Detailed Balance (Reversibility):}
+For candidate $\pi$,
+\[
+\pi(x)P(x,y) \stackrel{?}{=} \pi(y)P(y,x).
+\]
+Check on edges / neighbor pairs; if holds and $P$ is supported on edges, then $\pi$ is stationary.
+
+\textbf{Irreducibility Tests:}
+Show from any $x$ you can reach any $y$ with positive probability in some number of steps:
+\begin{itemize}
+\item For RW on graph: show graph is connected.
+\item For MCMC: show proposal and acceptance allow moving between all states.
+\end{itemize}
+
+\textbf{Aperiodicity Tests:}
+\begin{itemize}
+\item Show existence of self-loop $P(x,x)>0$ in irreducible chain $\Rightarrow$ all states aperiodic.
+\item For cycles/paths: inspect possible return times to detect gcd of lengths.
+\end{itemize}
+
+\textbf{Graph-RW as Markov Chain:}
+Convert graph to $P$:
+\[
+P(x,y)=\begin{cases}
+1/\deg(x), & (x,y)\in E,\\
+0, & \text{otherwise}.
+\end{cases}
+\]
+Then apply stationary/reversibility facts: $\pi(x)=\deg(x)/(2|E|)$.
+
+\textbf{Spectral Gap Reasoning:}
+Use known behaviors:
+\begin{itemize}
+\item Cycle/path: gap $\asymp 1/n^2$ $\Rightarrow$ $t_{\mathrm{rel}}\asymp n^2$.
+\item Complete graph: gap bounded away from 0 $\Rightarrow$ $t_{\mathrm{rel}}=O(1)$.
+\item Hybercube: gap $\asymp 1/d$.
+\end{itemize}
+Then use
+\[
+t_{\mathrm{mix}}(\varepsilon)\lesssim t_{\mathrm{rel}}\log\frac{1}{\varepsilon\pi_{\min}}.
+\]
+
+\subsection*{4. Coupling Techniques}
+
+\textbf{Shared-Randomness Markovian Coupling:}
+Represent transitions from each state via intervals of $[0,1]$:
+\begin{itemize}
+\item For each state $i$, partition $[0,1]$ into subintervals of lengths $P(i,j)$.
+\item At time $t$, draw a single $U_{t+1}\sim\mathrm{Unif}(0,1)$ and update both $X_{t+1}$ and $Y_{t+1}$ using their respective partitions for $X_t$ and $Y_t$.
+\end{itemize}
+This ensures each marginal evolves with kernel $P$.
+
+\textbf{Faithful Coupling Design:}
+Ensure that if $X_t=Y_t$ then the transition rule from that state is the same for both, using the same randomness, so $X_{t+1}=Y_{t+1}$ a.s.\ and once they meet they stay together.
+
+\textbf{Geometric Tail Bounds for Coupling Time:}
+If for all $i\neq j$,
+\[
+\mathbb{P}(X_{t+1}\neq Y_{t+1}\mid X_t=i,Y_t=j)\le c<1,
+\]
+then for $\tau=\inf\{t:X_t=Y_t\}$,
+\[
+\mathbb{P}(\tau>t)\le c^t.
+\]
+Technique: compute or bound one-step “stay different” probability and iterate.
+
+\textbf{Distance-Based Couplings:}
+Define a distance $d(X_t,Y_t)$ (graph distance, Hamming distance) and construct a coupling so $d$ evolves as a simpler process:
+\begin{itemize}
+\item Show $d$ has negative drift towards $0$ or behaves like a biased RW hitting $0$.
+\item Use hitting-time estimates on $d$ to bound $\mathbb{P}(\tau>t)$.
+\end{itemize}
+
+\textbf{Coupling with Stationary Initial State:}
+To bound $\|P^t(x,\cdot)-\pi\|_{\mathrm{TV}}$:
+\begin{itemize}
+\item Start $X_0=x$, $Y_0\sim\pi$.
+\item Run coupling so $Y_t\sim\pi$ for all $t$.
+\item Use $\|P^t(x,\cdot)-\pi\|_{\mathrm{TV}}\le \mathbb{P}(X_t\neq Y_t)\le \mathbb{P}(\tau>t)$.
+\end{itemize}
+
+\subsection*{5. MCMC (MH and Gibbs) Techniques}
+
+\textbf{Designing MH Proposals:}
+Choose $Q(x,y)$ so moves are:
+\begin{itemize}
+\item Local (random-walk proposals on graph or path).
+\item Independence (always propose from a fixed distribution).
+\item Symmetric ($Q(x,y)=Q(y,x)$) to simplify acceptance ratios.
+\end{itemize}
+
+\textbf{Computing MH Acceptances:}
+Work with unnormalized target $w(x)\propto\pi(x)$:
+\[
+\alpha(x,y)=\min\Big(1,\frac{w(y)Q(y,x)}{w(x)Q(x,y)}\Big).
+\]
+Look for cancellations (especially if $Q$ symmetric) and compute off-diagonal $P(x,y)=Q(x,y)\alpha(x,y)$, then diagonals by row sums.
+
+\textbf{MH Detailed Balance Proof:}
+Show for $x\neq y$,
+\[
+\pi(x)Q(x,y)\alpha(x,y)=\pi(y)Q(y,x)\alpha(y,x),
+\]
+and note $P(x,x)$ defined by normalization gives detailed balance on diagonals as well.
+
+\textbf{Gibbs Full-Conditional Derivation (Proportional Trick):}
+If $\pi(x)\propto g(x)$, then for coordinate $i$:
+\[
+\pi(x_i\mid x_{-i})\propto g(x_i,x_{-i}) \quad \text{(treat $x_{-i}$ as fixed constant)}.
+\]
+Normalize over $x_i\in\Omega_i$ only.
+
+\textbf{Gibbs Invariance/Stationarity:}
+One-coordinate Gibbs update using full conditional $\pi(x_i\mid x_{-i})$ leaves $\pi$ invariant; compositions of such updates (systematic or random scan) also leave $\pi$ invariant, giving a reversible chain with stationary $\pi$.
+
+\subsection*{6. Recurrence/Transience \& Distance Processes}
+
+\textbf{Reduction to Known SRW Results:}
+If a process can be expressed as a function of a random walk:
+\begin{itemize}
+\item Map to SRW or biased RW on $\mathbb{Z}$ or $\mathbb{Z}_{\ge0}$.
+\item Use known formulas (gambler’s ruin, biased hitting probabilities) to infer recurrence, transience, or escape probabilities.
+\end{itemize}
+
+\textbf{Distance-from-Root Processes:}
+On trees or graphs, define $L_n=\mathrm{dist}(X_n,\text{root})$:
+\begin{itemize}
+\item Show $L_n$ is a Markov chain with probabilities “up 2/3, down 1/3” etc.
+\item Apply gambler’s ruin or biased RW analysis to $L_n$.
+\end{itemize}
+
+\subsection*{7. General Inequality and Bounding Tactics}
+
+\textbf{Union Bound:}
+For events $A_i$,
+\[
+\mathbb{P}\Big(\bigcup_i A_i\Big)\le \sum_i \mathbb{P}(A_i).
+\]
+Used with tail bounds to control maxima over indices.
+
+\textbf{Jensen's Inequality:}
+For convex $\varphi$ and integrable $X$,
+\[
+\varphi(\mathbb{E}[X\mid\mathcal{G}])\le \mathbb{E}[\varphi(X)\mid\mathcal{G}].
+\]
+Used in submartingale constructions and concentration proofs.
+
+\textbf{Norm/Distance Comparisons:}
+\begin{itemize}
+\item Use coupling lemma: TV distance = inf disagreement probability over couplings.
+\item Use Cauchy–Schwarz in $L^2(\pi)$ and spectral decomposition for eigenvalue-based bounds.
+\end{itemize}
+
+\end{document}
