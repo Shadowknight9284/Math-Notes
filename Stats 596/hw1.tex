@@ -1,0 +1,827 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+ 
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+ 
+% Packages used specifically in this homework file.
+% (Reloading amsmath/amssymb is harmless if style.tex already loads them.)
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+ 
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Stats 596}
+\newcommand{\assignment}{Homework 1}
+\author{\name}
+\title{\course\ -- \assignment}
+\date{Fall 2026}
+ 
+% Fallbacks: these take effect only if style.tex does not already define them.
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\E}{\operatorname{E}}
+\providecommand{\argmin}{\operatorname*{arg\,min}}
+ 
+% Local notation
+\newcommand{\trans}{^{\mathsf T}}
+\newcommand{\normtwo}[1]{\left\lVert #1\right\rVert_2}
+\newcommand{\col}{\mathcal{C}}
+\newcommand{\nul}{\mathcal{N}}
+\newcommand{\ind}{\mathbf{1}}   % indicator function
+\newcommand{\ones}{\mathbf{1}}  % vector of ones
+ 
+\definecolor{codegreen}{rgb}{0,0.45,0.15}
+\definecolor{codepurple}{rgb}{0.50,0,0.50}
+\definecolor{codegray}{rgb}{0.40,0.40,0.40}
+\definecolor{codeback}{rgb}{0.97,0.97,0.97}
+\lstdefinestyle{Rstyle}{
+  language=R,
+  backgroundcolor=\color{codeback},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{codegreen},
+  stringstyle=\color{codepurple},
+  numberstyle=\tiny\color{codegray},
+  numbers=left,
+  numbersep=6pt,
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false,
+  keepspaces=true,
+  tabsize=2
+}
+\lstset{style=Rstyle}
+ 
+\begin{document}
+\maketitle
+ 
+\begin{questions}
+ 
+%==============================================================================
+\question \textbf{Exercise 1.3.}
+Let $A,B,C,$ and $D$ be matrices of appropriate dimensions and write
+\[
+M=\begin{pmatrix}A&B\\C&D\end{pmatrix},
+\qquad
+\widetilde A=A-BD^{-1}C.
+\]
+ 
+\begin{parts}
+\part Show that if $D$ and $\widetilde A$ are nonsingular, then $M$ is
+nonsingular and
+\[
+M^{-1}=
+\begin{pmatrix}
+\widetilde A^{-1} & -\widetilde A^{-1}BD^{-1}\\
+-D^{-1}C\widetilde A^{-1} &
+D^{-1}+D^{-1}C\widetilde A^{-1}BD^{-1}
+\end{pmatrix}.
+\]
+Give a direct proof using the orthogonalization idea or a variation.
+ 
+\part Show that if $D$ and $M$ are nonsingular, then $\widetilde A$ is
+nonsingular and the preceding inverse formula holds.
+ 
+\part Suppose $A,D,$ and $\widetilde A$ are nonsingular.  Show that
+\[
+\widetilde D=D-CA^{-1}B
+\]
+is nonsingular and that
+\[
+\widetilde D^{-1}
+=D^{-1}+D^{-1}C\widetilde A^{-1}BD^{-1}.
+\]
+ 
+\part As an application, show that if $u\trans u\neq 1$, then $I-uu\trans$
+is nonsingular and
+\[
+(I-uu\trans)^{-1}=I+(1-u\trans u)^{-1}uu\trans.
+\]
+\end{parts}
+ 
+\begin{solution}
+Take $A$ to be $m\times m$ and $D$ to be $q\times q$. The matrix
+$\widetilde A=A-BD^{-1}C$ is the Schur complement of $D$ in $M$.
+ 
+\textbf{(a)} Subtracting $BD^{-1}$ times the second block row from the first
+removes $B$; this residualizes $A$ on the $D$-block, which is the
+orthogonalization idea. In matrix form,
+\[
+M=LT,\qquad
+L=\begin{pmatrix}I&BD^{-1}\\0&I\end{pmatrix},\qquad
+T=\begin{pmatrix}\widetilde A&0\\C&D\end{pmatrix},
+\]
+as can be checked by multiplying out. Both factors are invertible, with
+\[
+L^{-1}=\begin{pmatrix}I&-BD^{-1}\\0&I\end{pmatrix},\qquad
+T^{-1}=\begin{pmatrix}\widetilde A^{-1}&0\\-D^{-1}C\widetilde A^{-1}&D^{-1}\end{pmatrix},
+\]
+again by direct multiplication. So $M$ is invertible, and multiplying out
+$M^{-1}=T^{-1}L^{-1}$ gives the stated formula.
+ 
+\textbf{(b)} $L$ is invertible whenever $D$ is, so $T=L^{-1}M$ is invertible.
+If $\widetilde Av=0$ for some $v\neq0$, put $w=-D^{-1}Cv$; then
+\[
+T\begin{pmatrix}v\\w\end{pmatrix}
+=\begin{pmatrix}\widetilde Av\\Cv+Dw\end{pmatrix}=0,
+\]
+contradicting invertibility of $T$. So $\widetilde A$ is invertible and part
+(a) applies.
+ 
+\textbf{(c)} Let $\widetilde D=D-CA^{-1}B$. Eliminating with $A$ as the pivot
+instead gives
+\[
+M=L_AU_A,\qquad
+L_A=\begin{pmatrix}I&0\\CA^{-1}&I\end{pmatrix},\qquad
+U_A=\begin{pmatrix}A&B\\0&\widetilde D\end{pmatrix}.
+\]
+Since $D$ and $\widetilde A$ are nonsingular, which are exactly the hypotheses of (a), $M$ is nonsingular. Therefore $U_A=L_A^{-1}M$ is nonsingular too. A block upper-triangular
+matrix whose $(1,1)$ block $A$ is invertible can only be invertible if its
+$(2,2)$ block is: if $\widetilde Dv=0$ with $v\neq0$, then $w=-A^{-1}Bv$ gives
+$U_A\begin{pmatrix}w\\v\end{pmatrix}=0$. Hence $\widetilde D$ is invertible,
+and
+\[
+M^{-1}=U_A^{-1}L_A^{-1}
+=\begin{pmatrix}
+A^{-1}+A^{-1}B\widetilde D^{-1}CA^{-1}&-A^{-1}B\widetilde D^{-1}\\
+-\widetilde D^{-1}CA^{-1}&\widetilde D^{-1}
+\end{pmatrix}.
+\]
+Since $M$ has only one inverse, this $(2,2)$ block equals the one from (a):
+$\widetilde D^{-1}=D^{-1}+D^{-1}C\widetilde A^{-1}BD^{-1}$.
+ 
+\textbf{(d)} Apply (c) with $A=1$, $B=u\trans$, $C=u$, and $D=I$. Then
+$\widetilde A=1-u\trans u\neq0$ and $\widetilde D=I-uu\trans$, so $I-uu\trans$
+is invertible and
+\[
+(I-uu\trans)^{-1}=I+u(1-u\trans u)^{-1}u\trans=I+(1-u\trans u)^{-1}uu\trans.
+\]
+\end{solution}
+ 
+%==============================================================================
+\question \textbf{Exercise 1.5.}
+Let $X$ be an $n\times p$ covariate matrix and let $Y$ be an $n\times1$
+response vector.
+ 
+\begin{parts}
+\part Show that if $n\geq p$ and $X$ has rank $p$, then $X\trans X$ is
+nonsingular and
+\[
+\widehat\beta=(X\trans X)^{-1}X\trans Y
+\]
+is the unique solution of
+$\min_{\beta\in\R^p}\normtwo{Y-X\beta}^2$.
+ 
+\part Show that if $n\leq p$ and $X$ has rank $n$, then $XX\trans$ is
+nonsingular and
+\[
+\widetilde\beta=X\trans(XX\trans)^{-1}Y
+\]
+is the unique solution of
+\[
+\min_{\beta\in\R^p}\normtwo{\beta}
+\quad\text{subject to}\quad Y=X\beta.
+\]
+ 
+\part Show that, regardless of the rank of $X$,
+\[
+(X\trans X)^+X\trans Y=X\trans(XX\trans)^+Y.
+\]
+\end{parts}
+ 
+\begin{solution}
+\textbf{(a)} Full column rank means $Xb\neq0$ whenever $b\neq0$, so
+$b\trans X\trans Xb=\normtwo{Xb}^2>0$; thus $X\trans X$ is positive definite and
+invertible. Let $\widehat r=Y-X\widehat\beta$. Then
+$X\trans\widehat r=X\trans Y-X\trans X(X\trans X)^{-1}X\trans Y=0$, so for any $\beta=\widehat\beta+h$,
+\[
+\normtwo{Y-X\beta}^2=\normtwo{\widehat r-Xh}^2
+=\normtwo{\widehat r}^2+\normtwo{Xh}^2,
+\]
+because the cross term $2h\trans X\trans\widehat r$ vanishes. This is larger
+than $\normtwo{\widehat r}^2$ unless $Xh=0$, that is, unless $h=0$.
+ 
+\textbf{(b)} $\operatorname{rank}(X)=n$ means $\operatorname{rank}(X\trans)=n$,
+so $\nul(X\trans)=\{0\}$ and $X\trans a\neq0$ for $a\neq0$. Thus
+$a\trans XX\trans a=\normtwo{X\trans a}^2>0$ and $XX\trans$ is invertible.
+Write $\widetilde\beta=X\trans\widetilde a$ with $\widetilde a=(XX\trans)^{-1}Y$;
+then $X\widetilde\beta=Y$. Any other solution of $X\beta=Y$ has the form
+$\beta=\widetilde\beta+h$ with $Xh=0$, and
+$h\trans\widetilde\beta=(Xh)\trans\widetilde a=0$. Hence
+$\normtwo{\beta}^2=\normtwo{\widetilde\beta}^2+\normtwo{h}^2$, which is smallest
+only when $h=0$.
+ 
+\textbf{(c)} Take the SVD $X=U\Sigma V\trans$, where $U$ and $V$ are
+orthogonal and $\Sigma$ is $n\times p$ and diagonal, with positive singular
+values $s_1,\ldots,s_r$ followed by zeros. Since $U$ and $V$ are orthogonal,
+$(X\trans X)^+=V(\Sigma\trans\Sigma)^+V\trans$ and
+$(XX\trans)^+=U(\Sigma\Sigma\trans)^+U\trans$, so
+\[
+(X\trans X)^+X\trans=V(\Sigma\trans\Sigma)^+\Sigma\trans U\trans,
+\qquad
+X\trans(XX\trans)^+=V\Sigma\trans(\Sigma\Sigma\trans)^+U\trans.
+\]
+Every matrix between $V$ and $U\trans$ is diagonal, so it is enough to compare
+diagonal entries. For $s_j>0$ they are $s_j^{-2}s_j=s_j^{-1}$ and
+$s_js_j^{-2}=s_j^{-1}$; for $s_j=0$ both are $0$. So the two sides are equal
+(both are $X^+$). With full column rank this is the estimator from (a), and
+with full row rank it is the minimum-norm solution from (b).
+\end{solution}
+ 
+%==============================================================================
+\question \textbf{Exercise 1.6.}
+Consider the linear regression model
+\[
+Y_i\sim X_i\trans\beta,
+\qquad
+X_i=(1,X_{i,1:p}\trans)\trans,
+\qquad i=1,\ldots,n.
+\]
+Let $X$ be the $n\times(p+1)$ design matrix, and suppose
+$\widehat\beta=(X\trans X)^{-1}X\trans Y$.  Show that
+$\widehat\beta=(\widehat\beta_0,\widehat\beta_{1:p}\trans)\trans$, where
+\[
+\widehat\beta_0
+=\overline Y-\overline X_{1:p}\trans\widehat\beta_{1:p}
+\]
+and
+\[
+\widehat\beta_{1:p}
+=(\widetilde X_{1:p}\trans\widetilde X_{1:p})^{-1}
+ \widetilde X_{1:p}\trans Y,
+\]
+with $\widetilde X_{1:p}$ denoting the matrix of centered covariates.
+ 
+\begin{solution}
+Write $X=(\ones,X_{1:p})$, and assume $X$ has full column rank
+(needed for $(X\trans X)^{-1}$ to exist). Let $C=I-\frac1n\ones\ones\trans$ be
+the centering matrix, so $CY=Y-\ones\overline Y$ and
+$\widetilde X_{1:p}=CX_{1:p}=X_{1:p}-\ones\overline X_{1:p}\trans$. Note that $C$ is symmetric
+and $C^2=C$.
+ 
+\textbf{Intercept.} For fixed $b$, $\normtwo{Y-\ones\beta_0-X_{1:p}b}^2$ is a
+quadratic in $\beta_0$, and setting its derivative
+$-2\ones\trans(Y-\ones\beta_0-X_{1:p}b)$ to zero gives
+\[
+\widehat\beta_0(b)=\overline Y-\overline X_{1:p}\trans b .
+\]
+Since $\widehat\beta$ minimizes over $(\beta_0,b)$ jointly, its intercept must
+be the best intercept for its own slope, so
+\[
+\widehat\beta_0=\overline Y-\overline X_{1:p}\trans\widehat\beta_{1:p}.
+\]
+ 
+\textbf{Slope.} Plugging in $\widehat\beta_0(b)$, the residual becomes
+\[
+Y-\ones\widehat\beta_0(b)-X_{1:p}b
+=(Y-\ones\overline Y)-(X_{1:p}-\ones\overline X_{1:p}\trans)b
+=CY-\widetilde X_{1:p}b .
+\]
+So $\widehat\beta_{1:p}$ minimizes $\normtwo{CY-\widetilde X_{1:p}b}^2$, which is a
+no-intercept regression of $CY$ on $\widetilde X_{1:p}$.
+ 
+This regression has a unique solution because $\widetilde X_{1:p}$ has full column
+rank: if $\widetilde X_{1:p}b=0$, then $X_{1:p}b=\ones(\overline X_{1:p}\trans b)$ is
+constant, so $(\ones,X_{1:p})\,(-\overline X_{1:p}\trans b,\ b\trans)\trans=0$, and full
+rank of $X$ forces $b=0$. By Exercise 1.5(a),
+\[
+\widehat\beta_{1:p}
+=(\widetilde X_{1:p}\trans\widetilde X_{1:p})^{-1}\widetilde X_{1:p}\trans CY
+=(\widetilde X_{1:p}\trans\widetilde X_{1:p})^{-1}\widetilde X_{1:p}\trans Y,
+\]
+where the last step uses
+$\widetilde X_{1:p}\trans C=X_{1:p}\trans C^2=\widetilde X_{1:p}\trans$.
+\end{solution}
+ 
+%==============================================================================
+\question \textbf{Exercise 1.7.}
+Consider
+\[
+Y_i\sim X_i\trans\beta=Z_i\theta+W_i\trans\alpha,
+\qquad X=(Z,W),
+\qquad
+\widehat\beta=(\widehat\theta,\widehat\alpha\trans)\trans.
+\]
+Let $R_Y$ be the residual vector from regressing $Y$ on $W$, and let $R_Z$
+be the residual vector from regressing $Z$ on $W$.  Define
+\[
+\widehat\sigma^2
+=\frac{\normtwo{Y-X\widehat\beta}^2}{n-p},
+\qquad
+\widetilde\sigma^2
+=\frac{\normtwo{R_Y-R_Z\widehat\theta}^2}{n-1}.
+\]
+ 
+\begin{parts}
+\part Show that
+$\widetilde\sigma^2=\frac{n-p}{n-1}\widehat\sigma^2$.
+ 
+\part Show that $(R_Z\trans R_Z)^{-1}$ equals the $(1,1)$ element of
+$(X\trans X)^{-1}$.
+ 
+\part Let
+$D=\operatorname{diag}(\widehat r_1^2,\ldots,\widehat r_n^2)$, where
+$\widehat r_i=Y_i-X_i\trans\widehat\beta$.  Show that
+\[
+(R_Z\trans R_Z)^{-1}(R_Z\trans D R_Z)(R_Z\trans R_Z)^{-1}
+\]
+equals the $(1,1)$ element of
+\[
+(X\trans X)^{-1}(X\trans D X)(X\trans X)^{-1}.
+\]
+\end{parts}
+ 
+\begin{solution}
+Here $Z$ is $n\times1$, $W$ is $n\times(p-1)$, and $X=(Z,W)$ has full column
+rank $p$. Let $M_W=I-W(W\trans W)^{-1}W\trans$, which is symmetric with
+$M_W^2=M_W$; then $R_Y=M_WY$ and $R_Z=M_WZ$. Note $R_Z\neq0$, since otherwise
+$Z\in\col(W)$ and $X$ would not have full rank.
+ 
+\textbf{(a)} For fixed $\theta$, the best $\alpha$ comes from regressing
+$Y-Z\theta$ on $W$, namely
+$\widehat\alpha(\theta)=(W\trans W)^{-1}W\trans(Y-Z\theta)$, and the residual is
+\[
+Y-Z\theta-W\widehat\alpha(\theta)=M_W(Y-Z\theta)=R_Y-R_Z\theta .
+\]
+The joint minimizer must use the best $\alpha$ for its own $\theta$ (otherwise
+replacing $\widehat\alpha$ by $\widehat\alpha(\widehat\theta)$ would strictly
+lower the criterion), so $\widehat\alpha=\widehat\alpha(\widehat\theta)$, and
+$\widehat\theta$ minimizes $\normtwo{R_Y-R_Z\theta}^2$. Hence the two
+regressions have identical residuals,
+\[
+Y-X\widehat\beta=R_Y-R_Z\widehat\theta ,
+\]
+which is the Frisch--Waugh--Lovell theorem. So both variance estimates have the
+same numerator $(n-p)\widehat\sigma^2$, and
+$\widetilde\sigma^2=\frac{n-p}{n-1}\widehat\sigma^2$.
+ 
+\textbf{(b)} Partition
+\[
+X\trans X=\begin{pmatrix}Z\trans Z&Z\trans W\\ W\trans Z&W\trans W\end{pmatrix}.
+\]
+Both $X\trans X$ and $W\trans W$ are nonsingular, so by Exercise 1.3 the
+$(1,1)$ entry of $(X\trans X)^{-1}$ is the inverse of the Schur complement
+\[
+Z\trans Z-Z\trans W(W\trans W)^{-1}W\trans Z=Z\trans M_WZ=R_Z\trans R_Z .
+\]
+ 
+\textbf{(c)} Let $s=R_Z\trans R_Z$. By the block inverse formula in Exercise
+1.3, the first column of $(X\trans X)^{-1}$ is
+\[
+q=\begin{pmatrix}s^{-1}\\ -(W\trans W)^{-1}W\trans Z\,s^{-1}\end{pmatrix},
+\]
+so
+\[
+Xq=s^{-1}\bigl(Z-W(W\trans W)^{-1}W\trans Z\bigr)=s^{-1}R_Z .
+\]
+Since $(X\trans X)^{-1}$ is symmetric, the $(1,1)$ entry of the sandwich is
+\[
+q\trans X\trans DXq=(Xq)\trans D(Xq)
+=(R_Z\trans R_Z)^{-1}(R_Z\trans DR_Z)(R_Z\trans R_Z)^{-1}.
+\]
+By (a) the two regressions have the same residuals, so $D$ is the same matrix
+in both.
+\end{solution}
+ 
+%==============================================================================
+\question \textbf{Exercise 1.8.}
+Generate the data using the following R code:
+\begin{lstlisting}
+library(MASS)
+set.seed(0)
+ 
+n <- 200
+p <- 4
+mu <- rep(0,p)
+msig <- toeplitz(.8^(1:p-1))
+sig <- .5
+ 
+x <- mvrnorm(n, mu, msig)
+y <- x[,1] + pmax(0, apply(x[,2:p],1,sum))^2 / 3 +
+     rnorm(n, 0, sig)
+cbind(y,x)[1:3,]
+\end{lstlisting}
+ 
+\begin{parts}
+\part Report the first three rows.  Fit a linear regression of $y$ on $x$
+with an intercept, and report all coefficients, degrees-of-freedom-adjusted
+model-based standard errors, and model-robust standard errors.
+ 
+\part Compute the same quantities using residual-on-residual regressions.
+ 
+\part Find the population target values of all coefficients analytically and
+numerically.
+\end{parts}
+ 
+\begin{solution}
+The covariance matrix is $\Sigma_{jk}=0.8^{|j-k|}$: in R, \texttt{1:p-1} means
+\texttt{(1:p)-1}, which is \texttt{0:3}.
+ 
+\textbf{(a)} The first three generated rows are
+\begin{center}
+\begin{tabular}{rrrrrr}
+\toprule
+Row & $y$ & $x_1$ & $x_2$ & $x_3$ & $x_4$\\
+\midrule
+1 & -2.191988 & -1.479972 & -1.698022 & -0.465721 & -0.818119\\
+2 & -0.502206 & -0.662950 &  0.653037 &  0.738444 &  0.336596\\
+3 &  0.302931 & -0.386687 & -0.993984 & -1.748198 & -1.520414\\
+\bottomrule
+\end{tabular}
+\end{center}
+Let $X=(\ones,x)$, with $n=200$ rows and $k=5$ columns, and let
+$\widehat r=y-X\widehat\beta$. The model-based variance is
+$\widehat\sigma^2(X\trans X)^{-1}$ with
+$\widehat\sigma^2=\widehat r\trans\widehat r/(n-k)$, and the robust (HC0)
+variance is $(X\trans X)^{-1}X\trans\widehat DX(X\trans X)^{-1}$ with
+$\widehat D=\operatorname{diag}(\widehat r_1^2,\ldots,\widehat r_n^2)$.
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Coefficient & Estimate & Model SE & HC0 SE\\
+\midrule
+Intercept & 0.954681 & 0.098797 & 0.097826\\
+$x_1$     & 0.683716 & 0.163978 & 0.142299\\
+$x_2$     & 0.739820 & 0.209943 & 0.225490\\
+$x_3$     & 0.256060 & 0.220531 & 0.217935\\
+$x_4$     & 0.868421 & 0.183722 & 0.235053\\
+\bottomrule
+\end{tabular}
+\end{center}
+ 
+\textbf{(b)} For each coefficient $j$, residualize the column $X_j$ on the
+other four columns to get $R_j$. By Exercise 1.7 (which applies to any column
+after reordering),
+\[
+\widehat\beta_j=\frac{R_j\trans y}{R_j\trans R_j},
+\qquad
+\mathrm{SE}_{\mathrm{mod},j}=\sqrt{\frac{\widehat\sigma^2}{R_j\trans R_j}},
+\qquad
+\mathrm{SE}_{\mathrm{HC0},j}=\sqrt{\frac{R_j\trans\widehat DR_j}{(R_j\trans R_j)^2}}.
+\]
+Here $\widehat\sigma^2$ uses the full-model degrees of freedom $n-k=195$; by
+Exercise 1.7(a), using $n-1$ from the residual-on-residual fit would instead
+shrink each model SE by a factor of $\sqrt{195/199}$. These formulas reproduce
+the table above, with a maximum absolute difference of $6.44\times10^{-15}$.
+ 
+\textbf{(c)} Let $a=(0,1,1,1)\trans$ and $S=a\trans X=X_2+X_3+X_4$, so
+$Y=X_1+S_+^2/3+\varepsilon$ with $\varepsilon$ independent of $X$. The target
+minimizes $\E(Y-\beta_0-X\trans b)^2$. Since $\E X=0$, its normal equations
+give $\beta_0^*=\E Y$ and $b^*=\Sigma^{-1}\operatorname{Cov}(X,Y)$.
+ 
+\emph{Intercept.} $S\sim N(0,v_S)$ with
+\[
+v_S=3+2\{\operatorname{Cov}(X_2,X_3)+\operatorname{Cov}(X_2,X_4)
++\operatorname{Cov}(X_3,X_4)\}=3+2(0.8+0.64+0.8)=7.48 .
+\]
+By symmetry of $S$, $\E S_+^2=\frac12\E S^2=v_S/2$, so
+$\beta_0^*=\E(S_+^2)/3=v_S/6=1.2466667$.
+ 
+\emph{Slopes.} $\operatorname{Cov}(X,Y)=\Sigma e_1+\frac13\E(XS_+^2)$. Because
+$(X,S)$ is jointly normal, $\E(X\mid S)=(\Sigma a/v_S)\,S$, so
+\[
+\E(XS_+^2)=\frac{\Sigma a}{v_S}\,\E\bigl(S^3\ind\{S>0\}\bigr)
+=\frac{\Sigma a}{v_S}\,v_S^{3/2}\sqrt{2/\pi},
+\]
+using $\E(Z^3\ind\{Z>0\})=\sqrt{2/\pi}$ for $Z\sim N(0,1)$. Therefore
+\[
+b^*=e_1+\lambda a,\qquad
+\lambda=\frac{\sqrt{v_S}}{3}\sqrt{\frac2\pi}=0.7273938,
+\]
+and
+$\beta^*=(1.2466667,\ 1,\ 0.7273938,\ 0.7273938,\ 0.7273938)\trans$.
+ 
+The following R functions implement the direct and residual-on-residual
+calculations used above.
+\begin{lstlisting}
+ols_stats <- function(x, y) {
+  X <- cbind(1, x)
+  n <- nrow(X)
+  k <- ncol(X)
+  XtX_inv <- solve(crossprod(X))
+  beta_hat <- drop(XtX_inv %*% crossprod(X, y))
+  residual <- drop(y - X %*% beta_hat)
+ 
+  V_model <- sum(residual^2) / (n - k) * XtX_inv
+  V_robust <- XtX_inv %*%
+    crossprod(X, X * residual^2) %*% XtX_inv
+ 
+  list(beta = beta_hat, residual = residual,
+       V_model = V_model, V_robust = V_robust, X = X)
+}
+ 
+ror_stats <- function(X, y) {
+  n <- nrow(X)
+  k <- ncol(X)
+  full <- ols_stats(X[, -1, drop = FALSE], y)
+  out <- matrix(NA_real_, k, 3)
+ 
+  for (j in seq_len(k)) {
+    Z <- X[, j]
+    W <- X[, -j, drop = FALSE]
+    RZ <- drop(Z - W %*%
+      solve(crossprod(W), crossprod(W, Z)))
+ 
+    out[j, 1] <- sum(RZ * y) / sum(RZ^2)
+    out[j, 2] <- sqrt(
+      sum(full$residual^2) / (n - k) / sum(RZ^2))
+    out[j, 3] <- sqrt(
+      sum(RZ^2 * full$residual^2) / sum(RZ^2)^2)
+  }
+  colnames(out) <- c("estimate", "model_se", "robust_se")
+  out
+}
+ 
+fit <- ols_stats(x, y)
+standard <- cbind(
+  estimate = fit$beta,
+  model_se = sqrt(diag(fit$V_model)),
+  robust_se = sqrt(diag(fit$V_robust)))
+ror <- ror_stats(fit$X, y)
+standard
+ror
+max(abs(standard - ror))
+\end{lstlisting}
+\end{solution}
+ 
+%==============================================================================
+\question \textbf{Exercise 1.9.}
+Using the random-design setting of Exercise 1.8, run 2000 repeated
+simulations and report:
+ 
+\begin{parts}
+\part Monte Carlo biases and standard deviations of the five estimated
+coefficients.
+ 
+\part Square roots of the Monte Carlo means of model-based variances and the
+$90\%$ and $95\%$ Wald coverage proportions.
+ 
+\part Square roots of the Monte Carlo means of model-robust variances and the
+$90\%$ and $95\%$ Wald coverage proportions.
+ 
+\part Summarize the conclusions from the simulation.
+\end{parts}
+ 
+\begin{solution}
+The target is $\beta^*=(1.2466667,\ 1,\ 0.7273938,\ 0.7273938,\ 0.7273938)\trans$
+from Exercise 1.8. There are 2000 replications after \texttt{set.seed(0)}; each draws new $X$ and $Y$, and
+the $90\%$ and $95\%$ Wald intervals use the normal critical values $1.645$ and
+$1.960$. ``RMV'' is the square root of the Monte Carlo mean of the estimated
+variances.
+ 
+\textbf{(a)--(b)} Model-based results (2000 replications):
+\begin{center}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Coefficient & Target & Bias & MC SD & Model RMV & Cov.\ 90\% & Cov.\ 95\%\\
+\midrule
+Intercept & 1.246667 & -0.016471 & 0.144232 & 0.141715 & 0.8655 & 0.9310\\
+$x_1$     & 1.000000 & -0.001998 & 0.229680 & 0.237606 & 0.9130 & 0.9585\\
+$x_2$     & 0.727394 & -0.014301 & 0.315431 & 0.304206 & 0.8755 & 0.9345\\
+$x_3$     & 0.727394 &  0.002095 & 0.311521 & 0.303437 & 0.8885 & 0.9425\\
+$x_4$     & 0.727394 & -0.003744 & 0.253048 & 0.236669 & 0.8750 & 0.9280\\
+\bottomrule
+\end{tabular}
+\end{center}
+ 
+\textbf{(c)} HC0 results (same 2000 replications):
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Coefficient & HC0 RMV & Cov.\ 90\% & Cov.\ 95\%\\
+\midrule
+Intercept & 0.140476 & 0.8610 & 0.9280\\
+$x_1$     & 0.229364 & 0.9025 & 0.9545\\
+$x_2$     & 0.307878 & 0.8795 & 0.9315\\
+$x_3$     & 0.309789 & 0.8830 & 0.9385\\
+$x_4$     & 0.250629 & 0.8805 & 0.9295\\
+\bottomrule
+\end{tabular}
+\end{center}
+ 
+\textbf{(d)} The linear model is misspecified, since the true mean contains
+$S_+^2/3$, but OLS still estimates the projection target $\beta^*$.
+ 
+\emph{Bias.} The biases are small compared with the MC SDs. The intercept bias
+($-0.0165$) is about five Monte Carlo standard errors
+($0.144/\sqrt{2000}\approx0.0032$) from zero, which is strong Monte Carlo evidence
+of finite-sample bias in this data-generating process: here OLS is consistent
+for $\beta^*$ but not exactly unbiased at $n=200$. The slope biases are within about two Monte Carlo
+standard errors of zero.
+ 
+\emph{Standard errors.} The error around the projection,
+$Y-X\trans\beta^*=\varepsilon+\{m(X)-X\trans\beta^*\}$, combines the noise
+$\varepsilon$ (variance $0.25$) with the approximation error of the nonlinear
+mean, and the second part makes its variance depend on $X$. For $x_1$ and $x_4$
+the HC0 RMVs ($0.229$, $0.251$) match the MC SDs ($0.230$, $0.253$) closely,
+while the model-based RMVs are too large for $x_1$ ($0.238$) and too small for
+$x_4$ ($0.237$). This pattern is consistent with heteroskedasticity; the
+direction of the model-based error can differ across coefficients. For $x_2$
+and $x_3$, both estimators understate the MC SD by up to about $4\%$, with HC0
+closer.
+ 
+\emph{Coverage.} A coverage proportion $\pi$ has Monte Carlo standard error
+$\sqrt{\pi(1-\pi)/2000}$, which is about $0.005$ at $\pi=0.95$ and $0.007$ at
+$\pi=0.90$. So coverage near $0.93$ is genuinely below nominal. Both
+methods undercover slightly for the intercept, $x_2$, $x_3$, and $x_4$: HC0
+has no small-sample correction, and the intercept is also biased. For $x_1$
+the model-based intervals overcover because its SE is too large, while the
+HC0 intervals are close to nominal.
+ 
+The R code for the simulation is
+\begin{lstlisting}
+summarize_mc <- function(B, V_model, V_robust, target) {
+  z90 <- qnorm(.95)
+  z95 <- qnorm(.975)
+  coverage <- function(V, z) {
+    colMeans(abs(sweep(B, 2, target, "-")) <= z * sqrt(V))
+  }
+ 
+  data.frame(
+    target = target,
+    mean = colMeans(B),
+    bias = colMeans(B) - target,
+    mc_sd = apply(B, 2, sd),
+    model_root_mean_var = sqrt(colMeans(V_model)),
+    model_cov90 = coverage(V_model, z90),
+    model_cov95 = coverage(V_model, z95),
+    robust_root_mean_var = sqrt(colMeans(V_robust)),
+    robust_cov90 = coverage(V_robust, z90),
+    robust_cov95 = coverage(V_robust, z95))
+}
+ 
+set.seed(0)
+m <- 2000
+coef_names <- c("(Intercept)", paste0("x", 1:4))
+a <- c(0, 1, 1, 1)
+vS <- drop(t(a) %*% msig %*% a)
+lambda <- sqrt(vS) * sqrt(2 / pi) / 3
+target_random <- c(vS / 6, 1, rep(lambda, 3))
+ 
+B <- V_model <- V_robust <- matrix(NA_real_, m, 5)
+for (s in seq_len(m)) {
+  x_s <- mvrnorm(n, mu, msig)
+  y_s <- x_s[, 1] +
+    pmax(0, rowSums(x_s[, 2:4, drop = FALSE]))^2 / 3 +
+    rnorm(n, 0, sig)
+ 
+  fit_s <- ols_stats(x_s, y_s)
+  B[s, ] <- fit_s$beta
+  V_model[s, ] <- diag(fit_s$V_model)
+  V_robust[s, ] <- diag(fit_s$V_robust)
+}
+ 
+random_results <- summarize_mc(
+  B, V_model, V_robust, target_random)
+rownames(random_results) <- coef_names
+random_results
+\end{lstlisting}
+\end{solution}
+ 
+%==============================================================================
+\question \textbf{Exercise 1.10.}
+Use the setting of Exercise 1.8, but hold the generated $x$-matrix fixed.
+ 
+\begin{parts}
+\part Find analytical expressions and numerical values for all fixed-design
+target coefficients.
+ 
+\part Using 2000 repeated simulations with $x$ fixed, report the Monte Carlo
+biases and standard deviations of the five estimated coefficients.
+ 
+\part Report the square roots of the Monte Carlo means of model-based
+variances and the $90\%$ and $95\%$ coverage proportions.
+ 
+\part Report the corresponding model-robust quantities and summarize the
+simulation results.
+\end{parts}
+ 
+\begin{solution}
+\textbf{(a)} Fix the $x$ generated right after \texttt{set.seed(0)} (the same
+$x$ as in Exercise 1.8) and let $X=(\ones,x)$. Given $X$, we have
+$Y=m+\varepsilon$ with
+\[
+m_i=x_{i1}+\frac{\{\max(0,x_{i2}+x_{i3}+x_{i4})\}^2}{3},
+\qquad
+\varepsilon\sim N(0,\sigma^2I_n),\quad \sigma=0.5 .
+\]
+So
+\[
+\widehat\beta=(X\trans X)^{-1}X\trans m+(X\trans X)^{-1}X\trans\varepsilon,
+\]
+and the target is
+$\beta_X^*=\E(\widehat\beta\mid X)=(X\trans X)^{-1}X\trans m$, the projection
+of the 200 true means onto this particular design:
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Coefficient & Fixed-design target\\
+\midrule
+Intercept & 0.983946\\
+$x_1$     & 0.650521\\
+$x_2$     & 0.815593\\
+$x_3$     & 0.103363\\
+$x_4$     & 0.973887\\
+\bottomrule
+\end{tabular}
+\end{center}
+These differ from the random-design targets because they depend on the
+realized $x$.
+ 
+\textbf{(b)--(c)} Model-based results (2000 replications after
+\texttt{set.seed(0)} and the draw of $x$). Only $\varepsilon$ is redrawn in each
+replication, and coverage is measured against $\beta_X^*$.
+\begin{center}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Coefficient & Target & Bias & MC SD & Model RMV & Cov.\ 90\% & Cov.\ 95\%\\
+\midrule
+Intercept & 0.983946 &  0.000224 & 0.035434 & 0.097466 & 1.0000 & 1.0000\\
+$x_1$     & 0.650521 & -0.001225 & 0.059715 & 0.161769 & 1.0000 & 1.0000\\
+$x_2$     & 0.815593 &  0.000341 & 0.075042 & 0.207115 & 1.0000 & 1.0000\\
+$x_3$     & 0.103363 &  0.000391 & 0.078367 & 0.217560 & 1.0000 & 1.0000\\
+$x_4$     & 0.973887 &  0.000558 & 0.067411 & 0.181247 & 1.0000 & 1.0000\\
+\bottomrule
+\end{tabular}
+\end{center}
+ 
+\textbf{(d)} HC0 results (same replications):
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Coefficient & HC0 RMV & Cov.\ 90\% & Cov.\ 95\%\\
+\midrule
+Intercept & 0.096745 & 1.0000 & 1.0000\\
+$x_1$     & 0.139671 & 0.9995 & 1.0000\\
+$x_2$     & 0.229211 & 1.0000 & 1.0000\\
+$x_3$     & 0.225230 & 1.0000 & 1.0000\\
+$x_4$     & 0.238594 & 1.0000 & 1.0000\\
+\bottomrule
+\end{tabular}
+\end{center}
+Given $X$, OLS is exactly unbiased for $\beta_X^*$, and by the decomposition
+in (a),
+\[
+\operatorname{Var}(\widehat\beta\mid X)
+=(X\trans X)^{-1}X\trans(\sigma^2I)X(X\trans X)^{-1}
+=\sigma^2(X\trans X)^{-1}=0.25\,(X\trans X)^{-1},
+\]
+which is what the MC SDs estimate. Three quantities should be kept apart
+here: the noise $\varepsilon$, with variance $0.25$; the approximation error
+$m-X\beta_X^*$ of the best linear fit, which is fixed once $X$ is fixed;
+and the OLS residual $\widehat r$, which contains both. The variance
+estimators are built from $\widehat r$. With $H=X(X\trans X)^{-1}X\trans$,
+\[
+\widehat r=(I-H)m+(I-H)\varepsilon .
+\]
+Because the mean is nonlinear, $m\notin\col(X)$, so the first term,
+$(I-H)m=m-X\beta_X^*$, is a fixed, nonzero approximation error. It inflates both estimators:
+$\E(\widehat\sigma^2\mid X)=\sigma^2+\normtwo{(I-H)m}^2/(n-k)$, and
+$\E(\widehat r_i^2\mid X)=\{((I-H)m)_i\}^2+\sigma^2(1-h_{ii})$. Both treat the
+fixed approximation error as if it were noise, so the model RMV is approximately $2.7$
+times the MC SD for each coefficient and coverage is essentially $100\%$.
+ 
+This does not contradict Exercise 1.9. Under random design the approximation
+error changes from sample to sample and really is part of the variability of
+$\widehat\beta$; holding one design fixed removes it.
+ 
+The R code is
+\begin{lstlisting}
+set.seed(0)
+x_fixed <- mvrnorm(n, mu, msig)
+X_fixed <- cbind(1, x_fixed)
+mean_y_fixed <- x_fixed[, 1] +
+  pmax(0, rowSums(x_fixed[, 2:4, drop = FALSE]))^2 / 3
+ 
+target_fixed <- drop(
+  solve(crossprod(X_fixed),
+        crossprod(X_fixed, mean_y_fixed)))
+ 
+m <- 2000
+B <- V_model <- V_robust <- matrix(NA_real_, m, 5)
+for (s in seq_len(m)) {
+  y_s <- mean_y_fixed + rnorm(n, 0, sig)
+  fit_s <- ols_stats(x_fixed, y_s)
+ 
+  B[s, ] <- fit_s$beta
+  V_model[s, ] <- diag(fit_s$V_model)
+  V_robust[s, ] <- diag(fit_s$V_robust)
+}
+ 
+fixed_results <- summarize_mc(
+  B, V_model, V_robust, target_fixed)
+rownames(fixed_results) <- coef_names
+ 
+target_fixed
+fixed_results
+\end{lstlisting}
+\end{solution}
+ 
+\end{questions}
+\end{document}
+ 

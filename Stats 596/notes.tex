@@ -1,0 +1,222 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Stats 596}
+\newcommand{\assignment}{Notes}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section*{Preface \& Comments }
+
+\section{Chapter 1}
+\subsection{Lecture 1: 9/1}
+\begin{remark}
+    [Data of Model]
+    $(X_i, Y_i), i=1,2,\ldots,n$ \quad $X_i$ is the covariate, $Y_i$ is the response. \\
+
+    $$ Y_i = X_i^T \beta^* + \epsilon_i, i = 1,2,\ldots,n$$
+    where $\beta^* \in \mathbb{R}^p$ is an unknown coeeficent vecotr. and $\epsilon_i$ is the noise term. 
+\end{remark}
+
+\begin{definition}
+    [Fixed Design.]
+    $X_1, X_2, \ldots, X_n$ are fixed and known and $Y_1, Y_2, \ldots, Y_n$ are random. More speifically $Y_i$ are independent and $E[Y_i] = X_i^T \beta^*$ 
+
+    This is the classical linear regression model. And ignore the randomness in $X_i$'s by conditioning some on $X_i$'s.
+
+    Most of the theory of historical linear regression is based on the fixed design assumption.
+\end{definition}
+\begin{definition}
+    [Random Design]
+    $(X_i, Y_i), i=1,2,\ldots,n$ are independent and identically distributed (i.i.d.) random variables, note they are pairs of random variables.
+    $$Y_i|X_i \sim N(X_i^T \beta^*, \sigma^2)$$
+    $$\epsilon_i|X_i \sim N(0, \sigma^2)$$
+    where $\epsilon_i = Y_i - X_i^T \beta^*$ is the noise term.
+    More specifically $(X_i, Y_i) \sim P_{XY}$, where $P_{XY}$ is the joint distribution of $(X,Y)$ and $E[Y|X] = X^T \beta^*$
+
+    $E[Y|X] = X^T \beta^*$ is the conditional expectation of $Y$ given $X$ and is a function of $X$.
+    $E[\epsilon|X] = 0$ is the conditional expectation of $\epsilon$ given $X$ and is a function of $X$.
+\end{definition}
+\begin{definition}
+    [Homoscedasticity noise]
+    Fixed: $\Var(y_i) = \Var(\epsilon_i) = \sigma^2$
+    Random: $\Var(Y_i|X_i) = \sigma^2$ 
+\end{definition}
+
+\subsection{Lecture 2: 9/3}
+\begin{remark}
+    [Estimation: LS]
+    $$\hat{\beta} = \arg \min_{\beta} \sum_{i=1}^{n} (Y_i - X_i^T \beta)^2$$
+    This is the least squares estimator for the linear regression model.
+
+    \textbf{Closed-Form Solution}
+    The closed-form solution for the least squares estimator is:
+    $$\hat{\beta} = (X^T X)^{-1} X^T Y$$
+    where $X$ is the design matrix and $Y$ is the response vector.
+\end{remark}
+\begin{remark}
+    [Estimatior of $\sigma^2$]
+    Under Homoscedasticity, the estimator of $\sigma^2$ is:
+    $$\hat{\sigma}^2 = \frac{1}{n-p} \sum_{i=1}^{n} (Y_i - X_i^T \hat{\beta})^2$$
+    where $p$ is the number of parameters in the model.
+
+    Under MLE, the estimator of $\sigma^2$ is:
+    $$\hat{\sigma}_\text{MLE}^2 = \frac{1}{n} \sum_{i=1}^{n} (Y_i - X_i^T \hat{\beta})^2$$
+    where $p$ is the number of parameters in the model. Remember that this requires a normality assumption on the noise term $\epsilon_i$.
+\end{remark}
+\begin{proposition}
+    [Homoscedastic noise in fixed design]
+    \begin{align*}
+        E[\hat{\beta}] = \beta^*\\
+        \var(\hat{\beta}) = (n\hat{H})^{-1}{\sigma^*}^2\\
+        E[\hat{\sigma}^2] = {\sigma^*}^2
+    \end{align*}
+    Where $\hat{H} = \frac{1}{n} \sum_{i=1}^{n} X_i X_i^T$ is the empirical covariance matrix of the covariates $X_i$'s.
+\end{proposition}
+\begin{remark}
+    $E[\hat{\beta}] = \beta^*$
+    \begin{proof}
+        \begin{align*}
+            E[\hat{\beta}] &= E[(X^T X)^{-1} X^T Y]\\
+            &= (X^T X)^{-1} X^T E[Y]\\
+            &= (X^T X)^{-1} X^T E[X \beta^* + \epsilon]\\
+            &= (X^T X)^{-1} X^T (X \beta^* + E[\epsilon])\\
+            &= (X^T X)^{-1} X^T (X \beta^* + 0)\\
+            &= (X^T X)^{-1} X^T X \beta^*\\
+            &= \beta^*
+        \end{align*}
+    \end{proof}
+    Note we only use that $E[\epsilon] = 0$ and not the distribution of $\epsilon$
+\end{remark}
+\begin{definition}
+    [Wald Confidence Interval]
+    $$\hat{\beta}_j \pm z_{1-\alpha/2} \sqrt{\var(\hat{\beta}_j)}$$
+    where $z_{1-\alpha/2}$ is the $(1-\alpha/2)$ quantile of the standard normal distribution.
+    This is a confidence interval for the $j$-th component of the parameter vector $\beta$.
+    For $\hat{\mu}$ the wald CI is $\hat{\mu} \pm z_{1-\alpha/2} \sqrt{\var(\hat{\mu})}$ where $\hat{\mu}$ is the estimator of the mean $\mu$.
+    
+    Point estimator and Variance Estimator (asymptotic normality) there are hings to remember for the wald CI 
+
+\end{definition}
+
+\subsection{Lecture 3: 9/10}
+\begin{remark}
+    Remember Lin Reg:
+    Fixed Design: $Y_i = X_i^T \beta^* + \epsilon_i, i = 1,2,\ldots,n$ where $\epsilon_i$ are independent and $E[\epsilon_i] = 0$ and $\var(\epsilon_i) = \sigma^2$. \\
+    CI for $\beta_j^*$ with homoscedasticity: $$\hat{\beta}_j \pm z_{1-\alpha/2} \hat\sigma \sqrt{\frac{\hat{H}^{-1}_{jj}}{n}}$$
+\end{remark}
+
+\begin{proposition}
+    [Heteroscedastic noise]
+    \begin{align*}
+        E[\hat{\beta}] &= \beta^*\\
+        \var(\hat{\beta}) &= \hat{H}^{-1} \left(\frac{1}{n^2} \sum_{i} {\sigma_i^{*}}^2 X_i X_i^T \right) \hat{H}^{-1}\\
+        \text{where} \quad {\sigma_i^{*}}^2 &= \var(\epsilon_i) = \var(Y_i|X_i)\\
+    \end{align*}
+    if $\sigma_i^{*}$ are constant then we can pull it out and it is clear that it matches the homoscedastic case.
+    $$ \hat{\Sigma} = \hat{H}^{-1} \frac{1}{n} \left(\sum_{i=1}^{n} (Y_i - X_i^T \hat{\beta})^2 X_i X_i^T\right) \hat{H}^{-1}$$
+\end{proposition}
+
+\begin{remark}
+    \begin{align*}
+        \hat{\Sigma}(\beta^*) &= \hat{H}^{-1} \frac{1}{n} \left(\sum_{i=1}^{n} (Y_i - X_i^T \beta^*)^2 X_i X_i^T\right) \hat{H}^{-1}\\
+        \sqrt{n}(\hat{\beta} - \beta^*) &\to_ D N(0, \hat{\Sigma}(\beta^*))\\
+        ||\hat{\Sigma}(\hat{\beta}) - \hat{\Sigma}(\beta^*)||_F &\to 0 \quad \text{in probability}
+    \end{align*}
+\end{remark}
+
+\begin{remark}
+    [Random Design]
+    $\hat{\beta}$ LS estimator is stil good
+
+    "Conditional inference": Given $X_1, X_2, \ldots, X_n$, then fixed design\\
+    "Unconditional inference": $X_1, X_2, \ldots, X_n$ are random, then random design: 
+    $$E(\hat{\beta}) = E[E[\hat{\beta}|X_i]] = E[\beta^*] = \beta^*$$
+    $$\var(\hat{\beta}) = E[\var(\hat{\beta}|X_i)] + \var(E[\hat{\beta}|X_i]) = E[\var(\hat{\beta}|X_i)]$$
+\end{remark}
+\begin{proposition}
+    \begin{align*}
+        \sqrt{n}(\hat{\beta} - \beta^*) &\to_D N(0, \Sigma(\beta^*))\\
+        \hat{\Sigma}(\hat{\beta}^*) &\to_P \Sigma(\beta^*)\\
+        \text{where} \quad \Sigma(\beta^*) &= H^{-1}G(\beta^*) H^{-1}\\
+        \text{and} \quad H &= E[X_i X_i^T]\\
+        \text{and} \quad G(\beta^*) = E[(Y_i - X_i^T \beta^*)^2 X_i X_i^T]\\
+    \end{align*}
+    \begin{proof}
+        \begin{align*}
+            \hat \beta = \tilde{E}^{-1}[XX^T] \tilde{E}[XY]\\
+            \hat \beta - \beta^* = \tilde{E}^{-1}[XX^T] \tilde{E}[XY] - \tilde{E}^{-1}[XX^T] \tilde{E}[XX^T] \beta^*\\
+            = \tilde{E}^{-1}[XX^T] \tilde{E}[X(Y - X^T \beta^*)]\\
+            \sqrt{n}(\hat \beta - \beta^*) = \tilde{E}^{-1}[XX^T] \sqrt{n} \tilde{E}[X(Y - X^T \beta^*)]\\
+            \text{By CLT, } \sqrt{n} \tilde{E}[X(Y - X^T \beta^*)] \to_D N(0, G(\beta^*))
+        \end{align*}
+    \end{proof}
+    Where $\tilde{E}$ is the empirical expectation operator.
+\end{proposition}
+
+\begin{theorem}
+    [Slutsky's Theorem]
+    If $X_n \to_D X$ and $Y_n \to_P c$ then $X_n + Y_n \to_D X + c$ and $X_n Y_n \to_D cX$ and $X_n / Y_n \to_D X / c$ if $c \neq 0$
+\end{theorem}
+
+\begin{remark}
+    [Application of Slutsky's Theorem]
+    We can use this to show $\var(H^{-1} Z) = H^{-1} \var(Z) H^{-1}$ and $\hat{\Sigma}(\hat{\beta}) \to_P \Sigma(\beta^*)$.
+\end{remark}
+
+\begin{definition}
+    [Partial Linear Regression]
+    $$E[Y|X] = X^T \theta^* + g^*(Z)$$
+    where $g(Z)$ is an unknown function of $Z$ and $Z$ is another covariate. This is a semi-parametric model.
+\end{definition}
+
+\begin{proposition}
+    [1.9]
+    $\hat \theta$ is doubly frobust for $\theta^*$ if either $g^*(Z)$ is correctly specified or $E[X|Z]$ is correctly specified.
+\end{proposition}
+
+\begin{proposition}
+    Let $V(\theta^*) = \frac{E\{\phi^2(z,w,y;\theta*, \bar \alpha, \bar \gamma) \}}{E^2\{Z (Z-W^T\bar \gamma)\}}$
+    If either g or f model is correct then $\sqrt{n}(\hat \theta - \theta^*) \to_D N(0, V(\theta^*))$ and $\hat V(\hat \theta) \to_P V(\theta^*)$.
+\end{proposition}
+
+\begin{remark}
+    
+
+    $\frac{1}{n}\sum \{ h(X_i ; \hat \eta) - h(X_i ; \bar \eta)\} \to_P 0$
+
+    This says that, as $n \to \infty$, the sample-average difference between
+    evaluating $h$ at the estimated nuisance parameter $\hat\eta$ and at its
+    target or probability limit $\bar\eta$ converges to zero in probability.
+    Thus, replacing $\bar\eta$ with $\hat\eta$ has a negligible effect on the
+    average for large samples. Equivalently, for every $\varepsilon>0$,
+    $$
+    P\left(\left|\frac{1}{n}\sum_{i=1}^n
+    \{h(X_i;\hat\eta)-h(X_i;\bar\eta)\}\right|>\varepsilon\right)\to 0.
+    $$
+    
+    $n^{1/2} (\hat \eta - \bar \eta) = O_P(1)$
+    
+\end{remark}
+
+\begin{definition}
+    $\phi = (Z - W^T \bar \gamma) (Y - W^T \bar \alpha - Z\theta)$
+
+    But if we choose 
+    $$\phi_{new} (Z - \frac{\exp(W^T \gamma)}{1+\exp(W^T \gamma)})(Y - W^T \bar \alpha - Z\theta)$$
+    then this is still mean zero and is doubly robust.
+\end{definition}
+
+
+
+
+\end{document}

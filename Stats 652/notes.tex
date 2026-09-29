@@ -1,0 +1,386 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{STAT 652}
+\newcommand{\assignment}{Lecture Notes}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\section{Exponential Families}
+\begin{definition}
+    [Exponential Density Function]
+    $$f(x;\lambda) = \lambda^{-1} e^{\frac{-x}{\lambda}}$$ 
+    for $\lambda > 0$ 
+    \textbf{Random Sample:} $X_1, X_2, \ldots, X_n$ 
+    where $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$ is the sample mean.
+    \textbf{Likelihood Function:}
+    $$L(\lambda) = \prod_{i=1}^{n} f(x_i;\lambda) = \prod_{i=1}^{n} \lambda^{-1} e^{\frac{-x_i}{\lambda}} = \lambda^{-n} e^{\frac{-\sum_{i=1}^{n} x_i}{\lambda}} = \lambda^{-n} e^{\frac{-n\bar{x}}{\lambda}}$$
+    \textbf{Log-Likelihood Function:}
+    $$l(\lambda) = \log L(\lambda) = \sum_{i=1}^{n} \log f(x_i;\lambda) = \sum_{i=1}^{n} \log \lambda^{-1} e^{\frac{-x_i}{\lambda}} = -n \log \lambda - \frac{\bar{x}}{\lambda}$$
+    \textbf{MLE:} 
+    $$ \hat{\lambda} = \bar{x}$$
+    $$ l'(\lambda) = -\frac{n}{\lambda} + \frac{n\bar{x}}{\lambda^2} = 0$$
+    $$ l''(\lambda) = \frac{n}{\lambda^2} - \frac{2n\bar{x}}{\lambda^3}$$
+    Note that $l''(\hat{\lambda}) = \begin{cases}
+        <0 \lambda < 2\bar{x} \quad \text{concave}\\
+        >0 \lambda > 2\bar{x} \quad \text{convex}
+    \end{cases}$
+    Thus, $\hat{\lambda} = \bar{x}$ is a local maximum.
+    We can prove that this is a global maximum by showing that $l'(\lambda) > 0$ for $\lambda < \bar{x}$ and $l'(\lambda) < 0$ for $\lambda > \bar{x}$.
+    \textbf{Reparamteriation:} $\theta = \frac{1}{\lambda} \implies \lambda = \frac{1}{\theta}$
+    $$f(x;\theta) = \theta e^{-\theta x}$$
+    \textbf{Log-Likelihood Function:}
+    $$l(\theta) = \sum_{i=1}^{n} \log f(x_i;\theta) = \sum_{i=1}^{n} \log \theta e^{-\theta x_i} = n\log \theta - \theta \sum_{i=1}^{n} x_i$$
+    $$l'(\theta) = \frac{n}{\theta} - \sum_{i=1}^{n} x_i = 0 \implies \hat{\theta} = \frac{n}{\sum_{i=1}^{n} x_i} = \frac{1}{\bar{x}}$$
+    This is the only critical point and $l''(\theta) = -\frac{n}{\theta^2} < 0$ for $\theta > 0$, so this is a global maximum. And thus $\hat{\lambda} = \frac{1}{\hat{\theta}} = \bar{x}$. is the unique MLE of $\lambda$.
+\end{definition}
+\begin{remark}
+    [MLE reparametrization] The MLE is invariant under one-to-one reparametrization. 
+\end{remark}
+\begin{definition}
+    [Normal Density Function]
+    $$f(x;\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+    for $\mu \in \mathbb{R}$ and $\sigma^2 > 0$.\\
+    \textbf{Random Sample:} $X_1, X_2, \ldots, X_n$ \\
+    \textbf{Likelihood Function:}
+    $$L(\mu,\sigma^2) = \prod_{i=1}^{n} f(x_i;\mu,\sigma^2) = \prod_{i=1}^{n} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x_i-\mu)^2}{2\sigma^2}} = (2\pi\sigma^2)^{-\frac{n}{2}} e^{-\frac{\sum_{i=1}^{n} (x_i-\mu)^2}{2\sigma^2}}$$
+    \textbf{Log-Likelihood Function:}
+    $$l(\mu,\sigma^2) = \log L(\mu,\sigma^2) = \sum_{i=1}^{n} \log f(x_i;\mu,\sigma^2) = -\frac{n}{2} \log (2\pi\sigma^2) - \frac{\sum_{i=1}^{n} (x_i-\mu)^2}{2\sigma^2}$$
+    \textbf{MLE:}
+    $$\hat{\mu} = \bar{x}$$
+    $$\hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2$$
+    $$l_\mu(\mu,\sigma^2) = \frac{\sum_{i=1}^{n} (x_i-\mu)}{\sigma^2} = 0 \implies \hat{\mu} = \bar{x}$$
+    $$l_{\sigma^2}(\mu,\sigma^2) = -\frac{n}{2\sigma^2} + \frac{\sum_{i=1}^{n} (x_i-\mu)^2}{2\sigma^4} = 0 \implies \hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2$$
+    These are the unique critical points because:
+    $$l_{\mu\mu}(\mu,\sigma^2) = -\frac{n}{\sigma^2} < 0$$
+    $$l_{\sigma^2\sigma^2}(\mu,\sigma^2) = \frac{n}{2\sigma^4} - \frac{\sum_{i=1}^{n} (x_i-\mu)^2}{\sigma^6}$$
+    $$l_{\mu\sigma^2}(\mu,\sigma^2) = -\frac{\sum_{i=1}^{n} (x_i-\mu)}{\sigma^4}$$
+    $$l_{\sigma^2\mu}(\mu,\sigma^2) = -\frac{\sum_{i=1}^{n} (x_i-\mu)}{\sigma^4}$$
+    The Hessian matrix is:
+    $$H = \begin{bmatrix}
+        l_{\mu\mu}(\mu,\sigma^2) & l_{\mu\sigma^2}(\mu,\sigma^2)\\
+        l_{\sigma^2\mu}(\mu,\sigma^2) & l_{\sigma^2\sigma^2}(\mu,\sigma^2)
+    \end{bmatrix} = \begin{bmatrix}
+        -\frac{n}{\sigma^2} & -\frac{\sum_{i=1}^{n} (x_i-\mu)}{\sigma^4}\\
+        -\frac{\sum_{i=1}^{n} (x_i-\mu)}
+{\sigma^4} & \frac{n}{2\sigma^4} - \frac{\sum_{i=1}^{n} (x_i-\mu)^2}{\sigma^6}
+    \end{bmatrix}$$
+    And the determinant of the Hessian is $\not < 0$.
+
+    And at $H(\hat{\mu},\hat{\sigma}^2)$, we have:
+    $$H(\hat{\mu},\hat{\sigma}^2) = \begin{bmatrix}
+        -\frac{n}{\hat{\sigma}^2} & 0\\
+        0 & -\frac{n}{2\hat{\sigma}^4}
+    \end{bmatrix} < 0$$
+    Thus $\bar{x}$ and $\hat{\sigma}^2$ are the unique MLEs of $\mu$ and $\sigma^2$ respectively.
+\end{definition}
+\begin{definition}
+    [Exponential Family] A one-paramter exponential family $\mathcal{P} = \{P_\theta | \theta \in \Theta\}$, $P_\theta$ prob measures on $\mathbb{R}^m, \Theta \in \mathbb{R}^p$ is an identifiable family of distributions with density or probability mass function of the form 
+    $$ f(x; \theta) = \exp\left( c(\theta)T(x) + d(\theta) + S(x) \right) I_{\mathcal{A}}(x)$$
+    Where $c: \Theta \to \mathbb{R}$ $\mathcal{A}: \Theta \to \mathbb{R}$ $T: \mathbb{R}^m \to \mathbb{R}$ $S: \mathbb{R}^m \to \mathbb{R}$ and $d: \Theta \to \mathbb{R}$ are known functions. and $\mathcal{A} \subset \mathbb{R}^m$ not dependent of $\theta$ aka Regular
+\end{definition}
+\begin{remark}
+    Density = Radon-Nikodim Derivative of $P_\theta$ with respect to a $\sigma$-finite measure $\mu$ on $\mathbb{R}^m$.
+\end{remark}
+\begin{example}
+    $X \sim Exp(\lambda)$ with $f(x;\lambda) = \lambda^{-1} e^{\frac{-x}{\lambda}}$ for $x > 0$ and $\lambda > 0$.\\
+    This is an exponential family with $c(\lambda) = -\frac{1}{\lambda}$, $T(x) = -x$, $S(x) = 0$ and $d(\lambda) = -\log \lambda$ and $\mathcal{A} = (0,\infty)$.
+    Note that this is not a unique representation of the exponential family. 
+\end{example}
+\begin{example}
+    $X \sim Binom(n,\theta)$ with $n$ known and $\theta \in (0,1)$ and $f(x;\theta) = \binom{n}{x} \theta^x (1-\theta)^{n-x}$ for $x = 0,1,\ldots,n$.\\
+    This can be rewritten as $f(x;\theta) = \exp\left( x\log \frac{\theta}{1-\theta} + \log \binom{n}{x} + n\log(1-\theta) \right)$ for $x = 0,1,\ldots,n$.\\
+    This is an exponential family with $c(\theta) = \log \frac{\theta}{1-\theta}$, $T(x) = x$, $S(x) = \log \binom{n}{x}$ and $d(\theta) = n\log(1-\theta)$ and $\mathcal{A} = \{0,1,\ldots,n\}$.
+    Notice that the parametrization of $c(\theta)$ is the logit function. 
+\end{example}
+\begin{example}
+    $X \sim Normal(\mu,\sigma^2)$ with $f(x;\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ for $x \in \mathbb{R}$ and $\mu \in \mathbb{R}$ and $\sigma^2 > 0$.\\
+    This can be rewritten as $f(x;\mu,\sigma^2) = \exp\left( -\frac{1}{2\sigma^2} x^2 + \frac{\mu}{\sigma^2} x - \frac{\mu^2}{2\sigma^2} - \frac{1}{2} \log (2\pi\sigma^2) \right)$ for $x \in \mathbb{R}$.\\
+    For a fixed $\sigma^2$, this is an exponential family in $\mu$ with $c(\mu) = \frac{\mu}{\sigma^2}$, $T(x) = x$, $S(x) = -\frac{1}{2\sigma^2} x^2$, $d(\mu) = -\frac{\mu^2}{2\sigma^2} - \frac{1}{2} \log (2\pi\sigma^2)$ and $\mathcal{A} = \mathbb{R}$.\\
+    For a fixed $\mu$, this is an exponential family in $\sigma^2$ with $c(\sigma^2) = -\frac{1}{2\sigma^2}$, $T(x) = x^2$, $S(x) = \frac{\mu}{\sigma^2} x$, $d(\sigma^2) = -\frac{\mu^2}{2\sigma^2} - \frac{1}{2} \log (2\pi\sigma^2)$ and $\mathcal{A} = \mathbb{R}$.
+\end{example}
+\begin{definition}
+    [k-dim Exponential Family] A k-dim exponential family $\mathcal{P} = \{P_\theta | \theta \in \Theta\}$, $P_\theta$ prob measures on $\mathbb{R}^m, \Theta \in \mathbb{R}^p$ is an identifiable family of distributing with density or probability mass function of the form
+    $$ f(x; \theta) = \exp\left( \sum_{j=1}^{k} c_j(\theta)T_j(x) + d(\theta) + S(x) \right) I_{\mathcal{A}}(x)$$
+    Where $k$ is the smallest integer for which this representation is possible.
+    Note that $\theta$ here is a vector of parameters
+\end{definition}
+\begin{example}
+    $X \sim Normal(\mu,\sigma^2)$ \\
+    This is a 2-dim/2-param exponential family with $c_1(\mu,\sigma^2) = \frac{\mu}{\sigma^2}$, $c_2(\mu,\sigma^2) = -\frac{1}{2\sigma^2}$, $T_1(x) = x$, $T_2(x) = x^2$, $S(x) = 0$, $d(\mu,\sigma^2) = -\frac{\mu^2}{2\sigma^2} - \frac{1}{2} \log (2\pi\sigma^2)$ and $\mathcal{A} = \mathbb{R}$.
+\end{example}
+\begin{remark}
+    $P_\theta$ is a exponetnal family in $\theta = \{\theta_1, \theta_2\} \implies \theta_2$ fixed, its exponential family in $\theta_1$ and vice versa.
+    Reverse implication is not true
+\end{remark}
+\begin{example}
+    $X \sim Multinomial_m(n, \theta)$ $\theta = (\theta_1, \ldots, \theta_m)$, $\sum_m \theta_i = 1$, $\theta_i > 0$ and $f(x;\theta) = \frac{n!}{x_1! \ldots x_m!} \prod_{i=1}^{m} \theta_i^{x_i}$ for $x = (x_1, \ldots, x_m)$ with $\sum_{i=1}^{m} x_i = n$ and $x_i \in \{0,1,\ldots,n\}$.\\
+    This can be rewritten as $f(x;\theta) = \exp\left( \sum_{i=1}^{m} x_i \log \theta_i + \log \frac{n!}{x_1! \ldots x_m!} \right)$ for $x = (x_1, \ldots, x_m)$ with $\sum_{i=1}^{m} x_i = n$ and $x_i \in \{0,1,\ldots,n\}$.\\
+    Thus 
+    \begin{align*}
+        c_i(\theta) &= \log \theta_i, \quad i = 1, \ldots, m-1\\
+        T_i(x) &= x_i, \quad i = 1, \ldots, m-1\\
+        S(x) &= \log \frac{n!}{x_1! \ldots x_m!}\\
+        d(\theta) &= n\log(1-\sum_{i=1}^{m-1} \theta_i)\\
+        \mathcal{A} &= \{(x_1, \ldots, x_m) | x_i \in \{0,1,\ldots,n\}, \sum_{i=1}^{m} x_i = n\}
+    \end{align*}
+\end{example}
+\begin{lemma}
+    A representation of an exponential family corresponds to k-dim iff 
+    \begin{enumerate}
+        \item $\sum_{i=1}^k a_j c_j(\theta) = a_0 \quad \forall \theta \in \Theta$ iff constants $a_0, a_1, \ldots, a_k = 0$
+        \item $\sum_{i=1}^k b_j T_j(x) = b_0 \quad \forall x \in \mathcal{A}$ iff constants $b_0, b_1, \ldots, b_k = 0$
+    \end{enumerate}
+    This basically means that the $1,c_j(\theta)$ are linearly independent and the functions $1, T_j(x)$ are linearly independent.
+\end{lemma}
+\begin{example}
+    [Examples of Exponential families]
+    Multinomial m$(\mu, \theta_m)$ Where $\sum_i \theta_i =1$
+    $$f(x: \theta) = \binom{N}{x_1, ..., x_n} \prod_i \theta_i^{x_i}$$
+    We can write this in exponential family from by 
+    \begin{align*}
+        c_i \log \theta_i | \theta_m , \quad i = 1, ..., m-1\\
+        T_i(x) = x_i, \quad i = 1, ..., m-1\\
+        S(x) = \log \binom{N}{x_1, ..., x_n}\\
+        d(\theta) = N \log(1 - \sum_{i=1}^{m-1} \theta_i)\\
+        \mathcal{A} = \{(x_1, ..., x_m) | x_i \in \{0, 1, ..., N\}, \sum_{i=1}^{m} x_i = N\}
+    \end{align*}
+
+    This is clealry a $k= m-1$ exponential family 
+\end{example}
+\begin{example}
+    [Gamma]
+    The Gamma distribution is a 2-dim exponential family with $c_1(\alpha,\beta) = \alpha - 1$, $c_2(\alpha,\beta) = -\frac{1}{\beta}$, $T_1(x) = \log x$, $T_2(x) = x$, $S(x) = 0$, $d(\alpha,\beta) = -\log \Gamma(\alpha) - \alpha \log \beta$ and $\mathcal{A} = (0,\infty)$.
+\end{example}
+\begin{definition}
+    [Full Rank and Curved Exponential Families]
+    A k-dim exponential family is called full rank if the set $\{c_1(\theta), \ldots, c_k(\theta) | \theta \in \Theta\}$ if this contains an open subset of $\mathbb{R}^k$. Otherwise, it is called a curved exponential family.
+\end{definition}
+\begin{example}
+    [Multinomial] The multinomial distribution is a full rank exponential family because the set $\{c_1(\theta), \ldots, c_{m-1}(\theta) | \theta \in \Theta\}$ contains an open subset of $\mathbb{R}^{m-1}$.
+\end{example}
+\begin{example}
+    [Gamma] The gamma distribution is a curved exponential family because the set $\{c_1(\alpha,\beta), c_2(\alpha,\beta) | \alpha > 0, \beta > 0\}$ does not contain an open subset of $\mathbb{R}^2$.
+\end{example}
+\begin{remark}
+    [Curved Exponential Family]
+    $f(x;\mu) = ce^{-(x-\mu)^4}$ 
+    Show that this is a curved exponential family with what k
+    \begin{proof}
+        We can rewrite this as $f(x;\mu) = \exp\left( - (x-\mu)^4 + \log c \right)$ for $x \in \mathbb{R}$ and $\mu \in \mathbb{R}$.\\
+        This is an exponential family with $c(\mu) = -1$, $T(x) = (x-\mu)^4$, $S(x) = 0$, $d(\mu) = \log c$ and $\mathcal{A} = \mathbb{R}$.\\
+        This is a 1-dim exponential family because the set $\{c(\mu) | \mu \in \mathbb{R}\}$ does not contain an open subset of $\mathbb{R}$.
+    \end{proof}
+\end{remark}
+\begin{remark}
+    [Random Sample from an expoential family] Let $X_1, \ldots, X_n$ be a random sample from an exponential family with density or probability mass function of the form
+    $$ f(x; \theta) = \exp\left( \sum_{j=1}^{k} c_j(\theta)T_j(x) + d(\theta) + S(x) \right) I_{\mathcal{A}}(x)$$
+    Then the joint density or probability mass function of the random sample is
+    $$ f(x_1, \ldots, x_n; \theta) = \prod_{i=1}^{n} f(x_i; \theta) = \exp\left( \sum_{j=1}^{k} c_j(\theta) \sum_{i=1}^{n} T_j(x_i) + n d(\theta) + \sum_{i=1}^{n} S(x_i) \right) I_{\mathcal{A}}(x_1, \ldots, x_n)$$
+    Thus the random sample is also an exponential family with $c_j(\theta)$, $T_j(x)$, $S(x)$, $d(\theta)$ and $\mathcal{A}$
+    \begin{align*}
+        c_i(\theta) &= c_i(\theta), \quad i = 1, \ldots, k\\
+        T_i(x_1, \ldots, x_n) &= \sum_{i=1}^{n} T_j(x_i), \quad i = 1, \ldots, k\\
+        S(x_1, \ldots, x_n) &= \sum_{i=1}^{n} S(x_i)\\
+        d(\theta) &= n d(\theta)\\
+        \mathcal{A} &= \mathcal{A}^n
+    \end{align*}
+\end{remark}
+
+\begin{theorem}
+    [Factorization Theorem] Let $X_1, \ldots, X_n$ be a random sample from a distribution with density or probability mass function $f(x; \theta)$. Then $T(X_1, \ldots, X_n)$ is a sufficient statistic for $\theta$ if and only if there exist functions $g(t; \theta)$ and $h(x_1, \ldots, x_n)$ such that
+    $$ f(x_1, \ldots, x_n; \theta) = g(T(x_1, \ldots, x_n); \theta) h(x_1, \ldots, x_n)$$
+
+\end{theorem}
+\begin{theorem}
+    [Minimal Sufficient Statistic] Let $X_1, \ldots, X_n$ be a random sample from a distribution with density or probability mass function $f(x; \theta)$. Then $T(X_1, \ldots, X_n)$ is a minimal sufficient statistic for $\theta$ if and only if for any two sample points $(x_1, \ldots, x_n)$ and $(y_1, \ldots, y_n)$, the ratio
+    $$ \frac{f(x_1, \ldots, x_n; \theta)}{f(y_1, \ldots, y_n; \theta)}$$
+    is constant as a function of $\theta$ if and only if $T(x_1, \ldots, x_n) = T(y_1, \ldots, y_n)$.
+
+\end{theorem}
+\begin{example}
+    [Example of a Minimal Sufficient Statistic]
+    Let $X \sim N(\mu, \sigma^2)$ with $\mu \in \mathbb{R}$ and $\sigma^2 > 0$. Then the minimal sufficient statistic for $(\mu, \sigma^2)$ is $(x,x^2)$. 
+
+    Let $X \sim N(0, \sigma^2)$ with $\sigma^2 > 0$. Then the minimal sufficient statistic for $\sigma^2$ is $\sum x^2$.
+\end{example}
+\begin{definition}
+    [Natural Reparametrization] A k-dim exponential family $\mathcal{P} = \{P_\theta | \theta \in \Theta\}$, $P_\theta$ prob measures on $\mathbb{R}^m, \Theta \in \mathbb{R}^p$ is an identifiable family of distributing with density or probability mass function of the form
+    $$ f(x; \theta) = \exp\left( \sum_{j=1}^{k} c_j(\theta)T_j(x) + d(\theta) + S(x) \right) I_{\mathcal{A}}(x)$$
+    The natural reparametrization of this exponential family is the k-dim exponential family $\mathcal{P} = \{P_\eta | \eta \in \mathbb{R}^k\}$, $P_\eta$ prob measures on $\mathbb{R}^m, \eta \in \mathbb{R}^k$ with density or probability mass function of the form
+    $$ f(x; \eta) = \exp\left( \sum_{j=1}^{k} \eta_j T_j(x) + d(\eta) + S(x) \right) I_{\mathcal{A}}(x)$$
+    where $\eta = (c_1(\theta), \ldots, c_k(\theta))$ and $d(\eta) = d(\theta)$.
+\end{definition}
+
+\fbox{OMG HE TALKED ABOUT STATISTICS ON MANIFOLDS}
+
+\begin{remark}
+    $g(n) = e^{-d_o(n)}$ is convex
+\end{remark}
+\begin{definition}
+    [Convex Set]
+    A set $C \subset \mathbb{R}^k$ is convex if for any two points $x,y \in C$, the line segment connecting $x$ and $y$ is contained in $C$. That is, for any $\lambda \in [0,1]$, we have $\lambda x + (1-\lambda)y \in C$.
+\end{definition}
+
+\begin{definition}
+    [Concave Set]
+    A set $C \subset \mathbb{R}^k$ is concave if for any two points $x,y \in C$, the line segment connecting $x$ and $y$ is contained in $C$ is less than or equal to the line segment connecting $x$ and $y$. That is, for any $\lambda \in [0,1]$, we have $\lambda x + (1-\lambda)y \leq C$.
+\end{definition}
+
+\begin{lemma}
+    Suppose $g: \Theta \to \mathbb{R}$ is a concave d
+    \begin{enumerate}
+        \item Any local max i a global max
+        \item Thee are no local min
+        \item The set of all global max is either empty or convex
+        \item If $\Theta$ is bounded then a max exists on $\Theta$ closure and thus if it is also closed it is in $\Theta$.
+        \item If $\Theta \in R^k$ then a max exits iff g is coercive ie $g(\theta) \to -\infty$ as $||\theta|| \to \infty$
+    \end{enumerate}
+\end{lemma}
+
+\begin{remark}
+    [Exp Family natural form]
+    \begin{align*}
+        f(x: \eta) = \exp\left( 
+        \sum_{j=1}^k \eta_j T_j(x) + d_0(\eta) + S(x)
+    \right) I_{\mathcal{A}}(x)
+    \end{align*}
+    Where $\eta = \left\{\eta = (\eta_1 ... \eta_k) | \eta = (c_1(\theta), ..., c_k(\theta)) , \theta \in \Theta \right\}$
+\end{remark}
+\begin{lemma}
+    The convex closure of $\eta$ is a valid parameter space for the natural form of the exponential family.
+\end{lemma}
+\begin{example}
+    $X \sim Gamma(\theta, \theta)$ with $f(x;\theta) = \exp\left( (\theta-1)\log x - \frac{x}{\theta} - \log \Gamma(\theta) - \theta \log \theta \right)$ for $x > 0$ and $\theta > 0$.\\
+    Where $d(\theta) = -\log \theta^\theta \Gamma(\theta)$ \\
+    or $f(x; \eta) = \exp\left( \eta_1 \log x + \eta_2 x + d_0(\eta) \right)$ for $x > 0$ and $\eta = (\theta-1, -\frac{1}{\theta})$ and $d_0(\eta) = -\log \Gamma(\eta_1+1) - (\eta_1+1)\log(-\eta_2)$\\
+    with $ \eta = \left\{(n_1, n_2)| n_1 > 1, n_2 > \frac{-1}{1+n_1}\right\}$
+\end{example}
+\begin{lemma}
+    Uniqueness of Natureal paramterizations under affine transformation $k$- parameter
+
+    $n_0$ representas a natural paramterization for a exp family iff $n_0$ is an affine transformation of $\eta$.
+\end{lemma}
+
+\begin{corollary}
+    $g(\eta) = e^{d_0(\eta)}$ is convex on $\eta$ and thus $d_0(\eta)$ is concave on $\eta$.
+    \begin{proof}
+        Since $d_0(\eta)$ is a convex function, its exponential $g(\eta) = e^{d_0(\eta)}$ is also convex.
+        $d_0(\eta)$ is concave because the negative of a convex function is concave.
+
+
+    \end{proof}
+
+\end{corollary}
+
+\begin{example}
+    $X_1 ... X_n \sim Gamma(\alpha, \beta)$ 
+    $$l(\alpha, \beta) = \sum_{i=1}^{n} \log f(x_i; \alpha, \beta) = \sum_{i=1}^{n} \left( (\alpha-1)\log x_i - \frac{x_i}{\beta} - \log \Gamma(\alpha) - \alpha \log \beta \right)$$
+
+    Case 1: $\beta$ known, $\alpha$ unknown.\\
+    $$l(\alpha) = \sum_{i=1}^{n} \left( (\alpha-1)\log x_i - \log \Gamma(\alpha) - \alpha \log \beta \right)$$
+    $$l'(\alpha) = \sum_{i=1}^{n} \left( \log x_i - \psi(\alpha) - \log \beta \right) = 0$$
+    $$l''(\alpha) = \sum_{i=1}^{n} \left( -\psi'(\alpha) \right) < 0$$
+    Thus $\hat{\alpha}$ is a global maximum.\\
+    Case 2: $\alpha$ known, $\beta$ unknown.\\
+    $$l(\beta) = \sum_{i=1}^{n} \left( -\frac{x_i}{\beta} - \alpha \log \beta \right)$$
+    $$l'(\beta) = \sum_{i=1}^{n} \left  ( \frac{x_i}{\beta^2} - \frac{\alpha}{\beta} \right) = 0$$
+    $$l''(\beta) = \sum_{i=1}^{n} \left( -\frac{2x_i}{\beta^3} + \frac{\alpha}{\beta^2} \right) < 0$$
+    Thus $\hat{\beta}$ is a global maximum.
+
+    This is sometimes refered to as the digamma function $\psi(\alpha) = \frac{\Gamma'(\alpha)}{\Gamma(\alpha)}$ and the trigamma function $\psi'(\alpha) = \frac{d}{d\alpha} \psi(\alpha)$.
+
+    Case 3: $\alpha$ and $\beta$ unknown.\\
+\end{example}
+
+\textbf{9/17}
+\begin{theorem}
+    Log-likelihood for an exp familty is ctrictly convave in $n \in \eta$ 
+    \begin{proof}
+        
+    \end{proof}
+\end{theorem}
+
+\begin{lemma}
+    [4.1] The mgf exists for any interior poirnt $\eta \in \underline {\overline{\eta}}$ with $$M_X(t) = \exp\left( d_0(\eta+t) - d_0(\eta) \right)$$
+\end{lemma}
+\begin{lemma}
+    [4.2] The density/mass of $T(X)$ the natural maximum sufficent statistic is given by $f_t(\tau) = \exp\left( \sum_{j=1}^{k} \eta_j \tau_j + d_0(\eta) + S_0(\tau) \right) I_{\mathcal{T}}(\tau)$
+\end{lemma}
+
+\begin{theorem}
+    [A minimual sufficent statsitc from a full rank exp family is complete]
+    Essentially this means that if $T(X)$ is a minimal sufficient statistic for a full rank exponential family, then it is also complete. This implies that any unbiased estimator based on $T(X)$ is unique and cannot be improved upon by any other unbiased estimator.
+\end{theorem}
+
+\begin{theorem}
+    [Lehmahn-Scheffe Theorem] If $T(X)$ is a complete sufficient statistic for a parameter $\theta$, then any unbiased estimator of a function of $\theta$ that is based on $T(X)$ is the unique minimum variance unbiased estimator (UMVUE) of that function.
+\end{theorem}
+
+\begin{theorem}
+    [Rao-Blackwell Theorem] If $T(X)$ is a sufficient statistic for a parameter $\theta$, and $\hat{\theta}$ is an unbiased estimator of a function of $\theta$, then the conditional expectation of $\hat{\theta}$ given $T(X)$, denoted as $E[\hat{\theta} | T(X)]$, is also an unbiased estimator of that function and has variance less than or equal to that of $\hat{\theta}$. This means that $E[\hat{\theta} | T(X)]$ is at least as good as $\hat{\theta}$ in terms of variance, and if $T(X)$ is complete, then it is the unique minimum variance unbiased estimator (UMVUE).
+    \begin{proof}
+        the proof of the Rao-Blackwell theorem involves showing that the conditional expectation $E[\hat{\theta} | T(X)]$ is unbiased and has variance less than or equal to that of $\hat{\theta}$.
+        Let $T(X)$ be a sufficient statistic for $\theta$, and let $\hat{\theta}$ be an unbiased estimator of a function of $\theta$. We want to show that $E[\hat{\theta} | T(X)]$ is also an unbiased estimator of that function and has variance less than or equal to that of $\hat{\theta}$.
+
+        First, we show that $E[\hat{\theta} | T(X)]$ is unbiased. By the law of total expectation, we have:
+        \[
+E[E[\hat{\theta} | T(X)]] = E[\hat{\theta}] = \theta\]
+        Thus, $E[\hat{\theta} | T(X)]$ is an unbiased estimator of the function of $\theta$.
+
+        Next, we show that the variance of $E[\hat{\theta} | T(X)]$ is less than or equal to the variance of $\hat{\theta}$. By the law of total variance, we have:
+
+        \[
+Var(\hat{\theta}) = E[Var(\hat{\theta} | T(X))] + Var(E[\hat{\theta} | T(X)])\]
+
+        Since $Var(\hat{\theta} | T(X)) \geq 0$, we have:
+        \[
+Var(E[\hat{\theta} | T(X)]) \leq Var(\hat{\theta})\]
+        Thus, the variance of $E[\hat{\theta} | T(X)]$ is less than or equal to the variance of $\hat{\theta}$.
+
+        Therefore, we have shown that $E[\hat{\theta} | T(X)]$ is an unbiased estimator of the function of $\theta$ and has variance less than or equal to that of $\hat{\theta}$. This completes the proof of the Rao-Blackwell theorem.
+
+    \end{proof}
+\end{theorem}
+
+\begin{example}
+    $X_1, \ldots, X_n \sim N(\theta, \theta^2)$ with $\theta \in \mathbb{R}$ Know that $\bar{X}, s^2$ are minimal sufficient statistics for $\theta$.\\
+    But it is not complete since $E[s^2] = \theta^2$ and $E[\bar{X}] = \theta^2 / n + \theta^2$.
+\end{example}
+
+\begin{example}
+    
+\end{example}
+
+\begin{remark}
+    [Evaluate Estimations]
+    Information: One Parameter Case:
+    Refualr paramteric Model:
+    $$f = \{f_\theta : \theta \in \Theta\}$$
+    Under Regularity Conditions, the Fisher Information is defined as:
+    $$I(\theta) = E\left[\left(\frac{\partial}{\partial \theta} \log f_\theta(X)\right)^2\right] = -E\left[\frac{\partial^2}{\partial \theta^2} \log f_\theta(X)\right]$$
+\end{remark}
+
+\begin{theorem}
+    [Cramer-Rao Lower Bound] Let $X_1, \ldots, X_n$ be a random sample from a distribution with density or probability mass function $f(x; \theta)$, and let $\hat{\theta}$ be an unbiased estimator of a function of $\theta$. Then the variance of $\hat{\theta}$ is bounded below by the Cramer-Rao lower bound:
+    $$Var(\hat{\theta}) \geq \frac{1}{I(\theta)}$$
+    where $I(\theta)$ is the Fisher information for $\theta$.
+\end{theorem}
+
+\begin{remark}
+    If your $T$ is complete sufficient statistic, then the UMVUE is unique and is given by $E[\hat{\theta} | T]$ and achives the Cramer-Rao lower bound.
+\end{remark}
+
+\begin{theorem}
+    [5.1] The information inequality is an equality if $H(X) = T(X)$ 
+\end{theorem}
+
+\end{document}

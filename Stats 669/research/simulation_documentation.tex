@@ -1,0 +1,443 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\geometry{margin=1in}
+
+\title{\textbf{Simulation Documentation} \\
+\large Periodic Fourier--AR(1) Spatio-Temporal Gaussian Process \\
+\normalsize Stats 669 Research Reference}
+\author{Pranav Tikkawar}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Model Overview}
+% ============================================================
+
+We simulate a real-valued Gaussian spatio-temporal process
+\[
+  \{ X_t(x) : x \in [0, 2\pi],\; t \in \mathbb{Z} \}
+\]
+defined on a one-dimensional \emph{periodic} spatial domain (a circle) with discrete time. The
+process is represented as a truncated real-valued Fourier series,
+\begin{equation}
+  X_t(x) = a_0(t) + \sum_{j=1}^{J} \bigl[ a_j(t)\cos(jx) + b_j(t)\sin(jx) \bigr],
+  \quad x \in [0, 2\pi],
+  \label{eq:Xt}
+\end{equation}
+where $J \in \mathbb{Z}_+$ is the Fourier truncation level and
+\[
+  \mathbf{Z}_t = \bigl(a_0(t),\, a_1(t),\, b_1(t),\, a_2(t),\, b_2(t),\,\ldots,\, a_J(t),\, b_J(t)\bigr)^\top \in \mathbb{R}^{2J+1}
+\]
+is the state vector of Fourier coefficients at time $t$.
+
+\paragraph{Markov property.}
+The state vector $\mathbf{Z}_t$ is Markov: the distribution of $\mathbf{Z}_{t+1}$ depends only on
+$\mathbf{Z}_t$. This Markov property holds for the \emph{full} coefficient vector; individual
+spatial values $X_t(x_0)$ at a fixed location are \emph{not} Markovian.
+
+% ============================================================
+\section{Parameter Specification}
+% ============================================================
+
+\subsection{Spatial Spectrum: Mat\'{e}rn-like Fourier Variances}
+
+The marginal variance allocated to each Fourier mode $j$ follows a Mat\'{e}rn-like spectral
+density evaluated at integer frequencies:
+\begin{equation}
+  \tilde{\sigma}_j^2 = \bigl(\kappa^2 + j^2\bigr)^{-(\nu + 1/2)}, \qquad j = 0,1,\ldots,J,
+  \label{eq:raw-spec}
+\end{equation}
+where
+\begin{itemize}[noitemsep]
+  \item $\nu > 0$ is the Mat\'{e}rn \emph{smoothness} parameter (larger $\nu$ $\Rightarrow$ smoother fields),
+  \item $\ell > 0$ is the spatial \emph{range} parameter,
+  \item $\kappa = \sqrt{2\nu}/\ell$ is the inverse-scale (larger $\kappa$ $\Rightarrow$ shorter range).
+\end{itemize}
+
+These are normalized to sum to a target total variance $\sigma^2_\mathrm{tot}$:
+\begin{equation}
+  \sigma_j^2 = \sigma^2_\mathrm{tot} \cdot \frac{\tilde{\sigma}_j^2}{\displaystyle\sum_{k=0}^{J} \tilde{\sigma}_k^2}.
+  \label{eq:sigma-norm}
+\end{equation}
+The resulting $\{\sigma_j^2\}_{j=0}^J$ are the \emph{stationary variances} of the cosine and sine
+coefficients for each mode.
+
+\subsection{Temporal Persistence: Power-Law Decay}
+
+Each mode $j$ has its own AR(1) persistence coefficient $\rho_j \in (0,1)$. High-frequency modes
+decay faster in time (non-separability). We use an \emph{algebraic} (power-law) parameterization:
+\begin{equation}
+  \rho_j = \frac{1}{\bigl(1 + \lambda\, j^\alpha\bigr)^\beta}, \qquad j = 1,\ldots,J,
+  \label{eq:rhoj}
+\end{equation}
+with $\rho_0 \in (0,1)$ set separately, and hyperparameters:
+\begin{itemize}[noitemsep]
+  \item $\lambda > 0$: overall temporal decay strength,
+  \item $\alpha > 0$: frequency exponent (how strongly persistence changes with $j$),
+  \item $\beta > 0$: decay exponent (slower polynomial decay for smaller $\beta$).
+\end{itemize}
+
+The continuous-time (SDE) interpretation is $\rho_j = e^{-\lambda_j}$ where
+$\lambda_j = \beta\log(1 + \lambda j^\alpha)$ is the mode-specific damping rate.
+
+\subsection{Phase Rotation}
+
+For each mode $j \geq 1$, a rotation angle $\theta_j \in \mathbb{R}$ controls temporal phase drift.
+The default parameterization is
+\begin{equation}
+  \theta_j = \frac{\theta_0}{j}, \qquad j = 1,\ldots,J,
+  \label{eq:thetaj}
+\end{equation}
+for scalar hyperparameter $\theta_0$. Setting $\theta_j = 0$ removes phase rotation entirely.
+
+\subsection{Innovation Correlation}
+
+Within each mode $j \geq 1$, the cosine and sine innovations are correlated with parameter
+$\phi_j \in (-1,1)$. The default parameterization is
+\begin{equation}
+  \phi_j = \frac{\phi_0}{1 + j}, \qquad j = 1,\ldots,J,
+  \label{eq:phij}
+\end{equation}
+for scalar hyperparameter $\phi_0 \in (-1,1)$. Setting $\phi_j = 0$ makes innovations
+independent within each mode.
+
+\subsection{Parameter Summary Table}
+
+\begin{center}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Symbol} & \textbf{Name} & \textbf{Domain} & \textbf{Role} \\
+\midrule
+$J$                   & Fourier truncation         & $\mathbb{Z}_+$   & Spatial resolution \\
+$\nu$                 & Mat\'{e}rn smoothness      & $(0,\infty)$     & Spatial regularity \\
+$\ell$                & Spatial range              & $(0,\infty)$     & Correlation length \\
+$\sigma^2_\mathrm{tot}$ & Total variance           & $(0,\infty)$     & Field scale \\
+$\rho_0$              & Constant-mode persistence  & $(0,1)$          & Long-run mean reversion \\
+$\lambda$             & Temporal decay strength    & $(0,\infty)$     & Overall temporal memory \\
+$\alpha$              & Frequency exponent         & $(0,\infty)$     & Persistence-frequency slope \\
+$\beta$               & Power-law exponent         & $(0,\infty)$     & Decay curvature \\
+$\theta_0$            & Rotation hyperparameter    & $\mathbb{R}$     & Phase drift rate \\
+$\phi_0$              & Correlation hyperparameter & $(-1,1)$         & Cosine--sine coupling \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ============================================================
+\section{Temporal Dynamics: Block-Diagonal AR(1)}
+% ============================================================
+
+\subsection{Transition Matrix for Mode \texorpdfstring{$j \geq 1$}{j >= 1}}
+
+The pair $(a_j(t), b_j(t))$ evolves as a bivariate AR(1):
+\begin{equation}
+  \begin{pmatrix} a_j(t+1) \\ b_j(t+1) \end{pmatrix}
+  = M_j \begin{pmatrix} a_j(t) \\ b_j(t) \end{pmatrix}
+  + \begin{pmatrix} \eta_{a,j,t} \\ \eta_{b,j,t} \end{pmatrix},
+  \label{eq:ar1-block}
+\end{equation}
+where the $2\times 2$ transition (rotation-scaling) matrix is
+\begin{equation}
+  M_j = \rho_j \begin{pmatrix} \cos\theta_j & -\sin\theta_j \\ \sin\theta_j & \cos\theta_j \end{pmatrix}.
+  \label{eq:Mj}
+\end{equation}
+
+Key properties of $M_j$:
+\begin{itemize}[noitemsep]
+  \item $M_j M_j^\top = \rho_j^2 I_2$ (orthogonal scaling --- no cross-coupling in second moments),
+  \item Eigenvalues: $\rho_j e^{\pm i\theta_j}$ (modulus $= \rho_j < 1$ ensures stationarity),
+  \item $\theta_j = 0$: reduces to $\rho_j I_2$, cosine and sine evolve independently.
+\end{itemize}
+
+\subsection{Mode \texorpdfstring{$j = 0$}{j = 0}: Scalar AR(1)}
+
+\begin{equation}
+  a_0(t+1) = \rho_0\, a_0(t) + \eta_{0,t},
+  \qquad \eta_{0,t} \sim \mathcal{N}\!\bigl(0,\; \sigma_0^2(1-\rho_0^2)\bigr).
+  \label{eq:ar1-j0}
+\end{equation}
+
+\subsection{Innovation Covariance}
+
+The innovation covariance for mode $j \geq 1$ is determined by the \emph{discrete-time Lyapunov
+equation}: stationarity $\Sigma_j = M_j \Sigma_j M_j^\top + \Sigma_{\varepsilon,j}$ with
+$M_j M_j^\top = \rho_j^2 I_2$ gives
+\[
+  \Sigma_{\varepsilon,j} = (1-\rho_j^2)\,\Sigma_j.
+\]
+Targeting stationary covariance
+$\Sigma_j = \sigma_j^2 \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}$
+yields:
+\begin{equation}
+  \Sigma_{\varepsilon,j}
+  = \sigma_j^2 (1 - \rho_j^2)
+    \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}.
+  \label{eq:Sigma-eps}
+\end{equation}
+Note: this result is \emph{independent of} $\theta_j$. The rotation angle affects temporal
+structure but not marginal variances or contemporaneous correlation.
+
+% ============================================================
+\section{Space--Time Covariance}
+% ============================================================
+
+For $\theta_j = 0$ (no rotation) and modes independent across frequencies, the space--time
+covariance is
+\begin{equation}
+  C(h, k) = \mathbb{E}[X_t(x)\, X_{t+k}(x+h)]
+  = \sum_{j=0}^{J} \sigma_j^2\, \rho_j^{|k|}\, \cos(jh).
+  \label{eq:cov-sep}
+\end{equation}
+Because $\rho_j$ depends on $j$, this cannot be factored as $C_\mathrm{space}(h)\cdot
+C_\mathrm{time}(k)$, so the model is \emph{nonseparable}.
+
+When $\theta_j \neq 0$, the lag-$k$ transition matrix is
+\[
+  M_j^k = \rho_j^k
+  \begin{pmatrix} \cos(k\theta_j) & -\sin(k\theta_j) \\ \sin(k\theta_j) & \cos(k\theta_j) \end{pmatrix},
+\]
+so the temporal cross-covariance of $(a_j, b_j)$ acquires oscillatory structure:
+\[
+  \mathrm{Cov}(a_j(t),\, a_j(t+k)) = \sigma_j^2\,\rho_j^k\cos(k\theta_j)
+  + \sigma_j^2\,\phi_j\,\rho_j^k\sin(k\theta_j).
+\]
+
+% ============================================================
+\section{Simulation Algorithm}
+% ============================================================
+
+\begin{algorithm}[H]
+\caption{Periodic Fourier--AR(1) Spatio-Temporal Simulation}
+\begin{algorithmic}[1]
+\Require Parameters: $T, J, \nu, \ell, \sigma^2_\mathrm{tot}, \rho_0, \lambda, \alpha, \beta, \theta_0, \phi_0$
+\Ensure Coefficient arrays $\mathbf{a} \in \mathbb{R}^{T \times (J+1)}$, $\mathbf{b} \in \mathbb{R}^{T \times (J+1)}$
+
+\State \textbf{Precompute parameters:}
+\State \quad $\sigma_j^2 \gets$ equation~\eqref{eq:sigma-norm} for $j = 0,\ldots,J$
+\State \quad $\rho_j \gets$ equation~\eqref{eq:rhoj} for $j = 1,\ldots,J$; \; $\rho_0$ set directly
+\State \quad $\theta_j \gets \theta_0 / j$ for $j = 1,\ldots,J$
+\State \quad $\phi_j \gets \phi_0 / (1+j)$ for $j = 1,\ldots,J$
+\State \quad $M_j \gets$ equation~\eqref{eq:Mj} for each $j \geq 1$
+\State \quad $\Sigma_{\varepsilon,j} \gets$ equation~\eqref{eq:Sigma-eps} for each $j \geq 1$
+
+\State \textbf{Initialize at} $t = 1$ \textbf{from stationary distribution:}
+\State \quad $a_0(1) \gets \mathcal{N}(0,\, \sigma_0^2)$
+\For{$j = 1,\ldots,J$}
+  \State $(a_j(1),\, b_j(1))^\top \gets \mathcal{N}_2\!\left(\mathbf{0},\; \sigma_j^2 \begin{pmatrix} 1 & \phi_j \\ \phi_j & 1 \end{pmatrix}\right)$
+\EndFor
+
+\State \textbf{Forward simulation for} $t = 2,\ldots,T$\textbf{:}
+\For{$t = 2,\ldots,T$}
+  \State $a_0(t) \gets \rho_0\, a_0(t-1) + \mathcal{N}(0,\, \sigma_0^2(1-\rho_0^2))$
+  \For{$j = 1,\ldots,J$}
+    \State $\boldsymbol{\eta} \sim \mathcal{N}_2(\mathbf{0},\, \Sigma_{\varepsilon,j})$
+    \State $(a_j(t),\, b_j(t))^\top \gets M_j\,(a_j(t-1),\, b_j(t-1))^\top + \boldsymbol{\eta}$
+  \EndFor
+\EndFor
+
+\State \textbf{Evaluate spatial field} (choose one of two methods below)
+\end{algorithmic}
+\end{algorithm}
+
+% ============================================================
+\section{Spatial Field Evaluation: Direct vs.\ FFT}
+% ============================================================
+
+\subsection{Method 1: Direct Summation}
+
+Given coefficient arrays $\mathbf{a}, \mathbf{b}$ and a spatial grid $\{x_n\}_{n=1}^N$, evaluate
+directly:
+\begin{equation}
+  X_t(x_n) = a_0(t) + \sum_{j=1}^{J} \bigl[a_j(t)\cos(jx_n) + b_j(t)\sin(jx_n)\bigr].
+  \label{eq:direct-eval}
+\end{equation}
+\textbf{Cost:} $O(NJ)$ per time step. Suitable for small $N$ or irregular grids.
+
+\subsection{Method 2: Inverse FFT on a Dense Regular Grid (Recommended)}
+
+The professor recommends evaluating on a \emph{dense regular grid} and using the Inverse FFT
+(IFFT) for speed. The key identity is:
+\[
+  X_t\!\left(\frac{2\pi k}{N}\right) = \mathrm{Re}\left[ \sum_{j=0}^{N-1} \tilde{c}_j\, e^{2\pi i jk/N} \right]
+  = N \cdot \mathrm{IFFT}\bigl(\tilde{\mathbf{c}}\bigr)[k],
+\]
+where the complex coefficient vector $\tilde{\mathbf{c}} \in \mathbb{C}^N$ is packed as:
+\begin{equation}
+  \tilde{c}_j = \begin{cases}
+    a_0(t) & j = 0, \\[4pt]
+    \dfrac{a_j(t) - i\, b_j(t)}{2} & j = 1,\ldots,J, \\[4pt]
+    \dfrac{a_{N-j}(t) + i\, b_{N-j}(t)}{2} & j = N-J,\ldots,N-1 \quad \text{(conjugate symmetric)}, \\[4pt]
+    0 & \text{otherwise}.
+  \end{cases}
+  \label{eq:fft-pack}
+\end{equation}
+
+\paragraph{Step-by-step procedure.}
+\begin{enumerate}[noitemsep]
+  \item Choose grid size $N$ (power of 2; require $N \geq 4J$ to avoid spatial aliasing).
+  \item Pack $\tilde{\mathbf{c}}$ from $(a_j, b_j)$ using equation~\eqref{eq:fft-pack}.
+  \item Compute $\mathbf{X}_t = \mathrm{Re}\bigl[N \cdot \mathrm{IFFT}(\tilde{\mathbf{c}})\bigr]$ in $O(N\log N)$.
+  \item To evaluate at arbitrary points $x^* \notin \{2\pi k/N\}$, interpolate from the dense grid.
+\end{enumerate}
+
+\paragraph{Nyquist constraint.}
+Frequencies $j > N/2$ cannot be represented on a grid of size $N$. Since we zero-pad all
+$j > J$ components in $\tilde{\mathbf{c}}$, choosing $N \geq 4J$ guarantees that:
+\begin{itemize}[noitemsep]
+  \item no aliasing occurs (frequencies $j \leq J \leq N/4 < N/2$),
+  \item interpolation from the dense grid is accurate.
+\end{itemize}
+
+\paragraph{Computational comparison.}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Method} & \textbf{Cost per time step} & \textbf{Example ($J{=}50$, $N{=}512$)} \\
+\midrule
+Direct summation & $O(NJ)$       & $512 \times 50 = 25{,}600$ ops \\
+IFFT             & $O(N\log N)$  & $512 \times 9 = 4{,}608$ ops \\
+Speedup          & ---           & $\approx 5.6\times$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+For $N = 2048$, $J = 200$: speedup $\approx 18\times$.
+
+\subsection{Method 3: Adaptive Truncation}
+
+Choose $J$ adaptively so the truncation error is below tolerance $\varepsilon$:
+\[
+  \sum_{j=J+1}^{\infty} \tilde{\sigma}_j^2 \Big/ \sum_{j=0}^{\infty} \tilde{\sigma}_j^2 < \varepsilon.
+\]
+For the Mat\'{e}rn spectrum with $\nu > 0$, the tail sum converges since
+$\tilde{\sigma}_j^2 = O(j^{-2\nu-1})$ as $j \to \infty$.
+A safe rule of thumb: set $J \approx 5\kappa = 5\sqrt{2\nu}/\ell$.
+
+% ============================================================
+\section{Stationary Properties}
+% ============================================================
+
+At stationarity, the following hold for all $t$ and all $j = 1,\ldots,J$:
+
+\begin{align}
+  \mathrm{Var}(a_j(t)) &= \sigma_j^2, \label{eq:var-aj} \\
+  \mathrm{Var}(b_j(t)) &= \sigma_j^2, \label{eq:var-bj} \\
+  \mathrm{Cov}(a_j(t),\, b_j(t)) &= \sigma_j^2\,\phi_j, \label{eq:cov-ab} \\
+  \mathrm{Corr}(a_j(t),\, a_j(t+k)) &= \rho_j^{|k|}. \label{eq:acf}
+\end{align}
+
+These are the \textbf{validation targets} for simulation diagnostics. Note: equation~\eqref{eq:acf}
+gives the ACF of the \emph{coefficients} $a_j(t)$, not the amplitude
+$R_j(t) = \sqrt{a_j(t)^2 + b_j(t)^2}$. The amplitude ACF differs from $\rho_j^{|k|}$ in general.
+
+\paragraph{Marginal field variance.}
+The total marginal variance of the field at any point $x$ is
+\[
+  \mathrm{Var}(X_t(x)) = \sigma_0^2 + \sum_{j=1}^J \sigma_j^2\bigl(1 + \phi_j \cdot 2\cos(jx)\cdot\sin(jx)\bigr).
+\]
+If $\phi_j = 0$ for all $j$, this simplifies to $\sum_{j=0}^J \sigma_j^2 = \sigma^2_\mathrm{tot}$,
+independent of $x$.
+
+% ============================================================
+\section{Connection to Continuous-Time SDE}
+% ============================================================
+
+The discrete-time AR(1) is the \emph{exact discretization} (Euler--Maruyama at $\Delta t = 1$)
+of the continuous-time Ornstein--Uhlenbeck system:
+\begin{equation}
+  d\begin{pmatrix} a_j(t) \\ b_j(t) \end{pmatrix}
+  = \underbrace{\begin{pmatrix} -\lambda_j & -\theta_j \\ \theta_j & -\lambda_j \end{pmatrix}}_{F_j}
+    \begin{pmatrix} a_j(t) \\ b_j(t) \end{pmatrix} dt
+  + \sqrt{2\lambda_j}\,\sigma_j\, d\begin{pmatrix} W_{a,j}(t) \\ W_{b,j}(t) \end{pmatrix},
+  \label{eq:sde}
+\end{equation}
+where $\lambda_j = -\log(\rho_j) > 0$ is the damping rate, and $W_{a,j}, W_{b,j}$ are
+independent standard Wiener processes.
+
+The matrix exponential $e^{F_j \Delta t}$ with $\Delta t = 1$ recovers $M_j$ exactly:
+\[
+  e^{F_j} = e^{-\lambda_j}
+  \begin{pmatrix} \cos\theta_j & -\sin\theta_j \\ \sin\theta_j & \cos\theta_j \end{pmatrix}
+  = \rho_j \begin{pmatrix} \cos\theta_j & -\sin\theta_j \\ \sin\theta_j & \cos\theta_j \end{pmatrix}
+  = M_j.
+\]
+
+The full infinite-dimensional SDE (stacking all modes) is:
+\[
+  d\mathbf{Z}(t) = \mathbf{F}\,\mathbf{Z}(t)\,dt + \mathbf{L}\,d\mathbf{W}(t),
+\]
+where $\mathbf{F} = \mathrm{diag}(-\lambda_0,\, F_1,\, F_2,\, \ldots)$ is a block-diagonal
+operator and $\mathbf{L} = \mathrm{diag}(\sqrt{2\lambda_0}\sigma_0,\, \sqrt{2\lambda_1}\sigma_1 I_2,\, \ldots)$.
+
+\paragraph{Connection to Solin \& S\"{a}rkk\"{a} (2014).}
+The purely periodic case ($\lambda_j = 0$, $\theta_j = j\omega_0$) corresponds to Solin \&
+S\"{a}rkk\"{a}'s stochastic resonator model. Our model extends this by adding damping ($\lambda_j > 0$),
+which corresponds to their \emph{quasi-periodic} kernel obtained by multiplying a periodic covariance
+by a Mat\'{e}rn covariance in time.
+
+% ============================================================
+\section{Validation Checklist}
+% ============================================================
+
+Run the following checks after simulation to confirm correctness:
+
+\begin{enumerate}[label=\textbf{V\arabic*.}]
+  \item \textbf{Variance}: For each $j$, check $\mathrm{Var}(a_j(t)) \approx \sigma_j^2$ and $\mathrm{Var}(b_j(t)) \approx \sigma_j^2$. (Equation~\eqref{eq:var-aj}--\eqref{eq:var-bj})
+  \item \textbf{Correlation}: For each $j$, check $\mathrm{Cor}(a_j(t), b_j(t)) \approx \phi_j$. (Equation~\eqref{eq:cov-ab})
+  \item \textbf{ACF}: For each $j$, the empirical ACF of $a_j(t)$ should decay as $\rho_j^{|k|}$. (Equation~\eqref{eq:acf})
+  \item \textbf{Phase drift}: For each $j$, the unwrapped phase $\psi_j(t) = \mathrm{atan2}(b_j(t), a_j(t))$ should drift linearly with slope $\approx \theta_j$ rad/step.
+  \item \textbf{Spatial covariance}: The empirical spatial covariance $\hat{C}(h,0)$ should match $\sum_j \sigma_j^2 \cos(jh)$.
+  \item \textbf{Total variance}: $\sum_j \hat{\sigma}_j^2 \approx \sigma^2_\mathrm{tot}$.
+  \item \textbf{Normality}: Each $a_j(t)$ and $b_j(t)$ should pass a normality test (Q-Q plot or Shapiro-Wilk).
+  \item \textbf{FFT accuracy}: For any time $t$, the IFFT-reconstructed field should match the direct-summation field to machine precision ($< 10^{-12}$).
+\end{enumerate}
+
+% ============================================================
+\section{Recommended Default Parameters}
+% ============================================================
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Parameter} & \textbf{Default} & \textbf{Notes} \\
+\midrule
+$J$                 & 50       & Increase to 100--200 for rough fields ($\nu < 1$) \\
+$\nu$               & 1.5      & Twice mean-square differentiable \\
+$\ell$              & 1.0      & Moderate spatial range on $[0,2\pi]$ \\
+$\sigma^2_\mathrm{tot}$ & 1.0 & Unit variance \\
+$\rho_0$            & 0.95     & Long memory in the mean \\
+$\lambda$           & 0.01     & Slow global temporal decay \\
+$\alpha$            & 1.2      & Slight superlinear frequency effect \\
+$\beta$             & 1.0      & Linear power-law \\
+$\theta_0$          & 0.3      & Moderate phase drift at $j=1$ \\
+$\phi_0$            & 0.5      & Moderate cosine--sine coupling \\
+$T$                 & 200      & Sufficient for ACF estimation up to lag 50 \\
+$N$                 & 512      & FFT grid; $N = 4J \times 2 = 400$, round to $2^9$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ============================================================
+\section{Open Questions}
+% ============================================================
+
+\begin{enumerate}[label=\textbf{Q\arabic*.}]
+  \item \textbf{Periodized Mat\'{e}rn spectrum}: Should $\sigma_j^2$ be computed by (a) sampling the continuous Mat\'{e}rn spectral density at integers $j$, or (b) computing the Fourier coefficients of the periodized Mat\'{e}rn covariance via Poisson summation? Option (b) is theoretically correct but more expensive.
+  \item \textbf{Amplitude ACF}: The theoretical ACF of the amplitude $R_j(t) = \sqrt{a_j^2 + b_j^2}$ is not simply $\rho_j^{|k|}$ (since $R_j$ follows a Rice/Rayleigh distribution). What is the correct theoretical ACF of $R_j$?
+  \item \textbf{Phase drift identifiability}: Is $\theta_j$ identifiable from data, or does it trade off with $\phi_j$?
+  \item \textbf{Spatial covariance ridge}: Does the empirical U-shaped spatial covariance at large lags correspond to Stein (2005)'s ridge artifact for nonseparable models?
+  \item \textbf{Parameterization for inference}: For Whittle likelihood estimation, should $\{\rho_j, \theta_j, \phi_j\}$ be free per-mode, or constrained via smooth functions of $j$?
+\end{enumerate}
+
+\end{document}

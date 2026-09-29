@@ -1,0 +1,1028 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Stats 490 - Experimental Design}
+\newcommand{\assignment}{Final Exam}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\newpage
+
+
+\section{Problem 1}
+
+\begin{solution}
+(a) For a $2^4$ factorial design with a single replicate, there are $2^4=16$ treatment combinations and $15$ factorial effect degrees of freedom. Since all degrees of freedom are used by the factorial effects, there is no separate pure error estimate from replication. Therefore, the usual procedure is to examine the effect estimates using their magnitudes, a normal plot, or a half-normal plot. The smaller effects, often higher-order interactions, are treated as negligible and pooled to estimate experimental error. The larger effects are then tested using this pooled error estimate, and the final reduced model keeps only the important effects.
+
+(b) For a $2^k$ design with $k=4$, the sum of squares for an effect estimate $\hat{E}$ is
+\[
+SS_E = 2^{k-2}\hat{E}^2 = 2^{4-2}\hat{E}^2 = 4\hat{E}^2.
+\]
+Using the given effect estimates and the total sum of squares $SS_T=58665$, the largest contributions are
+\[
+SS_A = 4(76.95)^2 = 23685.21,
+\]
+\[
+SS_B = 4(-67.52)^2 = 18235.80,
+\]
+and
+\[
+SS_{AB} = 4(-51.32)^2 = 10534.97.
+\]
+Their percent contributions to the total sum of squares are
+\[
+\frac{23685.21}{58665}(100) = 40.37\%,
+\]
+\[
+\frac{18235.80}{58665}(100) = 31.08\%,
+\]
+and
+\[
+\frac{10534.97}{58665}(100) = 17.96\%.
+\]
+Together, $A$, $B$, and $AB$ account for about
+\[
+40.37\%+31.08\%+17.96\%=89.42\%
+\]
+of the total sum of squares. Thus, the most important effects from the standpoint of contribution to total variation are $A$, $B$, and $AB$.
+
+(c) In a two-level factorial design using coded variables, each factor level is represented by $-1$ or $+1$. The regression coefficient for an effect is one-half of the corresponding effect estimate:
+\[
+\hat{\beta}_E=\frac{\hat{E}}{2}.
+\]
+For the selected effects,
+\[
+\hat{\beta}_A=\frac{76.95}{2}=38.475,
+\]
+\[
+\hat{\beta}_B=\frac{-67.52}{2}=-33.760,
+\]
+and
+\[
+\hat{\beta}_{AB}=\frac{-51.32}{2}=-25.660.
+\]
+Letting $\hat{\beta}_0$ be the overall mean response, the reduced regression model in coded units is
+\[
+\hat{y}
+=
+\hat{\beta}_0
++
+38.475x_A
+-
+33.760x_B
+-
+25.660x_Ax_B.
+\]
+This model keeps the dominant main effects $A$ and $B$ and their interaction $AB$, while treating the remaining effects as negligible.
+\end{solution}
+
+\section{Problem 2}
+
+\begin{solution}
+For factor $A$, the table gives $df_A=1$, so $a=2$ levels. For factor $B$, $df_B=2$, so $b=3$ levels. Since there are $r=3$ replications, the total number of observations is
+\[
+N=abr=(2)(3)(3)=18,
+\]
+so
+\[
+df_T=N-1=17.
+\]
+The interaction degrees of freedom are
+\[
+df_{AB}=df_A df_B=(1)(2)=2.
+\]
+Thus the error degrees of freedom are
+\[
+df_E=17-1-2-2=12.
+\]
+The error sum of squares is
+\[
+SS_E=SS_T-SS_A-SS_B-SS_{AB}
+=172-50-80-30=12.
+\]
+Therefore,
+\[
+MS_E=\frac{12}{12}=1.
+\]
+
+The completed ANOVA table without blocking is
+\[
+\begin{array}{c|c|c|c|c}
+\text{Source} & df & SS & MS & F \\
+\hline
+A & 1 & 50 & 50 & 50 \\
+B & 2 & 80 & 40 & 40 \\
+AB & 2 & 30 & 15 & 15 \\
+\text{Error} & 12 & 12 & 1 & \\
+\hline
+\text{Total} & 17 & 172 & & 
+\end{array}
+\]
+
+If the three replications are treated as blocks, then the block totals are
+\[
+10,\ 12,\ 14.
+\]
+The grand total is
+\[
+G=10+12+14=36,
+\]
+and each block contains
+\[
+ab=(2)(3)=6
+\]
+observations. Thus the block sum of squares is
+\[
+SS_{\text{Blocks}}
+=
+\frac{10^2+12^2+14^2}{6}
+-
+\frac{36^2}{18}
+=
+1.333.
+\]
+The block degrees of freedom are
+\[
+df_{\text{Blocks}}=3-1=2.
+\]
+This block sum of squares is removed from the original error term, so
+\[
+SS_E=12-1.333=10.667
+\]
+and
+\[
+df_E=12-2=10.
+\]
+Thus
+\[
+MS_E=\frac{10.667}{10}=1.067.
+\]
+The estimate of the standard deviation is
+\[
+\hat{\sigma}=\sqrt{MS_E}=\sqrt{1.067}\approx 1.033.
+\]
+
+The revised ANOVA table with blocks is
+\[
+\begin{array}{c|c|c|c|c}
+\text{Source} & df & SS & MS & F \\
+\hline
+\text{Blocks} & 2 & 1.333 & 0.667 & 0.625 \\
+A & 1 & 50.000 & 50.000 & 46.875 \\
+B & 2 & 80.000 & 40.000 & 37.500 \\
+AB & 2 & 30.000 & 15.000 & 14.063 \\
+\text{Error} & 10 & 10.667 & 1.067 & \\
+\hline
+\text{Total} & 17 & 172.000 & &
+\end{array}
+\]
+
+The block effect is not significant because its $F$ statistic is only
+\[
+F_{\text{Blocks}}=0.625.
+\]
+Thus, the blocks do not appear to represent a strong systematic source of variation in this experiment.
+
+The $F$ statistics for $A$, $B$, and $AB$ are all large. Using the blocked error term, the corresponding $p$-values are approximately
+\[
+p_A=0.000045,\qquad p_B=0.000023,\qquad p_{AB}=0.00124.
+\]
+Therefore, all three effects appear significant. Since the interaction $AB$ is significant, the effect of factor $A$ depends on the level of factor $B$, so the interaction should be interpreted along with the main effects.
+
+
+\end{solution}
+
+\section{Problem 3}
+
+\begin{solution}
+In a replicated $2^k$ factorial experiment with $n$ replicates, there are
+\[
+n2^k
+\]
+total observations. An effect estimate is a contrast comparing the average response at the high level of that effect with the average response at the low level of that effect. Since the design is balanced, each effect is estimated using the same number of observations.
+
+The standard error of an effect estimate is
+\[
+SE(\hat{E})
+=
+\sqrt{\frac{4MS_E}{n2^k}}
+=
+\sqrt{\frac{MS_E}{n2^{k-2}}},
+\]
+where $MS_E$ is the error mean square.
+
+The standard error is not smaller for main effects than for interaction effects. In a balanced $2^k$ factorial design, main effects and interaction effects are all estimated using contrasts with the same structure and the same number of observations. Therefore, main effects and interaction effects have the same standard error.
+\end{solution}
+
+\section{Problem 4}
+
+\begin{solution}
+The original $2^4$ factorial design has one replicate, so there are
+\[
+2^4=16
+\]
+factorial runs. The full factorial model contains $15$ factorial effects, so the original model is saturated and has no residual degrees of freedom. After adding the four center point observations
+\[
+73,\ 75,\ 66,\ 99,
+\]
+the added residual variation can be split into curvature and pure error.
+
+The factorial mean is the intercept from the fitted model:
+\[
+\bar{y}_f=70.0625.
+\]
+The center point mean is
+\[
+\bar{y}_c=\frac{73+75+66+99}{4}=78.25.
+\]
+The pure error sum of squares comes from the replicated center points:
+\[
+SS_{\text{PE}}
+=
+\sum_{i=1}^{4}(y_i-\bar{y}_c)^2
+=
+618.75.
+\]
+Since there are four center points,
+\[
+df_{\text{PE}}=4-1=3,
+\]
+so
+\[
+MS_{\text{PE}}=\frac{618.75}{3}=206.25.
+\]
+
+The curvature sum of squares is
+\[
+SS_{\text{curv}}
+=
+\frac{n_f n_c}{n_f+n_c}(\bar{y}_f-\bar{y}_c)^2,
+\]
+where $n_f=16$ and $n_c=4$. Therefore,
+\[
+SS_{\text{curv}}
+=
+\frac{(16)(4)}{16+4}(70.0625-78.25)^2
+=
+214.5125.
+\]
+The curvature degrees of freedom are
+\[
+df_{\text{curv}}=1,
+\]
+so
+\[
+MS_{\text{curv}}=214.5125.
+\]
+
+The factorial model sum of squares is the sum of the $15$ factorial effect sums of squares from the original ANOVA table:
+\[
+SS_{\text{factorial}}=5730.90.
+\]
+Thus the modified ANOVA table is
+\[
+\begin{array}{c|c|c|c|c}
+\text{Source} & df & SS & MS & F \\
+\hline
+\text{Factorial model} & 15 & 5730.9000 & 382.0600 & \\
+\text{Curvature} & 1 & 214.5125 & 214.5125 & 1.0401 \\
+\text{Pure Error} & 3 & 618.7500 & 206.2500 & \\
+\hline
+\text{Total} & 19 & 6564.1625 & &
+\end{array}
+\]
+
+To test for curvature, use the pure error mean square as the denominator:
+\[
+F_0
+=
+\frac{MS_{\text{curv}}}{MS_{\text{PE}}}
+=
+\frac{214.5125}{206.25}
+=
+1.0401.
+\]
+The corresponding $p$-value is approximately
+\[
+p=0.3829.
+\]
+Since this $p$-value is not small, we fail to reject the null hypothesis of no curvature. Therefore, there is not enough evidence that the model needs to be enhanced with a curvature term.
+\end{solution}
+
+\section{Problem 5}
+
+\begin{solution}
+(a) Since the experiment is a $2^6$ factorial experiment arranged in four blocks, and
+\[
+4=2^2,
+\]
+we need two independent block generators. Choose
+\[
+ABCD \quad \text{and} \quad CDEF
+\]
+as the two block generators. Their product is
+\[
+(ABCD)(CDEF)=ABEF,
+\]
+since $C^2=D^2=I$. Thus the block defining relation is
+\[
+I=ABCD=CDEF=ABEF.
+\]
+Therefore, the effects confounded with blocks are
+\[
+ABCD,\quad CDEF,\quad ABEF.
+\]
+
+The principal block is the block for which both block generators have positive sign:
+\[
+ABCD=+1,\qquad CDEF=+1.
+\]
+Checking the treatment combinations listed in the problem:
+\[
+\begin{array}{c|c|c|c}
+\text{Run} & ABCD & CDEF & \text{Principal block?} \\
+\hline
+(1) & +1 & +1 & \text{Yes} \\
+b & -1 & +1 & \text{No} \\
+abd & -1 & -1 & \text{No} \\
+abcdef & +1 & +1 & \text{Yes} \\
+bdf & +1 & +1 & \text{Yes}
+\end{array}
+\]
+Thus the treatment combinations in the principal block are
+\[
+(1),\quad abcdef,\quad bdf.
+\]
+
+(b) If this were used as a fractional $2^{6-2}$ factorial design, the defining relation would be
+\[
+I=ABCD=CDEF=ABEF.
+\]
+The shortest word in the defining relation has length $4$. Therefore, the design has resolution
+\[
+\boxed{\text{Resolution IV}}.
+\]
+\end{solution}
+
+\section{Problem 6}
+
+\begin{solution}
+A D-optimal design is a design chosen to estimate the model coefficients as precisely as possible using a limited number of runs. It does this by maximizing the determinant of the information matrix, usually written as $X'X$. This is useful when a full factorial or standard design would require too many runs.
+
+Resolution describes the aliasing structure of a fractional factorial design. In a Resolution III design, main effects may be aliased with two-factor interactions; in a Resolution IV design, main effects are clear of two-factor interactions, but two-factor interactions may be aliased with each other. In a Resolution V design, main effects are clear of two- and three-factor interactions, and two-factor interactions are clear of other two-factor interactions.
+
+Yes, it is possible to achieve Resolution V in a fractional $2^{5-1}$ design. For example, choose the generator
+\[
+E=ABCD,
+\]
+which gives the defining relation
+\[
+I=ABCDE.
+\]
+The shortest word has length $5$, so the design has Resolution V.
+
+Location refers to the effect of factors on the mean response, while dispersion refers to the effect of factors on the variability of the response. To test for dispersion in a $2^k$ factorial design, we need replicated observations so that variability can be estimated at each treatment combination or factor setting. We can then analyze a spread measure, such as the sample variance, range, or log variance, as the response in a factorial analysis.
+\end{solution}
+
+\section{Problem 7}
+
+\begin{solution}
+The first statement is \textbf{false}. In a $2^{5-2}$ fractional factorial design, there are $p=2$ generators, so each alias chain contains
+\[
+2^p=2^2=4
+\]
+effects total. Therefore, each effect is aliased with $3$ other effects, not $2$.
+
+The second statement is \textbf{false}. A half-normal plot uses the ordered absolute values of the effect estimates, not the signed effect estimates themselves. These absolute effects are compared against expected half-normal percentiles or scores.
+
+The third statement is \textbf{false}. With two blocks, the block contrast can be calculated as the difference between the average response in one block and the average response in the other block. However, if a treatment effect is confounded with blocks, this difference may contain both the block effect and the confounded treatment effect.
+
+The fourth statement is \textbf{false}. For a $2^7$ design confounded in four blocks,
+\[
+4=2^2,
+\]
+so two independent block generators are chosen, not three. The block defining contrast subgroup has $4$ words total, including $I$, so there are $3$ non-identity effects confounded with blocks, not eight.
+\end{solution}
+
+\section{Problem 8}
+
+\begin{solution}
+Each design has two generated factors, $P$ and $Q$, in a $2^6$ factorial design. Therefore each design is a
+\[
+2^{6-2}=2^4
+\]
+design, so each is a one-fourth fraction of the full $2^6$ design.
+
+For Design A,
+\[
+P=ABC,\qquad Q=BCD.
+\]
+Thus,
+\[
+I=ABCP,\qquad I=BCDQ.
+\]
+Multiplying these two defining words gives
+\[
+(ABCP)(BCDQ)=ADPQ.
+\]
+Therefore, the complete defining relation is
+\[
+I=ABCP=BCDQ=ADPQ.
+\]
+The shortest word has length $4$, so Design A has Resolution IV.
+
+For Design B,
+\[
+P=ABCE,\qquad Q=BCDF.
+\]
+Thus,
+\[
+I=ABCEP,\qquad I=BCDFQ.
+\]
+Multiplying these two defining words gives
+\[
+(ABCEP)(BCDFQ)=ADEFPQ.
+\]
+Therefore, the complete defining relation is
+\[
+I=ABCEP=BCDFQ=ADEFPQ.
+\]
+The shortest word has length $5$, so Design B has Resolution V.
+
+For Design C,
+\[
+P=ABCDE,\qquad Q=ABDF.
+\]
+Thus,
+\[
+I=ABCDEP,\qquad I=ABDFQ.
+\]
+Multiplying these two defining words gives
+\[
+(ABCDEP)(ABDFQ)=CEFPQ.
+\]
+Therefore, the complete defining relation is
+\[
+I=ABCDEP=ABDFQ=CEFPQ.
+\]
+The shortest word has length $5$, so Design C has Resolution V.
+\end{solution}
+
+\section{Problem 9}
+
+\begin{solution}
+Since $ABCDE$ is confounded with blocks, two treatment combinations are in the same block if they have the same sign for the contrast $ABCDE$. Use coded levels, where a factor present in the treatment combination has sign $+1$ and a factor absent has sign $-1$.
+
+For the run $acd$,
+\[
+A=+1,\quad B=-1,\quad C=+1,\quad D=+1,\quad E=-1.
+\]
+Therefore,
+\[
+ABCDE=(+1)(-1)(+1)(+1)(-1)=+1.
+\]
+So we need to find which listed treatment combinations also have sign $+1$ for $ABCDE$.
+
+Checking each candidate:
+\[
+\begin{array}{c|c|c}
+\text{Run} & ABCDE & \text{Same block as } acd? \\
+\hline
+(1) & -1 & \text{No} \\
+a & +1 & \text{Yes} \\
+ad & -1 & \text{No} \\
+bcd & +1 & \text{Yes} \\
+be & -1 & \text{No} \\
+abe & +1 & \text{Yes}
+\end{array}
+\]
+Thus the runs in the same block as $acd$ are
+\[
+a,\quad bcd,\quad abe.
+\]
+\end{solution}
+
+
+\section{Code Output}
+\tiny
+
+\begin{verbatim}
+
+> options(digits = 6)
+> 
+> section <- function(title) {
++   cat("\n", paste(rep("=", 72), collapse = ""), "\n", sep = "")
++   cat(title, "\n")
++   cat(paste(rep("=", 72), collapse = ""), "\n", sep = "")
++ }
+> 
+> signs_for_run <- function(run, factors) {
++   if (run == "(1)") {
++     high <- character(0)
++   } else {
++     high <- toupper(strsplit(run, "")[[1]])
++   }
++   signs <- ifelse(factors %in% high, 1, -1)
++   names(signs) <- factors
++   signs
++ }
+> 
+> word_sign_from_run <- function(run, word, factors) {
++   signs <- signs_for_run(run, factors)
++   prod(signs[word])
++ }
+> 
+> multiply_words <- function(w1, w2) {
++   letters <- strsplit(paste0(w1, w2), "")[[1]]
++   counts <- table(letters)
++   remaining <- names(counts[counts %% 2 == 1])
++   paste(sort(remaining), collapse = "")
++ }
+> 
+> design_resolution <- function(words) {
++   min(nchar(words))
++ }
+> 
+$--------------------------------------------------                
+> ## Question 1
+$--------------------------------------------------                
+> 
+> section("Question 1: 2^4 factorial effect contributions")
+
+========================================================================
+Question 1: 2^4 factorial effect contributions 
+========================================================================
+> 
+> effects_q1 <- c(
++   A = 76.95,
++   B = -67.52,
++   C = -7.84,
++   D = -18.73,
++   AB = -51.32,
++   AC = 11.69,
++   AD = 9.78,
++   BC = 20.78,
++   BD = 14.74,
++   CD = 1.27,
++   ABC = -2.82,
++   ABD = -6.50,
++   ACD = 10.20,
++   BCD = -7.98,
++   ABCD = -6.25
++ )
+> 
+> k_q1 <- 4
+> total_ss_q1 <- 58665
+> 
+> ss_q1 <- 2^(k_q1 - 2) * effects_q1^2
+> pct_q1 <- 100 * ss_q1 / total_ss_q1
+> beta_q1 <- effects_q1 / 2
+> 
+> q1_table <- data.frame(
++   Effect = names(effects_q1),
++   Effect_Estimate = as.numeric(effects_q1),
++   SS = as.numeric(ss_q1),
++   Percent_Total_SS = as.numeric(pct_q1),
++   Regression_Coefficient = as.numeric(beta_q1)
++ )
+> 
+> q1_table <- q1_table[order(-q1_table$Percent_Total_SS), ]
+> print(q1_table, row.names = FALSE)
+ Effect Effect_Estimate         SS Percent_Total_SS Regression_Coefficient
+      A           76.95 23685.2100       40.3736640                 38.475
+      B          -67.52 18235.8016       31.0846358                -33.760
+     AB          -51.32 10534.9696       17.9578447                -25.660
+     BC           20.78  1727.2336        2.9442318                 10.390
+      D          -18.73  1403.2516        2.3919741                 -9.365
+     BD           14.74   869.0704        1.4814121                  7.370
+     AC           11.69   546.6244        0.9317726                  5.845
+    ACD           10.20   416.1600        0.7093838                  5.100
+     AD            9.78   382.5936        0.6521667                  4.890
+    BCD           -7.98   254.7216        0.4341969                 -3.990
+      C           -7.84   245.8624        0.4190955                 -3.920
+    ABD           -6.50   169.0000        0.2880764                 -3.250
+   ABCD           -6.25   156.2500        0.2663428                 -3.125
+    ABC           -2.82    31.8096        0.0542224                 -1.410
+     CD            1.27     6.4516        0.0109974                  0.635
+> 
+> q1_top <- head(q1_table, 3)
+> cat("\nTop effects:\n")
+
+Top effects:
+> print(q1_top, row.names = FALSE)
+ Effect Effect_Estimate      SS Percent_Total_SS Regression_Coefficient
+      A           76.95 23685.2          40.3737                 38.475
+      B          -67.52 18235.8          31.0846                -33.760
+     AB          -51.32 10535.0          17.9578                -25.660
+> cat("\nCombined percent for top three effects:",
++     sum(q1_top$Percent_Total_SS), "\n")
+
+Combined percent for top three effects: 89.4161 
+> 
+$--------------------------------------------------                
+> ## Question 2
+$--------------------------------------------------                
+> 
+> section("Question 2: Two-factor ANOVA with and without blocks")
+
+========================================================================
+Question 2: Two-factor ANOVA with and without blocks 
+========================================================================
+> 
+> a <- 2
+> b <- 3
+> r <- 3
+> 
+> ss_a <- 50
+> ss_b <- 80
+> ss_ab <- 30
+> ss_total <- 172
+> 
+> df_a <- a - 1
+> df_b <- b - 1
+> df_ab <- df_a * df_b
+> df_total <- a * b * r - 1
+> df_error <- df_total - df_a - df_b - df_ab
+> 
+> ss_error <- ss_total - ss_a - ss_b - ss_ab
+> 
+> ms_a <- ss_a / df_a
+> ms_b <- ss_b / df_b
+> ms_ab <- ss_ab / df_ab
+> ms_error <- ss_error / df_error
+> 
+> f_a <- ms_a / ms_error
+> f_b <- ms_b / ms_error
+> f_ab <- ms_ab / ms_error
+> 
+> anova_q2_unblocked <- data.frame(
++   Source = c("A", "B", "AB", "Error", "Total"),
++   df = c(df_a, df_b, df_ab, df_error, df_total),
++   SS = c(ss_a, ss_b, ss_ab, ss_error, ss_total),
++   MS = c(ms_a, ms_b, ms_ab, ms_error, NA),
++   F = c(f_a, f_b, f_ab, NA, NA)
++ )
+> 
+> cat("\nQ2(a): Unblocked ANOVA table\n")
+
+Q2(a): Unblocked ANOVA table
+> print(anova_q2_unblocked, row.names = FALSE)
+ Source df  SS MS  F
+      A  1  50 50 50
+      B  2  80 40 40
+     AB  2  30 15 15
+  Error 12  12  1 NA
+  Total 17 172 NA NA
+> 
+> block_totals <- c(10, 12, 14)
+> grand_total <- sum(block_totals)
+> n_total <- a * b * r
+> obs_per_block <- a * b
+> 
+> ss_blocks <- sum(block_totals^2 / obs_per_block) - grand_total^2l
+> df_blocks <- r - 1
+> ms_blocks <- ss_blocks / df_blocks
+> 
+> ss_error_blocked <- ss_error - ss_blocks
+> df_error_blocked <- df_error - df_blocks
+> ms_error_blocked <- ss_error_blocked / df_error_blocked
+> 
+> f_blocks <- ms_blocks / ms_error_blocked
+> f_a_blocked <- ms_a / ms_error_blocked
+> f_b_blocked <- ms_b / ms_error_blocked
+> f_ab_blocked <- ms_ab / ms_error_blocked
+> 
+> s_hat_q2 <- sqrt(ms_error_blocked)
+> 
+> anova_q2_blocked <- data.frame(
++   Source = c("Blocks", "A", "B", "AB", "Error", "Total"),
++   df = c(df_blocks, df_a, df_b, df_ab, df_error_blocked, df_tota,
++   SS = c(ss_blocks, ss_a, ss_b, ss_ab, ss_error_blocked, ss_tota,
++   MS = c(ms_blocks, ms_a, ms_b, ms_ab, ms_error_blocked, NA),
++   F = c(f_blocks, f_a_blocked, f_b_blocked, f_ab_blocked, NA, NA)
++ )
+> 
+> cat("\nQ2(b): Blocked ANOVA table\n")
+
+Q2(b): Blocked ANOVA table
+> print(anova_q2_blocked, row.names = FALSE)
+ Source df        SS        MS       F
+ Blocks  2   1.33333  0.666667  0.6250
+      A  1  50.00000 50.000000 46.8750
+      B  2  80.00000 40.000000 37.5000
+     AB  2  30.00000 15.000000 14.0625
+  Error 10  10.66667  1.066667      NA
+  Total 17 172.00000        NA      NA
+> 
+> cat("\nEstimated standard deviation:", s_hat_q2, "\n")
+
+Estimated standard deviation: 1.0328 
+> 
+> p_values_q2 <- data.frame(
++   Effect = c("Blocks", "A", "B", "AB"),
++   F_value = c(f_blocks, f_a_blocked, f_b_blocked, f_ab_blocked),
++   df1 = c(df_blocks, df_a, df_b, df_ab),
++   df2 = rep(df_error_blocked, 4),
++   p_value = c(
++     pf(f_blocks, df_blocks, df_error_blocked, lower.tail = FALSE,
++     pf(f_a_blocked, df_a, df_error_blocked, lower.tail = FALSE),
++     pf(f_b_blocked, df_b, df_error_blocked, lower.tail = FALSE),
++     pf(f_ab_blocked, df_ab, df_error_blocked, lower.tail = FALSE)
++   )
++ )
+> 
+> cat("\nQ2(c): p-values using blocked error\n")
+
+Q2(c): p-values using blocked error
+> print(p_values_q2, row.names = FALSE)
+ Effect F_value df1 df2     p_value
+ Blocks  0.6250   2  10 5.54929e-01
+      A 46.8750   1  10 4.47745e-05
+      B 37.5000   2  10 2.25375e-05
+     AB 14.0625   2  10 1.24151e-03
+> 
+$--------------------------------------------------                
+> ## Question 3
+$--------------------------------------------------                
+> 
+> section("Question 3: Standard error formula")
+
+========================================================================
+Question 3: Standard error formula 
+========================================================================
+> 
+> cat("SE(effect) = sqrt(4 * MSE / (n * 2^k))\n")
+SE(effect) = sqrt(4 * MSE / (n * 2^k))
+> cat("Equivalent: SE(effect) = sqrt(MSE / (n * 2^(k - 2)))\n")
+Equivalent: SE(effect) = sqrt(MSE / (n * 2^(k - 2)))
+$ractions have the same SE in a balanced 2^k design                cat("Main effects and interactions have the same SE in a balanced 2^k design$
+Main effects and interactions have the same SE in a balanced 2^k design.
+> 
+$--------------------------------------------------                
+> ## Question 4
+$--------------------------------------------------                
+> 
+> section("Question 4: Center points, pure error, and curvature")
+
+========================================================================
+Question 4: Center points, pure error, and curvature 
+========================================================================
+> 
+> ss_terms_q4 <- c(
++   A = 1870.56,
++   B = 39.06,
++   C = 390.06,
++   D = 855.56,
++   AB = 0.06,
++   AC = 1314.06,
++   BC = 22.56,
++   AD = 1105.56,
++   BD = 0.56,
++   CD = 5.06,
++   ABC = 14.06,
++   ABD = 68.06,
++   ACD = 10.56,
++   BCD = 27.56,
++   ABCD = 7.56
++ )
+> 
+> factorial_mean <- 70.0625
+> center_points <- c(73, 75, 66, 99)
+> 
+> n_factorial <- 16
+> n_center <- length(center_points)
+> center_mean <- mean(center_points)
+> 
+> ss_factorial <- sum(ss_terms_q4)
+> df_factorial <- length(ss_terms_q4)
+> ms_factorial <- ss_factorial / df_factorial
+> 
+> ss_pure_error <- sum((center_points - center_mean)^2)
+> df_pure_error <- n_center - 1
+> ms_pure_error <- ss_pure_error / df_pure_error
+> 
+> ss_curvature <- (n_factorial * n_center) /
++   (n_factorial + n_center) * (factorial_mean - center_mean)^2
+> df_curvature <- 1
+> ms_curvature <- ss_curvature
+> 
+> f_curvature <- ms_curvature / ms_pure_error
+> p_curvature <- pf(
++   f_curvature,
++   df1 = df_curvature,
++   df2 = df_pure_error,
++   lower.tail = FALSE
++ )
+> 
+> ss_total_q4 <- ss_factorial + ss_curvature + ss_pure_error
+> df_total_q4 <- df_factorial + df_curvature + df_pure_error
+> 
+> anova_q4 <- data.frame(
++   Source = c("Factorial model", "Curvature", "Pure Error", "Tota,
++   df = c(df_factorial, df_curvature, df_pure_error, df_total_q4),
++   SS = c(ss_factorial, ss_curvature, ss_pure_error, ss_total_q4),
++   MS = c(ms_factorial, ms_curvature, ms_pure_error, NA),
++   F = c(NA, f_curvature, NA, NA)
++ )
+> 
+> print(anova_q4, row.names = FALSE)
+          Source df       SS      MS       F
+ Factorial model 15 5730.900 382.060      NA
+       Curvature  1  214.513 214.513 1.04006
+      Pure Error  3  618.750 206.250      NA
+           Total 19 6564.162      NA      NA
+> 
+> cat("\nFactorial mean:", factorial_mean, "\n")
+
+Factorial mean: 70.0625 
+> cat("Center mean:", center_mean, "\n")
+Center mean: 78.25 
+> cat("Curvature p-value:", p_curvature, "\n")
+Curvature p-value: 0.382882 
+> 
+$--------------------------------------------------                
+> ## Question 5
+$--------------------------------------------------                
+> 
+> section("Question 5: Blocking in a 2^6 factorial experiment")
+
+========================================================================
+Question 5: Blocking in a 2^6 factorial experiment 
+========================================================================
+> 
+> factors_q5 <- c("A", "B", "C", "D", "E", "F")
+> runs_q5 <- c("(1)", "b", "abd", "abcdef", "bdf")
+> 
+> gen1_q5 <- c("A", "B", "C", "D")
+> gen2_q5 <- c("C", "D", "E", "F")
+> 
+> q5_results <- data.frame(
++   Run = runs_q5,
++   ABCD = sapply(runs_q5, word_sign_from_run, word = gen1_q5,
++                 factors = factors_q5),
++   CDEF = sapply(runs_q5, word_sign_from_run, word = gen2_q5,
++                 factors = factors_q5)
++ )
+> q5_results$Principal_Block <- q5_results$ABCD == 1 & q5_results$1
+> 
+> print(q5_results, row.names = FALSE)
+    Run ABCD CDEF Principal_Block
+    (1)    1    1            TRUE
+      b   -1    1           FALSE
+    abd   -1   -1           FALSE
+ abcdef    1    1            TRUE
+    bdf    1    1            TRUE
+> 
+> defining_words_q5 <- c("ABCD", "CDEF", "ABEF")
+> cat("\nBlock defining relation: I =",
++     paste(defining_words_q5, collapse = " = "), "\n")
+
+Block defining relation: I = ABCD = CDEF = ABEF 
+> cat("Block alias relation: Block =",
++     paste(defining_words_q5, collapse = " = "), "\n")
+Block alias relation: Block = ABCD = CDEF = ABEF 
+> cat("Resolution if used as a 2^(6-2) fraction:",
++     design_resolution(defining_words_q5), "\n")
+Resolution if used as a 2^(6-2) fraction: 4 
+> 
+$--------------------------------------------------                
+> ## Question 6
+$--------------------------------------------------                
+> 
+> section("Question 6: Conceptual items")
+
+========================================================================
+Question 6: Conceptual items 
+========================================================================
+> 
+> cat("No numerical computation needed for Q6.\n")
+No numerical computation needed for Q6.
+$ design, resolution III/IV/V, 2^(5-1) Resolution V                cat("Key checks: D-optimal design, resolution III/IV/V, 2^(5-1) Resolution V$
+Key checks: D-optimal design, resolution III/IV/V, 2^(5-1) Resolution V,
+> cat("and location versus dispersion.\n")
+and location versus dispersion.
+> 
+$--------------------------------------------------                
+> ## Question 7
+$--------------------------------------------------                
+> 
+> section("Question 7: True/false checks")
+
+========================================================================
+Question 7: True/false checks 
+========================================================================
+> 
+> q7_checks <- data.frame(
++   Statement = 1:4,
++   Answer = c("False", "False as written", "False", "False"),
++   Key_Reason = c(
++     "A 2^(5-2) design has alias chains of size 2^2 = 4.",
+$ ordered absolute effects, not raw signed effects.                    "Half-normal plots use ordered absolute effects, not raw signed effects.$
++     "A two-block contrast can be computed from block averages.",
+$wo independent generators and confound 3 effects."                    "Four blocks require two independent generators and confound 3 effects."
++   )
++ )
+> print(q7_checks, row.names = FALSE)
+ Statement           Answer
+         1            False
+         2 False as written
+         3            False
+         4            False
+                                                              Key_Reason
+                      A 2^(5-2) design has alias chains of size 2^2 = 4.
+ Half-normal plots use ordered absolute effects, not raw signed effects.
+               A two-block contrast can be computed from block averages.
+  Four blocks require two independent generators and confound 3 effects.
+> 
+$--------------------------------------------------                
+> ## Question 8
+$--------------------------------------------------                
+
+> section("Question 8: Fractional factorial defining relations")
+
+========================================================================
+Question 8: Fractional factorial defining relations 
+========================================================================
+> 
+> designs_q8 <- list(
++   A = c("ABCP", "BCDQ"),
++   B = c("ABCEP", "BCDFQ"),
++   C = c("ABCDEP", "ABDFQ")
++ )
+> 
+> q8_results <- data.frame(
++   Design = character(0),
++   Fraction = character(0),
++   Defining_Relation = character(0),
++   Resolution = integer(0)
++ )
+> 
+> for (d in names(designs_q8)) {
++   word1 <- designs_q8[[d]][1]
++   word2 <- designs_q8[[d]][2]
++   word3 <- multiply_words(word1, word2)
++   words <- c(word1, word2, word3)
++   q8_results <- rbind(
++     q8_results,
++     data.frame(
++       Design = d,
++       Fraction = "1/4",
++       Defining_Relation = paste("I =", paste(words, collapse = ",
++       Resolution = design_resolution(words)
++     )
++   )
++ }
+> 
+> print(q8_results, row.names = FALSE)
+ Design Fraction          Defining_Relation Resolution
+      A      1/4     I = ABCP = BCDQ = ADPQ          4
+      B      1/4 I = ABCEP = BCDFQ = ADEFPQ          5
+      C      1/4 I = ABCDEP = ABDFQ = CEFPQ          5
+> 
+$--------------------------------------------------               
+> ## Question 9
+$--------------------------------------------------                
+> section("Question 9: Same block as acd when ABCDE is confounded")
+
+========================================================================
+Question 9: Same block as acd when ABCDE is confounded 
+========================================================================
+> 
+> factors_q9 <- c("A", "B", "C", "D", "E")
+> target_q9 <- "acd"
+> candidates_q9 <- c("(1)", "a", "ad", "bcd", "be", "abe")
+> word_q9 <- factors_q9
+> 
+> target_sign_q9 <- word_sign_from_run(target_q9, word_q9, factors)
+> 
+> q9_results <- data.frame(
++   Run = candidates_q9,
++   ABCDE_sign = sapply(candidates_q9, word_sign_from_run,
++                       word = word_q9, factors = factors_q9)
++ )
+> q9_results$Same_Block_As_acd <- q9_results$ABCDE_sign == target_9
+> 
+> cat("Target run:", target_q9, "\n")
+Target run: acd 
+> cat("ABCDE sign for target:", target_sign_q9, "\n\n")
+ABCDE sign for target: 1 
+
+> print(q9_results, row.names = FALSE)
+ Run ABCDE_sign Same_Block_As_acd
+ (1)         -1             FALSE
+   a          1              TRUE
+  ad         -1             FALSE
+ bcd          1              TRUE
+  be         -1             FALSE
+ abe          1              TRUE
+\end{verbatim}
+
+\end{document}

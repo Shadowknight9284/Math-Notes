@@ -1,0 +1,130 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\subsection{Lecture 1: 9/1}
+\subsubsection{Vector Norms}
+\begin{definition}
+    [Vector Norm] A vector norm on $R^d$ is a fuction $||\cdot||: R^d \to R$ that satisfies the following properties:
+    \begin{enumerate}
+        \item $||x|| \geq 0$
+        \item $||ax|| = |a| ||x||$ for all $a \in R$
+        \item $||x+y|| \leq ||x|| + ||y||$ (Triangle Inequality)
+    \end{enumerate}
+\end{definition}
+\begin{example}
+    [p-norm] For $p \geq 1$, the p-norm is defined as
+    $$||x||_p = \left( \sum_{i=1}^{d} |x_i|^p \right)^{1/p}$$
+    The p-norm is a vector norm for $p \geq 1$.
+\end{example}
+\begin{theorem}
+    All $p$-norms are norms for $p \geq 1$.
+    \begin{proof}
+        We need to verify that the three properties of a vector norm hold for the $p$-norm.
+
+        \begin{enumerate}
+            \item Non-negativity: For any $x \in R^d$, we have $|x_i| \geq 0$ for all $i$, so $|x_i|^p \geq 0$ for all $i$. Therefore,
+            $$||x||_p = \left( \sum_{i=1}^{d} |x_i|^p \right)^{1/p} \geq 0.$$
+            Moreover, $||x||_p = 0$ if and only if $|x_i|^p = 0$ for all $i$, which is equivalent to $x_i = 0$ for all $i$, i.e., $x = 0$.
+
+            \item Homogeneity: For any $a \in R$ and $x \in R^d$, we have
+            $$||ax||_p = \left( \sum_{i=1}^{d} |ax_i|^p \right)^{1/p} = \left( \sum_{i=1}^{d} |a|^p |x_i|^p \right)^{1/p} = |a| \left( \sum_{i=1}^{d} |x_i|^p \right)^{1/p} = |a| ||x||_p.$$
+
+            \item Triangle Inequality: This is a consequence of Minkowski's inequality. For any $x, y \in R^d$, we have
+            $$||x+y||_p = \left( \sum_{i=1}^{d} |x_i+y_i|^p \right)^{1/p} \leq \left( \sum_{i=1}^{d} (|x_i|+|y_i|)^p \right)^{1/p}.$$
+            By Minkowski's inequality,
+            $$\left( \sum_{i=1}^{d} (|x_i|+|y_i|)^p \right)^{1/p} \leq \left( \sum_{i=1}^{d} |x_i|^p \right)^{1/p} + \left( \sum_{i=1}^{d} |y_i|^p \right)^{1/p}.$$
+            Therefore, we have
+            $$||x+y||_p \leq ||x||_p + ||y||_p.$$
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
+\begin{remark}
+    [Weighted 2-norms]
+    A weighted 2-norm is a vector norm of the form
+    $$||x||_W = \left( \sum_{i=1}^{d} w_i |x_i|^2 \right)^{1/2}$$
+    where $w_i > 0$ for all $i$.
+\end{remark}
+\begin{remark}
+    [$l_0$-norm, sparsity norm]
+    The $l_0$-norm is a "norm" that counts the number of non-zero entries in a vector. It is not a true norm because it does not satisfy the homogeneity property.
+\end{remark}
+\begin{definition}
+    [Holder's Inequality] For any $p, q > 1$ such that $\frac{1}{p} + \frac{1}{q} = 1$, and for any vectors $x, y \in R^d$, we have
+    $$\sum_{i=1}^{d} |x_i y_i| \leq ||x||_p ||y||_q.$$
+
+    Cauchy-Schwarz inequality is a special case of Holder's inequality when $p = q = 2$.
+\end{definition}
+\begin{definition}
+    [Norm Equivalence]
+    Two norms $||\cdot||_a$ and $||\cdot||_b$ on $R^d$ are said to be equivalent if there exist positive constants $c_1, c_2 > 0$ such that for all $x \in R^d$,
+    $$c_1 ||x||_a \leq ||x||_b \leq c_2 ||x||_a.$$
+    \begin{example}
+        $||x||_1$ and $||x||_2$ are equivalent norms on $R^d$. In fact, we have 
+        $$||x||_1 \leq ||x||_2 \leq \sqrt{d} ||x||_1.$$
+    \end{example}
+\end{definition}
+
+\begin{definition}
+    [Matrix Norm] A matrix norm is a function $||\cdot||: R^{m \times n} \to R$ that satisfies the following properties:
+    \begin{enumerate}
+        \item $||A|| \geq 0$ for all $A \in R^{m \times n}$, and $||A|| = 0$ if and only if $A = 0$.
+        \item $||\alpha A|| = |\alpha| ||A||$ for all $\alpha \in R$ and $A \in R^{m \times n}$.
+        \item $||A + B|| \leq ||A|| + ||B||$ for all $A, B \in R^{m \times n}$ (Triangle Inequality).
+        \item $||AB|| \leq ||A|| ||B||$ for all $A \in R^{m \times n}$ and $B \in R^{n \times p}$ (Submultiplicativity).
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    [Frobenius Norm] The Frobenius norm of a matrix $A \in R^{m \times n}$ is defined as
+    $$||A||_F = \left( \sum_{i=1}^{m} \sum_{j=1}^{n} |a_{ij}|^2 \right)^{1/2}.$$
+    \begin{remark}
+$$||A||_F^2 = Trace(A^TA) = \sum_{i=1}^{r} \lambda_i A^T A$$
+    \end{remark}
+\end{example}
+\begin{theorem}
+    [Spectral Theorem] If $A \in R^{n \times n}$ is a symmetric positive semi-definite matrix, then there exists an orthogonal matrix $Q \in R^{n \times n}$ and a positive diagonal matrix $\Lambda \in R^{n \times n}$ such that
+    $$A = Q \Lambda Q^T.$$
+\end{theorem}
+\begin{definition}
+    [Spectral Norm]
+    The spectral norm of a matrix $A \in R^{m \times n}$ is defined as
+    $$||A||_2 = \sup_{x \neq 0} \frac{||Ax||_2}{||x||_2}.$$
+\end{definition}
+
+\subsection{Lecture 2: 9/3}
+\begin{definition}
+    [Moore-Penrose Pseudoinverse] For a matrix $A \in R^{m \times n}$ and full rank, the Moore-Penrose pseudoinverse $A^+ \in R^{n \times m}$ is the unique matrix that satisfies the following four properties:
+    \begin{enumerate}
+        \item $AA^+ = I_n + 0_m$
+        \item $A^+A = I_n$
+        \item $(AA^+)^T = AA^+$
+        \item $(A^+A)^T = A^+A$
+    \end{enumerate}
+    Thus $A^+$ is a generalization of the inverse matrix for non-square or singular matrices.
+    \begin{align*}
+        A^+ = (A^TA)^{-1}A^T \quad \text{if } A \text{ has full column rank} \\
+    \end{align*}
+    And note that $A^+ = V \Sigma^+ U^T$ if $A = U \Sigma V^T$ is the SVD of $A$.
+\end{definition}
+\begin{theorem}
+    [Eckart-Young-Mirsky Theorem] Let $A \in R^{m \times n}$ be a matrix of rank $r$ with singular value decomposition $A = U \Sigma V^T$. For any integer $k$ such that $1 \leq k < r$, let $\Sigma_k$ be the diagonal matrix obtained by replacing all but the largest $k$ singular values of $\Sigma$ with zeros. Then the matrix
+    $$A_k = U \Sigma_k V^T$$
+    is the best rank-$k$ approximation to $A$ in the sense that
+    $$\|A - A_k\|_F = \min_{\text{rank}(B) \leq k} \|A - B\|_F.$$
+    $$A_s = \argmin_{\text{rank}(B) \leq k} \|A - B\|_2$$
+\end{theorem}
+
+\end{document}

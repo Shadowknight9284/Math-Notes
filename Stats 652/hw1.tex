@@ -1,0 +1,1942 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{Stats 652}
+\newcommand{\assignment}{Homework 1}
+\author{\name}
+\title{\course\ - \assignment}
+
+\begin{document}
+\maketitle
+
+\begin{questions}
+
+\question[0] \textbf{Problem 1.1.}
+
+Define
+\[
+ g(\mu,\theta)=e^{-\mu^2\theta}+e^{-\theta}+\frac13\log\theta
+\]
+on
+\[
+ C=\{(\mu,\theta):0<\theta<\infty,\ \mu>\theta-1\}.
+\]
+Show that $g$ has only one critical point in $C$, and that it is a local maximum but
+not a global maximum.
+
+\begin{solution}
+We first find all critical points of $g$ that lie in $C$.
+The first-order partial derivatives are
+\[
+\frac{\partial g}{\partial\mu}
+=
+-2\mu\theta e^{-\mu^2\theta}
+\]
+and
+\[
+\frac{\partial g}{\partial\theta}
+=
+-\mu^2e^{-\mu^2\theta}
+-e^{-\theta}
++\frac{1}{3\theta}.
+\]
+
+Because $\theta>0$ and $e^{-\mu^2\theta}>0$, the equation
+\[
+\frac{\partial g}{\partial\mu}=0
+\]
+holds if and only if
+\[
+\mu=0.
+\]
+Therefore every critical point of $g$ must have the form
+$(0,\theta)$.
+
+Substituting $\mu=0$ into the second score equation gives
+\[
+-e^{-\theta}+\frac{1}{3\theta}=0,
+\]
+or equivalently,
+\[
+e^\theta=3\theta.
+\]
+
+Define
+\[
+h(\theta)=e^\theta-3\theta,
+\qquad \theta>0.
+\]
+Then
+\[
+h'(\theta)=e^\theta-3
+\]
+and
+\[
+h''(\theta)=e^\theta>0.
+\]
+Hence $h$ is strictly convex on $(0,\infty)$ and has a unique
+minimum at
+\[
+\theta=\log 3.
+\]
+Moreover,
+\[
+h(0)=1>0,
+\qquad
+h(1)=e-3<0,
+\]
+so the intermediate value theorem implies that $h$ has a root
+in $(0,1)$. Also,
+\[
+h(\log 3)=3-3\log 3<0,
+\]
+while $h(\theta)\to\infty$ as $\theta\to\infty$. Therefore $h$
+has another root in $(\log 3,\infty)$. Since $h$ is strictly
+convex and has only one minimum, these are its only two positive
+roots.
+
+However, a point of the form $(0,\theta)$ lies in $C$ only when
+\[
+0>\theta-1,
+\]
+which is equivalent to
+\[
+\theta<1.
+\]
+Thus the larger root does not give a point in $C$. Let
+$\theta_0\in(0,1)$ denote the unique solution of
+\[
+e^{\theta_0}=3\theta_0.
+\]
+Then
+\[
+(0,\theta_0)
+\]
+is the unique critical point of $g$ in $C$.
+
+We now classify this critical point. The relevant second
+derivatives are
+\[
+g_{\mu\mu}(\mu,\theta)
+=
+-2\theta e^{-\mu^2\theta}
++
+4\mu^2\theta^2e^{-\mu^2\theta},
+\]
+\[
+g_{\mu\theta}(\mu,\theta)
+=
+-2\mu e^{-\mu^2\theta}
++
+2\mu^3\theta e^{-\mu^2\theta},
+\]
+and
+\[
+g_{\theta\theta}(\mu,\theta)
+=
+\mu^4e^{-\mu^2\theta}
++
+e^{-\theta}
+-
+\frac{1}{3\theta^2}.
+\]
+
+At $(0,\theta_0)$, these reduce to
+\[
+g_{\mu\mu}(0,\theta_0)=-2\theta_0<0,
+\qquad
+g_{\mu\theta}(0,\theta_0)=0.
+\]
+Because $\theta_0$ satisfies
+\[
+e^{-\theta_0}=\frac{1}{3\theta_0},
+\]
+we also have
+\[
+g_{\theta\theta}(0,\theta_0)
+=
+\frac{1}{3\theta_0}
+-
+\frac{1}{3\theta_0^2}
+=
+\frac{\theta_0-1}{3\theta_0^2}<0,
+\]
+where the final inequality follows from $\theta_0<1$.
+
+Therefore the Hessian at the critical point is
+\[
+\nabla^2g(0,\theta_0)
+=
+\begin{pmatrix}
+-2\theta_0 & 0 \\[4pt]
+0 & \dfrac{\theta_0-1}{3\theta_0^2}
+\end{pmatrix}.
+\]
+Both diagonal entries are negative, so the Hessian is negative
+definite. Hence $(0,\theta_0)$ is a strict local maximum.
+
+Finally, this local maximum is not a global maximum. Consider
+the sequence
+\[
+(\mu,\theta)=(\theta,\theta),
+\qquad \theta>0.
+\]
+Each such point lies in $C$, since
+\[
+\mu=\theta>\theta-1.
+\]
+Along this sequence,
+\[
+g(\theta,\theta)
+=
+e^{-\theta^3}
++
+e^{-\theta}
++
+\frac{1}{3}\log\theta.
+\]
+As $\theta\to\infty$, the first two terms tend to zero, whereas
+\[
+\frac{1}{3}\log\theta\to\infty.
+\]
+Consequently,
+\[
+g(\theta,\theta)\to\infty.
+\]
+Thus $g$ is unbounded above on $C$, and its unique critical point
+is a strict local maximum but not a global maximum.
+\end{solution}
+
+\question[0] \textbf{Problem 1.2.}
+
+Let $X_1,\ldots,X_n$ be a random sample from a
+$\mathcal{N}(\mu,\sigma^2)$ distribution, where
+\[
+\mu\in\R
+\qquad\text{and}\qquad
+\sigma^2>0.
+\]
+
+\begin{parts}
+\part Show that the likelihood goes to zero as
+$(\mu,\sigma^2)$ approaches the boundary of the parameter space.
+
+\part Show that the likelihood is not strictly log-concave in
+$(\mu,\sigma^2)$.
+
+\part Verify directly that the log likelihood is strictly concave
+in $(\eta_1,\eta_2)$, where
+\[
+\eta_1=\frac{1}{\sigma^2},
+\qquad
+\eta_2=\frac{\mu}{\sigma^2}.
+\]
+\end{parts}
+
+\begin{solution}
+Let
+\[
+ v=\sigma^2,
+ \qquad
+ Q(\mu)=\sum_{i=1}^n(x_i-\mu)^2,
+ \qquad
+ S=\sum_{i=1}^n(x_i-\bar x)^2.
+\]
+Then
+\[
+ Q(\mu)=S+n(\mu-\bar x)^2,
+\]
+so the likelihood is
+\[
+ L(\mu,v)
+ =(2\pi v)^{-n/2}
+ \exp\left\{-\frac{Q(\mu)}{2v}\right\}.
+\]
+
+\begin{parts}
+\part
+Assume $S>0$, which holds with probability one under the normal model when $n\ge 2$. Since $Q(\mu)\ge S$,
+\[
+0\le L(\mu,v)
+\le (2\pi v)^{-n/2}\exp\left\{-\frac{S}{2v}\right\}.
+\]
+The right-hand side tends to $0$ as $v\downarrow0$, uniformly in $\mu$. Also,
+\[
+L(\mu,v)\le (2\pi v)^{-n/2}\longrightarrow0
+\qquad\text{as }v\to\infty.
+\]
+Finally, for fixed $\mu$, $L(\mu,v)$ is maximized over $v>0$ at $v=Q(\mu)/n$, and hence
+\[
+\sup_{v>0}L(\mu,v)
+=
+\left(\frac{n}{2\pi e\,Q(\mu)}\right)^{n/2}
+\longrightarrow0
+\qquad\text{as }|\mu|\to\infty,
+\]
+because $Q(\mu)=S+n(\mu-\bar x)^2\to\infty$. Therefore the likelihood tends to zero along every sequence leaving compact subsets of $\mathbb R\times(0,\infty)$. The assumption $S>0$ is necessary: if all observations equal $x_0$, then $L(x_0,v)=(2\pi v)^{-n/2}\to\infty$ as $v\downarrow0$.
+
+\part
+Ignoring constants that do not depend on $(\mu,v)$,
+\[
+\ell(\mu,v)
+=
+-\frac n2\log v-\frac{Q(\mu)}{2v}.
+\]
+Since
+\[
+Q'(\mu)=2n(\mu-\bar x),
+\]
+we have
+\[
+\frac{\partial\ell}{\partial\mu}
+=
+-\frac{n(\mu-\bar x)}{v},
+\qquad
+\frac{\partial\ell}{\partial v}
+=
+-\frac{n}{2v}+\frac{Q(\mu)}{2v^2}.
+\]
+The Hessian is
+\[
+H_{\mu,v}
+=
+\begin{pmatrix}
+-\dfrac nv
+&
+\dfrac{n(\mu-\bar x)}{v^2}
+\\[6pt]
+\dfrac{n(\mu-\bar x)}{v^2}
+&
+\dfrac{n}{2v^2}-\dfrac{Q(\mu)}{v^3}
+\end{pmatrix}.
+\]
+Its determinant is
+\begin{align*}
+\det H_{\mu,v}
+&=
+-\frac nv
+\left(
+\frac{n}{2v^2}-\frac{Q(\mu)}{v^3}
+\right)
+-\frac{n^2(\mu-\bar x)^2}{v^4}
+\\
+&=
+\frac{n}{v^4}
+\left[
+Q(\mu)-n(\mu-\bar x)^2-\frac{nv}{2}
+\right]
+\\
+&=
+\frac{n}{v^4}
+\left(S-\frac{nv}{2}\right).
+\end{align*}
+If
+\[
+v>\frac{2S}{n},
+\]
+then
+\[
+\det H_{\mu,v}<0.
+\]
+So the Hessian is indefinite at those points. Therefore the log
+likelihood is not concave in $(\mu,v)$, and hence it is not strictly
+log-concave in $(\mu,\sigma^2)$.
+
+\part
+Let
+\[
+\eta_1=\frac1v,
+\qquad
+\eta_2=\frac{\mu}{v}.
+\]
+Then
+\[
+v=\frac1{\eta_1},
+\qquad
+\mu=\frac{\eta_2}{\eta_1},
+\]
+and the parameter space is
+\[
+\{(\eta_1,\eta_2):\eta_1>0,\ \eta_2\in\R\}.
+\]
+
+Expanding the quadratic term gives
+\[
+\sum_{i=1}^n(x_i-\mu)^2
+=
+\sum_{i=1}^n x_i^2
+-2\mu\sum_{i=1}^n x_i
++n\mu^2.
+\]
+Therefore,
+\[
+\ell(\eta_1,\eta_2)
+=
+C
++\frac n2\log\eta_1
+-\frac{\eta_1}{2}\sum_{i=1}^n x_i^2
++\eta_2\sum_{i=1}^n x_i
+-\frac{n\eta_2^2}{2\eta_1}.
+\]
+
+The first derivatives are
+\[
+\frac{\partial\ell}{\partial\eta_1}
+=
+\frac{n}{2\eta_1}
+-\frac12\sum_{i=1}^n x_i^2
++\frac{n\eta_2^2}{2\eta_1^2},
+\]
+and
+\[
+\frac{\partial\ell}{\partial\eta_2}
+=
+\sum_{i=1}^n x_i-\frac{n\eta_2}{\eta_1}.
+\]
+Thus,
+\[
+H_\eta
+=
+\begin{pmatrix}
+-\dfrac{n}{2\eta_1^2}
+-\dfrac{n\eta_2^2}{\eta_1^3}
+&
+\dfrac{n\eta_2}{\eta_1^2}
+\\[8pt]
+\dfrac{n\eta_2}{\eta_1^2}
+&
+-\dfrac n{\eta_1}
+\end{pmatrix}.
+\]
+
+The upper-left entry is negative:
+\[
+-\frac{n}{2\eta_1^2}
+-\frac{n\eta_2^2}{\eta_1^3}<0.
+\]
+Also,
+\begin{align*}
+\det H_\eta
+&=
+\left(
+-\frac{n}{2\eta_1^2}
+-\frac{n\eta_2^2}{\eta_1^3}
+\right)
+\left(-\frac n{\eta_1}\right)
+-
+\left(\frac{n\eta_2}{\eta_1^2}\right)^2
+\\
+&=
+\frac{n^2}{2\eta_1^3}>0.
+\end{align*}
+Therefore $H_\eta$ is negative definite for every
+$\eta_1>0$. Hence the log likelihood is strictly concave in
+$(\eta_1,\eta_2)$.
+\end{parts}
+\end{solution}
+
+\question[0] \textbf{Problem 1.3.}
+
+\begin{parts}
+\part Show that if $f(x;\theta)$ is an exponential family in
+$\theta=(\theta_1,\theta_2)$, then, for fixed $\theta_2$, it is an
+exponential family in $\theta_1$.
+
+\part Show whether, if every coordinate slice is an exponential family,
+the joint family must be an exponential family. (Optional)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+
+\part
+Suppose
+\[
+f(x;\theta_1,\theta_2)
+=
+\exp\left\{
+\sum_{j=1}^k c_j(\theta_1,\theta_2)T_j(x)
++
+d(\theta_1,\theta_2)
++
+S(x)
+\right\}I_A(x),
+\]
+where $A$ does not depend on $(\theta_1,\theta_2)$.
+
+Fix $\theta_2=\theta_2^0$. Then
+\[
+f(x;\theta_1,\theta_2^0)
+=
+\exp\left\{
+\sum_{j=1}^k c_j(\theta_1,\theta_2^0)T_j(x)
++
+d(\theta_1,\theta_2^0)
++
+S(x)
+\right\}I_A(x).
+\]
+This is an exponential-family representation in $\theta_1$. Therefore,
+for fixed $\theta_2$, the family is an exponential family in
+$\theta_1$.
+
+\part
+No.
+
+Let
+\[
+\mathcal X=A=\N,
+\qquad
+h(x)=2^{-x},
+\qquad x\in\N.
+\]
+For each $j\in\N$, define
+\[
+U(x)=4^{-x},
+\qquad
+V(x)=3^{-x},
+\qquad
+T_j(x)=\mathbf 1\{x=j\}.
+\]
+Let the parameter space be $\Theta=\N^2$. For $(m,r)\in\Theta$, define
+\[
+Z_{m,r}
+=
+\sum_{x\in\N}h(x)
+\exp\left\{mU(x)+rV(x)+\mathbf 1\{m=r\}T_m(x)\right\},
+\]
+and set
+\[
+f(x;m,r)
+=
+\exp\left\{
+ mU(x)+rV(x)+\mathbf 1\{m=r\}T_m(x)
+-\log Z_{m,r}+
+\log h(x)
+\right\}I_{\N}(x).
+\]
+Each $f(\cdot;m,r)$ is a pmf on $\N$, since $0<Z_{m,r}<\infty$.
+
+We first record the following linear-independence fact, which we use below.
+Suppose
+\[
+a_0+aU(x)+bV(x)+\sum_{j\in J}b_jT_j(x)=0
+\qquad\text{for all }x\in\N,
+\]
+where $J$ is finite. If $x>\max J$, then all the $T_j(x)$ vanish, so
+\[
+a_0+a\,4^{-x}+b\,3^{-x}=0
+\qquad\text{for all sufficiently large }x.
+\]
+Letting $x\to\infty$ gives $a_0=0$. Since $4^{-x}$ and $3^{-x}$ are linearly
+independent as functions of $x$ (their ratio $(4/3)^{-x}$ is non-constant, so
+no nontrivial combination can vanish at two or more values of $x$), this also
+gives $a=b=0$. Evaluating at $x=j$ then shows $b_j=0$ for each $j\in J$.
+
+Thus the functions
+\[
+1,\ U,\ V,\ T_1,T_2,\ldots
+\]
+are linearly independent in every finite combination.
+
+Now fix $r=r_0$. Then
+\[
+f(x;m,r_0)
+=
+\exp\left\{
+ mU(x)+\mathbf 1\{m=r_0\}T_{r_0}(x)
+-\log Z_{m,r_0}+S_{r_0}(x)
+\right\}I_{\N}(x),
+\]
+where
+\[
+S_{r_0}(x)=r_0V(x)+\log h(x).
+\]
+So for fixed $r_0$, this is an exponential family in $m$, with statistics
+$U(x)$ and $T_{r_0}(x)$.
+
+Likewise, if $m=m_0$ is fixed, then
+\[
+f(x;m_0,r)
+=
+\exp\left\{
+ rV(x)+\mathbf 1\{r=m_0\}T_{m_0}(x)
+-\log Z_{m_0,r}+S_{m_0}(x)
+\right\}I_{\N}(x),
+\]
+where
+\[
+S_{m_0}(x)=m_0U(x)+\log h(x).
+\]
+So every slice with $m$ fixed is also an exponential family.
+
+Suppose now that the full family were a $k$-dimensional exponential family for some
+finite $k$. Then all log-density ratios would lie in one finite-dimensional vector
+space spanned by $1$ and the fixed statistics of that representation.
+
+Comparing the off-diagonal points $(2,4)$ and $(1,4)$ gives
+\[
+\log\frac{f(x;2,4)}{f(x;1,4)}=U(x)+\text{constant},
+\]
+so $U$ lies in that finite-dimensional space. Comparing $(4,2)$ and $(4,1)$ gives
+\[
+\log\frac{f(x;4,2)}{f(x;4,1)}=V(x)+\text{constant},
+\]
+so $V$ also lies in that space.
+
+Finally, for each $j\in\N$,
+\[
+\log\frac{f(x;j,j)}{f(x;j,j+1)}=T_j(x)-V(x)+\text{constant}.
+\]
+Since $V$ is already in the space, it follows that every $T_j$ is also in the same
+finite-dimensional space. But $T_1,T_2,\ldots$ are linearly independent, which is
+impossible in a finite-dimensional space. This contradiction shows that the joint
+family is not a finite-dimensional exponential family.
+\end{parts}
+\end{solution}
+
+\question[0] \textbf{Problem 1.4.} (Optional)
+
+Show that a $k$-dimensional exponential family is in minimal representation form if
+and only if
+\begin{parts}
+\part $\sum_{j=1}^k a_jc_j(\theta)=a_0$ for all $\theta$ implies
+$a_0=a_1=\cdots=a_k=0$;
+
+\part $\sum_{j=1}^k b_jT_j(x)=b_0$ for all $x\in A$ implies
+$b_0=b_1=\cdots=b_k=0$.
+\end{parts}
+
+\begin{solution}
+Write
+\[
+f(x;\theta)
+=
+\exp\{c(\theta)^\top T(x)+d(\theta)+S(x)\}I_A(x).
+\]
+
+Suppose first that the representation is minimal. If
+$a^\top c(\theta)=a_0$ for a nonzero vector $a$, choose an invertible linear
+transformation whose last transformed coefficient is $a^\top c(\theta)$. That
+coefficient is constant, so its term is independent of $\theta$ and can be absorbed
+into $S(x)$. This removes one statistic and contradicts minimality. Hence (a) holds.
+
+Likewise, if $b^\top T(x)=b_0$ for a nonzero vector $b$, choose an invertible linear
+transformation whose last transformed statistic is $b^\top T(x)$. Since this
+statistic is constant on $A$, its term can be absorbed into $d(\theta)$. This again
+reduces the number of statistics, contradicting minimality. Hence (b) holds.
+
+Conversely, assume (a) and (b). Fix $\theta_0\in\Theta$, $x_0\in A$, and define
+\[
+K(\theta,x)
+=\log f(x;\theta)-\log f(x_0;\theta)-\log f(x;\theta_0)+\log f(x_0;\theta_0).
+\]
+This quantity is defined directly from the density $f$, so it does not depend
+on which representation is used to compute it. Substituting
+$f(x;\theta)=\exp\{c(\theta)^\top T(x)+d(\theta)+S(x)\}I_A(x)$, the terms
+$d(\theta)$ and $S(x)$ cancel in the double difference, leaving
+\[
+K(\theta,x)=[c(\theta)-c(\theta_0)]^\top[T(x)-T(x_0)].
+\]
+Condition (a) implies that $\{c(\theta)-c(\theta_0):\theta\in\Theta\}$ spans
+$\R^k$ (otherwise a nonzero vector orthogonal to this span would give a
+forbidden affine relation among the $c_j$), and condition (b) similarly
+implies $\{T(x)-T(x_0):x\in A\}$ spans $\R^k$. We may therefore choose
+$\theta_1,\ldots,\theta_k\in\Theta$ and $x_1,\ldots,x_k\in A$ so that the
+$k\times k$ matrix $[K(\theta_i,x_j)]_{i,j=1}^k$ has rank $k$.
+
+Now suppose some representation of the same family used only $r<k$
+statistics, say
+$f(x;\theta)=\exp\{\sum_{l=1}^r c_l'(\theta)T_l'(x)+d'(\theta)+S'(x)\}I_A(x)$.
+Because $K$ depends only on $f$, applying the same double-difference
+identity to this representation gives
+\[
+K(\theta,x)=\sum_{l=1}^r\bigl[c_l'(\theta)-c_l'(\theta_0)\bigr]
+\bigl[T_l'(x)-T_l'(x_0)\bigr].
+\]
+Evaluating at the chosen grid, $[K(\theta_i,x_j)]=\sum_{l=1}^ru_lv_l^\top$
+where $u_l=(c_l'(\theta_i)-c_l'(\theta_0))_{i=1}^k$ and
+$v_l=(T_l'(x_j)-T_l'(x_0))_{j=1}^k$. A sum of $r$ rank-one matrices has rank
+at most $r$, since its column space is spanned by $u_1,\ldots,u_r$. But this
+matrix was constructed to have rank $k$, so $r\ge k$. Hence no representation
+with fewer than $k$ statistics exists, so the given representation is minimal.
+\end{solution}
+
+\question[0] \textbf{Problem 1.5.}
+
+Let
+\[
+f(x;\mu)=
+\frac{2}{\Gamma(1/4)}e^{-(x-\mu)^4},
+\qquad
+x,\mu\in\R.
+\]
+\begin{parts}
+\part Show that this is a $k$-dimensional curved exponential family and specify $k$.
+
+\part For a random sample of size $n$, determine the roots of the likelihood equation
+and the MLE.
+
+\part Find a minimal sufficient statistic for $\mu$.
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part
+Expanding the exponent,
+\[
+-(x-\mu)^4=-x^4+4\mu x^3-6\mu^2x^2+4\mu^3x-\mu^4.
+\]
+Thus
+\[
+f(x;\mu)
+=
+\exp\left\{
+4\mu^3x-6\mu^2x^2+4\mu x^3
+-\mu^4-x^4+\log\frac{2}{\Gamma(1/4)}
+\right\}I_{\R}(x).
+\]
+Take
+\[
+T(x)=(x,x^2,x^3)^\top,
+\qquad
+c(\mu)=(4\mu^3,-6\mu^2,4\mu)^\top.
+\]
+The functions $1,x,x^2,x^3$ are linearly independent, as are the functions
+$1,\mu,\mu^2,\mu^3$. Hence the representation is minimal and $k=3$. Since
+$\{c(\mu):\mu\in\R\}$ is a one-dimensional nonlinear curve in $\R^3$ and does not
+contain an open subset of $\R^3$, this is a curved exponential family.
+
+\part
+Ignoring constants,
+\[
+\ell(\mu)=-\sum_{i=1}^n(x_i-\mu)^4,
+\qquad
+\ell'(\mu)=4\sum_{i=1}^n(x_i-\mu)^3.
+\]
+Let
+\[
+F(\mu)=\sum_{i=1}^n(x_i-\mu)^3.
+\]
+Each summand is strictly decreasing in $\mu$, so $F$ is strictly decreasing. Also,
+\[
+F(\mu)\to\infty\quad(\mu\to-\infty),
+\qquad
+F(\mu)\to-\infty\quad(\mu\to\infty).
+\]
+Therefore the likelihood equation
+\[
+\sum_{i=1}^n(x_i-\mu)^3=0
+\]
+has exactly one root. Since $\ell(\mu)\to-\infty$ as $|\mu|\to\infty$, that root is
+the unique global MLE.
+
+\part
+The factorization theorem gives sufficiency of
+\[
+T(X)=\left(\sum_{i=1}^nX_i,\ \sum_{i=1}^nX_i^2,\ \sum_{i=1}^nX_i^3\right).
+\]
+For sample points $x,y\in\R^n$, the log likelihood ratio is a polynomial in $\mu$.
+It is independent of $\mu$ exactly when the coefficients of $\mu$, $\mu^2$, and
+$\mu^3$ agree, which is equivalent to $T(x)=T(y)$. The likelihood-ratio criterion
+therefore shows that $T$ is minimal sufficient.
+\end{parts}
+\end{solution}
+
+\question[0] \textbf{Problem 1.6.}
+
+Show that if $\eta$ represents the natural parameters of an exponential family, then
+$\eta^*$ is also a natural parametrization if and only if
+\[
+\eta^*=A\eta+a
+\]
+for some nonsingular matrix $A$ and some $a\in\R^k$.
+
+\begin{solution}
+Throughout, ``natural parametrization'' is taken to mean a minimal
+(full-rank) representation, as is standard; this guarantees $\eta$ and
+$\eta^*$ have the same dimension $k$ (the family's minimal order) and lets
+us invoke the characterization of minimality from Problem 1.4.
+
+Assume both are minimal full $k$-dimensional natural representations of the same
+family $\{f_\theta:\theta\in\Theta\}$, related to the original parameter $\theta$ by
+bijections $\eta=\eta(\theta)$ and $\eta^*=\eta^*(\theta)$. Since both maps are
+invertible, $\eta^*$ is in turn a well-defined function of $\eta$ alone, namely
+$\eta^*(\eta):=\eta^*(\theta(\eta))$; this is the map we show to be affine. In the
+first representation,
+\[
+f_\eta(x)
+=
+\exp\{\eta^\top T(x)+d_0(\eta)+S(x)\}I_A(x).
+\]
+By minimality, we can choose $x_0,x_1,\ldots,x_k\in A$ so that the matrix $D$ whose
+$i$th row is $(T(x_i)-T(x_0))^\top$ is nonsingular. Writing out the log-density
+ratio at each $x_i$ against $x_0$,
+\[
+\log\frac{f_\eta(x_i)}{f_\eta(x_0)}
+=\eta^\top\bigl(T(x_i)-T(x_0)\bigr)+\bigl(S(x_i)-S(x_0)\bigr),
+\]
+the $d_0(\eta)$ terms cancel because they do not depend on $x$. Hence, setting
+$b_i:=S(x_i)-S(x_0)$ (which does not depend on $\eta$) and
+$b:=(b_1,\ldots,b_k)^\top$, the vector of log-density ratios has the form
+\[
+r(\eta)
+=
+\left(\log\frac{f_\eta(x_i)}{f_\eta(x_0)}\right)_{i=1}^k
+=b+D\eta.
+\]
+
+Under the other minimal natural representation, with carrier function $S^*$, the
+identical computation gives
+\[
+r(\eta)=b^*+D^*\eta^*(\eta),
+\qquad
+b^*_i:=S^*(x_i)-S^*(x_0),
+\]
+where $D^*$ is the (also nonsingular, by minimality of the second representation)
+matrix with $i$th row $(T^*(x_i)-T^*(x_0))^\top$. Since $r(\eta)$ is the same
+quantity computed from the same density $f_\theta$ in each representation, the two
+expressions agree, so
+\[
+\eta^*(\eta)=(D^*)^{-1}D\eta+(D^*)^{-1}(b-b^*)=A\eta+a,
+\]
+and $A=(D^*)^{-1}D$ is nonsingular.
+
+Conversely, suppose $\eta^*=A\eta+a$ with $A$ nonsingular. Then
+\[
+\eta=A^{-1}(\eta^*-a)
+\]
+and
+\[
+\eta^\top T(x)
+=(\eta^*)^\top A^{-\top}T(x)-a^\top A^{-\top}T(x).
+\]
+Set
+\[
+T^*(x)=A^{-\top}T(x),
+\qquad
+S^*(x)=S(x)-a^\top A^{-\top}T(x).
+\]
+The second term is absorbed into the carrier $S^*$, while the first is
+$(\eta^*)^\top T^*(x)$. Hence $\eta^*$ is also a natural parametrization.
+\end{solution}
+
+\question[0] \textbf{Problem 1.7.}
+
+For a $k$-dimensional exponential family in natural form, prove the convexity,
+derivative, Hessian, and MGF identities stated in the assignment.
+
+\begin{solution}
+Write the natural form as
+\[
+f_\eta(x)
+=
+\exp\{\eta^\top T(x)+d_0(\eta)+S(x)\}I_A(x).
+\]
+Let $h(x)=e^{S(x)}I_A(x)$ and define
+\[
+Z(\eta)=e^{-d_0(\eta)}
+=\int_A e^{\eta^\top T(x)}h(x)\,d\nu(x).
+\]
+Assume the representation is minimal and work in the interior of the natural
+parameter space, where differentiation under the integral is valid.
+
+For any $a\ne0$,
+\[
+a^\top\nabla^2Z(\eta)a
+=\int_A\bigl(a^\top T(x)\bigr)^2
+ e^{\eta^\top T(x)}h(x)\,d\nu(x)>0.
+\]
+Minimality rules out $a^\top T(x)$ being almost surely constant. Thus
+$Z(\eta)=e^{-d_0(\eta)}$ is strictly convex.
+
+Now let
+\[
+A(\eta)=\log Z(\eta)=-d_0(\eta).
+\]
+Differentiating gives
+\[
+\nabla A(\eta)=\E_\eta[T(X)]
+\]
+and
+\[
+\nabla^2A(\eta)=\Cov_\eta(T(X)).
+\]
+For $a\ne0$,
+\[
+a^\top\nabla^2A(\eta)a
+=\Var_\eta\bigl(a^\top T(X)\bigr)>0,
+\]
+so $A$ is strictly convex and $d_0=-A$ is strictly concave. In particular,
+\[
+\nabla d_0(\eta)=-\E_\eta[T(X)]
+\]
+and
+\[
+\frac{\partial^2d_0(\eta)}{\partial\eta_i\partial\eta_j}
+=-\Cov_\eta(T_i(X),T_j(X)).
+\]
+
+For one observation, the data-dependent term $\eta^\top T(x)$ is linear in $\eta$.
+Therefore the Hessian of the log likelihood is
+\[
+H_\ell(\eta)=\nabla^2\ell(\eta)=-\Cov_\eta(T(X)),
+\]
+so
+\[
+a^\top H_\ell(\eta)a
+=-\Var_\eta\left(\sum_{j=1}^ka_jT_j(X)\right).
+\]
+
+Finally, whenever $\eta+t$ belongs to the natural parameter space,
+\begin{align*}
+M_{T,\eta}(t)
+&=\E_\eta\left[e^{t^\top T(X)}\right]\\
+&=e^{d_0(\eta)}
+\int_Ae^{(\eta+t)^\top T(x)}h(x)\,d\nu(x)\\
+&=\frac{Z(\eta+t)}{Z(\eta)}
+=\exp\{d_0(\eta)-d_0(\eta+t)\}.
+\end{align*}
+\end{solution}
+
+\question[0] \textbf{Problem 1.8.}
+
+Find the MLEs, if they exist, in the following cases.
+\begin{parts}
+\part $X_1\sim\mathcal{N}(\mu,\sigma^2)$ and $X_2\sim\mathcal{N}(\mu,1)$ independently.
+\part $X_i$ iid $\mathcal{N}(\theta,\theta^2)$.
+\part $X_i$ iid $\mathcal{N}(\theta,\theta)$, $\theta>0$.
+\part $X_i$ iid $\operatorname{Gamma}(\theta,\theta)$, $\theta>0$.
+\part $X_i$ iid $\operatorname{Gamma}(\theta,1/\theta)$, $\theta>0$.
+\end{parts}
+The gamma density uses the shape--scale convention
+\[
+f(x;\alpha,\beta)=\{\Gamma(\alpha)\beta^\alpha\}^{-1}x^{\alpha-1}e^{-x/\beta}.
+\]
+
+\begin{solution}
+\begin{parts}
+\part
+Set $\mu=x_1$ and let $\sigma^2\downarrow0$. The first normal density diverges while
+the second remains positive and finite. The likelihood is unbounded, so no MLE
+exists.
+
+\part
+The parameter space is $\R\setminus\{0\}$. Let
+\[
+A=\sum_{i=1}^n x_i^2,
+\qquad
+B=\sum_{i=1}^n x_i.
+\]
+Then
+\[
+\ell(\theta)=C-n\log|\theta|-\frac{A}{2\theta^2}+\frac{B}{\theta}-\frac n2.
+\]
+The score equation is
+\[
+n\theta^2+B\theta-A=0,
+\]
+with roots
+\[
+\theta_\pm=\frac{-B\pm\sqrt{B^2+4nA}}{2n}.
+\]
+
+Fix $A>0$; if $A=0$ then all $x_i=0$ and $\ell(\theta)\to\infty$ as
+$\theta\to0$, so no MLE exists. On $(0,\infty)$ and on $(-\infty,0)$, as
+$\theta\to0$ the term $-A/(2\theta^2)\to-\infty$ dominates
+$-n\log|\theta|\to\infty$, so $\ell(\theta)\to-\infty$; as $|\theta|\to\infty$,
+$-n\log|\theta|\to-\infty$ while the remaining variable terms vanish or stay
+bounded, so again $\ell(\theta)\to-\infty$. Hence on each half-line $\ell$ is
+continuous, tends to $-\infty$ at both ends, and so attains its supremum at an
+interior critical point. Since $\theta_+\theta_-=-A/n<0$, exactly one root
+lies in $(0,\infty)$ and one in $(-\infty,0)$, so $\theta_+$ and $\theta_-$
+are the (unique, hence global) maximizers of $\ell$ on their respective
+half-lines.
+
+To compare the two, note that at any root of $n\theta^2+B\theta-A=0$ we have
+$A/\theta^2=n+B/\theta$, so
+\[
+\ell(\theta)=C-n-n\log|\theta|+\frac{B}{2\theta}.
+\]
+Thus
+\[
+\ell(\theta_+)-\ell(\theta_-)
+=-n\bigl(\log\theta_+-\log|\theta_-|\bigr)
++\frac B2\Bigl(\frac1{\theta_+}-\frac1{\theta_-}\Bigr).
+\]
+By Vieta's formulas, $\theta_++\theta_-=-B/n$, i.e.\ $\theta_+-|\theta_-|=-B/n$,
+so $\theta_+<|\theta_-|$ exactly when $B>0$, making the first term positive
+exactly when $B>0$ (negative when $B<0$, zero when $B=0$). Also
+$\theta_+\theta_-=-A/n<0$ gives
+$\tfrac1{\theta_+}-\tfrac1{\theta_-}=\tfrac{\theta_--\theta_+}{\theta_+\theta_-}>0$
+always, so the second term shares the sign of $B$ as well. Hence
+\[
+\ell(\theta_+)>\ell(\theta_-)\iff B>0,
+\qquad
+\ell(\theta_+)=\ell(\theta_-)\iff B=0,
+\]
+so the global MLE is $\theta_+$ when $B>0$, $\theta_-$ when $B<0$, and both
+roots tie for the global maximum when $B=0$.
+
+\part
+Here
+\[
+\ell(\theta)=C-\frac n2\log\theta-\frac{A}{2\theta}+B-\frac{n\theta}{2}.
+\]
+The score equation is
+\[
+n\theta^2+n\theta-A=0.
+\]
+If $A>0$, the unique positive root is
+\[
+\widehat\theta=\frac{-1+\sqrt{1+4A/n}}{2},
+\]
+and it is the unique MLE. If $A=0$, the likelihood is unbounded as
+$\theta\downarrow0$, so no MLE exists.
+
+\part
+Let
+\[
+S=\sum_{i=1}^n x_i,
+\qquad
+G=\sum_{i=1}^n\log x_i.
+\]
+Then
+\[
+\ell(\theta)=C+(\theta-1)G-\frac{S}{\theta}-n\log\Gamma(\theta)-n\theta\log\theta.
+\]
+Writing $\psi$ and $\psi_1$ for the digamma and trigamma functions, the score and
+its derivative are
+\[
+U(\theta)=G+\frac{S}{\theta^2}-n\psi(\theta)-n(\log\theta+1)
+\]
+and
+\[
+U'(\theta)=-\frac{2S}{\theta^3}-n\psi_1(\theta)-\frac n\theta<0.
+\]
+Moreover, $U(\theta)\to\infty$ as $\theta\downarrow0$ and
+$U(\theta)\to-\infty$ as $\theta\to\infty$. Hence the MLE is the unique positive
+solution of $U(\theta)=0$.
+
+\part
+Now
+\[
+\ell(\theta)=C+n\theta\log\theta-n\log\Gamma(\theta)+(\theta-1)G-\theta S.
+\]
+Thus
+\[
+U(\theta)=n(\log\theta+1)-n\psi(\theta)+G-S
+\]
+and
+\[
+U'(\theta)=n\left(\frac1\theta-\psi_1(\theta)\right)<0.
+\]
+Also,
+\[
+\lim_{\theta\to\infty}U(\theta)
+=n+G-S
+=\sum_{i=1}^n(1+\log x_i-x_i)\le0.
+\]
+The inequality is strict unless every $x_i=1$. If the data are not all equal to $1$,
+there is a unique positive root of $U(\theta)=0$, and it is the MLE. If every
+$x_i=1$, there is no finite MLE; the likelihood approaches its supremum as
+$\theta\to\infty$.
+\end{parts}
+\end{solution}
+
+\question[0] \textbf{Problem 1.9.}
+
+Suppose $X_1,\ldots,X_n$ are iid Bernoulli$(\theta)$. For an integer $k$, find the
+UMVUE of $\theta^k$ and determine when it does not exist.
+
+\begin{solution}
+Let
+\[
+T=\sum_{i=1}^nX_i\sim\operatorname{Binomial}(n,\theta).
+\]
+Then $T$ is complete and sufficient. For $0\le k\le n$, using the falling factorial
+$(t)_k=t(t-1)\cdots(t-k+1)$,
+\[
+\E_\theta[(T)_k]=(n)_k\theta^k.
+\]
+Therefore
+\[
+\widehat{\theta^k}
+=\frac{(T)_k}{(n)_k}
+=\frac{\binom{T}{k}}{\binom{n}{k}}
+\]
+is unbiased and is the UMVUE by the Lehmann--Scheff\'e theorem.
+
+Every expectation of a statistic on the finite Bernoulli sample space is a polynomial
+in $\theta$ of degree at most $n$. If $k>n$, the function $\theta^k$ has degree greater
+than $n$; if $k<0$, it is not a polynomial. Hence no unbiased estimator exists in
+those cases. The UMVUE exists exactly for
+\[
+k\in\{0,1,\ldots,n\}.
+\]
+For $k=0$, the estimator is the constant $1$.
+\end{solution}
+
+\question[0] \textbf{Problem 1.10.}
+
+Prove that any function of a complete statistic is complete.
+
+\begin{solution}
+Let $T$ be complete and set $V=g(T)$. Suppose $a$ is measurable,
+$\E_\theta|a(V)|<\infty$, and
+\[
+\E_\theta[a(V)]=0
+\]
+for every $\theta$. Define $b(t)=a(g(t))$. Then
+\[
+\E_\theta[b(T)]=\E_\theta[a(g(T))]=0
+\]
+for every $\theta$. Since $T$ is complete, $b(T)=0$ almost surely for every $\theta$.
+But $b(T)=a(V)$, so $a(V)=0$ almost surely for every $\theta$. Therefore $V$ is
+complete.
+\end{solution}
+
+\question[0] \textbf{Problem 1.11.}
+
+Let $X_1,\ldots,X_n$ be iid Poisson$(\lambda)$.
+\begin{parts}
+\part Show that no unbiased estimator of $|\lambda-1|$ exists.
+\part For $k\in\R$, find the UMVUE of $\lambda^k$, if it exists.
+\part For $a>0$, find the UMVUE of $e^{-a\lambda}$. Explain the problem when
+$n<a$, especially when $a=2n$.
+\end{parts}
+
+\begin{solution}
+Let
+\[
+T=\sum_{i=1}^nX_i\sim\operatorname{Poisson}(n\lambda).
+\]
+The statistic $T$ is complete and sufficient.
+
+\begin{parts}
+\part
+Suppose an integrable unbiased estimator existed. Rao--Blackwellization would
+give a function $h(T)$ satisfying $\E_\lambda[h(T)]=|\lambda-1|$. Then
+\[
+e^{n\lambda}\E_\lambda[h(T)]
+=\sum_{t=0}^{\infty}h(t)\frac{(n\lambda)^t}{t!}.
+\]
+Because $h(T)$ is integrable for every $\lambda>0$, this power series converges
+absolutely on every bounded interval and defines an analytic function of $\lambda$.
+It would have to equal
+\[
+e^{n\lambda}|\lambda-1|,
+\]
+which is not differentiable at $\lambda=1$. This is impossible. Therefore no unbiased
+estimator exists.
+
+\part
+If $k\in\{0,1,2,\ldots\}$, then
+\[
+\E_\lambda[(T)_k]=(n\lambda)^k,
+\]
+so
+\[
+\widehat{\lambda^k}=\frac{(T)_k}{n^k}
+\]
+is unbiased and is the UMVUE. For any other real $k$, the function
+$e^{n\lambda}\lambda^k$ does not have an ordinary power-series expansion at
+$\lambda=0$. Since the expectation of any integrable function of $T$ produces such a
+power series, no integrable unbiased estimator exists.
+
+\part
+The pgf of $T$ gives
+\[
+\E_\lambda[r^T]=e^{n\lambda(r-1)}.
+\]
+Taking $r=1-a/n$ yields
+\[
+\widehat{e^{-a\lambda}}
+=\left(1-\frac an\right)^T.
+\]
+It is unbiased and, as a function of the complete sufficient statistic, is the UMVUE.
+When $a>n$, the base is negative, so the estimator changes sign even though the
+target is positive. When $a=2n$, the estimator is $(-1)^T$ and
+\[
+\Var_\lambda((-1)^T)=1-e^{-4n\lambda}.
+\]
+Thus the estimator remains unbiased but is highly variable and oscillates between
+$-1$ and $1$.
+\end{parts}
+\end{solution}
+
+\question[0] \textbf{Problem 1.12.}
+
+For a regular one-parameter family and a one-to-one reparametrization
+$\gamma=g(\theta)$, show that
+\[
+I(\gamma;X)=\frac{I(\theta;X)}{\{g'(\theta)\}^2}.
+\]
+
+\begin{solution}
+By the chain rule,
+\[
+U_\gamma(X)
+=\frac{\partial}{\partial\gamma}\log f(X;\theta(\gamma))
+=U_\theta(X)\frac{d\theta}{d\gamma}
+=\frac{U_\theta(X)}{g'(\theta)}.
+\]
+Squaring and taking expectations gives
+\[
+I(\gamma;X)
+=\E[U_\gamma(X)^2]
+=\frac{I(\theta;X)}{\{g'(\theta)\}^2}.
+\]
+\end{solution}
+
+\question[0] \textbf{Problem 1.13.}
+
+For a one-dimensional exponential family in natural form, prove
+\[
+I(\eta;X)=-d_0''(\eta).
+\]
+In the original parameterization, prove
+\[
+I(\theta;X)
+=-d''(\theta)+\frac{d'(\theta)c''(\theta)}{c'(\theta)}.
+\]
+
+\begin{solution}
+In natural form,
+\[
+f(x;\eta)
+=\exp\{\eta T(x)+d_0(\eta)+S(x)\}I_A(x),
+\]
+so
+\[
+\ell''(\eta;x)=d_0''(\eta).
+\]
+Regularity gives
+\[
+I(\eta;X)=-\E_\eta[\ell''(\eta;X)]=-d_0''(\eta).
+\]
+
+In the original parameterization,
+\[
+\ell(\theta;x)=c(\theta)T(x)+d(\theta)+S(x).
+\]
+The mean-zero score identity gives
+\[
+c'(\theta)\E_\theta[T(X)]+d'(\theta)=0,
+\]
+so, when $c'(\theta)\ne0$,
+\[
+\E_\theta[T(X)]=-\frac{d'(\theta)}{c'(\theta)}.
+\]
+Since
+\[
+\ell''(\theta;x)=c''(\theta)T(x)+d''(\theta),
+\]
+we obtain
+\[
+I(\theta;X)
+=-\E_\theta[\ell''(\theta;X)]
+=-d''(\theta)+\frac{d'(\theta)c''(\theta)}{c'(\theta)}.
+\]
+\end{solution}
+
+\question[0] \textbf{Problem 1.14.}
+
+Let $X_1,\ldots,X_n$ be iid $\mathcal{N}(\theta,\theta)$, $\theta>0$.
+\begin{parts}
+\part Find the Fisher information.
+\part Find the efficiencies of $\bar X$ and $s^2$ and determine which is better.
+\part Determine whether an unbiased estimator uniformly improves both.
+\part Determine whether an unbiased estimator achieves efficiency one.
+\end{parts}
+
+\begin{solution}
+Let
+\[
+s^2
+=
+\frac{1}{n-1}
+\sum_{i=1}^n(X_i-\bar X)^2.
+\]
+Since $X_i\sim\mathcal{N}(\theta,\theta)$, both
+\[
+\E_\theta[\bar X]=\theta
+\qquad\text{and}\qquad
+\E_\theta[s^2]=\theta.
+\]
+Thus $\bar X$ and $s^2$ are both unbiased estimators of $\theta$.
+
+\begin{parts}
+
+\part
+For one observation,
+\[
+X\sim\mathcal{N}(\mu(\theta),v(\theta)),
+\]
+where
+\[
+\mu(\theta)=\theta,
+\qquad
+v(\theta)=\theta.
+\]
+For a normal distribution with both mean and variance depending on
+$\theta$,
+\[
+I_1(\theta)
+=
+\frac{\{\mu'(\theta)\}^2}{v(\theta)}
++
+\frac{1}{2}
+\frac{\{v'(\theta)\}^2}{v(\theta)^2}.
+\]
+Here,
+\[
+\mu'(\theta)=1,
+\qquad
+v'(\theta)=1,
+\]
+so
+\[
+I_1(\theta)
+=
+\frac{1}{\theta}
++
+\frac{1}{2\theta^2}
+=
+\frac{2\theta+1}{2\theta^2}.
+\]
+Because the observations are independent,
+\[
+I_n(\theta)
+=
+nI_1(\theta)
+=
+\frac{n(2\theta+1)}{2\theta^2}.
+\]
+Therefore, the Cram\'er--Rao lower bound for any unbiased estimator of
+$\theta$ is
+\[
+\frac{1}{I_n(\theta)}
+=
+\frac{2\theta^2}{n(2\theta+1)}.
+\]
+
+\part
+We have
+\[
+\Var_\theta(\bar X)=\frac{\theta}{n},
+\]
+and, because $(n-1)s^2/\theta\sim\chi^2_{n-1}$,
+\[
+\Var_\theta(s^2)=\frac{2\theta^2}{n-1}.
+\]
+
+Define the efficiency of an unbiased estimator $\delta$ of $\theta$ by
+\[
+\operatorname{Eff}(\delta)
+=
+\frac{1/I_n(\theta)}{\Var_\theta(\delta)}.
+\]
+Then
+\[
+\operatorname{Eff}(\bar X)
+=
+\frac{\dfrac{2\theta^2}{n(2\theta+1)}}
+     {\dfrac{\theta}{n}}
+=
+\frac{2\theta}{2\theta+1},
+\]
+and
+\[
+\operatorname{Eff}(s^2)
+=
+\frac{\dfrac{2\theta^2}{n(2\theta+1)}}
+     {\dfrac{2\theta^2}{n-1}}
+=
+\frac{n-1}{n(2\theta+1)}.
+\]
+
+Thus,
+\[
+\operatorname{Eff}(\bar X)
+>
+\operatorname{Eff}(s^2)
+\]
+if and only if
+\[
+\frac{2\theta}{2\theta+1}
+>
+\frac{n-1}{n(2\theta+1)}.
+\]
+Since $2\theta+1>0$, this is equivalent to
+\[
+2n\theta>n-1,
+\]
+or
+\[
+\theta>\frac{n-1}{2n}.
+\]
+
+Therefore:
+\[
+\begin{cases}
+\bar X \text{ is more efficient}, &
+\theta>\dfrac{n-1}{2n},\\[6pt]
+s^2 \text{ is more efficient}, &
+0<\theta<\dfrac{n-1}{2n},\\[6pt]
+\bar X \text{ and }s^2\text{ have equal efficiency}, &
+\theta=\dfrac{n-1}{2n}.
+\end{cases}
+\]
+
+\part
+The joint density is
+\begin{align*}
+f_\theta(x_1,\ldots,x_n)
+&=
+\prod_{i=1}^n
+\frac{1}{\sqrt{2\pi\theta}}
+\exp\left\{
+-\frac{(x_i-\theta)^2}{2\theta}
+\right\}
+\\
+&=
+(2\pi\theta)^{-n/2}
+\exp\left\{
+-\frac{1}{2\theta}\sum_{i=1}^n x_i^2
++\sum_{i=1}^n x_i
+-\frac{n\theta}{2}
+\right\}.
+\end{align*}
+Thus the joint density factors through
+\[
+T=\sum_{i=1}^nX_i^2.
+\]
+Hence $T$ is sufficient.
+
+Moreover, this is a one-dimensional exponential family with natural statistic $T$
+and natural parameter
+\[
+\eta=-\frac{1}{2\theta},
+\qquad
+\eta\in(-\infty,0).
+\]
+The representation is minimal (the single statistic $T$ is non-constant on the
+support, so condition (b) of Problem 1.4 holds trivially with $k=1$), and the
+natural parameter space $(-\infty,0)$ is open in $\R$. By the completeness
+theorem for full-rank (minimal) exponential families with open natural parameter
+space, $T$ is therefore complete sufficient.
+
+Now define
+\[
+\delta(T)
+=
+\E_\theta[\bar X\mid T].
+\]
+Since $T$ is sufficient, the conditional distribution
+$P_\theta(X\in\cdot\mid T=t)$ does not depend on $\theta$; write this common
+conditional law as $P(\cdot\mid t)$. Defining $\delta(t)=\E[\bar X\mid T=t]$
+using this single $\theta$-free kernel produces one function of $T$ alone
+that is simultaneously a version of $\E_\theta[\bar X\mid T]$ for every
+$\theta$. Since $\bar X$ is unbiased,
+\[
+\E_\theta[\delta(T)]
+=
+\E_\theta[\bar X]
+=
+\theta.
+\]
+Thus $\delta(T)$ is an unbiased function of the complete sufficient
+statistic $T$, and hence it is the UMVUE of $\theta$.
+
+Likewise,
+\[
+\E_\theta[s^2\mid T]
+\]
+is an unbiased function of $T$. Since both
+\[
+\E_\theta[\bar X\mid T]
+\qquad\text{and}\qquad
+\E_\theta[s^2\mid T]
+\]
+are unbiased functions of the complete sufficient statistic $T$,
+completeness implies that they are equal almost surely. Therefore the
+same estimator $\delta(T)$ is the Rao--Blackwell improvement of both
+$\bar X$ and $s^2$.
+
+Consequently,
+\[
+\Var_\theta(\delta(T))
+\le
+\Var_\theta(\bar X)
+\]
+and
+\[
+\Var_\theta(\delta(T))
+\le
+\Var_\theta(s^2)
+\]
+for every $\theta>0$. Hence an unbiased estimator uniformly improves
+both $\bar X$ and $s^2$.
+
+\part
+The log likelihood, up to terms not depending on $\theta$, is
+\[
+\ell(\theta)
+=
+-\frac{n}{2}\log\theta
+-\frac{T}{2\theta}
+-\frac{n\theta}{2}.
+\]
+The score is
+\[
+U_\theta(X)
+=
+\frac{\partial\ell}{\partial\theta}
+=
+-\frac{n}{2\theta}
++
+\frac{T}{2\theta^2}
+-
+\frac{n}{2}
+=
+\frac{T-n\theta-n\theta^2}{2\theta^2}.
+\]
+
+Suppose that an unbiased estimator $\delta(X)$ attained the
+Cram\'er--Rao lower bound for every $\theta>0$. Equality in the
+Cram\'er--Rao inequality would imply
+\[
+\delta(X)-\theta
+=
+\frac{1}{I_n(\theta)}U_\theta(X).
+\]
+Since
+\[
+\frac{1}{I_n(\theta)}
+=
+\frac{2\theta^2}{n(2\theta+1)},
+\]
+we would obtain
+\begin{align*}
+\delta(X)-\theta
+&=
+\frac{2\theta^2}{n(2\theta+1)}
+\cdot
+\frac{T-n\theta-n\theta^2}{2\theta^2}
+\\
+&=
+\frac{T-n\theta-n\theta^2}{n(2\theta+1)}.
+\end{align*}
+Therefore,
+\[
+\delta(X)
+=
+\theta+
+\frac{T-n\theta-n\theta^2}{n(2\theta+1)}
+=
+\frac{T+n\theta^2}{n(2\theta+1)}.
+\]
+
+The right-hand side depends nontrivially on the unknown parameter
+$\theta$. Hence it cannot equal one fixed statistic $\delta(X)$ for
+every $\theta>0$. Therefore no unbiased estimator attains efficiency
+one uniformly over the parameter space.
+
+\end{parts}
+\end{solution}
+
+\question[0] \textbf{Problem 1.15.}
+
+Let $X_i$ be iid Poisson$(\lambda)$ and let $\widehat\gamma$ be the UMVUE of
+$\gamma=e^\lambda$.
+\begin{parts}
+\part Find its mean and variance.
+\part Show that $\Var(\widehat\gamma)>1/I(\gamma;X)$.
+\part Show that the ratio tends to one as $n\to\infty$.
+\end{parts}
+
+\begin{solution}
+Let
+\[
+T=\sum_{i=1}^nX_i\sim\operatorname{Poisson}(n\lambda).
+\]
+Using the Poisson pgf,
+\[
+\widehat\gamma=\left(1+\frac1n\right)^T
+\]
+is unbiased for $e^\lambda$. Since it is a function of the complete sufficient
+statistic $T$, it is the UMVUE.
+
+\begin{parts}
+\part
+The pgf gives
+\[
+\E[\widehat\gamma]=e^\lambda
+\]
+and
+\[
+\E[\widehat\gamma^2]
+=\exp\left\{n\lambda\left(\left(1+\frac1n\right)^2-1\right)\right\}
+=e^{2\lambda+\lambda/n}.
+\]
+Therefore
+\[
+\Var(\widehat\gamma)
+=e^{2\lambda}\left(e^{\lambda/n}-1\right).
+\]
+
+\part
+Since $I(\lambda;X)=n/\lambda$ and $\gamma=e^\lambda$, the reparametrization formula
+gives
+\[
+I(\gamma;X)=\frac{n}{\lambda e^{2\lambda}},
+\qquad
+\frac1{I(\gamma;X)}=\frac{\lambda e^{2\lambda}}n.
+\]
+Because $e^x-1>x$ for $x>0$,
+\[
+e^{2\lambda}\left(e^{\lambda/n}-1\right)
+>\frac{\lambda e^{2\lambda}}n.
+\]
+Hence $\Var(\widehat\gamma)>1/I(\gamma;X)$.
+
+\part
+The ratio is
+\[
+\frac{\Var(\widehat\gamma)}{1/I(\gamma;X)}
+=\frac{e^{\lambda/n}-1}{\lambda/n}
+\longrightarrow1
+\qquad(n\to\infty).
+\]
+\end{parts}
+\end{solution}
+
+\question[0] \textbf{Problem 1.16.} (Optional)
+
+If $T(X)\in\R^k$ is sufficient and there exist
+$\theta_0,\ldots,\theta_k$ such that
+\[
+\left(
+\frac{f(x;\theta_1)}{f(x;\theta_0)},\ldots,
+\frac{f(x;\theta_k)}{f(x;\theta_0)}
+\right)
+\]
+is a one-to-one function of $T(x)$, prove that $T$ is minimal sufficient.
+
+\begin{solution}
+Work on the common support where the displayed ratios are defined. Since $T$ is
+sufficient, the factorization theorem implies that
+\[
+T(x)=T(y)
+\quad\Longrightarrow\quad
+\frac{f(x;\theta)}{f(y;\theta)}
+\text{ is independent of }\theta.
+\]
+Conversely, suppose $f(x;\theta)/f(y;\theta)$ is independent of $\theta$. Then for
+$i=1,\ldots,k$,
+\[
+\frac{f(x;\theta_i)/f(x;\theta_0)}
+{f(y;\theta_i)/f(y;\theta_0)}=1.
+\]
+Hence the two ratio vectors at $x$ and $y$ are equal. By the assumed one-to-one
+relationship with $T$, this implies $T(x)=T(y)$. Therefore
+\[
+T(x)=T(y)
+\quad\Longleftrightarrow\quad
+\frac{f(x;\theta)}{f(y;\theta)}
+\text{ is independent of }\theta.
+\]
+The likelihood-ratio characterization of minimal sufficiency now shows that $T$ is
+minimal sufficient.
+\end{solution}
+
+\question[0] \textbf{Problem 1.17.}
+
+If $X\sim\operatorname{Gamma}(\alpha,\beta)$ in the shape--scale parameterization,
+find $\E_{\alpha,\beta}[\log X]$, $\Var_{\alpha,\beta}(\log X)$, and
+$\Cov_{\alpha,\beta}(\log X,X)$ using the exponential-family representation.
+
+\begin{solution}
+The density is
+\[
+f(x;\alpha,\beta)
+=
+\exp\left\{
+(\alpha-1)\log x-\frac{x}{\beta}
+-\log\Gamma(\alpha)-\alpha\log\beta
+\right\}I_{(0,\infty)}(x).
+\]
+Take
+\[
+T_1(X)=\log X,
+\qquad
+T_2(X)=X,
+\qquad
+\eta_1=\alpha-1,
+\qquad
+\eta_2=-\frac1\beta.
+\]
+The log-partition function is
+\[
+A(\eta)
+=\log\Gamma(\eta_1+1)-(\eta_1+1)\log(-\eta_2).
+\]
+Using $\nabla A(\eta)=\E_\eta[T(X)]$ (and $\E_\eta[T(X)]=\E_{\alpha,\beta}[T(X)]$
+under the change of variables $\eta\leftrightarrow(\alpha,\beta)$),
+\[
+\E_{\alpha,\beta}[\log X]
+=\frac{\partial A}{\partial\eta_1}
+=\psi(\eta_1+1)-\log(-\eta_2)
+=\psi(\alpha)+\log\beta.
+\]
+Using $\nabla^2A(\eta)=\Cov_\eta(T(X))=\Cov_{\alpha,\beta}(T(X))$,
+\[
+\Var_{\alpha,\beta}(\log X)
+=\frac{\partial^2A}{\partial\eta_1^2}
+=\psi_1(\alpha)
+\]
+and
+\[
+\Cov_{\alpha,\beta}(\log X,X)
+=\frac{\partial^2A}{\partial\eta_1\partial\eta_2}
+=-\frac1{\eta_2}
+=\beta.
+\]
+\end{solution}
+
+\question[0] \textbf{Problem 1.18.}
+
+Let $X=(X_1,\ldots,X_n)$ be iid
+$\operatorname{Gamma}(\alpha,\beta)$. Prove or disprove: if
+\[
+\E_{\alpha,\beta}[g(X)]=0
+\]
+for all $\alpha,\beta>0$, then
+\[
+\E_{\alpha,\beta}\left[
+g(X)
+\ \middle|\
+\sum_{i=1}^n X_i,\,
+\prod_{i=1}^n X_i
+\right]=0
+\]
+for all $\alpha,\beta>0$.
+
+\begin{solution}
+The assertion is true, assuming $g(X)$ is integrable, i.e.\
+$\E_{\alpha,\beta}|g(X)|<\infty$, at every $(\alpha,\beta)$ with $\alpha,\beta>0$
+(this is implicit in the hypothesis $\E_{\alpha,\beta}[g(X)]=0$ for all
+$\alpha,\beta>0$, and is needed for the conditional expectations below to be
+well defined).
+
+The joint density is
+\begin{align*}
+f_{\alpha,\beta}(x)
+&=
+\prod_{i=1}^n
+\frac{1}{\Gamma(\alpha)\beta^\alpha}
+x_i^{\alpha-1}e^{-x_i/\beta}
+I_{(0,\infty)}(x_i)
+\\
+&=
+\exp\left\{
+(\alpha-1)\sum_{i=1}^n\log x_i
+-\frac{1}{\beta}\sum_{i=1}^n x_i
+-n\log\Gamma(\alpha)
+-n\alpha\log\beta
+\right\}
+I_{(0,\infty)^n}(x).
+\end{align*}
+
+Therefore,
+\[
+T_1(X)=\sum_{i=1}^nX_i,
+\qquad
+T_2(X)=\sum_{i=1}^n\log X_i
+\]
+is a sufficient statistic. Its natural parameters are
+\[
+\eta_1=\alpha-1,
+\qquad
+\eta_2=-\frac{1}{\beta},
+\]
+with natural parameter space
+\[
+(-1,\infty)\times(-\infty,0),
+\]
+which is open in $\R^2$.
+
+Also, the representation is minimal: the statistics
+$1$, $T_1$, and $T_2$ are linearly independent. Hence, by the
+full-rank exponential-family completeness theorem,
+\[
+(T_1,T_2)
+=
+\left(
+\sum_{i=1}^nX_i,\,
+\sum_{i=1}^n\log X_i
+\right)
+\]
+is complete and sufficient.
+
+Since
+\[
+\sum_{i=1}^n\log X_i
+=
+\log\left(\prod_{i=1}^nX_i\right),
+\]
+the two statistics
+\[
+\left(
+\sum_{i=1}^nX_i,\,
+\sum_{i=1}^n\log X_i
+\right)
+\]
+and
+\[
+\left(
+\sum_{i=1}^nX_i,\,
+\prod_{i=1}^nX_i
+\right)
+\]
+generate the same sigma-field.
+
+By sufficiency, there exists a parameter-free version
+\[
+h(T_1,T_2)
+=
+\E_{\alpha,\beta}[g(X)\mid T_1,T_2].
+\]
+By the tower property,
+\[
+\E_{\alpha,\beta}[h(T_1,T_2)]
+=
+\E_{\alpha,\beta}[g(X)]
+=
+0
+\]
+for every $\alpha,\beta>0$. Since $(T_1,T_2)$ is complete,
+\[
+h(T_1,T_2)=0
+\]
+almost surely for every $\alpha,\beta>0$.
+
+Therefore,
+\[
+\E_{\alpha,\beta}\left[
+g(X)
+\ \middle|\
+\sum_{i=1}^nX_i,\,
+\prod_{i=1}^nX_i
+\right]
+=
+0
+\]
+almost surely for all $\alpha,\beta>0$.
+\end{solution}
+
+\question[0] \textbf{Problem 1.19.}
+
+Suppose $Y_1,\ldots,Y_n$ are independent with
+\[
+Y_i\sim\mathcal{N}(\beta x_i,\sigma^2),
+\]
+where the $x_i$ are fixed and known.
+\begin{parts}
+\part Find complete sufficient statistics.
+\part Find the MLEs of $(\beta,\sigma)$.
+\part Find the UMVUEs of $\beta$ and $\sigma^2$.
+\end{parts}
+
+\begin{solution}
+Let
+\[
+q=\sum_{i=1}^n x_i^2>0,
+\qquad
+T_1=\sum_{i=1}^n x_iY_i,
+\qquad
+T_2=\sum_{i=1}^n Y_i^2.
+\]
+
+\begin{parts}
+\part
+Expanding the joint density gives
+\[
+f_{\beta,\sigma^2}(y)
+=(2\pi)^{-n/2}
+\exp\left\{
+\frac{\beta}{\sigma^2}T_1
+-\frac{1}{2\sigma^2}T_2
+-\frac{\beta^2q}{2\sigma^2}
+-\frac n2\log\sigma^2
+\right\}.
+\]
+Thus $(T_1,T_2)$ is sufficient. The natural parameters are
+\[
+\eta_1=\frac{\beta}{\sigma^2},
+\qquad
+\eta_2=-\frac{1}{2\sigma^2},
+\]
+and they range over the open set $\R\times(-\infty,0)$.
+
+The design is assumed nondegenerate, i.e.\ not every $x_i$ is $0$, so that
+$q=\sum_{i=1}^nx_i^2>0$; this is exactly the condition needed for minimality. Indeed,
+by the criterion of Problem 1.4, minimality requires that
+$b_1T_1(y)+b_2T_2(y)=b_0$ for all $y\in\R^n$ forces $b_0=b_1=b_2=0$. Comparing the
+coefficient of $y_i^2$ gives $b_2=0$; comparing the coefficient of $y_i$ then gives
+$b_1x_i=0$ for every $i$, and since $q>0$ some $x_i\ne0$, so $b_1=0$; finally
+$b_0=0$. Hence the representation is minimal (for every $n\ge1$; we additionally
+take $n\ge2$ below so that the UMVUE of $\sigma^2$ in part (c) has positive degrees
+of freedom). Hence the full-rank exponential-family completeness theorem shows that
+$(T_1,T_2)$ is complete sufficient.
+
+\part
+Least squares gives
+\[
+\widehat\beta=\frac{T_1}{q}.
+\]
+The residual sum of squares is
+\[
+\operatorname{RSS}
+=\sum_{i=1}^n(Y_i-\widehat\beta x_i)^2
+=T_2-\frac{T_1^2}{q}.
+\]
+Therefore, when $\operatorname{RSS}>0$,
+\[
+\widehat{\sigma^2}_{\mathrm{MLE}}=\frac{\operatorname{RSS}}{n},
+\qquad
+\widehat\sigma_{\mathrm{MLE}}=\sqrt{\frac{\operatorname{RSS}}{n}}.
+\]
+If $\operatorname{RSS}=0$, the likelihood is unbounded as $\sigma^2\downarrow0$, so no
+MLE exists.
+
+\part
+The estimator $\widehat\beta=T_1/q$ is unbiased and is a function of the complete
+sufficient statistic. Therefore
+\[
+\widehat\beta_{\mathrm{UMVUE}}
+=\frac{\sum_{i=1}^n x_iY_i}{\sum_{i=1}^n x_i^2}.
+\]
+For $n\ge2$,
+\[
+\frac{\operatorname{RSS}}{\sigma^2}\sim\chi^2_{n-1},
+\]
+so $\E[\operatorname{RSS}]=(n-1)\sigma^2$. Hence
+\[
+\widehat{\sigma^2}_{\mathrm{UMVUE}}
+=\frac{\operatorname{RSS}}{n-1}
+=\frac{1}{n-1}\left(T_2-\frac{T_1^2}{q}\right).
+\]
+Both estimators are functions of the complete sufficient statistic, so the
+Lehmann--Scheff\'e theorem proves the UMVUE claims.
+\end{parts}
+\end{solution}
+
+\end{questions}
+
+\end{document}

@@ -1,0 +1,233 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\section{Metric Spaces}
+\begin{definition}
+    [Metric Space] 
+    A nonepty set $X$ is said to be a metric space if with any two point $p,q \in X$ there is a real number $d(p,q)$ called the distance between $p$ and $q$ such that the following properties hold:
+    \begin{enumerate}
+        \item $d(p,q) \geq 0$ and $d(p,q) = 0$ if and only if $p = q$
+        \item $d(p,q) = d(q,p)$ (Symmetry)
+        \item $d(p,r) \leq d(p,q) + d(q,r)$ (Triangle Inequality)
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    [Restriction of a Metric Space]
+    If $Y$ is a nonempty subset of a metric space $(X,d)$, then the restruction of the function $d$ to the input of $Y \times Y$ is a metric on $Y$. In other words, $(Y,d|_{Y \times Y})$ is a metric space. We call it a subspace of $(X,d)$. and we often call $X$ the ambient space of $Y$.
+\end{remark}
+\begin{definition}
+    [Open Interval]
+    $$ (a,b) := \left\{x \in \mathbb{R} : a < x < b \right\}$$
+\end{definition}
+\begin{remark}
+    [Open Ball]
+    $$V_r(p) := \left\{x \in X : d(x,p) < r \right\}$$
+    where $V_r(p)$ is the open ball of radius $r$ centered at $p$.\\
+    Can also be denoted as $B(p,r)$ or $B_r(p)$.
+\end{remark}
+\begin{definition}
+    [Neighborhood]
+    A neighborhood of a point $p \in X$ of radus $r>0$ is a set $N$ such that there exists an open ball $V_r(p)$ contained in $N$. In other words, $N$ is a neighborhood of $p$ if there exists an $r > 0$ such that $V_r(p) \subseteq N$.
+\end{definition}
+\begin{definition}
+    [Interior Point]
+    A point $p \in X$ is called an interior point of a set $E \subseteq X$ if there exists a neighborhood $N$ of $p$ such that $N \subseteq E$. In other words, $p$ is an interior point of $E$ if there exists an $r > 0$ such that $V_r(p) \subseteq E$.
+\end{definition}
+\begin{definition}
+    [The interior of a set]
+    The interior of a set $E \subseteq X$ is the set of all interior points of $E$. We denote the interior of $E$ by $\text{int}(E)$ or $E^{\circ}$.
+\end{definition}
+\begin{definition}
+    [The exterior of a set]
+    The exterior of a set $E \subseteq X$ is the interior of the complement of $E$. We denote the exterior of $E$ by $\text{ext}(E)$ or $E^{e}$.
+\end{definition}
+\begin{definition}
+    [Open Set (via Interior)]
+    A set $E \subseteq X$ is said to be open if $E = \text{int}(E)$. In other words, a set is open if every point of the set is an interior point of the set.
+\end{definition}
+\begin{definition}
+    [Topological Space]
+    Let $X$ be a nonempty set and let $\tau$ be a family of certain subsets of $X$. We say that $(X,\tau)$ is a topological space if the following properties hold:
+    \begin{enumerate}
+        \item Any union of sets in $\tau$ is also in $\tau$.
+        \item Any finite intersection of sets in $\tau$ is also in $\tau$.
+        \item $\emptyset$ and $X$ are in $\tau$.
+    \end{enumerate}
+\end{definition}
+\begin{definition}
+    [Neighborhood of Topological Space]
+    A neighborhood of a point $p \in X$ is any open set containing p
+\end{definition}
+\begin{definition}
+    [Interior Point of Topological Space]
+    A point $p \in X$ is called an interior point of a set $E \subseteq X$ if there exists a neighborhood $N$ of $p$ such that $N \subseteq E$. In other words, $p$ is an interior point of $E$ if there exists an open set $N$ such that $p \in N \subseteq E$.
+\end{definition}
+\begin{remark}
+    [Seperation Axioms in Topological Spaces]
+    The seperation axioms are a collection of properties that a topological space may or may not satisfy. They are used to classify topological spaces based on how well they can distinguish between points and sets. The most common seperation axioms are:
+    \begin{enumerate}
+        \item $T_0$ (Kolmogorov): For any two distinct points $p,q \in X$, there exists an open set containing one of the points but not the other.
+        \item $T_1$ (Frechet): For any two distinct points $p,q \in X$, there exist open sets $U$ and $V$ such that $p \in U$, $q \notin U$, $q \in V$, and $p \notin V$.
+        \item $T_2$ (Hausdorff): For any two distinct points $p,q \in X$, there exist neighborhoods $N_p$ of $p$ and $N_q$ of $q$ such that $N_p \cap N_q = \emptyset$.
+        \item $T_3$ (Regular): A topological space is regular if it is $T_1$ and for any point $p \in X$ and closed set $F \subseteq X$ such that $p \notin F$, there exist disjoint open sets $U$ and $V$ such that $p \in U$ and $F \subseteq V$.
+        \item $T_4$ (Normal): A topological space is normal if it is $T_1$ and for any two disjoint closed sets $F_1,F_2 \subseteq X$, there exist disjoint open sets $U_1$ and $U_2$ such that $F_1 \subseteq U_1$ and $F_2 \subseteq U_2$.
+    \end{enumerate}
+\end{remark}
+\begin{definition}
+    [Hausdorff Space]
+    A topological space $(X,\tau)$ is said to be a Hausdorff space if for any two distinct points $p,q \in X$, there exist neighborhoods $N_p$ of $p$ and $N_q$ of $q$ such that $N_p \cap N_q = \emptyset$.
+\end{definition}
+\begin{remark}
+    [Challenge Question]
+    Prove that all metric spaces are Hausdorff spaces.
+    \begin{proof}
+        Let $(X,d)$ be a metric space and let $p,q \in X$ be two distinct points. Then $d(p,q) > 0$. Let $r = \frac{d(p,q)}{2}$. Then $V_r(p)$ and $V_r(q)$ are neighborhoods of $p$ and $q$ respectively. We claim that $V_r(p) \cap V_r(q) = \emptyset$. Suppose not, then there exists a point $x \in V_r(p) \cap V_r(q)$. Then $d(x,p) < r$ and $d(x,q) < r$. By the triangle inequality, we have:
+        $$d(p,q) \leq d(p,x) + d(x,q) < r + r = 2r = d(p,q)$$
+        which is a contradiction. Therefore, $V_r(p) \cap V_r(q) = \emptyset$ and hence $(X,d)$ is a Hausdorff space.
+    \end{proof}
+\end{remark}
+\begin{definition}
+    [Limit Point]
+    A point $p \in X$ is called a limit point of a set $E \subseteq X$ if every neighborhood of $p$ contains a point $q \in E$ such that $q \neq p$. 
+\end{definition}
+\begin{definition}
+    [Derived set]
+    The derived set of a set $E \subseteq X$ is the set of all limit points of $E$. We denote the derived set of $E$ by $E'$. In other words, $E' = \left\{p \in X : p \text{ is a limit point of } E \right\}$.
+\end{definition}
+\begin{definition}
+    [Clousure of a set]
+    The closure of a set $E \subseteq X$ is the union of $E$ and its derived set $E'$. We denote the closure of $E$ by $\overline{E}$. In other words, $\overline{E} = E \cup E'$.
+\end{definition}
+\begin{definition}
+    [Closed Set]
+    A set $E \subseteq X$ is said to be closed if $E = \overline{E}$. In other words, a set is closed if it contains all its limit points.
+
+    This may seem like it doesnt hold in anything other than metric spaces, but it does. In fact, it holds in any topological space. A set is closed if it contains all its limit points. This makes sense intuitively, because if a set contains all its limit points, then it is closed under the operation of taking limits. This is a very important property of closed sets, and it is one of the reasons why they are so useful in analysis.
+\end{definition}
+\begin{definition}
+    [Isolated point]
+    A point $p \in E$ is called an isolated point of a set $E \subseteq X$ if there exists a neighborhood $N$ of $p$ such that $N \cap E = \left\{p\right\}$. In other words, $p$ is an isolated point of $E$ if there exists an open set $N$ such that $p \in N$ and $N \cap E = \left\{p\right\}$.
+\end{definition}
+\begin{theorem}
+    [Fundamental Theorem about open and closed sets]
+    A set is closed iff its complement is open.
+\end{theorem}
+\begin{definition}
+    [Boundary Point]
+    A point $p \in X$ is called a boundary point of a set $E \subseteq X$ if every neighborhood of $p$ contains a point $q \in E$ and a point $r \in E^c$. In other words, $p$ is a boundary point of $E$ if for every open set $N$ such that $p \in N$, we have $N \cap E \neq \emptyset$ and $N \cap E^c \neq \emptyset$.
+
+    For a point $p \in X$, $p$ is a boundary point of $E$ if and only it is a limit point in $E^c$, similarly, $p$ is a boundary point of $E^c$ if and only if it is a limit point in $E$. 
+
+    Note in the defintion we are not saying that for the neighborhood $N$ of $p$, there exists a point $q \in E$ and a point $r \in E^c$ \textbf{not including } $p$. This is because if $p \in E$, then $p \in N \cap E$ and if $p \in E^c$, then $p \in N \cap E^c$. So we are not excluding the point $p$ from the neighborhood $N$.
+\end{definition}
+
+\begin{definition}
+    [Cauchy Sequence]
+    A sequence $(x_n)$ in a metric space $(X, d)$ is called a Cauchy sequence if for every $\varepsilon > 0$, there exists a positive integer $N$ such that for all $m, n \geq N$, we have $d(x_m, x_n) < \varepsilon$.
+\end{definition}
+
+\begin{definition}
+    [Closed Metric Space]
+    A metric space $(X, d)$ is called closed if every Cauchy sequence in $X$ converges to a limit that is also in $X$. In other words, if $(x_n)$ is a Cauchy sequence in $X$, then there exists a point $x \in X$ such that $\lim_{n \to \infty} x_n = x$.
+\end{definition}
+\begin{definition}
+    [Permutation]
+    A permutation of a set is a one-to-one function from the set to itself. In other words, a permutation of a set is a rearrangement of its elements. One-to-one functions on a set are also called permutations of the set.
+\end{definition}
+
+
+\begin{definition}
+    [Compact Set]
+    A set $E \subseteq X$ is called compact if every sequence in $E$ has a subsequence that converges to a limit that is also in $E$. In other words, if $(x_n)$ is a sequence in $E$, then there exists a subsequence $(x_{n_k})$ and a point $x \in E$ such that $\lim_{k \to \infty} x_{n_k} = x$.
+\end{definition}
+
+\begin{definition}
+    [Open Cover] An open cover of a set $E \subseteq X$ is a collection of open sets $\{U_\alpha\}_{\alpha \in A}$ such that $E \subseteq \bigcup_{\alpha \in A} U_\alpha$. In other words, every point in $E$ is contained in at least one of the open sets in the collection.
+\end{definition}
+
+\begin{definition}
+    [Open Set Compact]
+    A set $E \subseteq X$ is called open set compact if every open cover of $E$ has a finite subcover. In other words, if $\{U_\alpha\}_{\alpha \in A}$ is an open cover of $E$, then there exists a finite subset $B \subseteq A$ such that $E \subseteq \bigcup_{\alpha \in B} U_\alpha$.
+\end{definition}
+
+\begin{definition}
+    [Limit Point Compact]
+    A topological space $(X, \tau)$ is called limit point compact if every infinite subset of $X$ has a limit point in $X$. In other words, if $E \subseteq X$ is an infinite set, then there exists a point $p \in X$ such that every neighborhood of $p$ contains infinitely many points of $E$.
+\end{definition}
+
+\begin{theorem}
+    Compact spaces are limit point compact.
+    \begin{proof}
+        Suppose $X$ is a compact topological space.\\
+        Need to show that $X$ is limit point compact, \\
+        That is every infinite set $S \subset X$ has a limit point in $X$.\\
+        Suppose $S$ is an infinite set in $X$.\\
+        Suppose $S$ has no limit point in $X$.\\
+        Then for each $p \in X$, there exists a neighborhood $N_p$ of $p$ such that $N_p \cap S$ is finite.\\
+        Then $\{N_p\}_{p \in X}$ is an open cover of $X$.\\
+        Since $X$ is compact, there exists a finite subcover $\{N_{p_1}, N_{p_2}, \ldots, N_{p_n}\}$ of $X$.\\
+        Then $S \subseteq \bigcup_{i=1}^{n} N_{p_i}$.\\
+        But $N_{p_i} \cap S$ is finite for each $i = 1, 2, \ldots, n$.\\
+        Therefore, $S$ is finite, which is a contradiction.\\
+        Hence, $S$ has a limit point in $X$.\\
+        Thus $X$ is limit point compact.
+    \end{proof}
+\end{theorem}
+
+\begin{theorem}
+    [Sequentially Compact]
+    A topological space $(X, \tau)$ is called sequentially compact if every sequence in $X$ has a convergent subsequence whose limit is in $X$. In other words, if $(x_n)$ is a sequence in $X$, then there exists a subsequence $(x_{n_k})$ and a point $x \in X$ such that $\lim_{k \to \infty} x_{n_k} = x$.
+\end{theorem}
+
+\begin{lemma}
+    [Lebegue Number Lemma]
+    Let $(X, d)$ be a metric space and let $E \subseteq X$ be a compact set. Then for every open cover $\{U_\alpha\}_{\alpha \in A}$ of $E$, there exists a positive real number $\delta > 0$ such that for every point $p \in E$, the open ball $V_\delta(p)$ is contained in at least one of the open sets $U_\alpha$ in the cover. In other words, there exists a $\delta > 0$ such that for every $p \in E$, there exists an $\alpha \in A$ such that $V_\delta(p) \subseteq U_\alpha$.
+
+    Think of this like a filter for small balls. If you have a compact set, then you can find a small enough ball around each point in the set that is contained in one of the open sets in the cover. This is a very useful lemma in analysis, and it is often used to prove theorems about compact sets.
+\end{lemma}
+
+\begin{theorem}
+    [Lebesgue Number Theorem]
+    A sequentially compact metric space has a positive Lebesgue number
+\end{theorem}
+
+\begin{theorem}
+    [Sequentially Compact Metric Space is Compact]
+    Suppose $X$ is a sequentially compact metric space. Then $X$ is compact.
+    \begin{proof}
+        Suppose $C$ is an open cover of $X$.\\
+        Need to show that $C$ has a finite subcover.\\
+        Get a lebeusgue number $\delta > 0$ for $C$.\\
+        Let $r = \frac{\delta}{2}$.\\
+        Cover the space with finite number of open balls of radius $r$.\\
+        This can be done since $X$ is sequentially compact, and hence totally bounded.\\
+        Take the finite subcover of $C$ that covers the centers of these balls.\\
+        Then this finite subcover also covers the entire space $X$.\\
+    \end{proof}
+\end{theorem}
+
+\begin{example}
+    Let $\{G_\lambda\}_{\lambda \in \Lambda}$ be an open cover of the sequentially compact space $X$. Proe there ecists a $\delta > 0$ such that for every $x \in X$, there exists a $\lambda \in \Lambda$ such that $V_\delta(x) \subseteq G_\lambda$ with $V_\delta(x)$ being the open ball of radius at most $\delta$ centered at $x$.
+    \begin{proof}
+        Assume by contradiction that no such $\delta$ exists. Then for every $n \in \mathbb{N}$, there exists a point $x_n \in X$ such that for every $\lambda \in \Lambda$, $V_{1/n}(x_n) \not\subseteq G_\lambda$. Since $X$ is sequentially compact, the sequence $(x_n)$ has a convergent subsequence $(x_{n_k})$ that converges to some point $x \in X$. Since $\{G_\lambda\}_{\lambda \in \Lambda}$ is an open cover of $X$, there exists a $\lambda_0 \in \Lambda$ such that $x \in G_{\lambda_0}$. Since $G_{\lambda_0}$ is open, there exists an $\varepsilon > 0$ such that $V_\varepsilon(x) \subseteq G_{\lambda_0}$. Choose $K$ such that for all $k \geq K$, we have $d(x_{n_k}, x) < \varepsilon/2$. Then for all $k \geq K$, we have:
+        $$V_{\varepsilon/2}(x_{n_k}) \subseteq V_\varepsilon(x) \subseteq G_{\lambda_0}$$
+        This contradicts the assumption that $V_{1/n_k}(x_{n_k}) \not\subseteq G_\lambda$ for all $\lambda \in \Lambda$. Therefore, there exists a $\delta > 0$ such that for every $x \in X$, there exists a $\lambda \in \Lambda$ such that $V_\delta(x) \subseteq G_\lambda$.
+
+
+    \end{proof}
+\end{example}
+
+\end{document}
