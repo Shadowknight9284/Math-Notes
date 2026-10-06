@@ -230,4 +230,37 @@
     \end{proof}
 \end{example}
 
+
+\begin{definition}
+    [Continuous Function at a Point]
+    Let $(X,d), (Y,\rho)$ with $f: X \to Y$ be a function. Then $f$ is continuous at $p \in X$ if for every $\varepsilon > 0$, there exists a $\delta > 0$ such that for all $q \in X$, if $d(p,q) < \delta$, then $\rho(f(p), f(q)) < \varepsilon$. In other words, $f$ is continuous at $p$ if for every open ball $V_\varepsilon(f(p))$ in $Y$, there exists an open ball $V_\delta(p)$ in $X$ such that $f(V_\delta(p)) \subseteq V_\varepsilon(f(p))$.\\
+\end{definition}
+
+\begin{definition}
+    [Continuous Function on a Set]
+    Let $(X,d), (Y,\rho)$ with $f: X \to Y$ be a function. Then $f$ is continuous on a set $A \subseteq X$ if for every $p \in A$, $f$ is continuous at $p$.\\
+\end{definition}
+
+\begin{definition}
+    [Uniformly Continuous Function]
+    Let $(X,d), (Y,\rho)$ with $f: X \to Y$ be a function. Then $f$ is uniformly continuous on a set $A \subseteq X$ if for every $\varepsilon > 0$, there exists a $\delta > 0$ such that for all $p,q \in A$, if $d(p,q) < \delta$, then $\rho(f(p), f(q)) < \varepsilon$. In other words, $f$ is uniformly continuous on $A$ if for every open ball $V_\varepsilon(f(p))$ in $Y$, there exists an open ball $V_\delta(p)$ in $X$ such that for all $p,q \in A$, if $q \in V_\delta(p)$, then $f(q) \in V_\varepsilon(f(p))$.\\
+
+    IE for all $p,q \in A$, if $d(p,q) < \delta$, then $\rho(f(p), f(q)) < \varepsilon$.
+
+    
+\end{definition}
+
+\begin{theorem}
+$f:X\to Y$ is continuous on $X$ if and only for all $(x_n) \subseteq X$ such that $x_n \to x$, we have $f(x_n) \to f(x)$.
+\end{theorem}
+
+\begin{theorem}
+    If $X$ is compact and $f:X\to Y$ is continuous, then $f(X)$ is compact and $f$ is uniformly continuous on $X$.
+\end{theorem}
+
+\begin{remark}
+    [Negation of Uniform Continuity]
+    
+\end{remark}
+
 \end{document}

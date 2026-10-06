@@ -1,0 +1,248 @@
+\documentclass[answers,12pt,addpoints]{exam}
+
+\usepackage{import}
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{411 - Mathematical Analysis}
+\newcommand{\assignment}{Homework 1}
+
+\author{\name}
+\title{\course\ - \assignment}
+
+\begin{document}
+
+\maketitle
+
+\begin{questions}
+
+\setcounter{question}{5}
+\question
+Prove that in a Hausdorff space (hence in every metric space),
+every finite set is closed.
+
+\begin{solution}
+Let $X$ be Hausdorff and let $A\subseteq X$ be finite.
+If $A=\varnothing$, then $A$ is closed.
+
+Otherwise, write $A=\{a_1,\ldots,a_n\}$. We show that
+$X\setminus A$ is open. Let $x\in X\setminus A$.
+For each $i$, the Hausdorff property gives disjoint open sets
+$U_i$ and $V_i$ with $x\in U_i$ and $a_i\in V_i$.
+
+The set
+\[
+U=\bigcap_{i=1}^{n}U_i
+\]
+is open and contains $x$. Since $a_i\notin U_i$ for every $i$,
+$U$ contains no point of $A$. Thus,
+\[
+x\in U\subseteq X\setminus A.
+\]
+Every point of $X\setminus A$ therefore has an open neighborhood
+contained in $X\setminus A$. Hence, $X\setminus A$ is open,
+so $A$ is closed.
+\end{solution}
+
+
+\setcounter{question}{7}
+\question
+Let $X$ be a metric space with metric $d$.
+
+\begin{parts}
+
+\part
+Prove that the following function is also a metric on $X$:
+\[
+\overline{d}(p,q):=\min\{d(p,q),1\}.
+\]
+
+\begin{solution}
+Let $p,q,r\in X$. We verify the metric axioms.
+
+\begin{enumerate}[(i)]
+\item Non-negativity:
+Since $d(p,q)\geq 0$, we have $\overline{d}(p,q) = \min\{d(p,q),1\} \geq 0$.
+
+\item Identity of indiscernibles:
+Since $1>0$,
+\[
+\overline{d}(p,q)=0
+\iff d(p,q)=0
+\iff p=q.
+\]
+
+\item Symmetry:
+Since $d$ is symmetric,
+\[
+\overline{d}(p,q)
+=\min\{d(p,q),1\}
+=\min\{d(q,p),1\}
+=\overline{d}(q,p).
+\]
+
+\item Triangle inequality:
+If $d(p,q)\geq 1$ or $d(q,r)\geq 1$, then
+\[
+\overline{d}(p,r)\leq 1
+\leq \overline{d}(p,q)+\overline{d}(q,r).
+\]
+Otherwise, both distances are less than $1$, so
+\[
+\overline{d}(p,r)
+\leq d(p,r)
+\leq d(p,q)+d(q,r)
+=\overline{d}(p,q)+\overline{d}(q,r).
+\]
+\end{enumerate}
+
+Therefore, $\overline{d}$ is a metric on $X$.
+\end{solution}
+
+
+\part
+Prove that $d$ and $\overline{d}$ induce the same topology;
+that is, they have the same open sets.
+
+\begin{solution}
+For every $p\in X$ and $0<r\leq 1$,
+\[
+\overline{d}(p,q)<r
+\iff \min\{d(p,q),1\}<r
+\iff d(p,q)<r.
+\]
+Therefore,
+\[
+B_{\overline{d}}(p,r)=B_d(p,r).
+\]
+
+Suppose $U$ is open in $(X,d)$ and $p\in U$.
+Choose $\epsilon>0$ such that $B_d(p,\epsilon)\subseteq U$,
+and let $r=\min\{\epsilon,1\}$. Then
+\[
+B_{\overline{d}}(p,r)
+=B_d(p,r)
+\subseteq B_d(p,\epsilon)
+\subseteq U.
+\]
+Thus, $U$ is open in $(X,\overline{d})$.
+
+Conversely, suppose $U$ is open in $(X,\overline{d})$
+and $p\in U$. Choose $\epsilon>0$ such that
+$B_{\overline{d}}(p,\epsilon)\subseteq U$,
+and let $r=\min\{\epsilon,1\}$. Then
+\[
+B_d(p,r)
+=B_{\overline{d}}(p,r)
+\subseteq B_{\overline{d}}(p,\epsilon)
+\subseteq U.
+\]
+Thus, $U$ is open in $(X,d)$.
+
+Hence, the two metrics induce the same topology.
+\end{solution}
+
+\end{parts}
+
+\begin{remark}
+Although the metrics induce the same topology, they may differ
+in boundedness: $\overline{d}\leq 1$, even when $d$ is unbounded.
+\end{remark}
+
+
+\question
+Let $X$ be an arbitrary topological space and let $A\subseteq X$.
+Prove the following.
+
+\begin{remark}[Partition Theorem]
+Every point of $X$ lies in exactly one of the following:
+the interior of $A$, the boundary of $A$, or the interior of
+$X\setminus A$. Equivalently,
+\[
+X=\operatorname{int}(A)
+\sqcup \partial A
+\sqcup \operatorname{int}(X\setminus A).
+\]
+Here, $\sqcup$ denotes a disjoint union.
+\end{remark}
+
+\begin{parts}
+
+\part
+$A$ is open if and only if it contains none of its boundary points.
+
+\begin{solution}
+Suppose $A$ is open. For each $x\in A$, the set $A$ is an open
+neighborhood of $x$ disjoint from $X\setminus A$. Thus,
+$x\notin\partial A$, so $A\cap\partial A=\varnothing$.
+
+Conversely, suppose $A\cap\partial A=\varnothing$.
+If $x\in A$, then $x$ is neither a boundary point of $A$
+nor an interior point of $X\setminus A$. By the Partition
+Theorem, $x\in\operatorname{int}(A)$. Therefore, every point
+of $A$ is an interior point, so $A$ is open.
+\end{solution}
+
+
+\part
+$A$ is closed if and only if it contains all of its boundary points.
+
+\begin{solution}
+Suppose $A$ is closed. If $x\notin A$, then $X\setminus A$
+is an open neighborhood of $x$ disjoint from $A$.
+Thus, $x\notin\partial A$. Therefore,
+$\partial A\subseteq A$.
+
+Conversely, suppose $\partial A\subseteq A$.
+If $x\in X\setminus A$, then $x$ is neither a boundary point
+of $A$ nor an interior point of $A$. By the Partition
+Theorem, $x\in\operatorname{int}(X\setminus A)$.
+Thus, $X\setminus A$ is open, so $A$ is closed.
+\end{solution}
+
+
+\part
+$A$ is neither open nor closed if and only if it contains
+some of its boundary points, but not all of them.
+
+\begin{solution}
+By part (a), $A$ is not open if and only if
+\[
+A\cap\partial A\neq\varnothing.
+\]
+By part (b), $A$ is not closed if and only if
+\[
+\partial A\setminus A\neq\varnothing.
+\]
+Thus, $A$ is neither open nor closed exactly when it contains
+at least one boundary point and omits at least one boundary point.
+\end{solution}
+
+\end{parts}
+
+
+\question
+Let $X$ be an arbitrary topological space. A set is called
+\emph{clopen} if it is both closed and open.
+Prove that $A\subseteq X$ is clopen if and only if
+$\partial A=\varnothing$.
+
+\begin{solution}
+Suppose $A$ is clopen. By Problem 9(a), $A\cap\partial A=\varnothing$.
+By Problem 9(b), $\partial A\subseteq A$. Together, these imply
+$\partial A=\varnothing$.
+
+Conversely, suppose $\partial A=\varnothing$. Then both
+\[
+A\cap\partial A=\varnothing
+\qquad\text{and}\qquad
+\partial A\subseteq A.
+\]
+By Problem 9(a) and (b), $A$ is both open and closed.
+Hence, $A$ is clopen.
+\end{solution}
+
+\end{questions}
+
+\end{document}
