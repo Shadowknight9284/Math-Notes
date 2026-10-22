@@ -1,266 +1,1082 @@
-\documentclass[answers,12pt,addpoints]{exam} 
+\documentclass[answers,12pt,addpoints]{exam}
 \usepackage{import}
 
-\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes/}{style.tex}
+
+% Assumes style.tex loads the required mathematics packages
+% and defines definition, theorem, lemma, remark, and example.
 
 % Header
 \newcommand{\name}{Pranav Tikkawar}
 \newcommand{\course}{01:XXX:XXX}
 \newcommand{\assignment}{Homework n}
 \author{\name}
-\title{\course \ - \assignment}
+\title{\course\ -- \assignment}
 
 \begin{document}
 \maketitle
 
 \newpage
 \section{Metric Spaces}
-\begin{definition}
-    [Metric Space] 
-    A nonepty set $X$ is said to be a metric space if with any two point $p,q \in X$ there is a real number $d(p,q)$ called the distance between $p$ and $q$ such that the following properties hold:
-    \begin{enumerate}
-        \item $d(p,q) \geq 0$ and $d(p,q) = 0$ if and only if $p = q$
-        \item $d(p,q) = d(q,p)$ (Symmetry)
-        \item $d(p,r) \leq d(p,q) + d(q,r)$ (Triangle Inequality)
-    \end{enumerate}
-\end{definition}
-\begin{remark}
-    [Restriction of a Metric Space]
-    If $Y$ is a nonempty subset of a metric space $(X,d)$, then the restruction of the function $d$ to the input of $Y \times Y$ is a metric on $Y$. In other words, $(Y,d|_{Y \times Y})$ is a metric space. We call it a subspace of $(X,d)$. and we often call $X$ the ambient space of $Y$.
-\end{remark}
-\begin{definition}
-    [Open Interval]
-    $$ (a,b) := \left\{x \in \mathbb{R} : a < x < b \right\}$$
-\end{definition}
-\begin{remark}
-    [Open Ball]
-    $$V_r(p) := \left\{x \in X : d(x,p) < r \right\}$$
-    where $V_r(p)$ is the open ball of radius $r$ centered at $p$.\\
-    Can also be denoted as $B(p,r)$ or $B_r(p)$.
-\end{remark}
-\begin{definition}
-    [Neighborhood]
-    A neighborhood of a point $p \in X$ of radus $r>0$ is a set $N$ such that there exists an open ball $V_r(p)$ contained in $N$. In other words, $N$ is a neighborhood of $p$ if there exists an $r > 0$ such that $V_r(p) \subseteq N$.
-\end{definition}
-\begin{definition}
-    [Interior Point]
-    A point $p \in X$ is called an interior point of a set $E \subseteq X$ if there exists a neighborhood $N$ of $p$ such that $N \subseteq E$. In other words, $p$ is an interior point of $E$ if there exists an $r > 0$ such that $V_r(p) \subseteq E$.
-\end{definition}
-\begin{definition}
-    [The interior of a set]
-    The interior of a set $E \subseteq X$ is the set of all interior points of $E$. We denote the interior of $E$ by $\text{int}(E)$ or $E^{\circ}$.
-\end{definition}
-\begin{definition}
-    [The exterior of a set]
-    The exterior of a set $E \subseteq X$ is the interior of the complement of $E$. We denote the exterior of $E$ by $\text{ext}(E)$ or $E^{e}$.
-\end{definition}
-\begin{definition}
-    [Open Set (via Interior)]
-    A set $E \subseteq X$ is said to be open if $E = \text{int}(E)$. In other words, a set is open if every point of the set is an interior point of the set.
-\end{definition}
-\begin{definition}
-    [Topological Space]
-    Let $X$ be a nonempty set and let $\tau$ be a family of certain subsets of $X$. We say that $(X,\tau)$ is a topological space if the following properties hold:
-    \begin{enumerate}
-        \item Any union of sets in $\tau$ is also in $\tau$.
-        \item Any finite intersection of sets in $\tau$ is also in $\tau$.
-        \item $\emptyset$ and $X$ are in $\tau$.
-    \end{enumerate}
-\end{definition}
-\begin{definition}
-    [Neighborhood of Topological Space]
-    A neighborhood of a point $p \in X$ is any open set containing p
-\end{definition}
-\begin{definition}
-    [Interior Point of Topological Space]
-    A point $p \in X$ is called an interior point of a set $E \subseteq X$ if there exists a neighborhood $N$ of $p$ such that $N \subseteq E$. In other words, $p$ is an interior point of $E$ if there exists an open set $N$ such that $p \in N \subseteq E$.
-\end{definition}
-\begin{remark}
-    [Seperation Axioms in Topological Spaces]
-    The seperation axioms are a collection of properties that a topological space may or may not satisfy. They are used to classify topological spaces based on how well they can distinguish between points and sets. The most common seperation axioms are:
-    \begin{enumerate}
-        \item $T_0$ (Kolmogorov): For any two distinct points $p,q \in X$, there exists an open set containing one of the points but not the other.
-        \item $T_1$ (Frechet): For any two distinct points $p,q \in X$, there exist open sets $U$ and $V$ such that $p \in U$, $q \notin U$, $q \in V$, and $p \notin V$.
-        \item $T_2$ (Hausdorff): For any two distinct points $p,q \in X$, there exist neighborhoods $N_p$ of $p$ and $N_q$ of $q$ such that $N_p \cap N_q = \emptyset$.
-        \item $T_3$ (Regular): A topological space is regular if it is $T_1$ and for any point $p \in X$ and closed set $F \subseteq X$ such that $p \notin F$, there exist disjoint open sets $U$ and $V$ such that $p \in U$ and $F \subseteq V$.
-        \item $T_4$ (Normal): A topological space is normal if it is $T_1$ and for any two disjoint closed sets $F_1,F_2 \subseteq X$, there exist disjoint open sets $U_1$ and $U_2$ such that $F_1 \subseteq U_1$ and $F_2 \subseteq U_2$.
-    \end{enumerate}
-\end{remark}
-\begin{definition}
-    [Hausdorff Space]
-    A topological space $(X,\tau)$ is said to be a Hausdorff space if for any two distinct points $p,q \in X$, there exist neighborhoods $N_p$ of $p$ and $N_q$ of $q$ such that $N_p \cap N_q = \emptyset$.
-\end{definition}
-\begin{remark}
-    [Challenge Question]
-    Prove that all metric spaces are Hausdorff spaces.
-    \begin{proof}
-        Let $(X,d)$ be a metric space and let $p,q \in X$ be two distinct points. Then $d(p,q) > 0$. Let $r = \frac{d(p,q)}{2}$. Then $V_r(p)$ and $V_r(q)$ are neighborhoods of $p$ and $q$ respectively. We claim that $V_r(p) \cap V_r(q) = \emptyset$. Suppose not, then there exists a point $x \in V_r(p) \cap V_r(q)$. Then $d(x,p) < r$ and $d(x,q) < r$. By the triangle inequality, we have:
-        $$d(p,q) \leq d(p,x) + d(x,q) < r + r = 2r = d(p,q)$$
-        which is a contradiction. Therefore, $V_r(p) \cap V_r(q) = \emptyset$ and hence $(X,d)$ is a Hausdorff space.
-    \end{proof}
-\end{remark}
-\begin{definition}
-    [Limit Point]
-    A point $p \in X$ is called a limit point of a set $E \subseteq X$ if every neighborhood of $p$ contains a point $q \in E$ such that $q \neq p$. 
-\end{definition}
-\begin{definition}
-    [Derived set]
-    The derived set of a set $E \subseteq X$ is the set of all limit points of $E$. We denote the derived set of $E$ by $E'$. In other words, $E' = \left\{p \in X : p \text{ is a limit point of } E \right\}$.
-\end{definition}
-\begin{definition}
-    [Clousure of a set]
-    The closure of a set $E \subseteq X$ is the union of $E$ and its derived set $E'$. We denote the closure of $E$ by $\overline{E}$. In other words, $\overline{E} = E \cup E'$.
-\end{definition}
-\begin{definition}
-    [Closed Set]
-    A set $E \subseteq X$ is said to be closed if $E = \overline{E}$. In other words, a set is closed if it contains all its limit points.
 
-    This may seem like it doesnt hold in anything other than metric spaces, but it does. In fact, it holds in any topological space. A set is closed if it contains all its limit points. This makes sense intuitively, because if a set contains all its limit points, then it is closed under the operation of taking limits. This is a very important property of closed sets, and it is one of the reasons why they are so useful in analysis.
+\begin{definition}[Metric Space]
+A metric on a nonempty set $X$ is a function
+\[
+d:X\times X\longrightarrow [0,\infty)
+\]
+such that, for all $p,q,r\in X$:
+\begin{enumerate}
+    \item $d(p,q)=0$ if and only if $p=q$.
+    \item $d(p,q)=d(q,p)$.
+    \item $d(p,r)\leq d(p,q)+d(q,r)$.
+\end{enumerate}
+The pair $(X,d)$ is called a metric space.
 \end{definition}
-\begin{definition}
-    [Isolated point]
-    A point $p \in E$ is called an isolated point of a set $E \subseteq X$ if there exists a neighborhood $N$ of $p$ such that $N \cap E = \left\{p\right\}$. In other words, $p$ is an isolated point of $E$ if there exists an open set $N$ such that $p \in N$ and $N \cap E = \left\{p\right\}$.
+
+\begin{remark}[Metric Subspaces]
+If $Y$ is a nonempty subset of a metric space $(X,d)$, then
+\[
+d_Y=d|_{Y\times Y}
+\]
+is a metric on $Y$. The space $(Y,d_Y)$ is called a metric
+subspace of $(X,d)$, and $X$ is its ambient space.
+\end{remark}
+
+\begin{definition}[Open Interval]
+For $a,b\in\mathbb{R}$ with $a<b$, define
+\[
+(a,b)=\{x\in\mathbb{R}:a<x<b\}.
+\]
 \end{definition}
-\begin{theorem}
-    [Fundamental Theorem about open and closed sets]
-    A set is closed iff its complement is open.
+
+\begin{definition}[Open Ball]
+Let $(X,d)$ be a metric space. For $p\in X$ and $r>0$, define
+\[
+B_X(p,r)=\{x\in X:d(x,p)<r\}.
+\]
+When the ambient space is clear, we write $B(p,r)$.
+Other common notations are $B_r(p)$ and $V_r(p)$.
+\end{definition}
+
+\begin{definition}[Neighborhood in a Metric Space]
+A set $N\subseteq X$ is a neighborhood of $p\in X$ if there
+exists $r>0$ such that
+\[
+B(p,r)\subseteq N.
+\]
+A neighborhood need not itself be open.
+An open neighborhood is a neighborhood that is open.
+\end{definition}
+
+\begin{definition}[Interior Point]
+A point $p\in X$ is an interior point of $E\subseteq X$ if
+there exists $r>0$ such that
+\[
+B(p,r)\subseteq E.
+\]
+\end{definition}
+
+\begin{definition}[Interior]
+The interior of $E\subseteq X$ is the set of all interior
+points of $E$:
+\[
+\operatorname{int}_X(E)
+=
+\{p\in X:\text{there exists }r>0
+\text{ such that }B(p,r)\subseteq E\}.
+\]
+We also write $E^\circ$ when the ambient space is clear.
+\end{definition}
+
+\begin{definition}[Exterior]
+The exterior of $E\subseteq X$ is
+\[
+\operatorname{ext}_X(E)
+=
+\operatorname{int}_X(X\setminus E).
+\]
+\end{definition}
+
+\begin{definition}[Open Set in a Metric Space]
+A set $E\subseteq X$ is open if every point of $E$ is an
+interior point. Equivalently,
+\[
+E=\operatorname{int}_X(E).
+\]
+\end{definition}
+
+\begin{remark}[The Metric Topology]
+The open subsets of a metric space form a topology:
+\[
+\tau_d
+=
+\{U\subseteq X:
+\text{for every }p\in U,\text{ there exists }r>0
+\text{ with }B(p,r)\subseteq U\}.
+\]
+Whenever a metric space is treated as a topological space,
+we use this topology unless stated otherwise.
+\end{remark}
+
+\section{Topological Spaces and Separation}
+
+\begin{definition}[Topological Space]
+Let $X$ be a set. A topology on $X$ is a collection
+$\tau\subseteq\mathcal{P}(X)$ such that:
+\begin{enumerate}
+    \item $\emptyset,X\in\tau$.
+    \item Any union of members of $\tau$ belongs to $\tau$.
+    \item Any finite intersection of members of $\tau$
+    belongs to $\tau$.
+\end{enumerate}
+The pair $(X,\tau)$ is a topological space.
+The members of $\tau$ are called open sets.
+\end{definition}
+
+\begin{definition}[Neighborhood in a Topological Space]
+A set $N\subseteq X$ is a neighborhood of $p\in X$ if there
+exists an open set $U$ such that
+\[
+p\in U\subseteq N.
+\]
+An open neighborhood of $p$ is an open set containing $p$.
+\end{definition}
+
+\begin{remark}[Neighborhood Conventions]
+Some texts use the word ``neighborhood'' to mean only an
+open neighborhood. These notes allow neighborhoods that
+are not open and explicitly say ``open neighborhood''
+when openness is required.
+\end{remark}
+
+\begin{definition}[Interior in a Topological Space]
+For $E\subseteq X$, a point $p$ belongs to
+$\operatorname{int}_X(E)$ if there exists an open set $U$
+such that
+\[
+p\in U\subseteq E.
+\]
+Equivalently, $\operatorname{int}_X(E)$ is the union of all
+open subsets of $E$.
+\end{definition}
+
+\begin{definition}[Closed Set]
+A set $F\subseteq X$ is closed if $X\setminus F$ is open.
+\end{definition}
+
+\begin{definition}[Subspace Topology]
+If $Y\subseteq X$, the subspace topology on $Y$ is
+\[
+\tau_Y=\{Y\cap U:U\in\tau\}.
+\]
+Thus a subset of $Y$ may be open in $Y$ without being
+open in $X$.
+\end{definition}
+
+\begin{remark}[Separation Axioms]
+The following axioms describe how well a topology
+separates points and closed sets.
+\begin{enumerate}
+    \item $T_0$:
+    For distinct $p,q\in X$, there exists an open set
+    containing one of them but not the other.
+
+    \item $T_1$:
+    For distinct $p,q\in X$, there exist open sets
+    $U,V$ such that
+    \[
+    p\in U,\quad q\notin U,
+    \qquad
+    q\in V,\quad p\notin V.
+    \]
+    Equivalently, every singleton is closed.
+
+    \item $T_2$ (Hausdorff):
+    For distinct $p,q\in X$, there exist disjoint open
+    neighborhoods $U$ of $p$ and $V$ of $q$.
+
+    \item $T_3$:
+    The space is $T_1$, and whenever $F$ is closed and
+    $p\notin F$, there exist disjoint open sets $U,V$
+    such that
+    \[
+    p\in U,\qquad F\subseteq V.
+    \]
+
+    \item $T_4$:
+    The space is $T_1$, and whenever $F_1,F_2$ are
+    disjoint closed sets, there exist disjoint open sets
+    $U_1,U_2$ such that
+    \[
+    F_1\subseteq U_1,\qquad F_2\subseteq U_2.
+    \]
+\end{enumerate}
+With these conventions,
+\[
+T_4\Longrightarrow T_3\Longrightarrow T_2
+\Longrightarrow T_1\Longrightarrow T_0.
+\]
+Terminology varies: some authors define ``regular'' and
+``normal'' without including the $T_1$ condition.
+\end{remark}
+
+\begin{definition}[Hausdorff Space]
+A topological space is Hausdorff if it satisfies $T_2$:
+distinct points have disjoint open neighborhoods.
+\end{definition}
+
+\begin{theorem}[Metric Spaces Are Hausdorff]
+Every metric space is Hausdorff in its metric topology.
 \end{theorem}
-\begin{definition}
-    [Boundary Point]
-    A point $p \in X$ is called a boundary point of a set $E \subseteq X$ if every neighborhood of $p$ contains a point $q \in E$ and a point $r \in E^c$. In other words, $p$ is a boundary point of $E$ if for every open set $N$ such that $p \in N$, we have $N \cap E \neq \emptyset$ and $N \cap E^c \neq \emptyset$.
 
-    For a point $p \in X$, $p$ is a boundary point of $E$ if and only it is a limit point in $E^c$, similarly, $p$ is a boundary point of $E^c$ if and only if it is a limit point in $E$. 
+\begin{proof}
+Let $p\neq q$ and put
+\[
+r=\frac{d(p,q)}{2}>0.
+\]
+Suppose $x\in B(p,r)\cap B(q,r)$. Then
+\[
+d(p,q)
+\leq d(p,x)+d(x,q)
+<r+r
+=d(p,q),
+\]
+a contradiction. Therefore the two open balls are disjoint.
+\end{proof}
 
-    Note in the defintion we are not saying that for the neighborhood $N$ of $p$, there exists a point $q \in E$ and a point $r \in E^c$ \textbf{not including } $p$. This is because if $p \in E$, then $p \in N \cap E$ and if $p \in E^c$, then $p \in N \cap E^c$. So we are not excluding the point $p$ from the neighborhood $N$.
+\section{Closure, Limit Points, and Boundary}
+
+\begin{definition}[Closure]
+For $E\subseteq X$, its closure is
+\[
+\overline{E}
+=
+\bigcap\{F\subseteq X:F\text{ is closed and }E\subseteq F\}.
+\]
+Equivalently,
+\[
+p\in\overline{E}
+\quad\Longleftrightarrow\quad
+\text{every open neighborhood of }p\text{ intersects }E.
+\]
 \end{definition}
 
-\begin{definition}
-    [Cauchy Sequence]
-    A sequence $(x_n)$ in a metric space $(X, d)$ is called a Cauchy sequence if for every $\varepsilon > 0$, there exists a positive integer $N$ such that for all $m, n \geq N$, we have $d(x_m, x_n) < \varepsilon$.
+\begin{definition}[Limit Point]
+A point $p\in X$ is a limit point, or accumulation point,
+of $E\subseteq X$ if every open neighborhood $U$ of $p$
+satisfies
+\[
+U\cap(E\setminus\{p\})\neq\emptyset.
+\]
+The point $p$ need not belong to $E$.
 \end{definition}
 
-\begin{definition}
-    [Closed Metric Space]
-    A metric space $(X, d)$ is called closed if every Cauchy sequence in $X$ converges to a limit that is also in $X$. In other words, if $(x_n)$ is a Cauchy sequence in $X$, then there exists a point $x \in X$ such that $\lim_{n \to \infty} x_n = x$.
-\end{definition}
-\begin{definition}
-    [Permutation]
-    A permutation of a set is a one-to-one function from the set to itself. In other words, a permutation of a set is a rearrangement of its elements. One-to-one functions on a set are also called permutations of the set.
+\begin{definition}[Derived Set]
+The derived set of $E$ is
+\[
+E'=\{p\in X:p\text{ is a limit point of }E\}.
+\]
 \end{definition}
 
-
-\begin{definition}
-    [Compact Set]
-    A set $E \subseteq X$ is called compact if every sequence in $E$ has a subsequence that converges to a limit that is also in $E$. In other words, if $(x_n)$ is a sequence in $E$, then there exists a subsequence $(x_{n_k})$ and a point $x \in E$ such that $\lim_{k \to \infty} x_{n_k} = x$.
-\end{definition}
-
-\begin{definition}
-    [Open Cover] An open cover of a set $E \subseteq X$ is a collection of open sets $\{U_\alpha\}_{\alpha \in A}$ such that $E \subseteq \bigcup_{\alpha \in A} U_\alpha$. In other words, every point in $E$ is contained in at least one of the open sets in the collection.
-\end{definition}
-
-\begin{definition}
-    [Open Set Compact]
-    A set $E \subseteq X$ is called open set compact if every open cover of $E$ has a finite subcover. In other words, if $\{U_\alpha\}_{\alpha \in A}$ is an open cover of $E$, then there exists a finite subset $B \subseteq A$ such that $E \subseteq \bigcup_{\alpha \in B} U_\alpha$.
-\end{definition}
-
-\begin{definition}
-    [Limit Point Compact]
-    A topological space $(X, \tau)$ is called limit point compact if every infinite subset of $X$ has a limit point in $X$. In other words, if $E \subseteq X$ is an infinite set, then there exists a point $p \in X$ such that every neighborhood of $p$ contains infinitely many points of $E$.
-\end{definition}
-
-\begin{theorem}
-    Compact spaces are limit point compact.
-    \begin{proof}
-        Suppose $X$ is a compact topological space.\\
-        Need to show that $X$ is limit point compact, \\
-        That is every infinite set $S \subset X$ has a limit point in $X$.\\
-        Suppose $S$ is an infinite set in $X$.\\
-        Suppose $S$ has no limit point in $X$.\\
-        Then for each $p \in X$, there exists a neighborhood $N_p$ of $p$ such that $N_p \cap S$ is finite.\\
-        Then $\{N_p\}_{p \in X}$ is an open cover of $X$.\\
-        Since $X$ is compact, there exists a finite subcover $\{N_{p_1}, N_{p_2}, \ldots, N_{p_n}\}$ of $X$.\\
-        Then $S \subseteq \bigcup_{i=1}^{n} N_{p_i}$.\\
-        But $N_{p_i} \cap S$ is finite for each $i = 1, 2, \ldots, n$.\\
-        Therefore, $S$ is finite, which is a contradiction.\\
-        Hence, $S$ has a limit point in $X$.\\
-        Thus $X$ is limit point compact.
-    \end{proof}
+\begin{theorem}[Closure and the Derived Set]
+In every topological space,
+\[
+\overline{E}=E\cup E'.
+\]
+Consequently,
+\[
+E\text{ is closed}
+\quad\Longleftrightarrow\quad
+E'\subseteq E.
+\]
 \end{theorem}
 
-\begin{theorem}
-    [Sequentially Compact]
-    A topological space $(X, \tau)$ is called sequentially compact if every sequence in $X$ has a convergent subsequence whose limit is in $X$. In other words, if $(x_n)$ is a sequence in $X$, then there exists a subsequence $(x_{n_k})$ and a point $x \in X$ such that $\lim_{k \to \infty} x_{n_k} = x$.
+\begin{proof}
+Every point of $E$ belongs to $\overline{E}$.
+Every point of $E'$ also belongs to $\overline{E}$,
+because every neighborhood intersects $E$.
+
+Conversely, suppose $p\in\overline{E}\setminus E$.
+Every open neighborhood of $p$ intersects $E$.
+Since $p\notin E$, such an intersection contains a point
+of $E$ different from $p$. Hence $p\in E'$.
+\end{proof}
+
+\begin{remark}[Closed Sets and Sequence Limits]
+In every topological space, a closed set contains every
+limit of every convergent sequence of its points.
+
+The converse holds in metric spaces but can fail in
+general topological spaces. Thus ``contains all its limit
+points'' should not be confused with a characterization
+using sequences alone in arbitrary spaces.
+\end{remark}
+
+\begin{definition}[Isolated Point]
+A point $p\in E$ is isolated in $E$ if there exists an open
+neighborhood $U$ of $p$ such that
+\[
+U\cap E=\{p\}.
+\]
+Equivalently, $p\in E\setminus E'$.
+\end{definition}
+
+\begin{theorem}[Open and Closed Complements]
+A set is closed if and only if its complement is open.
 \end{theorem}
 
-\begin{lemma}
-    [Lebegue Number Lemma]
-    Let $(X, d)$ be a metric space and let $E \subseteq X$ be a compact set. Then for every open cover $\{U_\alpha\}_{\alpha \in A}$ of $E$, there exists a positive real number $\delta > 0$ such that for every point $p \in E$, the open ball $V_\delta(p)$ is contained in at least one of the open sets $U_\alpha$ in the cover. In other words, there exists a $\delta > 0$ such that for every $p \in E$, there exists an $\alpha \in A$ such that $V_\delta(p) \subseteq U_\alpha$.
+\begin{remark}
+This is the definition of closedness adopted above.
+If closedness is instead introduced by
+$E=\overline{E}$, the same statement becomes an equivalent
+characterization.
+\end{remark}
 
-    Think of this like a filter for small balls. If you have a compact set, then you can find a small enough ball around each point in the set that is contained in one of the open sets in the cover. This is a very useful lemma in analysis, and it is often used to prove theorems about compact sets.
+\begin{definition}[Boundary]
+The boundary of $E\subseteq X$ is
+\[
+\partial E
+=
+\overline{E}\cap\overline{X\setminus E}.
+\]
+Equivalently, $p\in\partial E$ if every open neighborhood
+of $p$ intersects both $E$ and $X\setminus E$.
+\end{definition}
+
+\begin{remark}[Boundary Identities]
+For every $E\subseteq X$,
+\[
+\partial E
+=
+\overline{E}\setminus\operatorname{int}_X(E),
+\qquad
+\partial E=\partial(X\setminus E).
+\]
+Moreover,
+\[
+X=
+\operatorname{int}_X(E)
+\;\cup\;
+\partial E
+\;\cup\;
+\operatorname{ext}_X(E),
+\]
+where the three sets are pairwise disjoint.
+\end{remark}
+
+\begin{remark}[Boundary Points Versus Limit Points]
+The boundary definition does not exclude $p$ from the
+intersections.
+
+More precisely:
+\[
+p\in E
+\quad\Longrightarrow\quad
+\bigl(p\in\partial E
+\Longleftrightarrow p\in(X\setminus E)'\bigr),
+\]
+and
+\[
+p\notin E
+\quad\Longrightarrow\quad
+\bigl(p\in\partial E
+\Longleftrightarrow p\in E'\bigr).
+\]
+
+A boundary point need not be a limit point of both sets.
+For example, in the usual topology on $\mathbb{R}$,
+\[
+\partial\{0\}=\{0\},
+\qquad
+\{0\}'=\emptyset.
+\]
+\end{remark}
+
+\section{Sequences and Completeness}
+
+\begin{definition}[Convergent Sequence]
+A sequence $(x_n)$ in a topological space $X$ converges to
+$x\in X$ if, for every open neighborhood $U$ of $x$,
+there exists $N\in\mathbb{N}$ such that
+\[
+n\geq N\quad\Longrightarrow\quad x_n\in U.
+\]
+We write $x_n\to x$.
+
+In a metric space, this is equivalent to:
+for every $\varepsilon>0$, there exists $N\in\mathbb{N}$
+such that
+\[
+n\geq N\quad\Longrightarrow\quad d(x_n,x)<\varepsilon.
+\]
+\end{definition}
+
+\begin{theorem}[Uniqueness of Limits in Hausdorff Spaces]
+A convergent sequence in a Hausdorff space has a unique
+limit.
+\end{theorem}
+
+\begin{proof}
+Suppose $x_n\to p$ and $x_n\to q$ with $p\neq q$.
+Choose disjoint open neighborhoods $U$ of $p$ and $V$ of
+$q$. Eventually $x_n$ belongs to both $U$ and $V$, which
+contradicts $U\cap V=\emptyset$.
+\end{proof}
+
+\begin{definition}[Cauchy Sequence]
+A sequence $(x_n)$ in a metric space $(X,d)$ is Cauchy if,
+for every $\varepsilon>0$, there exists $N\in\mathbb{N}$
+such that
+\[
+m,n\geq N
+\quad\Longrightarrow\quad
+d(x_m,x_n)<\varepsilon.
+\]
+\end{definition}
+
+\begin{definition}[Complete Metric Space]
+A metric space $(X,d)$ is complete if every Cauchy sequence
+in $X$ converges to a point of $X$.
+\end{definition}
+
+\begin{remark}[Complete Versus Closed]
+Completeness is not the same definition as closedness.
+A subset is closed relative to an ambient topology,
+whereas completeness is a property of a metric space.
+
+Every metric space is closed as a subset of itself,
+but not every metric space is complete.
+
+A closed subspace of a complete metric space is complete.
+A complete metric subspace of any metric space is closed.
+\end{remark}
+
+\begin{definition}[Permutation]
+A permutation of a set $A$ is a bijection
+\[
+\sigma:A\longrightarrow A.
+\]
+Injectivity alone is insufficient when $A$ is infinite.
+For example, $n\mapsto n+1$ is injective on
+$\mathbb{N}=\{1,2,\ldots\}$ but is not surjective.
+\end{definition}
+
+\section{Compactness}
+
+\begin{definition}[Open Cover]
+An open cover of $E\subseteq X$ is a family
+$\{U_\alpha\}_{\alpha\in A}$ of open subsets of $X$ such that
+\[
+E\subseteq\bigcup_{\alpha\in A}U_\alpha.
+\]
+A finite subcover is a finite selection of these same sets
+that still covers $E$.
+\end{definition}
+
+\begin{definition}[Compact Set]
+A subset $E\subseteq X$ is compact if every open cover of
+$E$ has a finite subcover.
+
+Equivalently, $E$ is compact as a space with its subspace
+topology. A space $X$ is compact if it is compact as a
+subset of itself.
+\end{definition}
+
+\begin{definition}[Sequential Compactness]
+A subset $E\subseteq X$ is sequentially compact if every
+sequence in $E$ has a subsequence converging to a point
+of $E$.
+\end{definition}
+
+\begin{definition}[Limit Point Compactness]
+A topological space $X$ is limit point compact if every
+infinite subset of $X$ has a limit point in $X$.
+\end{definition}
+
+\begin{remark}[Limit Points in $T_1$ Spaces]
+In a $T_1$ space, $p$ is a limit point of $E$ if and only
+if every neighborhood of $p$ contains infinitely many
+points of $E$.
+
+Without the $T_1$ assumption, the condition involving
+infinitely many points is stronger than the limit-point
+definition given above.
+\end{remark}
+
+\begin{theorem}[Compactness Implies Limit Point Compactness]
+Every compact topological space is limit point compact.
+\end{theorem}
+
+\begin{proof}
+Suppose $X$ is compact and $S\subseteq X$ is infinite.
+Assume that $S$ has no limit point in $X$.
+
+For each $p\in X$, choose an open neighborhood $U_p$ such
+that
+\[
+U_p\cap(S\setminus\{p\})=\emptyset.
+\]
+Thus $U_p\cap S$ contains at most one point.
+
+The family $\{U_p:p\in X\}$ covers $X$, so compactness gives
+a finite subcover
+\[
+X=U_{p_1}\cup\cdots\cup U_{p_m}.
+\]
+It follows that
+\[
+S=\bigcup_{i=1}^{m}(S\cap U_{p_i})
+\]
+is finite, a contradiction.
+\end{proof}
+
+\begin{definition}[Total Boundedness]
+A metric space $(X,d)$ is totally bounded if, for every
+$r>0$, there exist finitely many points
+$p_1,\ldots,p_m\in X$ such that
+\[
+X=\bigcup_{i=1}^{m}B(p_i,r).
+\]
+\end{definition}
+
+\begin{lemma}[Sequential Compactness Implies Total Boundedness]
+Every sequentially compact metric space is totally bounded.
 \end{lemma}
 
-\begin{theorem}
-    [Lebesgue Number Theorem]
-    A sequentially compact metric space has a positive Lebesgue number
+\begin{proof}
+Suppose $X$ is not totally bounded. Then there exists
+$r>0$ such that no finite collection of open balls of
+radius $r$ covers $X$.
+
+Choose $x_1\in X$. Having chosen $x_1,\ldots,x_n$, choose
+\[
+x_{n+1}\notin\bigcup_{i=1}^{n}B(x_i,r).
+\]
+Then
+\[
+d(x_m,x_n)\geq r
+\qquad(m\neq n).
+\]
+No subsequence can be Cauchy, and therefore no subsequence
+can converge. This contradicts sequential compactness.
+\end{proof}
+
+\begin{lemma}[Lebesgue Number Lemma: Ball Form]
+Let $(X,d)$ be a sequentially compact metric space and let
+$\{U_\alpha\}_{\alpha\in A}$ be an open cover of $X$.
+There exists $\delta>0$ such that, for every $x\in X$,
+some $\alpha\in A$ satisfies
+\[
+B(x,\delta)\subseteq U_\alpha.
+\]
+\end{lemma}
+
+\begin{proof}
+If $X=\emptyset$, the conclusion is vacuous.
+Otherwise, suppose no such $\delta$ exists.
+For each $n\in\mathbb{N}$, choose $x_n\in X$ such that
+\[
+B(x_n,1/n)\not\subseteq U_\alpha
+\qquad\text{for every }\alpha\in A.
+\]
+
+By sequential compactness, some subsequence
+$(x_{n_k})$ converges to a point $x\in X$.
+Choose $\alpha_0$ such that $x\in U_{\alpha_0}$.
+Since $U_{\alpha_0}$ is open, choose $\varepsilon>0$
+such that
+\[
+B(x,\varepsilon)\subseteq U_{\alpha_0}.
+\]
+
+For sufficiently large $k$, both
+\[
+d(x_{n_k},x)<\varepsilon/2
+\qquad\text{and}\qquad
+1/n_k<\varepsilon/2
+\]
+hold. If $y\in B(x_{n_k},1/n_k)$, then
+\[
+d(y,x)
+\leq d(y,x_{n_k})+d(x_{n_k},x)
+<1/n_k+\varepsilon/2
+<\varepsilon.
+\]
+Hence
+\[
+B(x_{n_k},1/n_k)
+\subseteq B(x,\varepsilon)
+\subseteq U_{\alpha_0},
+\]
+a contradiction.
+\end{proof}
+
+\begin{theorem}[Sequentially Compact Metric Spaces Are Compact]
+Every sequentially compact metric space is compact.
 \end{theorem}
 
-\begin{theorem}
-    [Sequentially Compact Metric Space is Compact]
-    Suppose $X$ is a sequentially compact metric space. Then $X$ is compact.
-    \begin{proof}
-        Suppose $C$ is an open cover of $X$.\\
-        Need to show that $C$ has a finite subcover.\\
-        Get a lebeusgue number $\delta > 0$ for $C$.\\
-        Let $r = \frac{\delta}{2}$.\\
-        Cover the space with finite number of open balls of radius $r$.\\
-        This can be done since $X$ is sequentially compact, and hence totally bounded.\\
-        Take the finite subcover of $C$ that covers the centers of these balls.\\
-        Then this finite subcover also covers the entire space $X$.\\
-    \end{proof}
+\begin{proof}
+Let $\{U_\alpha\}_{\alpha\in A}$ be an open cover of $X$.
+Choose $\delta>0$ as in the preceding lemma.
+
+Since $X$ is totally bounded, choose
+$p_1,\ldots,p_m\in X$ such that
+\[
+X=\bigcup_{i=1}^{m}B(p_i,\delta/2).
+\]
+For each $i$, choose $\alpha_i$ such that
+\[
+B(p_i,\delta)\subseteq U_{\alpha_i}.
+\]
+Then
+\[
+X
+=\bigcup_{i=1}^{m}B(p_i,\delta/2)
+\subseteq\bigcup_{i=1}^{m}U_{\alpha_i}.
+\]
+Thus the original cover has a finite subcover.
+\end{proof}
+
+\begin{remark}[The Choice of Cover Members Matters]
+In the preceding proof, merely choosing a cover member
+containing each center $p_i$ is insufficient.
+We must choose $U_{\alpha_i}$ to contain the entire ball
+$B(p_i,\delta)$.
+\end{remark}
+
+\begin{theorem}[Compactness Equivalences in Metric Spaces]
+For a metric space $(X,d)$, the following are equivalent:
+\begin{enumerate}
+    \item $X$ is compact.
+    \item $X$ is sequentially compact.
+    \item $X$ is limit point compact.
+    \item $X$ is complete and totally bounded.
+\end{enumerate}
+These equivalences are specific to metric spaces;
+the three compactness notions need not coincide in
+arbitrary topological spaces.
 \end{theorem}
 
-\begin{example}
-    Let $\{G_\lambda\}_{\lambda \in \Lambda}$ be an open cover of the sequentially compact space $X$. Proe there ecists a $\delta > 0$ such that for every $x \in X$, there exists a $\lambda \in \Lambda$ such that $V_\delta(x) \subseteq G_\lambda$ with $V_\delta(x)$ being the open ball of radius at most $\delta$ centered at $x$.
-    \begin{proof}
-        Assume by contradiction that no such $\delta$ exists. Then for every $n \in \mathbb{N}$, there exists a point $x_n \in X$ such that for every $\lambda \in \Lambda$, $V_{1/n}(x_n) \not\subseteq G_\lambda$. Since $X$ is sequentially compact, the sequence $(x_n)$ has a convergent subsequence $(x_{n_k})$ that converges to some point $x \in X$. Since $\{G_\lambda\}_{\lambda \in \Lambda}$ is an open cover of $X$, there exists a $\lambda_0 \in \Lambda$ such that $x \in G_{\lambda_0}$. Since $G_{\lambda_0}$ is open, there exists an $\varepsilon > 0$ such that $V_\varepsilon(x) \subseteq G_{\lambda_0}$. Choose $K$ such that for all $k \geq K$, we have $d(x_{n_k}, x) < \varepsilon/2$. Then for all $k \geq K$, we have:
-        $$V_{\varepsilon/2}(x_{n_k}) \subseteq V_\varepsilon(x) \subseteq G_{\lambda_0}$$
-        This contradicts the assumption that $V_{1/n_k}(x_{n_k}) \not\subseteq G_\lambda$ for all $\lambda \in \Lambda$. Therefore, there exists a $\delta > 0$ such that for every $x \in X$, there exists a $\lambda \in \Lambda$ such that $V_\delta(x) \subseteq G_\lambda$.
+\begin{lemma}[Lebesgue Number Lemma for a Compact Subset]
+Let $E$ be a compact subset of a metric space $(X,d)$,
+and let $\{U_\alpha\}_{\alpha\in A}$ be an open cover of
+$E$ by open subsets of $X$.
 
+There exists $\delta>0$ such that, for every $p\in E$,
+some $\alpha\in A$ satisfies
+\[
+B_X(p,\delta)\subseteq U_\alpha.
+\]
+In particular,
+\[
+B_E(p,\delta)
+=
+E\cap B_X(p,\delta)
+\subseteq E\cap U_\alpha.
+\]
+\end{lemma}
 
-    \end{proof}
+\begin{proof}
+If $E=\emptyset$, the conclusion is vacuous.
+Otherwise, for each $p\in E$, choose $\alpha(p)$ and
+$r_p>0$ such that
+\[
+B_X(p,2r_p)\subseteq U_{\alpha(p)}.
+\]
+The balls $B_X(p,r_p)$ cover $E$. By compactness, finitely
+many suffice:
+\[
+E\subseteq\bigcup_{i=1}^{m}B_X(p_i,r_{p_i}).
+\]
+Set
+\[
+\delta=\min_{1\leq i\leq m}r_{p_i}>0.
+\]
+For $q\in E$, choose $i$ with $d(q,p_i)<r_{p_i}$.
+If $y\in B_X(q,\delta)$, then
+\[
+d(y,p_i)
+\leq d(y,q)+d(q,p_i)
+<\delta+r_{p_i}
+\leq 2r_{p_i}.
+\]
+Therefore
+\[
+B_X(q,\delta)
+\subseteq B_X(p_i,2r_{p_i})
+\subseteq U_{\alpha(p_i)}.
+\]
+\end{proof}
+
+\begin{remark}[Subspace Covers and Lebesgue Numbers]
+If the cover consists of sets open only in $E$, the
+appropriate conclusion is
+\[
+B_E(p,\delta)\subseteq U_\alpha,
+\]
+not necessarily
+\[
+B_X(p,\delta)\subseteq U_\alpha.
+\]
+
+A common alternative definition of a Lebesgue number
+$\delta$ requires that every subset of diameter less than
+$\delta$ be contained in one cover member.
+The ball formulation implies this diameter formulation.
+Conversely, the diameter formulation gives the ball
+formulation after shrinking the radius, for example
+to $\delta/3$.
+\end{remark}
+
+\section{Continuity and Uniform Continuity}
+
+\begin{definition}[Continuity at a Point]
+Let $(X,d)$ and $(Y,\rho)$ be metric spaces, and let
+$f:X\to Y$. The function $f$ is continuous at $p\in X$ if,
+for every $\varepsilon>0$, there exists $\delta>0$ such that
+\[
+d(p,q)<\delta
+\quad\Longrightarrow\quad
+\rho(f(p),f(q))<\varepsilon
+\qquad(q\in X).
+\]
+Equivalently,
+\[
+f(B_X(p,\delta))\subseteq B_Y(f(p),\varepsilon).
+\]
+\end{definition}
+
+\begin{definition}[Continuity]
+A function $f:X\to Y$ is continuous if it is continuous at
+every point of $X$.
+
+For topological spaces, continuity means that
+$f^{-1}(V)$ is open in $X$ for every open set $V\subseteq Y$.
+For metric spaces, this agrees with the
+$\varepsilon$--$\delta$ definition.
+\end{definition}
+
+\begin{remark}[Continuity on a Subset]
+For $A\subseteq X$, distinguish:
+\begin{enumerate}
+    \item $f$ is continuous at every $p\in A$ as a function
+    defined on $X$.
+    \item The restriction $f|_A:A\to Y$ is continuous
+    with respect to the subspace metric.
+\end{enumerate}
+The first implies the second, but the converse need not
+hold. In these notes, ``continuous on $A$'' means that
+$f|_A$ is continuous unless stated otherwise.
+\end{remark}
+
+\begin{definition}[Uniform Continuity]
+A function $f:X\to Y$ is uniformly continuous on
+$A\subseteq X$ if
+\[
+\forall\varepsilon>0\;
+\exists\delta>0\;
+\forall p,q\in A:
+\quad
+d(p,q)<\delta
+\Longrightarrow
+\rho(f(p),f(q))<\varepsilon.
+\]
+The same $\delta$ must work for every pair $p,q\in A$.
+\end{definition}
+
+\begin{remark}[Continuity Versus Uniform Continuity]
+For continuity at $p$, the choice of $\delta$ may depend
+on both $\varepsilon$ and $p$.
+
+For uniform continuity, $\delta$ may depend on
+$\varepsilon$, but not on the points $p,q$.
+\end{remark}
+
+\begin{remark}[Negation of Uniform Continuity]
+A function $f$ is not uniformly continuous on $A$ if
+\[
+\exists\varepsilon_0>0\;
+\forall\delta>0\;
+\exists p,q\in A:
+\quad
+d(p,q)<\delta
+\quad\text{and}\quad
+\rho(f(p),f(q))\geq\varepsilon_0.
+\]
+Equivalently, there exist sequences $(p_n),(q_n)$ in $A$
+such that
+\[
+d(p_n,q_n)\to 0,
+\qquad
+\rho(f(p_n),f(q_n))\geq\varepsilon_0
+\quad\text{for every }n.
+\]
+\end{remark}
+
+\begin{theorem}[Sequential Criterion for Continuity]
+Let $X,Y$ be metric spaces and $f:X\to Y$.
+Then $f$ is continuous if and only if
+\[
+x_n\to x
+\quad\Longrightarrow\quad
+f(x_n)\to f(x)
+\]
+for every sequence $(x_n)$ in $X$ and every $x\in X$.
+\end{theorem}
+
+\begin{proof}
+Suppose $f$ is continuous and $x_n\to x$.
+For $\varepsilon>0$, continuity at $x$ gives $\delta>0$
+such that
+\[
+d(y,x)<\delta
+\Longrightarrow
+\rho(f(y),f(x))<\varepsilon.
+\]
+Eventually $d(x_n,x)<\delta$, so eventually
+$\rho(f(x_n),f(x))<\varepsilon$.
+
+Conversely, suppose the sequential condition holds but
+$f$ is not continuous at some $x\in X$.
+There exists $\varepsilon_0>0$ such that, for every
+$n\in\mathbb{N}$, we can choose $x_n$ with
+\[
+d(x_n,x)<1/n,
+\qquad
+\rho(f(x_n),f(x))\geq\varepsilon_0.
+\]
+Then $x_n\to x$, but $f(x_n)$ does not converge to $f(x)$,
+a contradiction.
+\end{proof}
+
+\begin{remark}[General Topological Spaces]
+Continuous maps preserve sequence convergence in every
+topological space. The converse sequential criterion
+need not hold for arbitrary topological domains.
+\end{remark}
+
+\begin{theorem}[Continuous Images of Compact Spaces]
+If $X$ is a compact topological space and
+$f:X\to Y$ is continuous, then $f(X)$ is compact.
+\end{theorem}
+
+\begin{proof}
+Let $\{V_\alpha\}_{\alpha\in A}$ be a cover of $f(X)$
+by open subsets of $Y$.
+Then $\{f^{-1}(V_\alpha)\}_{\alpha\in A}$ is an open cover
+of $X$. Choose a finite subcover:
+\[
+X=\bigcup_{i=1}^{m}f^{-1}(V_{\alpha_i}).
+\]
+It follows that
+\[
+f(X)\subseteq\bigcup_{i=1}^{m}V_{\alpha_i}.
+\]
+\end{proof}
+
+\begin{theorem}[Heine--Cantor Theorem]
+If $(X,d)$ is a compact metric space, $(Y,\rho)$ is a
+metric space, and $f:X\to Y$ is continuous, then $f$ is
+uniformly continuous.
+\end{theorem}
+
+\begin{proof}
+Suppose $f$ is not uniformly continuous.
+There exist $\varepsilon_0>0$ and sequences $(p_n),(q_n)$
+in $X$ such that
+\[
+d(p_n,q_n)<1/n,
+\qquad
+\rho(f(p_n),f(q_n))\geq\varepsilon_0.
+\]
+By sequential compactness, some subsequence
+$p_{n_k}$ converges to $p\in X$.
+
+The triangle inequality gives
+\[
+d(q_{n_k},p)
+\leq d(q_{n_k},p_{n_k})+d(p_{n_k},p)\to 0,
+\]
+so $q_{n_k}\to p$ as well.
+By continuity,
+\[
+f(p_{n_k})\to f(p),
+\qquad
+f(q_{n_k})\to f(p).
+\]
+Consequently,
+\[
+\rho(f(p_{n_k}),f(q_{n_k}))
+\leq
+\rho(f(p_{n_k}),f(p))
++
+\rho(f(p),f(q_{n_k}))
+\to 0,
+\]
+contradicting the lower bound $\varepsilon_0$.
+\end{proof}
+
+\section{Sequences of Functions}
+
+\begin{remark}[Setup]
+Let $(X,d)$ and $(Y,\rho)$ be metric spaces, and let
+\[
+f_n:X\to Y,\qquad n\in\mathbb{N},
+\]
+be a sequence of functions. Let $f:X\to Y$ be a candidate
+limit function.
+\end{remark}
+
+\begin{remark}[Indexed Families]
+One can also consider a family
+$\{f_\alpha:X\to Y\}_{\alpha\in A}$.
+However, an arbitrary index set does not by itself define
+convergence. For example, equipping $A$ with a directed
+order allows the family to be treated as a net.
+Here we focus on sequences.
+\end{remark}
+
+\begin{definition}[Pointwise Convergence]
+The sequence $(f_n)$ converges pointwise to $f$ on $X$ if
+\[
+f_n(x)\to f(x)
+\qquad\text{for every }x\in X.
+\]
+Equivalently,
+\[
+\forall x\in X\;
+\forall\varepsilon>0\;
+\exists N=N(x,\varepsilon)\in\mathbb{N}\;
+\forall n\geq N:
+\quad
+\rho(f_n(x),f(x))<\varepsilon.
+\]
+The index $N$ may depend on $x$.
+\end{definition}
+
+\begin{definition}[Uniform Convergence]
+The sequence $(f_n)$ converges uniformly to $f$ on $X$ if
+\[
+\forall\varepsilon>0\;
+\exists N=N(\varepsilon)\in\mathbb{N}\;
+\forall n\geq N\;
+\forall x\in X:
+\quad
+\rho(f_n(x),f(x))<\varepsilon.
+\]
+The same $N$ must work for every $x\in X$.
+\end{definition}
+
+\begin{remark}[Supremum Criterion]
+For nonempty $X$, uniform convergence is equivalent to
+\[
+\sup_{x\in X}\rho(f_n(x),f(x))\longrightarrow 0.
+\]
+The supremum can initially be infinite, so it is viewed
+as an extended nonnegative real number.
+
+The eventual pointwise bound
+$\rho(f_n(x),f(x))<\varepsilon$ for all $x$ gives only
+\[
+\sup_{x\in X}\rho(f_n(x),f(x))\leq\varepsilon.
+\]
+To obtain a strict supremum bound below $\varepsilon$,
+apply uniform convergence with $\varepsilon/2$.
+\end{remark}
+
+\begin{remark}[Quantifier Order]
+The difference between pointwise and uniform convergence
+is the order of the quantifiers:
+\[
+\begin{aligned}
+\text{Pointwise:}\quad&
+\forall x\;\forall\varepsilon>0\;\exists N\;\forall n\geq N,\\
+\text{Uniform:}\quad&
+\forall\varepsilon>0\;\exists N\;\forall x\;\forall n\geq N.
+\end{aligned}
+\]
+Uniform convergence implies pointwise convergence,
+but the converse need not hold.
+\end{remark}
+
+\begin{example}[Pointwise but Not Uniform Convergence]
+Define $f_n:[0,1]\to\mathbb{R}$ by
+\[
+f_n(x)=x^n.
+\]
+Then $f_n$ converges pointwise to
+\[
+f(x)=
+\begin{cases}
+0,&0\leq x<1,\\
+1,&x=1.
+\end{cases}
+\]
+However, for every $n$,
+\[
+\sup_{x\in[0,1]}|f_n(x)-f(x)|=1.
+\]
+Thus convergence is not uniform.
+Each $f_n$ is continuous, but $f$ is discontinuous at $1$.
 \end{example}
 
-
-\begin{definition}
-    [Continuous Function at a Point]
-    Let $(X,d), (Y,\rho)$ with $f: X \to Y$ be a function. Then $f$ is continuous at $p \in X$ if for every $\varepsilon > 0$, there exists a $\delta > 0$ such that for all $q \in X$, if $d(p,q) < \delta$, then $\rho(f(p), f(q)) < \varepsilon$. In other words, $f$ is continuous at $p$ if for every open ball $V_\varepsilon(f(p))$ in $Y$, there exists an open ball $V_\delta(p)$ in $X$ such that $f(V_\delta(p)) \subseteq V_\varepsilon(f(p))$.\\
-\end{definition}
-
-\begin{definition}
-    [Continuous Function on a Set]
-    Let $(X,d), (Y,\rho)$ with $f: X \to Y$ be a function. Then $f$ is continuous on a set $A \subseteq X$ if for every $p \in A$, $f$ is continuous at $p$.\\
-\end{definition}
-
-\begin{definition}
-    [Uniformly Continuous Function]
-    Let $(X,d), (Y,\rho)$ with $f: X \to Y$ be a function. Then $f$ is uniformly continuous on a set $A \subseteq X$ if for every $\varepsilon > 0$, there exists a $\delta > 0$ such that for all $p,q \in A$, if $d(p,q) < \delta$, then $\rho(f(p), f(q)) < \varepsilon$. In other words, $f$ is uniformly continuous on $A$ if for every open ball $V_\varepsilon(f(p))$ in $Y$, there exists an open ball $V_\delta(p)$ in $X$ such that for all $p,q \in A$, if $q \in V_\delta(p)$, then $f(q) \in V_\varepsilon(f(p))$.\\
-
-    IE for all $p,q \in A$, if $d(p,q) < \delta$, then $\rho(f(p), f(q)) < \varepsilon$.
-
-    
-\end{definition}
-
-\begin{theorem}
-$f:X\to Y$ is continuous on $X$ if and only for all $(x_n) \subseteq X$ such that $x_n \to x$, we have $f(x_n) \to f(x)$.
+\begin{theorem}[Uniform Limit Theorem]
+Let $X,Y$ be metric spaces.
+If each $f_n:X\to Y$ is continuous and $f_n$ converges
+uniformly to $f:X\to Y$, then $f$ is continuous.
 \end{theorem}
 
-\begin{theorem}
-    If $X$ is compact and $f:X\to Y$ is continuous, then $f(X)$ is compact and $f$ is uniformly continuous on $X$.
-\end{theorem}
+\begin{proof}
+Fix $x_0\in X$ and $\varepsilon>0$.
+By uniform convergence, choose $N$ such that
+\[
+\rho(f_N(x),f(x))<\varepsilon/3
+\qquad\text{for every }x\in X.
+\]
+By continuity of $f_N$ at $x_0$, choose $\delta>0$ such that
+\[
+d(x,x_0)<\delta
+\quad\Longrightarrow\quad
+\rho(f_N(x),f_N(x_0))<\varepsilon/3.
+\]
+For any $x$ with $d(x,x_0)<\delta$, the triangle inequality
+gives
+\[
+\begin{aligned}
+\rho(f(x),f(x_0))
+&\leq
+\rho(f(x),f_N(x))
++\rho(f_N(x),f_N(x_0))
++\rho(f_N(x_0),f(x_0))\\
+&<
+\frac{\varepsilon}{3}
++\frac{\varepsilon}{3}
++\frac{\varepsilon}{3}\\
+&=\varepsilon.
+\end{aligned}
+\]
+Therefore $f$ is continuous at $x_0$.
+Since $x_0$ was arbitrary, $f$ is continuous on $X$.
+\end{proof}
 
-\begin{remark}
-    [Negation of Uniform Continuity]
-    
-\end{remark}
+\begin{definition}
+    [Homeomorphic Spaces]
+Two topological spaces $X$ and $Y$ are homeomorphic if
+there exists a homeomorphism $f:X\to Y$.
+\end{definition}
+
+\begin{definition}
+    [Homeomorphism]
+A homeomorphism is a bijective function $f:X\to Y$ between
+topological spaces such that both $f$ and its inverse $f^{-1}$ are continuous.
+That is,
+\begin{parts}
+    \part $f$ is a bijection
+    \part $f$ is continuous on $X$
+    \part $f^{-1}$ is continuous on $Y$
+\end{parts}
+
+    Homeomorphisms preserve topological properties, meaning that if two spaces are homeomorphic, they are considered topologically equivalent. This implies that they have the same topological structure, even if they may differ in other aspects such as geometry or metric properties.
+\end{definition}
 
 \end{document}

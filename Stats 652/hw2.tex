@@ -1,0 +1,1181 @@
+\documentclass[answers,12pt,addpoints]{exam}
+
+\usepackage{import}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{tikz}
+\usepackage[hidelinks]{hyperref}
+
+% Optional local style; the document also compiles without this file.
+\IfFileExists{C:/Users/prana/OneDrive/Desktop/MathNotes/style.tex}{%
+  \import{C:/Users/prana/OneDrive/Desktop/MathNotes/}{style.tex}%
+}{}
+
+\providecommand{\name}{Pranav Tikkawar}
+\providecommand{\course}{Statistics 652}
+\providecommand{\assignment}{Homework 2}
+\author{\name}
+\title{\course\ -- \assignment}
+\date{}
+
+\providecommand{\E}{\mathbb{E}}
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\Var}{\operatorname{Var}}
+\providecommand{\IF}{\operatorname{IF}}
+\providecommand{\GES}{\gamma^*}
+\providecommand{\sgn}{\operatorname{sgn}}
+\providecommand{\diag}{\operatorname{diag}}
+\providecommand{\ind}{\mathbf{1}}
+\providecommand{\ARE}{\operatorname{ARE}}
+\renewcommand{\questionlabel}{2.\arabic{question}.}
+
+\begin{document}
+\maketitle
+
+\section*{Notation and a preliminary lemma}
+For a distribution function $F$ on $\R$, let
+\[
+Q_F(u)=\inf\{x:F(x)\geq u\},\qquad 0<u<1,
+\]
+and let $\Delta_x$ denote unit point mass at $x$. Define
+\[
+F_{\varepsilon,x}=(1-\varepsilon)F+\varepsilon\Delta_x,
+\qquad 0\leq\varepsilon<1.
+\]
+The influence function and gross-error sensitivity are
+\[
+\IF(x;T,F)=\lim_{\varepsilon\downarrow0}
+\frac{T(F_{\varepsilon,x})-T(F)}{\varepsilon},
+\qquad
+\GES(T,F)=\sup_{x\in\R}|\IF(x;T,F)|.
+\]
+All sampling statements concern independent identically distributed
+observations unless otherwise stated. An asymptotic variance is the
+variance of the root-$n$ limiting distribution, not that variance
+divided by $n$.
+
+\paragraph{Regular M-functional lemma.}
+Let $t_0=T(F)$ solve
+\[
+\lambda_F(t_0)=0,\qquad \lambda_F(t)=\E_F\psi(X,t).
+\]
+Suppose $\lambda_F$ is differentiable at $t_0$, with
+$A_F=\lambda_F'(t_0)\ne0$. For a fixed contamination point $x$, assume
+$\psi(x,\cdot)$ is continuous at $t_0$ and that the selected roots
+$t_\varepsilon=T(F_{\varepsilon,x})$ satisfy $t_\varepsilon\to t_0$.
+Then
+\[
+\IF(x;T,F)=-A_F^{-1}\psi(x,t_0).
+\]
+\begin{proof}
+The contaminated estimating equation is
+\[
+(1-\varepsilon)\lambda_F(t_\varepsilon)
++\varepsilon\psi(x,t_\varepsilon)=0.
+\]
+Put $d_\varepsilon=t_\varepsilon-t_0$. Differentiability gives
+$\lambda_F(t_\varepsilon)=(A_F+r_\varepsilon)d_\varepsilon$, where
+$r_\varepsilon\to0$. Hence
+\[
+\frac{d_\varepsilon}{\varepsilon}
+=-\frac{\psi(x,t_\varepsilon)}
+{(1-\varepsilon)(A_F+r_\varepsilon)}
+\longrightarrow -A_F^{-1}\psi(x,t_0).
+\]
+\end{proof}
+For a smooth population equation, a nonzero parameter derivative
+and the implicit function theorem supply the required continuous
+local root branch. For a vector parameter, the same argument uses a
+nonsingular Jacobian. Differentiability of $\lambda_F$ does not by
+itself license replacing $\lambda_F'$ by $\E_F\partial_t\psi$;
+that interchange requires justification.
+
+\newpage
+\begin{questions}
+
+% ============================================================
+\question
+Recall that the mean is $T(F)=\E_FX$ and the median is
+$T(F)=F^{-1}(0.5)$.
+\begin{parts}
+\part For continuous $F$, express the trimmed and Winsorized means as
+functionals $T(F)$.
+\part For absolutely continuous $F$, derive the median's influence
+function and gross-error sensitivity, and evaluate
+$\E_F[\IF(X;T,F)]$ and $\E_F[\IF(X;T,F)^2]$.
+\end{parts}
+
+\begin{solution}
+\paragraph{Assumptions.}
+Use symmetric trimming with $0<\alpha<1/2$. For the median derivative,
+assume $F$ is absolutely continuous and differentiable at its median
+$m$, with $f(m)=F'(m)>0$.
+
+\paragraph{Proof.}
+\begin{parts}
+\part
+Let $a=Q_F(\alpha)$ and $b=Q_F(1-\alpha)$. Since $Q_F(U)$ has
+CDF $F$ for $U\sim\operatorname{Uniform}(0,1)$, averaging the retained
+central probability mass gives
+\[
+T_{\mathrm{tr},\alpha}(F)
+=\frac{1}{1-2\alpha}\int_\alpha^{1-\alpha}Q_F(u)\,du.
+\]
+For continuous $F$, this equals
+\[
+\frac1{1-2\alpha}\int_a^b x\,dF(x).
+\]
+The Winsorizing map is $w_{a,b}(x)=\min\{b,\max\{a,x\}\}$.
+Its expectation is
+\[
+T_{\mathrm W,\alpha}(F)
+=\alpha a+\int_\alpha^{1-\alpha}Q_F(u)\,du+\alpha b.
+\]
+No renormalization is needed because Winsorizing moves the tail
+mass to the cutoffs rather than deleting it. These quantile
+representations also define the functionals for distributions with
+atoms and require no tail moment assumptions.
+
+\part
+Write $m_\varepsilon=Q_{F_{\varepsilon,x}}(1/2)$.
+Because $F'(m)>0$, for all sufficiently small $\delta>0$,
+\[
+F(m-\delta)<1/2<F(m+\delta).
+\]
+The same strict inequalities hold under sufficiently small
+contamination. Therefore $m_\varepsilon\to m$.
+Fix $x\ne m$. The contaminating atom then stays on one side of a
+neighborhood of $m$, so
+\[
+m_\varepsilon=Q_F(u_\varepsilon),\qquad
+u_\varepsilon
+=\frac{\frac12-\varepsilon\ind\{x<m\}}{1-\varepsilon}.
+\]
+In particular,
+\[
+u_\varepsilon-\frac12
+=\varepsilon\left(\frac12-\ind\{x<m\}\right)+O(\varepsilon^2).
+\]
+To differentiate the quantile, put $y=Q_F(u)$ as $u\to1/2$.
+The strict inequalities around $m$ imply $y\to m$, and continuity
+of $F$ gives $F(y)=u$. Consequently,
+\[
+\frac{Q_F(u)-m}{u-1/2}
+=\frac{y-m}{F(y)-F(m)}\longrightarrow\frac1{f(m)}.
+\]
+Factoring the contamination difference quotient now proves
+\[
+\IF(x;T,F)=\frac{\frac12-\ind\{x<m\}}{f(m)}
+=\frac{\sgn(x-m)}{2f(m)},\qquad x\ne m.
+\]
+At $x=m$, the contaminated median remains $m$, giving influence zero.
+The median influence is therefore bounded by $1/(2f(m))$.
+Since $\Pr(X<m)=\Pr(X>m)=1/2$, its positive and negative values
+have equal probabilities, and its square is constant almost surely.
+\end{parts}
+
+\paragraph{Final answer.}
+\[
+\boxed{T_{\mathrm{tr},\alpha}(F)
+=\frac{\int_\alpha^{1-\alpha}Q_F(u)\,du}{1-2\alpha}}
+\]
+\[
+\boxed{T_{\mathrm W,\alpha}(F)
+=\alpha Q_F(\alpha)+\int_\alpha^{1-\alpha}Q_F(u)\,du
++\alpha Q_F(1-\alpha)}
+\]
+\[
+\boxed{\IF(x;\operatorname{Med},F)
+=\frac{\sgn(x-m)}{2f(m)},\quad \sgn(0)=0;
+\qquad \GES=\frac1{2f(m)}}
+\]
+\[
+\boxed{\E_F\IF(X;T,F)=0,\qquad
+\E_F[\IF(X;T,F)^2]=\frac1{4f(m)^2}.}
+\]
+\end{solution}
+
+% ============================================================
+\question
+\begin{parts}
+\part Show that the mode is not qualitatively robust.
+\part Show that the trimmed and Winsorized means can be expressed as
+L-statistics: find $a_1,\ldots,a_n$ such that
+$T_n=\sum_{i=1}^n a_i x_{(i)}$.
+\end{parts}
+
+\begin{solution}
+\paragraph{Assumptions.}
+For (a), interpret a mode estimator as a sequence consistently
+estimating the unique population mode at the distributions used
+below. Qualitative robustness refers to weak perturbations of the
+sampling distribution. For (b), use integer trimming of $k$
+observations from each tail, with $0\leq2k<n$.
+
+\paragraph{Proof.}
+\begin{parts}
+\part
+Let $F=N(0,1)$ with density $\phi$ and mode zero. Fix $a\ne0$, and put
+\[
+K(u)=\frac34(1-u^2)\ind\{|u|\leq1\},\qquad h_\varepsilon=\varepsilon^2,
+\]
+\[
+g_\varepsilon(t)=(1-\varepsilon)\phi(t)
++\frac{\varepsilon}{h_\varepsilon}
+K\left(\frac{t-a}{h_\varepsilon}\right).
+\]
+For its distribution $G_\varepsilon$,
+\[
+d_{\mathrm{TV}}(G_\varepsilon,F)\leq\varepsilon,
+\quad\text{so}\quad G_\varepsilon\Rightarrow F.
+\]
+Nevertheless, $g_\varepsilon(a)=(1-\varepsilon)\phi(a)+3/(4\varepsilon)$
+tends to infinity, whereas outside $[a-h_\varepsilon,a+h_\varepsilon]$
+the density is bounded by $\sup\phi$. All global modes lie inside
+that interval for small $\varepsilon$. There,
+\[
+g_\varepsilon''(t)
+=(1-\varepsilon)\phi''(t)-\frac32\varepsilon^{-5}<0
+\]
+for sufficiently small $\varepsilon$. Hence the mode is unique and
+\[
+m_\varepsilon=T_{\mathrm{mode}}(G_\varepsilon)\to a\ne0.
+\]
+Thus the mode functional is not weakly continuous.
+
+To establish non-robustness of an estimator sequence, let $T_n$ be
+consistent at $F$ and every fixed $G_\varepsilon$ above. Write $d_\pi$
+for Prokhorov distance. Qualitative robustness at $F$ would imply:
+for each $\zeta>0$ there is $\delta>0$ such that
+\[
+d_\pi(G,F)<\delta\ \Longrightarrow\
+d_\pi(\mathcal L_G(T_n),\mathcal L_F(T_n))<\zeta
+\]
+uniformly in $n$ (the argument also applies to the asymptotic version).
+Choose $0<\zeta<\min\{|a|,1\}/2$, then fix small $\varepsilon<\delta$
+with $\min\{|m_\varepsilon|,1\}>\zeta$. Since
+$d_\pi(G_\varepsilon,F)\leq\varepsilon$, robustness gives the above
+bound. Consistency and passage to $n\to\infty$ imply
+\[
+d_\pi(\Delta_{m_\varepsilon},\Delta_0)\leq\zeta.
+\]
+But $d_\pi(\Delta_s,\Delta_t)=\min\{|s-t|,1\}$, a contradiction.
+
+Such consistent estimators exist for these distributions. For example,
+use a Gaussian-kernel density estimator with bandwidth $b_n=n^{-1/4}$
+and a measurable global maximizer as the mode estimator. Integration
+by parts and the empirical-CDF bound give
+\[
+\sup_t|\widehat f_n(t)-\E\widehat f_n(t)|
+\leq \frac{\|\phi'\|_1}{b_n}\sup_y|F_n(y)-F(y)|
+=O_p(n^{-1/4}).
+\]
+For each fixed density above, bounded uniform continuity gives
+uniformly vanishing bias. Each density tends to zero at infinity and
+has a unique mode; hence that maximum is separated from the supremum
+outside any fixed neighborhood. Uniform density consistency implies
+mode consistency. Therefore the failure is one of qualitative
+robustness of consistent mode estimation, not merely a discontinuity
+statement without an estimator interpretation.
+
+\part
+For the trimmed mean,
+\[
+T_{\mathrm{tr},n}=\frac1{n-2k}\sum_{i=k+1}^{n-k}x_{(i)}.
+\]
+For the Winsorized mean,
+\[
+T_{\mathrm W,n}=\frac1n\left[
+kx_{(k+1)}+\sum_{i=k+1}^{n-k}x_{(i)}+kx_{(n-k)}\right].
+\]
+Collecting the coefficient of each order statistic gives the desired
+L-statistic representations. The formula below also handles the
+case $k+1=n-k$.
+\end{parts}
+
+\paragraph{Final answer.}
+The mode functional is not weakly continuous, and any mode estimator
+consistent at the displayed distributions is not qualitatively robust
+at $N(0,1)$. The L-statistic coefficients are
+\[
+\boxed{a_i^{\mathrm{tr}}=
+\frac{\ind\{k+1\leq i\leq n-k\}}{n-2k}}
+\]
+and
+\[
+\boxed{a_i^{\mathrm W}=\frac1n\left[
+\ind\{k+1\leq i\leq n-k\}
++k\ind\{i=k+1\}+k\ind\{i=n-k\}\right].}
+\]
+For an exact empirical quantile-integral definition rather than
+integer trimming, let $I_i=((i-1)/n,i/n]$ and let $\lambda$ be length.
+Then the corresponding coefficients are
+\[
+a_i^{\mathrm{tr},\alpha}
+=\frac{\lambda(I_i\cap[\alpha,1-\alpha])}{1-2\alpha},
+\]
+\[
+a_i^{\mathrm W,\alpha}
+=\lambda(I_i\cap[\alpha,1-\alpha])
++\alpha\ind\{i=\lceil n\alpha\rceil\}
++\alpha\ind\{i=\lceil n(1-\alpha)\rceil\}.
+\]
+These exact-quantile conventions need not coincide with integer
+trimming at boundary ranks.
+\end{solution}
+
+% ============================================================
+\question
+For a location M-estimate, show (i) $\rho(x,t)=\rho(x-t)$ with
+$\rho(-r)=\rho(r)$, and (ii) $\psi(x,t)=\psi(x-t)$ with
+$\psi(-r)=-\psi(r)$.
+
+\begin{solution}
+\paragraph{Assumptions.}
+Use a translation-invariant, reflection-symmetric loss:
+\[
+\rho(x+a,t+a)=\rho(x,t),\qquad \rho(-x,-t)=\rho(x,t).
+\]
+Assume differentiability when an ordinary score is used. Reflection
+symmetry is an additional assumption: it does not follow from
+location equivariance alone. For example,
+$\rho_\tau(r)=r(\tau-\ind\{r<0\})$ is a location loss but is not
+even for $\tau\ne1/2$.
+
+\paragraph{Proof.}
+Taking $a=-t$ gives $\rho(x,t)=\rho(x-t,0)$. Define
+$\rho_0(r)=\rho(r,0)$. Then
+\[
+\rho(x,t)=\rho_0(x-t),\qquad
+\rho_0(-r)=\rho(-r,0)=\rho(r,0)=\rho_0(r).
+\]
+Let $\psi_0=\rho_0'$. Differentiating the evenness identity yields
+$-\psi_0(-r)=\psi_0(r)$, so $\psi_0$ is odd and $\psi_0(0)=0$.
+The minimizing first-order equation is
+\[
+\sum_i\psi_0(x_i-t)=0.
+\]
+If $\psi(x,t)$ is defined as $\partial_t\rho(x,t)$, it equals
+$-\psi_0(x-t)$; this convention gives the same roots and oddness.
+For convex nonsmooth losses, replace the derivative equation by
+$0\in\sum_i\partial\rho_0(x_i-t)$.
+
+If $F$ is symmetric about $\theta$ and the score is integrable,
+oddness also implies $\E_F\psi_0(X-\theta)=0$. Consequently the
+functional is Fisher consistent whenever that is the unique selected
+root.
+
+\paragraph{Final answer.}
+Under translation invariance and reflection symmetry,
+\[
+\boxed{\rho(x,t)=\rho_0(x-t),\quad \rho_0(-r)=\rho_0(r),
+\qquad \psi_0(-r)=-\psi_0(r).}
+\]
+\end{solution}
+
+% ============================================================
+\question
+Derive the asymptotic relative efficiency of the mean to the median
+at (i) $X\sim\mu+\sigma t_\nu$ and (ii)
+$X\sim(1-\eta)N(\mu,\sigma^2)+\eta N(\mu,9\sigma^2)$.
+
+\begin{solution}
+\paragraph{Assumptions and convention.}
+Define $\ARE(A,B)=V_B/V_A$, where $V$ is root-$n$ asymptotic
+variance. Thus an ARE exceeding one favors $A$.
+For a common mean and unique median $\mu$, finite variance $v$,
+and differentiability at $\mu$ with $f(\mu)>0$, the CLT and 2.9 give
+\[
+V_{\mathrm{mean}}=v,\qquad V_{\mathrm{median}}=\frac1{4f(\mu)^2},
+\qquad \ARE(\bar X,\widehat m)=\frac1{4vf(\mu)^2}.
+\]
+
+\paragraph{Proof.}
+\begin{parts}
+\part
+For $\nu>2$,
+\[
+v=\sigma^2\frac\nu{\nu-2},\qquad f_X(\mu)=\frac{c_\nu}\sigma,
+\qquad
+c_\nu=\frac{\Gamma((\nu+1)/2)}{\sqrt{\nu\pi}\Gamma(\nu/2)}.
+\]
+Substitution gives
+\[
+\ARE(\bar X,\widehat m)
+=\frac{\nu-2}{4\nu c_\nu^2}
+=\frac{\pi(\nu-2)}4
+\left[\frac{\Gamma(\nu/2)}{\Gamma((\nu+1)/2)}\right]^2.
+\]
+The gamma-ratio asymptotic
+$\Gamma(z+1/2)/\Gamma(z)\sim z^{1/2}$ gives the limit $\pi/2$.
+For example, the ARE is $\pi^2/16$ at $\nu=3$, $8/9$ at $\nu=4$,
+and approximately $1.04093$ at $\nu=5$. The crossover is
+$\nu\approx4.67879$.
+
+For $0<\nu\leq2$, the ordinary ratio of finite root-$n$ variances
+is not defined for the sample mean. The median remains root-$n$
+normal for every $\nu>0$. Student tails are regularly varying with
+index $-\nu$: for $0<\nu<2$, the generalized CLT gives
+\[
+n^{1-1/\nu}(\bar X-\mu)\xrightarrow{d}S_\nu,
+\]
+where $S_\nu$ is a nondegenerate symmetric stable law with the
+appropriate scale. Thus the mean is slower than root-$n$ for
+$1<\nu<2$, does not concentrate for $\nu=1$, and has increasing
+spread for $0<\nu<1$. At $\nu=2$, its concentration rate is of order
+$\sqrt{n/\log n}$, again slower than root-$n$.
+Accordingly its efficiency relative to the median is zero under
+the extended rate-based convention. For $\nu\leq1$, $\mu$ denotes
+location, not a finite expectation.
+
+\part
+The component means agree, so
+\[
+v=(1-\eta)\sigma^2+\eta(9\sigma^2)=\sigma^2(1+8\eta).
+\]
+Symmetry gives median $\mu$, and
+\[
+f_X(\mu)=\frac{1-\eta}{\sigma\sqrt{2\pi}}
++\frac\eta{3\sigma\sqrt{2\pi}}
+=\frac{1-\frac23\eta}{\sigma\sqrt{2\pi}}.
+\]
+Substitution yields the expression below. Its denominator apart from
+the factor two is $D(\eta)=(1+8\eta)(1-\frac23\eta)^2$, with
+\[
+D'(\eta)=\frac43(1-\tfrac23\eta)(5-12\eta).
+\]
+Thus the ARE decreases until $\eta=5/12$ and then increases; it is
+not monotone on $[0,1]$. Solving $\ARE=1$ gives approximately
+$0.100592$ and $0.814126$. At $\eta=0$ and $1$, the distribution
+is a single normal and the ARE is $\pi/2$.
+\end{parts}
+
+\paragraph{Final answer.}
+\[
+\boxed{\ARE(\bar X,\widehat m)
+=\frac{\pi(\nu-2)}4
+\left[\frac{\Gamma(\nu/2)}{\Gamma((\nu+1)/2)}\right]^2,
+\quad\nu>2.}
+\]
+For $\nu\leq2$, finite root-$n$ variance ARE is unavailable; the
+extended rate-based efficiency of the mean relative to the median
+is zero.
+\[
+\boxed{\ARE(\bar X,\widehat m)
+=\frac\pi{2(1+8\eta)(1-\frac23\eta)^2},\quad0\leq\eta\leq1.}
+\]
+The median is more efficient for
+$0.100592\ldots<\eta<0.814126\ldots$.
+\end{solution}
+
+% ============================================================
+\question
+Let $\widehat\theta_n$ minimize $\sum_i\rho(x_i;\theta)$, with
+$\rho$ the negative log-likelihood of a regular one-parameter family.
+Show directly, without MLE asymptotic theory, that at $F=F_\theta$,
+$\E_F[\IF(X;T,F)^2]=1/I(\theta;X)$.
+
+\begin{solution}
+\paragraph{Assumptions.}
+Assume an identifiable regular family with common support,
+differentiation under the integral justified up to second order,
+and $0<I(\theta;X)<\infty$. Assume the population score equation
+is continuously differentiable near the model parameter and under
+small contamination. The functional follows the local minimizer
+branch through $\theta$; if defined by global minimization, assume
+its minimizer stays on this branch. Expected log-likelihood
+differences below are assumed well-defined.
+
+\paragraph{Proof.}
+Put $s_t(x)=\partial_t\log f_t(x)$ and
+$\psi(x,t)=\partial_t\rho(x;t)=-s_t(x)$. Fisher consistency follows
+from
+\[
+\E_\theta\rho(X;t)-\E_\theta\rho(X;\theta)
+=D_{\mathrm{KL}}(F_\theta\Vert F_t)\geq0,
+\]
+with equality only at $t=\theta$ by identifiability.
+Thus $T(F_\theta)=\theta$.
+Differentiating $\int f_\theta=1$ once and twice gives
+\[
+\E_\theta s_\theta(X)=0,
+\qquad
+\E_\theta[\partial_\theta s_\theta(X)+s_\theta(X)^2]=0.
+\]
+Consequently,
+\[
+A_{F_\theta}
+=-\E_\theta\partial_\theta s_\theta(X)
+=\E_\theta s_\theta(X)^2=I(\theta;X)>0.
+\]
+The implicit function theorem supplies a differentiable local root
+branch, and the preliminary lemma gives
+\[
+\IF(x;T,F_\theta)=I(\theta;X)^{-1}s_\theta(x).
+\]
+Squaring and integrating proves the result directly.
+
+\paragraph{Final answer.}
+\[
+\boxed{\IF(x;T,F_\theta)=\frac{s_\theta(x)}{I(\theta;X)},
+\qquad
+\E_\theta[\IF(X;T,F_\theta)^2]=\frac1{I(\theta;X)}.}
+\]
+For a vector parameter and nonsingular information matrix, the
+corresponding identity is
+$\E_\theta[\IF\IF^\top]=I(\theta)^{-1}$.
+\end{solution}
+
+% ============================================================
+\question
+For a distribution with a finite second moment, express its variance
+$\sigma_F^2$ as a functional, find its influence function and
+gross-error sensitivity, sketch the influence function, evaluate its
+first two moments, and derive the sample variance's asymptotic
+variance by the CLT.
+
+\begin{solution}
+\paragraph{Assumptions and notation.}
+Let $\mu=\E_FX$, $v=\sigma_F^2$, and
+$\mu_4=\E_F[(X-\mu)^4]$. The functional is defined on
+$\mathcal F_2=\{F:\int x^2\,dF(x)<\infty\}$.
+For the CLT assume $\mu_4<\infty$.
+Here $\sigma_F^2$ is the variance; the wording ``standard deviation''
+and centering by $\sigma$ in 2.6 are interpreted consistently with
+the sample variance as $\sigma_F^2$.
+
+\paragraph{Proof.}
+The functional is
+\[
+T(F)=\int x^2\,dF(x)-\left(\int x\,dF(x)\right)^2.
+\]
+The contaminated mean is $\mu+\varepsilon(x-\mu)$, and the mixture
+variance identity gives exactly
+\[
+T(F_{\varepsilon,x})=(1-\varepsilon)v
++\varepsilon(1-\varepsilon)(x-\mu)^2.
+\]
+Differentiating yields
+$\IF(x;T,F)=(x-\mu)^2-v$. This diverges as $|x|\to\infty$.
+Its graph is an upward-opening parabola with vertex $(\mu,-v)$ and,
+for $v>0$, zeros $\mu\pm\sqrt v$.
+\begin{center}
+\begin{tikzpicture}[x=1.35cm,y=0.7cm]
+\draw[->] (-2.2,0)--(2.4,0) node[right] {$z=(x-\mu)/\sqrt v$};
+\draw[->] (0,-1.5)--(0,3.6) node[above] {$\IF(x;T,F)/v$};
+\draw[thick,domain=-2:2,samples=70] plot (\x,{\x*\x-1});
+\node[below left] at (0,-1) {$-1$};
+\node[below] at (-1,0) {$-1$};
+\node[below] at (1,0) {$1$};
+\end{tikzpicture}
+\end{center}
+The displayed standardized sketch assumes $v>0$; when $v=0$, the
+unscaled graph is $(x-\mu)^2$.
+Taking moments,
+\[
+\E_F\IF(X;T,F)=\E_F[(X-\mu)^2]-v=0,
+\]
+\[
+\E_F[\IF(X;T,F)^2]
+=\E_F[((X-\mu)^2-v)^2]=\mu_4-v^2.
+\]
+The last quantity is infinite if $\mu_4=\infty$.
+
+For $s_n^2=n^{-1}\sum_i(X_i-\bar X)^2$, the exact identity
+\[
+s_n^2=\frac1n\sum_i(X_i-\mu)^2-(\bar X-\mu)^2
+\]
+implies
+\[
+\sqrt n(s_n^2-v)
+=\frac1{\sqrt n}\sum_i[(X_i-\mu)^2-v]
+-\sqrt n(\bar X-\mu)^2.
+\]
+By the mean CLT, $\bar X-\mu=O_p(n^{-1/2})$, so the final term is
+$o_p(1)$. The CLT for $(X_i-\mu)^2$ and Slutsky's theorem give
+\[
+\sqrt n(s_n^2-v)\xrightarrow{d}N(0,\mu_4-v^2).
+\]
+A zero limiting variance is allowed as a degenerate normal limit.
+
+\paragraph{Final answer.}
+\[
+\boxed{T(F)=\E_FX^2-(\E_FX)^2,\quad
+\IF(x;T,F)=(x-\mu)^2-v,\quad \GES=\infty.}
+\]
+\[
+\boxed{\E_F\IF=0,\qquad \E_F\IF^2=\mu_4-v^2
+=\operatorname{AVar}(s_n^2).}
+\]
+For normal $F$, this asymptotic variance is $2\sigma^4$.
+\end{solution}
+
+% ============================================================
+\question
+Express the standard deviation $\sigma$ as a functional, find and
+sketch its influence function, and determine whether the sample
+standard deviation's asymptotic variance equals $\E_F[\IF^2]$.
+
+\begin{solution}
+\paragraph{Assumptions.}
+Let $F\in\mathcal F_2$ and $\sigma>0$. For asymptotic normality,
+assume $\mu_4=\E_F[(X-\mu)^4]<\infty$.
+
+\paragraph{Proof.}
+The standard deviation functional is the square root of the variance:
+\[
+T(F)=\left[\int x^2\,dF(x)-\left(\int x\,dF(x)\right)^2\right]^{1/2}.
+\]
+Applying the ordinary chain rule to the contamination derivative
+from 2.6 gives
+\[
+\IF(x;T,F)=\frac{(x-\mu)^2-\sigma^2}{2\sigma}.
+\]
+This is an upward-opening parabola with vertex $(\mu,-\sigma/2)$
+and zeros $\mu\pm\sigma$; it has infinite gross-error sensitivity.
+\begin{center}
+\begin{tikzpicture}[x=1.35cm,y=1cm]
+\draw[->] (-2.2,0)--(2.4,0) node[right] {$z=(x-\mu)/\sigma$};
+\draw[->] (0,-0.9)--(0,2.2) node[above] {$\IF(x;T,F)/\sigma$};
+\draw[thick,domain=-2:2,samples=70] plot (\x,{(\x*\x-1)/2});
+\node[below left] at (0,-0.5) {$-1/2$};
+\node[below] at (-1,0) {$-1$};
+\node[below] at (1,0) {$1$};
+\end{tikzpicture}
+\end{center}
+Direct calculation gives
+\[
+\E_F\IF=0,\qquad
+\E_F\IF^2=\frac{\mu_4-\sigma^4}{4\sigma^2}.
+\]
+Applying the delta method to 2.6 with $g(v)=\sqrt v$ yields
+\[
+\sqrt n(s_n-\sigma)\xrightarrow{d}
+N\left(0,\frac{\mu_4-\sigma^4}{4\sigma^2}\right).
+\]
+At $\sigma=0$, $F=\Delta_\mu$, and exactly
+\[
+T(F_{\varepsilon,x})=\sqrt{\varepsilon(1-\varepsilon)}\,|x-\mu|.
+\]
+For $x\ne\mu$, the contamination difference quotient is infinite
+in the limit, so there is no finite regular influence function there.
+
+\paragraph{Final answer.}
+For $\sigma>0$,
+\[
+\boxed{\IF(x;T,F)=\frac{(x-\mu)^2-\sigma^2}{2\sigma},\qquad
+\operatorname{AVar}(s_n)=\E_F\IF^2
+=\frac{\mu_4-\sigma^4}{4\sigma^2}.}
+\]
+For normal $F$, the asymptotic variance is $\sigma^2/2$.
+\end{solution}
+
+% ============================================================
+\question
+Derive the density of $X=\mu+\sigma RZ$, where $\mu\in\R$,
+$\sigma>0$, $Z\sim N(0,1)$, $R>0$ has density $f_R$, and $R,Z$
+are independent.
+
+\begin{solution}
+\paragraph{Assumptions.}
+Only positivity of $R$, the stated independence, and existence of
+the mixing density are needed; no moments of $R$ are required.
+
+\paragraph{Proof.}
+Conditioning gives $X\mid R=r\sim N(\mu,\sigma^2r^2)$ and
+\[
+f_{X\mid R}(x\mid r)=\frac1{\sigma r\sqrt{2\pi}}
+\exp\left[-\frac{(x-\mu)^2}{2\sigma^2r^2}\right].
+\]
+Integrating this conditional density against $f_R$ gives the result.
+Tonelli's theorem verifies normalization:
+\[
+\int_\R f_X(x)\,dx
+=\int_0^\infty f_R(r)
+\left[\int_\R f_{X\mid R}(x\mid r)\,dx\right]dr=1.
+\]
+The density is symmetric about $\mu$. Its mixture version at the
+center has value $\E[R^{-1}]/(\sigma\sqrt{2\pi})$, possibly infinite.
+
+\paragraph{Final answer.}
+\[
+\boxed{f_X(x)=\int_0^\infty
+\frac{\exp[-(x-\mu)^2/(2\sigma^2r^2)]}{\sigma r\sqrt{2\pi}}
+f_R(r)\,dr.}
+\]
+For a general mixing law $H_R$, replace $f_R(r)\,dr$ by $dH_R(r)$;
+this includes discrete scale mixtures.
+\end{solution}
+
+% ============================================================
+\question
+(Optional.) Prove consistency and asymptotic normality of the sample
+median: if $\mu$ is the population median and $f(\mu)>0$, establish
+the limiting distribution of $\sqrt n(\widehat\mu_n-\mu)$.
+
+\begin{solution}
+\paragraph{Assumptions.}
+Assume $F$ is continuous near its unique median $\mu$ and is
+differentiable at $\mu$ with derivative $f(\mu)>0$.
+Let $k_n=\lceil n/2\rceil$ and initially set
+$\widehat\mu_n=X_{(k_n)}$. The centered limiting normal has mean
+zero; the mean $\mu$ printed in the assignment's limiting law is
+corrected accordingly.
+
+\paragraph{Proof of consistency.}
+For every $\delta>0$,
+\[
+F(\mu-\delta)<1/2<F(\mu+\delta).
+\]
+If $\widehat\mu_n>\mu+\delta$, then
+$F_n(\mu+\delta)<k_n/n$. By the law of large numbers and
+$k_n/n\to1/2$, this event has probability tending to zero.
+Likewise $\widehat\mu_n<\mu-\delta$ implies
+$F_n(\mu-\delta)\geq k_n/n$, again with probability tending to zero.
+Therefore $\widehat\mu_n\xrightarrow{p}\mu$.
+
+\paragraph{Proof of asymptotic normality.}
+Fix $t\in\R$ and set
+\[
+y_n=\mu+t/\sqrt n,\qquad
+p_n=F(y_n)=\frac12+\frac{f(\mu)t}{\sqrt n}+o(n^{-1/2}).
+\]
+The count $B_n=\sum_i\ind\{X_i\leq y_n\}$ is
+$\operatorname{Bin}(n,p_n)$. Since $p_n\to1/2$, the standardized
+Bernoulli triangular array satisfies Lindeberg's condition, giving
+\[
+Z_n=\frac{B_n-np_n}{\sqrt{np_n(1-p_n)}}\xrightarrow{d}N(0,1).
+\]
+The order-statistic event satisfies
+\[
+\Pr(\widehat\mu_n\leq y_n)
+=\Pr(B_n\geq k_n)
+=1-\Pr\left(Z_n\leq
+\frac{k_n-1-np_n}{\sqrt{np_n(1-p_n)}}\right).
+\]
+The threshold converges to $-2f(\mu)t$. Convergence to the continuous
+normal CDF permits this moving threshold, so the last expression
+tends to $\Phi(2f(\mu)t)$.
+
+For even $n=2k$, the same argument applies to ranks $k$ and $k+1$.
+For $M_n=(X_{(k)}+X_{(k+1)})/2$,
+\[
+\Pr(\sqrt n(X_{(k+1)}-\mu)\leq t)
+\leq\Pr(\sqrt n(M_n-\mu)\leq t)
+\leq\Pr(\sqrt n(X_{(k)}-\mu)\leq t).
+\]
+Both outer terms have the same limit, proving the result for the
+usual averaged median without an order-statistic spacing assumption.
+
+\paragraph{Final answer.}
+\[
+\boxed{\widehat\mu_n\xrightarrow{p}\mu,\qquad
+\sqrt n(\widehat\mu_n-\mu)\xrightarrow{d}
+N\left(0,\frac1{4f(\mu)^2}\right).}
+\]
+\end{solution}
+
+% ============================================================
+\question
+Show that if $X_1,X_2$ are independent
+$\operatorname{Cauchy}(\mu,\sigma^2)$ variables, then
+$(X_1+X_2)/2$ has the same distribution.
+
+\begin{solution}
+\paragraph{Assumptions and parameterization.}
+Let $s>0$ denote the Cauchy scale under the assignment's convention.
+Its density is $s/\{\pi[(x-\mu)^2+s^2]\}$. The second parameter
+in the problem is a scale convention, not a finite variance.
+
+\paragraph{Proof.}
+The characteristic function is $\phi_X(t)=\exp(i\mu t-s|t|)$.
+Independence gives
+\[
+\phi_{(X_1+X_2)/2}(t)
+=\phi_{X_1}(t/2)\phi_{X_2}(t/2)
+=\exp(i\mu t-s|t|)=\phi_X(t).
+\]
+Uniqueness of characteristic functions proves the claim.
+
+\paragraph{Final answer.}
+\[
+\boxed{(X_1+X_2)/2\overset d=X_1
+\sim\operatorname{Cauchy}(\mu,\sigma^2).}
+\]
+The same calculation gives $\bar X_n\overset d=X_1$ for every $n$.
+\end{solution}
+
+% ============================================================
+\question
+A standardized symmetric stable variable with index $0<\alpha\leq2$
+has characteristic function $\phi_X(t)=\exp(-|t|^\alpha)$.
+For i.i.d. copies $X_i$ and $Y_i=\mu+\sigma X_i$, find the
+characteristic function of $\bar Y_n=n^{-1}\sum_iY_i$ and describe
+how its spread depends on $n$.
+
+\begin{solution}
+\paragraph{Assumptions.}
+Let $\sigma>0$ and use the stated characteristic-function
+standardization. Spread is measured by scale or fixed interquantile
+ranges, not by variance when it is infinite.
+
+\paragraph{Proof.}
+Independence gives
+\begin{align*}
+\phi_{\bar Y_n}(t)
+&=e^{i\mu t}\prod_{i=1}^n
+\exp\left[-\left|\frac{\sigma t}{n}\right|^\alpha\right]\\
+&=\exp\left[i\mu t-\sigma^\alpha n^{1-\alpha}|t|^\alpha\right].
+\end{align*}
+This is the characteristic function of
+$\mu+\sigma n^{1/\alpha-1}X$. Therefore its interquantile ranges
+are multiplied by $n^{1/\alpha-1}$.
+
+\paragraph{Final answer.}
+\[
+\boxed{\phi_{\bar Y_n}(t)
+=\exp\left[i\mu t-\sigma^\alpha n^{1-\alpha}|t|^\alpha\right],
+\qquad
+\bar Y_n\overset d=\mu+\sigma n^{1/\alpha-1}X.}
+\]
+Spread decreases for $\alpha>1$, stays constant for $\alpha=1$,
+and increases for $0<\alpha<1$.
+At $\alpha=2$, the standard law is $N(0,2)$ and the scale decreases
+as $n^{-1/2}$. For $\alpha<2$, the variance is infinite; for
+$\alpha\leq1$, $\mu$ is location rather than a finite mean.
+\end{solution}
+
+% ============================================================
+\question
+Prove that $\E_F[\IF(X;T,F)]=0$ whenever $T$ is an M-functional.
+
+\begin{solution}
+\paragraph{Assumptions.}
+Let $T(F)=t_0$ solve $\lambda_F(t_0)=\E_F\psi(X,t_0)=0$, with
+$\E_F|\psi(X,t_0)|<\infty$. Assume
+$A_F=\lambda_F'(t_0)\ne0$, continuous selected contaminated roots,
+and continuity of $\psi(x,\cdot)$ at $t_0$ for $F$-almost every $x$.
+These are regularity conditions for the influence function to exist;
+singular or nonunique nonregular functionals need not possess one.
+
+\paragraph{Proof.}
+The preliminary lemma gives, for $F$-almost every $x$,
+\[
+\IF(x;T,F)=-A_F^{-1}\psi(x,t_0).
+\]
+The integrability assumption makes this influence function integrable.
+Taking expectations and using the population estimating equation,
+\[
+\E_F\IF(X;T,F)
+=-A_F^{-1}\E_F\psi(X,t_0)=0.
+\]
+The argument only requires differentiability of the population
+expectation. For example, with the median score
+$\psi(x,t)=\sgn(x-t)$ and continuous $F$,
+\[
+\lambda_F(t)=1-2F(t),\qquad A_F=-2f(m).
+\]
+The pointwise score derivative is zero off its jump, so taking its
+expectation would incorrectly miss this nonzero population derivative.
+For Huber's Lipschitz score, bounded difference quotients instead
+justify dominated differentiation, yielding
+\[
+A_F=-\Pr_F(|X-t_0|<c)
+\]
+when there is no mass at the two kinks.
+The vector case follows identically with a nonsingular Jacobian.
+
+\paragraph{Final answer.}
+For every regular M-functional satisfying the stated conditions,
+\[
+\boxed{\E_F[\IF(X;T,F)]=0.}
+\]
+\end{solution}
+
+% ============================================================
+\question
+Show that Tukey's M-estimate of location does not correspond to a
+maximum likelihood estimate under a symmetric location model.
+
+\begin{solution}
+\paragraph{Assumptions and criterion.}
+For $c>0$, use Tukey's bisquare loss
+\[
+\rho_c(r)=\begin{cases}
+\dfrac{c^2}{6}\left[1-\left(1-\dfrac{r^2}{c^2}\right)^3\right],
+&|r|\leq c,\\[1ex]
+\dfrac{c^2}{6},&|r|>c,
+\end{cases}
+\]
+with score $\psi_c(r)=r(1-r^2/c^2)^2\ind\{|r|\leq c\}$.
+A likelihood representation of the defining loss or score is
+considered first. To rule out even an alternative regular likelihood
+having the same estimator for all samples, assume its symmetric
+location density $g$ is positive and continuously differentiable.
+
+\paragraph{Proof.}
+If the loss were a negative log-density up to a positive scale and
+an additive constant, then
+\[
+g(r)=C\exp[-a\rho_c(r)],\qquad C>0,\ a>0.
+\]
+For $|r|>c$, this is the positive constant $Ce^{-ac^2/6}$.
+Hence it cannot integrate to one. The same conclusion follows from
+matching likelihood scores: $-(\log g)'=a\psi_c$ integrates to the
+same improper expression. This obstruction to a loss/score likelihood
+representation does not require smoothness assumptions on a candidate
+density beyond the proposed representation itself.
+
+There is also a direct estimator-level contradiction for any positive
+continuously differentiable symmetric density, even without requiring
+proportional scores. Consider the three observations $(0,0,r)$ with
+$r>2c$, and write $C_c=c^2/6$. The Tukey objective is
+\[
+L(t)=2\rho_c(t)+\rho_c(r-t).
+\]
+If $|t|<c$, then $|r-t|>c$, so $L(t)=2\rho_c(t)+C_c$, uniquely
+minimized there at $t=0$. If $|t|\geq c$, then
+$L(t)\geq2C_c>C_c=L(0)$. Thus its unique global minimizer is zero.
+
+If this estimator were also the MLE under $g$ for every sample,
+zero would maximize $g(-t)^2g(r-t)$. The derivative of its
+log-likelihood at zero must vanish:
+\[
+-2\frac{g'(0)}{g(0)}-\frac{g'(r)}{g(r)}=0.
+\]
+Symmetry and differentiability imply $g'(0)=0$, hence $g'(r)=0$
+for every $r>2c$. Thus $g$ is a positive constant on $(2c,\infty)$,
+contradicting integrability.
+
+\paragraph{Final answer.}
+\[
+\boxed{\text{Tukey's bisquare loss/score has no proper
+location likelihood representation.}}
+\]
+Moreover, no positive continuously differentiable symmetric location
+density has the same location MLE as Tukey's global M-estimator for
+all samples. The bounded loss, equivalently the score's exact tail
+cutoff, is the obstruction. Huber's linearly growing tail loss does
+not have this obstruction: its negative exponential is integrable.
+\end{solution}
+
+% ============================================================
+\question
+For the location-scale double-exponential distribution, find the MLE,
+show that the scale estimate has an unbounded influence function,
+and find the finite-sample breakdown point of the scale estimate.
+
+\begin{solution}
+\paragraph{Assumptions and parameterization.}
+Use
+\[
+f(x;\mu,b)=\frac1{2b}\exp\left(-\frac{|x-\mu|}{b}\right),\quad b>0.
+\]
+Its standard deviation is $\sqrt2 b$. For influence calculations,
+assume a finite first moment, absolute continuity, and $f(m)>0$
+at the median. For breakdown, take $n\geq2$ and an original sample
+with positive fitted scale. For even $n$, select the averaged median.
+
+\paragraph{Proof of the MLE.}
+The log-likelihood is
+\[
+\ell(\mu,b)=-n\log(2b)-\frac1b\sum_i|x_i-\mu|.
+\]
+For fixed $\mu$, its maximizing scale is
+$\widehat b(\mu)=n^{-1}\sum_i|x_i-\mu|$ when the sum is positive.
+Profiling reduces the location problem to minimizing the sum of
+absolute deviations, whose minimizers are the sample medians.
+The minimum sum is the same for every median in the even-sample
+median interval. If all data coincide, the likelihood diverges as
+$b\downarrow0$ and no positive-scale MLE exists; extend the fitted
+scale continuously by zero for breakdown calculations.
+
+\paragraph{Proof of the influence function.}
+Let $H(t)=\E_F|X-t|$, $m=m(F)$, and $B(F)=H(m)$.
+The bound
+\[
+\left||X-t-h|-|X-t|\right|\leq|h|
+\]
+justifies dominated differentiation at points without an atom, so
+$H'(t)=2F(t)-1$ and $H'(m)=0$.
+Problem 2.1 gives $m_\varepsilon-m=O(\varepsilon)$ for fixed $x$.
+Thus $H(m_\varepsilon)=H(m)+o(\varepsilon)$, and
+\[
+B(F_{\varepsilon,x})
+=(1-\varepsilon)H(m_\varepsilon)
++\varepsilon|x-m_\varepsilon|
+=B(F)+\varepsilon(|x-m|-B(F))+o(\varepsilon).
+\]
+Therefore $\IF(x;B,F)=|x-m|-B(F)$.
+At the Laplace model, $m=\mu$ and $B(F)=b$, giving unbounded
+influence $|x-\mu|-b$. In contrast, the location influence is
+$b\sgn(x-\mu)$, which is bounded.
+
+\paragraph{Proof of replacement breakdown.}
+Replace one observation by $M\to\infty$, keeping an original
+observation $x_j$ fixed. For every center $t$,
+\[
+|M-t|+|x_j-t|\geq|M-x_j|.
+\]
+Consequently,
+\[
+\widehat b_M=\frac1n\min_t\sum_i|x_i'-t|
+\geq\frac{|M-x_j|}{n}\longrightarrow\infty.
+\]
+One replacement therefore causes scale explosion.
+To include implosion, let $r$ be the maximum multiplicity of an
+original value. Replacing $n-r$ observations by that value makes
+$\widehat b=0$. With fewer replacements, at least $r+1$ original
+observations remain, including two distinct values. If $d>0$ is
+the smallest positive separation of distinct original values, then
+$\widehat b'\geq d/n$, preventing implosion.
+Thus the implosion fraction is $(n-r)/n$, and the explosion fraction
+is $1/n$. Their minimum is $1/n$.
+
+\paragraph{Final answer.}
+\[
+\boxed{\widehat\mu=\operatorname{median}(x_1,\ldots,x_n),\qquad
+\widehat b=\frac1n\sum_i|x_i-\widehat\mu|.}
+\]
+\[
+\boxed{\IF(x;B,F_{\mu,b})=|x-\mu|-b,\quad \GES=\infty,
+\qquad \epsilon_n^*(\widehat b;x)=\frac1n.}
+\]
+The asymptotic scale breakdown point is zero. For an all-distinct
+sample, the implosion-only fraction is $(n-1)/n$. Rescaling the
+parameter to $\sigma=\sqrt2 b$ multiplies its influence function by
+$\sqrt2$ and leaves its breakdown point unchanged.
+\end{solution}
+
+% ============================================================
+\question
+Find the MLEs of $\beta$ and $\sigma^2$ for
+$Y_i=X_i^\top\beta+\epsilon_i$, with independent
+$\epsilon_i\sim N(0,\sigma^2)$, using exponential-family theory.
+
+\begin{solution}
+\paragraph{Assumptions.}
+Let $X$ be the fixed $n\times p$ design matrix, of full column rank,
+with $n>p$. The parameter space is $\R^p\times(0,\infty)$.
+
+\paragraph{Proof.}
+The joint Gaussian density can be written in canonical form using
+\[
+\eta=\frac\beta{\sigma^2},\qquad \tau=-\frac1{2\sigma^2}<0:
+\]
+\[
+f(y;\eta,\tau)
+=\exp\{\eta^\top X^\top y+\tau y^\top y-A(\eta,\tau)\},
+\]
+where
+\[
+A(\eta,\tau)=\frac n2\log\left(\frac\pi{-\tau}\right)
+-\frac{\eta^\top X^\top X\eta}{4\tau}.
+\]
+The natural space $\R^p\times(-\infty,0)$ is open. This family is
+minimal: if $a^\top X^\top y+b\,y^\top y$ is constant for all $y$,
+its Hessian forces $b=0$, and full column rank then forces $a=0$.
+Thus $A$ is strictly convex and the canonical log-likelihood strictly
+concave. An interior solution of the canonical moment equations is
+the unique maximizer. The parameter transformation is bijective.
+
+For the canonical statistic $S(Y)=(X^\top Y,Y^\top Y)$, the
+exponential-family identity $\nabla A=\E S(Y)$ yields
+\[
+X^\top y=\E[X^\top Y]=X^\top X\beta,
+\]
+\[
+y^\top y=\E[Y^\top Y]=\beta^\top X^\top X\beta+n\sigma^2.
+\]
+The first equation gives the least-squares coefficient, and the
+second gives the residual sum of squares divided by $n$:
+\[
+y^\top y-\widehat\beta^\top X^\top X\widehat\beta
+=\|y-X\widehat\beta\|^2.
+\]
+If the residual sum of squares is positive, the solution is interior
+and hence is the MLE. If it is zero, an exact fit has likelihood
+unbounded as $\sigma^2\downarrow0$.
+
+\paragraph{Final answer.}
+For $y\notin\operatorname{col}(X)$,
+\[
+\boxed{\widehat\beta=(X^\top X)^{-1}X^\top y,\qquad
+\widehat\sigma^2=\frac1n\|y-X\widehat\beta\|^2.}
+\]
+For $y\in\operatorname{col}(X)$, no positive-variance MLE exists.
+The MLE uses divisor $n$, not the unbiased-estimation divisor $n-p$.
+\end{solution}
+
+% ============================================================
+\question
+Verify the adaptively weighted least-squares representation of a
+regression M-estimate of $\beta$.
+
+\begin{solution}
+\paragraph{Assumptions.}
+Minimize
+\[
+L(\beta)=\sum_i\rho(u_i(\beta)),\qquad
+u_i(\beta)=\frac{y_i-x_i^\top\beta}{s},\quad s>0,
+\]
+with scale held fixed. Let $\rho$ be even and differentiable,
+$\psi=\rho'$, and suppose $\psi(u)/u$ has a finite continuous
+extension at zero. For a weighted least-squares minimization,
+assume nonnegative weights and a nonsingular weighted design.
+
+\paragraph{Proof.}
+The first-order condition is
+\[
+\sum_i x_i\psi(u_i(\widehat\beta))=0.
+\]
+Define
+\[
+w(u)=\begin{cases}\psi(u)/u,&u\ne0,\\\psi'(0),&u=0,\end{cases}
+\qquad
+W(\beta)=\diag(w(u_1(\beta)),\ldots,w(u_n(\beta))).
+\]
+Since $\psi(u)=w(u)u$, the estimating equation becomes
+\[
+X^\top W(\widehat\beta)(y-X\widehat\beta)=0.
+\]
+Solving these weighted normal equations gives the desired implicit
+representation. Freezing weights at the current iterate gives IRLS.
+For Huber and Tukey scores respectively,
+\[
+w_c^{\mathrm H}(u)=\begin{cases}1,&|u|\leq c,\\c/|u|,&|u|>c,\end{cases}
+\qquad
+w_c^{\mathrm T}(u)=\left(1-\frac{u^2}{c^2}\right)^2\ind\{|u|\leq c\}.
+\]
+For these losses, $w$ is even, nonnegative, and nonincreasing in
+$|u|$. Let $g(v)=\rho(\sqrt v)$ for $v\geq0$. Since
+$g'(v)=w(\sqrt v)/2$ for $v>0$, $g$ is concave, and its tangent
+inequality implies
+\[
+\rho(u)\leq\rho(u_0)+\frac12w(u_0)(u^2-u_0^2).
+\]
+The extension at $u_0=0$ follows by continuity. Summing these
+inequalities produces a quadratic majorizer touching $L$ at the
+current iterate. Exact WLS minimization therefore cannot increase
+$L$, provided scale is fixed. This does not guarantee convergence
+to a global minimizer for a nonconvex loss.
+
+\paragraph{Final answer.}
+\[
+\boxed{\widehat\beta
+=[X^\top W(\widehat\beta)X]^{-1}X^\top W(\widehat\beta)y,}
+\]
+with iterative update
+\[
+\boxed{\beta^{(k+1)}
+=[X^\top W(\beta^{(k)})X]^{-1}X^\top W(\beta^{(k)})y.}
+\]
+The weights depend on fitted residuals, so the representation is a
+fixed-point identity, not a closed-form solution. Zero weights may
+make the design singular. Residual weighting alone does not generally
+control high-leverage design points. If scale is estimated separately,
+it is held fixed during this argument; alternating scale updates
+require a separate scale equation and convergence analysis.
+\end{solution}
+
+\end{questions}
+\end{document}

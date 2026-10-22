@@ -1,0 +1,537 @@
+\documentclass[answers,12pt,addpoints]{exam}
+\usepackage{import}
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+\usepackage{amsmath,amssymb,booktabs,longtable,pdflscape}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework 3}
+\author{\name}
+\title{\course\ - \assignment}
+\date{Due Thursday, October 22, 2026}
+
+\begin{document}
+\maketitle
+
+\noindent Assigned exercises: 1.1, 1.2, and 2.1--2.5 from
+\emph{A Course in Regression and Smoothing Methods}.
+
+\medskip
+\noindent Computational note: the numerical reference values below are those
+printed in the exercise, not independently executed results. The accompanying
+\texttt{homework3.R} implements all computations. Running it generates tables
+that this document automatically includes when they are available.
+
+\newpage
+\begin{questions}
+
+\question Exercise 1.1. For $x,a\in\mathbb R^p$ and a constant matrix
+$A\in\mathbb R^{p\times p}$, find the gradients of $a^Tx$ and $x^TAx$.
+\begin{solution}
+\textbf{(i) Linear form.}
+Since $a^Tx=\sum_{j=1}^p a_jx_j$, for each $k$,
+\[
+\frac{\partial}{\partial x_k}(a^Tx)=a_k.
+\]
+Stacking the partial derivatives as a column vector gives
+\[
+\boxed{\frac{\partial}{\partial x}(a^Tx)=a.}
+\]
+
+\textbf{(ii) Quadratic form.}
+Expand the scalar function as
+\[
+x^TAx=\sum_{j=1}^p\sum_{k=1}^p A_{jk}x_jx_k.
+\]
+For $\ell\in\{1,\ldots,p\}$, the product rule gives
+\[
+\frac{\partial}{\partial x_\ell}(x^TAx)
+=\sum_{k=1}^p A_{\ell k}x_k+\sum_{j=1}^p A_{j\ell}x_j
+=(Ax)_\ell+(A^Tx)_\ell.
+\]
+Consequently,
+\[
+\boxed{\frac{\partial}{\partial x}(x^TAx)=(A+A^T)x.}
+\]
+If $A=A^T$, this reduces to $2Ax$.
+
+For an alternative derivation, use differentials:
+\begin{align*}
+d(x^TAx)&=(dx)^TAx+x^TA\,dx\\
+&=\bigl[(A+A^T)x\bigr]^Tdx.
+\end{align*}
+Comparison with $df=(\nabla f)^Tdx$ gives the same gradient.
+Only the symmetric part $A_s=(A+A^T)/2$ contributes to the
+quadratic form, since $x^T(A-A^T)x=0$.
+\end{solution}
+
+\question Exercise 1.2. Show that the two matrix-derivative expressions
+for the Hessian of a scalar function agree, and find the Hessian of $x^TAx$.
+\begin{solution}
+\textbf{(i) Equality of the Hessian expressions.}
+Assume $h$ has continuous second partial derivatives in a neighborhood of $x$.
+Write
+\[
+L=\frac{\partial}{\partial x^T}\left(\frac{\partial h}{\partial x}\right),
+\qquad
+R=\frac{\partial}{\partial x}\left(\frac{\partial h}{\partial x^T}\right).
+\]
+By the derivative conventions in the exercise,
+\[
+L_{jk}=\frac{\partial}{\partial x_k}
+\left(\frac{\partial h}{\partial x_j}\right),
+\qquad
+R_{jk}=\frac{\partial}{\partial x_j}
+\left(\frac{\partial h}{\partial x_k}\right).
+\]
+Equality of mixed partials gives $L_{jk}=R_{jk}$ for every $j,k$.
+Therefore,
+\[
+\boxed{
+\frac{\partial}{\partial x^T}\left(\frac{\partial h}{\partial x}\right)
+=\frac{\partial}{\partial x}\left(\frac{\partial h}{\partial x^T}\right)
+=\nabla^2h(x).}
+\]
+In particular, $\nabla^2h(x)$ is symmetric. Merely assuming existence of
+second partials at a point would not, by itself, justify interchanging them;
+continuous second partials are a sufficient condition.
+
+\textbf{(ii) Quadratic-form Hessian.}
+By Exercise 1.1,
+\[
+\nabla(x^TAx)=(A+A^T)x.
+\]
+Differentiating this linear vector-valued function yields
+\[
+\boxed{\nabla^2(x^TAx)=A+A^T.}
+\]
+If $A$ is symmetric, the Hessian is $2A$.
+\end{solution}
+
+\question Exercise 2.1. Find the minimum-variance unbiased estimator
+of the form $T_a=(1-a)Z_1+aZ_2$, where the independent variables satisfy
+$Z_j\sim N(\mu,\sigma_j^2)$ and $\sigma_j^2>0$.
+\begin{solution}
+For every fixed $a$,
+\[
+E(T_a)=(1-a)\mu+a\mu=\mu.
+\]
+By independence,
+\[
+V(a)=\operatorname{Var}(T_a)
+=(1-a)^2\sigma_1^2+a^2\sigma_2^2.
+\]
+Differentiating,
+\[
+V'(a)=-2(1-a)\sigma_1^2+2a\sigma_2^2.
+\]
+The first-order condition is
+\[
+(1-a)\sigma_1^2=a\sigma_2^2,
+\]
+so
+\[
+\boxed{a^*=\frac{\sigma_1^2}{\sigma_1^2+\sigma_2^2},\qquad
+1-a^*=\frac{\sigma_2^2}{\sigma_1^2+\sigma_2^2}.}
+\]
+Since $V''(a)=2(\sigma_1^2+\sigma_2^2)>0$, this is the unique global minimum.
+Equivalently,
+\[
+\boxed{T^*=\frac{\sigma_1^{-2}Z_1+\sigma_2^{-2}Z_2}
+{\sigma_1^{-2}+\sigma_2^{-2}}.}
+\]
+Substitution gives
+\[
+\boxed{\operatorname{Var}(T^*)
+=\frac{\sigma_1^2\sigma_2^2}{\sigma_1^2+\sigma_2^2}
+=\frac{1}{\sigma_1^{-2}+\sigma_2^{-2}}.}
+\]
+
+\emph{Correction to the printed statement.}
+For the estimator $(1-a)Z_1+aZ_2$, the correct proportionality is
+\[
+(1-a^*,a^*)\propto(\sigma_1^{-2},\sigma_2^{-2}),
+\]
+not $(a^*,1-a^*)\propto(\sigma_1^{-2},\sigma_2^{-2})$.
+The latter would correspond to the estimator $aZ_1+(1-a)Z_2$.
+
+If $\sigma_j^2=c_j\sigma^2$, then
+\[
+a^*=\frac{c_1}{c_1+c_2},\qquad 1-a^*=\frac{c_2}{c_1+c_2},
+\]
+so the common unknown scale cancels. Normality is unnecessary for this
+variance-minimization argument; the common mean, independence, and finite
+positive variances suffice.
+\end{solution}
+
+\question Exercise 2.2. Derive Newton--Raphson and Fisher scoring
+for probit regression.
+\begin{solution}
+Let $Y_i\mid x_i\sim\operatorname{Bernoulli}(p_i)$ independently, where
+\[
+\eta_i=x_i^T\beta,\qquad p_i=\Phi(\eta_i),\qquad
+q_i=1-p_i,\qquad f_i=\phi(\eta_i).
+\]
+Here $\Phi$ and $\phi$ are the standard normal CDF and density, and
+$X$ has rows $x_i^T$.
+
+\textbf{Step 1: Log-likelihood and score.}
+The log-likelihood is
+\[
+\ell(\beta)=\sum_{i=1}^n\{y_i\log p_i+(1-y_i)\log q_i\}.
+\]
+Since $dp_i/d\eta_i=f_i$,
+\[
+u_i:=\frac{\partial\ell_i}{\partial\eta_i}
+=\frac{y_if_i}{p_i}-\frac{(1-y_i)f_i}{q_i}
+=\frac{f_i(y_i-p_i)}{p_iq_i}.
+\]
+Thus
+\[
+\boxed{U(\beta)=\nabla\ell(\beta)=\sum_i x_iu_i=X^Tu.}
+\]
+
+\textbf{Step 2: Observed information.}
+Set $s_i=2y_i-1$, $t_i=s_i\eta_i$, and
+$r(t)=\phi(t)/\Phi(t)$. Then $\ell_i=\log\Phi(t_i)$ and
+\[
+r'(t)=-r(t)\{t+r(t)\},\qquad u_i=s_ir(t_i).
+\]
+It follows that
+\[
+w_i^{\mathrm{obs}}=-\frac{\partial^2\ell_i}{\partial\eta_i^2}
+=r(t_i)\{r(t_i)+t_i\}.
+\]
+Equivalently,
+\[
+w_i^{\mathrm{obs}}=
+\begin{cases}
+f_i^2/p_i^2+\eta_if_i/p_i,&y_i=1,\\
+f_i^2/q_i^2-\eta_if_i/q_i,&y_i=0.
+\end{cases}
+\]
+Writing $W_{\mathrm{obs}}=\operatorname{diag}(w_i^{\mathrm{obs}})$,
+\[
+J(\beta)=-\nabla^2\ell(\beta)=X^TW_{\mathrm{obs}}X.
+\]
+A first-order expansion of the score around $\beta^{(k)}$ gives
+\[
+0\approx U(\beta^{(k)})-J(\beta^{(k)})
+(\beta^{(k+1)}-\beta^{(k)}).
+\]
+Therefore the Newton--Raphson update is
+\[
+\boxed{\beta^{(k+1)}=\beta^{(k)}+
+(X^TW_{\mathrm{obs}}^{(k)}X)^{-1}X^Tu^{(k)}.}
+\]
+
+\textbf{Step 3: Fisher information and scoring.}
+Under the model, $E(u_i\mid x_i)=0$ and
+\[
+E(u_i^2\mid x_i)
+=\frac{f_i^2}{p_i^2q_i^2}\operatorname{Var}(Y_i\mid x_i)
+=\frac{f_i^2}{p_iq_i}.
+\]
+Thus, with $w_i^F=f_i^2/(p_iq_i)$,
+\[
+I(\beta)=X^TW_FX,\qquad W_F=\operatorname{diag}(w_i^F).
+\]
+Replacing observed information by expected information gives
+\[
+\boxed{\beta^{(k+1)}=\beta^{(k)}+
+(X^TW_F^{(k)}X)^{-1}X^Tu^{(k)}.}
+\]
+
+\textbf{Step 4: IRLS representation.}
+Define the working response
+\[
+z_i^{(k)}=\eta_i^{(k)}+\frac{y_i-p_i^{(k)}}{f_i^{(k)}}.
+\]
+Since $w_i^F(z_i-\eta_i)=u_i$, scoring is equivalent to
+\[
+\boxed{\beta^{(k+1)}=(X^TW_F^{(k)}X)^{-1}X^TW_F^{(k)}z^{(k)}.}
+\]
+For probit regression, observed and expected information generally differ,
+so the two algorithms follow different paths but target the same finite MLE.
+In implementation, linear systems are solved instead of forming inverses.
+\end{solution}
+
+\question Exercise 2.3. Implement logistic Newton--Raphson, logistic MM,
+probit Newton--Raphson, and probit Fisher scoring on \texttt{birthwt};
+compare the prescribed starts and stopping rules.
+\begin{solution}
+\textbf{Step 1: Data and design.}
+Use the binary response \texttt{low} and the formula
+\[
+\texttt{low}\sim\texttt{age+lwt+race+smoke+ptd+ht+ui+ftv}.
+\]
+Race has reference level white; $\texttt{ptd}=1\{\texttt{ptl}>0\}$;
+and \texttt{ftv} is grouped into $0$, $1$, and $2+$, with reference $0$.
+This gives $n=189$ observations and $p=11$ coefficients, including the intercept.
+All four algorithms use the same design matrix.
+
+\textbf{Step 2: Logistic Newton--Raphson.}
+For $p_i=\operatorname{expit}(x_i^T\beta)$,
+\[
+\ell(\beta)=\sum_i\{y_ix_i^T\beta-\log(1+e^{x_i^T\beta})\},
+\quad U=X^T(y-p),\quad J=X^TWX,
+\]
+where $W=\operatorname{diag}\{p_i(1-p_i)\}$. Hence
+\[
+\boxed{\beta^{(k+1)}=\beta^{(k)}+
+(X^TW^{(k)}X)^{-1}X^T(y-p^{(k)}).}
+\]
+
+\textbf{Step 3: Logistic quadratic MM.}
+Let $L=-\ell$. Because $p_i(1-p_i)\leq1/4$,
+\[
+\nabla^2L(\beta)\preceq\tfrac14 X^TX.
+\]
+For any current iterate $b$, the second-order integral expansion gives
+\[
+L(\beta)\leq Q(\beta\mid b):=
+L(b)+\nabla L(b)^T(\beta-b)
++\tfrac18(\beta-b)^TX^TX(\beta-b).
+\]
+The first-order condition for minimizing $Q$ is
+\[
+-X^T\{y-p(b)\}+\tfrac14X^TX(\beta-b)=0.
+\]
+Therefore,
+\[
+\boxed{\beta^{(k+1)}=\beta^{(k)}+
+4(X^TX)^{-1}X^T(y-p^{(k)}).}
+\]
+The majorization property gives
+\[
+L(\beta^{(k+1)})\leq Q(\beta^{(k+1)}\mid\beta^{(k)})
+\leq Q(\beta^{(k)}\mid\beta^{(k)})=L(\beta^{(k)}),
+\]
+so the log-likelihood is nondecreasing.
+The two probit algorithms use the updates derived in Exercise 2.2.
+
+\textbf{Step 4: Initialization and convergence.}
+The two starts are
+\[
+\beta^{(0)}=0,\qquad
+\beta^{(0)}=(X^TX)^{-1}X^Ty.
+\]
+The second is the least-squares fit to the binary response, used only as an
+initial value. For each start and method, use either
+\[
+\|\beta^{(k)}-\beta^{(k-1)}\|_2\leq\epsilon
+\]
+or
+\[
+|K_n(\beta^{(k)})-K_n(\beta^{(k-1)})|\leq\epsilon,
+\qquad K_n=\ell/n,
+\]
+with $\epsilon\in\{10^{-3},10^{-6}\}$. This produces
+$4\times2\times2\times2=32$ runs. The first coefficient update counts as
+iteration 1. The implementation uses full steps, without step-halving.
+
+\textbf{Step 5: Computational results.}
+The accompanying R program reports the stopping iteration, log-likelihood,
+and all coefficient estimates for every run. The following tables are
+included automatically after running the script in the document directory.
+\IfFileExists{exercise_2_3_iterations.tex}{
+\input{hw3_results\exercise_2_3_iterations.tex}
+}{\par\emph{Iteration table pending execution of the accompanying R script.}\par}
+\IfFileExists{exercise_2_3_coefficients.tex}{
+\input{Stats 596/hw3_results/exercise_2_3_coefficients.tex}
+}{\par\emph{The 32-run coefficient table is generated by the same script.}\par}
+
+\textbf{Step 6: Interpretation.}
+The logistic algorithms optimize the same likelihood, as do the two probit
+algorithms, so sufficiently accurate fits should agree within each link.
+MM uses a fixed upper bound on curvature and is generally slower near the
+optimum than Newton's method. Newton and scoring differ for probit because
+their curvature matrices differ. A tighter tolerance cannot give an earlier
+first stopping iteration along the same deterministic sequence of iterates.
+A least-squares start is not guaranteed to be better in every configuration.
+Finally, near a nonsingular maximizer,
+\[
+\ell(\widehat\beta)-\ell(\beta)
+\approx\tfrac12(\beta-\widehat\beta)^TJ(\widehat\beta)
+(\beta-\widehat\beta),
+\]
+so small likelihood changes need not imply equally small coefficient changes.
+These are theoretical expectations to compare with the generated output,
+not claims about unexecuted iteration counts.
+\end{solution}
+
+\question Exercise 2.4. Reproduce the coefficient estimates, model-based
+standard errors, null deviance, and residual deviance for both links.
+\begin{solution}
+\textbf{Step 1: Accurate coefficient fits.}
+Use $\beta^{(0)}=0$ and stop when
+\[
+\|\beta^{(k)}-\beta^{(k-1)}\|_2\leq10^{-10}.
+\]
+Use Newton--Raphson for logit and Fisher scoring for probit.
+
+\textbf{Step 2: Model-based standard errors.}
+The model-based covariance estimate is
+\[
+\widehat V_{\mathrm{model}}=I(\widehat\beta)^{-1},\qquad
+\widehat{\operatorname{SE}}(\widehat\beta_j)
+=\sqrt{[\widehat V_{\mathrm{model}}]_{jj}}.
+\]
+For logit,
+\[
+I(\widehat\beta)=X^T\operatorname{diag}
+\{\widehat p_i(1-\widehat p_i)\}X.
+\]
+For probit,
+\[
+I(\widehat\beta)=X^T\operatorname{diag}
+\left\{\frac{\phi(\widehat\eta_i)^2}
+{\widehat p_i(1-\widehat p_i)}\right\}X.
+\]
+Expected information is used to reproduce the model-based probit standard
+errors from \texttt{glm}.
+
+\textbf{Step 3: Deviances.}
+For individual Bernoulli observations, the saturated log-likelihood is zero,
+using $0\log0=0$. Thus
+\[
+D_{\mathrm{res}}=2\{\ell_{\mathrm{sat}}-\ell(\widehat\beta)\}
+=-2\ell(\widehat\beta).
+\]
+The intercept-only MLE has constant probability $\widehat p_0=\overline y$,
+regardless of link. Hence
+\[
+D_{\mathrm{null}}=-2\sum_i\{y_i\log\overline y
++(1-y_i)\log(1-\overline y)\}.
+\]
+The degrees of freedom are $n-1=188$ and $n-p=178$, respectively.
+
+\textbf{Step 4: Reference values.}
+The following are the values printed in the exercise, provided as benchmarks.
+Small last-digit differences may occur with a different convergence rule.
+\begin{center}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+&\multicolumn{2}{c}{Logit}&\multicolumn{2}{c}{Probit}\\
+Term&Estimate&SE&Estimate&SE\\
+\midrule
+Intercept&0.82302&1.24471&0.461585&0.722771\\
+age&-0.03723&0.03870&-0.023300&0.022514\\
+lwt&-0.01565&0.00708&-0.008925&0.004056\\
+raceblack&1.19241&0.53597&0.704876&0.318383\\
+raceother&0.74069&0.46174&0.441680&0.266840\\
+smoke&0.75553&0.42502&0.464624&0.246865\\
+ptdTRUE&1.34376&0.48062&0.816927&0.288368\\
+ht&1.91317&0.72074&1.132272&0.426167\\
+ui&0.68019&0.46434&0.414494&0.281152\\
+ftv1&-0.43638&0.47939&-0.279556&0.279582\\
+ftv2+&0.17901&0.45638&0.086412&0.269392\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Quantity&Logit&Probit\\
+\midrule
+Null deviance&234.67&234.67\\
+Residual deviance&195.48&194.99\\
+Null degrees of freedom&188&188\\
+Residual degrees of freedom&178&178\\
+\bottomrule
+\end{tabular}
+\end{center}
+The custom numerical estimates and standard errors are included with the
+robust-SE tables in Exercise 2.5 after running the R code.
+\end{solution}
+
+\question Exercise 2.5. Compute model-robust standard errors for the
+logistic and probit coefficient estimates.
+\begin{solution}
+\textbf{Step 1: Individual scores and asymptotic covariance.}
+Let $s_i(\beta)=\partial\ell_i(\beta)/\partial\beta=x_iu_i(\beta)$.
+The likelihood estimator solves $\sum_i s_i(\widehat\beta)=0$.
+Under possible misspecification, define $\beta^\dagger$ by
+$E\{s_i(\beta^\dagger)\}=0$. With suitable regularity conditions,
+\[
+\sqrt n(\widehat\beta-\beta^\dagger)
+\overset{d}{\longrightarrow}N(0,A^{-1}BA^{-T}),
+\]
+where
+\[
+A=E\left\{-\frac{\partial s_i(\beta^\dagger)}{\partial\beta^T}\right\},
+\qquad B=E\{s_i(\beta^\dagger)s_i(\beta^\dagger)^T\}.
+\]
+This follows by Taylor expanding the estimating equation around
+$\beta^\dagger$, applying a law of large numbers to the score derivative,
+and a central limit theorem to $n^{-1/2}\sum_i s_i(\beta^\dagger)$.
+
+\textbf{Step 2: Empirical sandwich.}
+Use the sum-based matrices
+\[
+J=-\sum_i\frac{\partial s_i(\widehat\beta)}{\partial\beta^T},
+\qquad M=\sum_i s_i(\widehat\beta)s_i(\widehat\beta)^T.
+\]
+The HC0 covariance estimate is
+\[
+\boxed{\widehat V_{\mathrm{HC0}}=J^{-1}MJ^{-T},\qquad
+\widehat{\operatorname{SE}}_{\mathrm{HC0}}(\widehat\beta_j)
+=\sqrt{[\widehat V_{\mathrm{HC0}}]_{jj}}.}
+\]
+There is no additional factor of $n$ because $J$ and $M$ are sums.
+Equivalently, with $\widehat A=J/n$ and $\widehat B=M/n$,
+$\widehat V=n^{-1}\widehat A^{-1}\widehat B\widehat A^{-T}$.
+
+\textbf{Step 3: Logistic case.}
+Since $s_i=x_i(y_i-p_i)$,
+\[
+J_L=X^T\operatorname{diag}\{\widehat p_i(1-\widehat p_i)\}X,
+\qquad
+M_L=X^T\operatorname{diag}\{(y_i-\widehat p_i)^2\}X.
+\]
+Therefore,
+\[
+\boxed{\widehat V_L=J_L^{-1}M_LJ_L^{-1}.}
+\]
+
+\textbf{Step 4: Probit case.}
+Here
+\[
+\widehat u_i=\frac{\phi(\widehat\eta_i)(y_i-\widehat p_i)}
+{\widehat p_i(1-\widehat p_i)},\qquad
+M_P=X^T\operatorname{diag}(\widehat u_i^2)X.
+\]
+Using the observed weights from Exercise 2.2,
+\[
+J_P=X^T\operatorname{diag}(\widehat w_i^{\mathrm{obs}})X,
+\qquad
+\boxed{\widehat V_P=J_P^{-1}M_PJ_P^{-1}.}
+\]
+For the model-robust probit sandwich, the bread is the empirical observed
+score derivative, not the model-expected information. Those population
+matrices need not agree under misspecification.
+
+\textbf{Step 5: Implementation and output.}
+The R function \texttt{inference} constructs a matrix whose $i$th row is
+$s_i(\widehat\beta)^T$, obtains $M$ by its cross-product, and combines it
+with the observed information. It reports both HC0 and the optional correction
+\[
+\widehat V_{\mathrm{HC1}}=\frac{n}{n-p}\widehat V_{\mathrm{HC0}}.
+\]
+HC0 is the direct sandwich answer; HC1 is labeled separately.
+\IfFileExists{inference_logit.tex}{\input{inference_logit.tex}}{
+\par\emph{Logit numerical inference table pending execution of the R script.}\par}
+\IfFileExists{inference_probit.tex}{\input{inference_probit.tex}}{
+\par\emph{Probit numerical inference table pending execution of the R script.}\par}
+
+Robust standard errors leave the coefficient estimates unchanged and need
+not exceed model-based standard errors. Under misspecification, they support
+inference for the pseudo-true coefficient, not an automatically causal
+parameter. The calculation assumes independent observations; clustering
+would require an appropriately clustered meat matrix.
+\end{solution}
+
+\end{questions}
+\end{document}

@@ -1,0 +1,53 @@
+\documentclass[answers,12pt,addpoints]{exam} 
+\usepackage{import}
+
+\import{C:/Users/prana/OneDrive/Desktop/MathNotes}{style.tex}
+
+% Header
+\newcommand{\name}{Pranav Tikkawar}
+\newcommand{\course}{01:XXX:XXX}
+\newcommand{\assignment}{Homework n}
+\author{\name}
+\title{\course \ - \assignment}
+
+\begin{document}
+\maketitle
+
+\newpage
+\begin{questions}
+\question Question 1.
+\begin{solution}
+This is my solution
+\end{solution}
+Testing
+\question Question 2.
+\begin{solution}
+    
+\end{solution}
+\question Question 3.
+\begin{solution}
+    
+\end{solution}
+
+\question Question 4.
+Prove that in an arbitry topological space, the union of two closed sets is closed, using the limit point definition of closed sets.
+\begin{solution}
+    Suppose $A$ and $B$ are closed sets in a topological space $(X, \tau)$. 
+    Let $C = A \cup B$. We want to show that $C$ is closed, which means we need to show that $C$ contains all its limit points.
+    
+    Suppose for contradiction that there exists a limit point $x$ of $C$ such that $x \notin C$. 
+    
+    Since $x$ is a limit point of $C$, every open neighborhood of $x$ must intersect $C$ in some point other than $x$. 
+    
+    Since $C = A \cup B$, this means that every open neighborhood of $x$ must intersect either $A$ or $B$ (or both) in some point other than $x$. But since $A$ and $B$ are closed, they contain all their limit points. This is a contradiction.
+\end{solution}
+
+\question Question 5.
+
+\begin{solution}
+    
+\end{solution}
+
+\end{questions}
+
+\end{document}

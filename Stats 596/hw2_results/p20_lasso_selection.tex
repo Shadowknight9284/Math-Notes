@@ -1,15 +1,15 @@
 \begin{center}
 \small
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{lrr}
+\begin{tabular}{lrrrrr}
 \toprule
-Selection & $\lambda$ & Test MSE \\
+Selection & $\lambda$ & $f(\lambda)$ & Nonzero & Kept of $x_1$--$x_4$ & Test MSE \\
 \midrule
-Test-grid oracle & 0.002692 & 4.531942 \\
-5-fold CV minimum & 0.137171 & 4.751419 \\
-5-fold CV 1-SE & 0.528491 & 5.237139 \\
-10-fold CV minimum & 0.089777 & 4.699142 \\
-10-fold CV 1-SE & 0.640795 & 5.397660 \\
+Test-grid oracle & 0.002692 & 0.951 & 19 & 1,2,3,4 & 4.5319 \\
+5-fold CV minimum & 0.1372 & 0.478 & 7 & 1,3,4 & 4.7514 \\
+5-fold CV 1-SE & 0.5285 & 0.355 & 3 & 1,3,4 & 5.2372 \\
+10-fold CV minimum & 0.08978 & 0.502 & 9 & 1,2,3,4 & 4.6991 \\
+10-fold CV 1-SE & 0.6408 & 0.332 & 3 & 1,3,4 & 5.3977 \\
 \bottomrule
 \end{tabular}
 \end{center}

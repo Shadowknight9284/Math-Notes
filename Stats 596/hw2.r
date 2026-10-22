@@ -1,372 +1,311 @@
-# Stats 596 -- Homework 2 -- Pranav Tikkawar
-# Save this file as homework2.R beside hw2.tex.
-# Set the R working directory to that folder before sourcing this script.
-# Outputs are written to hw2_results/; all names match hw2.tex.
-# Requires MASS and glmnet. No numerical results are hard-coded.
+# Stats 596 HW2 - Pranav Tikkawar
 
-options(stringsAsFactors = FALSE, width = 120)
-needed <- c("MASS", "glmnet")
-missing <- needed[!vapply(needed, requireNamespace, logical(1), quietly = TRUE)]
-if (length(missing)) {
-  stop("Install required packages first: install.packages(c(",
-       paste(sprintf('"%s"', missing), collapse = ", "), "))")
-}
-resdir <- "hw2_results"
-dir.create(resdir, recursive = TRUE, showWarnings = FALSE)
+library(MASS)
+library(glmnet)
 
-# LaTeX table exporter. Input headings contain intentional math markup.
-write.tex.table <- function(d, filename, digits = 6) {
-  text <- lapply(d, function(v) {
-    if (is.numeric(v)) formatC(v, digits = digits, format = "f") else as.character(v)
+out <- "hw2_results"
+dir.create(out, showWarnings = FALSE)
+
+# write a data frame as a booktabs table that hw2.tex can \input
+tex_table <- function(d, file, digits = 4) {
+  d[] <- lapply(d, function(v) {
+    if (is.numeric(v)) formatC(v, digits = digits, format = "f") else v
   })
-  text <- as.data.frame(text, check.names = FALSE)
-  rows <- apply(text, 1, paste, collapse = " & ")
-  bs <- intToUtf8(92)
-  cmd <- function(s) paste0(bs, s)
-  ending <- paste0(" ", bs, bs)
-  lines <- c(cmd("begin{center}"), cmd("small"),
-    cmd("setlength{\\tabcolsep}{4pt}"),
-    cmd(paste0("begin{tabular}{l", paste(rep("r", ncol(d)-1), collapse=""), "}")),
-    cmd("toprule"), paste0(paste(names(d), collapse=" & "), ending),
-    cmd("midrule"), paste0(rows, ending), cmd("bottomrule"),
-    cmd("end{tabular}"), cmd("end{center}"))
-  writeLines(lines, filename, useBytes = TRUE)
+  rows <- paste(apply(d, 1, paste, collapse = " & "), "\\\\")
+  cat("\\begin{center}\\small\\setlength{\\tabcolsep}{4pt}",
+      paste0("\\begin{tabular}{l", strrep("r", ncol(d) - 1), "}"),
+      "\\toprule",
+      paste(paste(names(d), collapse = " & "), "\\\\"),
+      "\\midrule", rows, "\\bottomrule",
+      "\\end{tabular}\\end{center}",
+      file = file, sep = "\n")
 }
 
-# Exercise 1.11: exact normal-mean risks and independent integration checks.
-ridge.mse <- function(mu, lambda) (1 + lambda^2*mu^2)/(1 + lambda)^2
-lasso.mse <- function(mu, lambda) {
-  a <- -lambda-mu
-  b <- lambda-mu
-  (1+lambda^2)*(pnorm(a)+pnorm(b, lower.tail=FALSE)) -
-    (a+2*lambda)*dnorm(a) + (b-2*lambda)*dnorm(b) +
-    mu^2*(pnorm(b)-pnorm(a))
+
+#### Exercise 1.11 ####
+
+ridge_mse <- function(mu, lam) (1 + lam^2 * mu^2) / (1 + lam)^2
+
+lasso_mse <- function(mu, lam) {
+  a <- -lam - mu
+  b <- lam - mu
+  (1 + lam^2) * (pnorm(a) + pnorm(b, lower.tail = FALSE)) -
+    (a + 2 * lam) * dnorm(a) + (b - 2 * lam) * dnorm(b) +
+    mu^2 * (pnorm(b) - pnorm(a))
 }
-checks <- expand.grid(mu=c(-3,0,2), lambda=c(.1,1,5,10))
-checks$absolute.error <- mapply(function(mu, lambda) {
-  a <- -lambda-mu; b <- lambda-mu
-  value <- integrate(function(u) (u+lambda)^2*dnorm(u), -Inf, a)$value +
-    mu^2*(pnorm(b)-pnorm(a)) +
-    integrate(function(u) (u-lambda)^2*dnorm(u), b, Inf)$value
-  abs(value-lasso.mse(mu,lambda))
-}, checks$mu, checks$lambda)
-stopifnot(max(checks$absolute.error)<1e-6)
-write.csv(checks, file.path(resdir,"ex111_risk_checks.csv"), row.names=FALSE)
-mu.grid <- seq(-15,15,length.out=1201)
-lambdas <- c(.1,1,5,10)
-colors <- c("black","blue","red","darkgreen")
-pdf(file.path(resdir,"ex111_mse.pdf"), width=11, height=5)
-par(mfrow=c(1,2), mar=c(4,4,3,1))
-for (method in c("Ridge","Lasso")) {
-  risk <- if (method=="Ridge") ridge.mse else lasso.mse
-  values <- sapply(lambdas, function(lam) risk(mu.grid,lam))
-  matplot(mu.grid,values,type="l",lty=1,col=colors,lwd=2,
-          xlab=expression(mu),ylab="Mean squared error",main=method)
-  abline(h=1,lty=2,col="gray50")
-  legend("top",paste("lambda =",lambdas),col=colors,lty=1,lwd=2,bty="n")
-  tab <- data.frame(mu=mu.grid,values)
-  names(tab) <- c("mu",paste0("lambda_",lambdas))
-  write.csv(tab,file.path(resdir,paste0("ex111_",tolower(method),"_mse.csv")),row.names=FALSE)
+
+# sanity check of the closed form against numerical integration
+lasso_mse_int <- function(mu, lam) {
+  a <- -lam - mu
+  b <- lam - mu
+  integrate(function(u) (u + lam)^2 * dnorm(u), -Inf, a)$value +
+    mu^2 * (pnorm(b) - pnorm(a)) +
+    integrate(function(u) (u - lam)^2 * dnorm(u), b, Inf)$value
+}
+for (lam in c(0.1, 1, 5, 10)) {
+  for (mu in c(-3, 0, 2)) {
+    stopifnot(abs(lasso_mse(mu, lam) - lasso_mse_int(mu, lam)) < 1e-6)
+  }
+}
+
+lams <- c(0.1, 1, 5, 10)
+cols <- c("black", "blue", "red", "darkgreen")
+pdf(file.path(out, "ex111_mse.pdf"), width = 11, height = 9)
+par(mfrow = c(2, 2), mar = c(4, 4, 3, 1))
+for (zoom in c(FALSE, TRUE)) {
+  mu <- if (zoom) seq(-3, 3, length.out = 601) else seq(-15, 15, length.out = 1201)
+  for (method in c("Ridge", "Lasso")) {
+    f <- if (method == "Ridge") ridge_mse else lasso_mse
+    risk <- sapply(lams, function(l) f(mu, l))
+    matplot(mu, risk, type = "l", lty = 1, lwd = 2, col = cols,
+            ylim = if (zoom) c(0, 3) else range(risk),
+            xlab = expression(mu), ylab = "MSE",
+            main = paste0(method, if (zoom) ": near zero" else ": full range"))
+    abline(h = 1, lty = 2, col = "gray50")
+    legend("top", paste("lambda =", lams), col = cols, lwd = 2, bty = "n")
+  }
 }
 dev.off()
 
-# Textbook simulation. Generate all data before drawing any CV folds.
-make.data <- function(p) {
+
+#### Exercises 1.17 and 1.18 ####
+
+# simulation code from the book, with p as an argument
+make_data <- function(p) {
   set.seed(0)
   n <- 200
-  mu <- rep(0,p)
-  msig <- toeplitz(.8^(1:p-1))
+  mu <- rep(0, p)
+  msig <- toeplitz(.8^(1:p - 1))
   sig <- .5
-  x <- MASS::mvrnorm(n,mu,msig)
-  y <- x[,1] + pmax(0,apply(x[,2:4],1,sum))^2/3 + rnorm(n,0,sig)
+  x <- mvrnorm(n, mu, msig)
+  y <- x[, 1] + pmax(0, apply(x[, 2:4], 1, sum))^2 / 3 + rnorm(n, 0, sig)
   ntest <- 100
-  xtest <- MASS::mvrnorm(ntest,mu,msig)
-  ytest <- xtest[,1] + pmax(0,apply(xtest[,2:4],1,sum))^2/3 + rnorm(ntest,0,sig)
-  list(x=x,y=y,xtest=xtest,ytest=ytest)
+  xtest <- mvrnorm(ntest, mu, msig)
+  ytest <- xtest[, 1] + pmax(0, apply(xtest[, 2:4], 1, sum))^2 / 3 + rnorm(ntest, 0, sig)
+  list(x = x, y = y, xtest = xtest, ytest = ytest)
 }
 
-# Ridge minimizes RSS/(2*n) + lambda*sum(slopes^2)/2.
-# Only centering is performed, to profile out an unpenalized intercept.
-ridge.path <- function(x,y,lambda) {
+# Ridge: minimize RSS/(2n) + (lambda/2)*||b||^2 with an unpenalized intercept.
+# Center x and y (Ex 1.12), then use the SVD of the centered x:
+#   b = V diag(d / (d^2 + n*lambda)) U'y,   df = 1 + sum d^2 / (d^2 + n*lambda)
+# lambda = 0 gives the minimum-norm least squares fit.
+ridge_fit <- function(x, y, lambda) {
   n <- nrow(x)
-  xb <- colMeans(x); yb <- mean(y)
-  xc <- sweep(x,2,xb,"-"); yc <- y-yb
-  s <- svd(xc)
-  keep <- s$d > max(s$d)*1e-10
+  xbar <- colMeans(x)
+  ybar <- mean(y)
+  s <- svd(sweep(x, 2, xbar))
+  keep <- s$d > 1e-10 * s$d[1]   # drop zero singular values (p >= n case)
   d <- s$d[keep]
-  if (!length(d)) stop("Centered design has zero rank.")
-  U <- s$u[,keep,drop=FALSE]; V <- s$v[,keep,drop=FALSE]
-  uy <- drop(crossprod(U,yc))
-  W <- vapply(lambda,function(lam) d/(d^2+n*lam),numeric(length(d)))
-  W <- matrix(W,nrow=length(d),ncol=length(lambda))
-  B <- V %*% sweep(W,1,uy,"*")
-  shrink <- vapply(lambda,function(lam) d^2/(d^2+n*lam),numeric(length(d)))
-  shrink <- matrix(shrink,nrow=length(d),ncol=length(lambda))
-  list(beta=B,intercept=yb-drop(xb %*% B),df=1+colSums(shrink))
+  uy <- drop(crossprod(s$u[, keep], y - ybar))
+  beta <- sapply(lambda, function(l) s$v[, keep] %*% (d / (d^2 + n * l) * uy))
+  beta <- matrix(beta, ncol = length(lambda))
+  df <- sapply(lambda, function(l) 1 + sum(d^2 / (d^2 + n * l)))
+  list(beta = beta, a0 = ybar - drop(xbar %*% beta), df = df)
 }
 
-# Gaussian Lasso on original scales with an unpenalized intercept.
-# alpha=1 preserves the stated Lasso objective when glmnet undoes its
-# internal response transformation. No manual x or y rescaling is used.
-lasso.path <- function(x, y, lambda) {
-  fit <- glmnet::glmnet(
-    x = x,
-    y = y,
-    family = "gaussian",
-    alpha = 1,
-    lambda = lambda,
-    standardize = FALSE,
-    intercept = TRUE,
-    thresh = 1e-10,
-    maxit = 3000000
-  )
-
-  if (length(fit$lambda) != length(lambda)) {
-    stop(
-      "glmnet returned ", length(fit$lambda),
-      " of ", length(lambda), " requested penalties. ",
-      "The path did not finish; do not use incomplete results."
-    )
-  }
-
-  if (max(abs(fit$lambda - lambda)) >
-      1e-10 * max(1, max(lambda))) {
-    stop("Returned penalties do not match the requested grid.")
-  }
-
-  list(
-    beta = as.matrix(fit$beta),
-    intercept = as.numeric(fit$a0),
-    df = NULL
-  )
+# Lasso: glmnet solves RSS/(2n) + lambda*||b||_1. No standardization.
+# thresh is tightened so the KKT check below passes at the small lambdas.
+lasso_fit <- function(x, y, lambda) {
+  fit <- glmnet(x, y, alpha = 1, lambda = lambda, standardize = FALSE,
+                intercept = TRUE, thresh = 1e-14, maxit = 1e8)
+  stopifnot(length(fit$lambda) == length(lambda))
+  list(beta = as.matrix(fit$beta), a0 = fit$a0)
 }
-fit.path <- function(x,y,lambda,method) {
-  if (method=="ridge") ridge.path(x,y,lambda) else lasso.path(x,y,lambda)
-}
-predict.path <- function(fit,x) sweep(x %*% fit$beta,2,fit$intercept,"+")
-path.mse <- function(y,pred) colMeans(sweep(pred,1,y,"-")^2)
 
-# Equal-size fold errors, fold-based SE, and the largest acceptable lambda.
-cv.path <- function(x,y,lambda,method,folds) {
+fit_path <- function(x, y, lambda, method) {
+  if (method == "ridge") ridge_fit(x, y, lambda) else lasso_fit(x, y, lambda)
+}
+
+predict_path <- function(fit, x) sweep(x %*% fit$beta, 2, fit$a0, "+")
+mse <- function(y, pred) colMeans((pred - y)^2)
+
+# Largest violation of the Lasso optimality conditions (Ex 1.15) along the path:
+#   g_j + lambda*sign(b_j) = 0 if b_j != 0,  |g_j| <= lambda if b_j = 0,  mean residual = 0
+kkt_violation <- function(x, y, fit, lambda) {
+  r <- predict_path(fit, x) - y
+  g <- crossprod(x, r) / nrow(x)
+  sapply(seq_along(lambda), function(k) {
+    b <- fit$beta[, k]
+    on <- abs(b) > 1e-8
+    max(abs(g[on, k] + lambda[k] * sign(b[on])),
+        pmax(abs(g[!on, k]) - lambda[k], 0),
+        abs(mean(r[, k])))
+  })
+}
+
+# K-fold CV: mean fold MSE, its SE, and the min / one-SE choices
+cv_path <- function(x, y, lambda, method, folds) {
   K <- max(folds)
-  error <- matrix(NA_real_,K,length(lambda))
-  for (k in seq_len(K)) {
-    validation <- which(folds==k)
-    training <- which(folds!=k)
-    fit <- fit.path(x[training,,drop=FALSE],y[training],lambda,method)
-    error[k,] <- path.mse(y[validation],predict.path(fit,x[validation,,drop=FALSE]))
+  err <- matrix(NA, K, length(lambda))
+  for (k in 1:K) {
+    tr <- folds != k
+    fit <- fit_path(x[tr, ], y[tr], lambda, method)
+    if (method == "lasso") {
+      stopifnot(max(kkt_violation(x[tr, ], y[tr], fit, lambda)) < 1e-6 * lambda[1])
+    }
+    err[k, ] <- mse(y[!tr], predict_path(fit, x[!tr, ]))
   }
-  average <- colMeans(error)
-  se <- apply(error,2,sd)/sqrt(K)
-  imin <- which.min(average)
-  eligible <- which(average<=average[imin]+se[imin])
-  i1se <- eligible[which.max(lambda[eligible])]
-  list(mean=average,se=se,imin=imin,i1se=i1se,fold.errors=error)
+  cvm <- colMeans(err)
+  se <- apply(err, 2, sd) / sqrt(K)
+  imin <- which.min(cvm)
+  i1se <- min(which(cvm <= cvm[imin] + se[imin]))   # lambda is decreasing
+  list(cvm = cvm, se = se, imin = imin, i1se = i1se)
 }
 
-# Original-scale Lasso KKT checks, including the intercept equation.
-lasso.kkt <- function(x,y,fit,lambda) {
-  residual <- sweep(predict.path(fit,x),1,y,"-")
-  gradient <- crossprod(x,residual)/nrow(x)
-  vapply(seq_along(lambda),function(k) {
-    b <- fit$beta[,k]
-    active <- abs(b)>1e-8
-    violations <- numeric(length(b))
-    violations[active] <- abs(gradient[active,k]+lambda[k]*sign(b[active]))
-    violations[!active] <- pmax(abs(gradient[!active,k])-lambda[k],0)
-    max(c(violations,abs(mean(residual[,k]))))
-  },numeric(1))
-}
+rules <- c("Test-grid oracle", "5-fold CV minimum", "5-fold CV 1-SE",
+           "10-fold CV minimum", "10-fold CV 1-SE")
 
-run.method <- function(dat,method,folds5,folds10,p) {
-  x <- dat$x; y <- dat$y
-  xc <- sweep(x,2,colMeans(x),"-"); yc <- y-mean(y)
-  if (method=="ridge") {
-    scale <- max(svd(xc,nu=0,nv=0)$d)^2/nrow(x)
-    lambda <- scale*10^seq(4,-8,length.out=240)
+run_method <- function(dat, method, folds5, folds10) {
+  x <- dat$x
+  y <- dat$y
+  n <- nrow(x)
+  xc <- sweep(x, 2, colMeans(x))
+
+  if (method == "ridge") {
+    s <- svd(xc, nu = 0, nv = 0)$d[1]^2 / n
+    lambda <- s * 10^seq(4, -8, length.out = 240)
   } else {
-    lambda.max <- max(abs(drop(crossprod(xc,yc))))/nrow(x)
-    lambda <- lambda.max * 10^seq(
-  from = 0,
-  to = -4,
-  length.out = 240
-)
+    lmax <- max(abs(crossprod(xc, y - mean(y)))) / n   # smallest lambda giving b = 0
+    lambda <- lmax * 10^seq(0, -4, length.out = 240)
   }
-  fit <- fit.path(x,y,lambda,method)
-  train <- path.mse(y,predict.path(fit,x))
-  test <- path.mse(dat$ytest,predict.path(fit,dat$xtest))
-  cv5 <- cv.path(x,y,lambda,method,folds5)
-  cv10 <- cv.path(x,y,lambda,method,folds10)
-  stem <- paste0("p",p,"_",method)
-  if (method=="ridge") {
+
+  fit <- fit_path(x, y, lambda, method)
+  train <- mse(y, predict_path(fit, x))
+  test_sq <- (predict_path(fit, dat$xtest) - dat$ytest)^2
+  test <- colMeans(test_sq)
+  cv5 <- cv_path(x, y, lambda, method, folds5)
+  cv10 <- cv_path(x, y, lambda, method, folds10)
+
+  if (method == "ridge") {
     axis <- fit$df
-    xlabel <- "Degrees of freedom (including intercept)"
   } else {
-    reference <- ridge.path(x,y,0)
-    axis <- colSums(abs(fit$beta))/sum(abs(reference$beta[,1]))
-    xlabel <- "L1 shrinkage fraction (minimum-norm LS reference)"
-    checks <- lasso.kkt(x,y,fit,lambda)
-    write.csv(data.frame(lambda=lambda,kkt.violation=checks),
-              file.path(resdir,paste0(stem,"_kkt.csv")),row.names=FALSE)
-    if (max(checks)>1e-4) {
-      stop(stem,": KKT violation exceeds 1e-4; inspect convergence.")
-    }
+    # shrinkage fraction relative to the min-norm least squares fit
+    ls <- ridge_fit(x, y, 0)$beta
+    axis <- colSums(abs(fit$beta)) / sum(abs(ls))
+    stopifnot(max(kkt_violation(x, y, fit, lambda)) < 1e-6 * lmax)
+    stopifnot(all(axis <= 1 + 1e-6), all(diff(axis) >= -1e-6))   # proved in 1.18
   }
-  best <- which.min(test)
-  selected <- c(best,cv5$imin,cv5$i1se,cv10$imin,cv10$i1se)
-  selection <- c("Test-grid oracle","5-fold CV minimum","5-fold CV 1-SE",
-                 "10-fold CV minimum","10-fold CV 1-SE")
-  tab <- data.frame(Selection=selection,lambda=lambda[selected],
-                    `Test MSE`=test[selected],check.names=FALSE)
-  write.csv(tab,file.path(resdir,paste0(stem,"_selection.csv")),row.names=FALSE)
-  latex.tab <- tab
-  names(latex.tab)[2] <- "$\\lambda$"
-  write.tex.table(latex.tab,file.path(resdir,paste0(stem,"_selection.tex")))
-  detail <- data.frame(lambda=lambda,axis=axis,train=train,test=test,
-                       cv5=cv5$mean,se5=cv5$se,cv10=cv10$mean,se10=cv10$se)
-  write.csv(detail,file.path(resdir,paste0(stem,"_path.csv")),row.names=FALSE)
-  coef <- rbind(intercept=fit$intercept,fit$beta)
-  rownames(coef) <- c("Intercept",paste0("x",seq_len(ncol(x))))
-  write.csv(coef,file.path(resdir,paste0(stem,"_coefficients.csv")))
-  for (K in c(5,10)) {
-    cv <- if(K==5) cv5 else cv10
-    write.csv(cv$fold.errors,file.path(resdir,paste0(stem,"_cv",K,"_fold_errors.csv")),row.names=FALSE)
+
+  sel <- c(which.min(test), cv5$imin, cv5$i1se, cv10$imin, cv10$i1se)
+  tab <- data.frame(Selection = rules,
+                    lambda = formatC(lambda[sel], digits = 4, format = "g"),
+                    axis = formatC(axis[sel], digits = 3, format = "g"),
+                    test = test[sel])
+  names(tab) <- c("Selection", "$\\lambda$",
+                  if (method == "ridge") "df" else "$f(\\lambda)$", "Test MSE")
+  if (method == "lasso") {
+    nz <- abs(fit$beta[, sel]) > 1e-8
+    tab <- data.frame(tab[1:3],
+                      Nonzero = as.character(colSums(nz)),
+                      Kept = apply(nz[1:4, ], 2, function(v) paste(which(v), collapse = ",")),
+                      tab[4], check.names = FALSE)
+    names(tab)[5] <- "Kept of $x_1$--$x_4$"
   }
-  at.endpoint <- c(best,cv5$imin,cv10$imin) %in% c(1,length(lambda))
-  if(any(at.endpoint)) {
-    warning(stem,": a test/CV minimum is at a grid endpoint. Inspect and extend the grid if needed.")
-  }
-  list(method=method,lambda=lambda,fit=fit,axis=axis,xlabel=xlabel,
-       train=train,test=test,cv5=cv5,cv10=cv10,table=tab,best=best,
-       endpoint=at.endpoint)
+
+  list(method = method, lambda = lambda, fit = fit, axis = axis,
+       train = train, test = test, cv5 = cv5, cv10 = cv10,
+       sel = sel, tab = tab, test_sq = test_sq[, sel])
 }
 
-plot.result <- function(z,p) {
-  stem <- paste0("p",p,"_",z$method)
-  # Keep penalty-path order; the L1 reference fraction need not be monotone.
-  pdf(file.path(resdir,paste0(stem,"_path.pdf")),width=8,height=5.2)
-  par(mar=c(4.5,4,3,1))
-  matplot(z$axis,t(z$fit$beta),type="l",lty=1,
-          xlab=z$xlabel,ylab="Slope coefficient",
-          main=paste(z$method,"coefficient path: p =",p))
-  abline(h=0,col="gray80")
-  dev.off()
+plot_method <- function(z, p) {
+  stem <- file.path(out, paste0("p", p, "_", z$method))
+  xlab <- if (z$method == "ridge") "Degrees of freedom" else "L1 shrinkage fraction"
+  B <- t(z$fit$beta)
+  sig_cols <- c("black", "red", "blue", "darkgreen")
 
-  pdf(file.path(resdir,paste0(stem,"_errors.pdf")),width=11,height=5)
-  par(mfrow=c(1,2),mar=c(4.5,4,3,1))
-  E <- cbind(z$train,z$test,z$cv5$mean,z$cv10$mean)
-  for (zoom in c(FALSE,TRUE)) {
-    limits <- range(E)
-    if (zoom) {
-      minimum <- min(c(z$test,z$cv5$mean,z$cv10$mean))
-      limits <- c(0,max(1,2.5*minimum))
-    }
-    matplot(z$axis,E,type="l",lty=c(1,1,2,3),lwd=2,
-            col=c("black","red","blue","darkgreen"),ylim=limits,
-            xlab=z$xlabel,ylab="Mean squared error",
-            main=if(zoom) "Prediction-error detail" else "Full error range")
-    abline(v=z$axis[c(z$cv5$imin,z$cv5$i1se)],col="blue",lty=c(2,3))
-    abline(v=z$axis[c(z$cv10$imin,z$cv10$i1se)],col="darkgreen",lty=c(2,3))
-    legend("topleft",c("Training","Test","5-fold CV","10-fold CV"),
-           col=c("black","red","blue","darkgreen"),lty=c(1,1,2,3),
-           lwd=2,bty="n",cex=.8)
+  draw_path <- function(idx, main) {
+    matplot(z$axis[idx], B[idx, -(1:4)], type = "l", lty = 1, col = "gray75",
+            ylim = range(B[idx, ]), xlab = xlab, ylab = "Coefficient", main = main)
+    matlines(z$axis[idx], B[idx, 1:4], lty = 1, lwd = 2.5, col = sig_cols)
+    abline(h = 0, col = "gray50")
+    abline(v = z$axis[c(z$cv10$imin, z$cv10$i1se)], col = "purple", lty = c(2, 3))
+    legend("topleft", c(paste0("x", 1:4), "other x", "10-fold min", "10-fold 1-SE"),
+           col = c(sig_cols, "gray75", "purple", "purple"),
+           lty = c(1, 1, 1, 1, 1, 2, 3), bty = "n", cex = .75)
+  }
+
+  # p = 200 ridge nearly interpolates at small lambda, so add a zoomed panel
+  zoom <- z$method == "ridge" && p == 200
+  pdf(paste0(stem, "_path.pdf"), width = if (zoom) 11 else 8, height = 5.2)
+  par(mfrow = c(1, if (zoom) 2 else 1), mar = c(4.5, 4, 3, 1))
+  draw_path(seq_along(z$axis), paste(z$method, "path, p =", p))
+  if (zoom) {
+    draw_path(which(z$lambda >= z$lambda[z$cv10$imin] / 100), "Without smallest penalties")
   }
   dev.off()
 
-  pdf(file.path(resdir,paste0(stem,"_cv.pdf")),width=11,height=5)
-  par(mfrow=c(1,2),mar=c(4.5,4,3,1))
-  for (K in c(5,10)) {
-    cv <- if(K==5) z$cv5 else z$cv10
-    plot(z$axis,cv$mean,type="l",xlab=z$xlabel,ylab="CV MSE",
-         main=paste(K,"fold CV with one-SE bands"),
-         ylim=range(c(cv$mean-cv$se,cv$mean+cv$se)))
-    lines(z$axis,cv$mean+cv$se,col="gray50",lty=2)
-    lines(z$axis,cv$mean-cv$se,col="gray50",lty=2)
-    abline(v=z$axis[c(cv$imin,cv$i1se)],col=c("blue","red"),lty=c(2,3))
-    legend("topleft",c("CV mean","CV mean +/- SE","CV minimum","1-SE choice"),
-           col=c("black","gray50","blue","red"),lty=c(1,2,2,3),bty="n",cex=.8)
+  E <- cbind(z$train, z$test, z$cv5$cvm, z$cv10$cvm)
+  pdf(paste0(stem, "_errors.pdf"), width = 11, height = 5)
+  par(mfrow = c(1, 2), mar = c(4.5, 4, 3, 1))
+  for (detail in c(FALSE, TRUE)) {
+    ylim <- range(E)
+    xlim <- range(z$axis)
+    if (detail) {
+      ylim <- c(0, max(1, 2.5 * min(E[, 2:4])))
+      if (z$method == "lasso") {
+        s <- z$axis[z$sel]
+        w <- diff(range(s))
+        xlim <- c(max(0, min(s) - w), min(max(z$axis), max(s) + w))
+      }
+    }
+    matplot(z$axis, E, type = "l", lty = c(1, 1, 2, 3), lwd = 2,
+            col = c("black", "red", "blue", "darkgreen"),
+            xlim = xlim, ylim = ylim, xlab = xlab, ylab = "MSE",
+            main = if (detail) "Detail" else "Full range")
+    abline(v = z$axis[c(z$cv5$imin, z$cv5$i1se)], col = "blue", lty = c(2, 3))
+    abline(v = z$axis[c(z$cv10$imin, z$cv10$i1se)], col = "darkgreen", lty = c(2, 3))
+    legend("topleft", c("Train", "Test", "5-fold CV", "10-fold CV"),
+           col = c("black", "red", "blue", "darkgreen"), lty = c(1, 1, 2, 3),
+           lwd = 2, bty = "n", cex = .8)
   }
   dev.off()
 }
 
-results <- list()
-for (p in c(20,100,200)) {
-  cat("\n========== p =",p,"==========\n")
-  dat <- make.data(p)
-  for (kind in c("train","test")) {
-    raw <- if(kind=="train") cbind(dat$y,dat$x) else cbind(dat$ytest,dat$xtest)
-    d <- data.frame(Row=as.character(1:3),raw[1:3,1:6],check.names=FALSE)
-    names(d) <- c("Row","$y$",paste0("$x_",1:5,"$"))
-    cat("\n",kind,"data: first rows\n")
-    print(d)
-    write.tex.table(d,file.path(resdir,paste0("p",p,"_",kind,"_rows.tex")))
-    write.csv(d,file.path(resdir,paste0("p",p,"_",kind,"_rows.csv")),row.names=FALSE)
-  }
+for (p in c(20, 100, 200)) {
+  cat("\n---- p =", p, "----\n")
+  dat <- make_data(p)
+
+  # same folds for ridge and lasso; drawn after the data
   set.seed(123)
-  permutation <- sample.int(nrow(dat$x))
-  folds5 <- folds10 <- integer(nrow(dat$x))
-  folds5[permutation] <- rep(1:5,length.out=nrow(dat$x))
-  folds10[permutation] <- rep(1:10,length.out=nrow(dat$x))
-  write.csv(data.frame(row=seq_len(nrow(dat$x)),fold5=folds5,fold10=folds10),
-            file.path(resdir,paste0("p",p,"_folds.csv")),row.names=FALSE)
-  results[[as.character(p)]] <- list()
-  for (method in c("ridge","lasso")) {
-    cat("\nFitting",method,"and both CV paths...\n")
-    z <- run.method(dat,method,folds5,folds10,p)
-    plot.result(z,p)
-    print(z$table,row.names=FALSE)
-    results[[as.character(p)]][[method]] <- z
+  perm <- sample.int(200)
+  folds5 <- folds10 <- integer(200)
+  folds5[perm] <- rep(1:5, length.out = 200)
+  folds10[perm] <- rep(1:10, length.out = 200)
+
+  res <- list()
+  for (method in c("ridge", "lasso")) {
+    z <- run_method(dat, method, folds5, folds10)
+    plot_method(z, p)
+    tex_table(z$tab, file.path(out, paste0("p", p, "_", method, "_selection.tex")))
+    print(z$tab, row.names = FALSE)
+    res[[method]] <- z
   }
+
+  # paired comparison on the same test points
+  d <- res$ridge$test_sq - res$lasso$test_sq
+  se <- apply(d, 2, sd) / sqrt(nrow(d))
+  paired <- data.frame(Selection = rules,
+                       Ridge = colMeans(res$ridge$test_sq),
+                       Lasso = colMeans(res$lasso$test_sq),
+                       Diff = colMeans(d), SE = se, z = colMeans(d) / se)
+  names(paired)[4] <- "Ridge $-$ Lasso"
+  tex_table(paired, file.path(out, paste0("p", p, "_paired.tex")), digits = 3)
+  print(paired, row.names = FALSE, digits = 4)
 }
 
-# Numerical summaries are generated from the actual computed tables.
-fmt <- function(x) sprintf("%.4f",x)
-method.sentence <- function(z) {
-  t <- z$table
-  paste0(if(z$method=="ridge") "Ridge" else "Lasso",
-    " achieved a minimum test-grid MSE of ",fmt(t[[3]][1]),
-    "; the 5-fold minimum-CV and one-SE choices gave test MSEs ",
-    fmt(t[[3]][2])," and ",fmt(t[[3]][3]),
-    ", while the corresponding 10-fold choices gave ",
-    fmt(t[[3]][4])," and ",fmt(t[[3]][5]),". ")
-}
-r20 <- results[["20"]]
-summary17 <- paste0(method.sentence(r20$ridge),method.sentence(r20$lasso),
-  "The test-grid oracle is an infeasible benchmark, whereas the CV choices use only training data. ",
-  "The one-SE rule selects a penalty at least as large as the minimum-CV choice, favoring ",
-  "a more regularized fit; its prediction cost or benefit is shown by the reported test errors. ",
-  "Ridge continuously shrinks coefficients, while Lasso permits exact zeros. Both are linear ",
-  "approximations to a nonlinear conditional mean, so regularization reduces estimation ",
-  "variability without removing the underlying mean-model misspecification.")
-writeLines(summary17,file.path(resdir,"ex117_summary.tex"))
-summary18 <- paste0("For $p=100$, ",method.sentence(results[["100"]]$ridge),
-  method.sentence(results[["100"]]$lasso),"For $p=200$, ",
-  method.sentence(results[["200"]]$ridge),method.sentence(results[["200"]]$lasso),
-  "Increasing the dimension adds correlated predictors without changing the four variables ",
-  "in the generating mean. The comparisons reflect both increased estimation complexity and ",
-  "the realized samples. At $p=200$, the centered design has rank at most 199, making the ",
-  "unpenalized slope solution nonunique, while positive ridge penalties remain well defined. ",
-  "The Lasso fraction uses the minimum-norm least-squares reference. Changing the dimension ",
-  "also changes the random-number sequence, so these are not paired comparisons on identical observations.")
-writeLines(summary18,file.path(resdir,"ex118_summary.tex"))
-combined <- do.call(rbind,lapply(names(results),function(p) {
-  do.call(rbind,lapply(c("ridge","lasso"),function(method) {
-    data.frame(p=as.integer(p),Method=method,results[[p]][[method]]$table,check.names=FALSE)
-  }))
-}))
-write.csv(combined,file.path(resdir,"all_selection_results.csv"),row.names=FALSE)
-saveRDS(results,file.path(resdir,"all_results.rds"))
-capture.output(sessionInfo(),file=file.path(resdir,"sessionInfo.txt"))
 
-# Verify every file imported by the supplied LaTeX document exists.
-expected <- c("ex111_mse.pdf","ex117_summary.tex","ex118_summary.tex")
-for (p in c(20,100,200)) {
-  expected <- c(expected,paste0("p",p,"_",c("train","test"),"_rows.tex"))
-  for (method in c("ridge","lasso")) {
-    stem <- paste0("p",p,"_",method)
-    expected <- c(expected,paste0(stem,c("_path.pdf","_errors.pdf","_cv.pdf","_selection.tex")))
-  }
-}
-stopifnot(all(file.exists(file.path(resdir,expected))))
-cat("\nFinished. All",length(expected),"LaTeX input files were generated.\n")
-cat("Inspect any grid-endpoint warnings, then compile hw2.tex.\n")
+#### Best linear predictor benchmark ####
+# b* = (1, c, c, c, 0, ...) by Stein's lemma; S = x2 + x3 + x4 ~ N(0, v)
+v <- 3 + 2 * (.8 + .8 + .64)
+c_star <- (2 / 3) * sqrt(v) * dnorm(0)
+floor_risk <- .25 + v^2 * (5 / 36 - 2 / (9 * pi))
+
+# Monte Carlo check of the floor
+set.seed(2026)
+N <- 1e6
+xb <- mvrnorm(N, rep(0, 20), toeplitz(.8^(0:19)))
+sb <- rowSums(xb[, 2:4])
+yb <- xb[, 1] + pmax(0, sb)^2 / 3 + rnorm(N, 0, .5)
+e2 <- (yb - v / 6 - xb[, 1] - c_star * sb)^2
+cat("\nc =", c_star, " linear floor =", floor_risk,
+    " Monte Carlo =", mean(e2), "( SE", sd(e2) / sqrt(N), ")\n")
